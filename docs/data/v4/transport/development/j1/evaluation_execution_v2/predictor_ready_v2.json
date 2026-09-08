@@ -1,0 +1,71 @@
+{
+  "extra_model_or_fixture_requests": 0,
+  "files": {
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/checkpoint_0000.json": "3b312f22b198c03bf3bf3f73116a6db9974342ccaecc3dbd187c9918465811d8",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/fit_trace.json": "610d0d21a6ecd1d101a000003f9f7a0d96bc82fb3bc6d655503a0c62c360a2f3",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/ready.json": "b1da4876e4c81a838185b2515af7ccaceacddef67ca9c297fe088ffc02eb6321",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/startup.json": "070adc9ad10cf00f19e088727754d2fa7539bf59ddf72775977117d788fbcfd4"
+  },
+  "fit_id": "c6bc0450-ccd5-4b44-b6ad-ac95eeb0c839",
+  "freeze": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json",
+    "sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+  },
+  "frozen_files_rehashed": 613,
+  "go": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/go_v2.json",
+    "sha256": "7ab18e015c05307b35cb56553f359a162df69c79b76e8b475bac4ca1796819b9"
+  },
+  "host_pid_namespace": "pid:[4026531836]",
+  "initial_checkpoint_index": 0,
+  "initial_checkpoint_status": "COMPLETE",
+  "initial_learned_commitment_sha256": "135459275c4bfdd3ef806172be64a4e3603c57ca19e961518436b061ee276fef",
+  "initial_ledger_entries": 0,
+  "native_fit_calls": 1,
+  "native_modules_imported_by_reviewer": false,
+  "next": "Root may launch the frozen primary service; no additional predictor request was issued.",
+  "owned_unix_socket": {
+    "inode": "4176357",
+    "owned_fd_numbers": [
+      "5"
+    ],
+    "path": "/tmp/semabi-j1-evaluation-v2.sock"
+  },
+  "pid": 1080298,
+  "profiler_restored": true,
+  "provenance": {
+    "fit_id": "c6bc0450-ccd5-4b44-b6ad-ac95eeb0c839",
+    "fit_trace_sha256": "610d0d21a6ecd1d101a000003f9f7a0d96bc82fb3bc6d655503a0c62c360a2f3",
+    "initial_checkpoint": {
+      "checkpoint_index": 0,
+      "instrument_status": "COMPLETE",
+      "learned_commitment_sha256": "135459275c4bfdd3ef806172be64a4e3603c57ca19e961518436b061ee276fef",
+      "path": "/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/checkpoint_0000.json",
+      "schema": "semabi.j1.checkpoint_receipt.v1",
+      "sha256": "3b312f22b198c03bf3bf3f73116a6db9974342ccaecc3dbd187c9918465811d8"
+    },
+    "initial_learned_commitment_sha256": "135459275c4bfdd3ef806172be64a4e3603c57ca19e961518436b061ee276fef",
+    "pid": 1080298,
+    "runtime_freeze_sha256": "172a6a98b2c699902372aa025fa37c0e72419b365d0ee6ecaca34c409d37b2b6",
+    "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+    "trace_source_sha256": "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249",
+    "training": {
+      "actual_steps": 312,
+      "directory": "docs/data/v4/transport/first_pass/join/j1_training_v1",
+      "files": {
+        "observations.jsonl": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9",
+        "steps.jsonl": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452"
+      }
+    }
+  },
+  "recorded_utc": "2026-09-08T02:25:19.951122+00:00",
+  "runner_pid": 1080296,
+  "schema": "semabi.j1.execution_ready_receipt.v2",
+  "selected_final_run_calls": 1,
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "startup_projection_equals_fit_trace": true,
+  "status": "READY_COMPLETE_VERIFIED",
+  "tool_session_id": 12029,
+  "tool_session_owner": "/root",
+  "training_steps": 312
+}

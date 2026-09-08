@@ -1,0 +1,205 @@
+"""Capture the native identity search omitted from the saved training Fit."""
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import importlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+HERE = Path(__file__).resolve().parent
+J1 = HERE.parent.parent
+ROOT = J1.parents[5]
+FIRST_PASS = J1 / "first_pass_manifest_v2.json"
+FREEZE = J1 / "evaluation_freeze_v2.json"
+PREDICTOR_FREEZE = J1 / "evaluation_predictor_freeze_v2.json"
+TRACE = J1 / "evaluation_execution_v2/predictor_v2/fit_trace.json"
+TRAINING = ROOT / "docs/data/v4/transport/first_pass/join/j1_training_v1"
+HEAD = "6aea64baac1678cbce8ba4b1a41ab04756225c7d"
+PRESERVATION_SHA = "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256"
+FREEZE_SHA = "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+THREADS = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+           "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "BLIS_NUM_THREADS")
+
+
+def require(condition, detail):
+    if not condition:
+        raise ValueError(detail)
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def canonical(relative):
+    require(type(relative) is str and relative and not Path(relative).is_absolute()
+            and all(p not in ("", ".", "..") for p in relative.split("/")), "Noncanonical input name")
+    path = ROOT / relative
+    require(path.resolve(strict=True) == path and path.is_file() and not path.is_symlink(),
+            "Noncanonical input file")
+    return path
+
+
+def read(path):
+    return json.loads(Path(path).read_bytes())
+
+
+def relative(path):
+    return str(Path(path).relative_to(ROOT))
+
+
+def authenticate(manifest_path, expected_sha):
+    require(manifest_path == HERE / "source_manifest_v1.json" and sha(manifest_path) == expected_sha,
+            "Diagnostic manifest commitment differs")
+    manifest = read(manifest_path)
+    require(manifest.get("schema") == "semabi.j1.identity_search_diagnostic_source.v1"
+            and set(manifest["files"]) == {relative(HERE / n) for n in ("diagnose.py", "contract.md")},
+            "Diagnostic source inventory differs")
+    for name, digest in manifest["files"].items():
+        require(sha(canonical(name)) == digest, "Diagnostic source changed: " + name)
+    require(sha(FIRST_PASS) == PRESERVATION_SHA and sha(FREEZE) == FREEZE_SHA,
+            "Original F/P commitment differs")
+    preserved, frozen = read(FIRST_PASS), read(FREEZE)
+    require(preserved["status"] == "PRESERVED" and preserved["binding_failures"] == []
+            and preserved["freeze_sha256"] == FREEZE_SHA and len(preserved["files"]) == 705,
+            "Original preservation metadata differs")
+    for name, digest in preserved["files"].items():
+        require(sha(canonical(name)) == digest, "Preserved bytes changed: " + name)
+    require(subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+            == frozen["source_head"] == HEAD, "Native source HEAD differs")
+    native = {relative(p) for p in (ROOT / "semabi").rglob("*.py")}
+    require(native == {n for n in frozen["source_files"] if n.startswith("semabi/")},
+            "Native source inventory differs")
+    for name, digest in {**frozen["source_files"], **frozen["fixed_inputs"]}.items():
+        require(preserved["files"].get(name) == digest, "Frozen binding is outside the preserved inventory")
+    require(set(manifest["inputs"]) == {relative(p) for p in (FREEZE, FIRST_PASS, PREDICTOR_FREEZE, TRACE)},
+            "Diagnostic input inventory differs")
+    for name, digest in manifest["inputs"].items():
+        require(sha(canonical(name)) == digest, "Diagnostic input changed: " + name)
+    predictor = read(PREDICTOR_FREEZE)
+    require(predictor["training"]["directory"] == relative(TRAINING)
+            and predictor["training"]["actual_steps"] == 312,
+            "Original training allocation differs")
+    require(set(predictor["training"]["files"]) == {"observations.jsonl", "steps.jsonl"},
+            "Training file inventory differs")
+    for name, digest in predictor["training"]["files"].items():
+        require(sha(TRAINING / name) == digest, "Original training changed")
+    return manifest, preserved
+
+
+def module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    loaded = importlib.util.module_from_spec(spec)
+    sys.modules[name] = loaded
+    spec.loader.exec_module(loaded)
+    return loaded
+
+
+def write(path, value):
+    raw = (json.dumps(value, sort_keys=True, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode()
+    with path.open("xb") as stream:
+        require(stream.write(raw) == len(raw), "Incomplete diagnostic write")
+        stream.flush()
+        os.fsync(stream.fileno())
+    return sha(path)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
+    parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--manifest-sha256", required=True)
+    args = parser.parse_args()
+    manifest, preserved = authenticate(args.manifest, args.manifest_sha256)
+    require(set(os.sched_getaffinity(0)) == {19} and os.environ.get("PYTHONHASHSEED") == "0"
+            and all(os.environ.get(n) == "1" for n in THREADS), "Diagnostic resource allocation differs")
+    require(sys.dont_write_bytecode and sys.getprofile() is None, "Diagnostic Python settings differ")
+    result_path, projection_path = HERE / "diagnosis_v1.json", HERE / "projection_v1.json"
+    require(not result_path.exists() and not projection_path.exists(), "Diagnostic result identity already exists")
+    baseline = read(TRACE)
+    require(baseline["status"] == "COMPLETE" and baseline["fit_calls"] == 1
+            and baseline["projection"]["status"] == "COMPLETE", "Saved training projection is incomplete")
+    raw = {label: [json.loads(line) for line in (TRAINING / (label + ".jsonl")).read_bytes().splitlines()]
+           for label in ("observations", "steps")}
+    require(len(raw["steps"]) == 312 and len(raw["observations"]) == 45, "Raw training counts differ")
+    sys.path.insert(0, str(ROOT))
+    trace = module("_j1_identity_search_diagnostic_trace", J1 / "trace.py")
+    bindings = trace.native_bindings()
+    from semabi.compiler.v4 import consequence
+    compiler = importlib.import_module("semabi.compiler.compile_v4")
+    original_compile = compiler.compile_v4
+    captured, calls = [], []
+    fit, projection = None, None
+    result = {"schema": "semabi.j1.identity_search_diagnostic.v1", "status": "DIAGNOSTIC_FAILED",
+              "source_manifest_sha256": args.manifest_sha256,
+              "first_pass_manifest_sha256": PRESERVATION_SHA, "freeze_sha256": FREEZE_SHA,
+              "saved_fit_trace_sha256": sha(TRACE), "source_head": HEAD,
+              "started_utc": datetime.now(timezone.utc).isoformat(), "pid": os.getpid(),
+              "cpu_affinity": sorted(os.sched_getaffinity(0)), "fit_invocations_in_this_script": 0,
+              "compile_calls": calls, "entry_point_restored": False, "projection_exactly_matches": False,
+              "different_projection_fields": [], "projection": None, "search_result": None,
+              "error": None, "postflight_error": None,
+              "scope": "Training-only replay of one unchanged native Fit; no evaluation query or learned repair. Count covers the explicit script invocation, not a universal call monitor."}
+
+    def observed_compile(*positional, **keywords):
+        calls.append({"directory": str(positional[0]), "min_support": keywords.get("min_support"),
+                      "write_diagnostics": keywords.get("write_diagnostics"),
+                      "pinned_is_none": keywords.get("pinned") is None,
+                      "evidence_steps": len(keywords["evidence_log"].steps),
+                      "evidence_observations": len(keywords["evidence_log"].observations),
+                      "read_outputs": keywords.get("read_outputs")})
+        compiled = original_compile(*positional, **keywords)
+        captured.append(compiled)
+        return compiled
+
+    try:
+        compiler.compile_v4 = observed_compile
+        try:
+            result["fit_invocations_in_this_script"] += 1
+            fit = consequence.fit(TRAINING, None, at=312)
+        finally:
+            compiler.compile_v4 = original_compile
+            result["entry_point_restored"] = compiler.compile_v4 is original_compile
+        require(len(calls) == len(captured) == 1, "Unexpected native compile count")
+        projection = trace.project_fit(fit, raw_records=raw, primary_steps=[], bindings=bindings)
+        result["projection_exactly_matches"] = projection == baseline["projection"]
+        result["different_projection_fields"] = [key for key in sorted(set(projection) | set(baseline["projection"]))
+                                                   if projection.get(key) != baseline["projection"].get(key)]
+        result["projection_status"] = projection["status"]
+        require(captured[0].v4 is not None, "Actual native compile has no search result")
+        result["search_result"] = captured[0].v4.to_json()
+        result["reload_pairs"] = trace.plain_snapshot(getattr(fit.abstractor.H, "reload_pairs", None))
+        widgets = fit.abstractor.H.persistent_widgets
+        require(type(widgets) is set and all(type(pair) is tuple and len(pair) == 2
+                and all(type(value) is str for value in pair) for pair in widgets),
+                "Stored persistent-widget shape differs")
+        result["persistent_widgets"] = [list(pair) for pair in sorted(widgets)]
+        require(projection["status"] == "COMPLETE", "Replayed projection is incomplete")
+        result["status"] = "MATCHED_TRAINING_REPLAY" if result["projection_exactly_matches"] else "REPLAY_PROJECTION_DIFFERS"
+    except BaseException as failure:
+        result["error"] = {"type": type(failure).__name__, "detail": str(failure)}
+    finally:
+        compiler.compile_v4 = original_compile
+        result["entry_point_restored"] = compiler.compile_v4 is original_compile
+        try:
+            authenticate(args.manifest, args.manifest_sha256)
+        except BaseException as failure:
+            result["postflight_error"] = {"type": type(failure).__name__, "detail": str(failure)}
+            result["status"] = "DIAGNOSTIC_FAILED"
+        if projection is not None:
+            result["projection"] = {"path": relative(projection_path), "sha256": write(projection_path, projection)}
+        result["finished_utc"] = datetime.now(timezone.utc).isoformat()
+        digest = write(result_path, result)
+    print(json.dumps({"status": result["status"], "path": str(result_path), "sha256": digest,
+                      "projection_exactly_matches": result["projection_exactly_matches"],
+                      "compile_calls": len(calls), "error": result["error"],
+                      "postflight_error": result["postflight_error"]}, sort_keys=True), flush=True)
+    return 0 if result["status"] == "MATCHED_TRAINING_REPLAY" else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

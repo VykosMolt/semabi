@@ -1,0 +1,33 @@
+{
+  "schema": "semabi.j1.post_controls_tool_receipt.v1",
+  "scope": "Actual candidate-3 checks and unchanged counterexample rerun; fixed/invented inputs only",
+  "initial": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "a64581",
+        "wall_time_seconds": 1.001182297,
+        "session_id": 57770,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "db3637",
+        "wall_time_seconds": 0.000001202,
+        "exit_code": 0,
+        "original_token_count": 59,
+        "output": "{\"counts\": {\"PASS\": 19}, \"path\": \"docs/data/v4/transport/development/j1/evaluator/post_controls_v1/review_counterexamples_attempt3.json\", \"sha256\": \"105403597aa8f4e45282ac9b0a2aae870dd073dd0157ea91ed7d3df20266bafd\", \"status\": \"PASS\"}\n"
+      }
+    }
+  ],
+  "completion": {
+    "chunk_id": "c53fac",
+    "wall_time_seconds": 0.000002056,
+    "exit_code": 1,
+    "original_token_count": 58,
+    "output": "{\"counts\": {\"FAIL\": 2, \"PASS\": 80}, \"path\": \"docs/data/v4/transport/development/j1/evaluator/post_controls_v1/checks_attempt4.json\", \"sha256\": \"da423652cd9bbe9ce125766c1e2de689cad9b688a9d545502c69c1c22eed025d\", \"status\": \"FAIL\"}\n"
+  }
+}

@@ -2888,3 +2888,113 @@ passes the 12-case micro-control; normal learning and identity remain untested.
 Its separate bounded-search diagnostic reproduces false uniqueness after one
 of two assignments is retained. Review a minimal soundness repair and preserve
 all controls separately from the eventual learned JOIN assessment.
+
+## P44 / G2: prefix chronology and regression closed (recorded 2026-09-08)
+
+Integrated source `4440a4f` freezes prefix section-normalization statistics before
+future descriptors. Full validation: 577 passed, 3 skipped, 1 expected failure.
+All five dedicated corpora exactly match all six declared G1 components, including
+residual mistakes and ambiguity. The direct chronology witness learns zero
+operators; it establishes the prefix-representation boundary. Reused separating
+holdouts remain identified as reused evidence.
+
+The final report and independent review are
+`../transport/development/g2/integrated_report_v1.md` and `integrated_review_v1.md`.
+Checkpoint `38f1f08` preserves 135 files and nine terminated jobs in
+`results_manifest_v1.json`, SHA-256
+`481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e`.
+
+## P45 / reserved-interface R1: preserved negative transfer result (recorded 2026-09-08)
+
+This R1 is the reserved generated interface measured on `38f1f08`, before B1;
+the earlier comparator named R1 retains its own historical identity. Collection
+retains 328 charged attempts, 322 paired Steps, six unpaired resets and 56 failures.
+Four acquisition arms spend 60 attempts each, select zero contested targets and
+produce byte-identical raw observations and Steps within each seed pair. Five
+model readings leave eight ordinary targets undetermined; both review predictions are wrong after
+seed 1701 and correct after seed 1702 under both policies. RULE/LIST remain
+unestablished on all ten targets. Shared and union identity surfaces are empty.
+
+The 295-file/13-job first pass is preserved in
+`../transport/reserved_v1/first_pass_manifest_v1.json`, SHA-256
+`2dd83ed7914798f13e6c7a0cd1b5ccbd718bab7182df12e08a854223cf423678`.
+Five later oracle controls corroborate raw actions/fields while learned owner,
+operand, reference and comparison checks remain unavailable. The accepted
+`analysis/review_v1.md` finds H1–H3 unmet and establishes restricted-interface
+equivalence under H4; learner recognition of those rivals is unestablished.
+Analysis seal SHA-256
+`ea297ccc676116d86721511803846ddf6df4eb8aa8f25ea67e9b025e2c7f4e54`.
+R1 is now disclosed development evidence. No wrong-identity diagnosis or effective
+contested-acquisition comparison follows from these unavailable bindings and zero
+targeted interventions.
+
+## P46 / B1: incomplete search retains uncertainty (recorded 2026-09-08)
+
+The two guards preserve uncertainty for a truncated one-assignment binding and
+an incomplete consequence enumeration after value aggregation. The same focused
+cases change from 22 passes/32 intended failures to 54 passes. Clean validation
+passes 621 tests with 3 skips and 1 expected failure, and exactly matches all six
+G2 components across all five dedicated corpora. The final validation seal at
+`../transport/development/b1_validation/results_manifest_v1.json` binds 83 files
+and seven terminated jobs, SHA-256
+`af3c7131375798bbf0cc0f4050617cc8ebea901a6313d7be7879f23409597e8d`.
+
+Candidate `96b2d1f` and validation `b6f8c99` were adopted as `c9dd06d`/`d72335b`
+after reserved-interface R1 checkpoint `9a141f0`. `adoption_v1.json` verifies 226
+source/test files and all 83 artifacts against the tested worktree, SHA-256
+`4b0f9b9809cb20a2b71de0c171400ef324d6b7de0fd6d1c8b5370b533d30ddf4`.
+No unchanged full/corpus checks were repeated. The guards add no existential
+witness proposal or outcome query. J1's frozen normal-learner composition
+measurement, separate supplied-formula controls and exposure/process status are
+tracked in `../transport/development/j1/protocol_v1.md` and
+`../transport/execution.md`. P15, structural revision and whole-rival acquisition
+remain open; the next repair must follow the demonstrated layer of failure.
+
+A later W1 audit qualifies B1's five corpus source associations: the unchanged
+`link_probe.py` prepends main before native imports, and those historical jobs
+have no loaded-module ledger. The copied-file attestations and exact numerical
+B1/G2 comparison remain preserved, but production by the intended B1 source is
+unestablished. G2's intended root was main. The W1 verification preparation
+records this boundary and explicit package anchoring for the candidate runs.
+
+## P47 / J1: preserved composition measurement (recorded 2026-09-08)
+
+Both phases complete 313 charges, 312 Steps and 24 designated targets with zero
+action failures. Decision lists remain UNDETERMINED at every target; RULE/LIST
+have no admissible event, leaving all 24 unestablished rather than resolved.
+The event-argument comparison surface is empty. The separately recorded 28
+naming-query literals per target have unavailable independent semantics.
+
+The 705-file V2 first pass, original invalid score, corrected offline score,
+post-preservation controls and matching training replay are separately sealed.
+The [measurement report](../transport/development/j1/analysis/measurement_summary_v2/report_v1.md)
+gives hashes, denominators, exposure limits and causal findings. The original
+path-reference defect and earlier invalid cache attempt remain preserved.
+Root opened the actual summaries/diagnostics after their seals. These generated
+cases are disclosed development evidence. Final independent review passes 167
+measurement/replay and 19 training-field checks with 912 final bindings verified.
+Root accepted the 22-file review seal `f052ac74…` and checked unchanged native
+source in `../transport/development/j1/root_closeout_v1.json` (`66095786…`).
+The review's corrected helpers and preparation-authentication order remain explicit.
+
+Raw premise, primitive, visibility and observed effects pass 24/24 per phase.
+The model supports page-level transmitter/receiver anchors, but has no unique
+patch objects and no endpoint references. Action owners are available; receiver
+roles, query-literal correctness and learned state consequences are unavailable.
+The matching training replay records exact evidential ties that demote patch
+and inner-field identities, with alternatives retained in open questions.
+No qualifying reload pair promotes endpoint widgets. The raw-change score also
+excludes promoted widgets, and the shared inner field template can choose only
+one reference target type. Persistence alone is not an established repair.
+
+The next isolated source checkpoint W1 (`284d80c`) addresses a separately
+demonstrated soundness defect in reload correspondence. Duplicated child keys
+can no longer overwrite a reversion and establish slot-wide persistence.
+The same focused file moves from 3 failures/13 passes to 16 passes; independent
+review covers source, multiple pairs/slots and unaffected templates. Full-suite
+and dedicated allocation-positive/refusals, pilot and separating validation are
+being prepared before adoption. A separate controlled observation/scoring
+diagnostic follows; no normal JOIN competence is claimed.
+Already-promoted slots followed by key revision form a separate source-grounded
+variant to investigate; the focused W1 result does not establish that broader
+final-key invariant.

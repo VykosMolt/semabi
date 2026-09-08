@@ -1676,7 +1676,99 @@ transport, matched inferred/oracle-identity JOIN, P15 and structural revision
 remain open; root has still not opened the shared fixture source or reserved
 interface contents.
 
+## Part XXII -- chronology, reserved transport and bounded-search soundness (2026-09-08)
+
+G2 freezes prefix section-normalization statistics before future observations are
+described. Its integrated source `4440a4f` passes **577 tests, with 3 skips and
+1 expected failure**. All five dedicated corpora exactly match G1 across the
+six declared comparison components, including retained errors and ambiguity.
+The direct chronology witness learns zero operators; its demonstrated scope is
+prefix representation. The [final report](data/v4/transport/development/g2/integrated_report_v1.md)
+and [independent review](data/v4/transport/development/g2/integrated_review_v1.md)
+are preserved with 135 files and nine terminated jobs at checkpoint `38f1f08`.
+The separating variants reuse holdout evidence, so their summed rows are not
+independent replications.
+
+The **reserved-interface R1** experiment then measures G2 on the previously
+reserved generated workflow, before B1 adoption. Its
+[first-pass preservation](data/v4/transport/reserved_v1/first_pass_manifest_v1.json)
+binds 295 files and 13 terminated jobs. Collection retains 328 charged attempts,
+322 paired Steps, six unpaired resets and 56 failures. Each acquisition arm
+spends 60 attempts; contested targeting selects zero opportunities, and each
+same-seed contested/untargeted pair has byte-identical raw observations and Steps.
+
+Across the five model readings, the eight ordinary targets remain undetermined.
+The two review predictions are wrong after seed 1701 and correct after seed 1702
+under both policies. RULE and LIST leave all ten targets unestablished throughout.
+Both shared and union identity surfaces are empty. Five post-preservation oracle
+controls corroborate raw actions and visible fields; learned owners, operands,
+references and comparisons remain unavailable. The
+[accepted analysis](data/v4/transport/reserved_v1/analysis/review_v1.md) finds H1–H3
+unmet and establishes H4's restricted-interface equivalence. Learner recognition
+of those rival rules remains unestablished. These results localize a representation
+or binding limitation without diagnosing wrong identity, and zero targeted
+interventions leave effective contested acquisition untested. R1 became disclosed
+development evidence only after its first pass was preserved.
+
+B1 corrects two demonstrated false-certainty paths: a truncated search with one
+retained assignment no longer reports unique binding, and incomplete consequence
+enumeration retains uncertainty after value aggregation. The unchanged focused
+cases change from 22 passes and 32 intended failures to 54 passes. A clean
+validation worktree passes **621 tests, with 3 skips and 1 expected failure**,
+and exactly matches all six G2 components on all five dedicated corpora. The
+[validation report](data/v4/transport/development/b1_validation/validation_review_v1.md)
+and [final manifest](data/v4/transport/development/b1_validation/results_manifest_v1.json)
+preserve 83 files and seven terminated jobs. Candidate `96b2d1f` and validation
+`b6f8c99` were adopted as `c9dd06d` and `d72335b`, after reserved-interface R1.
+[Adoption verification](data/v4/transport/development/b1_validation/adoption_v1.json)
+matches 226 source/test files and all 83 artifacts to the tested worktree; no
+unchanged full or corpus run was repeated. This closes the bounded-search
+soundness defect while preserving the measured semantic limitations.
+
+A later W1 audit qualifies the five B1 corpus jobs: the unchanged legacy helper
+prepends main before the first native import. Their copied-file hashes do not
+recover the loaded source, and those jobs retained no module-origin ledger.
+The numerical B1/G2 comparison remains authenticated; production of the B1
+outputs by its intended worktree source is unestablished. G2's intended root
+was main. The [W1 verification plan](data/v4/transport/development/widget_persistence_v1/verification_preparation/plan_v1.md)
+records the evidence and the candidate-package anchoring for new validation.
+
+J1's preserved normal-learner measurement leaves all **24 targets per phase
+unestablished**, with UNDETERMINED decision lists and no admissible RULE/LIST
+event. Each phase retains 313 charges, 312 Steps and zero action failures.
+Post-preservation controls corroborate the raw task and executed effects, while
+the saved model has no patch objects or endpoint references. Page-level endpoint
+anchors do not establish persistent identity or correct learned naming. The
+[measurement report](data/v4/transport/development/j1/analysis/measurement_summary_v2/report_v1.md)
+connects the 705-file first pass, retained invalid attempts, corrected offline
+score, controls and matching training replay to their separate seals. The
+[independent review](data/v4/transport/development/j1/analysis/final_review_v2/review_v1.md)
+passes 167 measurement/replay and 19 training-field checks, with 912 final
+bindings authenticated. Root accepted its 22-file seal and the unchanged native
+source in [closeout](data/v4/transport/development/j1/root_closeout_v1.json).
+The cases are now disclosed development evidence. This result establishes a
+representation/binding limitation, without proving that persistence alone fixes
+it or that the task is observationally indistinguishable. The supplied-conjunction
+control remains a separate language test; it does not establish learned JOIN.
+
+The isolated W1 source checkpoint `284d80c` repairs a separately demonstrated
+false-persistence path: duplicated child keys could hide an observed reversion.
+It now withholds promotion when reload correspondence is ambiguous. The same
+focused file changes from 3 failures/13 passes to 16 passes, with independent
+source and boundary checks. Full-suite and five-corpus validation remain pending;
+the candidate is not adopted. J1 had no qualifying reload pairs, so this repair
+supports future probes without claiming to fix its original failure.
+A later source observation about already-promoted slots and key revision remains
+a separate production-flow investigation; W1's focused result is limited to its
+tested promotion boundary.
+P15's real conditional-base experiment, automatic link/union revision and
+whole-rival acquisition remain open questions.
+
 ## What stands, and what is open
+
+The following conclusions concern the earlier retained Harbour, Blend and Vet
+frontiers. The prospective campaigns and subsequent repairs are recorded in
+Parts XX–XXII; their evidence does not rewrite the historical frontier artifacts.
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
 the tournament closure over two family orders -- the same seven rows as before, the same

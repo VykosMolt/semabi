@@ -1,0 +1,239 @@
+# Post-preservation J1 diagnostics, version 1
+
+This package is evaluator-only. It was specified from the already frozen J1
+fixture, its independent reference, its scripts, and its original model audit
+before its author opened any actual J1 training or evaluation run payload. Its
+author and independent reviewer have evaluator semantic exposure. Root and the
+resident predictor remain unexposed by this work until root explicitly confirms
+that the first pass has been preserved. Metadata-only progress messages do not
+contain names, case semantics, oracle answers, or learned results.
+
+The package must stay outside every first-pass input/output directory. It is not
+imported by the learner, resident predictor, actor, collector, or first-pass
+outcome scorer. No oracle value or diagnostic correspondence is sent to P. No
+learner or native source is changed. No fit, native forecast, browser, fixture
+service, action, or model repair is executed by the diagnostics.
+
+## Admission and execution
+
+Production invocation supplies three independent expected SHA-256 commitments:
+the package source manifest, global evaluation freeze F, and the first-pass
+preservation manifest. Before authentication, the package inventory is exactly
+the three local files `controls.py`, `checks.py`, and `protocol.md`; no arbitrary
+manifest entry is read. The package verifies these sources, the explicit
+F/first-pass hashes, the preservation status, the preservation-to-F link, empty
+source-binding failures, preserved membership of every frozen source/fixed input,
+and every preserved file's bytes and canonical nonsymlink path before importing
+the evaluator or parsing a run payload. A new output must lie inside this
+package's evaluator directory and must neither contain nor be contained by any
+sealed first-pass output root.
+
+After authentication, an exact six-file dependency inventory is verified: the
+specification, cases, scripts, two catalogs, and original public source inventory.
+Each digest must agree with F's fixed inputs and the original frozen fixture
+inventory; the source inventory itself has its separately pinned original SHA.
+These checks run before opening the dependent oracle payloads.
+
+The imported evaluator must be the source committed by F and preservation. Its
+complete `load_freeze` and `verify_preservation` gates run first. Partial
+preservation retains all rows as unestablished and does not call native helpers.
+For full preservation, `native_helpers` and `audit_run` authenticate the complete resident fit,
+checkpoint/source/learned commitments, exact fixed allocation, raw request
+prestate, native after-state representative, primitive and receipt joins, all
+phase controls and owned process completion. No fit or native prediction method
+is called. The diagnostics consume only the resulting saved records. If
+preservation is partial or the full custody gate fails, every fixed row
+is retained with unobserved state and unavailable primitive/forecast controls.
+
+All commitments and preservation are checked again before the exclusive output
+write. Command shape (absolute output path required):
+
+```text
+.venv/bin/python -B docs/data/v4/transport/development/j1/evaluator/post_controls_v1/controls.py \
+  --control-manifest <package-source-manifest> --control-manifest-sha256 <sha256> \
+  --freeze <F> --freeze-sha256 <sha256> \
+  --first-pass-manifest <first-pass-manifest> --first-pass-sha256 <sha256> \
+  --out /home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/post_controls_v1/<new-result>.json
+```
+
+This command is a future adapter. It must not be run on actual evidence until
+root confirms first-pass preservation. The checks harness uses only invented
+trees/typed forecasts, invented authentication files, frozen fixture model code,
+the independent declarative reference, and the fixed prior model audit.
+
+## Result meanings and denominators
+
+`PASS` is a corroborated claim at the explicitly named diagnostic boundary.
+`WRONG` requires a contradiction between explicit comparable values or two
+uniquely identified visible objects. `UNOBSERVED` means required raw visibility
+is missing. `UNAVAILABLE` means a unique interpretation, target, argument,
+forecast, or provenance is not supplied. `AMBIGUOUS` retains multiple possible
+targets, alternatives, or correspondences. The absence of an exact object name
+alone never makes a correspondence wrong. A malformed/unsupported typed record
+becomes unavailable diagnostic data; it does not trigger a reconstructed query.
+
+Every split retains the frozen 313 charged actions and 24 designated targets,
+including failures, missing forecasts, and unavailable interpretations. There
+are 16 expected visible entity correspondences and 16 endpoint-reference
+opportunities for each row, including those without a forecast. These conditional
+structural opportunities do not replace the 24-target denominators. Named fields
+and result categories are kept separate: public visibility, resolved primitive,
+observed application effect, and saved prestate representation. No sum or average
+of these columns is a learned compositional accuracy score.
+Inner object/reference status counts must sum exactly to their denominators.
+When a forecast supplies no inner rows, all 16 outcomes in each category are
+counted unavailable. Designated target-premise status counts are also retained.
+
+## Public state and actual primitives
+
+The raw parser reads the frozen visible collection labels, entity group names,
+ancestor relationships, named controls, complete select-option alternatives,
+selected option values, explicit radio booleans, receipt text, and status text.
+Expected visible entity inventories come from the fixed profile's catalog;
+missing entities or fields are never supplied by the oracle. An unnamed wrapper
+does not own a named entity's controls. Duplicate groups, controls or options
+remain ambiguous. Additional distinct options remain ambiguous; missing-only
+options remain unobserved. Radio selection requires all four explicit radio states. The
+presence of a radio alone does not establish its state. The raw interface lacks
+a disabled field, so no enabled-state claim is made.
+
+The absence of a status node is recorded as absence from the saved visible tree,
+with `channel_visible: false`; it does not establish a hidden application state
+or an observed event channel. Unknown receipt words and selected values that do
+not occur among visible options are unavailable. Complete state comparison
+requires every expected collection, control, field and alternative.
+
+Primitive resolution independently searches the raw prestate for the frozen
+exact role, name, and ancestor scope, retaining zero or multiple candidates.
+For a unique target, it compares the saved native kind, node index, descriptor,
+and actual argument. Public operation identity comes from the actual native
+target and raw owner, not a case label. Select arguments must be visible options.
+Resets/reloads retain their actual global primitive and argument.
+A clear-message control is global only if it is unique and lies outside the
+observed entity ownership and collection sections.
+
+## Observed effects and fixed target premises
+
+All setup and designated actions are checked. The evaluator derives expected
+public changes from the independently resolved actual primitive and the complete
+raw prestate. The declarative same-bridge relation supplies the primary truth;
+the fixed model implementation is not invoked in production. Each before/after
+comparison records every endpoint rewire, receiver flag change, selection, and
+message. Reset has a separately fixed initial visible state. A failed native
+action keeps its visible delta, with its oracle-effect comparison unavailable.
+
+At designated targets, the complete raw prestate is also compared with the
+separately frozen case's graph, selected receiver, cleared receipts, and cleared
+message. These are tests of exposure/fixture realization. They do not prove a
+learner knew the relation. Sequential setup graph states remain public exposures;
+no claim is made that an evaluation endpoint combination or path was absent from
+earlier setup snapshots.
+
+## Saved interpretation and correspondence
+
+Only the stored typed `FORECAST` payload is decoded through the previously
+reviewed typed-data decoder. No dataclass, callback, property, denotation method,
+binding method, abstractor, or predictor is reconstructed or called. Saved object
+IDs must agree with their stored `(tid, key)` fields.
+The semantic input excludes exactly ParsedObs `_member_positioned_cache`, the
+native exporter's optional derived cache. The full raw response and snapshot table
+remain unchanged. Every traversed semantic snapshot reference is authenticated
+against its original digest before projection; only the excluded opaque cache is
+not traversed. Original set tags, item order and encoded uniqueness are validated
+before projection; projected items are canonical-sorted without deduplication.
+Original mapping keys are validated by the pinned decoder before each original
+row is projected. Decoded set membership and mapping aliases remain rejected.
+All six ParsedObs base fields remain mandatory, and any additional
+field is unsupported. Unknown or missing base semantics remain unavailable.
+Observation `_children` and all other recorded fields remain part of decoding.
+Reference and parent IDs require an exact integer and string pair; booleans and
+floats cannot alias integer IDs. Owner and bound copies must belong to the
+recorded state's object map and agree with the stored object in every typed field.
+
+A raw entity correspondence can be supported by a unique tree anchor, a unique
+exact visible key, or both. A broad anchor enclosing several entities remains
+ambiguous even when one key matches. Conflicting anchor and key names remain
+ambiguous. A key that is absent from the raw page is unavailable unless a unique
+raw anchor establishes the correspondence. This is a relation on one saved page;
+it does not establish persistent identity, naming generalization, or a learned
+oracle mapping.
+
+All 16 expected entities retain coverage rows, including no or multiple native
+objects. The recorded owner is compared with the uniquely resolved actual source.
+For a bridge with a unique object correspondence, a recorded reference is compared
+with a visible endpoint only when there is exactly one reference into the raw-
+corresponded endpoint collection. Missing/null references and nonunique reference
+field correspondences remain unavailable/ambiguous. Slot choice is never made by
+selecting the reference that happens to equal the desired endpoint.
+
+Every recorded event opportunity retains positions zero and one even when its
+argument-role map is empty. Recorded output argument roles for the two fixed event frames are checked against
+the actual source and selected target through recorded bound objects. Their
+identity check is separate from the saved event frame's correctness. Other frames
+or extra argument positions have no imposed oracle role correspondence. The
+standing outcome scorer remains authoritative for its own event/argument result.
+Each row separates bound-object identity, recorded binding status, recorded role
+declaration, and literal-argument correspondence. The native owner convention can
+name the owner even without a separate stored role record. Ambiguous/unnamed
+bindings and missing declarations remain open. Literal strings absent from the
+raw identity inventory are unavailable; a uniquely visible different endpoint is
+wrong. The copied query literal set is inventoried, but the correctness of its
+learned semantics remains unavailable in this package.
+
+Parsed field checks authenticate the stored parsed observation's complete semantic
+node tree against the request prestate, ignoring only URL and geometry omitted by
+native observation deduplication. They follow stored node-to-instance and node-
+to-slot indexes with exact integer types, require an explicit ancestor instance
+for these entity fields, and compare explicit radio,
+receipt-text and select values. These checks establish saved parsed leaf values
+only. Without unique saved attribute-to-node provenance, persistent flag-attribute
+correctness remains unavailable.
+The state-contained and top-level parsed base records must agree under exact typed
+equality after the same derived-cache exclusion. The copied child map must
+reproduce the stored parent tree exactly.
+Mapping entry order does not affect typed equality; key/value types still do.
+Stored observation nodes and select options retain their native list types.
+
+The first-pass forecast path stores prestate interpretation and event forecasts;
+it does not store a predicted poststate. Therefore learned state-consequence
+correctness is explicitly unavailable in this package. Agreement of an observed
+effect with the fixture oracle must never be relabeled as agreement of a learned
+state prediction. Oracle identity and representation are diagnostics only; they
+cannot retroactively become a first-pass learned prediction or validate full
+relational composition on their own.
+
+## Validation scope
+
+The executable checks cover invented complete/incomplete/ambiguous trees, actual
+primitive mismatches, public-effect contradictions, object and reference
+correspondence, role identities, parsed fields, and missing-row denominators.
+The fixed fixture-model checks reproduce all 72 cases, 864 public primitives,
+and 936 declared model snapshots and compare each case's 13 snapshot hashes with
+the already frozen model audit. These are model/renderer-invention checks, not
+native accessibility, browser visibility, recorder, fit, or learned-result tests.
+
+Outer authentication tests use invented files and count the evaluator import;
+every bad commitment/path/output case must fail before that import. The final
+evaluator's full custody gate is stubbed in these bounded outer-gate tests and
+has its own independent executable review. No actual J1 production invocation
+has been performed during preparation of this package.
+
+The original 68 assertions are reused with the positive typed fixture supplied
+with its previously omitted role records. Ten focused package/dependency/partial-
+CLI checks are added. Four focused typed-order/container controls and eight
+optional-parser-cache controls cover the compatibility corrections. The two
+positive parser-cache cases use the source-bound trace Copier with invented
+classes and its native field/optional specifications, including actual snapshot
+handling; no native bindings or native constructors are called. They preserve the
+raw response digest. Complete malformed envelopes retain unknown/missing/extra
+base-field, other-record, original snapshot hash and missing-reference failures.
+Four additional original-container controls cover canonical and noncanonical
+snapshot-reference sets and decoded set-member/mapping-key aliases at the complete
+invented forecast boundary, including pinned-decoder decisions and raw retention.
+The complete ordered 94-check inventory is hash-locked and
+the 72 fixture cases are counted explicitly. The 19 independent-review
+counterexamples are retained in a separate immutable harness and rerun unchanged.
+The no-real-data/no-native-execution scope fields are labeled declarations; they
+are supported by the recorded source and invocation, not a universal syscall or
+native-call interception mechanism. The partial-CLI control does measure that its
+stubbed native-helper entry point is never called and that all fixed rows remain.

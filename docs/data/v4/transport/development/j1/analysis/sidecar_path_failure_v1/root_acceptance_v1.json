@@ -1,0 +1,29 @@
+{
+  "accepted_contract": {
+    "path": "docs/data/v4/transport/development/j1/analysis/sidecar_path_failure_v1/correction_contract_v1.md",
+    "sha256": "9b8e6d4e48e79fdfcfbff20087f40879a5765a9526da9af20730e46b3d654be6"
+  },
+  "corrected_execution_authorized": false,
+  "diagnosis_manifest_sha256": "6ea136ed7a4d598490ff5a8bee35e47f879fe89af8a35d314714582a0a868a6c",
+  "implementation_owner": "/root/baseline_verification",
+  "independent_reviewer": "/root/reserved_audit",
+  "independent_statement": "All705preserved files and8original scoring artifacts rehashed unchanged. Four sidecar records have exact keys, matching digests and null error; canonical relative paths identify the exact frozen files with no symlink component. Frozen actor cwd and relative --out route explain the strings; actor passes them unchanged and custody.reference makes expected paths absolute. Downstream custody and performance remain unestablished.",
+  "next_gate": "Independent actual adapter/source/focused-evidence review then root acceptance before any corrected score.",
+  "original_inputs_and_score_mutated": false,
+  "recorded_utc": "2026-09-08T03:25:58.602235+00:00",
+  "root_diagnosis": {
+    "path": "docs/data/v4/transport/development/j1/analysis/sidecar_path_failure_v1/diagnosis_v1.json",
+    "sha256": "5aa84aace1d34c61dea89fbfda7e0b3088de3c13409ae989bdeed604ec065cae"
+  },
+  "root_source_confirmation": [
+    "scripts/transport_collect.py:189-190",
+    "docs/data/v4/transport/development/j1/act.py:149-150",
+    "docs/data/v4/transport/development/j1/act.py:281-294",
+    "docs/data/v4/transport/development/j1/evaluate.py:39-45",
+    "docs/data/v4/transport/development/j1/evaluate.py:303-304",
+    "docs/data/v4/transport/development/j1/custody.py:45-47",
+    "docs/data/v4/transport/development/j1/custody.py:251-253"
+  ],
+  "schema": "semabi.j1.sidecar_diagnosis_acceptance.v1",
+  "status": "ACCEPT_PATH_FORMAT_CAUSE_ONLY"
+}

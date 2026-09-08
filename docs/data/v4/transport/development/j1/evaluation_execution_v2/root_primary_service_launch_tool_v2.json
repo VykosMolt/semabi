@@ -1,0 +1,25 @@
+{
+  "schema": "semabi.j1.root_execution_launch_tool_receipt.v2",
+  "recorded_utc": "2026-09-08 02:26:36 UTC",
+  "role": "primary_service",
+  "owner": "/root",
+  "tool": "exec_command",
+  "submitted_tool_arguments": {
+    "cmd": "taskset -c 22 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/jobs/j1_primary_service_v2 -- .venv/bin/python experiments/join_v1/server.py --host 127.0.0.1 --port 8771 --profile primary",
+    "workdir": "/home/moloch/semabi",
+    "max_output_tokens": 1700,
+    "sandbox_permissions": "require_escalated",
+    "justification": "May I start the frozen primary J1 fixture service on loopback127.0.0.1:8771 under the user's existing local SemABI experiment authorization? The single authorized fit is complete; this is the next exact reviewed command, confined to the local fixture, workspace outputs and CPU22 with one numerical thread. The user explicitly authorized autonomous experiment execution and all24 CPUs; no external deployment or paid compute is involved.",
+    "tty": true,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "3afae5",
+    "wall_time_seconds": 1.001713695,
+    "session_id": 67647,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "freeze_sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+}

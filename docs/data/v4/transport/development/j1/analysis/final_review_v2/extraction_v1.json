@@ -1,0 +1,2096 @@
+{
+  "check_count": 173,
+  "checkpoint_count": 4,
+  "checks": [
+    {
+      "check": "score/status",
+      "pass": true
+    },
+    {
+      "check": "score/custody",
+      "pass": true
+    },
+    {
+      "check": "controls/status",
+      "pass": true
+    },
+    {
+      "check": "controls/custody",
+      "pass": true
+    },
+    {
+      "check": "phases",
+      "pass": true
+    },
+    {
+      "check": "control_phases",
+      "pass": true
+    },
+    {
+      "check": "primary/row_join",
+      "pass": true
+    },
+    {
+      "check": "primary/charge_ids",
+      "pass": true
+    },
+    {
+      "check": "primary/row_custody",
+      "pass": true
+    },
+    {
+      "check": "primary/native_ok",
+      "pass": true
+    },
+    {
+      "check": "primary/native_errors",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/decision_list/categories",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/decision_list/reasons",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/rule/categories",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/rule/reasons",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/list/categories",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/list/reasons",
+      "pass": true
+    },
+    {
+      "actual": 241,
+      "check": "primary/all_charges/all_literal_maps_empty",
+      "expected": 313,
+      "pass": false
+    },
+    {
+      "check": "primary/all_charges/denominator",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/recorded_event_positions",
+      "pass": true
+    },
+    {
+      "actual": 241,
+      "check": "primary/all_charges/without_literal_positions",
+      "expected": 313,
+      "pass": false
+    },
+    {
+      "check": "primary/all_charges/visibility",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/primitive",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/effect",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/representation",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/object_correspondence/sum",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/object_correspondence/counts",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/object_correspondence/denominator",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/endpoint_reference/sum",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/endpoint_reference/counts",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/endpoint_reference/denominator",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/denominator",
+      "pass": true
+    },
+    {
+      "check": "primary/all_charges/target_premise",
+      "pass": true
+    },
+    {
+      "check": "primary/root_prediction_copy/all_charges",
+      "pass": true
+    },
+    {
+      "check": "primary/root_diagnostic_copy/all_charges",
+      "pass": true
+    },
+    {
+      "check": "primary/all_clicks/decision_list/categories",
+      "pass": true
+    },
+    {
+      "check": "primary/all_clicks/decision_list/reasons",
+      "pass": true
+    },
+    {
+      "check": "primary/all_clicks/rule/categories",
+      "pass": true
+    },
+    {
+      "check": "primary/all_clicks/rule/reasons",
+      "pass": true
+    },
+    {
+      "check": "primary/all_clicks/list/categories",
+      "pass": true
+    },
+    {
+      "check": "primary/all_clicks/list/reasons",
+      "pass": true
+    },
+    {
+      "actual": 24,
+      "check": "primary/all_clicks/all_literal_maps_empty",
+      "expected": 96,
+      "pass": false
+    },
+    {
+      "check": "primary/all_clicks/denominator",
+      "pass": true
+    },
+    {
+      "check": "primary/all_clicks/recorded_event_positions",
+      "pass": true
+    },
+    {
+      "actual": 24,
+      "check": "primary/all_clicks/without_literal_positions",
+      "expected": 96,
+      "pass": false
+    },
+    {
+      "check": "primary/all_clicks/object_correspondence/sum",
+      "pass": true
+    },
+    {
+      "check": "primary/all_clicks/endpoint_reference/sum",
+      "pass": true
+    },
+    {
+      "check": "primary/root_prediction_copy/all_clicks",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/decision_list/categories",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/decision_list/reasons",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/rule/categories",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/rule/reasons",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/list/categories",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/list/reasons",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/all_literal_maps_empty",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/denominator",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/recorded_event_positions",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/without_literal_positions",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/visibility",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/primitive",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/effect",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/representation",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/object_correspondence/sum",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/object_correspondence/counts",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/object_correspondence/denominator",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/endpoint_reference/sum",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/endpoint_reference/counts",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/endpoint_reference/denominator",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/denominator",
+      "pass": true
+    },
+    {
+      "check": "primary/designated_targets/target_premise",
+      "pass": true
+    },
+    {
+      "check": "primary/root_prediction_copy/designated_targets",
+      "pass": true
+    },
+    {
+      "check": "primary/root_diagnostic_copy/designated_targets",
+      "pass": true
+    },
+    {
+      "check": "primary/target_count",
+      "pass": true
+    },
+    {
+      "check": "primary/distinct_target_cases",
+      "pass": true
+    },
+    {
+      "check": "primary/root_accounting",
+      "pass": true
+    },
+    {
+      "check": "primary/root_roles",
+      "pass": true
+    },
+    {
+      "check": "primary/root_object_by_kind",
+      "pass": true
+    },
+    {
+      "check": "primary/root_components",
+      "pass": true
+    },
+    {
+      "check": "primary/root_query_literals",
+      "pass": true
+    },
+    {
+      "check": "primary/root_endpoint_references",
+      "pass": true
+    },
+    {
+      "check": "primary/witness_subset/all_literal_maps_empty",
+      "pass": true
+    },
+    {
+      "check": "primary/witness_subset/all_literal_maps_empty",
+      "pass": true
+    },
+    {
+      "check": "primary/witness_subset/all_literal_maps_empty",
+      "pass": true
+    },
+    {
+      "check": "invariance/row_join",
+      "pass": true
+    },
+    {
+      "check": "invariance/charge_ids",
+      "pass": true
+    },
+    {
+      "check": "invariance/row_custody",
+      "pass": true
+    },
+    {
+      "check": "invariance/native_ok",
+      "pass": true
+    },
+    {
+      "check": "invariance/native_errors",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/decision_list/categories",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/decision_list/reasons",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/rule/categories",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/rule/reasons",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/list/categories",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/list/reasons",
+      "pass": true
+    },
+    {
+      "actual": 241,
+      "check": "invariance/all_charges/all_literal_maps_empty",
+      "expected": 313,
+      "pass": false
+    },
+    {
+      "check": "invariance/all_charges/denominator",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/recorded_event_positions",
+      "pass": true
+    },
+    {
+      "actual": 241,
+      "check": "invariance/all_charges/without_literal_positions",
+      "expected": 313,
+      "pass": false
+    },
+    {
+      "check": "invariance/all_charges/visibility",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/primitive",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/effect",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/representation",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/object_correspondence/sum",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/object_correspondence/counts",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/object_correspondence/denominator",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/endpoint_reference/sum",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/endpoint_reference/counts",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/endpoint_reference/denominator",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/denominator",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_charges/target_premise",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_prediction_copy/all_charges",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_diagnostic_copy/all_charges",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_clicks/decision_list/categories",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_clicks/decision_list/reasons",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_clicks/rule/categories",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_clicks/rule/reasons",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_clicks/list/categories",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_clicks/list/reasons",
+      "pass": true
+    },
+    {
+      "actual": 24,
+      "check": "invariance/all_clicks/all_literal_maps_empty",
+      "expected": 96,
+      "pass": false
+    },
+    {
+      "check": "invariance/all_clicks/denominator",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_clicks/recorded_event_positions",
+      "pass": true
+    },
+    {
+      "actual": 24,
+      "check": "invariance/all_clicks/without_literal_positions",
+      "expected": 96,
+      "pass": false
+    },
+    {
+      "check": "invariance/all_clicks/object_correspondence/sum",
+      "pass": true
+    },
+    {
+      "check": "invariance/all_clicks/endpoint_reference/sum",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_prediction_copy/all_clicks",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/decision_list/categories",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/decision_list/reasons",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/rule/categories",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/rule/reasons",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/list/categories",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/list/reasons",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/all_literal_maps_empty",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/denominator",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/recorded_event_positions",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/without_literal_positions",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/visibility",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/primitive",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/effect",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/representation",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/object_correspondence/sum",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/object_correspondence/counts",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/object_correspondence/denominator",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/endpoint_reference/sum",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/endpoint_reference/counts",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/endpoint_reference/denominator",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/denominator",
+      "pass": true
+    },
+    {
+      "check": "invariance/designated_targets/target_premise",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_prediction_copy/designated_targets",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_diagnostic_copy/designated_targets",
+      "pass": true
+    },
+    {
+      "check": "invariance/target_count",
+      "pass": true
+    },
+    {
+      "check": "invariance/distinct_target_cases",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_accounting",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_roles",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_object_by_kind",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_components",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_query_literals",
+      "pass": true
+    },
+    {
+      "check": "invariance/root_endpoint_references",
+      "pass": true
+    },
+    {
+      "check": "invariance/witness_subset/all_literal_maps_empty",
+      "pass": true
+    },
+    {
+      "check": "invariance/witness_subset/all_literal_maps_empty",
+      "pass": true
+    },
+    {
+      "check": "invariance/witness_subset/all_literal_maps_empty",
+      "pass": true
+    },
+    {
+      "check": "replay/full_projection_equality",
+      "pass": true
+    },
+    {
+      "check": "replay/status",
+      "pass": true
+    },
+    {
+      "check": "replay/error",
+      "pass": true
+    },
+    {
+      "check": "replay/postflight_error",
+      "pass": true
+    },
+    {
+      "check": "root_training/status",
+      "pass": true
+    },
+    {
+      "check": "root_training/initial",
+      "pass": true
+    },
+    {
+      "check": "root_training/final",
+      "pass": true
+    },
+    {
+      "check": "root_training/identity_demotions",
+      "pass": true
+    },
+    {
+      "check": "root_training/reload_pairs",
+      "pass": true
+    },
+    {
+      "check": "root_training/persistent_widgets",
+      "pass": true
+    },
+    {
+      "check": "root_training/fit_calls",
+      "pass": true
+    },
+    {
+      "check": "root_training/compile_calls",
+      "pass": true
+    },
+    {
+      "check": "root_training/projection",
+      "pass": true
+    }
+  ],
+  "diagnostic_status": "DIAGNOSTIC_ONLY",
+  "exposure_at_go": {
+    "invariance": "Unexecuted reserved presentation at authorization.",
+    "primary": "Disclosed development replay following preserved invalid V1.",
+    "root_actual_forecast_outcome_or_oracle_payloads_opened": false
+  },
+  "inputs": {
+    "docs/data/v4/transport/development/j1/analysis/final_review_v2/authentication_v3.json": "78353d967bafb62d70ec220a0ca62a6af3fecb82c310219f7184dc52f9855beb",
+    "docs/data/v4/transport/development/j1/analysis/final_review_v2/replay_authentication_v1.json": "3a5cbddc5b6eb4edb3dece0a16a2ea43b11349dda420e83c83154a77d01904d4",
+    "docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/diagnosis_v1.json": "67694dc901390b23736875281a911b4cb34cf7db8b7739cf54c598e2d4b7415f",
+    "docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/projection_v1.json": "5dfdb72fc7a49feae6b0b49f39e35999abda85056848abecf5878e92dd6da28a",
+    "docs/data/v4/transport/development/j1/analysis/measurement_summary_v2/summary_v1.json": "1022c7c5d944563bf18aa0fec165ef10ec08498813e9e864dc9a5e8bd7bf7e9a",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/go_v2.json": "7ab18e015c05307b35cb56553f359a162df69c79b76e8b475bac4ca1796819b9",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/fit_trace.json": "610d0d21a6ecd1d101a000003f9f7a0d96bc82fb3bc6d655503a0c62c360a2f3",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/diagnostics_sidecar_v1.json": "836ff781c0076412b3d43af7a713ca582a2f36a80d57a152f386b2f23b19f109",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/attempt_v1/evaluation.json": "9f0e22321d1b1fc5c2c0d114f77cceeb509c67884457fa861a55acc8384231c9"
+  },
+  "ledger_records": 629,
+  "limitations": [
+    "Saved-output aggregation and byte authentication only; no experimental or native execution.",
+    "No extra raw held-out application or oracle source was opened for this review.",
+    "Page-level object correspondence does not establish persistent identity or normal JOIN induction.",
+    "Recorded naming-query literals and comparable emitted-event positions are separate denominators.",
+    "The historical controls-preparation member inventory was completed after initial phase-semantic reads; v1-v3 authentication attempts preserve this review-order limitation."
+  ],
+  "measurement_status": "VALID_SAVED_FORECAST_MEASUREMENT",
+  "phases": [
+    {
+      "accounting": {
+        "bootstrap_goto": 0,
+        "case_count": 24,
+        "charged_attempts": 313,
+        "complete": true,
+        "designated_targets": 24,
+        "failed_attempts": 0,
+        "paired_steps_recorded": 312,
+        "primitive_counts": {
+          "click": 96,
+          "reload": 1,
+          "reset": 24,
+          "select": 192
+        },
+        "snapshot_calls": 625,
+        "unpaired_attempts": 1,
+        "unresolved_attempts": 0
+      },
+      "component_reasons": {
+        "learned_state_consequence": {
+          "PRESTATE_FORECAST_RECORD_CONTAINS_NO_PREDICTED_POSTSTATE": 24
+        },
+        "owner": {
+          "RECORDED_OWNER_VS_ACTUAL_SOURCE": 24
+        },
+        "persistent_flag_attributes": {
+          "NO_UNIQUE_SAVED_ATTRIBUTE_TO_RAW_NODE_PROVENANCE": 24
+        },
+        "query_literal_correctness": {
+          "NO_INDEPENDENT_GROUNDED_QUERY_LITERAL_SEMANTICS": 24
+        }
+      },
+      "diagnostic_from_rows": {
+        "all_charges": {
+          "denominator_opportunities": 313,
+          "effect": {
+            "counts": {
+              "PASS": 313
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 313
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 5008
+            },
+            "denominator": 5008
+          },
+          "object_correspondence": {
+            "counts": {
+              "PASS": 768,
+              "UNAVAILABLE": 4240
+            },
+            "denominator": 5008
+          },
+          "primitive": {
+            "counts": {
+              "PASS": 313
+            },
+            "reasons": {
+              "GLOBAL_NATIVE_PRIMITIVE": 25,
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 288
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 241,
+              "UNOBSERVED": 72
+            },
+            "reasons": {
+              "NO_COMPLETE_TYPED_FORECAST": 217,
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 96
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 312,
+              "UNOBSERVED": 1
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 313
+            }
+          }
+        },
+        "all_clicks": {
+          "denominator_opportunities": 96,
+          "effect": {
+            "counts": {
+              "PASS": 96
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 96
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 1536
+            },
+            "denominator": 1536
+          },
+          "object_correspondence": {
+            "counts": {
+              "PASS": 768,
+              "UNAVAILABLE": 768
+            },
+            "denominator": 1536
+          },
+          "primitive": {
+            "counts": {
+              "PASS": 96
+            },
+            "reasons": {
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 96
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 24,
+              "UNOBSERVED": 72
+            },
+            "reasons": {
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 96
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 96
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 96
+            }
+          }
+        },
+        "designated_targets": {
+          "denominator_opportunities": 24,
+          "effect": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 24
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 384
+            },
+            "denominator": 384
+          },
+          "object_correspondence": {
+            "counts": {
+              "PASS": 192,
+              "UNAVAILABLE": 192
+            },
+            "denominator": 384
+          },
+          "primitive": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 24
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 24
+            },
+            "reasons": {
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 24
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 24
+            }
+          }
+        }
+      },
+      "name": "primary",
+      "per_target_object_patterns": [
+        {
+          "counts": {
+            "patches": {
+              "UNAVAILABLE": 8
+            },
+            "receivers": {
+              "PASS": 4
+            },
+            "transmitters": {
+              "PASS": 4
+            }
+          },
+          "targets": 24
+        }
+      ],
+      "prediction_from_rows": {
+        "all_charges": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 313
+              },
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1,
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 313
+              },
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 313
+              },
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1
+              }
+            }
+          },
+          "denominator_opportunities": 313,
+          "empty_saved_literal_argument_maps": 241,
+          "nonempty_saved_literal_argument_maps": 72
+        },
+        "all_clicks": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 96
+              },
+              "unestablished_reasons": {
+                "NO_CHANNEL": 72,
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 96
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 96
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72
+              }
+            }
+          },
+          "denominator_opportunities": 96,
+          "empty_saved_literal_argument_maps": 24,
+          "nonempty_saved_literal_argument_maps": 72
+        },
+        "designated_targets": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 24
+              },
+              "unestablished_reasons": {
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 24
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 24
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24
+              }
+            }
+          },
+          "denominator_opportunities": 24,
+          "empty_saved_literal_argument_maps": 24,
+          "nonempty_saved_literal_argument_maps": 0
+        }
+      },
+      "recorded_query_literal_count_distribution": {
+        "28": 24
+      },
+      "recorded_query_literal_total": 672,
+      "target_components": {
+        "learned_state_consequence": {
+          "UNAVAILABLE": 24
+        },
+        "owner": {
+          "PASS": 24
+        },
+        "persistent_flag_attributes": {
+          "UNAVAILABLE": 24
+        },
+        "query_literal_correctness": {
+          "UNAVAILABLE": 24
+        }
+      },
+      "target_event_positions": [
+        {
+          "binding_status": {
+            "ABSENT": 24
+          },
+          "components": {
+            "binding": {
+              "UNAVAILABLE": 24
+            },
+            "declaration": {
+              "UNAVAILABLE": 24
+            },
+            "identity": {
+              "UNAVAILABLE": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0,
+          "role": {
+            "ABSENT": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": true
+        },
+        {
+          "binding_status": {
+            "ABSENT": 24
+          },
+          "components": {
+            "binding": {
+              "UNAVAILABLE": 24
+            },
+            "declaration": {
+              "UNAVAILABLE": 24
+            },
+            "identity": {
+              "UNAVAILABLE": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1,
+          "role": {
+            "ABSENT": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": true
+        },
+        {
+          "binding_status": {
+            "named": 24
+          },
+          "components": {
+            "binding": {
+              "PASS": 24
+            },
+            "declaration": {
+              "PASS": 24
+            },
+            "identity": {
+              "PASS": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0,
+          "role": {
+            "owner": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": false
+        },
+        {
+          "binding_status": {
+            "ABSENT": 24
+          },
+          "components": {
+            "binding": {
+              "UNAVAILABLE": 24
+            },
+            "declaration": {
+              "UNAVAILABLE": 24
+            },
+            "identity": {
+              "UNAVAILABLE": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1,
+          "role": {
+            "ABSENT": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": false
+        },
+        {
+          "binding_status": {
+            "named": 24
+          },
+          "components": {
+            "binding": {
+              "PASS": 24
+            },
+            "declaration": {
+              "PASS": 24
+            },
+            "identity": {
+              "PASS": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0,
+          "role": {
+            "owner": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": false
+        },
+        {
+          "binding_status": {
+            "ABSENT": 24
+          },
+          "components": {
+            "binding": {
+              "UNAVAILABLE": 24
+            },
+            "declaration": {
+              "UNAVAILABLE": 24
+            },
+            "identity": {
+              "UNAVAILABLE": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1,
+          "role": {
+            "ABSENT": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": false
+        }
+      ],
+      "target_object_by_kind": {
+        "patches": {
+          "UNAVAILABLE": 192
+        },
+        "receivers": {
+          "PASS": 96
+        },
+        "transmitters": {
+          "PASS": 96
+        }
+      },
+      "target_reference_reasons": {
+        "NO_UNIQUE_BRIDGE_OBJECT": 384
+      },
+      "witness_subsets": {
+        "0": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "UNDETERMINED": 8
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            }
+          },
+          "denominator_opportunities": 8,
+          "empty_saved_literal_argument_maps": 8,
+          "nonempty_saved_literal_argument_maps": 0
+        },
+        "1": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "UNDETERMINED": 8
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            }
+          },
+          "denominator_opportunities": 8,
+          "empty_saved_literal_argument_maps": 8,
+          "nonempty_saved_literal_argument_maps": 0
+        },
+        "2": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "UNDETERMINED": 8
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            }
+          },
+          "denominator_opportunities": 8,
+          "empty_saved_literal_argument_maps": 8,
+          "nonempty_saved_literal_argument_maps": 0
+        }
+      }
+    },
+    {
+      "accounting": {
+        "bootstrap_goto": 0,
+        "case_count": 24,
+        "charged_attempts": 313,
+        "complete": true,
+        "designated_targets": 24,
+        "failed_attempts": 0,
+        "paired_steps_recorded": 312,
+        "primitive_counts": {
+          "click": 96,
+          "reload": 1,
+          "reset": 24,
+          "select": 192
+        },
+        "snapshot_calls": 625,
+        "unpaired_attempts": 1,
+        "unresolved_attempts": 0
+      },
+      "component_reasons": {
+        "learned_state_consequence": {
+          "PRESTATE_FORECAST_RECORD_CONTAINS_NO_PREDICTED_POSTSTATE": 24
+        },
+        "owner": {
+          "RECORDED_OWNER_VS_ACTUAL_SOURCE": 24
+        },
+        "persistent_flag_attributes": {
+          "NO_UNIQUE_SAVED_ATTRIBUTE_TO_RAW_NODE_PROVENANCE": 24
+        },
+        "query_literal_correctness": {
+          "NO_INDEPENDENT_GROUNDED_QUERY_LITERAL_SEMANTICS": 24
+        }
+      },
+      "diagnostic_from_rows": {
+        "all_charges": {
+          "denominator_opportunities": 313,
+          "effect": {
+            "counts": {
+              "PASS": 313
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 313
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 5008
+            },
+            "denominator": 5008
+          },
+          "object_correspondence": {
+            "counts": {
+              "PASS": 768,
+              "UNAVAILABLE": 4240
+            },
+            "denominator": 5008
+          },
+          "primitive": {
+            "counts": {
+              "PASS": 313
+            },
+            "reasons": {
+              "GLOBAL_NATIVE_PRIMITIVE": 25,
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 288
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 241,
+              "UNOBSERVED": 72
+            },
+            "reasons": {
+              "NO_COMPLETE_TYPED_FORECAST": 217,
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 96
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 312,
+              "UNOBSERVED": 1
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 313
+            }
+          }
+        },
+        "all_clicks": {
+          "denominator_opportunities": 96,
+          "effect": {
+            "counts": {
+              "PASS": 96
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 96
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 1536
+            },
+            "denominator": 1536
+          },
+          "object_correspondence": {
+            "counts": {
+              "PASS": 768,
+              "UNAVAILABLE": 768
+            },
+            "denominator": 1536
+          },
+          "primitive": {
+            "counts": {
+              "PASS": 96
+            },
+            "reasons": {
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 96
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 24,
+              "UNOBSERVED": 72
+            },
+            "reasons": {
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 96
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 96
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 96
+            }
+          }
+        },
+        "designated_targets": {
+          "denominator_opportunities": 24,
+          "effect": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 24
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 384
+            },
+            "denominator": 384
+          },
+          "object_correspondence": {
+            "counts": {
+              "PASS": 192,
+              "UNAVAILABLE": 192
+            },
+            "denominator": 384
+          },
+          "primitive": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 24
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 24
+            },
+            "reasons": {
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 24
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 24
+            }
+          }
+        }
+      },
+      "name": "invariance",
+      "per_target_object_patterns": [
+        {
+          "counts": {
+            "patches": {
+              "UNAVAILABLE": 8
+            },
+            "receivers": {
+              "PASS": 4
+            },
+            "transmitters": {
+              "PASS": 4
+            }
+          },
+          "targets": 24
+        }
+      ],
+      "prediction_from_rows": {
+        "all_charges": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 313
+              },
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1,
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 313
+              },
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 313
+              },
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1
+              }
+            }
+          },
+          "denominator_opportunities": 313,
+          "empty_saved_literal_argument_maps": 241,
+          "nonempty_saved_literal_argument_maps": 72
+        },
+        "all_clicks": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 96
+              },
+              "unestablished_reasons": {
+                "NO_CHANNEL": 72,
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 96
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 96
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72
+              }
+            }
+          },
+          "denominator_opportunities": 96,
+          "empty_saved_literal_argument_maps": 24,
+          "nonempty_saved_literal_argument_maps": 72
+        },
+        "designated_targets": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 24
+              },
+              "unestablished_reasons": {
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 24
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 24
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24
+              }
+            }
+          },
+          "denominator_opportunities": 24,
+          "empty_saved_literal_argument_maps": 24,
+          "nonempty_saved_literal_argument_maps": 0
+        }
+      },
+      "recorded_query_literal_count_distribution": {
+        "28": 24
+      },
+      "recorded_query_literal_total": 672,
+      "target_components": {
+        "learned_state_consequence": {
+          "UNAVAILABLE": 24
+        },
+        "owner": {
+          "PASS": 24
+        },
+        "persistent_flag_attributes": {
+          "UNAVAILABLE": 24
+        },
+        "query_literal_correctness": {
+          "UNAVAILABLE": 24
+        }
+      },
+      "target_event_positions": [
+        {
+          "binding_status": {
+            "ABSENT": 24
+          },
+          "components": {
+            "binding": {
+              "UNAVAILABLE": 24
+            },
+            "declaration": {
+              "UNAVAILABLE": 24
+            },
+            "identity": {
+              "UNAVAILABLE": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0,
+          "role": {
+            "ABSENT": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": true
+        },
+        {
+          "binding_status": {
+            "ABSENT": 24
+          },
+          "components": {
+            "binding": {
+              "UNAVAILABLE": 24
+            },
+            "declaration": {
+              "UNAVAILABLE": 24
+            },
+            "identity": {
+              "UNAVAILABLE": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1,
+          "role": {
+            "ABSENT": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": true
+        },
+        {
+          "binding_status": {
+            "named": 24
+          },
+          "components": {
+            "binding": {
+              "PASS": 24
+            },
+            "declaration": {
+              "PASS": 24
+            },
+            "identity": {
+              "PASS": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0,
+          "role": {
+            "owner": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": false
+        },
+        {
+          "binding_status": {
+            "ABSENT": 24
+          },
+          "components": {
+            "binding": {
+              "UNAVAILABLE": 24
+            },
+            "declaration": {
+              "UNAVAILABLE": 24
+            },
+            "identity": {
+              "UNAVAILABLE": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1,
+          "role": {
+            "ABSENT": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": false
+        },
+        {
+          "binding_status": {
+            "named": 24
+          },
+          "components": {
+            "binding": {
+              "PASS": 24
+            },
+            "declaration": {
+              "PASS": 24
+            },
+            "identity": {
+              "PASS": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0,
+          "role": {
+            "owner": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": false
+        },
+        {
+          "binding_status": {
+            "ABSENT": 24
+          },
+          "components": {
+            "binding": {
+              "UNAVAILABLE": 24
+            },
+            "declaration": {
+              "UNAVAILABLE": 24
+            },
+            "identity": {
+              "UNAVAILABLE": 24
+            },
+            "literal": {
+              "UNAVAILABLE": 24
+            }
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1,
+          "role": {
+            "ABSENT": 24
+          },
+          "status": {
+            "UNAVAILABLE": 24
+          },
+          "synthetic_undetermined": false
+        }
+      ],
+      "target_object_by_kind": {
+        "patches": {
+          "UNAVAILABLE": 192
+        },
+        "receivers": {
+          "PASS": 96
+        },
+        "transmitters": {
+          "PASS": 96
+        }
+      },
+      "target_reference_reasons": {
+        "NO_UNIQUE_BRIDGE_OBJECT": 384
+      },
+      "witness_subsets": {
+        "0": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "UNDETERMINED": 8
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            }
+          },
+          "denominator_opportunities": 8,
+          "empty_saved_literal_argument_maps": 8,
+          "nonempty_saved_literal_argument_maps": 0
+        },
+        "1": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "UNDETERMINED": 8
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            }
+          },
+          "denominator_opportunities": 8,
+          "empty_saved_literal_argument_maps": 8,
+          "nonempty_saved_literal_argument_maps": 0
+        },
+        "2": {
+          "channels": {
+            "decision_list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "UNDETERMINED": 8
+              }
+            },
+            "list": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            },
+            "rule": {
+              "categories": {
+                "unestablished": 8
+              },
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 8
+              }
+            }
+          },
+          "denominator_opportunities": 8,
+          "empty_saved_literal_argument_maps": 8,
+          "nonempty_saved_literal_argument_maps": 0
+        }
+      }
+    }
+  ],
+  "pre_extraction_unique_bindings_rehashed": 893,
+  "recorded_utc": "2026-09-08T05:03:21.018834+00:00",
+  "schema": "semabi.j1.independent_final_extraction.v1",
+  "source_sha256": "fde072920130263bb4006730c3259ef0c4f6c2a84595991fe72f72609ebf9b2d",
+  "status": "FAIL",
+  "training_replay": {
+    "final": {
+      "churn": 0,
+      "churn_steps": [],
+      "complexity": 12,
+      "conflicts": 0,
+      "contradiction_steps": [],
+      "contradictions": 0,
+      "delta_atoms": 0,
+      "explained": 0,
+      "named": 48,
+      "positional": 0,
+      "spurious": 0,
+      "steps": 312,
+      "unexplained": 16,
+      "visibility": 0,
+      "visibility_steps": []
+    },
+    "full_projection_equality": true,
+    "identity_demotions": [
+      {
+        "decided_by": {
+          "unearned": "group#0"
+        },
+        "family": "group[_](heading[_],group[_](text[_](combobox[_])))",
+        "key_slot": null,
+        "move": "identity",
+        "round": 0,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 17,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 48,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 16,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY",
+        "templates": 1
+      },
+      {
+        "decided_by": {
+          "unearned": "text#0"
+        },
+        "family": "text[_](combobox[_])",
+        "key_slot": null,
+        "move": "identity",
+        "round": 0,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 12,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 48,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 16,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY",
+        "templates": 1
+      }
+    ],
+    "initial": {
+      "churn": 0,
+      "churn_steps": [],
+      "complexity": 24,
+      "conflicts": 0,
+      "contradiction_steps": [],
+      "contradictions": 0,
+      "delta_atoms": 0,
+      "explained": 0,
+      "named": 48,
+      "positional": 0,
+      "spurious": 0,
+      "steps": 312,
+      "unexplained": 16,
+      "visibility": 0,
+      "visibility_steps": []
+    },
+    "persistent_widgets": [],
+    "recorded_compile_calls": 1,
+    "recorded_fit_invocations": 1,
+    "reload_pairs": [],
+    "scope": "Inspection of the already sealed training replay, not a new Fit or proof of an ontology.",
+    "status": "MATCHED_TRAINING_REPLAY"
+  }
+}

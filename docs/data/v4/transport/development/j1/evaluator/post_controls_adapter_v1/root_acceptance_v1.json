@@ -1,0 +1,35 @@
+{
+  "schema": "semabi.j1.root_post_controls_adapter_acceptance.v1",
+  "status": "ACCEPTED_FOR_ONE_OFFLINE_DIAGNOSTIC",
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "owner": "/root",
+  "references": {
+    "source_manifest": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/source_manifest_v1.json",
+      "sha256": "4167af43a763f6d3ee38bded0ae78a02e10fb497c57fc285a94cf304518ed920"
+    },
+    "preparation_manifest": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/artifact_manifest_v1.json",
+      "sha256": "607f28e74c94fabfd04b5d0ecb97f894dc080801226eff84cf642dc2c514a5ff"
+    },
+    "independent_review_manifest": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/independent_review/artifact_manifest_v1.json",
+      "sha256": "3555d4590444ffc76a888b81b9e52c663aadf3ad315a1ec936592f07f8d66fe3"
+    }
+  },
+  "evidence": {
+    "root_full_runtime_and_protocol_read": true,
+    "root_focused_result_read": true,
+    "independent_full_source_review": "No blocking findings; review_v1.md 8bc758ece7887c2fd656b4a4f236cbf4fd49d26d593d81cc49a33b5c333f0ca9",
+    "focused_checks": 18,
+    "focused_failures": 0,
+    "root_unique_source_and_metadata_bindings_rehashed": 19,
+    "original_113_check_package": "Previously reviewed and unchanged; no repeat preparation suite.",
+    "production_output_paths_absent": true,
+    "bytecode_lookup_prefix_absent": true
+  },
+  "command": "taskset -c 20 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPYCACHEPREFIX=/tmp/semabi_j1_post_controls_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/jobs/controls_v1 -- .venv/bin/python -B docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/run.py --manifest /home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/source_manifest_v1.json --manifest-sha256 4167af43a763f6d3ee38bded0ae78a02e10fb497c57fc285a94cf304518ed920",
+  "cwd": "/home/moloch/semabi",
+  "scope": "One unchanged post-controls main invocation over preserved saved evidence, through the exact loader seam and accepted path-only reader. This is execution admission, not a semantic or JOIN result.",
+  "separate_development": "W1 native/test changes exist only in runs/.w1_worktree; main source and HEAD remain frozen."
+}

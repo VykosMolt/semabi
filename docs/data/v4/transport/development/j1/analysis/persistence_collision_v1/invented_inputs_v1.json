@@ -1,0 +1,141 @@
+{
+  "after_sig": "invented-after",
+  "before_sig": "invented-before",
+  "child_key_slot": "label#0",
+  "child_template": "invented-widget-field",
+  "construction": "Direct real UnitInstance/UnitHyp state with declared key slots and one claimed reload pair; no upstream template discovery, fit, compiler pipeline or prediction. Parent keys define the invented contextual witness.",
+  "native_source_files": {
+    "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+    "semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "semabi/compiler/v2/graph.py": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+    "semabi/compiler/v2/hypotheses.py": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03",
+    "semabi/compiler/v2/units.py": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f"
+  },
+  "original_metadata": {
+    "failed_score_seal": {
+      "path": "docs/data/v4/transport/development/j1/scoring_v2/artifact_manifest_v2.json",
+      "sha256": "cf4e345fd36fb9f664872a21f860a37cd5c831fdb99a43271a7ba8e53be54f17"
+    },
+    "freeze": {
+      "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json",
+      "sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+    },
+    "preservation": {
+      "path": "docs/data/v4/transport/development/j1/first_pass_manifest_v2.json",
+      "sha256": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256"
+    }
+  },
+  "parent_key_slot": "record#0",
+  "parent_template": "invented-record",
+  "records": [
+    {
+      "children": [
+        {
+          "after": "Default",
+          "before": "Edited",
+          "label": "Source",
+          "label_node": 13,
+          "root": 12,
+          "value_node": 14
+        },
+        {
+          "after": "Harbor",
+          "before": "Harbor",
+          "label": "Destination",
+          "label_node": 16,
+          "root": 15,
+          "value_node": 17
+        }
+      ],
+      "key": "Record Alpha",
+      "key_node": 11,
+      "root": 10
+    },
+    {
+      "children": [
+        {
+          "after": "Forest",
+          "before": "Forest",
+          "label": "Source",
+          "label_node": 33,
+          "root": 32,
+          "value_node": 34
+        },
+        {
+          "after": "Mountain",
+          "before": "Mountain",
+          "label": "Destination",
+          "label_node": 36,
+          "root": 35,
+          "value_node": 37
+        }
+      ],
+      "key": "Record Beta",
+      "key_node": 31,
+      "root": 30
+    }
+  ],
+  "scenarios": [
+    {
+      "all_values_persist": false,
+      "expected_contextual_kept": 3,
+      "expected_contextual_lost": 1,
+      "expected_native_kept": 2,
+      "expected_native_lost": 0,
+      "expected_native_promotion": true,
+      "id": "duplicate_keys_changed_parent_first",
+      "record_order": [
+        "Record Alpha",
+        "Record Beta"
+      ],
+      "unique_child_keys": false
+    },
+    {
+      "all_values_persist": false,
+      "expected_contextual_kept": 3,
+      "expected_contextual_lost": 1,
+      "expected_native_kept": 1,
+      "expected_native_lost": 1,
+      "expected_native_promotion": false,
+      "id": "duplicate_keys_changed_parent_last",
+      "record_order": [
+        "Record Beta",
+        "Record Alpha"
+      ],
+      "unique_child_keys": false
+    },
+    {
+      "all_values_persist": true,
+      "expected_contextual_kept": 4,
+      "expected_contextual_lost": 0,
+      "expected_native_kept": 2,
+      "expected_native_lost": 0,
+      "expected_native_promotion": true,
+      "id": "duplicate_keys_all_values_persist",
+      "record_order": [
+        "Record Alpha",
+        "Record Beta"
+      ],
+      "unique_child_keys": false
+    },
+    {
+      "all_values_persist": false,
+      "expected_contextual_kept": 3,
+      "expected_contextual_lost": 1,
+      "expected_native_kept": 3,
+      "expected_native_lost": 1,
+      "expected_native_promotion": false,
+      "id": "unique_keys_mixed_retention",
+      "record_order": [
+        "Record Alpha",
+        "Record Beta"
+      ],
+      "unique_child_keys": true
+    }
+  ],
+  "schema": "semabi.j1.invented_persistence_collision_inputs.v1",
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "widget_slot": "combobox#0~"
+}

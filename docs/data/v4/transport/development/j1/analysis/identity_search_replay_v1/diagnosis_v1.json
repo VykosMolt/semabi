@@ -1,0 +1,1157 @@
+{
+  "bytecode_prefix": "/home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/unused_bytecode_prefix_v2",
+  "bytecode_prefix_absent_after_fit": true,
+  "compile_calls": [
+    {
+      "directory": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_training_v1",
+      "evidence_observations": 45,
+      "evidence_steps": 312,
+      "min_support": 2,
+      "pinned_is_none": true,
+      "read_outputs": true,
+      "write_diagnostics": false
+    }
+  ],
+  "cpu_affinity": [
+    19
+  ],
+  "different_projection_fields": [],
+  "entry_point_restored": true,
+  "error": null,
+  "finished_utc": "2026-09-08T04:10:58.601224+00:00",
+  "first_pass_manifest_sha256": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256",
+  "fit_invocations_in_this_script": 1,
+  "freeze_sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b",
+  "native_module_origins_after_fit": {
+    "semabi": {
+      "path": "semabi/__init__.py",
+      "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8"
+    },
+    "semabi.compiler": {
+      "path": "semabi/compiler/__init__.py",
+      "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893"
+    },
+    "semabi.compiler.abstract": {
+      "path": "semabi/compiler/abstract.py",
+      "sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056"
+    },
+    "semabi.compiler.belief": {
+      "path": "semabi/compiler/belief.py",
+      "sha256": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c"
+    },
+    "semabi.compiler.browser": {
+      "path": "semabi/compiler/browser.py",
+      "sha256": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792"
+    },
+    "semabi.compiler.compile": {
+      "path": "semabi/compiler/compile.py",
+      "sha256": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f"
+    },
+    "semabi.compiler.compile_v4": {
+      "path": "semabi/compiler/compile_v4.py",
+      "sha256": "8ac23e907a19b790e78fadf6d7d0c22f8176620dd93844b7f21f32551e5193ad"
+    },
+    "semabi.compiler.evidence": {
+      "path": "semabi/compiler/evidence.py",
+      "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+    },
+    "semabi.compiler.explorer": {
+      "path": "semabi/compiler/explorer.py",
+      "sha256": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807"
+    },
+    "semabi.compiler.grounder": {
+      "path": "semabi/compiler/grounder.py",
+      "sha256": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06"
+    },
+    "semabi.compiler.induce": {
+      "path": "semabi/compiler/induce.py",
+      "sha256": "c726cb2f40c78cc946d8a998e94e056f300e0591fc4d74f73cd8504222954fb8"
+    },
+    "semabi.compiler.mentions": {
+      "path": "semabi/compiler/mentions.py",
+      "sha256": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c"
+    },
+    "semabi.compiler.model": {
+      "path": "semabi/compiler/model.py",
+      "sha256": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31"
+    },
+    "semabi.compiler.observation": {
+      "path": "semabi/compiler/observation.py",
+      "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+    },
+    "semabi.compiler.parse": {
+      "path": "semabi/compiler/parse.py",
+      "sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9"
+    },
+    "semabi.compiler.v2": {
+      "path": "semabi/compiler/v2/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "semabi.compiler.v2.abstractor": {
+      "path": "semabi/compiler/v2/abstractor.py",
+      "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5"
+    },
+    "semabi.compiler.v2.controls": {
+      "path": "semabi/compiler/v2/controls.py",
+      "sha256": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c"
+    },
+    "semabi.compiler.v2.graph": {
+      "path": "semabi/compiler/v2/graph.py",
+      "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a"
+    },
+    "semabi.compiler.v2.hypotheses": {
+      "path": "semabi/compiler/v2/hypotheses.py",
+      "sha256": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03"
+    },
+    "semabi.compiler.v2.score": {
+      "path": "semabi/compiler/v2/score.py",
+      "sha256": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b"
+    },
+    "semabi.compiler.v2.sections": {
+      "path": "semabi/compiler/v2/sections.py",
+      "sha256": "4bd39bf7e067a94ec19f6ad6c23c098d13ac01efdabafe2f6e15eb213003ba02"
+    },
+    "semabi.compiler.v2.units": {
+      "path": "semabi/compiler/v2/units.py",
+      "sha256": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f"
+    },
+    "semabi.compiler.v4": {
+      "path": "semabi/compiler/v4/__init__.py",
+      "sha256": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c"
+    },
+    "semabi.compiler.v4.abstractor": {
+      "path": "semabi/compiler/v4/abstractor.py",
+      "sha256": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1"
+    },
+    "semabi.compiler.v4.binding": {
+      "path": "semabi/compiler/v4/binding.py",
+      "sha256": "0f905cae535aa975dffe517f1107884f37524fdc3cbcc781ec7f645cd0f9b0dc"
+    },
+    "semabi.compiler.v4.consequence": {
+      "path": "semabi/compiler/v4/consequence.py",
+      "sha256": "c95bd040c8b066aaaac5bb5653b2ff20824ed3f2b59aba81c42b8a579ca8445e"
+    },
+    "semabi.compiler.v4.correspondence": {
+      "path": "semabi/compiler/v4/correspondence.py",
+      "sha256": "dd4659f74a4eb1ca8d3656ad278cd15290de2c08318b964e1a85c127fdd1be8c"
+    },
+    "semabi.compiler.v4.emission": {
+      "path": "semabi/compiler/v4/emission.py",
+      "sha256": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe"
+    },
+    "semabi.compiler.v4.fields": {
+      "path": "semabi/compiler/v4/fields.py",
+      "sha256": "b5b794432a504b7d30f6574dc1e0d3ff34b44536967ab50ae9a5a0c04ffc9967"
+    },
+    "semabi.compiler.v4.identity": {
+      "path": "semabi/compiler/v4/identity.py",
+      "sha256": "06792b4a7ebd478fb46edeb7a37c5dce3b7eec02d561994f3560fad2ef01d6a7"
+    },
+    "semabi.compiler.v4.objective": {
+      "path": "semabi/compiler/v4/objective.py",
+      "sha256": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef"
+    },
+    "semabi.compiler.v4.outcome": {
+      "path": "semabi/compiler/v4/outcome.py",
+      "sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736"
+    },
+    "semabi.compiler.v4.pinned": {
+      "path": "semabi/compiler/v4/pinned.py",
+      "sha256": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b"
+    },
+    "semabi.compiler.v4.promote": {
+      "path": "semabi/compiler/v4/promote.py",
+      "sha256": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65"
+    },
+    "semabi.compiler.v4.prospective": {
+      "path": "semabi/compiler/v4/prospective.py",
+      "sha256": "591deb563820612e1f138660b2b2d83f9da51fcdb386b12c88ce19d0e074511b"
+    },
+    "semabi.compiler.v4.referring": {
+      "path": "semabi/compiler/v4/referring.py",
+      "sha256": "c0e2abbee5dd724f193bc61a5264268e853837c4282cbe2d372b2ec2489e5b1f"
+    },
+    "semabi.compiler.v4.search": {
+      "path": "semabi/compiler/v4/search.py",
+      "sha256": "c87e3633207dfaa1483574cad2335b23222bec6fa51fe35526adf8dd9576f72c"
+    },
+    "semabi.relmodel": {
+      "path": "semabi/relmodel.py",
+      "sha256": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
+    }
+  },
+  "native_module_origins_before_fit": {
+    "semabi": {
+      "path": "semabi/__init__.py",
+      "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8"
+    },
+    "semabi.compiler": {
+      "path": "semabi/compiler/__init__.py",
+      "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893"
+    },
+    "semabi.compiler.abstract": {
+      "path": "semabi/compiler/abstract.py",
+      "sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056"
+    },
+    "semabi.compiler.belief": {
+      "path": "semabi/compiler/belief.py",
+      "sha256": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c"
+    },
+    "semabi.compiler.browser": {
+      "path": "semabi/compiler/browser.py",
+      "sha256": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792"
+    },
+    "semabi.compiler.compile": {
+      "path": "semabi/compiler/compile.py",
+      "sha256": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f"
+    },
+    "semabi.compiler.compile_v4": {
+      "path": "semabi/compiler/compile_v4.py",
+      "sha256": "8ac23e907a19b790e78fadf6d7d0c22f8176620dd93844b7f21f32551e5193ad"
+    },
+    "semabi.compiler.evidence": {
+      "path": "semabi/compiler/evidence.py",
+      "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+    },
+    "semabi.compiler.explorer": {
+      "path": "semabi/compiler/explorer.py",
+      "sha256": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807"
+    },
+    "semabi.compiler.induce": {
+      "path": "semabi/compiler/induce.py",
+      "sha256": "c726cb2f40c78cc946d8a998e94e056f300e0591fc4d74f73cd8504222954fb8"
+    },
+    "semabi.compiler.model": {
+      "path": "semabi/compiler/model.py",
+      "sha256": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31"
+    },
+    "semabi.compiler.observation": {
+      "path": "semabi/compiler/observation.py",
+      "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+    },
+    "semabi.compiler.parse": {
+      "path": "semabi/compiler/parse.py",
+      "sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9"
+    },
+    "semabi.compiler.v2": {
+      "path": "semabi/compiler/v2/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "semabi.compiler.v2.abstractor": {
+      "path": "semabi/compiler/v2/abstractor.py",
+      "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5"
+    },
+    "semabi.compiler.v2.controls": {
+      "path": "semabi/compiler/v2/controls.py",
+      "sha256": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c"
+    },
+    "semabi.compiler.v2.graph": {
+      "path": "semabi/compiler/v2/graph.py",
+      "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a"
+    },
+    "semabi.compiler.v2.hypotheses": {
+      "path": "semabi/compiler/v2/hypotheses.py",
+      "sha256": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03"
+    },
+    "semabi.compiler.v2.score": {
+      "path": "semabi/compiler/v2/score.py",
+      "sha256": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b"
+    },
+    "semabi.compiler.v2.sections": {
+      "path": "semabi/compiler/v2/sections.py",
+      "sha256": "4bd39bf7e067a94ec19f6ad6c23c098d13ac01efdabafe2f6e15eb213003ba02"
+    },
+    "semabi.compiler.v2.units": {
+      "path": "semabi/compiler/v2/units.py",
+      "sha256": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f"
+    },
+    "semabi.compiler.v4": {
+      "path": "semabi/compiler/v4/__init__.py",
+      "sha256": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c"
+    },
+    "semabi.compiler.v4.abstractor": {
+      "path": "semabi/compiler/v4/abstractor.py",
+      "sha256": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1"
+    },
+    "semabi.compiler.v4.binding": {
+      "path": "semabi/compiler/v4/binding.py",
+      "sha256": "0f905cae535aa975dffe517f1107884f37524fdc3cbcc781ec7f645cd0f9b0dc"
+    },
+    "semabi.compiler.v4.consequence": {
+      "path": "semabi/compiler/v4/consequence.py",
+      "sha256": "c95bd040c8b066aaaac5bb5653b2ff20824ed3f2b59aba81c42b8a579ca8445e"
+    },
+    "semabi.compiler.v4.correspondence": {
+      "path": "semabi/compiler/v4/correspondence.py",
+      "sha256": "dd4659f74a4eb1ca8d3656ad278cd15290de2c08318b964e1a85c127fdd1be8c"
+    },
+    "semabi.compiler.v4.emission": {
+      "path": "semabi/compiler/v4/emission.py",
+      "sha256": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe"
+    },
+    "semabi.compiler.v4.identity": {
+      "path": "semabi/compiler/v4/identity.py",
+      "sha256": "06792b4a7ebd478fb46edeb7a37c5dce3b7eec02d561994f3560fad2ef01d6a7"
+    },
+    "semabi.compiler.v4.objective": {
+      "path": "semabi/compiler/v4/objective.py",
+      "sha256": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef"
+    },
+    "semabi.compiler.v4.outcome": {
+      "path": "semabi/compiler/v4/outcome.py",
+      "sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736"
+    },
+    "semabi.compiler.v4.pinned": {
+      "path": "semabi/compiler/v4/pinned.py",
+      "sha256": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b"
+    },
+    "semabi.compiler.v4.promote": {
+      "path": "semabi/compiler/v4/promote.py",
+      "sha256": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65"
+    },
+    "semabi.compiler.v4.prospective": {
+      "path": "semabi/compiler/v4/prospective.py",
+      "sha256": "591deb563820612e1f138660b2b2d83f9da51fcdb386b12c88ce19d0e074511b"
+    },
+    "semabi.compiler.v4.referring": {
+      "path": "semabi/compiler/v4/referring.py",
+      "sha256": "c0e2abbee5dd724f193bc61a5264268e853837c4282cbe2d372b2ec2489e5b1f"
+    },
+    "semabi.compiler.v4.search": {
+      "path": "semabi/compiler/v4/search.py",
+      "sha256": "c87e3633207dfaa1483574cad2335b23222bec6fa51fe35526adf8dd9576f72c"
+    },
+    "semabi.relmodel": {
+      "path": "semabi/relmodel.py",
+      "sha256": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
+    }
+  },
+  "persistent_widgets": [],
+  "pid": 1187309,
+  "postflight_error": null,
+  "projection": {
+    "path": "docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/projection_v1.json",
+    "sha256": "5dfdb72fc7a49feae6b0b49f39e35999abda85056848abecf5878e92dd6da28a"
+  },
+  "projection_exactly_matches": true,
+  "projection_status": "COMPLETE",
+  "reload_pairs": [],
+  "saved_fit_trace_sha256": "610d0d21a6ecd1d101a000003f9f7a0d96bc82fb3bc6d655503a0c62c360a2f3",
+  "schema": "semabi.j1.identity_search_diagnostic.v1",
+  "scope": "Training-only replay of one unchanged native Fit; no evaluation query or learned repair. Count covers the explicit script invocation, not a universal call monitor.",
+  "search_result": {
+    "chosen": {
+      "group[_](heading[_],button[Transmit])": {
+        "evidence": {
+          "constant_share": 0.25,
+          "copresent_pairs": 270,
+          "coverage": 1.0,
+          "cross_view_values": 0,
+          "discrimination": 1.0,
+          "distinct_values": 4,
+          "numeric_share": 0.0,
+          "reload_stability": 1.0,
+          "separated_pairs": 270,
+          "shared": 0.0,
+          "spoken": 1.0
+        },
+        "key_slot": "heading#0",
+        "status": "SUPPORTED",
+        "template": "group[_](heading[_],button[_])",
+        "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+      },
+      "group[_](heading[_],group[](text[_](combobox[_])))": {
+        "evidence": {
+          "constant_share": 0.0,
+          "copresent_pairs": 400,
+          "coverage": 0.0,
+          "cross_view_values": 0,
+          "discrimination": 0.0,
+          "distinct_values": 0,
+          "numeric_share": 0.0,
+          "reload_stability": null,
+          "separated_pairs": 0,
+          "shared": 0.0,
+          "spoken": 0.0
+        },
+        "key_slot": null,
+        "status": "NO_IDENTITY",
+        "template": "group[_](heading[_],group[_](text[_](combobox[_])))",
+        "why": "no identity-bearing observation claimed"
+      },
+      "group[_](heading[_],text[Select receiver](radio[Select receiver]),text[Received no],button[Clear receipt])": {
+        "evidence": {
+          "constant_share": 0.25,
+          "copresent_pairs": 270,
+          "coverage": 1.0,
+          "cross_view_values": 0,
+          "discrimination": 1.0,
+          "distinct_values": 4,
+          "numeric_share": 0.0,
+          "reload_stability": 1.0,
+          "separated_pairs": 270,
+          "shared": 0.0,
+          "spoken": 1.0
+        },
+        "key_slot": "heading#0",
+        "status": "SUPPORTED",
+        "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+        "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+      },
+      "group[_](heading[_],text[Select receiver](radio[Select receiver]),text[Received yes],button[Clear receipt])": {
+        "evidence": {
+          "constant_share": 0.25,
+          "copresent_pairs": 270,
+          "coverage": 1.0,
+          "cross_view_values": 0,
+          "discrimination": 1.0,
+          "distinct_values": 4,
+          "numeric_share": 0.0,
+          "reload_stability": 1.0,
+          "separated_pairs": 270,
+          "shared": 0.0,
+          "spoken": 1.0
+        },
+        "key_slot": "heading#0",
+        "status": "SUPPORTED",
+        "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+        "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+      },
+      "text[_](combobox[_])": {
+        "evidence": {
+          "constant_share": 0.0,
+          "copresent_pairs": 400,
+          "coverage": 0.0,
+          "cross_view_values": 0,
+          "discrimination": 0.0,
+          "distinct_values": 0,
+          "numeric_share": 0.0,
+          "reload_stability": null,
+          "separated_pairs": 0,
+          "shared": 0.0,
+          "spoken": 0.0
+        },
+        "key_slot": null,
+        "status": "NO_IDENTITY",
+        "template": "text[_](combobox[_])",
+        "why": "no identity-bearing observation claimed"
+      }
+    },
+    "families": {
+      "group[_](heading[_],button[_])": [
+        "group[_](heading[_],button[Transmit])"
+      ],
+      "group[_](heading[_],group[_](text[_](combobox[_])))": [
+        "group[_](heading[_],group[](text[_](combobox[_])))"
+      ],
+      "group[_](heading[_],text[_](radio[_]),text[_],button[_])": [
+        "group[_](heading[_],text[Select receiver](radio[Select receiver]),text[Received no],button[Clear receipt])",
+        "group[_](heading[_],text[Select receiver](radio[Select receiver]),text[Received yes],button[Clear receipt])"
+      ],
+      "text[_](combobox[_])": [
+        "text[_](combobox[_])"
+      ]
+    },
+    "final": {
+      "churn": 0,
+      "churn_steps": [],
+      "complexity": 12,
+      "conflicts": 0,
+      "contradiction_steps": [],
+      "contradictions": 0,
+      "delta_atoms": 0,
+      "explained": 0,
+      "named": 48,
+      "positional": 0,
+      "spurious": 0,
+      "steps": 312,
+      "unexplained": 16,
+      "visibility": 0,
+      "visibility_steps": []
+    },
+    "initial": {
+      "churn": 0,
+      "churn_steps": [],
+      "complexity": 24,
+      "conflicts": 0,
+      "contradiction_steps": [],
+      "contradictions": 0,
+      "delta_atoms": 0,
+      "explained": 0,
+      "named": 48,
+      "positional": 0,
+      "spurious": 0,
+      "steps": 312,
+      "unexplained": 16,
+      "visibility": 0,
+      "visibility_steps": []
+    },
+    "moves": [
+      {
+        "against": "heading#0",
+        "decided_by": {
+          "named": 24
+        },
+        "family": "group[_](heading[_],button[_])",
+        "key_slot": null,
+        "move": "rejected",
+        "round": 0,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 18,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 24,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 16,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY"
+      },
+      {
+        "decided_by": {
+          "unearned": "group#0"
+        },
+        "family": "group[_](heading[_],group[_](text[_](combobox[_])))",
+        "key_slot": null,
+        "move": "identity",
+        "round": 0,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 17,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 48,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 16,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY",
+        "templates": 1
+      },
+      {
+        "against": "heading#0",
+        "decided_by": {
+          "named": 24
+        },
+        "family": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+        "key_slot": null,
+        "move": "rejected",
+        "round": 0,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 11,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 24,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 0,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY"
+      },
+      {
+        "decided_by": {
+          "unearned": "text#0"
+        },
+        "family": "text[_](combobox[_])",
+        "key_slot": null,
+        "move": "identity",
+        "round": 0,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 12,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 48,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 16,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY",
+        "templates": 1
+      },
+      {
+        "against": "heading#0",
+        "decided_by": {
+          "named": 24
+        },
+        "family": "group[_](heading[_],button[_])",
+        "key_slot": null,
+        "move": "rejected",
+        "round": 1,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 6,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 24,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 16,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY"
+      },
+      {
+        "against": "heading#0",
+        "decided_by": {
+          "named": 24
+        },
+        "family": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+        "key_slot": null,
+        "move": "rejected",
+        "round": 1,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 6,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 24,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 0,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY"
+      }
+    ],
+    "open_questions": [
+      {
+        "left": {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "heading#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        "reason": "the trace so far scores both readings identically",
+        "right": {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "group#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        "template": "group[_](heading[_],button[_])"
+      },
+      {
+        "left": {
+          "evidence": {
+            "constant_share": 0.0,
+            "copresent_pairs": 400,
+            "coverage": 0.0,
+            "cross_view_values": 0,
+            "discrimination": 0.0,
+            "distinct_values": 0,
+            "numeric_share": 0.0,
+            "reload_stability": null,
+            "separated_pairs": 0,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": null,
+          "status": "NO_IDENTITY",
+          "template": "group[_](heading[_],group[_](text[_](combobox[_])))",
+          "why": "no identity-bearing observation claimed"
+        },
+        "reason": "the trace so far scores both readings identically",
+        "right": {
+          "evidence": {
+            "constant_share": 0.125,
+            "copresent_pairs": 400,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 8,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 400,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": "group#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],group[_](text[_](combobox[_])))",
+          "why": "separates 400/400 co-present pairs, 8 values, coverage 1.00"
+        },
+        "template": "group[_](heading[_],group[_](text[_](combobox[_])))"
+      },
+      {
+        "left": {
+          "evidence": {
+            "constant_share": 0.0,
+            "copresent_pairs": 400,
+            "coverage": 0.0,
+            "cross_view_values": 0,
+            "discrimination": 0.0,
+            "distinct_values": 0,
+            "numeric_share": 0.0,
+            "reload_stability": null,
+            "separated_pairs": 0,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": null,
+          "status": "NO_IDENTITY",
+          "template": "group[_](heading[_],group[_](text[_](combobox[_])))",
+          "why": "no identity-bearing observation claimed"
+        },
+        "reason": "the trace so far scores both readings identically",
+        "right": {
+          "evidence": {
+            "constant_share": 0.125,
+            "copresent_pairs": 400,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 8,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 400,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": "heading#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],group[_](text[_](combobox[_])))",
+          "why": "separates 400/400 co-present pairs, 8 values, coverage 1.00"
+        },
+        "template": "group[_](heading[_],group[_](text[_](combobox[_])))"
+      },
+      {
+        "left": {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "heading#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        "reason": "the trace so far scores both readings identically",
+        "right": {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "group#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])"
+      },
+      {
+        "left": {
+          "evidence": {
+            "constant_share": 0.0,
+            "copresent_pairs": 400,
+            "coverage": 0.0,
+            "cross_view_values": 0,
+            "discrimination": 0.0,
+            "distinct_values": 0,
+            "numeric_share": 0.0,
+            "reload_stability": null,
+            "separated_pairs": 0,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": null,
+          "status": "NO_IDENTITY",
+          "template": "text[_](combobox[_])",
+          "why": "no identity-bearing observation claimed"
+        },
+        "reason": "the trace so far scores both readings identically",
+        "right": {
+          "evidence": {
+            "constant_share": 0.5,
+            "copresent_pairs": 400,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 0.5325,
+            "distinct_values": 2,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 213,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": "text#0",
+          "status": "SUPPORTED",
+          "template": "text[_](combobox[_])",
+          "why": "separates 213/400 co-present pairs, 2 values, coverage 1.00"
+        },
+        "template": "text[_](combobox[_])"
+      }
+    ],
+    "promoted_leaves": [],
+    "readings": {
+      "group[_](heading[_],button[Transmit])": [
+        {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "group#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "heading#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        {
+          "evidence": {
+            "constant_share": 0.0,
+            "copresent_pairs": 270,
+            "coverage": 0.0,
+            "cross_view_values": 0,
+            "discrimination": 0.0,
+            "distinct_values": 0,
+            "numeric_share": 0.0,
+            "reload_stability": null,
+            "separated_pairs": 0,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": null,
+          "status": "NO_IDENTITY",
+          "template": "group[_](heading[_],button[_])",
+          "why": "no identity-bearing observation claimed"
+        }
+      ],
+      "group[_](heading[_],group[](text[_](combobox[_])))": [
+        {
+          "evidence": {
+            "constant_share": 0.125,
+            "copresent_pairs": 400,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 8,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 400,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": "group#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],group[_](text[_](combobox[_])))",
+          "why": "separates 400/400 co-present pairs, 8 values, coverage 1.00"
+        },
+        {
+          "evidence": {
+            "constant_share": 0.125,
+            "copresent_pairs": 400,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 8,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 400,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": "heading#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],group[_](text[_](combobox[_])))",
+          "why": "separates 400/400 co-present pairs, 8 values, coverage 1.00"
+        },
+        {
+          "evidence": {
+            "constant_share": 0.0,
+            "copresent_pairs": 400,
+            "coverage": 0.0,
+            "cross_view_values": 0,
+            "discrimination": 0.0,
+            "distinct_values": 0,
+            "numeric_share": 0.0,
+            "reload_stability": null,
+            "separated_pairs": 0,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": null,
+          "status": "NO_IDENTITY",
+          "template": "group[_](heading[_],group[_](text[_](combobox[_])))",
+          "why": "no identity-bearing observation claimed"
+        }
+      ],
+      "group[_](heading[_],text[Select receiver](radio[Select receiver]),text[Received no],button[Clear receipt])": [
+        {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "group#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "heading#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        {
+          "evidence": {
+            "constant_share": 0.0,
+            "copresent_pairs": 270,
+            "coverage": 0.0,
+            "cross_view_values": 0,
+            "discrimination": 0.0,
+            "distinct_values": 0,
+            "numeric_share": 0.0,
+            "reload_stability": null,
+            "separated_pairs": 0,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": null,
+          "status": "NO_IDENTITY",
+          "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+          "why": "no identity-bearing observation claimed"
+        }
+      ],
+      "group[_](heading[_],text[Select receiver](radio[Select receiver]),text[Received yes],button[Clear receipt])": [
+        {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "group#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        {
+          "evidence": {
+            "constant_share": 0.25,
+            "copresent_pairs": 270,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 1.0,
+            "distinct_values": 4,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 270,
+            "shared": 0.0,
+            "spoken": 1.0
+          },
+          "key_slot": "heading#0",
+          "status": "SUPPORTED",
+          "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+          "why": "separates 270/270 co-present pairs, 4 values, coverage 1.00"
+        },
+        {
+          "evidence": {
+            "constant_share": 0.0,
+            "copresent_pairs": 270,
+            "coverage": 0.0,
+            "cross_view_values": 0,
+            "discrimination": 0.0,
+            "distinct_values": 0,
+            "numeric_share": 0.0,
+            "reload_stability": null,
+            "separated_pairs": 0,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": null,
+          "status": "NO_IDENTITY",
+          "template": "group[_](heading[_],text[_](radio[_]),text[_],button[_])",
+          "why": "no identity-bearing observation claimed"
+        }
+      ],
+      "text[_](combobox[_])": [
+        {
+          "evidence": {
+            "constant_share": 0.5,
+            "copresent_pairs": 400,
+            "coverage": 1.0,
+            "cross_view_values": 0,
+            "discrimination": 0.5325,
+            "distinct_values": 2,
+            "numeric_share": 0.0,
+            "reload_stability": 1.0,
+            "separated_pairs": 213,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": "text#0",
+          "status": "SUPPORTED",
+          "template": "text[_](combobox[_])",
+          "why": "separates 213/400 co-present pairs, 2 values, coverage 1.00"
+        },
+        {
+          "evidence": {
+            "constant_share": 0.0,
+            "copresent_pairs": 400,
+            "coverage": 0.0,
+            "cross_view_values": 0,
+            "discrimination": 0.0,
+            "distinct_values": 0,
+            "numeric_share": 0.0,
+            "reload_stability": null,
+            "separated_pairs": 0,
+            "shared": 0.0,
+            "spoken": 0.0
+          },
+          "key_slot": null,
+          "status": "NO_IDENTITY",
+          "template": "text[_](combobox[_])",
+          "why": "no identity-bearing observation claimed"
+        }
+      ]
+    },
+    "stale_refutations": [],
+    "withheld_unions": []
+  },
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "source_manifest_sha256": "9a034671ba155b5a5ebfd2ee81cda49d362219f067079342b993399c94f21757",
+  "started_utc": "2026-09-08T04:07:23.898141+00:00",
+  "status": "MATCHED_TRAINING_REPLAY"
+}

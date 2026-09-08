@@ -1,0 +1,1246 @@
+{
+  "checkpoint_count": 4,
+  "diagnostic_status": "DIAGNOSTIC_ONLY",
+  "inputs": {
+    "docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/artifact_manifest_v1.json": "c6ecb59ea29510161e56d243bf48fc19cd598e90f1579f00f581d5a6ebbff0ae",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/result_manifest_v1.json": "9d859d52b9235e90abbfeb7ebdf44f3220a27d8774776fbcaa8f8cf8add58c5b",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/corrected_score_manifest_v1.json": "afb3d7dd55b12ba3e08d6a13c41038fd18873118ba25a02dbbbfeb5ef97b8ff6"
+  },
+  "ledger_records": 629,
+  "limitations": {
+    "controls": [
+      "Oracle identity/representation controls are post-preservation diagnostics only.",
+      "No missing exact name is called a wrong correspondence.",
+      "Complete fixed target denominators include unavailable and missing forecasts.",
+      "Observed effects and saved prestate interpretations are separate from learned poststate consequences.",
+      "No fit, native forecast, browser, service, action or repair is invoked."
+    ],
+    "measurement": "Outcome frames and literal arguments only. Invalid custody retains the complete fixed denominators with no admitted predictions. Composition, representation, identity and native state-consequence correctness require separate controls.",
+    "summary": [
+      "This extraction does not rerun native prediction, fitting, fixture actions or evaluation.",
+      "No available bridge correspondence is not a demonstrated wrong correspondence.",
+      "The actual search demotions establish a tie-handling decision, not the sufficiency of any proposed repair."
+    ]
+  },
+  "measurement_status": "VALID_SAVED_FORECAST_MEASUREMENT",
+  "phases": [
+    {
+      "accounting": {
+        "bootstrap_goto": 0,
+        "case_count": 24,
+        "charged_attempts": 313,
+        "complete": true,
+        "designated_targets": 24,
+        "failed_attempts": 0,
+        "paired_steps_recorded": 312,
+        "primitive_counts": {
+          "click": 96,
+          "reload": 1,
+          "reset": 24,
+          "select": 192
+        },
+        "snapshot_calls": 625,
+        "unpaired_attempts": 1,
+        "unresolved_attempts": 0
+      },
+      "diagnostic": {
+        "all_charges": {
+          "denominator_opportunities": 313,
+          "effect": {
+            "counts": {
+              "PASS": 313
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 313
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 5008
+            },
+            "denominator": 5008,
+            "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+          },
+          "endpoint_reference_opportunities": 5008,
+          "object_correspondence": {
+            "counts": {
+              "PASS": 768,
+              "UNAVAILABLE": 4240
+            },
+            "denominator": 5008,
+            "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+          },
+          "object_correspondence_opportunities": 5008,
+          "primitive": {
+            "counts": {
+              "PASS": 313
+            },
+            "reasons": {
+              "GLOBAL_NATIVE_PRIMITIVE": 25,
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 288
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 241,
+              "UNOBSERVED": 72
+            },
+            "reasons": {
+              "NO_COMPLETE_TYPED_FORECAST": 217,
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 96
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 312,
+              "UNOBSERVED": 1
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 313
+            }
+          }
+        },
+        "designated_targets": {
+          "denominator_opportunities": 24,
+          "effect": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 24
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 384
+            },
+            "denominator": 384,
+            "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+          },
+          "endpoint_reference_opportunities": 384,
+          "object_correspondence": {
+            "counts": {
+              "PASS": 192,
+              "UNAVAILABLE": 192
+            },
+            "denominator": 384,
+            "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+          },
+          "object_correspondence_opportunities": 384,
+          "primitive": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 24
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 24
+            },
+            "reasons": {
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 24
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 24
+            }
+          }
+        }
+      },
+      "name": "primary",
+      "prediction": {
+        "all_charges": {
+          "channels": {
+            "decision_list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "correct": 0,
+                "unestablished": 313,
+                "wrong": 0
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1,
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 313
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1
+              }
+            },
+            "rule": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 313
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1
+              }
+            }
+          },
+          "denominator_opportunities": 313,
+          "literal_argument_positions": {
+            "counts": {},
+            "denominator_recorded_event_positions": 0,
+            "opportunities_with_any_literal_positions": 0,
+            "opportunities_without_literal_positions": 313,
+            "scope": "Full action/target denominators remain above; position counts are conditional on recorded event and role opportunities.",
+            "unavailable_reasons": {}
+          }
+        },
+        "all_clicks": {
+          "channels": {
+            "decision_list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "correct": 0,
+                "unestablished": 96,
+                "wrong": 0
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_CHANNEL": 72,
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 96
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72
+              }
+            },
+            "rule": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 96
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72
+              }
+            }
+          },
+          "denominator_opportunities": 96,
+          "literal_argument_positions": {
+            "counts": {},
+            "denominator_recorded_event_positions": 0,
+            "opportunities_with_any_literal_positions": 0,
+            "opportunities_without_literal_positions": 96,
+            "scope": "Full action/target denominators remain above; position counts are conditional on recorded event and role opportunities.",
+            "unavailable_reasons": {}
+          }
+        },
+        "designated_targets": {
+          "channels": {
+            "decision_list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "correct": 0,
+                "unestablished": 24,
+                "wrong": 0
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 24
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24
+              }
+            },
+            "rule": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 24
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24
+              }
+            }
+          },
+          "denominator_opportunities": 24,
+          "literal_argument_positions": {
+            "counts": {},
+            "denominator_recorded_event_positions": 0,
+            "opportunities_with_any_literal_positions": 0,
+            "opportunities_without_literal_positions": 24,
+            "scope": "Full action/target denominators remain above; position counts are conditional on recorded event and role opportunities.",
+            "unavailable_reasons": {}
+          }
+        }
+      },
+      "recorded_query_literal_count_distribution": {
+        "28": 24
+      },
+      "scope": "Object correspondence uses one saved page and raw anchors/keys. It is not a persistent-identity scoreboard or proof of learned naming. Synthetic UNDETERMINED rows are retained separately from learned event frames.",
+      "target_endpoint_reference_counts": {
+        "UNAVAILABLE": 384
+      },
+      "target_event_role_components": [
+        {
+          "component": "binding",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1
+        }
+      ],
+      "target_object_correspondence_by_kind": {
+        "patches": {
+          "UNAVAILABLE": 192
+        },
+        "receivers": {
+          "PASS": 96
+        },
+        "transmitters": {
+          "PASS": 96
+        }
+      },
+      "target_representation_components": {
+        "learned_state_consequence": {
+          "UNAVAILABLE": 24
+        },
+        "owner": {
+          "PASS": 24
+        },
+        "persistent_flag_attributes": {
+          "UNAVAILABLE": 24
+        },
+        "query_literal_correctness": {
+          "UNAVAILABLE": 24
+        }
+      }
+    },
+    {
+      "accounting": {
+        "bootstrap_goto": 0,
+        "case_count": 24,
+        "charged_attempts": 313,
+        "complete": true,
+        "designated_targets": 24,
+        "failed_attempts": 0,
+        "paired_steps_recorded": 312,
+        "primitive_counts": {
+          "click": 96,
+          "reload": 1,
+          "reset": 24,
+          "select": 192
+        },
+        "snapshot_calls": 625,
+        "unpaired_attempts": 1,
+        "unresolved_attempts": 0
+      },
+      "diagnostic": {
+        "all_charges": {
+          "denominator_opportunities": 313,
+          "effect": {
+            "counts": {
+              "PASS": 313
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 313
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 5008
+            },
+            "denominator": 5008,
+            "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+          },
+          "endpoint_reference_opportunities": 5008,
+          "object_correspondence": {
+            "counts": {
+              "PASS": 768,
+              "UNAVAILABLE": 4240
+            },
+            "denominator": 5008,
+            "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+          },
+          "object_correspondence_opportunities": 5008,
+          "primitive": {
+            "counts": {
+              "PASS": 313
+            },
+            "reasons": {
+              "GLOBAL_NATIVE_PRIMITIVE": 25,
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 288
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 241,
+              "UNOBSERVED": 72
+            },
+            "reasons": {
+              "NO_COMPLETE_TYPED_FORECAST": 217,
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 96
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 312,
+              "UNOBSERVED": 1
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 313
+            }
+          }
+        },
+        "designated_targets": {
+          "denominator_opportunities": 24,
+          "effect": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC": 24
+            }
+          },
+          "endpoint_reference": {
+            "counts": {
+              "UNAVAILABLE": 384
+            },
+            "denominator": 384,
+            "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+          },
+          "endpoint_reference_opportunities": 384,
+          "object_correspondence": {
+            "counts": {
+              "PASS": 192,
+              "UNAVAILABLE": 192
+            },
+            "denominator": 384,
+            "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+          },
+          "object_correspondence_opportunities": 384,
+          "primitive": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "RAW_TARGET_AND_NATIVE_ARGUMENTS": 24
+            }
+          },
+          "representation": {
+            "counts": {
+              "UNAVAILABLE": 24
+            },
+            "reasons": {
+              "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC": 24
+            }
+          },
+          "target_premise": {
+            "counts": {
+              "PASS": 24
+            },
+            "denominator_opportunities": 24
+          },
+          "visibility": {
+            "counts": {
+              "PASS": 24
+            },
+            "reasons": {
+              "SEPARATE_RAW_BEFORE_AND_AFTER": 24
+            }
+          }
+        }
+      },
+      "name": "invariance",
+      "prediction": {
+        "all_charges": {
+          "channels": {
+            "decision_list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "correct": 0,
+                "unestablished": 313,
+                "wrong": 0
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1,
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 313
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1
+              }
+            },
+            "rule": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 313
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NON_CLICK": 216,
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72,
+                "NO_PRESTATE": 1
+              }
+            }
+          },
+          "denominator_opportunities": 313,
+          "literal_argument_positions": {
+            "counts": {},
+            "denominator_recorded_event_positions": 0,
+            "opportunities_with_any_literal_positions": 0,
+            "opportunities_without_literal_positions": 313,
+            "scope": "Full action/target denominators remain above; position counts are conditional on recorded event and role opportunities.",
+            "unavailable_reasons": {}
+          }
+        },
+        "all_clicks": {
+          "channels": {
+            "decision_list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "correct": 0,
+                "unestablished": 96,
+                "wrong": 0
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_CHANNEL": 72,
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 96
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72
+              }
+            },
+            "rule": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 96
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24,
+                "NO_CHANNEL": 72
+              }
+            }
+          },
+          "denominator_opportunities": 96,
+          "literal_argument_positions": {
+            "counts": {},
+            "denominator_recorded_event_positions": 0,
+            "opportunities_with_any_literal_positions": 0,
+            "opportunities_without_literal_positions": 96,
+            "scope": "Full action/target denominators remain above; position counts are conditional on recorded event and role opportunities.",
+            "unavailable_reasons": {}
+          }
+        },
+        "designated_targets": {
+          "channels": {
+            "decision_list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "correct": 0,
+                "unestablished": 24,
+                "wrong": 0
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "UNDETERMINED": 24
+              }
+            },
+            "list": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 24
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24
+              }
+            },
+            "rule": {
+              "ambiguous_among": 0,
+              "ambiguous_missing": 0,
+              "categories": {
+                "ambiguous": 0,
+                "forced_correct": 0,
+                "forced_wrong": 0,
+                "unestablished": 24
+              },
+              "sole_correct": 0,
+              "sole_wrong": 0,
+              "unestablished_reasons": {
+                "NO_ADMISSIBLE_EVENT": 24
+              }
+            }
+          },
+          "denominator_opportunities": 24,
+          "literal_argument_positions": {
+            "counts": {},
+            "denominator_recorded_event_positions": 0,
+            "opportunities_with_any_literal_positions": 0,
+            "opportunities_without_literal_positions": 24,
+            "scope": "Full action/target denominators remain above; position counts are conditional on recorded event and role opportunities.",
+            "unavailable_reasons": {}
+          }
+        }
+      },
+      "recorded_query_literal_count_distribution": {
+        "28": 24
+      },
+      "scope": "Object correspondence uses one saved page and raw anchors/keys. It is not a persistent-identity scoreboard or proof of learned naming. Synthetic UNDETERMINED rows are retained separately from learned event frames.",
+      "target_endpoint_reference_counts": {
+        "UNAVAILABLE": 384
+      },
+      "target_event_role_components": [
+        {
+          "component": "binding",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 0
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "\u0000UNDETERMINED",
+          "position": 1
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission blocked : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "PASS": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 0
+        },
+        {
+          "component": "binding",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "declaration",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "identity",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1
+        },
+        {
+          "component": "literal",
+          "counts": {
+            "UNAVAILABLE": 24
+          },
+          "event": "Transmission delivered : <> \u2192 <> .",
+          "position": 1
+        }
+      ],
+      "target_object_correspondence_by_kind": {
+        "patches": {
+          "UNAVAILABLE": 192
+        },
+        "receivers": {
+          "PASS": 96
+        },
+        "transmitters": {
+          "PASS": 96
+        }
+      },
+      "target_representation_components": {
+        "learned_state_consequence": {
+          "UNAVAILABLE": 24
+        },
+        "owner": {
+          "PASS": 24
+        },
+        "persistent_flag_attributes": {
+          "UNAVAILABLE": 24
+        },
+        "query_literal_correctness": {
+          "UNAVAILABLE": 24
+        }
+      }
+    }
+  ],
+  "recorded_utc": "2026-09-08T04:46:05.805231+00:00",
+  "schema": "semabi.j1.measurement_summary.v2",
+  "source_sha256": "ceaf4d5b626588945b0705e4c47daba0ef85e84b0ed4eadf1da57181ab372894",
+  "status": "PRESERVED_MEASUREMENT_SUMMARIZED",
+  "training_search": {
+    "compile_calls": 1,
+    "final": {
+      "churn": 0,
+      "churn_steps": [],
+      "complexity": 12,
+      "conflicts": 0,
+      "contradiction_steps": [],
+      "contradictions": 0,
+      "delta_atoms": 0,
+      "explained": 0,
+      "named": 48,
+      "positional": 0,
+      "spurious": 0,
+      "steps": 312,
+      "unexplained": 16,
+      "visibility": 0,
+      "visibility_steps": []
+    },
+    "fit_invocations": 1,
+    "identity_demotions": [
+      {
+        "decided_by": {
+          "unearned": "group#0"
+        },
+        "family": "group[_](heading[_],group[_](text[_](combobox[_])))",
+        "key_slot": null,
+        "move": "identity",
+        "round": 0,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 17,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 48,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 16,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY",
+        "templates": 1
+      },
+      {
+        "decided_by": {
+          "unearned": "text#0"
+        },
+        "family": "text[_](combobox[_])",
+        "key_slot": null,
+        "move": "identity",
+        "round": 0,
+        "score": {
+          "churn": 0,
+          "churn_steps": [],
+          "complexity": 12,
+          "conflicts": 0,
+          "contradiction_steps": [],
+          "contradictions": 0,
+          "delta_atoms": 0,
+          "explained": 0,
+          "named": 48,
+          "positional": 0,
+          "spurious": 0,
+          "steps": 312,
+          "unexplained": 16,
+          "visibility": 0,
+          "visibility_steps": []
+        },
+        "status": "NO_IDENTITY",
+        "templates": 1
+      }
+    ],
+    "initial": {
+      "churn": 0,
+      "churn_steps": [],
+      "complexity": 24,
+      "conflicts": 0,
+      "contradiction_steps": [],
+      "contradictions": 0,
+      "delta_atoms": 0,
+      "explained": 0,
+      "named": 48,
+      "positional": 0,
+      "spurious": 0,
+      "steps": 312,
+      "unexplained": 16,
+      "visibility": 0,
+      "visibility_steps": []
+    },
+    "persistent_widgets": [],
+    "projection_exactly_matches": true,
+    "reload_pairs": [],
+    "status": "MATCHED_TRAINING_REPLAY"
+  }
+}

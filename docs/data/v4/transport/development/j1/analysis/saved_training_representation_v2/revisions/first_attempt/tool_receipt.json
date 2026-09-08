@@ -1,0 +1,15 @@
+{
+  "args": {
+    "cmd": "taskset -c 19 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPYCACHEPREFIX=/tmp/semabi_j1_representation_summary_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/j1/analysis/saved_training_representation_v2/inspect.py",
+    "workdir": "/home/moloch/semabi",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3500
+  },
+  "result": {
+    "chunk_id": "2b25d0",
+    "wall_time_seconds": 0.320430244,
+    "exit_code": 1,
+    "original_token_count": 101,
+    "output": "Traceback (most recent call last):\n  File \"/home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/saved_training_representation_v2/inspect.py\", line 128, in <module>\n    main()\n  File \"/home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/saved_training_representation_v2/inspect.py\", line 90, in main\n    assert type(value) is bool\n           ^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  }
+}

@@ -1,0 +1,917 @@
+"""Evaluator-only J1 diagnostics; real data requires an authenticated first pass.
+
+No fit, forecast, browser, fixture service, action, or model mutation is invoked.
+The oracle labels and correspondence choices in this file are diagnostic inputs.
+They are never offered as learned predictions or sent to the resident predictor.
+"""
+from __future__ import annotations
+
+import argparse
+from collections import Counter, defaultdict
+from copy import deepcopy
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import sys
+
+HERE = Path(__file__).resolve().parent
+J1 = HERE.parent.parent
+ROOT = J1.parents[5]
+KINDS = ("transmitters", "receivers", "patches")
+SECTIONS = dict(zip(KINDS, ("Transmitters", "Receivers", "Patch leads")))
+COUNTS = dict(zip(KINDS, (4, 4, 8)))
+ENDPOINTS = {"transmitter": "transmitters", "receiver": "receivers"}
+HELPER_SOURCES = {
+    "live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "score.py": "28f2887e0ff9e59ed183173024d76cee04f29325828a7116328bbf6ecb07025d",
+}
+PACKAGE_FILES = {"controls.py", "checks.py", "protocol.md"}
+DEPENDENCY_FILES = {
+    "experiments/join_v1/oracle/specification_v1.json",
+    "experiments/join_v1/oracle/cases_v1.json",
+    "experiments/join_v1/oracle/scripts_v1.json",
+    "experiments/join_v1/fixtures/catalog_primary.json",
+    "experiments/join_v1/fixtures/catalog_permuted.json",
+    "docs/data/v4/transport/development/j1/evaluator/public_inventory_sha256.json",
+}
+FIXTURE_INVENTORY_SHA = "93bba30bf1c3ba1a95c4bad63e6ae55f96066471e1efef4b024a0dfb27c6b10d"
+ABSOBJ = "semabi.compiler.abstract.AbsObj"
+ABSSTATE = "semabi.compiler.abstract.AbstractState"
+PARSED = "semabi.compiler.parse.ParsedObs"
+INSTANCE = "semabi.compiler.parse.Instance"
+STATUSES = {"PASS", "WRONG", "UNOBSERVED", "UNAVAILABLE", "AMBIGUOUS"}
+_HELPERS = None
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+                      allow_nan=False).encode()
+
+
+def digest(value):
+    return hashlib.sha256(canonical(value)).hexdigest()
+
+
+def same(left, right):
+    return canonical(left) == canonical(right)
+
+
+def same_typed(left, right):
+    """Exact stored equality, including tuple keys and bool/int distinctions."""
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return len(left) == len(right) and all(
+            same_typed(a, b) and same_typed(left[a], right[b])
+            for a, b in zip(left, right, strict=True))
+    if type(left) in (tuple, list):
+        return len(left) == len(right) and all(same_typed(a, b) for a, b in zip(left, right, strict=True))
+    if type(left) in (set, frozenset):
+        return len(left) == len(right) and all(any(same_typed(a, b) for b in right) for a in left)
+    return left == right
+
+
+def read_json(path):
+    def pairs(items):
+        result = {}
+        for key, value in items:
+            require(key not in result, "Duplicate JSON key")
+            result[key] = value
+        return result
+    def bad_number(value):
+        raise ValueError("Nonfinite JSON number: " + value)
+    return json.loads(Path(path).read_bytes(), object_pairs_hook=pairs, parse_constant=bad_number)
+
+
+def module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    loaded = importlib.util.module_from_spec(spec)
+    sys.modules[name] = loaded
+    spec.loader.exec_module(loaded)
+    return loaded
+
+
+def helpers():
+    global _HELPERS
+    if _HELPERS is None:
+        for name, wanted in HELPER_SOURCES.items():
+            require(sha(J1 / name) == wanted, "Reviewed data helper changed")
+        io = module("_j1_post_controls_io", J1 / "live_io.py")
+        score = module("_j1_post_controls_score", J1 / "score.py")
+        _HELPERS = io, score
+    return _HELPERS
+
+
+def check(status, reason, **details):
+    require(status in STATUSES, "Unknown diagnostic status")
+    return {"status": status, "reason": reason, **details}
+
+
+def compare(actual, expected, reason="EXPLICIT_VISIBLE_VALUE"):
+    return check("PASS" if same(actual, expected) else "WRONG", reason,
+                 actual=actual, expected=expected)
+
+
+def aggregate(rows):
+    statuses = [row["status"] for row in rows]
+    # Contradiction is preserved even when an independent field is unobserved.
+    for status in ("WRONG", "AMBIGUOUS", "UNOBSERVED", "UNAVAILABLE"):
+        if status in statuses:
+            return status
+    return "PASS" if statuses else "UNAVAILABLE"
+
+
+def unique(items, reason):
+    if not items:
+        return check("UNOBSERVED", "MISSING_" + reason, candidates=[])
+    if len(items) != 1:
+        return check("AMBIGUOUS", "MULTIPLE_" + reason, candidates=items)
+    return check("PASS", "UNIQUE_" + reason, value=items[0])
+
+
+def ancestors(nodes, index):
+    result = []
+    while index != -1:
+        result.append(index)
+        index = nodes[index]["parent"]
+    return result
+
+
+def descendants(nodes, root):
+    return [node["i"] for node in nodes if root in ancestors(nodes, node["i"])]
+
+
+def validate_catalog(catalog):
+    all_names = []
+    for kind in KINDS:
+        names = catalog[kind]
+        require(type(names) is list and len(names) == COUNTS[kind]
+                and all(type(name) is str and name and name.strip() == name for name in names)
+                and len(set(names)) == len(names), "Frozen catalog identity inventory differs")
+        all_names.extend(names)
+    require(len(set(all_names)) == len(all_names), "Frozen visible identity alphabets overlap")
+
+
+def public_state(raw, catalog):
+    """Read named groups and controls; never fill a missing node from the oracle."""
+    validate_catalog(catalog)
+    helpers()[0].validate_observation(raw)
+    if raw is None:
+        return {"status": "UNOBSERVED", "reason": "NO_RAW_PAGE", "entities": {},
+                "collections": {}, "selected": check("UNOBSERVED", "NO_RAW_PAGE"),
+                "notice": check("UNOBSERVED", "NO_RAW_PAGE"), "raw_sha256": None}
+    nodes = raw["nodes"]
+    entities, collections, checks = {}, {}, []
+    for kind, section_name in SECTIONS.items():
+        section = unique([n["i"] for n in nodes if n["role"] == "group" and n["name"] == section_name],
+                         "COLLECTION_SECTION")
+        groups = []
+        if section["status"] == "PASS":
+            root = section["value"]
+            groups = [i for i in descendants(nodes, root) if i != root
+                      and nodes[i]["role"] == "group" and nodes[i]["name"]]
+        observed = [nodes[i]["name"] for i in groups]
+        missing = sorted(set(catalog[kind]) - set(observed))
+        extras = sorted(set(observed) - set(catalog[kind]))
+        duplicates = sorted(name for name, count in Counter(observed).items() if count > 1)
+        status = (section["status"] if section["status"] != "PASS" else
+                  "AMBIGUOUS" if extras or duplicates else "UNOBSERVED" if missing else "PASS")
+        inventory = check(status, "RAW_VISIBLE_ALTERNATIVE_INVENTORY", section=section,
+                          expected=list(catalog[kind]), observed=observed,
+                          missing=missing, additional=extras, duplicated=duplicates)
+        collections[kind] = inventory
+        checks.append(inventory)
+        for name in catalog[kind]:
+            root_check = unique([i for i in groups if nodes[i]["name"] == name], "ENTITY_GROUP")
+            entity = {"kind": kind, "name": name, "root": root_check, "fields": {}}
+            entities[name] = entity
+            checks.append(root_check)
+            if root_check["status"] != "PASS":
+                continue
+            root = root_check["value"]
+            owned = [i for i in descendants(nodes, root)
+                     if not any(other != root and other in ancestors(nodes, i) for other in groups)]
+            entity["owned_nodes"] = owned
+
+            def control(field, role, label):
+                found = unique([i for i in owned if nodes[i]["role"] == role and nodes[i]["name"] == label], field.upper())
+                entity["fields"][field] = found
+                checks.append(found)
+                return None if found["status"] != "PASS" else nodes[found["value"]]
+
+            if kind == "transmitters":
+                control("transmit", "button", "Transmit")
+            elif kind == "receivers":
+                radio = control("select", "radio", "Select receiver")
+                control("clear", "button", "Clear receipt")
+                selected = (check("UNOBSERVED", "CHECKED_STATE_NOT_VISIBLE")
+                            if radio is None or type(radio.get("checked")) is not bool else
+                            check("PASS", "EXPLICIT_RADIO_STATE", value=radio["checked"], node=radio["i"]))
+                entity["fields"]["checked"] = selected
+                checks.append(selected)
+                receipts = [i for i in owned if nodes[i]["role"] == "text" and nodes[i]["name"].startswith("Received:")]
+                receipt = unique(receipts, "RECEIVED_FLAG")
+                if receipt["status"] == "PASS":
+                    n = nodes[receipt["value"]]
+                    receipt = (check("PASS", "EXPLICIT_RECEIVED_FLAG", value=n["name"] == "Received: yes", node=n["i"])
+                               if n["name"] in {"Received: yes", "Received: no"} else
+                               check("UNAVAILABLE", "UNKNOWN_RECEIVED_VALUE", node=n["i"], text=n["name"]))
+                entity["fields"]["received"] = receipt
+                checks.append(receipt)
+            else:
+                for endpoint, target_kind in ENDPOINTS.items():
+                    node = control(endpoint + "_control", "combobox", endpoint.capitalize())
+                    if node is None:
+                        observed_value = check("UNOBSERVED", "ENDPOINT_CONTROL_NOT_VISIBLE")
+                    else:
+                        options = node.get("options")
+                        value = node.get("value")
+                        if type(options) is not list:
+                            observed_value = check("UNOBSERVED", "ENDPOINT_OPTIONS_NOT_VISIBLE", node=node["i"])
+                        elif len(set(options)) != len(options):
+                            observed_value = check("AMBIGUOUS", "DUPLICATED_ENDPOINT_OPTIONS", node=node["i"], options=options)
+                        elif set(options) - set(catalog[target_kind]):
+                            observed_value = check("AMBIGUOUS", "ADDITIONAL_ENDPOINT_ALTERNATIVES_VISIBLE",
+                                                   node=node["i"], options=options, value=value)
+                        elif set(options) != set(catalog[target_kind]):
+                            observed_value = check("UNOBSERVED", "COMPLETE_ENDPOINT_ALTERNATIVES_NOT_VISIBLE",
+                                                   node=node["i"], options=options, value=value)
+                        elif type(value) is not str or value not in options:
+                            observed_value = check("UNAVAILABLE", "ENDPOINT_VALUE_NOT_A_VISIBLE_OPTION",
+                                                   node=node["i"], options=options, value=value)
+                        else:
+                            observed_value = check("PASS", "EXPLICIT_SELECTED_ENDPOINT", value=value,
+                                                   node=node["i"], options=options)
+                    entity["fields"][endpoint] = observed_value
+                    checks.append(observed_value)
+    receiver_checks = [entities[name]["fields"].get("checked", check("UNOBSERVED", "NO_RECEIVER_GROUP"))
+                       for name in catalog["receivers"]]
+    if any(item["status"] != "PASS" for item in receiver_checks):
+        selected = check(aggregate(receiver_checks), "SELECTION_REQUIRES_ALL_RADIO_STATES")
+    else:
+        selected_names = [name for name, row in zip(catalog["receivers"], receiver_checks, strict=True) if row["value"]]
+        selected = (check("AMBIGUOUS", "MULTIPLE_CHECKED_RECEIVERS", candidates=selected_names)
+                    if len(selected_names) > 1 else check("PASS", "ALL_RADIO_STATES_VISIBLE", value=next(iter(selected_names), None)))
+    checks.append(selected)
+    status_nodes = [n for n in nodes if n["role"] == "status"]
+    notice = unique([n["i"] for n in status_nodes], "STATUS_NODE")
+    if not status_nodes:
+        notice = check("PASS", "NO_STATUS_NODE_IN_SAVED_VISIBLE_TREE", value=None,
+                       channel_visible=False, scope="Visible tree absence, not hidden application state")
+    elif notice["status"] == "PASS":
+        notice = check("PASS", "VISIBLE_STATUS_TEXT", value=status_nodes[0]["name"],
+                       node=status_nodes[0]["i"], channel_visible=True)
+    checks.append(notice)
+    return {"status": aggregate(checks), "entities": entities, "collections": collections,
+            "selected": selected, "notice": notice, "raw_sha256": digest(raw)}
+
+
+def state_values(state, catalog):
+    """Return no complete state when any mandatory raw alternative is missing."""
+    if state["status"] != "PASS":
+        return None
+    entities = state["entities"]
+    return {"connections": {name: {endpoint: entities[name]["fields"][endpoint]["value"] for endpoint in ENDPOINTS}
+                             for name in catalog["patches"]},
+            "received": {name: entities[name]["fields"]["received"]["value"] for name in catalog["receivers"]},
+            "selected": state["selected"]["value"], "notice": state["notice"]["value"]}
+
+
+def primary_truth(state, source):
+    target = state["selected"]
+    witnesses = [name for name, edge in state["connections"].items()
+                 if edge["transmitter"] == source and edge["receiver"] == target]
+    return {"source": source, "target": target, "witnesses": witnesses,
+            "delivered": bool(witnesses)}
+
+
+def message(delivered, source, target):
+    return f"Transmission {'delivered' if delivered else 'blocked'}: {source} → {target}."
+
+
+def initial_values(catalog, specification):
+    return {"connections": {name: {"transmitter": catalog["transmitters"][left],
+                                    "receiver": catalog["receivers"][right]}
+                             for name, left, right in zip(catalog["patches"], specification["left_endpoints"],
+                                                         specification["base_right_endpoints"], strict=True)},
+            "received": dict.fromkeys(catalog["receivers"], False), "selected": None, "notice": None}
+
+
+def resolve_primitive(raw, requested, actual):
+    """Compare the saved native primitive with an independent raw tree resolution."""
+    if actual is None:
+        return check("UNAVAILABLE", "NO_RESOLVED_NATIVE_PRIMITIVE")
+    kind = requested.get("kind")
+    if kind in {"reset", "reload", "noop"}:
+        expected = {"kind": kind, "target": None, "text": requested.get("text"), "target_desc": None}
+        return compare({key: actual.get(key) for key in expected}, expected, "GLOBAL_NATIVE_PRIMITIVE")
+    if raw is None:
+        return check("UNOBSERVED", "NO_RAW_PRESTATE")
+    nodes = raw["nodes"]
+    candidates = []
+    for node in nodes:
+        if node["role"] != requested.get("role") or node["name"] != requested.get("name"):
+            continue
+        scope = requested.get("scope")
+        if scope is not None and not any(nodes[i]["role"] == scope["role"] and nodes[i]["name"] == scope["name"]
+                                         for i in ancestors(nodes, node["i"])[1:]):
+            continue
+        candidates.append(node["i"])
+    if not candidates:
+        return check("UNAVAILABLE", "EXACT_RAW_TARGET_NOT_AVAILABLE", candidates=[])
+    if len(candidates) != 1:
+        return check("AMBIGUOUS", "MULTIPLE_RAW_TARGETS", candidates=candidates)
+    node = nodes[candidates[0]]
+    text = requested.get("value") if kind == "select" else requested.get("text")
+    if kind == "select" and (node.get("options") is None or text not in node["options"]):
+        return check("UNAVAILABLE", "ARGUMENT_NOT_IN_VISIBLE_OPTIONS", target=node["i"], argument=text)
+    expected = {"kind": kind, "target": node["i"], "text": text,
+                "target_desc": {"role": node["role"], "name": node["name"], "placeholder": node.get("placeholder")}}
+    return compare({key: actual.get(key) for key in expected}, expected, "RAW_TARGET_AND_NATIVE_ARGUMENTS")
+
+
+def operation(raw, state, primitive):
+    """Name only an operation justified by the actual target node and ancestor."""
+    if primitive is None:
+        return check("UNAVAILABLE", "NO_NATIVE_PRIMITIVE")
+    if primitive["kind"] in {"reset", "reload", "noop"}:
+        return check("PASS", "GLOBAL_PRIMITIVE", value={"op": primitive["kind"]})
+    if raw is None:
+        return check("UNOBSERVED", "NO_RAW_PRESTATE")
+    target = primitive.get("target")
+    if type(target) is not int or not 0 <= target < len(raw["nodes"]):
+        return check("UNAVAILABLE", "NO_VALID_NATIVE_TARGET")
+    node = raw["nodes"][target]
+    if (primitive["kind"], node["role"], node["name"]) == ("click", "button", "Clear message"):
+        candidates = [n["i"] for n in raw["nodes"] if n["role"] == "button" and n["name"] == "Clear message"]
+        owned = any(target in entity.get("owned_nodes", []) for entity in state["entities"].values())
+        scoped = any(raw["nodes"][i]["role"] == "group" and raw["nodes"][i]["name"] in SECTIONS.values()
+                     for i in ancestors(raw["nodes"], target)[1:])
+        if len(candidates) != 1:
+            return check("AMBIGUOUS", "MULTIPLE_CLEAR_MESSAGE_CONTROLS", candidates=candidates)
+        if owned or scoped:
+            return check("UNAVAILABLE", "CLEAR_MESSAGE_CONTROL_HAS_ENTITY_OR_COLLECTION_SCOPE")
+        return check("PASS", "VISIBLE_GLOBAL_CONTROL", value={"op": "clear_message"})
+    candidates = []
+    for name, entity in state["entities"].items():
+        if target not in entity.get("owned_nodes", []):
+            continue
+        fields = entity["fields"]
+        if primitive["kind"] == "select" and entity["kind"] == "patches":
+            for endpoint in ENDPOINTS:
+                control = fields.get(endpoint + "_control", {})
+                if control.get("status") == "PASS" and control.get("value") == target:
+                    candidates.append({"op": "set_endpoint", "patch": name, "endpoint": endpoint,
+                                       "value": primitive.get("text")})
+        elif primitive["kind"] == "click":
+            for field, op, identity_key in (("transmit", "transmit", "transmitter"),
+                                           ("select", "select_receiver", "receiver"),
+                                           ("clear", "clear_receipt", "receiver")):
+                if fields.get(field, {}).get("status") == "PASS" and fields[field]["value"] == target:
+                    candidates.append({"op": op, identity_key: name})
+    if not candidates:
+        return check("UNAVAILABLE", "NO_UNIQUE_PUBLIC_OPERATION")
+    if len(candidates) != 1:
+        return check("AMBIGUOUS", "MULTIPLE_PUBLIC_OPERATIONS", candidates=candidates)
+    return check("PASS", "RAW_CONTROL_AND_OWNER", value=candidates[0])
+
+
+def effect(before_state, after_state, operation_check, catalog, specification, native_ok):
+    before = state_values(before_state, catalog)
+    after = state_values(after_state, catalog)
+    delta = None if before is None or after is None else {
+        "rewired": [{"patch": name, "endpoint": endpoint, "before": before["connections"][name][endpoint],
+                     "after": after["connections"][name][endpoint]}
+                    for name in catalog["patches"] for endpoint in ENDPOINTS
+                    if before["connections"][name][endpoint] != after["connections"][name][endpoint]],
+        "flags": [{"receiver": name, "before": before["received"][name], "after": after["received"][name]}
+                  for name in catalog["receivers"] if before["received"][name] != after["received"][name]],
+        "selection": {"before": before["selected"], "after": after["selected"]},
+        "notice": {"before": before["notice"], "after": after["notice"]}}
+    if operation_check["status"] != "PASS":
+        return check(operation_check["status"], "PUBLIC_OPERATION_UNESTABLISHED", visible_delta=delta)
+    op = operation_check["value"]
+    if after is None or (before is None and op["op"] != "reset"):
+        return check("UNOBSERVED", "COMPLETE_PUBLIC_STATE_NOT_VISIBLE", visible_delta=delta)
+    if native_ok is not True:
+        return check("UNAVAILABLE", "NATIVE_ACTION_DID_NOT_SUCCEED", visible_delta=delta)
+    expected = initial_values(catalog, specification) if op["op"] == "reset" else deepcopy(before)
+    truth = None
+    if op["op"] == "set_endpoint":
+        endpoint_kind = ENDPOINTS[op["endpoint"]]
+        if op["value"] not in catalog[endpoint_kind]:
+            return check("UNAVAILABLE", "ENDPOINT_ARGUMENT_NOT_A_VISIBLE_IDENTITY", visible_delta=delta)
+        expected["connections"][op["patch"]][op["endpoint"]] = op["value"]
+    elif op["op"] == "select_receiver":
+        expected["selected"] = op["receiver"]
+    elif op["op"] == "clear_receipt":
+        expected["received"][op["receiver"]] = False
+    elif op["op"] == "clear_message":
+        expected["notice"] = None
+    elif op["op"] == "transmit":
+        if before["selected"] is None:
+            return check("UNAVAILABLE", "NO_SELECTED_RECEIVER", visible_delta=delta)
+        truth = primary_truth(before, op["transmitter"])
+        if truth["delivered"]:
+            expected["received"][truth["target"]] = True
+        expected["notice"] = message(truth["delivered"], truth["source"], truth["target"])
+    elif op["op"] not in {"reset", "reload", "noop"}:
+        return check("UNAVAILABLE", "UNSUPPORTED_PUBLIC_OPERATION", visible_delta=delta)
+    fields = {name: compare(after[name], expected[name]) for name in expected}
+    return check(aggregate(list(fields.values())), "ORACLE_PUBLIC_EFFECT_DIAGNOSTIC", fields=fields,
+                 visible_delta=delta, oracle_truth=truth,
+                 scope="Observed application effect; no learned state consequence prediction is manufactured")
+
+
+def record_fields(value, typename, fields=None):
+    require(type(value) is dict and set(value) == {"$record", "fields"}
+            and value["$record"] == typename and type(value["fields"]) is dict,
+            "Unsupported typed diagnostic record: " + typename)
+    if fields is not None:
+        require(set(value["fields"]) == set(fields.split()), "Incomplete typed diagnostic record: " + typename)
+    return value["fields"]
+
+
+def object_fields(value):
+    fields = record_fields(value, ABSOBJ, "tid key attrs parent refs ordinal node positional")
+    require(type(fields["tid"]) is int and type(fields["key"]) is str
+            and type(fields["node"]) is int and type(fields["attrs"]) is dict
+            and type(fields["refs"]) is dict and type(fields["positional"]) is bool,
+            "Typed object fields differ")
+    def identity(value):
+        return value is None or (type(value) is tuple and len(value) == 2
+                                 and type(value[0]) is int and type(value[1]) is str)
+    require(all(type(key) is str for key in fields["attrs"])
+            and all(type(key) is str and identity(target) for key, target in fields["refs"].items())
+            and identity(fields["parent"]) and type(fields["ordinal"]) is int,
+            "Typed object reference, parent or slot identity differs")
+    return fields
+
+
+def object_correspondence(obj, raw, public):
+    if obj is None:
+        return check("UNAVAILABLE", "NO_RECORDED_OBJECT")
+    fields = object_fields(obj)
+    if raw is None:
+        return check("UNOBSERVED", "NO_RAW_PRESTATE")
+    node_index = fields["node"]
+    structural, exact = [], []
+    for name, entity in public["entities"].items():
+        if entity["root"]["status"] != "PASS":
+            continue
+        if fields["key"] == name:
+            exact.append(name)
+        root = entity["root"]["value"]
+        if 0 <= node_index < len(raw["nodes"]) and (
+                root in ancestors(raw["nodes"], node_index) or
+                node_index in ancestors(raw["nodes"], root)):
+            structural.append(name)
+    # A broad ancestor enclosing alternatives is ambiguous, even if a key happens to match.
+    if len(structural) > 1:
+        return check("AMBIGUOUS", "OBJECT_ANCHOR_ENCLOSES_MULTIPLE_ENTITIES", candidates=structural,
+                     exact_key_candidates=exact, native_node=node_index, native_key=fields["key"])
+    candidates = list(dict.fromkeys(structural + exact))
+    if not candidates:
+        return check("UNAVAILABLE", "NO_UNIQUE_RAW_CORRESPONDENCE", native_node=node_index,
+                     native_key=fields["key"], exact_name_absence_is_not_wrong=True)
+    if len(candidates) > 1:
+        return check("AMBIGUOUS", "RAW_ANCHOR_AND_KEY_DISAGREE", candidates=candidates,
+                     native_node=node_index, native_key=fields["key"])
+    name = candidates[0]
+    return check("PASS", "UNIQUE_RAW_CORRESPONDENCE", name=name, kind=public["entities"][name]["kind"],
+                 raw_group=public["entities"][name]["root"]["value"], native_node=node_index,
+                 native_key=fields["key"], basis=[label for label, values in (("TREE_ANCHOR", structural), ("EXACT_VISIBLE_KEY", exact)) if values],
+                 scope="One saved page; does not establish persistent identity or learned naming")
+
+
+def correspondence_comparison(correspondence, expected, reason):
+    if expected is None:
+        return check("UNOBSERVED", "EXPECTED_PUBLIC_IDENTITY_NOT_VISIBLE", correspondence=correspondence)
+    if correspondence["status"] != "PASS":
+        return check(correspondence["status"], "CORRESPONDENCE_NOT_ESTABLISHED", correspondence=correspondence)
+    result = compare(correspondence["name"], expected, reason)
+    result["correspondence"] = correspondence
+    return result
+
+
+def state_correspondence(obj, objects, raw, public):
+    if obj is None:
+        return check("UNAVAILABLE", "NO_RECORDED_OBJECT")
+    fields = object_fields(obj)
+    identity = fields["tid"], fields["key"]
+    if identity not in objects:
+        return check("UNAVAILABLE", "RECORDED_OBJECT_NOT_IN_STATE", native_identity=list(identity))
+    if not same_typed(obj, objects[identity]):
+        return check("UNAVAILABLE", "RECORDED_OBJECT_DISAGREES_WITH_STATE", native_identity=list(identity))
+    return object_correspondence(objects[identity], raw, public)
+
+
+def parsed_fields(parsed, raw, public, catalog):
+    fields = record_fields(parsed, PARSED, "obs instances statics node_instance node_key row_named")
+    require(type(fields["instances"]) is list and type(fields["statics"]) is dict
+            and type(fields["node_instance"]) is dict and type(fields["node_key"]) is dict,
+            "Typed parsed inventory differs")
+    instances = [record_fields(item, INSTANCE, "root tid parent slots context anchor positional")
+                 for item in fields["instances"]]
+    require(raw is not None, "No request page for parsed provenance")
+    require(all(type(key) is int and 0 <= key < len(raw["nodes"])
+                and type(value) is int and 0 <= value < len(instances)
+                for key, value in fields["node_instance"].items())
+            and all(type(key) is int and 0 <= key < len(raw["nodes"]) and type(value) is str
+                    for key, value in fields["node_key"].items()),
+            "Typed parsed index maps differ")
+    require(all(type(inst["root"]) is int and 0 <= inst["root"] < len(raw["nodes"])
+                and type(inst["tid"]) is int and type(inst["slots"]) is dict
+                and all(type(key) is str for key in inst["slots"]) for inst in instances),
+            "Typed parsed instance identity differs")
+    stored_obs = record_fields(fields["obs"], "semabi.compiler.observation.Observation", "nodes url _children")
+    stored_nodes = [record_fields(item, "semabi.compiler.observation.Node",
+                                 "i parent role name value checked options placeholder current bbox")
+                    for item in stored_obs["nodes"]]
+    semantic_fields = ("i", "parent", "role", "name", "value", "checked", "options", "placeholder", "current")
+    require(raw is not None and same([{key: node.get(key) for key in semantic_fields} for node in raw["nodes"]],
+                                    [{key: node[key] for key in semantic_fields} for node in stored_nodes]),
+            "Saved parsed page differs from the request's public semantic tree")
+    children = {}
+    for node in stored_nodes:
+        children.setdefault(node["parent"], []).append(node["i"])
+    require(same_typed(stored_obs["_children"], children), "Saved parsed child map differs from its parent tree")
+    rows = []
+    for name in catalog["receivers"] + catalog["patches"]:
+        entity = public["entities"].get(name)
+        kinds = ("checked", "received") if name in catalog["receivers"] else tuple(ENDPOINTS)
+        for field in kinds:
+            visible = {} if entity is None else entity["fields"].get(field, {})
+            if visible.get("status") != "PASS":
+                rows.append({"name": name, "field": field, **check("UNOBSERVED", "RAW_FIELD_NOT_VISIBLE")})
+                continue
+            node = visible["node"]
+            slot = fields["node_key"].get(node)
+            inst_index = fields["node_instance"].get(node)
+            slots = instances[inst_index]["slots"] if type(inst_index) is int and 0 <= inst_index < len(instances) else {}
+            stored = slots.get(slot)
+            grounded = (type(inst_index) is int and 0 <= inst_index < len(instances)
+                        and type(instances[inst_index]["root"]) is int
+                        and instances[inst_index]["root"] in ancestors(raw["nodes"], node))
+            if not grounded:
+                result = check("UNAVAILABLE", "PARSED_INSTANCE_NOT_AN_ANCESTOR", node=node, native_slot=slot)
+            elif slot is None or type(stored) is not tuple or len(stored) != 2:
+                result = check("UNAVAILABLE", "NO_GROUNDED_PARSED_SLOT", node=node, native_slot=slot)
+            else:
+                expected = raw["nodes"][node]["name"] if field == "received" else visible["value"]
+                result = compare(stored[1], expected, "SAVED_NODE_TO_PARSED_SLOT_VALUE")
+                result.update(node=node, native_slot=slot, native_instance=inst_index)
+            rows.append({"name": name, "field": field, **result})
+    return {"denominator": len(rows), "counts": dict(Counter(row["status"] for row in rows)), "rows": rows,
+            "scope": "Saved parsed leaf slots only; these checks do not establish persistent attributes or references"}
+
+
+def representation(response, raw, public, catalog, operation_check):
+    """Inspect the stored pre-action interpretation without calling its methods."""
+    if response is None:
+        return check("UNAVAILABLE", "MISSING_FORECAST", object_denominator=16, reference_denominator=16)
+    _, score = helpers()
+    values = score.payload(response)
+    if values is None:
+        return check("UNAVAILABLE", "NO_COMPLETE_TYPED_FORECAST", forecast_status=response.get("status"),
+                     object_denominator=16, reference_denominator=16)
+    decoded = score.decode(response["values"], response["snapshots"])
+    state = record_fields(decoded["state"], ABSSTATE,
+                          "objs view partial unidentified provisional parsed unknown_is_none")
+    require(type(state["objs"]) is dict and type(state["view"]) is dict
+            and type(state["partial"]) is bool and type(state["unknown_is_none"]) is bool
+            and type(state["unidentified"]) is list and type(state["provisional"]) is set,
+            "Typed state inventory differs")
+    require(same_typed(state["parsed"], decoded["parsed"]), "State and top-level parsed records differ")
+    objects, by_name, correspondences = [], defaultdict(list), {}
+    for identity, obj in state["objs"].items():
+        fields = object_fields(obj)
+        require(type(identity) is tuple and len(identity) == 2 and type(identity[0]) is int
+                and type(identity[1]) is str and identity == (fields["tid"], fields["key"]),
+                "Stored object identity differs from its fields")
+        corr = object_correspondence(obj, raw, public)
+        correspondences[identity] = corr
+        objects.append({"native_identity": list(identity), "correspondence": corr,
+                        "attribute_slots": sorted(fields["attrs"]), "reference_slots": sorted(fields["refs"])})
+        if corr["status"] == "PASS":
+            by_name[corr["name"]].append(identity)
+    coverage = []
+    for kind in KINDS:
+        for name in catalog[kind]:
+            identities = by_name[name]
+            status = "PASS" if len(identities) == 1 else "AMBIGUOUS" if identities else "UNAVAILABLE"
+            coverage.append({"kind": kind, "name": name, **check(status, "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+                                                                 native_identities=[list(identity) for identity in identities])})
+    operation_value = operation_check.get("value", {}) if operation_check["status"] == "PASS" else {}
+    source = operation_value.get("transmitter") if operation_value.get("op") == "transmit" else None
+    selected = public["selected"].get("value") if public["selected"]["status"] == "PASS" else None
+    owner_corr = state_correspondence(decoded["owner"], state["objs"], raw, public)
+    owner = correspondence_comparison(owner_corr, source, "RECORDED_OWNER_VS_ACTUAL_SOURCE")
+    refs = []
+    for name in catalog["patches"]:
+        for endpoint, target_kind in ENDPOINTS.items():
+            base = {"patch": name, "endpoint": endpoint}
+            visible = public["entities"].get(name, {}).get("fields", {}).get(endpoint, {})
+            if visible.get("status") != "PASS":
+                result = check("UNOBSERVED", "RAW_ENDPOINT_NOT_VISIBLE")
+            elif len(by_name[name]) != 1:
+                result = check("AMBIGUOUS" if by_name[name] else "UNAVAILABLE", "NO_UNIQUE_BRIDGE_OBJECT")
+            else:
+                fields = object_fields(state["objs"][by_name[name][0]])
+                candidates = []
+                for slot, target in fields["refs"].items():
+                    corr = correspondences.get(target) if type(target) is tuple else None
+                    if corr is not None and corr["status"] == "PASS" and corr["kind"] == target_kind:
+                        candidates.append({"slot": slot, "target_identity": list(target), "correspondence": corr})
+                if len(candidates) != 1:
+                    result = check("AMBIGUOUS" if candidates else "UNAVAILABLE", "REFERENCE_FIELD_CORRESPONDENCE_NOT_UNIQUE",
+                                   candidates=candidates)
+                else:
+                    candidate = candidates[0]
+                    result = correspondence_comparison(candidate["correspondence"], visible["value"], "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE")
+                    result.update(slot=candidate["slot"], target_identity=candidate["target_identity"],
+                                  field_basis="Unique recorded reference into a raw-corresponded endpoint collection")
+            refs.append({**base, **result})
+    require(type(decoded["bound"]) is dict and type(decoded["binding_status"]) is dict,
+            "Typed binding inventory differs")
+    require(type(decoded["roles"]) is dict and type(decoded["literals"]) is set
+            and all(type(key) is str for key in decoded["bound"])
+            and all(type(key) is str and type(value) is str for key, value in decoded["binding_status"].items()),
+            "Typed role or literal inventory differs")
+    bound = {name: state_correspondence(obj, state["objs"], raw, public) for name, obj in decoded["bound"].items()}
+    roles = []
+    for event in dict.fromkeys([*values["arguments"], *values["arg_roles"]]):
+        positions = values["arg_roles"].get(event, {})
+        recognized = "".join(event.split()) in {
+            "Transmissiondelivered:<>→<>.", "Transmissionblocked:<>→<>."}
+        for position in sorted(set((0, 1)) | set(positions)):
+            role = positions.get(position)
+            corr = bound.get(role, check("UNAVAILABLE", "NO_RECORDED_BOUND_OBJECT"))
+            expected = (source, selected)[position] if recognized and position in (0, 1) else None
+            identity = (correspondence_comparison(corr, expected, "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT")
+                        if recognized and position in (0, 1) else check("UNAVAILABLE", "NO_FIXED_EVENT_ROLE_CORRESPONDENCE"))
+            binding_status = decoded["binding_status"].get(role)
+            binding = check("PASS" if binding_status == "named" and role in bound else
+                            "AMBIGUOUS" if binding_status == "ambiguous" else "UNAVAILABLE",
+                            "RECORDED_BINDING_STATUS", recorded=binding_status)
+            definition = decoded["roles"].get(role)
+            if definition is None:
+                declared = check("PASS" if role == "owner" else "UNAVAILABLE",
+                                 "NATIVE_OWNER_CONVENTION" if role == "owner" else "NO_RECORDED_ROLE_DEFINITION")
+            else:
+                typename = definition.get("$record") if type(definition) is dict else None
+                allowed = {"semabi.compiler.v4.outcome.Role": "name kind form tid anchor",
+                           "semabi.compiler.v4.outcome.Alias": "name parts tid evidence"}
+                require(typename in allowed, "Unsupported copied role declaration")
+                fields = record_fields(definition, typename, allowed[typename])
+                require(fields["name"] == role and type(fields["name"]) is str, "Copied role declaration name differs")
+                declared = check("PASS", "RECORDED_ROLE_DEFINITION", record_type=typename)
+            argument = values["arguments"].get(event, {}).get(position)
+            entity = public["entities"].get(argument) if type(argument) is str else None
+            if expected is None:
+                literal = check("UNAVAILABLE", "NO_FIXED_LITERAL_IDENTITY_COMPARISON")
+            elif entity is None or entity["root"]["status"] != "PASS":
+                literal = check("UNAVAILABLE", "NO_UNIQUE_RECORDED_LITERAL_CORRESPONDENCE", recorded=argument)
+            else:
+                literal = compare(argument, expected, "RECORDED_LITERAL_VS_RAW_ENDPOINT")
+            components = {"identity": identity, "binding": binding, "declaration": declared, "literal": literal}
+            result = check(aggregate(list(components.values())), "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS", components=components)
+            roles.append({"event": event, "position": position, "role": role,
+                          "binding_status": binding_status, **result})
+    parsed = parsed_fields(decoded["parsed"], raw, public, catalog)
+    checks = [*coverage, *refs, owner, *roles, *parsed["rows"]]
+    return check(aggregate(checks), "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC",
+                 owner=owner, bound_correspondences=bound, object_denominator=16,
+                 objects=objects, object_coverage=coverage, reference_denominator=16, references=refs,
+                 argument_role_positions=roles, parsed_public_fields=parsed,
+                 state_scope={"partial": state["partial"], "unknown_is_none": state["unknown_is_none"],
+                              "unidentified_count": len(state["unidentified"]), "provisional_count": len(state["provisional"])},
+                 persistent_flag_attributes=check("UNAVAILABLE", "NO_UNIQUE_SAVED_ATTRIBUTE_TO_RAW_NODE_PROVENANCE"),
+                 learned_state_consequence=check("UNAVAILABLE", "PRESTATE_FORECAST_RECORD_CONTAINS_NO_PREDICTED_POSTSTATE"),
+                 recorded_literal_count=len(decoded["literals"]),
+                 query_literal_correctness=check("UNAVAILABLE", "NO_INDEPENDENT_GROUNDED_QUERY_LITERAL_SEMANTICS"),
+                 scope="Oracle correspondence is a post-preservation diagnostic, not a learned or recomputed prediction")
+
+
+def target_premise(public, catalog, case):
+    state = state_values(public, catalog)
+    if state is None:
+        return check("UNOBSERVED", "TARGET_PRESTATE_NOT_FULLY_VISIBLE")
+    expected = {"connections": {name: {"transmitter": catalog["transmitters"][edge[0]],
+                                       "receiver": catalog["receivers"][edge[1]]}
+                                for name, edge in zip(catalog["patches"], case["edges"], strict=True)},
+                "received": dict.fromkeys(catalog["receivers"], False),
+                "selected": catalog["receivers"][case["target"]], "notice": None}
+    return compare(state, expected, "FIXED_ORACLE_TARGET_PREMISE")
+
+
+def assess(actual, expected, catalog, specification, case=None):
+    if actual is None:
+        return {"charged_attempt": expected["charged_attempt"], "target": expected["target"],
+                "case": expected["metadata"]["case"], "custody": "UNVERIFIED",
+                "visibility": check("UNOBSERVED", "NO_ADMITTED_RAW_RECORD"),
+                "primitive": check("UNAVAILABLE", "NO_ADMITTED_PRIMITIVE"),
+                "effect": check("UNOBSERVED", "NO_ADMITTED_RAW_RECORD"),
+                "representation": check("UNAVAILABLE", "NO_ADMITTED_FORECAST", object_denominator=16, reference_denominator=16),
+                "target_premise": check("UNOBSERVED", "NO_ADMITTED_RAW_RECORD") if expected["target"] else None}
+    raw_before, raw_after = actual["before"], actual["after"]
+    before, after = public_state(raw_before, catalog), public_state(raw_after, catalog)
+    primitive = actual["decision"]["action"]
+    resolved = resolve_primitive(raw_before, expected["action"], primitive)
+    op = operation(raw_before, before, primitive)
+    try:
+        represented = representation(actual["response"], raw_before, before, catalog, op)
+    except Exception as failure:
+        represented = check("UNAVAILABLE", "UNSUPPORTED_OR_INVALID_TYPED_DIAGNOSTIC_DATA",
+                            error={"type": type(failure).__name__, "detail": str(failure)},
+                            object_denominator=16, reference_denominator=16)
+    return {"charged_attempt": expected["charged_attempt"], "target": expected["target"],
+            "case": expected["metadata"]["case"], "custody": "MATCHED",
+            "receipt_index": actual.get("receipt_index"), "native_ok": actual["decision"]["ok"],
+            "native_error": actual["decision"]["error"],
+            "visibility": check(aggregate([before, after]), "SEPARATE_RAW_BEFORE_AND_AFTER", before=before, after=after),
+            "primitive": resolved, "operation": op,
+            "effect": effect(before, after, op, catalog, specification, actual["decision"]["ok"]),
+            "representation": represented,
+            "target_premise": target_premise(before, catalog, case) if expected["target"] else None}
+
+
+def summarize(rows):
+    result = {"denominator_opportunities": len(rows)}
+    for label in ("visibility", "primitive", "effect", "representation"):
+        result[label] = {"counts": dict(Counter(row[label]["status"] for row in rows)),
+                         "reasons": dict(Counter(row[label]["reason"] for row in rows))}
+    result["object_correspondence_opportunities"] = sum(row["representation"]["object_denominator"] for row in rows)
+    result["endpoint_reference_opportunities"] = sum(row["representation"]["reference_denominator"] for row in rows)
+    for label, field, denominator in (("object_correspondence", "object_coverage", "object_denominator"),
+                                      ("endpoint_reference", "references", "reference_denominator")):
+        counts = Counter()
+        for row in rows:
+            represented = row["representation"]
+            inner = represented.get(field)
+            if inner is None:
+                require(represented["status"] in {"UNAVAILABLE", "UNOBSERVED"}, "Missing inner diagnostic outcomes")
+                counts["UNAVAILABLE"] += represented[denominator]
+            else:
+                require(len(inner) == represented[denominator] and all(item["status"] in STATUSES for item in inner),
+                        "Inner diagnostic outcome denominator differs")
+                counts.update(item["status"] for item in inner)
+        result[label] = {"denominator": sum(row["representation"][denominator] for row in rows), "counts": dict(counts),
+                         "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"}
+        require(sum(counts.values()) == result[label]["denominator"], "Inner diagnostic status counts do not sum")
+    premises = [row["target_premise"] for row in rows if row["target_premise"] is not None]
+    result["target_premise"] = {"denominator_opportunities": len(premises),
+                                "counts": dict(Counter(row["status"] for row in premises))}
+    return result
+
+
+def canonical_path(root, name, *, exists=True):
+    require(type(name) is str and name and not Path(name).is_absolute()
+            and all(part not in {"", ".", ".."} for part in name.split("/")), "Noncanonical inventory path")
+    path = root / name
+    require(path.resolve(strict=exists) == path, "Inventory path traverses a symlink")
+    return path
+
+
+def verify_package(manifest_path, wanted):
+    require(sha(manifest_path) == wanted, "Control package manifest changed")
+    manifest = read_json(manifest_path)
+    require(type(manifest) is dict and set(manifest) == {"schema", "files", "dependency_files"}
+            and manifest.get("schema") == "semabi.j1.post_controls_source_manifest.v1"
+            and type(manifest.get("files")) is dict
+            and set(manifest["files"]) == {str((HERE / name).relative_to(ROOT)) for name in PACKAGE_FILES}
+            and type(manifest["dependency_files"]) is dict,
+            "Control package source inventory differs")
+    for name, file_sha in manifest["files"].items():
+        require(sha(canonical_path(ROOT, name)) == file_sha, "Control package source changed")
+    return manifest
+
+
+def verify_dependencies(manifest, frozen):
+    """Called only after first-pass authentication; exact fixed oracle inputs."""
+    require(set(manifest["dependency_files"]) == DEPENDENCY_FILES, "Diagnostic dependency inventory differs")
+    inventory_name = "docs/data/v4/transport/development/j1/evaluator/public_inventory_sha256.json"
+    require(manifest["dependency_files"][inventory_name] == FIXTURE_INVENTORY_SHA,
+            "Original fixture source inventory differs")
+    for name, wanted in manifest["dependency_files"].items():
+        require(frozen["fixed_inputs"].get(name) == wanted, "Diagnostic dependency is outside the fixed first-pass inputs")
+        require(sha(canonical_path(ROOT, name)) == wanted, "Diagnostic dependency bytes changed")
+    inventory = read_json(canonical_path(ROOT, inventory_name))
+    for name, wanted in manifest["dependency_files"].items():
+        require(name == inventory_name or inventory["sha256"].get(name) == wanted,
+                "Diagnostic dependency differs from the original frozen fixture")
+
+
+def authenticate(freeze_path, freeze_sha, preserved_path, preserved_sha, out):
+    """Authenticate commitments before importing evaluator or parsing run payloads."""
+    require(sha(freeze_path) == freeze_sha and sha(preserved_path) == preserved_sha,
+            "Supplied first-pass commitment changed")
+    frozen, preserved = read_json(freeze_path), read_json(preserved_path)
+    require(frozen.get("schema") == "semabi.j1.evaluation_freeze.v1"
+            and preserved.get("schema") == "semabi.j1.first_pass_preservation.v1"
+            and preserved.get("status") in {"PRESERVED", "PRESERVED_PARTIAL"}
+            and preserved.get("freeze_sha256") == freeze_sha and preserved.get("binding_failures") == [],
+            "First-pass preservation is not authenticated")
+    require(type(preserved.get("files")) is dict and type(frozen.get("source_files")) is dict
+            and type(frozen.get("fixed_inputs")) is dict, "Missing first-pass input inventory")
+    for label in ("source_files", "fixed_inputs"):
+        for name, wanted in frozen[label].items():
+            require(preserved["files"].get(name) == wanted, "Preserved input commitment differs")
+    for name, wanted in preserved["files"].items():
+        require(type(wanted) is str and len(wanted) == 64 and sha(canonical_path(ROOT, name)) == wanted,
+                "Preserved bytes changed")
+    evaluator_name = str((J1 / "evaluate.py").relative_to(ROOT))
+    require(evaluator_name in frozen["source_files"], "Evaluator source is outside the commitment")
+    for name, wanted in HELPER_SOURCES.items():
+        require(frozen["source_files"].get(str((J1 / name).relative_to(ROOT))) == wanted,
+                "Frozen data helper differs from reviewed diagnostic helper")
+    require(out.is_absolute() and out.resolve() == out and not out.exists() and not out.is_symlink()
+            and out.is_relative_to(HERE), "Diagnostic output must be a new identity inside its evaluator directory")
+    roots = [frozen["predictor_directory"], frozen["execution_receipts_directory"],
+             *[phase["directory"] for phase in frozen["phases"]],
+             *[control["path"] for control in frozen["controls"]], *[job["path"] for job in frozen["jobs"]]]
+    require(all(not out.is_relative_to(canonical_path(ROOT, name, exists=False))
+                and not canonical_path(ROOT, name, exists=False).is_relative_to(out) for name in roots),
+            "Diagnostic output lies within a sealed first-pass root")
+    evaluation = module("_j1_post_controls_evaluation", J1 / "evaluate.py")
+    verified = evaluation.load_freeze(freeze_path)
+    require(same(verified, frozen), "Global freeze changed during authentication")
+    evaluation.verify_preservation(frozen, freeze_path, preserved_path)
+    return evaluation, frozen, preserved
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
+    parser.add_argument("--control-manifest", type=Path, required=True)
+    parser.add_argument("--control-manifest-sha256", required=True)
+    parser.add_argument("--freeze", type=Path, required=True)
+    parser.add_argument("--freeze-sha256", required=True)
+    parser.add_argument("--first-pass-manifest", type=Path, required=True)
+    parser.add_argument("--first-pass-sha256", required=True)
+    parser.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args()
+    package = verify_package(args.control_manifest, args.control_manifest_sha256)
+    evaluation, frozen, preserved = authenticate(args.freeze, args.freeze_sha256,
+                                                args.first_pass_manifest, args.first_pass_sha256, args.out)
+    verify_dependencies(package, frozen)
+    # Fixture/oracle payloads are first opened only after authenticated first-pass custody.
+    fixture = ROOT / "experiments/join_v1"
+    specification = read_json(fixture / "oracle/specification_v1.json")
+    cases = read_json(fixture / "oracle/cases_v1.json")
+    catalogs = {name: read_json(fixture / f"fixtures/catalog_{name}.json") for name in ("primary", "permuted")}
+    script = evaluation.custody.read_json(evaluation.bound_reference(frozen, frozen["script"]))
+    planned = [evaluation.custody.allocation(script, phase) for phase in frozen["phases"]]
+    require([plan["targets"] for plan in planned] == [24, 24]
+            and [len(plan["rows"]) for plan in planned] == [313, 313], "Fixed diagnostic allocation differs")
+    admitted, error = None, None
+    try:
+        require(preserved["status"] == "PRESERVED", "Partial first-pass preservation remains unestablished")
+        native = evaluation.native_helpers()
+        admitted = evaluation.audit_run(frozen, planned, native)
+    except Exception as failure:
+        error = {"type": type(failure).__name__, "detail": str(failure)}
+    phases = []
+    for index, (phase, plan, partition) in enumerate(zip(frozen["phases"], planned, ("evaluation", "invariance"), strict=True)):
+        catalog = catalogs[phase["profile"]]
+        case_map = {case["case"]: case for case in cases[partition]}
+        require(len(case_map) == 24, "Fixed oracle target denominator differs")
+        rows = [assess(None if admitted is None else admitted["phases"][index]["rows"][position], expected,
+                       catalog, specification, case_map[expected["metadata"]["case"]])
+                for position, expected in enumerate(plan["rows"])]
+        targets = [row for row in rows if row["target"]]
+        require(len(targets) == 24, "Missing target was dropped from diagnostics")
+        phases.append({"name": phase["name"], "all_charges": summarize(rows),
+                       "designated_targets": summarize(targets), "rows": rows})
+    authenticate(args.freeze, args.freeze_sha256, args.first_pass_manifest, args.first_pass_sha256, args.out)
+    verify_package(args.control_manifest, args.control_manifest_sha256)
+    verify_dependencies(package, frozen)
+    result = {"schema": "semabi.j1.post_preservation_diagnostics.v1",
+              "status": "DIAGNOSTIC_ONLY" if admitted is not None else "INVALID_CUSTODY_UNESTABLISHED",
+              "control_manifest_sha256": args.control_manifest_sha256,
+              "freeze_sha256": args.freeze_sha256, "first_pass_sha256": args.first_pass_sha256,
+              "first_pass_status": preserved["status"], "source_files": package["files"],
+              "custody_error": error, "phases": phases,
+              "limitations": ["Oracle identity/representation controls are post-preservation diagnostics only.",
+                              "No missing exact name is called a wrong correspondence.",
+                              "Complete fixed target denominators include unavailable and missing forecasts.",
+                              "Observed effects and saved prestate interpretations are separate from learned poststate consequences.",
+                              "No fit, native forecast, browser, service, action or repair is invoked."]}
+    with args.out.open("xb") as stream:
+        stream.write(canonical(result) + b"\n")
+    print(json.dumps({"status": result["status"], "path": str(args.out), "sha256": sha(args.out),
+                      "target_denominators": [24, 24]}, sort_keys=True))
+    return 0 if admitted is not None else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

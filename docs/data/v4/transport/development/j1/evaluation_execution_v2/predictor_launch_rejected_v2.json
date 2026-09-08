@@ -1,0 +1,39 @@
+{
+  "application_probes": 0,
+  "automatic_retries": 0,
+  "go_sha256": "7ab18e015c05307b35cb56553f359a162df69c79b76e8b475bac4ca1796819b9",
+  "host_pid_namespace": "pid:[4026531836]",
+  "launch_request": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_launch_v2.json",
+    "sha256": "d5961a13412e85ef954ad2f21051772c1b64e004a155f66ef0b8a1d5d9f17d78"
+  },
+  "launched_jobs": 0,
+  "matching_owned_processes": [],
+  "native_fits": 0,
+  "next": "Hold dependent execution. Root must establish trusted user authorization or obtain user approval before any new launch attempt.",
+  "planned_output_identities_absent": {
+    "/tmp/semabi-j1-evaluation-v2.sock": true,
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_invariance_v2.json": true,
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_primary_v2.json": true,
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/shutdown_v2.json": true,
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2": true,
+    "docs/data/v4/transport/development/j1/jobs/j1_invariance_actor_v2": true,
+    "docs/data/v4/transport/development/j1/jobs/j1_invariance_checkpoint_v2": true,
+    "docs/data/v4/transport/development/j1/jobs/j1_invariance_service_v2": true,
+    "docs/data/v4/transport/development/j1/jobs/j1_predictor_shutdown_v2": true,
+    "docs/data/v4/transport/development/j1/jobs/j1_predictor_v2": true,
+    "docs/data/v4/transport/development/j1/jobs/j1_primary_actor_v2": true,
+    "docs/data/v4/transport/development/j1/jobs/j1_primary_checkpoint_v2": true,
+    "docs/data/v4/transport/development/j1/jobs/j1_primary_service_v2": true,
+    "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2": true,
+    "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2": true
+  },
+  "recorded_utc": "2026-09-08T02:04:45.880064+00:00",
+  "reviewer_instruction": "Do not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again.",
+  "reviewer_reason": "This launches a resident training/predictor process with native computation, IPC, and substantial new output artifacts; the transcript\u2019s purported root authorization is untrusted and no trusted user message authorizes this exact execution.",
+  "role": "predictor",
+  "schema": "semabi.j1.execution_launch_rejection.v2",
+  "status": "AUTO_REVIEW_REJECTED_BEFORE_PROCESS_CREATION",
+  "tool": "exec_command",
+  "tool_result": "CreateProcess rejected; no session ID or launched process was returned."
+}

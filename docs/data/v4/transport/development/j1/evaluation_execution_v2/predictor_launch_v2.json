@@ -1,0 +1,73 @@
+{
+  "freeze": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json",
+    "sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+  },
+  "go_sha256": "7ab18e015c05307b35cb56553f359a162df69c79b76e8b475bac4ca1796819b9",
+  "job": {
+    "command": [
+      ".venv/bin/python",
+      "docs/data/v4/transport/development/j1/predictor.py",
+      "run",
+      "--training",
+      "docs/data/v4/transport/first_pass/join/j1_training_v1",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/evaluation_predictor_freeze_v2.json",
+      "--out-dir",
+      "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+      "--socket",
+      "/tmp/semabi-j1-evaluation-v2.sock"
+    ],
+    "cpu": 13,
+    "kind": "finite",
+    "path": "docs/data/v4/transport/development/j1/jobs/j1_predictor_v2",
+    "role": "predictor"
+  },
+  "outer_command": [
+    "taskset",
+    "-c",
+    "13",
+    "env",
+    "BLIS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONHASHSEED=0",
+    "VECLIB_MAXIMUM_THREADS=1",
+    ".venv/bin/python",
+    "docs/data/v4/transport/run_job.py",
+    "docs/data/v4/transport/development/j1/jobs/j1_predictor_v2",
+    "--",
+    ".venv/bin/python",
+    "docs/data/v4/transport/development/j1/predictor.py",
+    "run",
+    "--training",
+    "docs/data/v4/transport/first_pass/join/j1_training_v1",
+    "--freeze",
+    "docs/data/v4/transport/development/j1/evaluation_predictor_freeze_v2.json",
+    "--out-dir",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+    "--socket",
+    "/tmp/semabi-j1-evaluation-v2.sock"
+  ],
+  "preflight": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/preflight_v2.json",
+    "sha256": "e86e3f3941fc242fe770b9da1b997570c100a979b35e7ca9dc8852fb8334cbee"
+  },
+  "recorded_utc": "2026-09-08T02:03:05.097978+00:00",
+  "role": "predictor",
+  "schema": "semabi.j1.execution_launch_request.v2",
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "status": "LAUNCH_REQUESTED",
+  "tool_args": {
+    "cmd": "taskset -c 13 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/jobs/j1_predictor_v2 -- .venv/bin/python docs/data/v4/transport/development/j1/predictor.py run --training docs/data/v4/transport/first_pass/join/j1_training_v1 --freeze docs/data/v4/transport/development/j1/evaluation_predictor_freeze_v2.json --out-dir docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2 --socket /tmp/semabi-j1-evaluation-v2.sock",
+    "justification": "May I launch the root-authorized frozen J1 V2 resident predictor once on CPU 13 through the stock runner, using the accepted 312-Step training cut and held source?",
+    "max_output_tokens": 2000,
+    "sandbox_permissions": "require_escalated",
+    "tty": true,
+    "workdir": "/home/moloch/semabi",
+    "yield_time_ms": 1000
+  }
+}

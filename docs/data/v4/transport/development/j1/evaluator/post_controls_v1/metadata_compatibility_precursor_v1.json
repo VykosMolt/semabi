@@ -1,0 +1,239 @@
+{
+  "disclosure_scope": "Source/interface names, counts and commitments only; no fixture identities, cases, oracle answers or actual learned results",
+  "execution_scope": {
+    "actual_first_pass_manifest_opened": false,
+    "actual_run_payloads_opened": false,
+    "held_package_modified": false,
+    "native_fit_forecast_browser_service_executed": false,
+    "production_adapter_executed": false,
+    "unchanged101_controls_rerun": false
+  },
+  "fixed_dependencies": [
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "docs/data/v4/transport/development/j1/evaluator/public_inventory_sha256.json",
+      "sha256": "93bba30bf1c3ba1a95c4bad63e6ae55f96066471e1efef4b024a0dfb27c6b10d",
+      "v1_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/fixtures/catalog_permuted.json",
+      "sha256": "10a8d2f5e54bd242c7bf98475a07f01cdc20f75bfb5ff983d2bce6516bd8682d",
+      "v1_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/fixtures/catalog_primary.json",
+      "sha256": "ab50e4b06c44aa814429cd0a88c8e42d22f408b73903fac9e41d032d89fcfdd7",
+      "v1_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/oracle/cases_v1.json",
+      "sha256": "015b0ec5a6a0588c8d25a97e461936d4a3db3b50416f4d7425327bb20404408a",
+      "v1_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/oracle/scripts_v1.json",
+      "sha256": "d44719acaa5ae83757829fd652796804abd230a213c5401d5228851ff8ab8b39",
+      "v1_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/oracle/specification_v1.json",
+      "sha256": "ca919756fc27dad154ab376966f6b4d86aeb1a4999cd26cd245b1055f3a3d3cb",
+      "v1_fixed_input_membership": true
+    }
+  ],
+  "focused_source_probe": {
+    "finding": "The producer includes the one optional derived parser-cache field even when absent; its absent marker is non-incomplete. Full semantic decoding rejects the absent marker, and the current exact base-field gate rejects a legitimate present field.",
+    "invented_cases": [
+      {
+        "base_inventory_status": null,
+        "copied_record_field_count": 7,
+        "copying_errors": 0,
+        "decoder_error": "Unsupported or incomplete copied data",
+        "decoder_error_type": "ProtocolError",
+        "decoder_status": "REJECTED",
+        "optional_cache": "absent"
+      },
+      {
+        "base_inventory_error": "Incomplete typed diagnostic record: semabi.compiler.parse.ParsedObs",
+        "base_inventory_error_type": "ValueError",
+        "base_inventory_status": "REJECTED",
+        "copied_record_field_count": 7,
+        "copying_errors": 0,
+        "decoder_status": "ACCEPTED",
+        "optional_cache": "present_empty_mapping"
+      }
+    ],
+    "native_bindings_called": false,
+    "scope": "Actual held trace Copier, score decoder and controls record gate with one invented class; no native bindings, fixture model, learner, forecast, browser or production inputs"
+  },
+  "helper_gate_status": "EXACT_TWO_PINNED_HELPERS_MATCH_PROPOSAL",
+  "metadata_only": true,
+  "monitor_boundary": {
+    "capture_and_native_bindings_ast_unchanged_from_v1": true,
+    "checkpoint_extra_summary_fields_do_not_change_forecast_schema": true,
+    "forecast_exporter_and_trace_bytes_unchanged": true,
+    "learned_view_change_is_monitor_review_scope": true,
+    "summary_occurrence_revision_announced_but_not_admitted": true
+  },
+  "package_manifest": {
+    "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/source_manifest_v2.json",
+    "sha256": "d89de95be0bd809a726ba2149da3fad1a2a96ade6bdb11d5b6992a692547122a"
+  },
+  "proposed_runtime_metadata": {
+    "added_paths": [],
+    "changed_from_v1": {
+      "docs/data/v4/transport/development/j1/live_contract_v1.md": {
+        "proposed_sha256": "fbc4740d168aebef146a017f712aa969a13e0274a886828c60fdf622dc270076",
+        "v1_sha256": "f9642c36b3581323eaa8206d5117dd7831c2d57cf6142b39877fd0e2fbc17d90"
+      },
+      "docs/data/v4/transport/development/j1/live_model.py": {
+        "proposed_sha256": "b83ff047ad79350774c142817789c75708f6b3f025d7b46b83f4744233a4bc96",
+        "v1_sha256": "6e34f1422ee8905abf84e0699bdf5361c6c88822c950d96b5169e60414ae3ff7"
+      }
+    },
+    "current_byte_mismatches": {
+      "docs/data/v4/transport/development/j1/live_contract_v1.md": {
+        "current": "4031693fb3cd6a3b12bab4aa2d31044e83b0ba129a6457f9dc2851850de9d1f9",
+        "proposed": "fbc4740d168aebef146a017f712aa969a13e0274a886828c60fdf622dc270076"
+      },
+      "docs/data/v4/transport/development/j1/live_model.py": {
+        "current": "e8847bce1e8b55f21164672d61b83e3acc3aaec7ca8087803acb5b217ed70210",
+        "proposed": "b83ff047ad79350774c142817789c75708f6b3f025d7b46b83f4744233a4bc96"
+      }
+    },
+    "inventory_field": "runtime_source_files",
+    "path": "docs/data/v4/transport/development/j1/review_evidence/root_corrected_monitor_v2/root_review_v1.json",
+    "removed_paths": [],
+    "sha256": "a2a0249870ac840a90380819f5d83881b9f1d5926a3a45e803790a12a7923a12",
+    "source_count": 173
+  },
+  "required_next_steps": [
+    "Freeze and review the narrowly scoped optional-derived-field correction without changing native or first-pass sources",
+    "Receive the final V2 freeze/admission digests and revised monitor inventory",
+    "Recheck the exact fixed dependency membership and all required source commitments against that final metadata",
+    "Preservation authorization and expected first-pass manifest digest remain required before any actual production access"
+  ],
+  "schema": "semabi.j1.post_controls_compatibility_precursor.v1",
+  "status": "PENDING_TYPED_AVAILABILITY_CORRECTION_AND_FINAL_FREEZE",
+  "typed_record_source_audit": [
+    {
+      "base_field_count": 8,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.abstract.AbsObj",
+      "source": "semabi/compiler/abstract.py",
+      "source_sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+      "unchanged_from_v1": true
+    },
+    {
+      "base_field_count": 7,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.abstract.AbstractState",
+      "source": "semabi/compiler/abstract.py",
+      "source_sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+      "unchanged_from_v1": true
+    },
+    {
+      "base_field_count": 6,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [
+        "_member_positioned_cache"
+      ],
+      "post_controls_status": "AVAILABILITY_GAP_OPTIONAL_DERIVED_FIELD",
+      "record_type": "semabi.compiler.parse.ParsedObs",
+      "source": "semabi/compiler/parse.py",
+      "source_sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+      "unchanged_from_v1": true
+    },
+    {
+      "base_field_count": 7,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.parse.Instance",
+      "source": "semabi/compiler/parse.py",
+      "source_sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+      "unchanged_from_v1": true
+    },
+    {
+      "base_field_count": 3,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.observation.Observation",
+      "source": "semabi/compiler/observation.py",
+      "source_sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "unchanged_from_v1": true
+    },
+    {
+      "base_field_count": 10,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.observation.Node",
+      "source": "semabi/compiler/observation.py",
+      "source_sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "unchanged_from_v1": true
+    },
+    {
+      "base_field_count": 5,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.v4.outcome.Role",
+      "source": "semabi/compiler/v4/outcome.py",
+      "source_sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+      "unchanged_from_v1": true
+    },
+    {
+      "base_field_count": 4,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.v4.outcome.Alias",
+      "source": "semabi/compiler/v4/outcome.py",
+      "source_sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+      "unchanged_from_v1": true
+    },
+    {
+      "base_field_count": 6,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.v4.outcome.Vouch",
+      "source": "semabi/compiler/v4/outcome.py",
+      "source_sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+      "unchanged_from_v1": true
+    }
+  ],
+  "unchanged_runtime_interfaces": {
+    "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+    "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+    "docs/data/v4/transport/development/j1/control.py": "877c823a78d9629d0e493d8b3da32317b7ac3bb762a58a66192fae34265b95c5",
+    "docs/data/v4/transport/development/j1/custody.py": "001d6b1ecc7ddf8611cab651b413adcdab45f32d3f388e1dadfe40da86d46aed",
+    "docs/data/v4/transport/development/j1/evaluate.py": "3984eac0b1f57923121b43e4601e0a784e019a5cc1ab2d44e3da8245f299fe1a",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/predictor.py": "c0d05260b4668db3e885e6691d7b9cd61096c8db6547ae56dd1358348ef48e51",
+    "docs/data/v4/transport/development/j1/preserve.py": "c90ca334d01b1e7c9529909c203e523eafc939c2fedd121141fdbacdf0a30772",
+    "docs/data/v4/transport/development/j1/score.py": "28f2887e0ff9e59ed183173024d76cee04f29325828a7116328bbf6ecb07025d",
+    "docs/data/v4/transport/development/j1/trace.py": "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249"
+  },
+  "v1_freeze_metadata": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v1.json",
+    "sha256": "f9817e8b864f4797e6d202839fb38d96775d82ce11cbe7ab7bce5e0b8c74bceb"
+  }
+}

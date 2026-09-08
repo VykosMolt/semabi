@@ -1,0 +1,100 @@
+{
+  "commitments": {
+    "evaluation_freeze_v2.json": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b",
+    "first_pass_manifest_v2.json": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256",
+    "scoring_v2/artifact_manifest_v2.json": "cf4e345fd36fb9f664872a21f860a37cd5c831fdb99a43271a7ba8e53be54f17"
+  },
+  "native_modules_imported": 0,
+  "rows": [
+    {
+      "actor_file_sha256": "910d573cf4bd71e289f06f99ca9672830a7a8bfc7c97edd53ce9545a587ab765",
+      "comparison_after_only_path_normalization": true,
+      "differing_fields": [
+        "path"
+      ],
+      "frozen_expected": {
+        "error": null,
+        "path": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_receipts.jsonl",
+        "sha256": "b91054d70a3539223620ecfbc1a77f5eff762e9a5926855068185df92a909332"
+      },
+      "label": "receipts",
+      "original_frozen_comparison": false,
+      "phase": "primary",
+      "sidecar_bytes_match_preservation": true,
+      "stored": {
+        "error": null,
+        "path": "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_receipts.jsonl",
+        "sha256": "b91054d70a3539223620ecfbc1a77f5eff762e9a5926855068185df92a909332"
+      }
+    },
+    {
+      "actor_file_sha256": "910d573cf4bd71e289f06f99ca9672830a7a8bfc7c97edd53ce9545a587ab765",
+      "comparison_after_only_path_normalization": true,
+      "differing_fields": [
+        "path"
+      ],
+      "frozen_expected": {
+        "error": null,
+        "path": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_reconciliation.jsonl",
+        "sha256": "e9c458b254da8858c061511ecbff0c3b4a4e59b163d54a137560425366111923"
+      },
+      "label": "reconciliations",
+      "original_frozen_comparison": false,
+      "phase": "primary",
+      "sidecar_bytes_match_preservation": true,
+      "stored": {
+        "error": null,
+        "path": "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_reconciliation.jsonl",
+        "sha256": "e9c458b254da8858c061511ecbff0c3b4a4e59b163d54a137560425366111923"
+      }
+    },
+    {
+      "actor_file_sha256": "7ba87c44479653a9f5cb451840b3bd94962f1c876310c64835cd4d3ad0b78d39",
+      "comparison_after_only_path_normalization": true,
+      "differing_fields": [
+        "path"
+      ],
+      "frozen_expected": {
+        "error": null,
+        "path": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_receipts.jsonl",
+        "sha256": "ec77b87b34ed929e290700677086832a5abfee1ae1e4acf968f246d3cf575a2f"
+      },
+      "label": "receipts",
+      "original_frozen_comparison": false,
+      "phase": "invariance",
+      "sidecar_bytes_match_preservation": true,
+      "stored": {
+        "error": null,
+        "path": "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_receipts.jsonl",
+        "sha256": "ec77b87b34ed929e290700677086832a5abfee1ae1e4acf968f246d3cf575a2f"
+      }
+    },
+    {
+      "actor_file_sha256": "7ba87c44479653a9f5cb451840b3bd94962f1c876310c64835cd4d3ad0b78d39",
+      "comparison_after_only_path_normalization": true,
+      "differing_fields": [
+        "path"
+      ],
+      "frozen_expected": {
+        "error": null,
+        "path": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_reconciliation.jsonl",
+        "sha256": "86f8d07ad23c31188499406064a378dc20a594b534088164deff35d19e68eb53"
+      },
+      "label": "reconciliations",
+      "original_frozen_comparison": false,
+      "phase": "invariance",
+      "sidecar_bytes_match_preservation": true,
+      "stored": {
+        "error": null,
+        "path": "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_reconciliation.jsonl",
+        "sha256": "86f8d07ad23c31188499406064a378dc20a594b534088164deff35d19e68eb53"
+      }
+    }
+  ],
+  "schema": "semabi.j1.sidecar_path_diagnosis.v1",
+  "scope": "Actual frozen same/reference functions and saved actor sidecar metadata only. No forecast/outcome payload, native fit, query, browser action or corrective scorer execution.",
+  "source": {
+    "docs/data/v4/transport/development/j1/analysis/sidecar_path_failure_v1/diagnose_v1.py": "2a6bf0864701d0d0e6609aa3a6600c2ed170be5d23552efe4d60e434492c359c"
+  },
+  "status": "FOUR_PATH_FORMAT_MISMATCHES_WITH_IDENTICAL_AUTHENTICATED_BYTES"
+}

@@ -1,0 +1,15 @@
+{
+  "args": {
+    "cmd": "taskset -c 19 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/j1/analysis/measurement_summary_v2/summarize.py",
+    "workdir": "/home/moloch/semabi",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "327502",
+    "wall_time_seconds": 0.079301109,
+    "exit_code": 0,
+    "original_token_count": 72,
+    "output": "{\"path\": \"/home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/measurement_summary_v2/summary_v1.json\", \"sha256\": \"1022c7c5d944563bf18aa0fec165ef10ec08498813e9e864dc9a5e8bd7bf7e9a\", \"phases\": 2, \"status\": \"PRESERVED_MEASUREMENT_SUMMARIZED\", \"input_bindings_rechecked\": 36}\n"
+  }
+}

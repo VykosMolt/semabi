@@ -1,0 +1,15 @@
+{
+  "schema": "semabi.w1.independent_boundary_tool_receipt.v1",
+  "owner": "/root/sidecar_review",
+  "command": "taskset -c 22 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/independent_review_v1/boundary_check_v1.py --input-sha256 71eda9f7d2be8530d5047e6f9d8dbb242fed21455e7b0aafb325823bfa4ad475 --script-sha256 149dc4c33bf47b767099b561cdec2cc1b76ef14310ad0b56e3a4f785dec6eceb",
+  "cwd": "/home/moloch/semabi",
+  "tool": "exec_command",
+  "tool_result": {
+    "chunk_id": "cc0882",
+    "wall_time_seconds": 0.000002455,
+    "exit_code": 0,
+    "original_token_count": 58,
+    "output": "{\"fatal_error\": null, \"out\": \"docs/data/v4/transport/development/widget_persistence_v1/independent_review_v1/boundary_result_v1.json\", \"sha256\": \"e9070aefd11817f9a7a1384c58a50bdb240d80e3431dd421c7f3b2a9abb97ef1\", \"status\": \"PASS\"}\n"
+  },
+  "scope": "One direct invented multi-pair, multi-slot and multi-template boundary; no Fit, full tests, corpus or actual J1 data."
+}

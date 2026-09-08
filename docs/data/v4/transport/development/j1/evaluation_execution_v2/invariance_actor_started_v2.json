@@ -1,0 +1,132 @@
+{
+  "child": {
+    "affinity": [
+      17
+    ],
+    "argv": [
+      ".venv/bin/python",
+      "docs/data/v4/transport/development/j1/act.py",
+      "--actor-freeze",
+      "docs/data/v4/transport/development/j1/evaluation_actor_freeze_v2.json",
+      "--predictor-dir",
+      "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+      "script",
+      "--url",
+      "http://127.0.0.1:8771/join",
+      "--reset-url",
+      "http://127.0.0.1:8771/reset",
+      "--script",
+      "experiments/join_v1/oracle/scripts_v1.json",
+      "--fixture",
+      "permuted_evaluation",
+      "--seed",
+      "0",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/evaluation_collector_freeze_v2.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2"
+    ],
+    "cpu_seconds": 0.54,
+    "cwd": "/home/moloch/semabi",
+    "environment": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "exists": true,
+    "io_priority": "none: prio 0",
+    "nice": 0,
+    "pid": 1112026,
+    "ppid": 1112024,
+    "process_group": 1112026,
+    "rss": "51400 kB",
+    "session": 1112026,
+    "state": "S",
+    "threads": 2
+  },
+  "go": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/go_v2.json",
+    "sha256": "7ab18e015c05307b35cb56553f359a162df69c79b76e8b475bac4ca1796819b9"
+  },
+  "host_ipc_namespace": "ipc:[4026531839]",
+  "host_net_namespace": "net:[4026531833]",
+  "host_pid_namespace": "pid:[4026531836]",
+  "native_query_or_fixture_probe_by_reviewer": false,
+  "owned_listener": null,
+  "process_record": {
+    "path": "docs/data/v4/transport/development/j1/jobs/j1_invariance_actor_v2/process.json",
+    "sha256": "31344d04b449850a9313145721cba3b3fe01813f219484f33d5f70109ec379d8"
+  },
+  "recorded_utc": "2026-09-08T02:42:09.803454+00:00",
+  "resident_predictor_pid": 1080298,
+  "role": "invariance_actor",
+  "root_launch_tool_receipt": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/root_invariance_actor_launch_tool_v2.json",
+    "sha256": "693bb31e7a860a4f63dc1f2432260caf81a818f4ea0b270299496231c649a579"
+  },
+  "schema": "semabi.j1.execution_started_receipt.v2",
+  "source_files_verified": 156,
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "status": "RUNNING_HOST_VERIFIED",
+  "tool_session_id": 90173,
+  "tool_session_owner": "/root",
+  "wrapper": {
+    "affinity": [
+      17
+    ],
+    "argv": [
+      ".venv/bin/python",
+      "docs/data/v4/transport/run_job.py",
+      "docs/data/v4/transport/development/j1/jobs/j1_invariance_actor_v2",
+      "--",
+      ".venv/bin/python",
+      "docs/data/v4/transport/development/j1/act.py",
+      "--actor-freeze",
+      "docs/data/v4/transport/development/j1/evaluation_actor_freeze_v2.json",
+      "--predictor-dir",
+      "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+      "script",
+      "--url",
+      "http://127.0.0.1:8771/join",
+      "--reset-url",
+      "http://127.0.0.1:8771/reset",
+      "--script",
+      "experiments/join_v1/oracle/scripts_v1.json",
+      "--fixture",
+      "permuted_evaluation",
+      "--seed",
+      "0",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/evaluation_collector_freeze_v2.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2"
+    ],
+    "cpu_seconds": 0.02,
+    "cwd": "/home/moloch/semabi",
+    "environment": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "exists": true,
+    "io_priority": "none: prio 0",
+    "nice": 0,
+    "pid": 1112024,
+    "ppid": 156716,
+    "process_group": 1112024,
+    "rss": "19396 kB",
+    "session": 1112024,
+    "state": "S",
+    "threads": 1
+  }
+}

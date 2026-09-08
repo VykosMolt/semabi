@@ -1,0 +1,315 @@
+{
+  "check_count": 18,
+  "checks": [
+    {
+      "detail": {
+        "fresh_evaluators": 2,
+        "held_bytes_unchanged": true,
+        "inventory_counts": {
+          "corrected_score": 8,
+          "failed_score": 8,
+          "first_pass": 16,
+          "post_controls_preparation": 73,
+          "sidecar_preparation": 8,
+          "sidecar_review": 44
+        },
+        "normalization_rows": [
+          4,
+          0
+        ],
+        "original_verify_calls": [
+          2,
+          2
+        ],
+        "result_status": "DIAGNOSTIC_ONLY",
+        "retry_rejected": true,
+        "returncode": 0,
+        "stdout_bytes": 290
+      },
+      "name": "original_main_both_authentications_and_stdout",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "fresh_evaluators": 2,
+        "held_bytes_unchanged": true,
+        "inventory_counts": {
+          "corrected_score": 8,
+          "failed_score": 8,
+          "first_pass": 16,
+          "post_controls_preparation": 73,
+          "sidecar_preparation": 8,
+          "sidecar_review": 44
+        },
+        "normalization_rows": [
+          4,
+          0
+        ],
+        "original_verify_calls": [
+          2,
+          2
+        ],
+        "result_status": "INVALID_CUSTODY_UNESTABLISHED",
+        "retry_rejected": true,
+        "returncode": 2,
+        "stdout_bytes": 304
+      },
+      "name": "original_main_later_audit_failure_retained",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "error": {
+          "detail": "Control package source inventory differs",
+          "type": "ValueError"
+        },
+        "no_result_written": true,
+        "original_verify_calls": [
+          2,
+          2
+        ],
+        "restored": true,
+        "returncode": 2,
+        "stdout_bytes": 0
+      },
+      "name": "package_failure",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "error": {
+          "detail": "Diagnostic dependency inventory differs",
+          "type": "ValueError"
+        },
+        "no_result_written": true,
+        "original_verify_calls": [
+          2,
+          2
+        ],
+        "restored": true,
+        "returncode": 2,
+        "stdout_bytes": 0
+      },
+      "name": "dependency_failure",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "error": {
+          "detail": "invented assessment seam failure",
+          "type": "RuntimeError"
+        },
+        "no_result_written": true,
+        "original_verify_calls": [
+          2
+        ],
+        "restored": true,
+        "returncode": 2,
+        "stdout_bytes": 0
+      },
+      "name": "assessment_failure",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "error": {
+          "detail": "First-pass artifact inventory changed",
+          "type": "ProtocolError"
+        },
+        "no_result_written": true,
+        "original_verify_calls": [
+          1
+        ],
+        "restored": true,
+        "returncode": 2,
+        "stdout_bytes": 0
+      },
+      "name": "inventory_drift",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "error": {
+          "detail": "Correction or original commitment changed: docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/run.py",
+          "type": "ValueError"
+        },
+        "no_result_written": true,
+        "original_verify_calls": [
+          2,
+          1
+        ],
+        "restored": true,
+        "returncode": 2,
+        "stdout_bytes": 0
+      },
+      "name": "source_drift",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "error": {
+          "detail": "Correction or original commitment changed: docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/invented_corrected_score_0.json",
+          "type": "ValueError"
+        },
+        "no_result_written": true,
+        "original_verify_calls": [
+          2,
+          1
+        ],
+        "restored": true,
+        "returncode": 2,
+        "stdout_bytes": 0
+      },
+      "name": "corrected_score_drift",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "nonmatching_original_calls": 3,
+        "unchanged_return_identity": true
+      },
+      "name": "exact_loader_name_path_and_path_type_only",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "error": {
+          "detail": "Original loader reused an evaluator instance",
+          "type": "ValueError"
+        },
+        "restored": true
+      },
+      "name": "reused_evaluator_is_rejected_and_restored",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "bytes_unchanged": true,
+        "error": {
+          "detail": "Launcher manifest commitment differs",
+          "type": "ValueError"
+        },
+        "no_imports": true
+      },
+      "name": "prepare_rejects_manifest",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "bytes_unchanged": true,
+        "error": {
+          "detail": "Held launcher input changed: docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/run.py",
+          "type": "ValueError"
+        },
+        "no_imports": true
+      },
+      "name": "prepare_rejects_source",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "bytes_unchanged": true,
+        "error": {
+          "detail": "Held launcher input changed: freeze.json",
+          "type": "ValueError"
+        },
+        "no_imports": true
+      },
+      "name": "prepare_rejects_input",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "bytes_unchanged": true,
+        "error": {
+          "detail": "Held launcher input changed: docs/data/v4/transport/development/j1/evaluator/post_controls_v1/invented_preparation_0.json",
+          "type": "ValueError"
+        },
+        "no_imports": true
+      },
+      "name": "prepare_rejects_held_preparation",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "bytes_unchanged": true,
+        "error": {
+          "detail": "Launcher outputs must be new exclusive identities in their declared directories",
+          "type": "ValueError"
+        },
+        "no_imports": true
+      },
+      "name": "prepare_rejects_protected_result",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "bytes_unchanged": true,
+        "error": {
+          "detail": "Launcher outputs must be new exclusive identities in their declared directories",
+          "type": "ValueError"
+        },
+        "no_imports": true
+      },
+      "name": "prepare_rejects_wrong_result_directory",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "bytes_unchanged": true,
+        "error": {
+          "detail": "Launcher outputs must be new exclusive identities in their declared directories",
+          "type": "ValueError"
+        },
+        "no_imports": true
+      },
+      "name": "prepare_rejects_existing_attempt",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "error": {
+          "detail": "Held launcher input changed before import: docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/run.py",
+          "type": "ValueError"
+        },
+        "failed_audit_retained": true,
+        "no_imports": true
+      },
+      "name": "post_prepare_source_drift_before_any_import",
+      "status": "PASS"
+    }
+  ],
+  "elapsed_seconds": 1.5821149349212646,
+  "explicit_stubs": [
+    "Synthetic load_freeze returns invented metadata; original evaluate.verify_preservation executes unchanged.",
+    "Original controls.main, authenticate, verify_package, verify_dependencies and output body execute; copied controls.FIXTURE_INVENTORY_SHA points to the invented dependency inventory.",
+    "Synthetic allocation, native_helpers, audit_run, assess and summarize replace data/model seams; audit_run reads only invented actor records through the real accepted adapter.",
+    "Package/dependency failure controls change only copied module inventory constants after first authentication, preserving the original rejecting function bodies.",
+    "Original evaluator loader and verifier are instrumented to count calls, while delegating their original bodies first.",
+    "Exact nonmatching-loader and reused-instance controls use explicit loader return stubs."
+  ],
+  "fatal_error": null,
+  "monitor_limit": "No universal syscall or native-call monitor is claimed.",
+  "native_module_imports": [],
+  "schema": "semabi.j1.post_controls_adapter_focused_checks.v1",
+  "scope": "Invented new-loader seam only; no 113-check package suite, 42+2 adapter suite, actual score, actual controls, Fit, forecast, fixture or action.",
+  "source_files": {
+    "docs/data/v4/transport/development/j1/custody.py": "001d6b1ecc7ddf8611cab651b413adcdab45f32d3f388e1dadfe40da86d46aed",
+    "docs/data/v4/transport/development/j1/evaluate.py": "3984eac0b1f57923121b43e4601e0a784e019a5cc1ab2d44e3da8245f299fe1a",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/checks.py": "f4ff082eac60e93b7fe19727fa225be9566d6e0511e33f6a9977577a32133c3c",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/protocol.md": "2f89acd474257f9268945d7db8a7088c50de84edbdc62cd2adf1d1ba0acd9035",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/run.py": "f445e6f255c7631cc1bfe28956e90beb1ef039d79dd16d015511e958c419d19e",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/checks.py": "8bb4009d510526c35808a96e7d8136c05d02914630e66e39fa0390c1842257b3",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/controls.py": "4ad00a1d86aa5caa2d8c7bd5328b7db936e1c0fe05386f67fdef2a4b8ea4f817",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/protocol.md": "6fa8cf7fa0d1d08ae6cd66f913c3ad86c666b1a5497264d58945bd5686a22c1c",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/source_manifest_v4.json": "e2d241b8ff8681bd2e4f05f88d455ce9e27fdf8be539ea9ffed4a6b5dcee3b33",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/adapter.py": "71e9a59fd7c191dda5d653ac53ef8a6109a5990f778057ac2df0c215e2e5da4b",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/checks.py": "5d8f316e0abda595bfb918159b91f66ba952c9c5cfcfaaf46e048631e6ddb909",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/protocol.md": "744e3f647e3624c84a60e0025919a5afd9ee9fcfc268e87e25840b88896cc7a7",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/run.py": "c76130e0a34e405d1663b792a49360ddb581c9ac2e3aa293619b31b0301f4930",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json": "6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/score.py": "28f2887e0ff9e59ed183173024d76cee04f29325828a7116328bbf6ecb07025d"
+  },
+  "status": "PASS"
+}

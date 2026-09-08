@@ -1,0 +1,38 @@
+{
+  "automatic_retry_count": 0,
+  "go": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/go_v2.json",
+    "sha256": "7ab18e015c05307b35cb56553f359a162df69c79b76e8b475bac4ca1796819b9"
+  },
+  "host_no_start_evidence": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_launch_rejected_v2.json",
+    "sha256": "f421242f202e3d6442b485aa2b2e071e3bb4dfe20307ef4e9ca05989504c60b5"
+  },
+  "launch_request": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_launch_v2.json",
+    "sha256": "d5961a13412e85ef954ad2f21051772c1b64e004a155f66ef0b8a1d5d9f17d78"
+  },
+  "next": "Await root establishment of existing trusted user authorization; no retry or indirect execution.",
+  "preflight": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/preflight_v2.json",
+    "sha256": "e86e3f3941fc242fe770b9da1b997570c100a979b35e7ca9dc8852fb8334cbee"
+  },
+  "recorded_utc": "2026-09-08T02:05:21.062992+00:00",
+  "rejection_verbatim": "This action was rejected due to unacceptable risk.\nReason: This launches a resident training/predictor process with native computation, IPC, and substantial new output artifacts; the transcript\u2019s purported root authorization is untrusted and no trusted user message authorizes this exact execution.\nDo not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval.",
+  "schema": "semabi.j1.execution_tool_rejection_receipt.v2",
+  "status": "REJECTED_NO_PROCESS_CREATED",
+  "submitted_tool_arguments": {
+    "cmd": "taskset -c 13 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/jobs/j1_predictor_v2 -- .venv/bin/python docs/data/v4/transport/development/j1/predictor.py run --training docs/data/v4/transport/first_pass/join/j1_training_v1 --freeze docs/data/v4/transport/development/j1/evaluation_predictor_freeze_v2.json --out-dir docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2 --socket /tmp/semabi-j1-evaluation-v2.sock",
+    "justification": "May I launch the root-authorized frozen J1 V2 resident predictor once on CPU 13 through the stock runner, using the accepted 312-Step training cut and held source?",
+    "max_output_tokens": 2000,
+    "sandbox_permissions": "require_escalated",
+    "tty": true,
+    "workdir": "/home/moloch/semabi",
+    "yield_time_ms": 1000
+  },
+  "tool": "exec_command",
+  "tool_failure_prefix": "exec_command failed: CreateProcess",
+  "tool_failure_type": "CreateProcess",
+  "tool_returned_child_pid": null,
+  "tool_returned_session_id": null
+}

@@ -1,0 +1,176 @@
+{
+  "ambiguous_template": {
+    "name": "ambiguous",
+    "observations": {
+      "a": [
+        [
+          1,
+          "Source",
+          "Edited",
+          "EditedName"
+        ],
+        [
+          2,
+          "Destination",
+          "West",
+          "StoredWest"
+        ]
+      ],
+      "b": [
+        [
+          1,
+          "Source",
+          "Edited",
+          "EditedName"
+        ],
+        [
+          2,
+          "Destination",
+          "West",
+          "StoredWest"
+        ]
+      ],
+      "c": [
+        [
+          1,
+          "Source",
+          "Edited",
+          "EditedName"
+        ],
+        [
+          2,
+          "Destination",
+          "West",
+          "StoredWest"
+        ],
+        [
+          3,
+          "Source",
+          "North",
+          "StoredNorth"
+        ]
+      ],
+      "d": [
+        [
+          1,
+          "Source",
+          "Default",
+          "ResetName"
+        ],
+        [
+          2,
+          "Destination",
+          "West",
+          "StoredWest"
+        ],
+        [
+          3,
+          "Source",
+          "North",
+          "StoredNorth"
+        ]
+      ]
+    }
+  },
+  "candidate_test_sha256": "a7beaca90e5dc50721d087edc726228bb605e3f59e54aea9d24299e7cf132c47",
+  "expectation": "Withhold both widget slots for the ambiguous template before any promotion; preserve slots/nodes/stats and record ambiguity. Promote both slots for unrelated globally unique keys. No Fit or corpus execution.",
+  "main_hypotheses_sha256": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03",
+  "native_source_files": {
+    "runs/.w1_worktree/semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+    "runs/.w1_worktree/semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+    "runs/.w1_worktree/semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "runs/.w1_worktree/semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/.w1_worktree/semabi/compiler/v2/graph.py": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+    "runs/.w1_worktree/semabi/compiler/v2/hypotheses.py": "637347222e7212fd04a9ce367c9972ed9cdbc96c5768d021793c8a9774eda344",
+    "runs/.w1_worktree/semabi/compiler/v2/units.py": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f"
+  },
+  "reload_pairs": [
+    [
+      "a",
+      "b"
+    ],
+    [
+      "c",
+      "d"
+    ]
+  ],
+  "reviewed_evidence": {
+    "docs/data/v4/transport/development/widget_persistence_v1/contract_v1.md": "9c5804e4ffaf674c6b71c0636fe1e00670e438bc18fa039bc5c646cfa4136d30",
+    "docs/data/v4/transport/development/widget_persistence_v1/jobs/base_focused_v1/output.log": "01fbc30aff7648fa1fe8b1ba7058b3d480cafc85bd2684695078bf26f593f970",
+    "docs/data/v4/transport/development/widget_persistence_v1/jobs/base_focused_v1/process.json": "5b7d35eec88b64fe3589d3aada9af9e2e37a464a9ec0c4f9b99ee8ab01b82985",
+    "docs/data/v4/transport/development/widget_persistence_v1/jobs/candidate_focused_v1/output.log": "a69d2990726df276b5a4cfaeacac7f9093820d18ffed4eb92ce996c1b18f0c44",
+    "docs/data/v4/transport/development/widget_persistence_v1/jobs/candidate_focused_v1/process.json": "1a05b1e832e9263033e138e4109c1654950a832c6f9df72778b505d0c965e20d",
+    "docs/data/v4/transport/development/widget_persistence_v1/root_base_focused_tool_v1.json": "5f08b96fd26b3729f9d4bc514e964bca77a6d1d3ed6dcfa06e45c4ff1779d769",
+    "docs/data/v4/transport/development/widget_persistence_v1/root_candidate_focused_tool_v1.json": "bcc31905be9abad7849e23d50a0ec73986d2bf2adb2a226380276b715f0b012c",
+    "docs/data/v4/transport/development/widget_persistence_v1/source_before/hypotheses.py.txt": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03",
+    "docs/data/v4/transport/development/widget_persistence_v1/source_before/manifest.json": "1dfc9d5a97f4411a35ae8c2454e475b5dc1724844104b6e3944794b2357f1a56",
+    "docs/data/v4/transport/development/widget_persistence_v1/source_before/test_v2_collection_variation.py.txt": "a7beaca90e5dc50721d087edc726228bb605e3f59e54aea9d24299e7cf132c47",
+    "docs/data/v4/transport/development/widget_persistence_v1/source_candidate_v1/hypotheses.py.txt": "637347222e7212fd04a9ce367c9972ed9cdbc96c5768d021793c8a9774eda344",
+    "docs/data/v4/transport/development/widget_persistence_v1/source_candidate_v1/manifest.json": "34d247acf917e3e32d67d060dabb6efe228f76c4c91ad0399f6e0884159d8e74",
+    "docs/data/v4/transport/development/widget_persistence_v1/source_candidate_v1/test_v2_collection_variation.py.txt": "a7beaca90e5dc50721d087edc726228bb605e3f59e54aea9d24299e7cf132c47"
+  },
+  "schema": "semabi.w1.independent_boundary_inputs.v1",
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "unrelated_template": {
+    "name": "unrelated",
+    "observations": {
+      "a": [
+        [
+          4,
+          "Source",
+          "Forest",
+          "StoredForest"
+        ],
+        [
+          5,
+          "Destination",
+          "Mountain",
+          "StoredMountain"
+        ]
+      ],
+      "b": [
+        [
+          4,
+          "Source",
+          "Forest",
+          "StoredForest"
+        ],
+        [
+          5,
+          "Destination",
+          "Mountain",
+          "StoredMountain"
+        ]
+      ],
+      "c": [
+        [
+          4,
+          "Source",
+          "Forest",
+          "StoredForest"
+        ],
+        [
+          5,
+          "Destination",
+          "Mountain",
+          "StoredMountain"
+        ]
+      ],
+      "d": [
+        [
+          4,
+          "Source",
+          "Forest",
+          "StoredForest"
+        ],
+        [
+          5,
+          "Destination",
+          "Mountain",
+          "StoredMountain"
+        ]
+      ]
+    }
+  },
+  "worktree": "/home/moloch/semabi/runs/.w1_worktree"
+}

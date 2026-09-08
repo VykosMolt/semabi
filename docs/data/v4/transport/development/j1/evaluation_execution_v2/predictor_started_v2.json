@@ -1,0 +1,128 @@
+{
+  "child": {
+    "affinity": [
+      13
+    ],
+    "argv": [
+      ".venv/bin/python",
+      "docs/data/v4/transport/development/j1/predictor.py",
+      "run",
+      "--training",
+      "docs/data/v4/transport/first_pass/join/j1_training_v1",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/evaluation_predictor_freeze_v2.json",
+      "--out-dir",
+      "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+      "--socket",
+      "/tmp/semabi-j1-evaluation-v2.sock"
+    ],
+    "cpu_seconds": 111.55,
+    "cwd": "/home/moloch/semabi",
+    "environment": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "exe": "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+    "io_priority": "none: prio 0",
+    "nice": 0,
+    "pid": 1080298,
+    "ppid": 1080296,
+    "process_group": 1080298,
+    "rss": "98704 kB",
+    "session": 1080298,
+    "state": "R",
+    "threads": 1
+  },
+  "execution_tool_receipt_keys": [
+    "schema",
+    "recorded_utc",
+    "status",
+    "role",
+    "tool",
+    "submitted_tool_arguments",
+    "result",
+    "source_head",
+    "prior_rejection",
+    "authorization_check",
+    "process_ownership"
+  ],
+  "go": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/go_v2.json",
+    "sha256": "7ab18e015c05307b35cb56553f359a162df69c79b76e8b475bac4ca1796819b9"
+  },
+  "host_ipc_namespace": "ipc:[4026531839]",
+  "host_net_namespace": "net:[4026531833]",
+  "host_pid_namespace": "pid:[4026531836]",
+  "native_query_or_fixture_probe_by_reviewer": false,
+  "process_record": {
+    "path": "docs/data/v4/transport/development/j1/jobs/j1_predictor_v2/process.json",
+    "sha256": "858d6b6c54c5fad0e462266738db3b1efdda9ee3aea903aa2a902399f0f2f9ac"
+  },
+  "ready_exists": false,
+  "recorded_utc": "2026-09-08T02:08:46.473087+00:00",
+  "role": "predictor",
+  "root_launch_tool_receipt": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/root_predictor_launch_tool_v2.json",
+    "sha256": "3cc3db008f06531751277f630bdc70b212a3176128be7678460a3790863409c9"
+  },
+  "schema": "semabi.j1.execution_started_receipt.v2",
+  "source_files_verified": 156,
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "startup": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/startup.json",
+    "sha256": "070adc9ad10cf00f19e088727754d2fa7539bf59ddf72775977117d788fbcfd4"
+  },
+  "status": "RUNNING_TRAINING_STARTUP",
+  "tool_session_id": 12029,
+  "tool_session_owner": "/root",
+  "wrapper": {
+    "affinity": [
+      13
+    ],
+    "argv": [
+      ".venv/bin/python",
+      "docs/data/v4/transport/run_job.py",
+      "docs/data/v4/transport/development/j1/jobs/j1_predictor_v2",
+      "--",
+      ".venv/bin/python",
+      "docs/data/v4/transport/development/j1/predictor.py",
+      "run",
+      "--training",
+      "docs/data/v4/transport/first_pass/join/j1_training_v1",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/evaluation_predictor_freeze_v2.json",
+      "--out-dir",
+      "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+      "--socket",
+      "/tmp/semabi-j1-evaluation-v2.sock"
+    ],
+    "cpu_seconds": 0.03,
+    "cwd": "/home/moloch/semabi",
+    "environment": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "exe": "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+    "io_priority": "none: prio 0",
+    "nice": 0,
+    "pid": 1080296,
+    "ppid": 156716,
+    "process_group": 1080296,
+    "rss": "19324 kB",
+    "session": 1080296,
+    "state": "S",
+    "threads": 1
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "accepted_shutdown_custody": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/shutdown_completed_v2.json",
+    "sha256": "bd4c990f481de9d1116c2777d87aec1e942e58faee08ac9d483b81daed6062c3"
+  },
+  "all_instrument_receipts_complete_per_accepted_phase_and_control_gates": true,
+  "checkpoint_count": 4,
+  "cleanup_errors": [],
+  "cleanup_errors_field_present": false,
+  "files": {
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/checkpoint_0000.json": "3b312f22b198c03bf3bf3f73116a6db9974342ccaecc3dbd187c9918465811d8",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/checkpoint_0001.json": "705f3f8a7c9ce1ce6978e38da1abc0e902b5fe92b9032428e8cf5a47fda3cdee",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/checkpoint_0002.json": "00a62adaef0c0ff84855ba69ca6f0854a043454c83cac3c822fdc51564864e4a",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/checkpoint_0003.json": "2189e4c81d575320b199faaa1c5a2def797c71d01b17b8297b8f0f6844741eeb",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/fit_trace.json": "610d0d21a6ecd1d101a000003f9f7a0d96bc82fb3bc6d655503a0c62c360a2f3",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/forecasts.jsonl": "74bd380757d116516aa63bde691d14d1fc4831a2113c29d5f10f9b4fadbcfd54",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/ready.json": "b1da4876e4c81a838185b2515af7ccaceacddef67ca9c297fe088ffc02eb6321",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/startup.json": "070adc9ad10cf00f19e088727754d2fa7539bf59ddf72775977117d788fbcfd4",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/termination.json": "ae24b6f88a7651d60f23e19cd802dda1b6e583902fc979cf41bb6059a230a62a"
+  },
+  "final_receipt": {
+    "ledger_sha256": "74bd380757d116516aa63bde691d14d1fc4831a2113c29d5f10f9b4fadbcfd54",
+    "receipt_index": 629
+  },
+  "fit_id": "c6bc0450-ccd5-4b44-b6ad-ac95eeb0c839",
+  "global_freeze_sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b",
+  "host_pid_namespace": "pid:[4026531836]",
+  "ledger_operation_counts": {
+    "checkpoint": 2,
+    "forecast": 626,
+    "shutdown": 1
+  },
+  "ledger_records": 629,
+  "ledger_sha256": "74bd380757d116516aa63bde691d14d1fc4831a2113c29d5f10f9b4fadbcfd54",
+  "native_fit_calls": 1,
+  "owned_runner_child_and_process_groups_absent": true,
+  "predictor_pid": 1080298,
+  "process": {
+    "child_pid": 1080298,
+    "child_terminated": true,
+    "end_utc": "2026-09-08T02:52:33.367037+00:00",
+    "log_sha256": "ed5f87844b86322272b10550b18f47be2a713b1373543cf2f4e85cc9853548ea",
+    "owned_process_group": 1080298,
+    "returncode": 0,
+    "runner_pid": 1080296,
+    "start_utc": "2026-09-08T02:06:54.755309+00:00",
+    "status": "FINISHED"
+  },
+  "process_record": {
+    "path": "docs/data/v4/transport/development/j1/jobs/j1_predictor_v2/process.json",
+    "sha256": "637fe39d8d16704761b3bf05fcf70b9a9c21084c8f00147daa3de3065aec6731"
+  },
+  "recorded_utc": "2026-09-08T03:00:02.450849+00:00",
+  "root_reap_receipt": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/root_predictor_reap_tool_v2.json",
+    "sha256": "894f5fbea106ad12e13689f67418bb15df9a2a3283c93364c2dae9bf63f02649"
+  },
+  "runtime_scope": "Instrumented resident lifecycle includes fit, trace/checkpoint observation, both fixed forecast allocations and phase-coordination idle time; these timestamps are not an uninstrumented learner timing measurement.",
+  "schema": "semabi.j1.evaluation_predictor_completed.v2",
+  "scope": "Final terminal metadata, accepted custody receipts, opaque artifact hashes and host lifecycle only; no repeated custody suite, scoring or extra request.",
+  "socket_removed": true,
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "status": "FINISHED_REAPED_COMPLETE_METADATA_CUSTODY",
+  "termination": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2/termination.json",
+    "sha256": "ae24b6f88a7651d60f23e19cd802dda1b6e583902fc979cf41bb6059a230a62a"
+  },
+  "termination_status": "FINISHED",
+  "tool_reaped_by_root": true,
+  "tool_session_id": 12029,
+  "tool_session_owner": "/root",
+  "training_steps": 312,
+  "verified_frozen_file_count": 613
+}

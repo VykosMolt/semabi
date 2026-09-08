@@ -1,0 +1,130 @@
+{
+  "checks": [
+    {
+      "adapted_error": {
+        "detail": "Actor sidecar path is not an admitted spelling",
+        "type": "ValueError"
+      },
+      "audit_rows": 0,
+      "invented_file_count": 15,
+      "name": "second_sidecar_same_hash_alias_atomic_rejection",
+      "original_error": {
+        "detail": "Actor durable sidecar commitment differs",
+        "type": "ProtocolError"
+      },
+      "raw_bytes_unchanged": true,
+      "reader_restored": true,
+      "status": "PASS"
+    },
+    {
+      "adapted_error": {
+        "detail": "Actor intent is unmatched or differs from native evidence",
+        "type": "ProtocolError"
+      },
+      "audit_rows": 2,
+      "invented_file_count": 14,
+      "name": "later_original_intent_error_retained",
+      "original_error": {
+        "detail": "Actor durable sidecar commitment differs",
+        "type": "ProtocolError"
+      },
+      "raw_bytes_unchanged": true,
+      "reader_restored": true,
+      "status": "PASS"
+    }
+  ],
+  "execution": {
+    "cpu_affinity": [
+      22
+    ],
+    "pid": 2,
+    "thread_environment": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    }
+  },
+  "fatal_error": null,
+  "invented_inputs": {
+    "baseline/invented_ready.json": "9631725f96a98f11dfd08f4977b2f0859131aef35bf6a52800177f4727ee0126",
+    "baseline/invented_script.json": "9e087bf04563e11e5acf43789aa45b831f471c8c38506fb53fa30e802342c28e",
+    "baseline/predictor/forecasts.jsonl": "5ab6199a22e31b778d115d6855e036d2151f7bd5bb3d7c5b9c743ede9b039668",
+    "baseline/run/actor_verification.json": "09ea5cb17481debec41d0acf3e3e99fc65a8116c46490b843c4b878032e5470e",
+    "baseline/run/collector_verification.json": "b91c05869261abbc454a0089edf2696f11388f30247b132c59c15e72c84e4671",
+    "baseline/run/decisions.jsonl": "a27b068691f0e92ac7007ff05fa0687851542a583777b0a728dbaa2e602767f7",
+    "baseline/run/forecast_receipts.jsonl": "95f200b2a84225a1979146ff62152ce573007b2b67b7e6b360b94836d3e1628b",
+    "baseline/run/forecast_reconciliation.jsonl": "2f99e10ee9a77d3cab64959a3e1d1fb594ba1b3e2f72e0947767eeb3a8aff277",
+    "baseline/run/observations.jsonl": "a28f23fb9cd4f07c4c490c3101da1d8cc5ae07ca3a08ad24b6a30edc96311e15",
+    "baseline/run/run.json": "72a4d0079a81bb1f4b18ca59c926963ab27c8cb1a241a4059752acf290cbb821",
+    "baseline/run/steps.jsonl": "e73a12d4eeba90494f3077909a8be00147ba82788545d2c4e224d88b5a7486bd",
+    "later_original_intent_error_retained/freeze.json": "949c0e0380c3e121fb1ad253a6883cf42cbdbbb93ed316041a1b9a74c39cefe3",
+    "later_original_intent_error_retained/preservation.json": "1fad74ff84e374b36a2ed6891e1a16a86d4f94c71a6b378a2868887967d5b0b5",
+    "later_original_intent_error_retained/primary/invented_ready.json": "9631725f96a98f11dfd08f4977b2f0859131aef35bf6a52800177f4727ee0126",
+    "later_original_intent_error_retained/primary/predictor/forecasts.jsonl": "5ab6199a22e31b778d115d6855e036d2151f7bd5bb3d7c5b9c743ede9b039668",
+    "later_original_intent_error_retained/primary/run/actor_verification.json": "044773c9a3956e6aaa8d0d240b4f5e9431fa4e26c103a0f4ff3ead26185abc77",
+    "later_original_intent_error_retained/primary/run/collector_verification.json": "b91c05869261abbc454a0089edf2696f11388f30247b132c59c15e72c84e4671",
+    "later_original_intent_error_retained/primary/run/decisions.jsonl": "cf5ff753ae8d89a8b5458ef38e7c921b1a4bf48cc289dfecfb44d15ed1bb56dc",
+    "later_original_intent_error_retained/primary/run/forecast_receipts.jsonl": "8fbb803412a54cd00da679cff57b7d42ec55fa3c342d0109da790688b5907294",
+    "later_original_intent_error_retained/primary/run/forecast_reconciliation.jsonl": "2f99e10ee9a77d3cab64959a3e1d1fb594ba1b3e2f72e0947767eeb3a8aff277",
+    "later_original_intent_error_retained/primary/run/observations.jsonl": "2f2a4cb1e9891b1102e9a0cd0499dfa8d969dbf554f798891ca4bf29a51d0074",
+    "later_original_intent_error_retained/primary/run/run.json": "d920d2ba2d7607fe9927a150faa24d6c3e2e1e08848e317b689f57164a4e4d00",
+    "later_original_intent_error_retained/primary/run/steps.jsonl": "5da3b41a0a03bcd6f28f69a547589786cd2f6102efe563c2d6770827017ad1ef",
+    "later_original_intent_error_retained/script.json": "7d951e04a930cc82e40252499700555bed8d8bad495636977f5d03e39d08acb3",
+    "later_original_intent_error_retained/source_marker.txt": "4f35ddbbe973442322b7a25e32f631c0a8798a0b08576da4be0352377a1828e1",
+    "second_sidecar_same_hash_alias_atomic_rejection/freeze.json": "949c0e0380c3e121fb1ad253a6883cf42cbdbbb93ed316041a1b9a74c39cefe3",
+    "second_sidecar_same_hash_alias_atomic_rejection/preservation.json": "2c78a8ff64d8525b64de7247e284eee27f0e736ecc655e93e6b37765764fa896",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/invented_ready.json": "9631725f96a98f11dfd08f4977b2f0859131aef35bf6a52800177f4727ee0126",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/predictor/forecasts.jsonl": "5ab6199a22e31b778d115d6855e036d2151f7bd5bb3d7c5b9c743ede9b039668",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/run/actor_verification.json": "534e4a4a357a1d4651365ee40d5c3bcb1223a70fb01ead610958058bef10eb8b",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/run/collector_verification.json": "b91c05869261abbc454a0089edf2696f11388f30247b132c59c15e72c84e4671",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/run/decisions.jsonl": "8868f740a1a7e4881f4f635f5b64032e1dc720181a2b58dd044130ee7571f531",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/run/forecast_receipts.jsonl": "30092a9d4ba0a2f37ab9cc6fa648ea4b51b97aedaa150559c7e1c251c8152bc5",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/run/forecast_reconciliation.jsonl": "2f99e10ee9a77d3cab64959a3e1d1fb594ba1b3e2f72e0947767eeb3a8aff277",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/run/observations.jsonl": "2f2a4cb1e9891b1102e9a0cd0499dfa8d969dbf554f798891ca4bf29a51d0074",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/run/run.json": "a3142326c0623fed2b96cd68dbb9f1f3c5ce6ffbe8b58c3313176dac96517839",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/run/same_hash_reconciliation.jsonl": "2f99e10ee9a77d3cab64959a3e1d1fb594ba1b3e2f72e0947767eeb3a8aff277",
+    "second_sidecar_same_hash_alias_atomic_rejection/primary/run/steps.jsonl": "5da3b41a0a03bcd6f28f69a547589786cd2f6102efe563c2d6770827017ad1ef",
+    "second_sidecar_same_hash_alias_atomic_rejection/script.json": "7d951e04a930cc82e40252499700555bed8d8bad495636977f5d03e39d08acb3",
+    "second_sidecar_same_hash_alias_atomic_rejection/source_marker.txt": "4f35ddbbe973442322b7a25e32f631c0a8798a0b08576da4be0352377a1828e1"
+  },
+  "limits": "No actual J1 payload parsed, fit, native prediction, server, browser service or fixture query; no universal syscall monitor claimed.",
+  "native_module_imports": [],
+  "reused_components": [
+    "Held checks.py public_constructors and explicitly stubbed synthetic_evaluator.load_freeze",
+    "Held custody_control_checks_v1.py invented Browser and ledger-backed Client",
+    "Real ActorState.accounting after each capsule refresh; public constructors extracted from held source"
+  ],
+  "schema": "semabi.j1.sidecar_path_independent_boundaries.v1",
+  "scope": "Two invented complete seven-charge capsules. Original reconcile_phase and verify_preservation bodies execute; no evaluator main or real score execution.",
+  "script_sha256": "3c6cfd3258fc42d48e00b4064618dbef95f802c433f3a659a987eb8c092c40f2",
+  "source_files": {
+    "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+    "docs/data/v4/transport/development/j1/analysis/sidecar_path_failure_v1/correction_contract_v1.md": "9b8e6d4e48e79fdfcfbff20087f40879a5765a9526da9af20730e46b3d654be6",
+    "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+    "docs/data/v4/transport/development/j1/custody.py": "001d6b1ecc7ddf8611cab651b413adcdab45f32d3f388e1dadfe40da86d46aed",
+    "docs/data/v4/transport/development/j1/evaluate.py": "3984eac0b1f57923121b43e4601e0a784e019a5cc1ab2d44e3da8245f299fe1a",
+    "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/adapter.py": "71e9a59fd7c191dda5d653ac53ef8a6109a5990f778057ac2df0c215e2e5da4b",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/artifact_manifest_v1.json": "39feb4f47bd290d5632456a6d2a44d2c6942cdd99667ec1f4ebcb2f92f68fe80",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/checks.py": "5d8f316e0abda595bfb918159b91f66ba952c9c5cfcfaaf46e048631e6ddb909",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/checks_v1.json": "740385013c0c9413a1b6f9aedab448cd133ddbee86c6a6f384106371beb3e311",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/protocol.md": "744e3f647e3624c84a60e0025919a5afd9ee9fcfc268e87e25840b88896cc7a7",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/run.py": "c76130e0a34e405d1663b792a49360ddb581c9ac2e3aa293619b31b0301f4930",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json": "6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51",
+    "docs/data/v4/transport/development/j1/first_pass_manifest_v2.json": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/predictor.py": "c0d05260b4668db3e885e6691d7b9cd61096c8db6547ae56dd1358348ef48e51",
+    "docs/data/v4/transport/development/j1/review_evidence/custody_control_checks_v1.py": "8d22a5d1af9d3d63f8038e0de27d724399521ed71b45f663b50d495273e9e98a",
+    "docs/data/v4/transport/development/j1/scoring_v2/artifact_manifest_v2.json": "cf4e345fd36fb9f664872a21f860a37cd5c831fdb99a43271a7ba8e53be54f17",
+    "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+  },
+  "status": "PASS"
+}

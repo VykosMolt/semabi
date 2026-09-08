@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "taskset -c 21 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_base_focused_v1_bytecode VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py /home/moloch/semabi/docs/data/v4/transport/development/widget_persistence_v1/jobs/base_focused_v1 -- /home/moloch/semabi/.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_v2_collection_variation.py",
+    "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Run the new focused widget-persistence regressions against the unchanged native source in the isolated worktree and preserve the baseline failures.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "0aae64",
+    "wall_time_seconds": 0.451995298,
+    "exit_code": 1,
+    "original_token_count": 34,
+    "output": "{\"status\": \"FAILED\", \"returncode\": 1, \"child_pid\": 1203825, \"child_terminated\": true, \"end_utc\": \"2026-09-08T04:25:07.105350+00:00\"}\n"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "host_pid_namespace": "pid:[4026531836]",
+  "owned_runner_child_and_process_groups_absent": true,
+  "phase": "invariance",
+  "predictor_pid": 1080298,
+  "process": {
+    "child_pid": 1109934,
+    "child_terminated": true,
+    "end_utc": "2026-09-08T02:53:33.579100+00:00",
+    "log_sha256": "e11cc785c2211af15bb857c4812e3294f5d7059f26e845dbb25bb71537dbfaba",
+    "owned_process_group": 1109934,
+    "returncode": -15,
+    "runner_pid": 1109932,
+    "start_utc": "2026-09-08T02:39:28.827311+00:00",
+    "status": "INTERRUPTED"
+  },
+  "process_record": {
+    "path": "docs/data/v4/transport/development/j1/jobs/j1_invariance_service_v2/process.json",
+    "sha256": "af7b8a698b443fb6815300a6f7a340be680d617cc1970b93f0f09ed5f75acd61"
+  },
+  "recorded_utc": "2026-09-08T03:00:14.633523+00:00",
+  "root_stop_intent": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/root_invariance_service_stop_intent_v2.json",
+    "sha256": "0677ae2d6e53974d772f16523cd913b32bfd29391447e84efd2ae6e5c63ea390"
+  },
+  "root_stop_tool_receipt": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v2/root_invariance_service_stop_tool_v2.json",
+    "sha256": "512276c2c45980254551106d2495b9cf029ae874b52bd6c0a5071b341e550650"
+  },
+  "runtime_sources_rehashed": 173,
+  "same_resident_fit_id": "c6bc0450-ccd5-4b44-b6ad-ac95eeb0c839",
+  "schema": "semabi.j1.evaluation_service_completed.v2",
+  "scope": "Expected stock-runner KeyboardInterrupt and owned child SIGTERM for service cleanup; this is not a learner measurement failure. No HTTP, browser or predictor request.",
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "status": "PLANNED_SERVICE_INTERRUPTION_REAPED",
+  "tcp8771_listeners": [],
+  "tool_exit_code": 1,
+  "tool_reaped_by_root": true,
+  "tool_session_id": 22848,
+  "tool_session_owner": "/root"
+}

@@ -1,0 +1,105 @@
+{
+  "cwd": "/home/moloch/semabi",
+  "environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONPYCACHEPREFIX": "/tmp/semabi_j1_corrected_score_v1_no_pyc",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "evidence": {
+    "authored_checks_passed": 42,
+    "independent_boundary_checks_passed": 2,
+    "root_full_review_read_tool": "89b56a",
+    "root_full_runtime_protocol_read_tools": [
+      "fc3989",
+      "d0cae2",
+      "659c80",
+      "d44b55"
+    ],
+    "root_rehash_tools": [
+      "0cd88d",
+      "06fdde"
+    ]
+  },
+  "inner_command": [
+    ".venv/bin/python",
+    "-B",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/run.py",
+    "--manifest",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json",
+    "--manifest-sha256",
+    "6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51",
+    "--out-dir",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/attempt_v1"
+  ],
+  "job_directory": "/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/jobs/evaluate_v1",
+  "new_output_directory": "/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/attempt_v1",
+  "outer_argv": [
+    "taskset",
+    "-c",
+    "20",
+    "env",
+    "BLIS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONHASHSEED=0",
+    "PYTHONPYCACHEPREFIX=/tmp/semabi_j1_corrected_score_v1_no_pyc",
+    "VECLIB_MAXIMUM_THREADS=1",
+    ".venv/bin/python",
+    "-B",
+    "docs/data/v4/transport/run_job.py",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/jobs/evaluate_v1",
+    "--",
+    ".venv/bin/python",
+    "-B",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/run.py",
+    "--manifest",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json",
+    "--manifest-sha256",
+    "6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51",
+    "--out-dir",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/attempt_v1"
+  ],
+  "outer_command": "taskset -c 20 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPYCACHEPREFIX=/tmp/semabi_j1_corrected_score_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/jobs/evaluate_v1 -- .venv/bin/python -B docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/run.py --manifest /home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json --manifest-sha256 6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51 --out-dir /home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/attempt_v1",
+  "owner": "/root",
+  "recorded_utc": "2026-09-08T03:59:56.112847+00:00",
+  "references": {
+    "first_pass": {
+      "path": "docs/data/v4/transport/development/j1/first_pass_manifest_v2.json",
+      "sha256": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256"
+    },
+    "independent_review": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/independent_review/review_v1.md",
+      "sha256": "f403bb9b0b668a7c9be2be4bc75797e43be342a5cbe4fdd5179a18303a47b85f"
+    },
+    "independent_review_manifest": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/independent_review/artifact_manifest_v1.json",
+      "sha256": "722a49004a514cb50ce89d4750de0a60d135eec1f13380caeef8abdf24d9397a"
+    },
+    "original_score_manifest": {
+      "path": "docs/data/v4/transport/development/j1/scoring_v2/artifact_manifest_v2.json",
+      "sha256": "cf4e345fd36fb9f664872a21f860a37cd5c831fdb99a43271a7ba8e53be54f17"
+    },
+    "preparation_manifest": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/artifact_manifest_v1.json",
+      "sha256": "39feb4f47bd290d5632456a6d2a44d2c6942cdd99667ec1f4ebcb2f92f68fe80"
+    },
+    "source_manifest": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json",
+      "sha256": "6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51"
+    }
+  },
+  "reviewer": "/root",
+  "schema": "semabi.j1.root_sidecar_correction_acceptance.v1",
+  "scope": "One original evaluate.main invocation through the reviewed path-only adapter. No fit, forecast, fixture or action. Preserve all original and subsequent failures. Added empty bytecode lookup prefix selects authenticated source; writes remain disabled. No model or semantic protocol change.",
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "status": "ACCEPTED_FOR_ONE_OFFLINE_SCORE"
+}

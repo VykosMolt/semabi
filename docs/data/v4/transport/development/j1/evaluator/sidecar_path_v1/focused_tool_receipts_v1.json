@@ -1,0 +1,31 @@
+{
+  "schema": "semabi.j1.sidecar_path_focused_tool_receipts.v1",
+  "source_manifest_preparation": {
+    "command": "python3 -B (exclusive source_manifest_v1.json creation; hashes four owned sources and exact F/P/failed-score-seal/correction-contract inputs only)",
+    "tool_result": {
+      "chunk_id": "68224c",
+      "wall_time_seconds": 0.000002763,
+      "exit_code": 0,
+      "original_token_count": 422,
+      "output": "{\"manifest\": {\"files\": {\"docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/adapter.py\": \"71e9a59fd7c191dda5d653ac53ef8a6109a5990f778057ac2df0c215e2e5da4b\", \"docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/checks.py\": \"5d8f316e0abda595bfb918159b91f66ba952c9c5cfcfaaf46e048631e6ddb909\", \"docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/protocol.md\": \"744e3f647e3624c84a60e0025919a5afd9ee9fcfc268e87e25840b88896cc7a7\", \"docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/run.py\": \"c76130e0a34e405d1663b792a49360ddb581c9ac2e3aa293619b31b0301f4930\"}, \"inputs\": {\"correction_contract\": {\"path\": \"docs/data/v4/transport/development/j1/analysis/sidecar_path_failure_v1/correction_contract_v1.md\", \"sha256\": \"9b8e6d4e48e79fdfcfbff20087f40879a5765a9526da9af20730e46b3d654be6\"}, \"failed_score_seal\": {\"path\": \"docs/data/v4/transport/development/j1/scoring_v2/artifact_manifest_v2.json\", \"sha256\": \"cf4e345fd36fb9f664872a21f860a37cd5c831fdb99a43271a7ba8e53be54f17\"}, \"freeze\": {\"path\": \"docs/data/v4/transport/development/j1/evaluation_freeze_v2.json\", \"sha256\": \"100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b\"}, \"preservation\": {\"path\": \"docs/data/v4/transport/development/j1/first_pass_manifest_v2.json\", \"sha256\": \"51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256\"}}, \"runner_addendum\": \"PRESERVATION_POSTFLIGHT_PLUS_CORRECTION_COMMITMENTS_V1\", \"schema\": \"semabi.j1.sidecar_path_correction_source.v1\"}, \"path\": \"/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json\", \"sha256\": \"6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51\"}\n"
+    }
+  },
+  "focused_run": {
+    "command": "taskset -c 8 env PYTHONHASHSEED=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/checks.py --adapter-sha256 71e9a59fd7c191dda5d653ac53ef8a6109a5990f778057ac2df0c215e2e5da4b --runner-sha256 c76130e0a34e405d1663b792a49360ddb581c9ac2e3aa293619b31b0301f4930 --out docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/checks_v1.json",
+    "cwd": "/home/moloch/semabi",
+    "tool": "exec_command",
+    "tool_result": {
+      "chunk_id": "cdc050",
+      "wall_time_seconds": 0.603716607,
+      "exit_code": 0,
+      "original_token_count": 52,
+      "output": "{\"check_count\": 42, \"out\": \"docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/checks_v1.json\", \"sha256\": \"740385013c0c9413a1b6f9aedab448cd133ddbee86c6a6f384106371beb3e311\", \"status\": \"PASS\"}\n"
+    },
+    "completion": "Synchronous final exit_code=0; no session_id or child remained to poll.",
+    "source_manifest": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json",
+      "sha256": "6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51"
+    }
+  },
+  "scope": "Invented focused checks only. No actual corrective score, control, Fit, forecast, browser or J1 payload read."
+}

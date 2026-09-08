@@ -1,0 +1,19 @@
+{
+  "schema": "semabi.j1.sidecar_diagnosis_tool_receipt.v1",
+  "recorded_utc": "2026-09-08 03:16:54 UTC",
+  "owner": "/root",
+  "tool": "exec_command",
+  "submitted_tool_arguments": {
+    "cmd": "taskset -c 19 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python docs/data/v4/transport/development/j1/analysis/sidecar_path_failure_v1/diagnose_v1.py",
+    "workdir": "/home/moloch/semabi",
+    "max_output_tokens": 2000,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "78f981",
+    "wall_time_seconds": 0.147395124,
+    "exit_code": 0,
+    "original_token_count": 72,
+    "output": "{\"status\": \"FOUR_PATH_FORMAT_MISMATCHES_WITH_IDENTICAL_AUTHENTICATED_BYTES\", \"rows\": 4, \"path\": \"/home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/sidecar_path_failure_v1/diagnosis_v1.json\", \"sha256\": \"5aa84aace1d34c61dea89fbfda7e0b3088de3c13409ae989bdeed604ec065cae\"}\n"
+  }
+}

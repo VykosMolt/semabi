@@ -1,0 +1,9 @@
+{
+  "schema": "semabi.j1.root_scoring_seal_attempt.v1",
+  "tool_chunk_id": "4cc4a6",
+  "exit_code": 1,
+  "status": "NO_MANIFEST_WRITTEN",
+  "cause": "Root audit assumed job log name run.log; stock wrapper uses output.log. FileNotFoundError occurred during read-only prechecks, before any manifest write.",
+  "first_pass_and_original_score_changed": false,
+  "resolution": "Read the actual job file inventory, correct only the audit's log path, then write the first additive score manifest. Do not rerun preservation or scoring."
+}

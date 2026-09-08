@@ -1,0 +1,34 @@
+{
+  "host_processes": [
+    {
+      "command": ".venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/jobs/replay_v1 -- .venv/bin/python -B docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/diagnose.py --manifest /home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/source_manifest_v2.json --manifest-sha256 9a034671ba155b5a5ebfd2ee81cda49d362219f067079342b993399c94f21757 ",
+      "cwd": "/home/moloch/semabi",
+      "exists": true,
+      "nice": 0,
+      "pid": 1187307,
+      "role": "runner_pid",
+      "status": [
+        "State:\tS (sleeping)",
+        "VmRSS:\t   19432 kB",
+        "Threads:\t1",
+        "Cpus_allowed_list:\t19"
+      ]
+    },
+    {
+      "command": ".venv/bin/python -B docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/diagnose.py --manifest /home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/source_manifest_v2.json --manifest-sha256 9a034671ba155b5a5ebfd2ee81cda49d362219f067079342b993399c94f21757 ",
+      "cwd": "/home/moloch/semabi",
+      "exists": true,
+      "nice": 0,
+      "pid": 1187309,
+      "role": "child_pid",
+      "status": [
+        "State:\tR (running)",
+        "VmRSS:\t  327940 kB",
+        "Threads:\t1",
+        "Cpus_allowed_list:\t19"
+      ]
+    }
+  ],
+  "process_status": "RUNNING",
+  "recorded_utc": "2026-09-08T04:07:45.788392+00:00"
+}

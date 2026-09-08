@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "taskset -c 21 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_candidate_focused_v1_bytecode VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py /home/moloch/semabi/docs/data/v4/transport/development/widget_persistence_v1/jobs/candidate_focused_v1 -- /home/moloch/semabi/.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_v2_collection_variation.py",
+    "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Run the identical focused regressions on the isolated candidate repair and retain the before/after evidence.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "190253",
+    "wall_time_seconds": 0.412322117,
+    "exit_code": 0,
+    "original_token_count": 34,
+    "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1205930, \"child_terminated\": true, \"end_utc\": \"2026-09-08T04:26:40.820144+00:00\"}\n"
+  }
+}

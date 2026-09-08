@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "taskset -c 20 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/verify_and_seal_v1.py",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Independently verify the completed offline controls, original evidence commitments and host termination, then seal the new diagnostic result.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3500
+  },
+  "result": {
+    "chunk_id": "1b8950",
+    "wall_time_seconds": 0.347583249,
+    "exit_code": 0,
+    "original_token_count": 73,
+    "output": "{\"path\": \"/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/result_manifest_v1.json\", \"sha256\": \"9d859d52b9235e90abbfeb7ebdf44f3220a27d8774776fbcaa8f8cf8add58c5b\", \"files\": 9, \"held_bindings_rehashed\": 866, \"status\": \"OFFLINE_CONTROLS_PRESERVED\"}\n"
+  }
+}

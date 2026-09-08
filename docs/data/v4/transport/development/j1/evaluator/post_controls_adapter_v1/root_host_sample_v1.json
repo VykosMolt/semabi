@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "python3 -B - <<'PY'\nimport json,os\nfrom pathlib import Path\nfrom datetime import datetime,timezone\np=Path('/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/jobs/controls_v1/process.json')\nv=json.loads(p.read_bytes());rows=[]\nfor label in ('runner_pid','child_pid'):\n    pid=v[label];q=Path('/proc')/str(pid)\n    row={'kind':label,'pid':pid,'present':q.exists()}\n    if q.exists():\n        try:\n            stat=(q/'stat').read_text().rsplit(') ',1)[1].split()\n            row.update(state=stat[0],pgrp=int(stat[2]),nice=int(stat[16]),affinity=sorted(os.sched_getaffinity(pid)))\n            status=(q/'status').read_text().splitlines()\n            row['status']=[s for s in status if s.startswith(('VmRSS:','Threads:','Cpus_allowed_list:'))]\n            names={'BLIS_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS','OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','VECLIB_MAXIMUM_THREADS','PYTHONHASHSEED','PYTHONDONTWRITEBYTECODE','PYTHONPYCACHEPREFIX'}\n            row['environment']={x.split('=',1)[0]:x.split('=',1)[1] for x in (q/'environ').read_text().split('\\x00') if '=' in x and x.split('=',1)[0] in names}\n        except FileNotFoundError:row['exited_during_sample']=True\n    rows.append(row)\nprint(json.dumps({'sampled_utc':datetime.now(timezone.utc).isoformat(),'job_status':v['status'],'processes':rows,'bytecode_prefix_present':Path('/tmp/semabi_j1_post_controls_v1_no_pyc').exists()},sort_keys=True))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Record host process ownership and resource settings for the authorized offline J1 controls.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "ce3db9",
+    "wall_time_seconds": 0.000002978,
+    "exit_code": 0,
+    "original_token_count": 277,
+    "output": "{\"bytecode_prefix_present\": false, \"job_status\": \"RUNNING\", \"processes\": [{\"affinity\": [20], \"environment\": {\"BLIS_NUM_THREADS\": \"1\", \"MKL_NUM_THREADS\": \"1\", \"NUMEXPR_NUM_THREADS\": \"1\", \"OMP_NUM_THREADS\": \"1\", \"OPENBLAS_NUM_THREADS\": \"1\", \"PYTHONDONTWRITEBYTECODE\": \"1\", \"PYTHONHASHSEED\": \"0\", \"PYTHONPYCACHEPREFIX\": \"/tmp/semabi_j1_post_controls_v1_no_pyc\", \"VECLIB_MAXIMUM_THREADS\": \"1\"}, \"kind\": \"runner_pid\", \"nice\": 0, \"pgrp\": 1208901, \"pid\": 1208901, \"present\": true, \"state\": \"S\", \"status\": [\"VmRSS:\\t   23068 kB\", \"Threads:\\t1\", \"Cpus_allowed_list:\\t20\"]}, {\"affinity\": [20], \"environment\": {\"BLIS_NUM_THREADS\": \"1\", \"MKL_NUM_THREADS\": \"1\", \"NUMEXPR_NUM_THREADS\": \"1\", \"OMP_NUM_THREADS\": \"1\", \"OPENBLAS_NUM_THREADS\": \"1\", \"PYTHONDONTWRITEBYTECODE\": \"1\", \"PYTHONHASHSEED\": \"0\", \"PYTHONPYCACHEPREFIX\": \"/tmp/semabi_j1_post_controls_v1_no_pyc\", \"VECLIB_MAXIMUM_THREADS\": \"1\"}, \"kind\": \"child_pid\", \"nice\": 0, \"pgrp\": 1208903, \"pid\": 1208903, \"present\": true, \"state\": \"R\", \"status\": [\"VmRSS:\\t 2515656 kB\", \"Threads:\\t1\", \"Cpus_allowed_list:\\t20\"]}], \"sampled_utc\": \"2026-09-08T04:29:57.659584+00:00\"}\n"
+  }
+}

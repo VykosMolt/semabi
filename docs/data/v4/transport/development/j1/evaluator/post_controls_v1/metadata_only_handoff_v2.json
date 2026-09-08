@@ -1,0 +1,148 @@
+{
+  "artifact_inventory": {
+    "bytes": 18358,
+    "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/artifact_manifest_v2.json",
+    "sha256": "83253929513c0d07407dd0cd43acaa4ece29aea6f6302983e0978506425afead"
+  },
+  "current_package_manifest": {
+    "bytes": 1321,
+    "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/source_manifest_v4.json",
+    "sha256": "e2d241b8ff8681bd2e4f05f88d455ce9e27fdf8be539ea9ffed4a6b5dcee3b33"
+  },
+  "current_source_files": {
+    "checks.py": {
+      "bytes": 56283,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/checks.py",
+      "sha256": "8bb4009d510526c35808a96e7d8136c05d02914630e66e39fa0390c1842257b3"
+    },
+    "controls.py": {
+      "bytes": 57172,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/controls.py",
+      "sha256": "4ad00a1d86aa5caa2d8c7bd5328b7db936e1c0fe05386f67fdef2a4b8ea4f817"
+    },
+    "protocol.md": {
+      "bytes": 15555,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/protocol.md",
+      "sha256": "6fa8cf7fa0d1d08ae6cd66f913c3ad86c666b1a5497264d58945bd5686a22c1c"
+    }
+  },
+  "dependency_status": {
+    "all_frozen_runtime_sources_current_at_seal": true,
+    "exact_fixed_entries": 6,
+    "head_at_seal": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+    "nine_previously_audited_native_record_sources_match": true,
+    "package_sources_excluded_from_global_freeze": true,
+    "staged_audit_status_note": "The retained compatibility record was produced while bounded review was pending; final independent acceptance is recorded in this handoff.",
+    "two_pinned_helpers_match": true,
+    "unchanged_from_previous_package": true,
+    "v2_admission": {
+      "bytes": 95281,
+      "path": "docs/data/v4/transport/development/j1/root_instrument_admission_v2.json",
+      "sha256": "1e314c0eea875e89e84d6473e8740ab965639db789b5801061baae72ff2e4834"
+    },
+    "v2_freeze": {
+      "bytes": 114761,
+      "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json",
+      "sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+    },
+    "v2_metadata_validation": {
+      "bytes": 10818,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/metadata_compatibility_v2_freeze_v1.json",
+      "sha256": "7be422e1a1f74492f5eeff2df66fe764d7bb2d61f50d48652e1ec04a95739b45"
+    },
+    "v2_runtime_source_count": 173
+  },
+  "execution_scope": {
+    "actual_first_pass_manifest_opened": false,
+    "actual_run_payloads_opened": false,
+    "native_fit_forecast_browser_service_executed_by_this_branch": false,
+    "production_adapter_executed": false,
+    "qualification": "Declared scope supported by source, exact hashes, retained invocations and the independent native-module import observation; no universal syscall or native-call monitor."
+  },
+  "material_review_findings": 0,
+  "ownership": "Only evaluator/post_controls_v1 files created or edited; no commits, runtime source edits or first-pass artifact changes.",
+  "pending_before_actual_execution": [
+    "Exact expected V2 first-pass preservation manifest path and SHA-256",
+    "Separate root authorization to access preserved payloads and run production diagnostics",
+    "Successful full production custody and dependency validation"
+  ],
+  "production_command_argv_template": [
+    ".venv/bin/python",
+    "-B",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/controls.py",
+    "--control-manifest",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/source_manifest_v4.json",
+    "--control-manifest-sha256",
+    "e2d241b8ff8681bd2e4f05f88d455ce9e27fdf8be539ea9ffed4a6b5dcee3b33",
+    "--freeze",
+    "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json",
+    "--freeze-sha256",
+    "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b",
+    "--first-pass-manifest",
+    "<preserved-V2-first-pass-manifest-path>",
+    "--first-pass-sha256",
+    "<expected-V2-first-pass-sha256>",
+    "--out",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/post_controls_v1/<new-exclusive-result>.json"
+  ],
+  "provenance": "Independent review and probe transcripts are author-retained copies or summaries of reviewer messages, not reviewer-authored or signed files. Literal supplied commands and exact returns are retained. Author test receipts contain actual tool returns.",
+  "review_verdict": "ACCEPT",
+  "safe_to_read_before_evaluator_semantic_release": true,
+  "schema": "semabi.j1.post_controls_metadata_handoff.v2",
+  "semantic_artifacts_closed_until_root_release": {
+    "final_evidence_report": {
+      "bytes": 8930,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/implementation_evidence_v3.md",
+      "sha256": "6bf23113e37b73562391c4641fcd7feb596a343e5540ec8884eda5f363138903"
+    },
+    "final_review": {
+      "bytes": 3599,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/independent_review_attempt4.md",
+      "sha256": "e4411eed19a4d6696530e762c48039e9a2c49bc545588b69ed68bbafefb8b064"
+    },
+    "other_contents": "All source, protocol, fixture/check payloads, reports and result details remain evaluator-semantic material. This handoff and commitment inventories are metadata only.",
+    "previous_regression_probe_transcript": {
+      "bytes": 7097,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/review_probe_transcript_v1.json",
+      "sha256": "d33a23d3e3d7063c0bbd04c6510e35c5c84fd9602806a44cd6bbe9a296c411d4"
+    }
+  },
+  "status": "PREPARED_BOUNDED_REVIEW_ACCEPTED_V2_METADATA_COMPATIBLE",
+  "validation": {
+    "all_owned_check_processes_reaped": true,
+    "current_source_binding_count": 34,
+    "current_source_changes": 0,
+    "immutable_counterexamples": {
+      "fail": 0,
+      "pass": 19,
+      "result": {
+        "bytes": 74069,
+        "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/review_counterexamples_attempt5.json",
+        "sha256": "ddfa446fcc247ee87af3d85e6af6aa5c890fc7efe0c6fac12c2e7ba529aafcaa"
+      }
+    },
+    "independent_complete_envelope_probe_count": 5,
+    "independent_probe_transcript": {
+      "bytes": 5736,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/repaired_review_probe_transcript_v1.json",
+      "sha256": "ea8fb9c9b99f65a05307e8b722be64a3da886add527655c3239caa4e5e3a9645"
+    },
+    "main_harness": {
+      "fail": 0,
+      "pass": 94,
+      "result": {
+        "bytes": 597819,
+        "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/checks_attempt7.json",
+        "sha256": "8fefdcbdd5d42049c19ad11cda37b299786bc743d735e529687e1734e534ef1a"
+      }
+    },
+    "previous_90_result_rows_preserved": "Independently verified exact equality after removing four added controls",
+    "probe_process_exit_code": 0,
+    "tool_receipt": {
+      "bytes": 1323,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/container_fix_attempt1_tool.json",
+      "sha256": "f62cc104995a69323cc99330513f9151ec1cb5c9de76a96474c8824fdec170b3"
+    },
+    "unique_named_controls": 113
+  }
+}

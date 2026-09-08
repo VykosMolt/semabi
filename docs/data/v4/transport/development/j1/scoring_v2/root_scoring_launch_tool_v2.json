@@ -1,0 +1,24 @@
+{
+  "schema": "semabi.j1.root_scoring_launch_tool_receipt.v2",
+  "recorded_utc": "2026-09-08 03:07:55 UTC",
+  "owner": "/root",
+  "tool": "exec_command",
+  "submitted_tool_arguments": {
+    "cmd": "taskset -c 19 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/scoring_v2/jobs/evaluate_v2 -- .venv/bin/python docs/data/v4/transport/development/j1/evaluate.py --freeze docs/data/v4/transport/development/j1/evaluation_freeze_v2.json --preserved docs/data/v4/transport/development/j1/first_pass_manifest_v2.json --out docs/data/v4/transport/development/j1/scoring_v2/evaluation_v2.json",
+    "workdir": "/home/moloch/semabi",
+    "max_output_tokens": 2200,
+    "sandbox_permissions": "require_escalated",
+    "justification": "Run the frozen saved-forecast scorer for the user's authorized J1 research. The first pass is PRESERVED with all705 files independently rehashed and all owned execution jobs gone. This CPU19 command uses only completed local evidence, performs zero native Fits or application interactions, and writes a new result/job identity outside the sealed roots.",
+    "tty": true,
+    "yield_time_ms": 250
+  },
+  "result": {
+    "chunk_id": "a54a70",
+    "wall_time_seconds": 0.251702943,
+    "session_id": 64903,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "preservation_sha256": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256",
+  "preserved_files_independently_rehashed": 705
+}

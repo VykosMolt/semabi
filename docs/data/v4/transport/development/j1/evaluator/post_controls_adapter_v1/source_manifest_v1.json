@@ -1,0 +1,51 @@
+{
+  "files": {
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/checks.py": "f4ff082eac60e93b7fe19727fa225be9566d6e0511e33f6a9977577a32133c3c",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/protocol.md": "2f89acd474257f9268945d7db8a7088c50de84edbdc62cd2adf1d1ba0acd9035",
+    "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/run.py": "f445e6f255c7631cc1bfe28956e90beb1ef039d79dd16d015511e958c419d19e"
+  },
+  "inputs": {
+    "controls_preparation": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/artifact_manifest_v2.json",
+      "sha256": "83253929513c0d07407dd0cd43acaa4ece29aea6f6302983e0978506425afead"
+    },
+    "controls_source": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/source_manifest_v4.json",
+      "sha256": "e2d241b8ff8681bd2e4f05f88d455ce9e27fdf8be539ea9ffed4a6b5dcee3b33"
+    },
+    "corrected_score": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/corrected_score_manifest_v1.json",
+      "sha256": "afb3d7dd55b12ba3e08d6a13c41038fd18873118ba25a02dbbbfeb5ef97b8ff6"
+    },
+    "freeze": {
+      "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json",
+      "sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+    },
+    "preservation": {
+      "path": "docs/data/v4/transport/development/j1/first_pass_manifest_v2.json",
+      "sha256": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256"
+    },
+    "sidecar_acceptance": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/root_acceptance_v1.json",
+      "sha256": "f4bbd47464a964f9650d3cdf434566f3f2adfa96ff6ecdc8705bbfeb46746254"
+    },
+    "sidecar_preparation": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/artifact_manifest_v1.json",
+      "sha256": "39feb4f47bd290d5632456a6d2a44d2c6942cdd99667ec1f4ebcb2f92f68fe80"
+    },
+    "sidecar_review": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/independent_review/artifact_manifest_v1.json",
+      "sha256": "722a49004a514cb50ce89d4750de0a60d135eec1f13380caeef8abdf24d9397a"
+    },
+    "sidecar_source": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json",
+      "sha256": "6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51"
+    }
+  },
+  "mechanism": "EXACT_POST_CONTROLS_EVALUATOR_LOADER_WITH_ACCEPTED_SIDECAR_CONTEXT_V1",
+  "outputs": {
+    "audit_directory": "docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/attempt_v1",
+    "result": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/diagnostics_sidecar_v1.json"
+  },
+  "schema": "semabi.j1.post_controls_adapter_source.v1"
+}

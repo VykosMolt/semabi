@@ -1,0 +1,25 @@
+{
+  "schema": "semabi.j1.root_execution_launch_tool_receipt.v2",
+  "recorded_utc": "2026-09-08 02:27:49 UTC",
+  "role": "primary_actor",
+  "owner": "/root",
+  "tool": "exec_command",
+  "submitted_tool_arguments": {
+    "cmd": "taskset -c 17 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/jobs/j1_primary_actor_v2 -- .venv/bin/python docs/data/v4/transport/development/j1/act.py --actor-freeze docs/data/v4/transport/development/j1/evaluation_actor_freeze_v2.json --predictor-dir docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2 script --url http://127.0.0.1:8771/join --reset-url http://127.0.0.1:8771/reset --script experiments/join_v1/oracle/scripts_v1.json --fixture primary_evaluation --seed 0 --freeze docs/data/v4/transport/development/j1/evaluation_collector_freeze_v2.json --out docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2",
+    "workdir": "/home/moloch/semabi",
+    "max_output_tokens": 1700,
+    "sandbox_permissions": "require_escalated",
+    "justification": "May I execute the fixed313-attempt primary J1 script against the owned loopback fixture and already fitted predictor, as authorized by the user's autonomous local experiment task? This is the exact frozen actor command, using CPU17, one numerical thread, preserved model and exclusive workspace outputs. The service and predictor are verified ready; this performs no refit or extra calibration and has no external deployment or cost.",
+    "tty": true,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "6afc3a",
+    "wall_time_seconds": 1.000980402,
+    "session_id": 96045,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "freeze_sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+}

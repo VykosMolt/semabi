@@ -1,0 +1,840 @@
+"""Synthetic and frozen fixture-model checks for evaluator-only post controls.
+
+This never opens a J1 training/evaluation run, fits a learner, forecasts, starts a
+browser or server, or changes a frozen fixture. Rendered trees and typed forecasts
+below are inventions and cannot establish native browser or learner behavior.
+"""
+from __future__ import annotations
+
+import argparse
+import ast
+from collections import Counter
+from contextlib import redirect_stdout
+from copy import deepcopy
+import importlib.util
+import io as stream_io
+import json
+from pathlib import Path
+import sys
+import tempfile
+from types import SimpleNamespace
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[7]
+EXPECTED_CHECK_NAMES_SHA256 = "95366e91a3338aa5b72c4d120aa707eb6097b715432e1c215553c9281a9bb171"
+
+
+def load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    result = importlib.util.module_from_spec(spec)
+    sys.modules[name] = result
+    spec.loader.exec_module(result)
+    return result
+
+
+def tree(public):
+    nodes = []
+    def add(role, name, parent, **fields):
+        index = len(nodes)
+        nodes.append({"i": index, "parent": parent, "role": role, "name": name,
+                      "bbox": [0, 0, 10, 10], **fields})
+        return index
+    body = add("group", "", -1)
+    add("button", "Clear message", body)
+    add("button", "Reset console", body)
+    for kind, label in (("transmitters", "Transmitters"), ("receivers", "Receivers"), ("patches", "Patch leads")):
+        section = add("group", label, body)
+        wrapper = add("group", "", section)
+        for entity in public[kind]:
+            group = add("group", entity["name"], wrapper)
+            add("heading", entity["name"], group)
+            if kind == "transmitters":
+                add("button", "Transmit", group)
+            elif kind == "receivers":
+                label_node = add("text", "Select receiver", group)
+                add("radio", "Select receiver", label_node,
+                    checked=public["selected_receiver"] == entity["name"])
+                add("text", "Received: " + ("yes" if entity["received"] else "no"), group)
+                add("button", "Clear receipt", group)
+            else:
+                wrapper2 = add("group", "", group)
+                for endpoint, endpoints in (("transmitter", "transmitters"), ("receiver", "receivers")):
+                    label_node = add("text", endpoint.capitalize(), wrapper2)
+                    add("combobox", endpoint.capitalize(), label_node,
+                        value=entity[endpoint], options=[item["name"] for item in public[endpoints]])
+    notice = public["notice"]
+    if notice is not None:
+        add("status", f"Transmission {'delivered' if notice['delivered'] else 'blocked'}: "
+                      f"{notice['transmitter']} → {notice['receiver']}.", body)
+    return {"url": "http://invented.invalid/join", "nodes": nodes}
+
+
+def prune(raw, indices, C):
+    drop = set()
+    for index in indices:
+        drop.update(C.descendants(raw["nodes"], index))
+    remaining = [node for node in raw["nodes"] if node["i"] not in drop]
+    remap = {node["i"]: index for index, node in enumerate(remaining)}
+    return {"url": raw["url"], "nodes": [{**node, "i": remap[node["i"]],
+             "parent": -1 if node["parent"] == -1 else remap[node["parent"]]} for node in remaining]}
+
+
+def native_primitive(raw, requested, C):
+    kind = requested["kind"]
+    if kind in {"reset", "reload", "noop"}:
+        return {"kind": kind, **({"text": requested["text"]} if "text" in requested else {})}
+    scope = requested.get("scope")
+    matches = [node for node in raw["nodes"] if node["role"] == requested["role"] and node["name"] == requested["name"]
+               and (scope is None or any(raw["nodes"][i]["role"] == scope["role"] and raw["nodes"][i]["name"] == scope["name"]
+                                        for i in C.ancestors(raw["nodes"], node["i"])[1:]))]
+    assert len(matches) == 1
+    node = matches[0]
+    result = {"kind": kind, "target": node["i"], "target_desc": {
+        "role": node["role"], "name": node["name"], "placeholder": node.get("placeholder")}}
+    if kind == "select":
+        result["text"] = requested["value"]
+    return result
+
+
+def rec(name, fields):
+    return {"$record": name, "fields": fields}
+
+
+def encode(value, C):
+    if value is None or type(value) in (bool, int, float, str):
+        return value
+    if type(value) is list:
+        return [encode(item, C) for item in value]
+    if type(value) is tuple:
+        return {"$tuple": [encode(item, C) for item in value]}
+    if type(value) in (set, frozenset):
+        return {"$set": type(value).__name__, "items": sorted([encode(item, C) for item in value], key=C.canonical)}
+    if type(value) is dict and set(value) == {"$record", "fields"}:
+        return {"$record": value["$record"], "fields": {key: encode(item, C) for key, item in value["fields"].items()}}
+    if type(value) is dict:
+        return {"$mapping": "dict", "items": [[encode(key, C), encode(item, C)] for key, item in value.items()]}
+    raise ValueError(type(value))
+
+
+def invented_values(raw, catalog, C):
+    public = C.public_state(raw, catalog)
+    objects, instance_list, node_instance, node_key, statics = {}, [], {}, {}, {}
+    by_name = {}
+    for tid, kind in enumerate(C.KINDS):
+        for name in catalog[kind]:
+            entity = public["entities"][name]
+            root = entity["root"]["value"]
+            obj = rec(C.ABSOBJ, {"tid": tid, "key": name, "attrs": {}, "parent": None,
+                                "refs": {}, "ordinal": 0, "node": root, "positional": False})
+            objects[(tid, name)] = obj
+            by_name[name] = obj
+            idx = len(instance_list)
+            slots = {"id": ("", name)}
+            for node_id in entity["owned_nodes"]:
+                node = raw["nodes"][node_id]
+                node_instance[node_id] = idx
+                if node["role"] not in {"radio", "text", "combobox"}:
+                    continue
+                key = node["role"] + "@" + str(node_id)
+                node_key[node_id] = key
+                value = node.get("checked") if node["role"] == "radio" else node.get("value") if node["role"] == "combobox" else node["name"]
+                slots[key] = (node["name"], value)
+            instance_list.append(rec(C.INSTANCE, {"root": root, "tid": tid, "parent": None,
+                                                 "slots": slots, "context": {}, "anchor": "invented", "positional": False}))
+    for name in catalog["patches"]:
+        by_name[name]["fields"]["refs"] = {
+            "source_slot": (0, public["entities"][name]["fields"]["transmitter"]["value"]),
+            "target_slot": (1, public["entities"][name]["fields"]["receiver"]["value"])}
+    children = {}
+    for node in raw["nodes"]:
+        children.setdefault(node["parent"], []).append(node["i"])
+    typed_nodes = [rec("semabi.compiler.observation.Node", {
+        **{key: node.get(key) for key in ("i", "parent", "role", "name", "value", "checked", "options", "placeholder", "current")},
+        "bbox": tuple(node["bbox"])}) for node in raw["nodes"]]
+    obs = rec("semabi.compiler.observation.Observation", {"nodes": typed_nodes, "url": raw["url"], "_children": children})
+    parsed = rec(C.PARSED, {"obs": obs, "instances": instance_list, "statics": statics,
+                           "node_instance": node_instance, "node_key": node_key, "row_named": set()})
+    state = rec(C.ABSSTATE, {"objs": objects, "view": {}, "partial": True, "unidentified": [],
+                            "provisional": set(), "parsed": parsed, "unknown_is_none": True})
+    source = catalog["transmitters"][0]
+    target = public["selected"]["value"]
+    event = "Transmission delivered : <> → <> ."
+    vouch = rec("semabi.compiler.v4.outcome.Vouch", {
+        "event": event, "witnesses": (0,), "condition": (), "covers": 1, "sole": True, "preceded_by": ()})
+    return {"control": "invented-control", "state": state, "parsed": parsed, "owner": by_name[source],
+            "bound": {"owner": by_name[source], "selected": by_name[target]},
+            "binding_status": {"owner": "named", "selected": "named"},
+            "literals": {("named", "owner")},
+            "roles": {name: rec("semabi.compiler.v4.outcome.Role", {
+                "name": name, "kind": kind, "form": (), "tid": tid, "anchor": None})
+                for name, kind, tid in (("owner", "owner", 0), ("selected", "selection", 1))},
+            "arg_roles": {event: {0: "owner", 1: "selected"}}, "decision_list": event,
+            "rule": {event: vouch}, "list": {event: vouch}, "arguments": {event: {0: source, 1: target}}}
+
+
+def forecast(values, C):
+    return {"schema": "semabi.j1.forecast.v1", "status": "FORECAST", "instrument_status": "COMPLETE",
+            "incomplete_reasons": [], "snapshots": {}, "values": encode(values, C)}
+
+
+def main():
+    parser = argparse.ArgumentParser(allow_abbrev=False)
+    parser.add_argument("--controls-sha256", required=True)
+    parser.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args()
+    C = load("_j1_post_controls_under_test", HERE / "controls.py")
+    assert C.ROOT == ROOT
+    assert C.sha(HERE / "controls.py") == args.controls_sha256
+    assert not args.out.exists()
+    inventory_path = HERE.parent / "public_inventory_sha256.json"
+    inventory = C.read_json(inventory_path)
+    source_paths = {str(HERE.relative_to(ROOT) / "controls.py"): args.controls_sha256,
+                    str(Path(__file__).relative_to(ROOT)): C.sha(__file__),
+                    str((HERE / "protocol.md").relative_to(ROOT)): C.sha(HERE / "protocol.md"),
+                    str(inventory_path.relative_to(ROOT)): C.sha(inventory_path)}
+    # The existing source inventory, not a run directory, bounds all fixture reads.
+    frozen_files = inventory.get("sha256", inventory.get("files"))
+    assert isinstance(frozen_files, dict)
+    for name, wanted in frozen_files.items():
+        assert C.sha(ROOT / name) == wanted
+        source_paths[name] = wanted
+    for name, wanted in C.HELPER_SOURCES.items():
+        assert C.sha(C.J1 / name) == wanted
+        source_paths[str((C.J1 / name).relative_to(ROOT))] = wanted
+    trace_path = C.J1 / "trace.py"
+    trace_sha = "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249"
+    assert C.sha(trace_path) == trace_sha
+    source_paths[str(trace_path.relative_to(ROOT))] = trace_sha
+    T = load("_post_controls_source_bound_trace_copier", trace_path)
+    trace_tree = ast.parse(trace_path.read_text())
+    native_binding_source = next(node for node in trace_tree.body
+                                 if isinstance(node, ast.FunctionDef) and node.name == "native_bindings")
+    optional_assignment = next(node for node in ast.walk(native_binding_source)
+                               if isinstance(node, ast.Assign) and any(
+                                   isinstance(target, ast.Name) and target.id == "optional" for target in node.targets))
+    native_optional_fields = ast.literal_eval(optional_assignment.value.func.value)
+    fixture = ROOT / "experiments/join_v1"
+    model = load("_post_controls_fixture_model", fixture / "fixtures/model.py")
+    reference = load("_post_controls_fixture_reference", fixture / "oracle/reference.py")
+    audit = load("_post_controls_prior_audit", fixture / "oracle/audit_fixture.py")
+    specification = C.read_json(fixture / "oracle/specification_v1.json")
+    catalogs = {name: C.read_json(fixture / f"fixtures/catalog_{name}.json") for name in ("primary", "permuted")}
+    catalog = catalogs["primary"]
+    cases = C.read_json(fixture / "oracle/cases_v1.json")
+    scripts = C.read_json(fixture / "oracle/scripts_v1.json")
+    prior = C.read_json(HERE.parent / "sealed_model_audit_v1.json")
+    results = []
+
+    def run(name, function):
+        try:
+            detail = function()
+            results.append({"name": name, "status": "PASS", "detail": detail})
+        except Exception as failure:
+            results.append({"name": name, "status": "FAIL", "error": {
+                "type": type(failure).__name__, "detail": str(failure)}})
+
+    def expect(status, value):
+        assert value["status"] == status, value
+        return value
+
+    def require(value, detail=None):
+        assert value, detail
+        return detail
+
+    fresh = model.fresh()
+    raw = tree(model.public(fresh, catalog))
+    page = C.public_state(raw, catalog)
+    run("complete_invented_public_tree", lambda: expect("PASS", page))
+    run("no_selection_observed_only_from_all_four_explicit_radios",
+        lambda: require(page["selected"]["status"] == "PASS" and page["selected"]["value"] is None, page["selected"]))
+
+    def visibility_mutation(change, expected):
+        altered = deepcopy(raw)
+        replacement = change(altered)
+        if replacement is not None:
+            altered = replacement
+        return expect(expected, C.public_state(altered, catalog))
+
+    receiver = page["entities"][catalog["receivers"][0]]
+    patch = page["entities"][catalog["patches"][0]]
+    run("missing_source_retains_unobserved_alternative", lambda: visibility_mutation(
+        lambda r: prune(r, [page["entities"][catalog["transmitters"][0]]["root"]["value"]], C), "UNOBSERVED"))
+    run("missing_receiver_retains_unobserved_alternative", lambda: visibility_mutation(
+        lambda r: prune(r, [receiver["root"]["value"]], C), "UNOBSERVED"))
+    run("missing_patch_retains_unobserved_alternative", lambda: visibility_mutation(
+        lambda r: prune(r, [patch["root"]["value"]], C), "UNOBSERVED"))
+    run("missing_options_does_not_establish_reference", lambda: visibility_mutation(
+        lambda r: r["nodes"][patch["fields"]["receiver"]["node"]].pop("options") and None, "UNOBSERVED"))
+    run("partial_options_does_not_establish_complete_alternatives", lambda: visibility_mutation(
+        lambda r: r["nodes"][patch["fields"]["receiver"]["node"]]["options"].pop() and None, "UNOBSERVED"))
+    run("duplicated_options_retain_ambiguity", lambda: visibility_mutation(
+        lambda r: r["nodes"][patch["fields"]["receiver"]["node"]]["options"].append(catalog["receivers"][0]), "AMBIGUOUS"))
+    run("absent_checked_state_is_unobserved", lambda: visibility_mutation(
+        lambda r: r["nodes"][receiver["fields"]["checked"]["node"]].update(checked=None), "UNOBSERVED"))
+    run("unknown_receipt_word_is_unavailable", lambda: visibility_mutation(
+        lambda r: r["nodes"][receiver["fields"]["received"]["node"]].update(name="Received: perhaps"), "UNAVAILABLE"))
+    run("unknown_endpoint_name_is_unavailable_not_wrong", lambda: visibility_mutation(
+        lambda r: r["nodes"][patch["fields"]["receiver"]["node"]].update(value="AbsentIdentity"), "UNAVAILABLE"))
+
+    def double_selection(r):
+        for name in catalog["receivers"][:2]:
+            r["nodes"][page["entities"][name]["fields"]["checked"]["node"]]["checked"] = True
+    run("two_selected_receivers_retain_ambiguity", lambda: visibility_mutation(double_selection, "AMBIGUOUS"))
+
+    def duplicate_group(r):
+        root = receiver["root"]["value"]
+        owned = C.descendants(r["nodes"], root)
+        mapping = {i: len(r["nodes"]) + j for j, i in enumerate(owned)}
+        r["nodes"].extend([{**r["nodes"][i], "i": mapping[i],
+                            "parent": mapping.get(r["nodes"][i]["parent"], r["nodes"][i]["parent"])} for i in owned])
+    run("duplicate_identity_groups_retain_ambiguity", lambda: visibility_mutation(duplicate_group, "AMBIGUOUS"))
+
+    selected = model.fresh()
+    model.act(selected, {"op": "select_receiver", "receiver": catalog["receivers"][0]}, catalog)
+    selected_raw = tree(model.public(selected, catalog))
+    selected_page = C.public_state(selected_raw, catalog)
+    requested = {"kind": "click", "role": "button", "name": "Transmit", "exact": True,
+                 "scope": {"role": "group", "name": catalog["transmitters"][0], "exact": True}}
+    primitive = native_primitive(selected_raw, requested, C)
+    op = C.operation(selected_raw, selected_page, primitive)
+    run("primitive_exact_raw_target_and_arguments", lambda: expect("PASS", C.resolve_primitive(selected_raw, requested, primitive)))
+    run("primitive_wrong_native_target", lambda: expect("WRONG", C.resolve_primitive(
+        selected_raw, requested, {**primitive, "target": selected_page["entities"][catalog["transmitters"][1]]["fields"]["transmit"]["value"]})))
+    run("primitive_boolean_target_alias", lambda: expect("WRONG", C.resolve_primitive(selected_raw, requested, {**primitive, "target": True})))
+    run("primitive_missing_target_exact_name_is_unavailable", lambda: expect("UNAVAILABLE", C.resolve_primitive(
+        selected_raw, {**requested, "name": "Not a visible control"}, primitive)))
+    run("primitive_unscoped_duplicate_controls_ambiguous", lambda: expect("AMBIGUOUS", C.resolve_primitive(
+        selected_raw, {key: value for key, value in requested.items() if key != "scope"}, primitive)))
+    select_request = {"kind": "select", "role": "combobox", "name": "Receiver", "exact": True,
+                      "scope": {"role": "group", "name": catalog["patches"][0], "exact": True}, "value": catalog["receivers"][1]}
+    select_primitive = native_primitive(selected_raw, select_request, C)
+    run("primitive_select_argument_pass", lambda: expect("PASS", C.resolve_primitive(selected_raw, select_request, select_primitive)))
+    run("primitive_select_wrong_argument", lambda: expect("WRONG", C.resolve_primitive(
+        selected_raw, select_request, {**select_primitive, "text": catalog["receivers"][2]})))
+    run("primitive_select_argument_unavailable", lambda: expect("UNAVAILABLE", C.resolve_primitive(
+        selected_raw, {**select_request, "value": "AbsentIdentity"}, select_primitive)))
+    run("primitive_global_reset_argument", lambda: expect("PASS", C.resolve_primitive(None, {"kind": "reset", "text": "0"}, {"kind": "reset", "text": "0"})))
+    run("primitive_global_reset_wrong_argument", lambda: expect("WRONG", C.resolve_primitive(None, {"kind": "reset", "text": "0"}, {"kind": "reset", "text": "1"})))
+    run("actual_source_comes_from_native_target_tree", lambda: require(op["value"] == {
+        "op": "transmit", "transmitter": catalog["transmitters"][0]}, op))
+
+    delivered = deepcopy(selected)
+    model.act(delivered, op["value"], catalog)
+    delivered_raw = tree(model.public(delivered, catalog))
+    def effect_case(change=None, native_ok=True, expected="PASS"):
+        changed = deepcopy(delivered)
+        if change:
+            change(changed)
+        after_page = C.public_state(tree(model.public(changed, catalog)), catalog)
+        return expect(expected, C.effect(selected_page, after_page, op, catalog, specification, native_ok))
+    run("primary_public_effect_matches_reference", effect_case)
+    run("primary_unrelated_flag_change_wrong", lambda: effect_case(lambda s: s["received"].__setitem__(1, True), expected="WRONG"))
+    run("primary_graph_change_wrong", lambda: effect_case(lambda s: s["connections"][0].update(receiver=2), expected="WRONG"))
+    run("primary_selection_change_wrong", lambda: effect_case(lambda s: s.update(selected_receiver=1), expected="WRONG"))
+    run("primary_message_argument_change_wrong", lambda: effect_case(lambda s: s["notice"].update(transmitter=1), expected="WRONG"))
+    run("native_failure_not_promoted_to_oracle_effect_success", lambda: effect_case(native_ok=False, expected="UNAVAILABLE"))
+    run("missing_after_state_effect_unobserved", lambda: expect("UNOBSERVED", C.effect(
+        selected_page, C.public_state(None, catalog), op, catalog, specification, True)))
+    run("first_reset_prestate_unobserved_poststate_check_pass", lambda: expect("PASS", C.effect(
+        C.public_state(None, catalog), page, C.check("PASS", "invented", value={"op": "reset"}), catalog, specification, True)))
+    run("reload_does_not_reset_visible_state", lambda: expect("PASS", C.effect(
+        selected_page, selected_page, C.check("PASS", "invented", value={"op": "reload"}), catalog, specification, True)))
+
+    values = invented_values(selected_raw, catalog, C)
+    def represented(change=None):
+        current = deepcopy(values)
+        if change:
+            change(current)
+        return C.representation(forecast(current, C), selected_raw, selected_page, catalog, op)
+    run("complete_invented_typed_correspondence", lambda: expect("PASS", represented()))
+    def reordered_maps(v):
+        v["owner"] = deepcopy(v["owner"])
+        v["owner"]["fields"] = dict(reversed(tuple(v["owner"]["fields"].items())))
+        v["bound"]["selected"] = deepcopy(v["bound"]["selected"])
+        v["bound"]["selected"]["fields"] = dict(reversed(tuple(v["bound"]["selected"]["fields"].items())))
+        v["parsed"] = deepcopy(v["parsed"])
+        parsed = v["parsed"]["fields"]
+        parsed["node_key"] = dict(reversed(tuple(parsed["node_key"].items())))
+        obs = parsed["obs"]["fields"]
+        obs["_children"] = dict(reversed(tuple(obs["_children"].items())))
+    run("equivalent_reordered_typed_maps_remain_available", lambda: expect("PASS", represented(reordered_maps)))
+    run("typed_mapping_key_types_do_not_alias", lambda: require(all(
+        not C.same_typed(left, right) and not C.same_typed(right, left)
+        for left, right in (({False: "v"}, {0: "v"}), ({1.0: "v"}, {1: "v"}),
+                            ({(True, "id"): "v"}, {(1, "id"): "v"})))))
+    def assessed_mutation(change):
+        current = deepcopy(values)
+        change(current)
+        actual = {"before": selected_raw, "after": delivered_raw,
+                  "decision": {"action": primitive, "ok": True, "error": None},
+                  "response": forecast(current, C)}
+        expected = {"charged_attempt": 1, "target": False,
+                    "metadata": {"case": "invented-container-control"}, "action": requested}
+        return C.assess(actual, expected, catalog, specification)["representation"]
+    def tuple_nodes(v):
+        obs = v["parsed"]["fields"]["obs"]["fields"]
+        obs["nodes"] = tuple(obs["nodes"])
+    run("tuple_typed_observation_nodes_unavailable", lambda: expect("UNAVAILABLE", assessed_mutation(tuple_nodes)))
+    def tuple_options(v):
+        nodes = v["parsed"]["fields"]["obs"]["fields"]["nodes"]
+        node = next(item["fields"] for item in nodes if item["fields"]["options"])
+        node["options"] = tuple(node["options"])
+    run("tuple_typed_select_options_unavailable", lambda: expect("UNAVAILABLE", assessed_mutation(tuple_options)))
+    def assessed_response(response):
+        actual = {"before": selected_raw, "after": delivered_raw,
+                  "decision": {"action": primitive, "ok": True, "error": None}, "response": response}
+        expected = {"charged_attempt": 1, "target": False,
+                    "metadata": {"case": "invented-parser-cache-control"}, "action": requested}
+        return C.assess(actual, expected, catalog, specification)["representation"]
+
+    def native_exported_response(cache_present=False):
+        # Actual exporter/specs with invented classes; never call native_bindings.
+        _, score = C.helpers()
+        schemas = {"semabi.compiler." + suffix + "." + name: tuple(fields.split())
+                   for suffix, names in T.RECORDS.items() for name, fields in names.items()}
+        schemas["semabi.compiler.v4.outcome.Vouch"] = tuple(sorted(score.VOUCH_FIELDS))
+        classes, records, memo = {}, {}, {}
+
+        def materialize(value):
+            if type(value) is dict:
+                if id(value) in memo:
+                    return memo[id(value)]
+                if set(value) == {"$record", "fields"}:
+                    label = value["$record"]
+                    if label not in classes:
+                        cls = classes[label] = type("Invented_" + label.rsplit(".", 1)[-1], (), {})
+                        optional = native_optional_fields.get(label.rsplit(".", 1)[-1], ())
+                        records[cls] = T.RecordSpec(label, schemas[label], optional)
+                    result = classes[label]()
+                    memo[id(value)] = result
+                    for name, item in value["fields"].items():
+                        setattr(result, name, materialize(item))
+                    return result
+                result = {}
+                memo[id(value)] = result
+                result.update((materialize(key), materialize(item)) for key, item in value.items())
+                return result
+            if type(value) in (list, tuple, set, frozenset):
+                return type(value)(materialize(item) for item in value)
+            return value
+
+        invented = materialize(values)
+        if cache_present:
+            slot = next(iter(invented["parsed"].node_key.values()))
+            setattr(invented["parsed"], native_optional_fields["ParsedObs"][0], {slot: False})
+        bindings = T.Bindings({}, records, {
+            "state": classes[C.ABSSTATE], "observation": classes["semabi.compiler.observation.Observation"]}, ())
+        copier = T.Copier(bindings)
+        copied = copier.copy(invented, "invented.forecast")
+        assert not copier.errors and copier.snapshots
+        return {"schema": "semabi.j1.forecast.v1", "status": "FORECAST", "instrument_status": "COMPLETE",
+                "values": copied, "snapshots": copier.snapshots, "incomplete_reasons": copier.errors}
+
+    def native_cache_case(present):
+        response = native_exported_response(present)
+        before_digest = C.digest(response)
+        result = expect("PASS", assessed_response(response))
+        assert result["parsed_public_fields"]["counts"] == {"PASS": 24}
+        assert C.digest(response) == before_digest
+        return {"status": result["status"], "parsed_counts": result["parsed_public_fields"]["counts"],
+                "copying_errors": 0, "snapshot_count": len(response["snapshots"]), "raw_payload_preserved": True}
+
+    run("native_export_absent_parsed_cache_preserves_interpretation", lambda: native_cache_case(False))
+    run("native_export_present_parsed_cache_preserves_interpretation", lambda: native_cache_case(True))
+
+    def encoded_semantic_fault(record_type, change):
+        current = deepcopy(values)
+        current["parsed"]["fields"][C.PARSED_DERIVED_CACHE] = {}
+        response = forecast(current, C)
+        def visit(item):
+            if type(item) is list:
+                for child in item:
+                    visit(child)
+            elif type(item) is dict:
+                if set(item) == {"$record", "fields"} and item["$record"] == record_type:
+                    change(item["fields"])
+                for child in item.values():
+                    visit(child)
+        visit(response["values"])
+        assert response["instrument_status"] == "COMPLETE" and response["incomplete_reasons"] == []
+        return assessed_response(response)
+
+    unknown_core = {"$unknown": {"reason": "invented_unknown_semantic_field", "path": "invented.core"}}
+    run("parsed_core_unknown_remains_unavailable", lambda: expect("UNAVAILABLE", encoded_semantic_fault(
+        C.PARSED, lambda fields: fields.update(node_key=unknown_core))))
+    run("parsed_core_missing_remains_unavailable", lambda: expect("UNAVAILABLE", encoded_semantic_fault(
+        C.PARSED, lambda fields: fields.pop("node_key"))))
+    run("parsed_extra_semantic_field_remains_unavailable", lambda: expect("UNAVAILABLE", encoded_semantic_fault(
+        C.PARSED, lambda fields: fields.update(unsupported_semantic_field="invented-extra"))))
+    run("observation_children_unknown_remains_unavailable", lambda: expect("UNAVAILABLE", encoded_semantic_fault(
+        "semabi.compiler.observation.Observation", lambda fields: fields.update(_children=unknown_core))))
+
+    def snapshot_fault(missing):
+        response = native_exported_response()
+        key = next(key for key, item in response["snapshots"].items() if item["$record"] == C.ABSSTATE)
+        if missing:
+            response["snapshots"].pop(key)
+        else:
+            response["snapshots"][key]["fields"]["parsed"]["fields"][C.PARSED_DERIVED_CACHE] = {
+                "$mapping": "dict", "items": []}
+        return assessed_response(response)
+
+    run("semantic_snapshot_hash_mismatch_remains_unavailable", lambda: expect("UNAVAILABLE", snapshot_fault(False)))
+    run("semantic_snapshot_missing_remains_unavailable", lambda: expect("UNAVAILABLE", snapshot_fault(True)))
+    run("no_exact_name_needed_when_raw_tree_anchor_unique", lambda: expect("PASS", C.object_correspondence(
+        rec(C.ABSOBJ, {**values["owner"]["fields"], "key": "InventedLatentKey"}), selected_raw, selected_page)))
+    run("absent_name_and_anchor_is_unavailable_not_wrong", lambda: expect("UNAVAILABLE", C.object_correspondence(
+        rec(C.ABSOBJ, {**values["owner"]["fields"], "key": "AbsentIdentity", "node": -1}), selected_raw, selected_page)))
+    run("broad_ancestor_does_not_select_favorable_exact_key", lambda: expect("AMBIGUOUS", C.object_correspondence(
+        rec(C.ABSOBJ, {**values["owner"]["fields"], "node": 0}), selected_raw, selected_page)))
+    run("conflicting_key_and_anchor_is_ambiguous", lambda: expect("AMBIGUOUS", C.object_correspondence(
+        rec(C.ABSOBJ, {**values["owner"]["fields"], "key": catalog["transmitters"][1]}), selected_raw, selected_page)))
+    run("wrong_owner_identifies_other_visible_entity", lambda: expect("WRONG", represented(
+        lambda v: v.update(owner=v["state"]["fields"]["objs"][(0, catalog["transmitters"][1])]))["owner"]))
+    run("missing_owner_is_unavailable", lambda: expect("UNAVAILABLE", represented(lambda v: v.update(owner=None))["owner"]))
+    patch_name = catalog["patches"][0]
+    def wrong_ref(v):
+        v["state"]["fields"]["objs"][(2, patch_name)]["fields"]["refs"]["target_slot"] = (1, catalog["receivers"][2])
+    run("reference_to_other_visible_endpoint_is_wrong", lambda: expect("WRONG", represented(wrong_ref)))
+    def absent_ref(v):
+        v["state"]["fields"]["objs"][(2, patch_name)]["fields"]["refs"]["target_slot"] = None
+    run("null_reference_is_unavailable_not_wrong", lambda: expect("UNAVAILABLE", represented(absent_ref)))
+    def duplicate_ref(v):
+        v["state"]["fields"]["objs"][(2, patch_name)]["fields"]["refs"]["second_target"] = (1, catalog["receivers"][1])
+    run("multiple_same_collection_refs_remain_ambiguous", lambda: expect("AMBIGUOUS", represented(duplicate_ref)))
+    run("missing_object_retains_fixed_coverage", lambda: expect("UNAVAILABLE", represented(
+        lambda v: v["state"]["fields"]["objs"].pop((2, patch_name)))))
+    def wrong_bound(v):
+        v["bound"]["selected"] = v["state"]["fields"]["objs"][(1, catalog["receivers"][2])]
+    run("wrong_bound_argument_role_identity", lambda: require(any(r["status"] == "WRONG" for r in represented(wrong_bound)["argument_role_positions"])))
+    run("missing_bound_argument_role_unavailable", lambda: require(any(r["status"] == "UNAVAILABLE" for r in represented(
+        lambda v: v["bound"].pop("selected"))["argument_role_positions"])))
+    def wrong_parsed(v):
+        parsed = v["parsed"]["fields"]
+        node = selected_page["entities"][catalog["receivers"][0]]["fields"]["checked"]["node"]
+        instance = parsed["instances"][parsed["node_instance"][node]]["fields"]
+        slot = parsed["node_key"][node]
+        instance["slots"][slot] = ("Select receiver", False)
+    run("wrong_parsed_radio_value_is_separate_wrong", lambda: require(any(r["status"] == "WRONG" for r in represented(wrong_parsed)["parsed_public_fields"]["rows"])))
+    run("missing_forecast_keeps_representation_denominators", lambda: require(C.representation(None, selected_raw, selected_page, catalog, op) ==
+        C.check("UNAVAILABLE", "MISSING_FORECAST", object_denominator=16, reference_denominator=16)))
+    run("no_poststate_prediction_is_manufactured", lambda: expect("UNAVAILABLE", represented()["learned_state_consequence"]))
+    run("unproven_persistent_flag_attribute_is_unavailable", lambda: expect("UNAVAILABLE", represented()["persistent_flag_attributes"]))
+
+    fixture_rows = []
+    def fixture_partition(partition, fixture_name, profile):
+        cat = catalogs[profile]
+        sequence = cases[partition]
+        script_cases = scripts["fixtures"][fixture_name]["cases"]
+        assert len(sequence) == len(script_cases) == 24
+        prior_rows = {row["case"]: row for row in prior["case_results"][partition]}
+        total_actions, total_snapshots, targets = 0, 0, []
+        for case, script_case in zip(sequence, script_cases, strict=True):
+            assert case["case"] == script_case["case"]
+            state = model.fresh()
+            before = None
+            snapshots = []
+            action_index = 0
+            for requested_action in script_case["script"]:
+                public_model = model.public(state, cat)
+                if requested_action["kind"] == "snapshot":
+                    snapshots.append(audit.digest(public_model))
+                    total_snapshots += 1
+                    continue
+                before_raw = tree(public_model)
+                public_before = C.public_state(before_raw, cat)
+                primitive_action = native_primitive(before_raw, requested_action, C)
+                assert C.resolve_primitive(before_raw, requested_action, primitive_action)["status"] == "PASS"
+                operation_result = C.operation(before_raw, public_before, primitive_action)
+                assert operation_result["status"] == "PASS"
+                operation_value = audit.resolve(requested_action, public_model)
+                assert operation_result["value"] == operation_value
+                if action_index == 11:
+                    assert C.target_premise(public_before, cat, case)["status"] == "PASS"
+                    truth = C.primary_truth(C.state_values(public_before, cat), cat["transmitters"][case["source"]])
+                    assert truth["delivered"] == reference.accepted(case["edges"], case["source"], case["target"])
+                    assert truth["witnesses"] == [cat["patches"][index] for index in reference.witnesses(case["edges"], case["source"], case["target"])]
+                    targets.append(truth)
+                model.act(state, operation_value, cat)
+                after_raw = tree(model.public(state, cat))
+                assert C.effect(public_before, C.public_state(after_raw, cat), operation_result, cat, specification, True)["status"] == "PASS"
+                action_index += 1
+                total_actions += 1
+            assert snapshots == prior_rows[case["case"]]["public_model_snapshot_sha256"]
+            fixture_rows.append({"partition": partition, "case": case["case"], "model_snapshots_match_prior_audit": True,
+                                 "public_primitives_checked": action_index, "snapshots": len(snapshots)})
+        assert total_actions == 288 and total_snapshots == 312 and len(targets) == 24
+        return {"cases": 24, "primitives": total_actions, "snapshots": total_snapshots, "targets": len(targets),
+                "witness_counts": dict(Counter(len(row["witnesses"]) for row in targets))}
+    for partition, fixture_name, profile in (("training", "primary_training", "primary"),
+                                           ("evaluation", "primary_evaluation", "primary"),
+                                           ("invariance", "permuted_evaluation", "permuted")):
+        run("frozen_model_script_reference_" + partition,
+            lambda p=partition, f=fixture_name, c=profile: fixture_partition(p, f, c))
+
+    def missing_phase():
+        rows = [C.assess(None, {"charged_attempt": 14 + 13 * index, "target": True,
+                                "metadata": {"case": "invented_" + str(index)}}, catalog, specification)
+                for index in range(24)]
+        summary = C.summarize(rows)
+        assert summary["denominator_opportunities"] == 24
+        assert summary["representation"]["counts"] == {"UNAVAILABLE": 24}
+        assert summary["effect"]["counts"] == {"UNOBSERVED": 24}
+        assert summary["object_correspondence_opportunities"] == summary["endpoint_reference_opportunities"] == 384
+        return summary
+    run("all_missing_targets_preserve_fixed_denominators", missing_phase)
+
+    def authentication_case(mutation=None, accepts=False):
+        """Only invented local bytes; evaluator import is counted and stubbed."""
+        original_root, original_j1, original_here, original_module = C.ROOT, C.J1, C.HERE, C.module
+        events = []
+        try:
+            with tempfile.TemporaryDirectory(prefix="j1-post-controls-gate-") as temp:
+                C.ROOT = Path(temp).resolve()
+                C.J1 = C.ROOT / "j1"
+                C.HERE = C.J1 / "evaluator/post_controls_v1"
+                C.HERE.mkdir(parents=True)
+                source_files = {}
+                for name in ("live_io.py", "score.py", "evaluate.py"):
+                    path = C.J1 / name
+                    path.write_bytes((original_j1 / name).read_bytes() if name != "evaluate.py" else b"# Invented evaluator source, never executed.\n")
+                    source_files[str(path.relative_to(C.ROOT))] = C.sha(path)
+                input_path = C.ROOT / "fixed.json"
+                input_path.write_bytes(b'{"invented":true}\n')
+                payload_path = C.ROOT / "payload.json"
+                payload_path.write_bytes(b'{"invented_only":true}\n')
+                frozen = {"schema": "semabi.j1.evaluation_freeze.v1", "source_files": source_files,
+                          "fixed_inputs": {"fixed.json": C.sha(input_path)}, "predictor_directory": "prediction",
+                          "execution_receipts_directory": "receipts", "phases": [{"directory": "phase"}],
+                          "controls": [{"path": "control.json"}], "jobs": [{"path": "job"}]}
+                freeze_path = C.ROOT / "freeze.json"
+                freeze_path.write_bytes(C.canonical(frozen))
+                freeze_sha = C.sha(freeze_path)
+                preserved = {"schema": "semabi.j1.first_pass_preservation.v1", "status": "PRESERVED",
+                             "freeze_sha256": freeze_sha, "binding_failures": [],
+                             "files": {**source_files, **frozen["fixed_inputs"], "payload.json": C.sha(payload_path)}}
+                preservation_path = C.ROOT / "preserved.json"
+                out = C.HERE / "result.json"
+                context = {"freeze": frozen, "preserved": preserved, "out": out,
+                           "freeze_path": freeze_path, "preserved_path": preservation_path,
+                           "freeze_sha": freeze_sha, "payload": payload_path,
+                           "preserved_sha_override": None, "rewrite_freeze": False}
+                if mutation:
+                    mutation(context)
+                if context["rewrite_freeze"]:
+                    freeze_path.write_bytes(C.canonical(frozen))
+                    context["freeze_sha"] = C.sha(freeze_path)
+                    preserved["freeze_sha256"] = context["freeze_sha"]
+                preservation_path.write_bytes(C.canonical(preserved))
+                def stub_module(name, path):
+                    events.append("evaluator_import")
+                    def verify(saved, fpath, ppath):
+                        events.append("frozen_evaluator_preservation_gate")
+                        assert saved == frozen
+                        return preserved
+                    return SimpleNamespace(load_freeze=lambda _: frozen, verify_preservation=verify)
+                C.module = stub_module
+                failure = None
+                try:
+                    C.authenticate(freeze_path, context["freeze_sha"], preservation_path,
+                                   context["preserved_sha_override"] or C.sha(preservation_path), context["out"])
+                except Exception as error:
+                    failure = {"type": type(error).__name__, "detail": str(error)}
+                assert (failure is None) == accepts, {"failure": failure, "events": events}
+                if accepts:
+                    assert events == ["evaluator_import", "frozen_evaluator_preservation_gate"]
+                else:
+                    assert events == [], events
+                assert not out.exists() or context.get("intentional_existing_output")
+                return {"accepted": failure is None, "error": failure, "events": events,
+                        "scope": "Outer authentication only; final evaluator gate is separately reviewed and stubbed here"}
+        finally:
+            C.ROOT, C.J1, C.HERE, C.module = original_root, original_j1, original_here, original_module
+    run("authentication_positive_invented_commitments", lambda: authentication_case(accepts=True))
+    run("authentication_partial_preservation_is_allowed_before_custody_gate", lambda: authentication_case(
+        lambda x: x["preserved"].update(status="PRESERVED_PARTIAL"), accepts=True))
+    run("authentication_wrong_supplied_preservation_digest", lambda: authentication_case(
+        lambda x: x.update(preserved_sha_override="0" * 64)))
+    run("authentication_wrong_supplied_global_freeze_digest", lambda: authentication_case(
+        lambda x: x.update(freeze_sha="0" * 64)))
+    run("authentication_nonpreserved_status", lambda: authentication_case(
+        lambda x: x["preserved"].update(status="STARTING")))
+    run("authentication_first_pass_bound_to_different_freeze", lambda: authentication_case(
+        lambda x: x["preserved"].update(freeze_sha256="0" * 64)))
+    run("authentication_binding_failure_rejects_before_import", lambda: authentication_case(
+        lambda x: x["preserved"].update(binding_failures=[{"invented": "changed source"}])))
+    run("authentication_preserved_source_mismatch_rejects_before_import", lambda: authentication_case(
+        lambda x: x["preserved"]["files"].update({"j1/evaluate.py": "0" * 64})))
+    run("authentication_preserved_payload_changed_rejects_before_import", lambda: authentication_case(
+        lambda x: x["payload"].write_bytes(b'{"invented_only":false}\n')))
+    def symlink_payload(x):
+        target = x["payload"].with_name("alternate.json")
+        x["payload"].rename(target)
+        x["payload"].symlink_to(target)
+    run("authentication_symlink_payload_rejects_before_import", lambda: authentication_case(symlink_payload))
+    run("authentication_noncanonical_inventory_rejects_before_import", lambda: authentication_case(
+        lambda x: x["preserved"]["files"].update({"../payload.json": "0" * 64})))
+    run("authentication_output_outside_evaluator_rejects_before_import", lambda: authentication_case(
+        lambda x: x.update(out=x["out"].parents[2] / "outside.json")))
+    def existing_output(x):
+        x["out"].write_bytes(b"invented\n")
+        x["intentional_existing_output"] = True
+    run("authentication_existing_output_rejects_before_import", lambda: authentication_case(existing_output))
+    def sealed_output_overlap(x):
+        x["freeze"]["phases"][0]["directory"] = "j1/evaluator"
+        x["rewrite_freeze"] = True
+    run("authentication_output_inside_sealed_root_rejects_before_import", lambda: authentication_case(sealed_output_overlap))
+
+    dependency_files = {name: C.sha(ROOT / name) for name in C.DEPENDENCY_FILES}
+    package_template = {"schema": "semabi.j1.post_controls_source_manifest.v1",
+                        "files": {str((HERE / name).relative_to(ROOT)): C.sha(HERE / name) for name in C.PACKAGE_FILES},
+                        "dependency_files": dependency_files}
+
+    def package_case(change=None, accepts=False):
+        original_sha = C.sha
+        foreign_reads = []
+        try:
+            with tempfile.TemporaryDirectory(prefix="j1-post-package-check-", dir=HERE) as temp:
+                sentinel = Path(temp) / "invented_raw_sentinel.json"
+                sentinel.write_bytes(b'{"invented_only":true}\n')
+                package = deepcopy(package_template)
+                if change:
+                    change(package, sentinel)
+                file = Path(temp) / "package.json"
+                file.write_bytes(C.canonical(package))
+                expected_sha = C.sha(file)
+                def watched_sha(path):
+                    if Path(path) == sentinel:
+                        foreign_reads.append(str(path))
+                    return original_sha(path)
+                C.sha = watched_sha
+                error = None
+                try:
+                    C.verify_package(file, expected_sha)
+                except Exception as failure:
+                    error = {"type": type(failure).__name__, "detail": str(failure)}
+                assert (error is None) == accepts, error
+                assert foreign_reads == [], foreign_reads
+                return {"accepted": error is None, "error": error, "foreign_reads": foreign_reads}
+        finally:
+            C.sha = original_sha
+
+    run("package_positive_exact_local_inventory", lambda: package_case(accepts=True))
+    run("package_extra_entry_rejected_before_read", lambda: package_case(
+        lambda p, sentinel: p["files"].update({str(sentinel.relative_to(ROOT)): C.sha(sentinel)})))
+    run("package_missing_local_source_rejected", lambda: package_case(
+        lambda p, _: p["files"].pop(str((HERE / "protocol.md").relative_to(ROOT)))))
+
+    def dependency_case(change=None, accepts=False):
+        package = deepcopy(package_template)
+        frozen = {"fixed_inputs": deepcopy(dependency_files)}
+        if change:
+            change(package, frozen)
+        error = None
+        try:
+            C.verify_dependencies(package, frozen)
+        except Exception as failure:
+            error = {"type": type(failure).__name__, "detail": str(failure)}
+        assert (error is None) == accepts, error
+        return {"accepted": error is None, "error": error,
+                "scope": "Exact dependency gate over authorized frozen fixture sources and invented F metadata"}
+
+    dep = "experiments/join_v1/oracle/specification_v1.json"
+    run("dependency_positive_exact_frozen_inventory", lambda: dependency_case(accepts=True))
+    run("dependency_missing_required_source_rejected", lambda: dependency_case(
+        lambda p, _: p["dependency_files"].pop(dep)))
+    run("dependency_extra_source_rejected", lambda: dependency_case(
+        lambda p, _: p["dependency_files"].update({"invented_extra.json": "0" * 64})))
+    run("dependency_wrong_F_hash_rejected", lambda: dependency_case(
+        lambda _, f: f["fixed_inputs"].update({dep: "0" * 64})))
+    def wrong_file_commitment(package, frozen):
+        package["dependency_files"][dep] = frozen["fixed_inputs"][dep] = "0" * 64
+    run("dependency_wrong_declared_file_hash_rejected", lambda: dependency_case(wrong_file_commitment))
+    def wrong_original_inventory(package, frozen):
+        name = "docs/data/v4/transport/development/j1/evaluator/public_inventory_sha256.json"
+        package["dependency_files"][name] = frozen["fixed_inputs"][name] = "0" * 64
+    run("dependency_original_inventory_hash_rejected", lambda: dependency_case(wrong_original_inventory))
+
+    def partial_cli():
+        custody_path = C.J1 / "custody.py"
+        custody_sha = "001d6b1ecc7ddf8611cab651b413adcdab45f32d3f388e1dadfe40da86d46aed"
+        assert C.sha(custody_path) == custody_sha
+        source_paths[str(custody_path.relative_to(ROOT))] = custody_sha
+        custody = load("_post_controls_allocation_only", custody_path)
+        prior_auth, prior_argv, prior_read = C.authenticate, list(sys.argv), C.read_json
+        events = []
+        try:
+            with tempfile.TemporaryDirectory(prefix="j1-post-partial-cli-", dir=HERE) as temp:
+                temp = Path(temp)
+                package = temp / "source_manifest.json"
+                package.write_bytes(C.canonical(package_template))
+                script_name = "experiments/join_v1/oracle/scripts_v1.json"
+                frozen = {"fixed_inputs": deepcopy(dependency_files),
+                          "script": {"path": script_name, "sha256": dependency_files[script_name]},
+                          "phases": [{"name": name, "profile": profile, "fixture": fixture,
+                                      "url": "http://invented.invalid/join", "reset_url": "http://invented.invalid/reset", "seed": 0}
+                                     for name, profile, fixture in (("primary", "primary", "primary_evaluation"),
+                                                                   ("invariance", "permuted", "permuted_evaluation"))]}
+                def no_native():
+                    events.append("native_helpers_called")
+                    raise AssertionError("Native helpers must not be called for partial preservation")
+                evaluator = SimpleNamespace(custody=custody, native_helpers=no_native,
+                    bound_reference=lambda f, ref: ROOT / ref["path"])
+                def authenticated(*_):
+                    events.append("first_pass_authenticated")
+                    return evaluator, frozen, {"status": "PRESERVED_PARTIAL"}
+                def read_with_order(path):
+                    if Path(path).is_relative_to(ROOT / "experiments/join_v1"):
+                        assert "first_pass_authenticated" in events
+                        events.append("fixed_fixture_source_read")
+                    return prior_read(path)
+                C.authenticate, C.read_json = authenticated, read_with_order
+                out = temp / "result.json"
+                sys.argv = [str(HERE / "controls.py"), "--control-manifest", str(package),
+                            "--control-manifest-sha256", C.sha(package), "--freeze", str(temp / "invented_F.json"),
+                            "--freeze-sha256", "0" * 64, "--first-pass-manifest", str(temp / "invented_partial.json"),
+                            "--first-pass-sha256", "1" * 64, "--out", str(out)]
+                stdout = stream_io.StringIO()
+                with redirect_stdout(stdout):
+                    code = C.main()
+                saved = prior_read(out)
+                assert code == 2 and saved["status"] == "INVALID_CUSTODY_UNESTABLISHED"
+                assert [len(p["rows"]) for p in saved["phases"]] == [313, 313]
+                assert [p["designated_targets"]["denominator_opportunities"] for p in saved["phases"]] == [24, 24]
+                assert all(p["designated_targets"]["representation"]["counts"] == {"UNAVAILABLE": 24}
+                           and p["designated_targets"]["object_correspondence"]["counts"] == {"UNAVAILABLE": 384}
+                           and p["designated_targets"]["endpoint_reference"]["counts"] == {"UNAVAILABLE": 384}
+                           for p in saved["phases"])
+                assert events.count("first_pass_authenticated") == 2 and "native_helpers_called" not in events
+                return {"exit_code": code, "status": saved["status"], "target_denominators": [24, 24],
+                        "native_helper_calls": 0, "events": events,
+                        "scope": "Real controls.main and fixed allocation; first-pass authentication is stubbed with invented partial metadata"}
+        finally:
+            C.authenticate, sys.argv, C.read_json = prior_auth, prior_argv, prior_read
+    run("partial_main_keeps_all_denominators_without_native_helpers", partial_cli)
+
+    source_changes = {name: {"expected": wanted, "actual": C.sha(ROOT / name)} for name, wanted in source_paths.items()
+                      if C.sha(ROOT / name) != wanted}
+    assert not source_changes
+    check_names = [row["name"] for row in results]
+    assert len(check_names) == len(set(check_names)) == 90
+    assert C.digest(check_names) == EXPECTED_CHECK_NAMES_SHA256
+    assert len(fixture_rows) == 72 and Counter(row["partition"] for row in fixture_rows) == {
+        "training": 24, "evaluation": 24, "invariance": 24}
+    outcome = {"schema": "semabi.j1.post_controls_checks.v1", "status": "PASS" if all(row["status"] == "PASS" for row in results) else "FAIL",
+               "scope": "Invented public trees and typed forecasts; frozen fixture model/reference and prior model audit only",
+               "declared_execution_scope": {"real_run_payload_reads_authorized": False,
+                                             "fit_forecast_browser_service_calls_authorized": False,
+                                             "instrumentation": "Source guards and explicit synthetic controls; no universal syscall/native-call monitor"},
+               "expected_check_names_sha256": EXPECTED_CHECK_NAMES_SHA256,
+               "source_files": source_paths, "source_changes": source_changes,
+               "checks": results, "counts": dict(Counter(row["status"] for row in results)), "fixture_cases": fixture_rows}
+    with args.out.open("x") as stream:
+        json.dump(outcome, stream, sort_keys=True, indent=2, allow_nan=False)
+        stream.write("\n")
+    print(json.dumps({"status": outcome["status"], "counts": outcome["counts"], "path": str(args.out), "sha256": C.sha(args.out)}, sort_keys=True))
+    return 0 if outcome["status"] == "PASS" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

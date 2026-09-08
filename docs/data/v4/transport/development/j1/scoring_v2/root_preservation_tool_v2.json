@@ -1,0 +1,25 @@
+{
+  "schema": "semabi.j1.root_preservation_tool_receipt.v2",
+  "recorded_utc": "2026-09-08 03:06:52 UTC",
+  "owner": "/root",
+  "tool": "exec_command",
+  "submitted_tool_arguments": {
+    "cmd": "taskset -c 19 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python docs/data/v4/transport/development/j1/preserve.py --freeze docs/data/v4/transport/development/j1/evaluation_freeze_v2.json --out docs/data/v4/transport/development/j1/first_pass_manifest_v2.json",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Execute the user's required first-pass preservation for the authorized J1 experiment. All eight owned job sessions are reaped, independent host cleanup and the held handoff passed, and root authenticated all62 execution files. This frozen CPU19 command reads source and completed local evidence, verifies host process absence, and writes one exclusive manifest before any semantic scoring or diagnosis.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 2200
+  },
+  "result": {
+    "chunk_id": "4d095e",
+    "wall_time_seconds": 0.677540543,
+    "exit_code": 0,
+    "original_token_count": 64,
+    "output": "{\"binding_failures\":0,\"files\":705,\"job_completion_defects\":0,\"missing_outputs\":0,\"path\":\"docs/data/v4/transport/development/j1/first_pass_manifest_v2.json\",\"sha256\":\"51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256\",\"status\":\"PRESERVED\"}\n"
+  },
+  "handoff_sha256": "13432189b9b0cb67e11816f984e7203c66c96e9d341e166a157f4bede970e855",
+  "execution_manifest_sha256": "16c61130fc9fef4e2549d852599d4e70d64456a10a17756eab0d735a949f69c3",
+  "handoff_directory_files_rehashed_by_root": 62,
+  "semantic_payloads_opened_before_preservation": false
+}

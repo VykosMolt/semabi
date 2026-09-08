@@ -1,6 +1,100 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-08 01:47 UTC)
+## Active checkpoint (2026-09-08 05:18 UTC)
+
+Current question: which observation, identity and field-attachment changes can
+earn J1's missing relational records and endpoint binding?
+The corrected saved-forecast measurement is valid: all 24 designated targets in
+each phase are unestablished, with decision-list UNDETERMINED and no admissible
+RULE/LIST event. There are no forced answers or comparable literal positions.
+Both phases retain 313 charges, 312 Steps, zero action failures and 24 targets;
+all 629 ledger records and four checkpoints passed the original custody gates.
+
+V2's 705-file first pass and original invalid score remain immutable. The separate
+path adapter passed 42 authored and two independent controls before root ran it
+once. It normalized exactly four audit-path strings; all original byte commitments
+and evaluator bodies remain unchanged. The corrected eight-file score seal is
+`evaluator/sidecar_path_v1/corrected_score_manifest_v1.json`, SHA-256
+`afb3d7dd55b12ba3e08d6a13c41038fd18873118ba25a02dbbbfeb5ef97b8ff6`.
+Root rehashed its 705/8/8/44 parent inventories and opened the aggregate result
+only afterward. The scoring job is terminated and reaped; its live OS sample
+occurred after exit and is recorded as host PID absence. Both the empty failed
+tool-receipt write and its corrected complete receipt remain preserved.
+
+Root has now seen the fixture specification/rendering source and aggregate
+evaluation outcomes after preservation; these are disclosed development evidence.
+Training inspection finds structural patch candidates but no final patch objects
+or references. Receiver checked-radio state remains in parsed member slots but
+does not reach the naming-query inputs. Root's training-only replay completed one
+unchanged Fit and compile, and independently matches the entire saved projection.
+Its 16-file seal is `analysis/identity_search_replay_v1/artifact_manifest_v1.json`,
+SHA-256 `c6ecb59ea29510161e56d243bf48fc19cd598e90f1579f00f581d5a6ebbff0ae`.
+The owned runner/child/group are absent and session 5981 is reaped. Its initial
+unexecuted source and cache-binding correction are retained. The captured search
+drops patch `group#0` and inner-field `text#0` identities as unearned: modeled
+behavior is unchanged while complexity falls from 24 to 12. Both alternatives
+remain in open questions. Reload pairs and promoted widgets are empty; reported
+identity-reading stability alone does not establish a widget reload intervention.
+
+The original 113-check post-controls package has now executed successfully
+through its separately reviewed 18-check launcher. Its nine-file result seal is
+`evaluator/post_controls_adapter_v1/result_manifest_v1.json`, SHA-256
+`9d859d52b9235e90abbfeb7ebdf44f3220a27d8774776fbcaa8f8cf8add58c5b`.
+All 24 targets per phase pass the raw-premise, primitive, visibility and observed
+effect checks. Page-level transmitter/receiver correspondences pass 192/192;
+patch correspondences are unavailable 192/192, and endpoint-reference checks
+are unavailable 384/384. Owner checks pass 24/24. Receiver-role declarations,
+query-literal correctness and learned state consequences remain unavailable.
+These page anchors do not establish persistent identity or learned naming.
+Root opened the actual diagnostics only after their seal; J1 is development
+evidence. All original jobs and the post-controls/replay jobs are reaped.
+
+The complete measurement and causal boundaries are in
+`analysis/measurement_summary_v2/report_v1.md`; its six-file seal is
+`668d35f2bfeb4874c82674a27af6848ddcdc283fe83e84780dd35b8619b67313`.
+The saved-representation extraction has its own six-file seal
+`fcd4566bf484abca5965354187b8649fcbe1f0256f99130b82dfaa8f5d4c3843`.
+Independent final review passes 167 measurement/replay checks and 19 training
+field checks, with 912 final bindings authenticated. Its 22-file seal is
+`analysis/final_review_v2/artifact_manifest_v1.json`, SHA-256
+`f052ac74df7d9761d10c85eeaab597ffc730116d64f72f8ae4ad7384913e35fb`.
+Root read the complete review, checked its 22 files and the unchanged 156 native
+files, and accepted `root_closeout_v1.json`, SHA-256
+`66095786a5b6d2d7279f99d245050977ae62a4137856bad44d4a5747d80bc4aa`.
+The review retains its helper corrections and explicitly limits authentication
+order for historical preparation members. The original first pass, invalid attempts,
+corrected results and all existing seals remain immutable. Main native source
+is still unchanged at `6aea64ba`; its J1 evidence checkpoint is next.
+
+The independent invented collision diagnostic is sealed at
+`analysis/persistence_collision_v1/artifact_manifest_v1.json`, SHA-256
+`529a671b9d682c76eae1719f6bcad9e36d8a747ed0afb8ae6edf115a80d7ca20`.
+Root's isolated W1 repair retains all reload candidates and withholds promotion
+for a template with ambiguous own keys. The same focused file changes from
+3 failures/13 passes to 16 passes; independent source and boundary checks pass.
+Focused source checkpoint `284d80c` is in `runs/.w1_worktree`, with no main
+adoption. Full-suite and five dedicated-corpus instruments have passed independent
+review; source/data freeze and metadata preflight are next. No validation jobs
+are running. This repair
+supports sound future reload probes; J1 had no qualifying reload pairs, so W1
+does not itself repair its representation failure. The next invented diagnostic
+will separate keyed identity and widget promotion from the raw-change score,
+without changing J1's original evidence or claiming natural reload persistence.
+Separately, a source audit notes that previously promoted widgets and later key
+associations can bypass a subsequent transient-slot collision check. W1's direct
+overwrite regression does not establish a broader invariant after key revision;
+that production-flow variant needs its own executable investigation.
+
+W1 preparation also found a historical provenance limit: the unchanged legacy
+`link_probe.py` prepends main before B1's corpus child imports SemABI. The old
+jobs recorded copied source hashes but no loaded-module paths. B1's numerical
+outputs remain an authenticated retained baseline and match G2; their production
+by the intended B1 worktree source is unestablished. W1 explicitly anchors its
+candidate package and records loaded native origins before/after each run.
+Full-suite synthetic authority-test subprocesses retain their documented scope.
+
+The paragraphs below retain the earlier campaign sequence and exposure state
+at each checkpoint; the active status above supersedes earlier pending actions.
 
 T1, G1 and G2 are preserved and locally committed. G2 checkpoint `38f1f08` contains
 G2 and its reviewed evidence: 577 passing tests, 3 skips, 1 expected failure,
@@ -56,6 +150,11 @@ after the R1 checkpoint `9a141f0`. Root compared 226 source/test files and all
 script inventories and relevant committed configurations. Adoption record SHA-256
 `4b0f9b9809cb20a2b71de0c171400ef324d6b7de0fd6d1c8b5370b533d30ddf4`.
 No unchanged full/corpus tests were repeated. R1 retains its G2 source association.
+The later W1 source audit qualifies the five B1 corpus jobs: the helper's hardcoded
+main import path and absence of historical loaded-module records prevent assigning
+their outputs to B1 candidate bytes with certainty. The retained output comparison
+is unchanged; G2's intended source root was main. See
+`development/widget_persistence_v1/verification_preparation/plan_v1.md`.
 
 The pre-J1 main checkpoint is `5925905`, including B1 adoption verification and
 the accepted R1 analysis. J1's independently authored generated bridge fixture has 24 training,
@@ -232,24 +331,119 @@ It authenticates the invalid parent, reviewed correction, new pilot, preserved
 training and unchanged caller controls. Evolving post-preservation diagnostics
 are excluded. The admission recorder is source-only and made no native import.
 
-Current ownership: root owns the pilot/admission checkpoint and V2 phase freezes;
-`reserved_audit` is reviewing concrete admission metadata and remains the planned
-J1 executor after root reviews the actual phase freeze. `baseline_verification`
-owns the separate diagnostics. Its
+The pilot and admission are committed at `6aea64ba`. V2's concrete global freeze
+SHA-256 is `100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b`.
+Root's runtime gates and independent admission review agree on all 613 unique
+source/input bindings, exact 611 fixed inputs, eight commands and 15 unused output
+identities. The independent review passes all 23 checks with no findings,
+SHA-256 `30c2159b677745c4948b6579e607048d37be6444f576cd0eae1c15e59f4ac492`.
+Root accepted it and issued the eight-job execution GO, SHA-256
+`7ab18e015c05307b35cb56553f359a162df69c79b76e8b475bac4ca1796819b9`.
+Exact copies of both actual-phase reviews are inside the execution receipt root
+for first-pass preservation. Hold source and HEAD through preservation and scoring.
+
+The executor's host preflight passed with all 15 outputs absent, free TCP/Unix
+routing, 209 GB free disk and 25 GB available memory. Automatic approval review
+then rejected its initial launch before creating any process because it did not
+recognize the user's existing experiment authorization. The exact rejection and
+host no-start evidence are retained. Root checked the original research task and
+later 24-CPU instruction, then submitted the identical command for review again.
+That request passed. Root owned predictor session 12029, runner 1080296 and
+child 1080298. Host sampling confirms the exact command/source, CPU 13, nice 0,
+normal I/O, all six numerical thread limits 1, hash seed zero and one active thread.
+The sole native fit is complete. Its native training trace is byte-identical to
+the preserved earlier trace, and the initial checkpoint/learned commitment are
+COMPLETE. The authenticated ready receipt, SHA-256
+`05e596a6ba25e81a2c2d892bc153358dc82b5ad6bb081ad83322cc1c78a97896`,
+records one Fit on the same 312 Steps, startup projection equality, empty initial
+ledger and the Unix socket owned by the predictor PID.
+
+Current ownership: root owns direct job launch sessions and reaps;
+`reserved_audit` owns independent host process/resource monitoring and execution
+receipts. Primary collection finished with 313 charges, 312 paired Steps, all 24
+targets and zero failed actions; all receipts/reconciliations match the ledger.
+The actor and checkpoint sessions are reaped. Strict checkpoint 1 verification
+passes with unchanged learned content and native identity, SHA-256
+`6828ed706c808981ec06b283c5f17ed042c4a419e51a7c5792a2175f9c9f5f8b`.
+Primary service session 67647 was stopped/reaped by the planned wrapper interrupt;
+its two PIDs/process groups are absent and port 8771 was released.
+
+The permuted phase also completed 313 charges, 312 paired Steps, all 24 targets
+and zero failed actions. Its 313 authenticated receipts and reconciliations pass
+the opaque association checks; the prior ledger prefix is unchanged. Actor session
+90173 was reaped with exit zero. Strict checkpoint 2 passes with unchanged learned
+content and native identity, SHA-256
+`335ba76648ee78ff01b1ce4807cbbac9623034f271b5b7c8f5d7ea0071dfb042`.
+The prescribed shutdown and original predictor sessions then exited zero and were
+reaped. Root stopped/reaped permuted service session 22848 using the planned
+wrapper interrupt; its child recorded INTERRUPTED/-15 with termination confirmed.
+All eight root launch sessions are reaped. Final shutdown custody passes. The
+independent host audit confirms all 30 recorded PIDs and their process groups
+absent, the Unix socket removed and TCP 8771 released. Root read the complete
+handoff and rehashed all 62 execution-directory files, then ran the frozen
+preserver once. `development/j1/first_pass_manifest_v2.json` preserves 705 files,
+SHA-256 `51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256`,
+with zero missing outputs, binding failures or completion defects. Root
+independently rehashed all 705 before scoring. New
+receipts live under `development/j1/evaluation_execution_v2`, with the eight uniquely
+named V2 jobs. Root owns first-pass preservation and frozen scoring after handoff;
+their unused output paths pass the unchanged destination gate. The exact
+post-preservation commands are recorded before any result is opened.
+`baseline_verification` owns the separate diagnostics. Its
 source-only compatibility audit found an optional ParsedObs cache being decoded
 as required semantic data. That held package is preserved; the narrow correction
-passes 90 authored checks and all 19 unchanged reviewer counterexamples. Review
+passed 90 authored checks and all 19 unchanged reviewer counterexamples. Review
 then exposed original set-order validation being changed by snapshot inlining;
 the failing candidate and probes are preserved before the narrow container fix.
 The original set/mapping envelope must be validated before projection. This
-affects the separate diagnostics, whose source is excluded from V2. No actual
-J1 learner payloads or semantic report were opened by root. Production diagnostics
-await reviewed compatibility and V2 preservation. Next: commit pilot/admission,
-prepare and verify the new eight-job J1 freeze, then execute once. Primary is
-disclosed replay; invariance remains unexecuted. No native fit, fixture service
-or evaluation actor is live.
-A report or commit is a checkpoint; continue through reviewed J1
-execution and the next evidence-justified development milestone.
+affects the separate diagnostics, whose source is excluded from V2. The corrected
+package passes 94 authored plus 19 unchanged independent cases and final bounded
+review accepts it with no material findings. Its six fixed dependencies and both pinned helpers match the
+actual V2 freeze. No actual J1 learner payloads or semantic report were opened by
+root. Root rehashed the final 73-file artifact inventory and 15 handoff references
+without opening semantic contents. After preservation and the original score
+seal, root read the complete held diagnostic source, protocol and accepted review
+with no material findings. Its production invocation awaits the separate path
+adapter below. Primary is a disclosed replay; invariance completed its first
+execution. G2/R1/B1 summary documentation is updated and independently
+reviewed from their already preserved results, outside V2's fixed source/input
+inventories. Hold those local edits until this frozen execution and scoring finish.
+The frozen scorer ran exactly once on the preserved V2 evidence and returned
+INVALID_CUSTODY_UNESTABLISHED, preserving all 313 charges, 96 clicks and 24 targets
+per phase as unestablished in all channels. The scorer is reaped; its original
+eight-file additive seal is `development/j1/scoring_v2/artifact_manifest_v2.json`,
+SHA-256 `cf4e345fd36fb9f664872a21f860a37cd5c831fdb99a43271a7ba8e53be54f17`.
+Root's first seal audit assumed the wrong log filename; that read-only failure
+is recorded before using the actual `output.log`. No score or collection was
+repeated. The original score itself has SHA-256
+`7ad71289c19b8e21d99d3b3847e14f60bf256706d379ea03c64acfd6f5a7a171`.
+
+After both seals, root and an independent reviewer traced its rejection,
+`Actor durable sidecar commitment differs`, to path spelling alone. Both actors
+recorded canonical repository-relative sidecar paths inherited from their frozen
+relative `--out`; the custodian expected absolute paths. All four sidecar hashes,
+null error fields, exact schemas and file identities agree with preservation.
+Root's four-row reproducer invokes the actual frozen comparison without native
+imports, SHA-256 `5aa84aace1d34c61dea89fbfda7e0b3088de3c13409ae989bdeed604ec065cae`.
+The reviewer independently rehashed all 705 first-pass and eight scoring files.
+Their diagnosis supports an offline path-format correction only; later custody
+gates and outcome performance remain unestablished.
+
+The separate `evaluator/sidecar_path_v1/` adapter is being implemented against
+the frozen correction contract. It may canonicalize only the two path fields
+in each authenticated actor record's in-memory copy, with exact path, preserved
+membership, bytes, schema and error checks. All original files and evaluator
+bodies remain held. Focused invented controls and independent source review
+precede one new corrected offline scorer identity; no fit or collection replay
+is planned. The held post-controls package will use that same reviewed adapter
+through a separately bound launcher after scoring. Root has opened invalid-score
+and actor metadata, diagnostic source semantics and the stored training-model
+operators after preservation. Actual evaluation forecasts and observed outcomes
+have not been used to design the path correction. A parallel read-only training
+trace audit is locating representation and grounding boundaries; no native repair
+or additional fitting has occurred.
+A report or commit is a checkpoint; continue through reviewed J1 measurement
+and the next evidence-justified development milestone.
 
 The following dated sections retain the campaign history and original decisions.
 

@@ -1,0 +1,2140 @@
+{
+  "diagnostic_source": {
+    "path": "docs/data/v4/transport/development/j1/analysis/persistence_collision_v1/diagnose_v1.py",
+    "sha256": "fcda9f2a70e7eb61d49459722f6f8a4a08b654ee79d98fafaeb443e91c0bcce1"
+  },
+  "execution": {
+    "cpu_affinity": [
+      22
+    ],
+    "elapsed_seconds": 0.01923043799615698,
+    "owner": "/root/sidecar_review",
+    "pid": 2,
+    "ppid": 1,
+    "recorded_utc": "2026-09-08T04:16:59.258927+00:00",
+    "thread_environment": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    }
+  },
+  "fatal_error": null,
+  "invented_inputs": {
+    "path": "docs/data/v4/transport/development/j1/analysis/persistence_collision_v1/invented_inputs_v1.json",
+    "sha256": "64ea343a6fd9de9f8bab4b8085f40c913e767c3c0d56b5f5dda6abfd8ede0991"
+  },
+  "limitations": "No upstream template/key discovery, Fit, compiler pipeline, prediction, browser, server, fixture or application execution; no actual J1 forecast, outcome, oracle or case payload read. Enumeration-order sensitivity is demonstrated at the unit-hypothesis input boundary.",
+  "native_source_files": {
+    "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+    "semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "semabi/compiler/v2/graph.py": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+    "semabi/compiler/v2/hypotheses.py": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03",
+    "semabi/compiler/v2/units.py": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f"
+  },
+  "order_sensitivity": {
+    "promotion_changed": true,
+    "same_contextual_comparisons": true,
+    "same_unordered_native_inputs": true
+  },
+  "original_metadata": {
+    "failed_score_seal": {
+      "path": "docs/data/v4/transport/development/j1/scoring_v2/artifact_manifest_v2.json",
+      "sha256": "cf4e345fd36fb9f664872a21f860a37cd5c831fdb99a43271a7ba8e53be54f17"
+    },
+    "freeze": {
+      "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json",
+      "sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+    },
+    "preservation": {
+      "path": "docs/data/v4/transport/development/j1/first_pass_manifest_v2.json",
+      "sha256": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256"
+    }
+  },
+  "scenario_count": 4,
+  "scenarios": [
+    {
+      "after": {
+        "evidence": [
+          "widget slot combobox#0~ survives reloads (2): attribute"
+        ],
+        "instances": [
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0": "Edited",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0": "Default",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          }
+        ],
+        "key_slot": "label#0",
+        "persistent_widgets": [
+          [
+            "invented-widget-field",
+            "combobox#0"
+          ]
+        ],
+        "slots": {
+          "combobox#0": {
+            "crowded": 0,
+            "id": "combobox#0",
+            "n": 8,
+            "n_obs_values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            }
+          },
+          "label#0": {
+            "crowded": 0,
+            "id": "label#0",
+            "n": 8,
+            "n_obs_values": {
+              "Destination": 4,
+              "Source": 4
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Destination": 4,
+              "Source": 4
+            }
+          }
+        }
+      },
+      "before": {
+        "instances": [
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Edited",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Default",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          }
+        ],
+        "key_slot": "label#0",
+        "persistent_widgets": [],
+        "slots": {
+          "combobox#0~": {
+            "crowded": 0,
+            "id": "combobox#0~",
+            "n": 8,
+            "n_obs_values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            }
+          },
+          "label#0": {
+            "crowded": 0,
+            "id": "label#0",
+            "n": 8,
+            "n_obs_values": {
+              "Destination": 4,
+              "Source": 4
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Destination": 4,
+              "Source": 4
+            }
+          }
+        }
+      },
+      "contextual_comparisons": [
+        {
+          "after": "Harbor",
+          "before": "Harbor",
+          "child_key": "Destination",
+          "kept": true,
+          "record": "Record Alpha"
+        },
+        {
+          "after": "Default",
+          "before": "Edited",
+          "child_key": "Source",
+          "kept": false,
+          "record": "Record Alpha"
+        },
+        {
+          "after": "Mountain",
+          "before": "Mountain",
+          "child_key": "Destination",
+          "kept": true,
+          "record": "Record Beta"
+        },
+        {
+          "after": "Forest",
+          "before": "Forest",
+          "child_key": "Source",
+          "kept": true,
+          "record": "Record Beta"
+        }
+      ],
+      "contextual_kept": 3,
+      "contextual_lost": 1,
+      "diagnostic_expectation": "PASS",
+      "false_promotion": true,
+      "graph_observations": 0,
+      "id": "duplicate_keys_changed_parent_first",
+      "native_promoted": true,
+      "native_trace": {
+        "kept": 2,
+        "line": 707,
+        "lost": 0,
+        "selected_representatives": {
+          "invented-after": {
+            "Destination": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 35,
+              "value": "Mountain"
+            },
+            "Source": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 32,
+              "value": "Forest"
+            }
+          },
+          "invented-before": {
+            "Destination": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 35,
+              "value": "Mountain"
+            },
+            "Source": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 32,
+              "value": "Forest"
+            }
+          }
+        },
+        "slot": "combobox#0~",
+        "template": "invented-widget-field"
+      },
+      "parents": [
+        {
+          "nested": [
+            12,
+            15
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 10,
+          "sig": "invented-before",
+          "slot_nodes": {
+            "record#0": 11
+          },
+          "slots": {
+            "record#0": "Record Alpha"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            32,
+            35
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 30,
+          "sig": "invented-before",
+          "slot_nodes": {
+            "record#0": 31
+          },
+          "slots": {
+            "record#0": "Record Beta"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            12,
+            15
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 10,
+          "sig": "invented-after",
+          "slot_nodes": {
+            "record#0": 11
+          },
+          "slots": {
+            "record#0": "Record Alpha"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            32,
+            35
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 30,
+          "sig": "invented-after",
+          "slot_nodes": {
+            "record#0": 31
+          },
+          "slots": {
+            "record#0": "Record Beta"
+          },
+          "template": "invented-record"
+        }
+      ],
+      "record_order": [
+        "Record Alpha",
+        "Record Beta"
+      ],
+      "stubs": [],
+      "trace_restored": true
+    },
+    {
+      "after": {
+        "evidence": [],
+        "instances": [
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Edited",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Default",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          }
+        ],
+        "key_slot": "label#0",
+        "persistent_widgets": [],
+        "slots": {
+          "combobox#0~": {
+            "crowded": 0,
+            "id": "combobox#0~",
+            "n": 8,
+            "n_obs_values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            }
+          },
+          "label#0": {
+            "crowded": 0,
+            "id": "label#0",
+            "n": 8,
+            "n_obs_values": {
+              "Destination": 4,
+              "Source": 4
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Destination": 4,
+              "Source": 4
+            }
+          }
+        }
+      },
+      "before": {
+        "instances": [
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Edited",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Default",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          }
+        ],
+        "key_slot": "label#0",
+        "persistent_widgets": [],
+        "slots": {
+          "combobox#0~": {
+            "crowded": 0,
+            "id": "combobox#0~",
+            "n": 8,
+            "n_obs_values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            }
+          },
+          "label#0": {
+            "crowded": 0,
+            "id": "label#0",
+            "n": 8,
+            "n_obs_values": {
+              "Destination": 4,
+              "Source": 4
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Destination": 4,
+              "Source": 4
+            }
+          }
+        }
+      },
+      "contextual_comparisons": [
+        {
+          "after": "Harbor",
+          "before": "Harbor",
+          "child_key": "Destination",
+          "kept": true,
+          "record": "Record Alpha"
+        },
+        {
+          "after": "Default",
+          "before": "Edited",
+          "child_key": "Source",
+          "kept": false,
+          "record": "Record Alpha"
+        },
+        {
+          "after": "Mountain",
+          "before": "Mountain",
+          "child_key": "Destination",
+          "kept": true,
+          "record": "Record Beta"
+        },
+        {
+          "after": "Forest",
+          "before": "Forest",
+          "child_key": "Source",
+          "kept": true,
+          "record": "Record Beta"
+        }
+      ],
+      "contextual_kept": 3,
+      "contextual_lost": 1,
+      "diagnostic_expectation": "PASS",
+      "false_promotion": false,
+      "graph_observations": 0,
+      "id": "duplicate_keys_changed_parent_last",
+      "native_promoted": false,
+      "native_trace": {
+        "kept": 1,
+        "line": 707,
+        "lost": 1,
+        "selected_representatives": {
+          "invented-after": {
+            "Destination": {
+              "parent_root": 10,
+              "record": "Record Alpha",
+              "root": 15,
+              "value": "Harbor"
+            },
+            "Source": {
+              "parent_root": 10,
+              "record": "Record Alpha",
+              "root": 12,
+              "value": "Default"
+            }
+          },
+          "invented-before": {
+            "Destination": {
+              "parent_root": 10,
+              "record": "Record Alpha",
+              "root": 15,
+              "value": "Harbor"
+            },
+            "Source": {
+              "parent_root": 10,
+              "record": "Record Alpha",
+              "root": 12,
+              "value": "Edited"
+            }
+          }
+        },
+        "slot": "combobox#0~",
+        "template": "invented-widget-field"
+      },
+      "parents": [
+        {
+          "nested": [
+            32,
+            35
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 30,
+          "sig": "invented-before",
+          "slot_nodes": {
+            "record#0": 31
+          },
+          "slots": {
+            "record#0": "Record Beta"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            12,
+            15
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 10,
+          "sig": "invented-before",
+          "slot_nodes": {
+            "record#0": 11
+          },
+          "slots": {
+            "record#0": "Record Alpha"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            32,
+            35
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 30,
+          "sig": "invented-after",
+          "slot_nodes": {
+            "record#0": 31
+          },
+          "slots": {
+            "record#0": "Record Beta"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            12,
+            15
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 10,
+          "sig": "invented-after",
+          "slot_nodes": {
+            "record#0": 11
+          },
+          "slots": {
+            "record#0": "Record Alpha"
+          },
+          "template": "invented-record"
+        }
+      ],
+      "record_order": [
+        "Record Beta",
+        "Record Alpha"
+      ],
+      "stubs": [],
+      "trace_restored": true
+    },
+    {
+      "after": {
+        "evidence": [
+          "widget slot combobox#0~ survives reloads (2): attribute"
+        ],
+        "instances": [
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0": "Edited",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0": "Edited",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          }
+        ],
+        "key_slot": "label#0",
+        "persistent_widgets": [
+          [
+            "invented-widget-field",
+            "combobox#0"
+          ]
+        ],
+        "slots": {
+          "combobox#0": {
+            "crowded": 0,
+            "id": "combobox#0",
+            "n": 8,
+            "n_obs_values": {
+              "Edited": 2,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Edited": 2,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            }
+          },
+          "label#0": {
+            "crowded": 0,
+            "id": "label#0",
+            "n": 8,
+            "n_obs_values": {
+              "Destination": 4,
+              "Source": 4
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Destination": 4,
+              "Source": 4
+            }
+          }
+        }
+      },
+      "before": {
+        "instances": [
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Edited",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Edited",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Destination"
+            },
+            "template": "invented-widget-field"
+          }
+        ],
+        "key_slot": "label#0",
+        "persistent_widgets": [],
+        "slots": {
+          "combobox#0~": {
+            "crowded": 0,
+            "id": "combobox#0~",
+            "n": 8,
+            "n_obs_values": {
+              "Edited": 2,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Edited": 2,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            }
+          },
+          "label#0": {
+            "crowded": 0,
+            "id": "label#0",
+            "n": 8,
+            "n_obs_values": {
+              "Destination": 4,
+              "Source": 4
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Destination": 4,
+              "Source": 4
+            }
+          }
+        }
+      },
+      "contextual_comparisons": [
+        {
+          "after": "Harbor",
+          "before": "Harbor",
+          "child_key": "Destination",
+          "kept": true,
+          "record": "Record Alpha"
+        },
+        {
+          "after": "Edited",
+          "before": "Edited",
+          "child_key": "Source",
+          "kept": true,
+          "record": "Record Alpha"
+        },
+        {
+          "after": "Mountain",
+          "before": "Mountain",
+          "child_key": "Destination",
+          "kept": true,
+          "record": "Record Beta"
+        },
+        {
+          "after": "Forest",
+          "before": "Forest",
+          "child_key": "Source",
+          "kept": true,
+          "record": "Record Beta"
+        }
+      ],
+      "contextual_kept": 4,
+      "contextual_lost": 0,
+      "diagnostic_expectation": "PASS",
+      "false_promotion": false,
+      "graph_observations": 0,
+      "id": "duplicate_keys_all_values_persist",
+      "native_promoted": true,
+      "native_trace": {
+        "kept": 2,
+        "line": 707,
+        "lost": 0,
+        "selected_representatives": {
+          "invented-after": {
+            "Destination": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 35,
+              "value": "Mountain"
+            },
+            "Source": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 32,
+              "value": "Forest"
+            }
+          },
+          "invented-before": {
+            "Destination": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 35,
+              "value": "Mountain"
+            },
+            "Source": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 32,
+              "value": "Forest"
+            }
+          }
+        },
+        "slot": "combobox#0~",
+        "template": "invented-widget-field"
+      },
+      "parents": [
+        {
+          "nested": [
+            12,
+            15
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 10,
+          "sig": "invented-before",
+          "slot_nodes": {
+            "record#0": 11
+          },
+          "slots": {
+            "record#0": "Record Alpha"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            32,
+            35
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 30,
+          "sig": "invented-before",
+          "slot_nodes": {
+            "record#0": 31
+          },
+          "slots": {
+            "record#0": "Record Beta"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            12,
+            15
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 10,
+          "sig": "invented-after",
+          "slot_nodes": {
+            "record#0": 11
+          },
+          "slots": {
+            "record#0": "Record Alpha"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            32,
+            35
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 30,
+          "sig": "invented-after",
+          "slot_nodes": {
+            "record#0": 31
+          },
+          "slots": {
+            "record#0": "Record Beta"
+          },
+          "template": "invented-record"
+        }
+      ],
+      "record_order": [
+        "Record Alpha",
+        "Record Beta"
+      ],
+      "stubs": [],
+      "trace_restored": true
+    },
+    {
+      "after": {
+        "evidence": [],
+        "instances": [
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Edited",
+              "label#0": "Record Alpha Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Record Alpha Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Record Beta Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Record Beta Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Default",
+              "label#0": "Record Alpha Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Record Alpha Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Record Beta Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Record Beta Destination"
+            },
+            "template": "invented-widget-field"
+          }
+        ],
+        "key_slot": "label#0",
+        "persistent_widgets": [],
+        "slots": {
+          "combobox#0~": {
+            "crowded": 0,
+            "id": "combobox#0~",
+            "n": 8,
+            "n_obs_values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            }
+          },
+          "label#0": {
+            "crowded": 0,
+            "id": "label#0",
+            "n": 8,
+            "n_obs_values": {
+              "Record Alpha Destination": 2,
+              "Record Alpha Source": 2,
+              "Record Beta Destination": 2,
+              "Record Beta Source": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Record Alpha Destination": 2,
+              "Record Alpha Source": 2,
+              "Record Beta Destination": 2,
+              "Record Beta Source": 2
+            }
+          }
+        }
+      },
+      "before": {
+        "instances": [
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Edited",
+              "label#0": "Record Alpha Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Record Alpha Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Record Beta Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-before",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Record Beta Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 12,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 14,
+              "label#0": 13
+            },
+            "slots": {
+              "combobox#0~": "Default",
+              "label#0": "Record Alpha Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 10,
+            "positional": false,
+            "root": 15,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 17,
+              "label#0": 16
+            },
+            "slots": {
+              "combobox#0~": "Harbor",
+              "label#0": "Record Alpha Destination"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 32,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 34,
+              "label#0": 33
+            },
+            "slots": {
+              "combobox#0~": "Forest",
+              "label#0": "Record Beta Source"
+            },
+            "template": "invented-widget-field"
+          },
+          {
+            "nested": [],
+            "parent_root": 30,
+            "positional": false,
+            "root": 35,
+            "sig": "invented-after",
+            "slot_nodes": {
+              "combobox#0~": 37,
+              "label#0": 36
+            },
+            "slots": {
+              "combobox#0~": "Mountain",
+              "label#0": "Record Beta Destination"
+            },
+            "template": "invented-widget-field"
+          }
+        ],
+        "key_slot": "label#0",
+        "persistent_widgets": [],
+        "slots": {
+          "combobox#0~": {
+            "crowded": 0,
+            "id": "combobox#0~",
+            "n": 8,
+            "n_obs_values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Default": 1,
+              "Edited": 1,
+              "Forest": 2,
+              "Harbor": 2,
+              "Mountain": 2
+            }
+          },
+          "label#0": {
+            "crowded": 0,
+            "id": "label#0",
+            "n": 8,
+            "n_obs_values": {
+              "Record Alpha Destination": 2,
+              "Record Alpha Source": 2,
+              "Record Beta Destination": 2,
+              "Record Beta Source": 2
+            },
+            "numeric": 0,
+            "unique_in_parent": 8,
+            "values": {
+              "Record Alpha Destination": 2,
+              "Record Alpha Source": 2,
+              "Record Beta Destination": 2,
+              "Record Beta Source": 2
+            }
+          }
+        }
+      },
+      "contextual_comparisons": [
+        {
+          "after": "Harbor",
+          "before": "Harbor",
+          "child_key": "Record Alpha Destination",
+          "kept": true,
+          "record": "Record Alpha"
+        },
+        {
+          "after": "Default",
+          "before": "Edited",
+          "child_key": "Record Alpha Source",
+          "kept": false,
+          "record": "Record Alpha"
+        },
+        {
+          "after": "Mountain",
+          "before": "Mountain",
+          "child_key": "Record Beta Destination",
+          "kept": true,
+          "record": "Record Beta"
+        },
+        {
+          "after": "Forest",
+          "before": "Forest",
+          "child_key": "Record Beta Source",
+          "kept": true,
+          "record": "Record Beta"
+        }
+      ],
+      "contextual_kept": 3,
+      "contextual_lost": 1,
+      "diagnostic_expectation": "PASS",
+      "false_promotion": false,
+      "graph_observations": 0,
+      "id": "unique_keys_mixed_retention",
+      "native_promoted": false,
+      "native_trace": {
+        "kept": 3,
+        "line": 707,
+        "lost": 1,
+        "selected_representatives": {
+          "invented-after": {
+            "Record Alpha Destination": {
+              "parent_root": 10,
+              "record": "Record Alpha",
+              "root": 15,
+              "value": "Harbor"
+            },
+            "Record Alpha Source": {
+              "parent_root": 10,
+              "record": "Record Alpha",
+              "root": 12,
+              "value": "Default"
+            },
+            "Record Beta Destination": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 35,
+              "value": "Mountain"
+            },
+            "Record Beta Source": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 32,
+              "value": "Forest"
+            }
+          },
+          "invented-before": {
+            "Record Alpha Destination": {
+              "parent_root": 10,
+              "record": "Record Alpha",
+              "root": 15,
+              "value": "Harbor"
+            },
+            "Record Alpha Source": {
+              "parent_root": 10,
+              "record": "Record Alpha",
+              "root": 12,
+              "value": "Edited"
+            },
+            "Record Beta Destination": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 35,
+              "value": "Mountain"
+            },
+            "Record Beta Source": {
+              "parent_root": 30,
+              "record": "Record Beta",
+              "root": 32,
+              "value": "Forest"
+            }
+          }
+        },
+        "slot": "combobox#0~",
+        "template": "invented-widget-field"
+      },
+      "parents": [
+        {
+          "nested": [
+            12,
+            15
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 10,
+          "sig": "invented-before",
+          "slot_nodes": {
+            "record#0": 11
+          },
+          "slots": {
+            "record#0": "Record Alpha"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            32,
+            35
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 30,
+          "sig": "invented-before",
+          "slot_nodes": {
+            "record#0": 31
+          },
+          "slots": {
+            "record#0": "Record Beta"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            12,
+            15
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 10,
+          "sig": "invented-after",
+          "slot_nodes": {
+            "record#0": 11
+          },
+          "slots": {
+            "record#0": "Record Alpha"
+          },
+          "template": "invented-record"
+        },
+        {
+          "nested": [
+            32,
+            35
+          ],
+          "parent_root": null,
+          "positional": false,
+          "root": 30,
+          "sig": "invented-after",
+          "slot_nodes": {
+            "record#0": 31
+          },
+          "slots": {
+            "record#0": "Record Beta"
+          },
+          "template": "invented-record"
+        }
+      ],
+      "record_order": [
+        "Record Alpha",
+        "Record Beta"
+      ],
+      "stubs": [],
+      "trace_restored": true
+    }
+  ],
+  "schema": "semabi.j1.invented_persistence_collision_result.v1",
+  "scope": "Direct invented unit hypotheses and a claimed reload pair. Real constructors, _slot_stats and _promote_persistent_widgets execute without stubs. A read-only line trace observes actual decision locals.",
+  "source_imports": {
+    "bytecode_writes_disabled": true,
+    "cache_empty_after": true,
+    "cache_empty_before_import": true,
+    "modules": [
+      {
+        "module": "semabi",
+        "path": "semabi/__init__.py",
+        "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8"
+      },
+      {
+        "module": "semabi.compiler",
+        "path": "semabi/compiler/__init__.py",
+        "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893"
+      },
+      {
+        "module": "semabi.compiler.observation",
+        "path": "semabi/compiler/observation.py",
+        "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+      },
+      {
+        "module": "semabi.compiler.v2",
+        "path": "semabi/compiler/v2/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "semabi.compiler.v2.graph",
+        "path": "semabi/compiler/v2/graph.py",
+        "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a"
+      },
+      {
+        "module": "semabi.compiler.v2.hypotheses",
+        "path": "semabi/compiler/v2/hypotheses.py",
+        "sha256": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03"
+      },
+      {
+        "module": "semabi.compiler.v2.units",
+        "path": "semabi/compiler/v2/units.py",
+        "sha256": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f"
+      }
+    ],
+    "no_semabi_preloaded": true,
+    "unique_cache_prefix": "docs/data/v4/transport/development/j1/analysis/persistence_collision_v1/source_import_cache-xuxrbwds"
+  },
+  "status": "REPRODUCED"
+}

@@ -1,0 +1,99 @@
+{
+  "correction_manifest": {
+    "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json",
+    "sha256": "6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51"
+  },
+  "error": null,
+  "failed_score_file_count": 8,
+  "first_pass_file_count": 705,
+  "normalization": {
+    "freeze_sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b",
+    "preservation_sha256": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256",
+    "reader_restored": true,
+    "reads": [
+      {
+        "actor_path": "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/actor_verification.json",
+        "actor_sha256": "910d573cf4bd71e289f06f99ca9672830a7a8bfc7c97edd53ce9545a587ab765",
+        "canonical": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_receipts.jsonl",
+        "field": "accounting[0].receipts.path",
+        "normalized": true,
+        "original": "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_receipts.jsonl",
+        "phase": "primary",
+        "sidecar_path": "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_receipts.jsonl",
+        "sidecar_sha256": "b91054d70a3539223620ecfbc1a77f5eff762e9a5926855068185df92a909332"
+      },
+      {
+        "actor_path": "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/actor_verification.json",
+        "actor_sha256": "910d573cf4bd71e289f06f99ca9672830a7a8bfc7c97edd53ce9545a587ab765",
+        "canonical": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_reconciliation.jsonl",
+        "field": "accounting[0].reconciliations.path",
+        "normalized": true,
+        "original": "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_reconciliation.jsonl",
+        "phase": "primary",
+        "sidecar_path": "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2/forecast_reconciliation.jsonl",
+        "sidecar_sha256": "e9c458b254da8858c061511ecbff0c3b4a4e59b163d54a137560425366111923"
+      },
+      {
+        "actor_path": "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/actor_verification.json",
+        "actor_sha256": "7ba87c44479653a9f5cb451840b3bd94962f1c876310c64835cd4d3ad0b78d39",
+        "canonical": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_receipts.jsonl",
+        "field": "accounting[0].receipts.path",
+        "normalized": true,
+        "original": "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_receipts.jsonl",
+        "phase": "invariance",
+        "sidecar_path": "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_receipts.jsonl",
+        "sidecar_sha256": "ec77b87b34ed929e290700677086832a5abfee1ae1e4acf968f246d3cf575a2f"
+      },
+      {
+        "actor_path": "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/actor_verification.json",
+        "actor_sha256": "7ba87c44479653a9f5cb451840b3bd94962f1c876310c64835cd4d3ad0b78d39",
+        "canonical": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_reconciliation.jsonl",
+        "field": "accounting[0].reconciliations.path",
+        "normalized": true,
+        "original": "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_reconciliation.jsonl",
+        "phase": "invariance",
+        "sidecar_path": "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2/forecast_reconciliation.jsonl",
+        "sidecar_sha256": "86f8d07ad23c31188499406064a378dc20a594b534088164deff35d19e68eb53"
+      }
+    ],
+    "schema": "semabi.j1.actor_sidecar_path_audit.v1"
+  },
+  "original_inputs": {
+    "correction_contract": {
+      "path": "docs/data/v4/transport/development/j1/analysis/sidecar_path_failure_v1/correction_contract_v1.md",
+      "sha256": "9b8e6d4e48e79fdfcfbff20087f40879a5765a9526da9af20730e46b3d654be6"
+    },
+    "failed_score_seal": {
+      "path": "docs/data/v4/transport/development/j1/scoring_v2/artifact_manifest_v2.json",
+      "sha256": "cf4e345fd36fb9f664872a21f860a37cd5c831fdb99a43271a7ba8e53be54f17"
+    },
+    "freeze": {
+      "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json",
+      "sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b"
+    },
+    "preservation": {
+      "path": "docs/data/v4/transport/development/j1/first_pass_manifest_v2.json",
+      "sha256": "51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256"
+    }
+  },
+  "original_main_invoked": true,
+  "original_main_returncode": 0,
+  "original_main_stdout": "{\"path\":\"/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/attempt_v1/evaluation.json\",\"sha256\":\"9f0e22321d1b1fc5c2c0d114f77cceeb509c67884457fa861a55acc8384231c9\",\"status\":\"VALID_SAVED_FORECAST_MEASUREMENT\",\"target_denominators\":[24,24]}\n",
+  "original_verify_preservation_calls": 3,
+  "postflight_error": null,
+  "preservation_guard_restored": true,
+  "qualification": "Offline instrument correction only; no fit, forecast or application action.",
+  "reader_restored": true,
+  "schema": "semabi.j1.sidecar_path_correction_run.v1",
+  "score": {
+    "path": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/attempt_v1/evaluation.json",
+    "sha256": "9f0e22321d1b1fc5c2c0d114f77cceeb509c67884457fa861a55acc8384231c9"
+  },
+  "source_files": {
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/adapter.py": "71e9a59fd7c191dda5d653ac53ef8a6109a5990f778057ac2df0c215e2e5da4b",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/checks.py": "5d8f316e0abda595bfb918159b91f66ba952c9c5cfcfaaf46e048631e6ddb909",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/protocol.md": "744e3f647e3624c84a60e0025919a5afd9ee9fcfc268e87e25840b88896cc7a7",
+    "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/run.py": "c76130e0a34e405d1663b792a49360ddb581c9ac2e3aa293619b31b0301f4930"
+  },
+  "status": "CORRECTED_SCORE_COMPLETE"
+}

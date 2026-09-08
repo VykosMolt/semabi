@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "taskset -c 19 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/verify_and_seal_v1.py",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Verify the completed training replay against its preserved model and host process state, then seal its diagnostic artifacts.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "63a857",
+    "wall_time_seconds": 0.835455849,
+    "exit_code": 0,
+    "original_token_count": 78,
+    "output": "{\"path\": \"/home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/artifact_manifest_v1.json\", \"sha256\": \"c6ecb59ea29510161e56d243bf48fc19cd598e90f1579f00f581d5a6ebbff0ae\", \"files\": 16, \"status\": \"VERIFIED_MATCHED_TRAINING_REPLAY\", \"owned_pids_absent\": [1187307, 1187309]}\n"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "semabi.j1.sidecar_path_retention_tool.v1",
+  "command": "python3 -B - <<'PY'\nimport hashlib,json,pathlib,subprocess\nroot=pathlib.Path.cwd(); j1=root/'docs/data/v4/transport/development/j1'\nsha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nf=j1/'evaluation_freeze_v2.json'; p=j1/'first_pass_manifest_v2.json'; s=j1/'scoring_v2/artifact_manifest_v2.json'\npreserved=json.loads(p.read_bytes()); failed=json.loads(s.read_bytes())\nrows={label:{'file_count':len(data['files']),'mismatches':[name for name,wanted in data['files'].items() if (root/name).resolve()!=root/name or not (root/name).is_file() or sha(root/name)!=wanted]} for label,data in (('preserved_first_pass',preserved),('failed_score',failed))}\nresult={'source_head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'freeze_sha256':sha(f),'preservation_sha256':sha(p),'failed_score_seal_sha256':sha(s),'checks':rows,'scope':'Hashes only for preserved and failed-score files; no payload JSON parsed.'}\nprint(json.dumps(result,sort_keys=True))\nraise SystemExit(0 if all(not row['mismatches'] for row in rows.values()) else 2)\nPY",
+  "tool_result": {
+    "chunk_id": "4edc78",
+    "wall_time_seconds": 0.125124403,
+    "exit_code": 0,
+    "original_token_count": 137,
+    "output": "{\"checks\": {\"failed_score\": {\"file_count\": 8, \"mismatches\": []}, \"preserved_first_pass\": {\"file_count\": 705, \"mismatches\": []}}, \"failed_score_seal_sha256\": \"cf4e345fd36fb9f664872a21f860a37cd5c831fdb99a43271a7ba8e53be54f17\", \"freeze_sha256\": \"100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b\", \"preservation_sha256\": \"51b77f306b0c1a79c9db8192226af0743dd91c8a0025123ae73ba3666eadb256\", \"scope\": \"Hashes only for preserved and failed-score files; no payload JSON parsed.\", \"source_head\": \"6aea64baac1678cbce8ba4b1a41ab04756225c7d\"}\n"
+  }
+}

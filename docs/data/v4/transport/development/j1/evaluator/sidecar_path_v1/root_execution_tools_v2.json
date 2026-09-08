@@ -1,0 +1,46 @@
+{
+  "schema": "semabi.j1.corrected_score_root_tool_receipts.v2",
+  "launch": {
+    "args": {
+      "cmd": "taskset -c 20 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPYCACHEPREFIX=/tmp/semabi_j1_corrected_score_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/jobs/evaluate_v1 -- .venv/bin/python -B docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/run.py --manifest /home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/source_manifest_v1.json --manifest-sha256 6f1fd0acee51791b439f7ce93f370e90f2327660eb56d864750c388253f63b51 --out-dir /home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/attempt_v1",
+      "workdir": "/home/moloch/semabi",
+      "sandbox_permissions": "require_escalated",
+      "justification": "Run the reviewed local offline scorer against the preserved J1 forecasts with authoritative process checks; this performs no model fitting or application actions.",
+      "yield_time_ms": 1000,
+      "max_output_tokens": 3000
+    },
+    "result": {
+      "chunk_id": "dcf8fb",
+      "wall_time_seconds": 1.001773305,
+      "session_id": 52332,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  "reap": {
+    "args": {
+      "session_id": 52332,
+      "chars": "",
+      "yield_time_ms": 1000,
+      "max_output_tokens": 3000
+    },
+    "result": {
+      "chunk_id": "66f0ac",
+      "wall_time_seconds": 0.00000204,
+      "exit_code": 0,
+      "original_token_count": 34,
+      "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1181627, \"child_terminated\": true, \"end_utc\": \"2026-09-08T04:01:01.419208+00:00\"}\n"
+    }
+  },
+  "previous_receipt_write_failure": {
+    "artifact": "docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/root_execution_tools_v1.json",
+    "state": "Empty file retained from failed write",
+    "tool_result": {
+      "chunk_id": "3513f7",
+      "wall_time_seconds": 0.000002943,
+      "exit_code": 1,
+      "original_token_count": 31,
+      "output": "Traceback (most recent call last):\n  File \"<stdin>\", line 5, in <module>\nTypeError: write() argument must be str, not dict\n"
+    }
+  }
+}

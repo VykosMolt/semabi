@@ -1,0 +1,101 @@
+......F...FF....                                                         [100%]
+=================================== FAILURES ===================================
+__ test_repeated_child_keys_cannot_hide_a_reload_counterexample[False-False] ___
+
+reverse_before = False, reverse_after = False
+
+    @pytest.mark.parametrize("reverse_before", [False, True])
+    @pytest.mark.parametrize("reverse_after", [False, True])
+    def test_repeated_child_keys_cannot_hide_a_reload_counterexample(reverse_before, reverse_after):
+        before = [(1, "Source", "Edited"), (1, "Destination", "West"),
+                  (2, "Source", "North"), (2, "Destination", "East")]
+        after = [(1, "Source", "Default"), *before[1:]]
+        if reverse_before:
+            before.reverse()
+        if reverse_after:
+            after.reverse()
+        hypothesis, unit = _reload_widgets(before, after)
+        # These keys are valid among siblings, which does not make them global keys.
+        assert unit.slots["text#0"].unique_in_parent == 8
+>       _assert_widget_promotion_withheld(hypothesis, unit)
+
+tests/test_v2_collection_variation.py:215: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+hypothesis = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fd51c2f3860>
+unit = UnitHyp(template='field', instances=[UnitInstance(sig='before', root=100, template='field', slots={'text#0': 'Source',... key_slot='text#0', key_score=0.0, max_per_obs=0, evidence=['widget slot combobox#0~ survives reloads (2): attribute'])
+
+    def _assert_widget_promotion_withheld(hypothesis, unit):
+        before = [(dict(ui.slots), dict(ui.slot_nodes)) for ui in unit.instances]
+        hypothesis._promote_persistent_widgets()
+>       assert hypothesis.persistent_widgets == set()
+E       AssertionError: assert {('field', 'combobox#0')} == set()
+E         
+E         Extra items in the left set:
+E         ('field', 'combobox#0')
+E         Use -v to get more diff
+
+tests/test_v2_collection_variation.py:197: AssertionError
+_ test_a_collision_on_either_reload_side_blocks_other_positive_matches[before] _
+
+duplicate_side = 'before'
+
+    @pytest.mark.parametrize("duplicate_side", ["before", "after"])
+    def test_a_collision_on_either_reload_side_blocks_other_positive_matches(duplicate_side):
+        before = [(1, "Source", "North"), (2, "Left", "West"), (3, "Right", "East")]
+        after = list(before)
+        (before if duplicate_side == "before" else after).append((4, "Source", "North"))
+        hypothesis, unit = _reload_widgets(before, after)
+>       _assert_widget_promotion_withheld(hypothesis, unit)
+
+tests/test_v2_collection_variation.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+hypothesis = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fd51c2f37d0>
+unit = UnitHyp(template='field', instances=[UnitInstance(sig='before', root=100, template='field', slots={'text#0': 'Source',... key_slot='text#0', key_score=0.0, max_per_obs=0, evidence=['widget slot combobox#0~ survives reloads (3): attribute'])
+
+    def _assert_widget_promotion_withheld(hypothesis, unit):
+        before = [(dict(ui.slots), dict(ui.slot_nodes)) for ui in unit.instances]
+        hypothesis._promote_persistent_widgets()
+>       assert hypothesis.persistent_widgets == set()
+E       AssertionError: assert {('field', 'combobox#0')} == set()
+E         
+E         Extra items in the left set:
+E         ('field', 'combobox#0')
+E         Use -v to get more diff
+
+tests/test_v2_collection_variation.py:197: AssertionError
+_ test_a_collision_on_either_reload_side_blocks_other_positive_matches[after] __
+
+duplicate_side = 'after'
+
+    @pytest.mark.parametrize("duplicate_side", ["before", "after"])
+    def test_a_collision_on_either_reload_side_blocks_other_positive_matches(duplicate_side):
+        before = [(1, "Source", "North"), (2, "Left", "West"), (3, "Right", "East")]
+        after = list(before)
+        (before if duplicate_side == "before" else after).append((4, "Source", "North"))
+        hypothesis, unit = _reload_widgets(before, after)
+>       _assert_widget_promotion_withheld(hypothesis, unit)
+
+tests/test_v2_collection_variation.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+hypothesis = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fd51c2f1940>
+unit = UnitHyp(template='field', instances=[UnitInstance(sig='before', root=100, template='field', slots={'text#0': 'Source',... key_slot='text#0', key_score=0.0, max_per_obs=0, evidence=['widget slot combobox#0~ survives reloads (3): attribute'])
+
+    def _assert_widget_promotion_withheld(hypothesis, unit):
+        before = [(dict(ui.slots), dict(ui.slot_nodes)) for ui in unit.instances]
+        hypothesis._promote_persistent_widgets()
+>       assert hypothesis.persistent_widgets == set()
+E       AssertionError: assert {('field', 'combobox#0')} == set()
+E         
+E         Extra items in the left set:
+E         ('field', 'combobox#0')
+E         Use -v to get more diff
+
+tests/test_v2_collection_variation.py:197: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_v2_collection_variation.py::test_repeated_child_keys_cannot_hide_a_reload_counterexample[False-False]
+FAILED tests/test_v2_collection_variation.py::test_a_collision_on_either_reload_side_blocks_other_positive_matches[before]
+FAILED tests/test_v2_collection_variation.py::test_a_collision_on_either_reload_side_blocks_other_positive_matches[after]
+3 failed, 13 passed in 0.07s

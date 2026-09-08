@@ -1,0 +1,15 @@
+{
+  "args": {
+    "cmd": "taskset -c 19 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/j1/analysis/measurement_summary_v2/summarize.py",
+    "workdir": "/home/moloch/semabi",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "8694b8",
+    "wall_time_seconds": 0.102707607,
+    "exit_code": 1,
+    "original_token_count": 126,
+    "output": "Traceback (most recent call last):\n  File \"/home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/measurement_summary_v2/summarize.py\", line 110, in <module>\n    main()\n  File \"/home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/measurement_summary_v2/summarize.py\", line 94, in main\n    'limitations': score['limitations'] + controls['limitations'] + [\n                   ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~\nTypeError: can only concatenate str (not \"list\") to str\n"
+  }
+}

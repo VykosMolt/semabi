@@ -1,0 +1,227 @@
+{
+  "admission": {
+    "path": "docs/data/v4/transport/development/j1/root_instrument_admission_v2.json",
+    "runtime_inventory_exactly_equals_freeze": true,
+    "schema": "semabi.j1.root_instrument_admission.v1",
+    "sha256": "1e314c0eea875e89e84d6473e8740ab965639db789b5801061baae72ff2e4834",
+    "status": "ACCEPTED_FOR_CORRECTED_ATTEMPT"
+  },
+  "all_173_frozen_runtime_sources_current": true,
+  "disclosure_scope": "Commitments, inventory counts, source/type compatibility and synthetic-control statuses only; no actual first-pass semantic result.",
+  "execution_scope": {
+    "actual_first_pass_manifest_opened": false,
+    "actual_run_payload_parsed": false,
+    "native_bindings_or_fit_forecast_browser_service_called": false,
+    "production_authenticate_main_or_verify_dependencies_called": false,
+    "runtime_source_modified": false
+  },
+  "fixed_dependencies": [
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "docs/data/v4/transport/development/j1/evaluator/public_inventory_sha256.json",
+      "sha256": "93bba30bf1c3ba1a95c4bad63e6ae55f96066471e1efef4b024a0dfb27c6b10d",
+      "v2_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/fixtures/catalog_permuted.json",
+      "sha256": "10a8d2f5e54bd242c7bf98475a07f01cdc20f75bfb5ff983d2bce6516bd8682d",
+      "v2_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/fixtures/catalog_primary.json",
+      "sha256": "ab50e4b06c44aa814429cd0a88c8e42d22f408b73903fac9e41d032d89fcfdd7",
+      "v2_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/oracle/cases_v1.json",
+      "sha256": "015b0ec5a6a0588c8d25a97e461936d4a3db3b50416f4d7425327bb20404408a",
+      "v2_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/oracle/scripts_v1.json",
+      "sha256": "d44719acaa5ae83757829fd652796804abd230a213c5401d5228851ff8ab8b39",
+      "v2_fixed_input_membership": true
+    },
+    {
+      "current_bytes_match": true,
+      "original_fixture_inventory_membership": true,
+      "path": "experiments/join_v1/oracle/specification_v1.json",
+      "sha256": "ca919756fc27dad154ab376966f6b4d86aeb1a4999cd26cd245b1055f3a3d3cb",
+      "v2_fixed_input_membership": true
+    }
+  ],
+  "freeze": {
+    "fixed_input_count": 611,
+    "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v2.json",
+    "runtime_source_count": 173,
+    "schema": "semabi.j1.evaluation_freeze.v1",
+    "sha256": "100c99e85be08543369d1fd7825569268a0e75b5f7cba2970da568c93ea4b35b",
+    "source_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d"
+  },
+  "helper_sources": {
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/score.py": "28f2887e0ff9e59ed183173024d76cee04f29325828a7116328bbf6ecb07025d"
+  },
+  "metadata_only": true,
+  "package": {
+    "excluded_from_freeze_sources_and_fixed_inputs": true,
+    "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/source_manifest_v4.json",
+    "sha256": "e2d241b8ff8681bd2e4f05f88d455ce9e27fdf8be539ea9ffed4a6b5dcee3b33",
+    "source_files": {
+      "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/checks.py": "8bb4009d510526c35808a96e7d8136c05d02914630e66e39fa0390c1842257b3",
+      "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/controls.py": "4ad00a1d86aa5caa2d8c7bd5328b7db936e1c0fe05386f67fdef2a4b8ea4f817",
+      "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/protocol.md": "6fa8cf7fa0d1d08ae6cd66f913c3ad86c666b1a5497264d58945bd5686a22c1c"
+    }
+  },
+  "prior_metadata_audit": {
+    "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/metadata_compatibility_precursor_v1.json",
+    "scope": "Prior AST-based nine-record base/optional schema audit; current exact source hashes checked against concrete V2.",
+    "sha256": "77c89eed1878f0eca624b95b6a3ef5f1a9d3af9992a45207a0434f623aa010b1"
+  },
+  "remaining_gates": [
+    "Bounded independent review acceptance for corrected package",
+    "Exact V2 first-pass preservation commitment and separate root production GO",
+    "Full production custody validation before any diagnostic result"
+  ],
+  "schema": "semabi.j1.post_controls_metadata_compatibility.v1",
+  "source_head_at_check": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "status": "COMPATIBLE_METADATA_AND_SYNTHETIC_CONTROLS_REVIEW_PENDING",
+  "synthetic_controls": {
+    "all_34_source_bindings_current": true,
+    "expanded": {
+      "pass": 94,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/checks_attempt7.json",
+      "sha256": "8fefdcbdd5d42049c19ad11cda37b299786bc743d735e529687e1734e534ef1a"
+    },
+    "immutable_independent": {
+      "pass": 19,
+      "path": "docs/data/v4/transport/development/j1/evaluator/post_controls_v1/review_counterexamples_attempt5.json",
+      "sha256": "ddfa446fcc247ee87af3d85e6af6aa5c890fc7efe0c6fac12c2e7ba529aafcaa"
+    },
+    "unique_checks": 113
+  },
+  "typed_record_source_audit": [
+    {
+      "base_field_count": 8,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.abstract.AbsObj",
+      "source": "semabi/compiler/abstract.py",
+      "source_sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+      "unchanged_from_v1": true,
+      "v2_source_bytes_match": true
+    },
+    {
+      "base_field_count": 7,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.abstract.AbstractState",
+      "source": "semabi/compiler/abstract.py",
+      "source_sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+      "unchanged_from_v1": true,
+      "v2_source_bytes_match": true
+    },
+    {
+      "base_field_count": 6,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [
+        "_member_positioned_cache"
+      ],
+      "post_controls_status": "BASE_PLUS_KNOWN_OPTIONAL_CACHE_COMPATIBLE",
+      "record_type": "semabi.compiler.parse.ParsedObs",
+      "source": "semabi/compiler/parse.py",
+      "source_sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+      "unchanged_from_v1": true,
+      "v2_source_bytes_match": true
+    },
+    {
+      "base_field_count": 7,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.parse.Instance",
+      "source": "semabi/compiler/parse.py",
+      "source_sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+      "unchanged_from_v1": true,
+      "v2_source_bytes_match": true
+    },
+    {
+      "base_field_count": 3,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.observation.Observation",
+      "source": "semabi/compiler/observation.py",
+      "source_sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "unchanged_from_v1": true,
+      "v2_source_bytes_match": true
+    },
+    {
+      "base_field_count": 10,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.observation.Node",
+      "source": "semabi/compiler/observation.py",
+      "source_sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "unchanged_from_v1": true,
+      "v2_source_bytes_match": true
+    },
+    {
+      "base_field_count": 5,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.v4.outcome.Role",
+      "source": "semabi/compiler/v4/outcome.py",
+      "source_sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+      "unchanged_from_v1": true,
+      "v2_source_bytes_match": true
+    },
+    {
+      "base_field_count": 4,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.v4.outcome.Alias",
+      "source": "semabi/compiler/v4/outcome.py",
+      "source_sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+      "unchanged_from_v1": true,
+      "v2_source_bytes_match": true
+    },
+    {
+      "base_field_count": 6,
+      "base_fields_match_trace": true,
+      "optional_exported_fields": [],
+      "post_controls_status": "BASE_INVENTORY_COMPATIBLE",
+      "record_type": "semabi.compiler.v4.outcome.Vouch",
+      "source": "semabi/compiler/v4/outcome.py",
+      "source_sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+      "unchanged_from_v1": true,
+      "v2_source_bytes_match": true
+    }
+  ],
+  "unchanged_runtime_interfaces": {
+    "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+    "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+    "docs/data/v4/transport/development/j1/control.py": "877c823a78d9629d0e493d8b3da32317b7ac3bb762a58a66192fae34265b95c5",
+    "docs/data/v4/transport/development/j1/custody.py": "001d6b1ecc7ddf8611cab651b413adcdab45f32d3f388e1dadfe40da86d46aed",
+    "docs/data/v4/transport/development/j1/evaluate.py": "3984eac0b1f57923121b43e4601e0a784e019a5cc1ab2d44e3da8245f299fe1a",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/predictor.py": "c0d05260b4668db3e885e6691d7b9cd61096c8db6547ae56dd1358348ef48e51",
+    "docs/data/v4/transport/development/j1/preserve.py": "c90ca334d01b1e7c9529909c203e523eafc939c2fedd121141fdbacdf0a30772",
+    "docs/data/v4/transport/development/j1/score.py": "28f2887e0ff9e59ed183173024d76cee04f29325828a7116328bbf6ecb07025d",
+    "docs/data/v4/transport/development/j1/trace.py": "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249"
+  }
+}

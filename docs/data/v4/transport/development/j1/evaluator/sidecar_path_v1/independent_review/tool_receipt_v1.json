@@ -1,0 +1,15 @@
+{
+  "schema": "semabi.j1.sidecar_path_independent_tool_receipt.v1",
+  "owner": "/root/sidecar_review",
+  "command": "taskset -c 22 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/independent_review/boundary_checks_v1.py",
+  "cwd": "/home/moloch/semabi",
+  "tool": "exec_command",
+  "tool_result": {
+    "chunk_id": "3285d3",
+    "wall_time_seconds": 0.000002192,
+    "exit_code": 0,
+    "original_token_count": 58,
+    "output": "{\"check_count\": 2, \"out\": \"docs/data/v4/transport/development/j1/evaluator/sidecar_path_v1/independent_review/boundary_checks_v1.json\", \"sha256\": \"ba68f904c7775ea08d4df1162b97479560b1add45319e5d5e84a8ed44e067e30\", \"status\": \"PASS\"}\n"
+  },
+  "scope": "Two invented seven-charge boundary controls only; no actual J1 score execution."
+}

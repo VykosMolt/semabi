@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "taskset -c 20 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPYCACHEPREFIX=/tmp/semabi_j1_post_controls_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/jobs/controls_v1 -- .venv/bin/python -B docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/run.py --manifest /home/moloch/semabi/docs/data/v4/transport/development/j1/evaluator/post_controls_adapter_v1/source_manifest_v1.json --manifest-sha256 4167af43a763f6d3ee38bded0ae78a02e10fb497c57fc285a94cf304518ed920",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Execute the independently reviewed offline state-and-argument controls on J1’s preserved first pass, keeping its frozen learner and evidence unchanged.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "7224b5",
+    "wall_time_seconds": 1.000935347,
+    "session_id": 67617,
+    "original_token_count": 0,
+    "output": ""
+  }
+}

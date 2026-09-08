@@ -1,0 +1,15 @@
+{
+  "schema": "semabi.j1.invented_persistence_collision_tool_receipt.v1",
+  "owner": "/root/sidecar_review",
+  "command": "taskset -c 22 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/j1/analysis/persistence_collision_v1/diagnose_v1.py --inputs-sha256 64ea343a6fd9de9f8bab4b8085f40c913e767c3c0d56b5f5dda6abfd8ede0991 --script-sha256 fcda9f2a70e7eb61d49459722f6f8a4a08b654ee79d98fafaeb443e91c0bcce1",
+  "cwd": "/home/moloch/semabi",
+  "tool": "exec_command",
+  "tool_result": {
+    "chunk_id": "769469",
+    "wall_time_seconds": 0.000003138,
+    "exit_code": 0,
+    "original_token_count": 207,
+    "output": "{\"fatal_error\": null, \"out\": \"docs/data/v4/transport/development/j1/analysis/persistence_collision_v1/result_v1.json\", \"scenario_count\": 4, \"sha256\": \"8d63e7bd36020a615e1a2895d9373855eae60025bd45d0cb19d04f7965b1c554\", \"status\": \"REPRODUCED\", \"summary\": [{\"contextual_kept\": 3, \"contextual_lost\": 1, \"id\": \"duplicate_keys_changed_parent_first\", \"native_kept\": 2, \"native_lost\": 0, \"promoted\": true}, {\"contextual_kept\": 3, \"contextual_lost\": 1, \"id\": \"duplicate_keys_changed_parent_last\", \"native_kept\": 1, \"native_lost\": 1, \"promoted\": false}, {\"contextual_kept\": 4, \"contextual_lost\": 0, \"id\": \"duplicate_keys_all_values_persist\", \"native_kept\": 2, \"native_lost\": 0, \"promoted\": true}, {\"contextual_kept\": 3, \"contextual_lost\": 1, \"id\": \"unique_keys_mixed_retention\", \"native_kept\": 3, \"native_lost\": 1, \"promoted\": false}]}\n"
+  },
+  "scope": "One tiny CPU22 job with four invented native-unit scenarios; no Fit, compiler pipeline, prediction, browser or application execution."
+}

@@ -1,0 +1,15 @@
+{
+  "args": {
+    "cmd": "taskset -c 19 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPYCACHEPREFIX=/tmp/semabi_j1_representation_summary_v2_no_pyc VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/development/j1/analysis/saved_training_representation_v2/inspect.py",
+    "workdir": "/home/moloch/semabi",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "b69c18",
+    "wall_time_seconds": 0.222253805,
+    "exit_code": 0,
+    "original_token_count": 77,
+    "output": "{\"path\": \"/home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/saved_training_representation_v2/summary_v1.json\", \"sha256\": \"d30e341bbafbe008f38a5ae20747ca9ed8598836d9065d8fc038d45750f95a0b\", \"status\": \"SAVED_FIELDS_COUNTED\", \"raw_observations\": 45, \"states\": 509, \"parsed_observations\": 45}\n"
+  }
+}

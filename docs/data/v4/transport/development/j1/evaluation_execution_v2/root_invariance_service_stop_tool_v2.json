@@ -1,0 +1,20 @@
+{
+  "schema": "semabi.j1.root_execution_stop_tool_receipt.v2",
+  "recorded_utc": "2026-09-08 02:53:41 UTC",
+  "role": "invariance_service",
+  "owner": "/root",
+  "tool": "write_stdin",
+  "submitted_tool_arguments": {
+    "session_id": 22848,
+    "chars": "\u0003",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 2400
+  },
+  "result": {
+    "chunk_id": "04b607",
+    "wall_time_seconds": 0.157073948,
+    "exit_code": 1,
+    "original_token_count": 280,
+    "output": "^C{\"status\": \"INTERRUPTED\", \"returncode\": -15, \"child_pid\": 1109934, \"child_terminated\": true, \"end_utc\": \"2026-09-08T02:53:33.579100+00:00\"}\r\nTraceback (most recent call last):\r\n  File \"/home/moloch/semabi/docs/data/v4/transport/run_job.py\", line 83, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"/home/moloch/semabi/docs/data/v4/transport/run_job.py\", line 59, in main\r\n    code = child.wait()\r\n           ^^^^^^^^^^^^\r\n  File \"/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/subprocess.py\", line 1264, in wait\r\n    return self._wait(timeout=timeout)\r\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/subprocess.py\", line 2053, in _wait\r\n    (pid, sts) = self._try_wait(0)\r\n                 ^^^^^^^^^^^^^^^^^\r\n  File \"/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/subprocess.py\", line 2011, in _try_wait\r\n    (pid, sts) = os.waitpid(self.pid, wait_flags)\r\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nKeyboardInterrupt\r\n"
+  }
+}

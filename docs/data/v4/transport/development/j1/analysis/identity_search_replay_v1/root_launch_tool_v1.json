@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "taskset -c 19 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/jobs/replay_v1 -- .venv/bin/python -B docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/diagnose.py --manifest /home/moloch/semabi/docs/data/v4/transport/development/j1/analysis/identity_search_replay_v1/source_manifest_v2.json --manifest-sha256 9a034671ba155b5a5ebfd2ee81cda49d362219f067079342b993399c94f21757",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Run one reviewed, unchanged native training-only fit to capture the omitted identity-search decision in a new diagnostic directory.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "494ff0",
+    "wall_time_seconds": 1.001324003,
+    "session_id": 5981,
+    "original_token_count": 0,
+    "output": ""
+  }
+}

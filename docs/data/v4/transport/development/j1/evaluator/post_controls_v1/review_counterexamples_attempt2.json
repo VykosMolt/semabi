@@ -1,0 +1,2306 @@
+{
+  "checks": [
+    {
+      "name": "empty_argument_role_map_retains_two_unavailable_positions",
+      "observed": {
+        "positions": [
+          {
+            "binding_status": null,
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": null,
+                "status": "UNAVAILABLE"
+              },
+              "declaration": {
+                "reason": "NO_RECORDED_ROLE_DEFINITION",
+                "status": "UNAVAILABLE"
+              },
+              "identity": {
+                "correspondence": {
+                  "reason": "NO_RECORDED_BOUND_OBJECT",
+                  "status": "UNAVAILABLE"
+                },
+                "reason": "CORRESPONDENCE_NOT_ESTABLISHED",
+                "status": "UNAVAILABLE"
+              },
+              "literal": {
+                "actual": "Pex",
+                "expected": "Pex",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 0,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": null,
+            "status": "UNAVAILABLE"
+          },
+          {
+            "binding_status": null,
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": null,
+                "status": "UNAVAILABLE"
+              },
+              "declaration": {
+                "reason": "NO_RECORDED_ROLE_DEFINITION",
+                "status": "UNAVAILABLE"
+              },
+              "identity": {
+                "correspondence": {
+                  "reason": "NO_RECORDED_BOUND_OBJECT",
+                  "status": "UNAVAILABLE"
+                },
+                "reason": "CORRESPONDENCE_NOT_ESTABLISHED",
+                "status": "UNAVAILABLE"
+              },
+              "literal": {
+                "actual": "Qir",
+                "expected": "Qir",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 1,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": null,
+            "status": "UNAVAILABLE"
+          }
+        ],
+        "reason": "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "wrong_recorded_literal_cannot_pass_role_argument_control",
+      "observed": {
+        "positions": [
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Pex",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "transmitters",
+                  "name": "Pex",
+                  "native_key": "Pex",
+                  "native_node": 5,
+                  "raw_group": 5,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Pex",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Vun",
+                "expected": "Pex",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "WRONG"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 0,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "owner",
+            "status": "WRONG"
+          },
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Qir",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "receivers",
+                  "name": "Qir",
+                  "native_key": "Qir",
+                  "native_node": 19,
+                  "raw_group": 19,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Qir",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Qir",
+                "expected": "Qir",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 1,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "selected",
+            "status": "PASS"
+          }
+        ],
+        "reason": "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC",
+        "status": "WRONG"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "missing_recorded_literal_retains_unavailable_position",
+      "observed": {
+        "positions": [
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Pex",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "transmitters",
+                  "name": "Pex",
+                  "native_key": "Pex",
+                  "native_node": 5,
+                  "raw_group": 5,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Pex",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "reason": "NO_UNIQUE_RECORDED_LITERAL_CORRESPONDENCE",
+                "recorded": null,
+                "status": "UNAVAILABLE"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 0,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "owner",
+            "status": "UNAVAILABLE"
+          },
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Qir",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "receivers",
+                  "name": "Qir",
+                  "native_key": "Qir",
+                  "native_node": 19,
+                  "raw_group": 19,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Qir",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Qir",
+                "expected": "Qir",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 1,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "selected",
+            "status": "PASS"
+          }
+        ],
+        "reason": "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "ambiguous_binding_status_does_not_become_named",
+      "observed": {
+        "positions": [
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Pex",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "transmitters",
+                  "name": "Pex",
+                  "native_key": "Pex",
+                  "native_node": 5,
+                  "raw_group": 5,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Pex",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Pex",
+                "expected": "Pex",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 0,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "owner",
+            "status": "PASS"
+          },
+          {
+            "binding_status": "ambiguous",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "ambiguous",
+                "status": "AMBIGUOUS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Qir",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "receivers",
+                  "name": "Qir",
+                  "native_key": "Qir",
+                  "native_node": 19,
+                  "raw_group": 19,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Qir",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Qir",
+                "expected": "Qir",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 1,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "selected",
+            "status": "AMBIGUOUS"
+          }
+        ],
+        "reason": "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC",
+        "status": "AMBIGUOUS"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "missing_declared_role_is_explicitly_unavailable",
+      "observed": {
+        "positions": [
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Pex",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "transmitters",
+                  "name": "Pex",
+                  "native_key": "Pex",
+                  "native_node": 5,
+                  "raw_group": 5,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Pex",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Pex",
+                "expected": "Pex",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 0,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "owner",
+            "status": "PASS"
+          },
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "NO_RECORDED_ROLE_DEFINITION",
+                "status": "UNAVAILABLE"
+              },
+              "identity": {
+                "actual": "Qir",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "receivers",
+                  "name": "Qir",
+                  "native_key": "Qir",
+                  "native_node": 19,
+                  "raw_group": 19,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Qir",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Qir",
+                "expected": "Qir",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 1,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "selected",
+            "status": "UNAVAILABLE"
+          }
+        ],
+        "reason": "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "detached_owner_must_belong_to_recorded_state",
+      "observed": {
+        "correspondence": {
+          "native_identity": [
+            99,
+            "Pex"
+          ],
+          "reason": "RECORDED_OBJECT_NOT_IN_STATE",
+          "status": "UNAVAILABLE"
+        },
+        "reason": "CORRESPONDENCE_NOT_ESTABLISHED",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "detached_bound_role_must_belong_to_recorded_state",
+      "observed": {
+        "positions": [
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Pex",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "transmitters",
+                  "name": "Pex",
+                  "native_key": "Pex",
+                  "native_node": 5,
+                  "raw_group": 5,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Pex",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Pex",
+                "expected": "Pex",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 0,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "owner",
+            "status": "PASS"
+          },
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "correspondence": {
+                  "native_identity": [
+                    99,
+                    "Qir"
+                  ],
+                  "reason": "RECORDED_OBJECT_NOT_IN_STATE",
+                  "status": "UNAVAILABLE"
+                },
+                "reason": "CORRESPONDENCE_NOT_ESTABLISHED",
+                "status": "UNAVAILABLE"
+              },
+              "literal": {
+                "actual": "Qir",
+                "expected": "Qir",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 1,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "selected",
+            "status": "UNAVAILABLE"
+          }
+        ],
+        "reason": "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "state_and_top_level_parsed_records_must_agree",
+      "observed": {
+        "error": {
+          "detail": "State and top-level parsed records differ",
+          "type": "ValueError"
+        },
+        "reason": "UNSUPPORTED_OR_INVALID_TYPED_DIAGNOSTIC_DATA",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "boolean_reference_identity_must_not_alias_integer",
+      "observed": {
+        "error": {
+          "detail": "Typed object reference, parent or slot identity differs",
+          "type": "ValueError"
+        },
+        "reason": "UNSUPPORTED_OR_INVALID_TYPED_DIAGNOSTIC_DATA",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "float_reference_identity_must_not_alias_integer",
+      "observed": {
+        "error": {
+          "detail": "Typed object reference, parent or slot identity differs",
+          "type": "ValueError"
+        },
+        "reason": "UNSUPPORTED_OR_INVALID_TYPED_DIAGNOSTIC_DATA",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "float_parsed_node_key_must_not_alias_integer",
+      "observed": {
+        "error": {
+          "detail": "Typed parsed index maps differ",
+          "type": "ValueError"
+        },
+        "reason": "UNSUPPORTED_OR_INVALID_TYPED_DIAGNOSTIC_DATA",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "entity_field_needs_recorded_ancestor_instance",
+      "observed": {
+        "argument_role_positions": [
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Pex",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "transmitters",
+                  "name": "Pex",
+                  "native_key": "Pex",
+                  "native_node": 5,
+                  "raw_group": 5,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Pex",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Pex",
+                "expected": "Pex",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 0,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "owner",
+            "status": "PASS"
+          },
+          {
+            "binding_status": "named",
+            "components": {
+              "binding": {
+                "reason": "RECORDED_BINDING_STATUS",
+                "recorded": "named",
+                "status": "PASS"
+              },
+              "declaration": {
+                "reason": "RECORDED_ROLE_DEFINITION",
+                "record_type": "semabi.compiler.v4.outcome.Role",
+                "status": "PASS"
+              },
+              "identity": {
+                "actual": "Qir",
+                "correspondence": {
+                  "basis": [
+                    "TREE_ANCHOR",
+                    "EXACT_VISIBLE_KEY"
+                  ],
+                  "kind": "receivers",
+                  "name": "Qir",
+                  "native_key": "Qir",
+                  "native_node": 19,
+                  "raw_group": 19,
+                  "reason": "UNIQUE_RAW_CORRESPONDENCE",
+                  "scope": "One saved page; does not establish persistent identity or learned naming",
+                  "status": "PASS"
+                },
+                "expected": "Qir",
+                "reason": "EVENT_ARGUMENT_ROLE_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              },
+              "literal": {
+                "actual": "Qir",
+                "expected": "Qir",
+                "reason": "RECORDED_LITERAL_VS_RAW_ENDPOINT",
+                "status": "PASS"
+              }
+            },
+            "event": "Transmission delivered : <> \u2192 <> .",
+            "position": 1,
+            "reason": "SEPARATE_RECORDED_ROLE_AND_LITERAL_CONTROLS",
+            "role": "selected",
+            "status": "PASS"
+          }
+        ],
+        "bound_correspondences": {
+          "owner": {
+            "basis": [
+              "TREE_ANCHOR",
+              "EXACT_VISIBLE_KEY"
+            ],
+            "kind": "transmitters",
+            "name": "Pex",
+            "native_key": "Pex",
+            "native_node": 5,
+            "raw_group": 5,
+            "reason": "UNIQUE_RAW_CORRESPONDENCE",
+            "scope": "One saved page; does not establish persistent identity or learned naming",
+            "status": "PASS"
+          },
+          "selected": {
+            "basis": [
+              "TREE_ANCHOR",
+              "EXACT_VISIBLE_KEY"
+            ],
+            "kind": "receivers",
+            "name": "Qir",
+            "native_key": "Qir",
+            "native_node": 19,
+            "raw_group": 19,
+            "reason": "UNIQUE_RAW_CORRESPONDENCE",
+            "scope": "One saved page; does not establish persistent identity or learned naming",
+            "status": "PASS"
+          }
+        },
+        "learned_state_consequence": {
+          "reason": "PRESTATE_FORECAST_RECORD_CONTAINS_NO_PREDICTED_POSTSTATE",
+          "status": "UNAVAILABLE"
+        },
+        "object_coverage": [
+          {
+            "kind": "transmitters",
+            "name": "Pex",
+            "native_identities": [
+              [
+                0,
+                "Pex"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "transmitters",
+            "name": "Vun",
+            "native_identities": [
+              [
+                0,
+                "Vun"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "transmitters",
+            "name": "Lom",
+            "native_identities": [
+              [
+                0,
+                "Lom"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "transmitters",
+            "name": "Daz",
+            "native_identities": [
+              [
+                0,
+                "Daz"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "receivers",
+            "name": "Qir",
+            "native_identities": [
+              [
+                1,
+                "Qir"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "receivers",
+            "name": "Tav",
+            "native_identities": [
+              [
+                1,
+                "Tav"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "receivers",
+            "name": "Nes",
+            "native_identities": [
+              [
+                1,
+                "Nes"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "receivers",
+            "name": "Yuk",
+            "native_identities": [
+              [
+                1,
+                "Yuk"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "patches",
+            "name": "Bima",
+            "native_identities": [
+              [
+                2,
+                "Bima"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "patches",
+            "name": "Celo",
+            "native_identities": [
+              [
+                2,
+                "Celo"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "patches",
+            "name": "Faro",
+            "native_identities": [
+              [
+                2,
+                "Faro"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "patches",
+            "name": "Genu",
+            "native_identities": [
+              [
+                2,
+                "Genu"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "patches",
+            "name": "Havi",
+            "native_identities": [
+              [
+                2,
+                "Havi"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "patches",
+            "name": "Jora",
+            "native_identities": [
+              [
+                2,
+                "Jora"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "patches",
+            "name": "Kesu",
+            "native_identities": [
+              [
+                2,
+                "Kesu"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          },
+          {
+            "kind": "patches",
+            "name": "Motu",
+            "native_identities": [
+              [
+                2,
+                "Motu"
+              ]
+            ],
+            "reason": "NATIVE_OBJECTS_WITH_RAW_CORRESPONDENCE",
+            "status": "PASS"
+          }
+        ],
+        "object_denominator": 16,
+        "objects": [
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Pex",
+              "native_key": "Pex",
+              "native_node": 5,
+              "raw_group": 5,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              0,
+              "Pex"
+            ],
+            "reference_slots": []
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Vun",
+              "native_key": "Vun",
+              "native_node": 8,
+              "raw_group": 8,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              0,
+              "Vun"
+            ],
+            "reference_slots": []
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Lom",
+              "native_key": "Lom",
+              "native_node": 11,
+              "raw_group": 11,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              0,
+              "Lom"
+            ],
+            "reference_slots": []
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Daz",
+              "native_key": "Daz",
+              "native_node": 14,
+              "raw_group": 14,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              0,
+              "Daz"
+            ],
+            "reference_slots": []
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Qir",
+              "native_key": "Qir",
+              "native_node": 19,
+              "raw_group": 19,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              1,
+              "Qir"
+            ],
+            "reference_slots": []
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Tav",
+              "native_key": "Tav",
+              "native_node": 25,
+              "raw_group": 25,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              1,
+              "Tav"
+            ],
+            "reference_slots": []
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Nes",
+              "native_key": "Nes",
+              "native_node": 31,
+              "raw_group": 31,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              1,
+              "Nes"
+            ],
+            "reference_slots": []
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Yuk",
+              "native_key": "Yuk",
+              "native_node": 37,
+              "raw_group": 37,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              1,
+              "Yuk"
+            ],
+            "reference_slots": []
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "patches",
+              "name": "Bima",
+              "native_key": "Bima",
+              "native_node": 45,
+              "raw_group": 45,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              2,
+              "Bima"
+            ],
+            "reference_slots": [
+              "source_slot",
+              "target_slot"
+            ]
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "patches",
+              "name": "Celo",
+              "native_key": "Celo",
+              "native_node": 52,
+              "raw_group": 52,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              2,
+              "Celo"
+            ],
+            "reference_slots": [
+              "source_slot",
+              "target_slot"
+            ]
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "patches",
+              "name": "Faro",
+              "native_key": "Faro",
+              "native_node": 59,
+              "raw_group": 59,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              2,
+              "Faro"
+            ],
+            "reference_slots": [
+              "source_slot",
+              "target_slot"
+            ]
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "patches",
+              "name": "Genu",
+              "native_key": "Genu",
+              "native_node": 66,
+              "raw_group": 66,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              2,
+              "Genu"
+            ],
+            "reference_slots": [
+              "source_slot",
+              "target_slot"
+            ]
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "patches",
+              "name": "Havi",
+              "native_key": "Havi",
+              "native_node": 73,
+              "raw_group": 73,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              2,
+              "Havi"
+            ],
+            "reference_slots": [
+              "source_slot",
+              "target_slot"
+            ]
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "patches",
+              "name": "Jora",
+              "native_key": "Jora",
+              "native_node": 80,
+              "raw_group": 80,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              2,
+              "Jora"
+            ],
+            "reference_slots": [
+              "source_slot",
+              "target_slot"
+            ]
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "patches",
+              "name": "Kesu",
+              "native_key": "Kesu",
+              "native_node": 87,
+              "raw_group": 87,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              2,
+              "Kesu"
+            ],
+            "reference_slots": [
+              "source_slot",
+              "target_slot"
+            ]
+          },
+          {
+            "attribute_slots": [],
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "patches",
+              "name": "Motu",
+              "native_key": "Motu",
+              "native_node": 94,
+              "raw_group": 94,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "native_identity": [
+              2,
+              "Motu"
+            ],
+            "reference_slots": [
+              "source_slot",
+              "target_slot"
+            ]
+          }
+        ],
+        "owner": {
+          "actual": "Pex",
+          "correspondence": {
+            "basis": [
+              "TREE_ANCHOR",
+              "EXACT_VISIBLE_KEY"
+            ],
+            "kind": "transmitters",
+            "name": "Pex",
+            "native_key": "Pex",
+            "native_node": 5,
+            "raw_group": 5,
+            "reason": "UNIQUE_RAW_CORRESPONDENCE",
+            "scope": "One saved page; does not establish persistent identity or learned naming",
+            "status": "PASS"
+          },
+          "expected": "Pex",
+          "reason": "RECORDED_OWNER_VS_ACTUAL_SOURCE",
+          "status": "PASS"
+        },
+        "parsed_public_fields": {
+          "counts": {
+            "PASS": 23,
+            "UNAVAILABLE": 1
+          },
+          "denominator": 24,
+          "rows": [
+            {
+              "field": "checked",
+              "name": "Qir",
+              "native_slot": "radio@22",
+              "node": 22,
+              "reason": "PARSED_INSTANCE_NOT_AN_ANCESTOR",
+              "status": "UNAVAILABLE"
+            },
+            {
+              "actual": "Received: no",
+              "expected": "Received: no",
+              "field": "received",
+              "name": "Qir",
+              "native_instance": 4,
+              "native_slot": "text@23",
+              "node": 23,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": false,
+              "expected": false,
+              "field": "checked",
+              "name": "Tav",
+              "native_instance": 5,
+              "native_slot": "radio@28",
+              "node": 28,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Received: no",
+              "expected": "Received: no",
+              "field": "received",
+              "name": "Tav",
+              "native_instance": 5,
+              "native_slot": "text@29",
+              "node": 29,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": false,
+              "expected": false,
+              "field": "checked",
+              "name": "Nes",
+              "native_instance": 6,
+              "native_slot": "radio@34",
+              "node": 34,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Received: no",
+              "expected": "Received: no",
+              "field": "received",
+              "name": "Nes",
+              "native_instance": 6,
+              "native_slot": "text@35",
+              "node": 35,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": false,
+              "expected": false,
+              "field": "checked",
+              "name": "Yuk",
+              "native_instance": 7,
+              "native_slot": "radio@40",
+              "node": 40,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Received: no",
+              "expected": "Received: no",
+              "field": "received",
+              "name": "Yuk",
+              "native_instance": 7,
+              "native_slot": "text@41",
+              "node": 41,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Pex",
+              "expected": "Pex",
+              "field": "transmitter",
+              "name": "Bima",
+              "native_instance": 8,
+              "native_slot": "combobox@49",
+              "node": 49,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Qir",
+              "expected": "Qir",
+              "field": "receiver",
+              "name": "Bima",
+              "native_instance": 8,
+              "native_slot": "combobox@51",
+              "node": 51,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Pex",
+              "expected": "Pex",
+              "field": "transmitter",
+              "name": "Celo",
+              "native_instance": 9,
+              "native_slot": "combobox@56",
+              "node": 56,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Tav",
+              "expected": "Tav",
+              "field": "receiver",
+              "name": "Celo",
+              "native_instance": 9,
+              "native_slot": "combobox@58",
+              "node": 58,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Vun",
+              "expected": "Vun",
+              "field": "transmitter",
+              "name": "Faro",
+              "native_instance": 10,
+              "native_slot": "combobox@63",
+              "node": 63,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Qir",
+              "expected": "Qir",
+              "field": "receiver",
+              "name": "Faro",
+              "native_instance": 10,
+              "native_slot": "combobox@65",
+              "node": 65,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Vun",
+              "expected": "Vun",
+              "field": "transmitter",
+              "name": "Genu",
+              "native_instance": 11,
+              "native_slot": "combobox@70",
+              "node": 70,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Tav",
+              "expected": "Tav",
+              "field": "receiver",
+              "name": "Genu",
+              "native_instance": 11,
+              "native_slot": "combobox@72",
+              "node": 72,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Lom",
+              "expected": "Lom",
+              "field": "transmitter",
+              "name": "Havi",
+              "native_instance": 12,
+              "native_slot": "combobox@77",
+              "node": 77,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Nes",
+              "expected": "Nes",
+              "field": "receiver",
+              "name": "Havi",
+              "native_instance": 12,
+              "native_slot": "combobox@79",
+              "node": 79,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Lom",
+              "expected": "Lom",
+              "field": "transmitter",
+              "name": "Jora",
+              "native_instance": 13,
+              "native_slot": "combobox@84",
+              "node": 84,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Yuk",
+              "expected": "Yuk",
+              "field": "receiver",
+              "name": "Jora",
+              "native_instance": 13,
+              "native_slot": "combobox@86",
+              "node": 86,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Daz",
+              "expected": "Daz",
+              "field": "transmitter",
+              "name": "Kesu",
+              "native_instance": 14,
+              "native_slot": "combobox@91",
+              "node": 91,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Nes",
+              "expected": "Nes",
+              "field": "receiver",
+              "name": "Kesu",
+              "native_instance": 14,
+              "native_slot": "combobox@93",
+              "node": 93,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Daz",
+              "expected": "Daz",
+              "field": "transmitter",
+              "name": "Motu",
+              "native_instance": 15,
+              "native_slot": "combobox@98",
+              "node": 98,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            },
+            {
+              "actual": "Yuk",
+              "expected": "Yuk",
+              "field": "receiver",
+              "name": "Motu",
+              "native_instance": 15,
+              "native_slot": "combobox@100",
+              "node": 100,
+              "reason": "SAVED_NODE_TO_PARSED_SLOT_VALUE",
+              "status": "PASS"
+            }
+          ],
+          "scope": "Saved parsed leaf slots only; these checks do not establish persistent attributes or references"
+        },
+        "persistent_flag_attributes": {
+          "reason": "NO_UNIQUE_SAVED_ATTRIBUTE_TO_RAW_NODE_PROVENANCE",
+          "status": "UNAVAILABLE"
+        },
+        "query_literal_correctness": {
+          "reason": "NO_INDEPENDENT_GROUNDED_QUERY_LITERAL_SEMANTICS",
+          "status": "UNAVAILABLE"
+        },
+        "reason": "SAVED_PRESTATE_INTERPRETATION_DIAGNOSTIC",
+        "recorded_literal_count": 1,
+        "reference_denominator": 16,
+        "references": [
+          {
+            "actual": "Pex",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Pex",
+              "native_key": "Pex",
+              "native_node": 5,
+              "raw_group": 5,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "transmitter",
+            "expected": "Pex",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Bima",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "source_slot",
+            "status": "PASS",
+            "target_identity": [
+              0,
+              "Pex"
+            ]
+          },
+          {
+            "actual": "Qir",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Qir",
+              "native_key": "Qir",
+              "native_node": 19,
+              "raw_group": 19,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "receiver",
+            "expected": "Qir",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Bima",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "target_slot",
+            "status": "PASS",
+            "target_identity": [
+              1,
+              "Qir"
+            ]
+          },
+          {
+            "actual": "Pex",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Pex",
+              "native_key": "Pex",
+              "native_node": 5,
+              "raw_group": 5,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "transmitter",
+            "expected": "Pex",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Celo",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "source_slot",
+            "status": "PASS",
+            "target_identity": [
+              0,
+              "Pex"
+            ]
+          },
+          {
+            "actual": "Tav",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Tav",
+              "native_key": "Tav",
+              "native_node": 25,
+              "raw_group": 25,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "receiver",
+            "expected": "Tav",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Celo",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "target_slot",
+            "status": "PASS",
+            "target_identity": [
+              1,
+              "Tav"
+            ]
+          },
+          {
+            "actual": "Vun",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Vun",
+              "native_key": "Vun",
+              "native_node": 8,
+              "raw_group": 8,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "transmitter",
+            "expected": "Vun",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Faro",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "source_slot",
+            "status": "PASS",
+            "target_identity": [
+              0,
+              "Vun"
+            ]
+          },
+          {
+            "actual": "Qir",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Qir",
+              "native_key": "Qir",
+              "native_node": 19,
+              "raw_group": 19,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "receiver",
+            "expected": "Qir",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Faro",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "target_slot",
+            "status": "PASS",
+            "target_identity": [
+              1,
+              "Qir"
+            ]
+          },
+          {
+            "actual": "Vun",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Vun",
+              "native_key": "Vun",
+              "native_node": 8,
+              "raw_group": 8,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "transmitter",
+            "expected": "Vun",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Genu",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "source_slot",
+            "status": "PASS",
+            "target_identity": [
+              0,
+              "Vun"
+            ]
+          },
+          {
+            "actual": "Tav",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Tav",
+              "native_key": "Tav",
+              "native_node": 25,
+              "raw_group": 25,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "receiver",
+            "expected": "Tav",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Genu",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "target_slot",
+            "status": "PASS",
+            "target_identity": [
+              1,
+              "Tav"
+            ]
+          },
+          {
+            "actual": "Lom",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Lom",
+              "native_key": "Lom",
+              "native_node": 11,
+              "raw_group": 11,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "transmitter",
+            "expected": "Lom",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Havi",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "source_slot",
+            "status": "PASS",
+            "target_identity": [
+              0,
+              "Lom"
+            ]
+          },
+          {
+            "actual": "Nes",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Nes",
+              "native_key": "Nes",
+              "native_node": 31,
+              "raw_group": 31,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "receiver",
+            "expected": "Nes",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Havi",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "target_slot",
+            "status": "PASS",
+            "target_identity": [
+              1,
+              "Nes"
+            ]
+          },
+          {
+            "actual": "Lom",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Lom",
+              "native_key": "Lom",
+              "native_node": 11,
+              "raw_group": 11,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "transmitter",
+            "expected": "Lom",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Jora",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "source_slot",
+            "status": "PASS",
+            "target_identity": [
+              0,
+              "Lom"
+            ]
+          },
+          {
+            "actual": "Yuk",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Yuk",
+              "native_key": "Yuk",
+              "native_node": 37,
+              "raw_group": 37,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "receiver",
+            "expected": "Yuk",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Jora",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "target_slot",
+            "status": "PASS",
+            "target_identity": [
+              1,
+              "Yuk"
+            ]
+          },
+          {
+            "actual": "Daz",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Daz",
+              "native_key": "Daz",
+              "native_node": 14,
+              "raw_group": 14,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "transmitter",
+            "expected": "Daz",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Kesu",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "source_slot",
+            "status": "PASS",
+            "target_identity": [
+              0,
+              "Daz"
+            ]
+          },
+          {
+            "actual": "Nes",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Nes",
+              "native_key": "Nes",
+              "native_node": 31,
+              "raw_group": 31,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "receiver",
+            "expected": "Nes",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Kesu",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "target_slot",
+            "status": "PASS",
+            "target_identity": [
+              1,
+              "Nes"
+            ]
+          },
+          {
+            "actual": "Daz",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "transmitters",
+              "name": "Daz",
+              "native_key": "Daz",
+              "native_node": 14,
+              "raw_group": 14,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "transmitter",
+            "expected": "Daz",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Motu",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "source_slot",
+            "status": "PASS",
+            "target_identity": [
+              0,
+              "Daz"
+            ]
+          },
+          {
+            "actual": "Yuk",
+            "correspondence": {
+              "basis": [
+                "TREE_ANCHOR",
+                "EXACT_VISIBLE_KEY"
+              ],
+              "kind": "receivers",
+              "name": "Yuk",
+              "native_key": "Yuk",
+              "native_node": 37,
+              "raw_group": 37,
+              "reason": "UNIQUE_RAW_CORRESPONDENCE",
+              "scope": "One saved page; does not establish persistent identity or learned naming",
+              "status": "PASS"
+            },
+            "endpoint": "receiver",
+            "expected": "Yuk",
+            "field_basis": "Unique recorded reference into a raw-corresponded endpoint collection",
+            "patch": "Motu",
+            "reason": "VISIBLE_ENDPOINT_VS_RECORDED_REFERENCE",
+            "slot": "target_slot",
+            "status": "PASS",
+            "target_identity": [
+              1,
+              "Yuk"
+            ]
+          }
+        ],
+        "scope": "Oracle correspondence is a post-preservation diagnostic, not a learned or recomputed prediction",
+        "state_scope": {
+          "partial": true,
+          "provisional_count": 0,
+          "unidentified_count": 0,
+          "unknown_is_none": true
+        },
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "stored_children_map_must_match_parent_tree",
+      "observed": {
+        "error": {
+          "detail": "Saved parsed child map differs from its parent tree",
+          "type": "ValueError"
+        },
+        "reason": "UNSUPPORTED_OR_INVALID_TYPED_DIAGNOSTIC_DATA",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "extra_visible_option_is_ambiguous_not_missing",
+      "observed": {
+        "field": {
+          "node": 51,
+          "options": [
+            "Qir",
+            "Tav",
+            "Nes",
+            "Yuk",
+            "InventedAdditionalIdentity"
+          ],
+          "reason": "ADDITIONAL_ENDPOINT_ALTERNATIVES_VISIBLE",
+          "status": "AMBIGUOUS",
+          "value": "Qir"
+        },
+        "status": "AMBIGUOUS"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "entity_owned_clear_message_cannot_be_global",
+      "observed": {
+        "reason": "CLEAR_MESSAGE_CONTROL_HAS_ENTITY_OR_COLLECTION_SCOPE",
+        "status": "UNAVAILABLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "unavailable_inner_outcomes_have_complete_status_counts",
+      "observed": {
+        "denominator_opportunities": 1,
+        "effect": {
+          "counts": {
+            "UNOBSERVED": 1
+          },
+          "reasons": {
+            "NO_ADMITTED_RAW_RECORD": 1
+          }
+        },
+        "endpoint_reference": {
+          "counts": {
+            "UNAVAILABLE": 16
+          },
+          "denominator": 16,
+          "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+        },
+        "endpoint_reference_opportunities": 16,
+        "object_correspondence": {
+          "counts": {
+            "UNAVAILABLE": 16
+          },
+          "denominator": 16,
+          "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+        },
+        "object_correspondence_opportunities": 16,
+        "primitive": {
+          "counts": {
+            "UNAVAILABLE": 1
+          },
+          "reasons": {
+            "NO_ADMITTED_PRIMITIVE": 1
+          }
+        },
+        "representation": {
+          "counts": {
+            "UNAVAILABLE": 1
+          },
+          "reasons": {
+            "NO_ADMITTED_FORECAST": 1
+          }
+        },
+        "target_premise": {
+          "counts": {
+            "UNOBSERVED": 1
+          },
+          "denominator_opportunities": 1
+        },
+        "visibility": {
+          "counts": {
+            "UNOBSERVED": 1
+          },
+          "reasons": {
+            "NO_ADMITTED_RAW_RECORD": 1
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "target_premise_outcomes_are_summarized",
+      "observed": {
+        "denominator_opportunities": 1,
+        "effect": {
+          "counts": {
+            "UNOBSERVED": 1
+          },
+          "reasons": {
+            "NO_ADMITTED_RAW_RECORD": 1
+          }
+        },
+        "endpoint_reference": {
+          "counts": {
+            "UNAVAILABLE": 16
+          },
+          "denominator": 16,
+          "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+        },
+        "endpoint_reference_opportunities": 16,
+        "object_correspondence": {
+          "counts": {
+            "UNAVAILABLE": 16
+          },
+          "denominator": 16,
+          "missing_forecast_policy": "Every missing inner outcome is counted UNAVAILABLE"
+        },
+        "object_correspondence_opportunities": 16,
+        "primitive": {
+          "counts": {
+            "UNAVAILABLE": 1
+          },
+          "reasons": {
+            "NO_ADMITTED_PRIMITIVE": 1
+          }
+        },
+        "representation": {
+          "counts": {
+            "UNAVAILABLE": 1
+          },
+          "reasons": {
+            "NO_ADMITTED_FORECAST": 1
+          }
+        },
+        "target_premise": {
+          "counts": {
+            "UNOBSERVED": 1
+          },
+          "denominator_opportunities": 1
+        },
+        "visibility": {
+          "counts": {
+            "UNOBSERVED": 1
+          },
+          "reasons": {
+            "NO_ADMITTED_RAW_RECORD": 1
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "package_extra_run_entry_rejected_before_its_read",
+      "observed": {
+        "error": {
+          "detail": "Control package source inventory differs",
+          "type": "ValueError"
+        },
+        "foreign_reads": [],
+        "rejected": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "output_ancestor_of_missing_sealed_root_rejected",
+      "observed": {
+        "error": {
+          "detail": "Diagnostic output lies within a sealed first-pass root",
+          "type": "ValueError"
+        },
+        "events": [],
+        "rejected": true
+      },
+      "status": "PASS"
+    }
+  ],
+  "controls_sha256": "c604d7f3f8706b5eb1c03b56c83523073faf270aed14b45c4a29903a53ad0d24",
+  "counts": {
+    "PASS": 19
+  },
+  "harness_sha256": "76136365d1e823420d0e1dff4a51079cfe3b00bfb6ea4a1a1fcbacaf3bb37040",
+  "helper_sha256": "5c1aee4378860ec981b5f8062ff44f3e1de85c197d5a8d598b582f23bcf4c2bd",
+  "schema": "semabi.j1.post_controls_review_counterexamples.v1",
+  "scope": "Invented fixtures and source-only model; no actual run evidence",
+  "status": "PASS"
+}

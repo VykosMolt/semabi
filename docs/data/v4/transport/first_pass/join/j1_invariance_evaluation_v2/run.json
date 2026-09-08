@@ -1,0 +1,75 @@
+{
+  "bootstrap_goto": 0,
+  "case_count": 24,
+  "charged_attempts": 313,
+  "complete": true,
+  "end": {
+    "argv": [
+      "/home/moloch/semabi/docs/data/v4/transport/development/j1/collect.py",
+      "script",
+      "--url",
+      "http://127.0.0.1:8771/join",
+      "--reset-url",
+      "http://127.0.0.1:8771/reset",
+      "--script",
+      "experiments/join_v1/oracle/scripts_v1.json",
+      "--fixture",
+      "permuted_evaluation",
+      "--seed",
+      "0",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/evaluation_collector_freeze_v2.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+    "pid": 1112026,
+    "utc": "2026-09-08T02:45:39.170810+00:00"
+  },
+  "failed_attempts": 0,
+  "freeze_sha256": "6804d0518889e9399c8f1fd18b605f62c24985bffa89987cb8dc03cbbadab12f",
+  "navigation_waits": 0,
+  "paired_steps_recorded": 312,
+  "primitive_counts": {
+    "click": 96,
+    "reload": 1,
+    "reset": 24,
+    "select": 192
+  },
+  "raw_hashes": {
+    "decisions.jsonl": "80c10ff2e67749517dc1869fbaae47680f7e1e657703d59579fee023ddb9042f",
+    "observations.jsonl": "b75eba48d04ee0715f6e402dd09c849450753a05378afd8deefb03b904a9ae87",
+    "steps.jsonl": "ef40ef3b005a85332697d3af16b9cfb771ba41359c03db831b236bbf03e389d6"
+  },
+  "script_file": "experiments/join_v1/oracle/scripts_v1.json",
+  "script_sha256": "d44719acaa5ae83757829fd652796804abd230a213c5401d5228851ff8ab8b39",
+  "settle_timeouts": 0,
+  "snapshot_calls": 625,
+  "start": {
+    "argv": [
+      "/home/moloch/semabi/docs/data/v4/transport/development/j1/collect.py",
+      "script",
+      "--url",
+      "http://127.0.0.1:8771/join",
+      "--reset-url",
+      "http://127.0.0.1:8771/reset",
+      "--script",
+      "experiments/join_v1/oracle/scripts_v1.json",
+      "--fixture",
+      "permuted_evaluation",
+      "--seed",
+      "0",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/evaluation_collector_freeze_v2.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+    "pid": 1112026,
+    "utc": "2026-09-08T02:41:49.010725+00:00"
+  },
+  "status": "FINISHED",
+  "unpaired_attempts": 1
+}

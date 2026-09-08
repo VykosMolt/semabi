@@ -1,0 +1,110 @@
+"""Extract the preserved J1 measurement and separate diagnostic denominators."""
+from collections import Counter, defaultdict
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+J1 = HERE.parent.parent
+ROOT = J1.parents[5]
+SEALS = {
+    J1 / 'evaluator/sidecar_path_v1/corrected_score_manifest_v1.json':
+        'afb3d7dd55b12ba3e08d6a13c41038fd18873118ba25a02dbbbfeb5ef97b8ff6',
+    J1 / 'evaluator/post_controls_adapter_v1/result_manifest_v1.json':
+        '9d859d52b9235e90abbfeb7ebdf44f3220a27d8774776fbcaa8f8cf8add58c5b',
+    J1 / 'analysis/identity_search_replay_v1/artifact_manifest_v1.json':
+        'c6ecb59ea29510161e56d243bf48fc19cd598e90f1579f00f581d5a6ebbff0ae',
+}
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def read(path):
+    return json.loads(path.read_bytes())
+
+
+def authenticate():
+    bindings = {}
+    for path, digest in SEALS.items():
+        assert sha(path) == digest
+        bindings[str(path.relative_to(ROOT))] = digest
+        for name, wanted in read(path)['files'].items():
+            assert name not in bindings or bindings[name] == wanted
+            p = ROOT / name
+            assert p.resolve(strict=True) == p and not p.is_symlink() and sha(p) == wanted, name
+            bindings[name] = wanted
+    return bindings
+
+
+def main():
+    bindings = authenticate()
+    score = read(J1 / 'evaluator/sidecar_path_v1/attempt_v1/evaluation.json')
+    controls = read(J1 / 'evaluator/post_controls_v1/diagnostics_sidecar_v1.json')
+    replay = read(J1 / 'analysis/identity_search_replay_v1/diagnosis_v1.json')
+    assert score['status'] == 'VALID_SAVED_FORECAST_MEASUREMENT' and score['custody_error'] is None
+    assert controls['status'] == 'DIAGNOSTIC_ONLY' and controls['custody_error'] is None
+    assert replay['status'] == 'MATCHED_TRAINING_REPLAY' and replay['projection_exactly_matches'] is True
+    phases = []
+    for measured, diagnostic in zip(score['phases'], controls['phases'], strict=True):
+        assert measured['name'] == diagnostic['name']
+        rows = [row for row in diagnostic['rows'] if row['target']]
+        assert len(rows) == len({row['case'] for row in rows}) == 24
+        assert len(diagnostic['rows']) == measured['all_charges']['denominator_opportunities'] == 313
+        coverage = {kind: dict(Counter(item['status'] for row in rows
+                    for item in row['representation']['object_coverage'] if item['kind'] == kind))
+                    for kind in ('transmitters', 'receivers', 'patches')}
+        reference_counts = dict(Counter(item['status'] for row in rows for item in row['representation']['references']))
+        assert sum(sum(value.values()) for value in coverage.values()) == diagnostic['designated_targets']['object_correspondence_opportunities']
+        assert sum(reference_counts.values()) == diagnostic['designated_targets']['endpoint_reference_opportunities']
+        roles = defaultdict(Counter)
+        for row in rows:
+            for item in row['representation']['argument_role_positions']:
+                for component, value in item['components'].items():
+                    roles[(item['event'], item['position'], component)][value['status']] += 1
+        phases.append({
+            'name': measured['name'], 'accounting': measured['accounting'],
+            'prediction': {key: measured[key] for key in ('all_charges', 'all_clicks', 'designated_targets')},
+            'diagnostic': {key: diagnostic[key] for key in ('all_charges', 'designated_targets')},
+            'target_object_correspondence_by_kind': coverage,
+            'target_endpoint_reference_counts': reference_counts,
+            'target_representation_components': {key: dict(Counter(row['representation'][key]['status'] for row in rows))
+                for key in ('owner', 'persistent_flag_attributes', 'query_literal_correctness', 'learned_state_consequence')},
+            'target_event_role_components': [{'event': event, 'position': position, 'component': component,
+                                              'counts': dict(counts)}
+                    for (event, position, component), counts in sorted(roles.items())],
+            'recorded_query_literal_count_distribution': dict(Counter(row['representation']['recorded_literal_count'] for row in rows)),
+            'scope': 'Object correspondence uses one saved page and raw anchors/keys. It is not a persistent-identity scoreboard or proof of learned naming. Synthetic UNDETERMINED rows are retained separately from learned event frames.',
+        })
+    result = {
+        'schema': 'semabi.j1.measurement_summary.v2', 'status': 'PRESERVED_MEASUREMENT_SUMMARIZED',
+        'recorded_utc': datetime.now(timezone.utc).isoformat(), 'source_sha256': sha(Path(__file__)),
+        'inputs': {str(path.relative_to(ROOT)): digest for path, digest in SEALS.items()},
+        'measurement_status': score['status'], 'diagnostic_status': controls['status'],
+        'ledger_records': score['ledger_records'], 'checkpoint_count': score['checkpoint_count'],
+        'phases': phases,
+        'training_search': {'status': replay['status'], 'projection_exactly_matches': True,
+            'fit_invocations': replay['fit_invocations_in_this_script'], 'compile_calls': len(replay['compile_calls']),
+            'reload_pairs': replay['reload_pairs'], 'persistent_widgets': replay['persistent_widgets'],
+            'initial': replay['search_result']['initial'], 'final': replay['search_result']['final'],
+            'identity_demotions': [move for move in replay['search_result']['moves']
+                if move.get('move') == 'identity' and 'unearned' in move.get('decided_by', {})]},
+        'limitations': {'measurement': score['limitations'], 'controls': controls['limitations'], 'summary': [
+            'This extraction does not rerun native prediction, fitting, fixture actions or evaluation.',
+            'No available bridge correspondence is not a demonstrated wrong correspondence.',
+            'The actual search demotions establish a tie-handling decision, not the sufficiency of any proposed repair.',
+        ]},
+    }
+    assert bindings == authenticate()
+    out = HERE / 'summary_v1.json'
+    with out.open('x') as stream:
+        json.dump(result, stream, sort_keys=True, indent=2)
+        stream.write('\n')
+    print(json.dumps({'path': str(out), 'sha256': sha(out), 'phases': len(phases),
+                      'status': result['status'], 'input_bindings_rechecked': len(bindings)}))
+
+
+if __name__ == '__main__':
+    main()
