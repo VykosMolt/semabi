@@ -1,0 +1,16 @@
+{
+  "args": {
+    "cmd": "taskset -c 8 env PYTHONPATH= PYTHONDONTWRITEBYTECODE=1 /home/moloch/semabi/.venv/bin/python -P -B - <<'PY'\nimport pathlib,json,datetime,os,hashlib\nh=pathlib.Path('/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1');j=json.loads((h/'job_v1/process.json').read_text())\npids=[j['runner_pid'],j['child_pid']];members=[]\nfor p in pathlib.Path('/proc').iterdir():\n    if not p.name.isdigit():continue\n    try:\n        tail=(p/'stat').read_text().rsplit(') ',1)[1].split()\n        if int(tail[2])==j['owned_process_group']:members.append(int(p.name))\n    except (FileNotFoundError,ProcessLookupError,PermissionError):pass\nout={'schema':'semabi.widget_key_revision.root_host_post_exit_sample.v1','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sample_pid':os.getpid(),'sample_affinity':sorted(os.sched_getaffinity(0)),'runner_pid':pids[0],'child_pid':pids[1],'owned_process_group':j['owned_process_group'],'process_present':{str(p):(pathlib.Path('/proc')/str(p)).exists() for p in pids},'owned_process_group_members':members,'scope':'Actual host sample after direct execution completion. This establishes process/group absence at this boundary, not a live environment sample.'}\np=h/'root_host_sample_v1.json'\nwith p.open('x') as f:json.dump(out,f,indent=2,sort_keys=True);f.write('\\n')\nprint(json.dumps({'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),**out},sort_keys=True))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Record the actual host process and group absence for the completed W3 diagnostic before sealing its result.",
+    "max_output_tokens": 2000
+  },
+  "result": {
+    "chunk_id": "746a2f",
+    "wall_time_seconds": 0.000002816,
+    "exit_code": 0,
+    "original_token_count": 143,
+    "output": "{\"child_pid\": 1353902, \"created_utc\": \"2026-09-08T07:03:30.010735+00:00\", \"owned_process_group\": 1353902, \"owned_process_group_members\": [], \"process_present\": {\"1353891\": false, \"1353902\": false}, \"runner_pid\": 1353891, \"sample_affinity\": [8], \"sample_pid\": 1354835, \"schema\": \"semabi.widget_key_revision.root_host_post_exit_sample.v1\", \"scope\": \"Actual host sample after direct execution completion. This establishes process/group absence at this boundary, not a live environment sample.\", \"sha256\": \"90c0fa4946a50301e3c353b017899bec552b3423fd4106838a17620cc11f4113\"}\n"
+  }
+}

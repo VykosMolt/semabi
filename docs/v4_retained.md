@@ -1763,9 +1763,11 @@ manifest-test caches leave directories under the unused prefix. The
 and 121-file seal retain that failure; an isolated test-fixture repair precedes
 a new full-suite gate. The candidate is not adopted. J1 had no qualifying reload pairs, so this repair
 supports future probes without claiming to fix its original failure.
-A later source observation about already-promoted slots and key revision remains
-a separate production-flow investigation; W1's focused result is limited to its
-tested promotion boundary.
+The test-only cache-fixture repair is committed separately at `a1c0bc96` and
+passes all five affected tests with the wrapper's cache/origin postflight intact.
+Its focused attempt is sealed at `98a0fe11…`; the canonical full-suite retry is
+prepared with the original pytest configuration and plugins preserved. Native
+and retained corpus inputs are unchanged; main adoption still awaits that gate.
 The reviewed [W2 diagnostic](data/v4/transport/development/widget_observation_v1/report_v1.md)
 isolates a separate scoring omission. The same native keyed/promoted widget
 attribute delta is SPURIOUS under the current predicate and EXPLAINED when its
@@ -1775,6 +1777,21 @@ are retained. Supplied identities and invented reload calibration make this a
 diagnostic, not earned identity, production scoring or JOIN competence. A proposed
 repair must distinguish value swaps from identity revision and resolve active
 field ownership before adoption.
+
+The reviewed [W3 diagnostic](data/v4/transport/development/widget_key_revision_v1/report_v1.md)
+now confirms the final-key variant through two actual default fits at W1 source
+`284d80c`. Identical raw widget values support two same-key matches in CONTROL,
+but an after-side supplied noncolliding key bijection leaves zero matches and
+two losses. The fitted widget remains persistent, and the native tracker emits
+two identity-induced attribute changes. The trace places promotion before the
+association rewrite, with no final support check. This diagnoses inconsistent
+persistence support under a supplied identity; it does not establish that
+identity as true or ordinarily inferred. All 14 predictions match and the
+26-file first result is sealed at `4c51d398…` before semantic inspection.
+Independent review and root acceptance retain the evidence and serialization
+correction. A separate isolated repair tracks reload-owned claims and rechecks
+them after key/context/composite changes while preserving configured support;
+no W3 native change has been adopted.
 P15's real conditional-base experiment, automatic link/union revision and
 whole-rival acquisition remain open questions.
 

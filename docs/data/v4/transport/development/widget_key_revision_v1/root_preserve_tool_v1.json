@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "taskset -c 8 env PYTHONPATH= PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w3_preserve_v1_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_v1/preserve_v1.py --freeze-sha256 840f5c1032201f13ba597a6c8a0ecee39619949109de0cc673d3d24d09e6e16d --launch-sha256 fa70e5587c5a347eefe88b559ae2388fe1c8d151d42cc05e8840701bfac5cf1c",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Seal the completed W3 diagnostic and verify source, process and import custody before inspecting its semantic rows.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 2500
+  },
+  "result": {
+    "chunk_id": "1871b5",
+    "wall_time_seconds": 0.295103576,
+    "exit_code": 0,
+    "original_token_count": 44,
+    "output": "{\"manifest_sha256\": \"4c51d39889083683cb6779fdc4a219e0c7ab41f69cafde21066b40c304cb6086\", \"file_count\": 26, \"checks\": 6228, \"custody_status\": \"VERIFIED\", \"custody_findings\": []}\n"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "taskset -c 8 env PYTHONPATH= PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w3_freezer_v1_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_v1/freeze.py --cpu 8 --diagnostic-sha256 75fc450fff0ed3311ccb7dd3641b379034d04783712a2580186f2e163b5712c4 --inputs-sha256 ae3f64d0129350f86d6cfab63012ebbda34d4b425d789e6e6a92fab619e826ee --contract-sha256 9fe796471502e3cef1de07ecc6011670f7e9c2d89b85674edd09857fc40b6e54 --plan-sha256 36d874a511c6118ad48ea677bfafe9be3df4e05e11610bb178724c8f1dcad143 --freezer-sha256 72fe25341c784d0c069c9dd86a2dc0f5bc3f32aad311b9ae7e1cf40e4fb28404",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Freeze the independently reviewed W3 diagnostic metadata on CPU 8 without importing or running SemABI.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 2500
+  },
+  "result": {
+    "chunk_id": "fce8a5",
+    "wall_time_seconds": 0.253663821,
+    "exit_code": 0,
+    "original_token_count": 54,
+    "output": "{\"freeze_sha256\": \"840f5c1032201f13ba597a6c8a0ecee39619949109de0cc673d3d24d09e6e16d\", \"launch_sha256\": \"fa70e5587c5a347eefe88b559ae2388fe1c8d151d42cc05e8840701bfac5cf1c\", \"study_files\": 12, \"w1_frozen_files\": 2867}\n"
+  }
+}

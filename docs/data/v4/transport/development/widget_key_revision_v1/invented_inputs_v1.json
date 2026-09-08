@@ -1,0 +1,184 @@
+{
+  "claimed_reload": [
+    "BEFORE",
+    "AFTER"
+  ],
+  "conditions": [
+    {
+      "after_key_overrides": {},
+      "name": "CONTROL"
+    },
+    {
+      "after_key_overrides": {
+        "Alpha": "Beta",
+        "Beta": "Alpha"
+      },
+      "name": "AFTER_BIJECTION"
+    }
+  ],
+  "observation_order": [
+    "BEFORE",
+    "AFTER"
+  ],
+  "observations": {
+    "AFTER": {
+      "nodes": [
+        {
+          "i": 0,
+          "name": "",
+          "parent": -1,
+          "role": "group"
+        },
+        {
+          "i": 1,
+          "name": "After",
+          "parent": 0,
+          "role": "status"
+        },
+        {
+          "i": 2,
+          "name": "",
+          "parent": 0,
+          "role": "list"
+        },
+        {
+          "i": 3,
+          "name": "Alpha",
+          "parent": 2,
+          "role": "listitem"
+        },
+        {
+          "i": 4,
+          "name": "",
+          "parent": 3,
+          "role": "combobox",
+          "value": "Red"
+        },
+        {
+          "i": 5,
+          "name": "Beta",
+          "parent": 2,
+          "role": "listitem"
+        },
+        {
+          "i": 6,
+          "name": "",
+          "parent": 5,
+          "role": "combobox",
+          "value": "Blue"
+        },
+        {
+          "i": 7,
+          "name": "Help",
+          "parent": 0,
+          "role": "button"
+        },
+        {
+          "i": 8,
+          "name": "About",
+          "parent": 0,
+          "role": "link"
+        },
+        {
+          "i": 9,
+          "name": "Inventory",
+          "parent": 0,
+          "role": "heading"
+        }
+      ],
+      "url": ""
+    },
+    "BEFORE": {
+      "nodes": [
+        {
+          "i": 0,
+          "name": "",
+          "parent": -1,
+          "role": "group"
+        },
+        {
+          "i": 1,
+          "name": "Before",
+          "parent": 0,
+          "role": "status"
+        },
+        {
+          "i": 2,
+          "name": "",
+          "parent": 0,
+          "role": "list"
+        },
+        {
+          "i": 3,
+          "name": "Alpha",
+          "parent": 2,
+          "role": "listitem"
+        },
+        {
+          "i": 4,
+          "name": "",
+          "parent": 3,
+          "role": "combobox",
+          "value": "Red"
+        },
+        {
+          "i": 5,
+          "name": "Beta",
+          "parent": 2,
+          "role": "listitem"
+        },
+        {
+          "i": 6,
+          "name": "",
+          "parent": 5,
+          "role": "combobox",
+          "value": "Blue"
+        },
+        {
+          "i": 7,
+          "name": "Help",
+          "parent": 0,
+          "role": "button"
+        },
+        {
+          "i": 8,
+          "name": "About",
+          "parent": 0,
+          "role": "link"
+        },
+        {
+          "i": 9,
+          "name": "Inventory",
+          "parent": 0,
+          "role": "heading"
+        }
+      ],
+      "url": ""
+    }
+  },
+  "outside_status_node": 1,
+  "predictions": {
+    "AFTER_BIJECTION": {
+      "kept": 0,
+      "lost": 2,
+      "selected_widget_attribute_changes": 2
+    },
+    "CONTROL": {
+      "kept": 2,
+      "lost": 0,
+      "selected_widget_attribute_changes": 0
+    },
+    "persistent_widget": true,
+    "selected_key": "listitem#0",
+    "widget_slot": "combobox#0"
+  },
+  "schema": "semabi.widget_key_revision.invented_inputs.v1",
+  "unit_roots": [
+    3,
+    5
+  ],
+  "widget_nodes": [
+    4,
+    6
+  ]
+}

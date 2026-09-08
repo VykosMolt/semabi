@@ -1,154 +1,94 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-08 06:49 UTC)
+## Active checkpoint (2026-09-08 07:43 UTC)
 
-Current question: which observation, identity and field-attachment changes can
-earn J1's missing relational records and endpoint binding?
-The corrected saved-forecast measurement is valid: all 24 designated targets in
-each phase are unestablished, with decision-list UNDETERMINED and no admissible
-RULE/LIST event. There are no forced answers or comparable literal positions.
-Both phases retain 313 charges, 312 Steps, zero action failures and 24 targets;
-all 629 ledger records and four checkpoints passed the original custody gates.
+Current question: how should widget persistence and raw observation evidence
+respond when the candidate changes object identity or field ownership? J1's
+reviewed result localizes missing patch objects, references and receiver naming;
+it does not establish persistence as a sufficient repair or learned JOIN.
 
-V2's 705-file first pass and original invalid score remain immutable. The separate
-path adapter passed 42 authored and two independent controls before root ran it
-once. It normalized exactly four audit-path strings; all original byte commitments
-and evaluator bodies remain unchanged. The corrected eight-file score seal is
-`evaluator/sidecar_path_v1/corrected_score_manifest_v1.json`, SHA-256
-`afb3d7dd55b12ba3e08d6a13c41038fd18873118ba25a02dbbbfeb5ef97b8ff6`.
-Root rehashed its 705/8/8/44 parent inventories and opened the aggregate result
-only afterward. The scoring job is terminated and reaped; its live OS sample
-occurred after exit and is recorded as host PID absence. Both the empty failed
-tool-receipt write and its corrected complete receipt remain preserved.
+Main evidence checkpoint is `5935f6c365a510259591da76636924f71f41b646`.
+It preserves W1's first validation attempt and W2's reviewed diagnostic. Main
+native/test bytes are unchanged. J1 remains associated with `6aea64ba`; its
+705-file first pass, invalid attempts, corrected scores, controls and matching
+training replay are immutable. Both phases retain 313 charges, 312 Steps, zero
+action failures and 24 unestablished targets; the event-literal surface is empty.
+The [J1 measurement](development/j1/analysis/measurement_summary_v2/report_v1.md)
+and [accepted closeout](development/j1/root_closeout_v1.json) give denominators,
+exposure history and reviewed causal limits. Its fixtures/results are disclosed
+development evidence.
 
-Root has now seen the fixture specification/rendering source and aggregate
-evaluation outcomes after preservation; these are disclosed development evidence.
-Training inspection finds structural patch candidates but no final patch objects
-or references. Receiver checked-radio state remains in parsed member slots but
-does not reach the naming-query inputs. Root's training-only replay completed one
-unchanged Fit and compile, and independently matches the entire saved projection.
-Its 16-file seal is `analysis/identity_search_replay_v1/artifact_manifest_v1.json`,
-SHA-256 `c6ecb59ea29510161e56d243bf48fc19cd598e90f1579f00f581d5a6ebbff0ae`.
-The owned runner/child/group are absent and session 5981 is reaped. Its initial
-unexecuted source and cache-binding correction are retained. The captured search
-drops patch `group#0` and inner-field `text#0` identities as unearned: modeled
-behavior is unchanged while complexity falls from 24 to 12. Both alternatives
-remain in open questions. Reload pairs and promoted widgets are empty; reported
-identity-reading stability alone does not establish a widget reload intervention.
+W1 source `284d80c` withholds reload promotion for ambiguous own-key matches.
+The focused file passes 16 tests, versus three failures/13 passes before repair.
+Five dedicated corpus runs preserve all six retained semantic components and
+residual errors. The first full suite reports 631 passes, three skips and one
+expected failure, but its wrapper fails on cache-prefix residue. The 121-file
+seal `47518651…` and [preserved report](development/widget_persistence_v1/retained_validation_v1/validation_completion_v1.md)
+retain that failed gate. B1's retained numerical comparison is authenticated;
+its historical worktree import origins remain unestablished. W1 records explicit
+candidate-package anchoring and native origin snapshots.
 
-The original 113-check post-controls package has now executed successfully
-through its separately reviewed 18-check launcher. Its nine-file result seal is
-`evaluator/post_controls_adapter_v1/result_manifest_v1.json`, SHA-256
-`9d859d52b9235e90abbfeb7ebdf44f3220a27d8774776fbcaa8f8cf8add58c5b`.
-All 24 targets per phase pass the raw-premise, primitive, visibility and observed
-effect checks. Page-level transmitter/receiver correspondences pass 192/192;
-patch correspondences are unavailable 192/192, and endpoint-reference checks
-are unavailable 384/384. Owner checks pass 24/24. Receiver-role declarations,
-query-literal correctness and learned state consequences remain unavailable.
-These page anchors do not establish persistent identity or learned naming.
-Root opened the actual diagnostics only after their seal; J1 is development
-evidence. All original jobs and the post-controls/replay jobs are reaped.
+The test-only cache-isolation repair is source commit
+`a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08` in `runs/.w1_validation_worktree`,
+parent `284d80c`. Its five affected tests pass with wrapper code zero and verified
+postflight; every private tree is removed and the ambient prefix restored/absent.
+The focused 26-file seal is `98a0fe1130bfc15988de66d3db0d5c73328c886c76f543b8686028135fbb8ad2`.
+Independent source, runtime-observer and supplemental result reviews pass. The
+canonical full-suite retry is frozen at `a1b4242f…`, with concrete CPU 6 command
+`3eb953cd…`: actual pytest configuration, conftest inputs and unchanged plugins
+are bound, with safe interpreter startup and explicit normal optimization.
+The superseded preparation and optimization-gap review are archived before any
+execution. Root verified 2,884 candidate and 170
+retained external files; independent review accepted the correction. Root GO
+`63f1390f…` authorizes the one attempt, now running from 07:42:25 UTC.
+No five-corpus repeat is needed if
+native/input/runtime dependencies remain identical. Main adoption remains pending.
 
-The complete measurement and causal boundaries are in
-`analysis/measurement_summary_v2/report_v1.md`; its six-file seal is
-`668d35f2bfeb4874c82674a27af6848ddcdc283fe83e84780dd35b8619b67313`.
-The saved-representation extraction has its own six-file seal
-`fcd4566bf484abca5965354187b8649fcbe1f0256f99130b82dfaa8f5d4c3843`.
-Independent final review passes 167 measurement/replay checks and 19 training
-field checks, with 912 final bindings authenticated. Its 22-file seal is
-`analysis/final_review_v2/artifact_manifest_v1.json`, SHA-256
-`f052ac74df7d9761d10c85eeaab597ffc730116d64f72f8ae4ad7384913e35fb`.
-Root read the complete review, checked its 22 files and the unchanged 156 native
-files, and accepted `root_closeout_v1.json`, SHA-256
-`66095786a5b6d2d7279f99d245050977ae62a4137856bad44d4a5747d80bc4aa`.
-The review retains its helper corrections and explicitly limits authentication
-order for historical preparation members. The original first pass, invalid attempts,
-corrected results and all existing seals remain immutable. J1's source association
-remains `6aea64ba`. Main evidence checkpoint `5960a0f` preserves the reviewed
-measurement and focused W1 records; its native and test bytes are unchanged.
+[W2](development/widget_observation_v1/report_v1.md) preserves eight fresh scoring
+rows and all 133 controls. The same keyed/promoted attribute delta is SPURIOUS
+under the current raw-change predicate and EXPLAINED under its diagnostic
+intervention; the other three interpretation conditions remain NOTHING. The
+37-file seal `d32f9fa3…` and independent review `ba40439f…` are accepted. Identities
+and reload calibration are supplied; no normal fit or fresh transfer ran in W2.
 
-The independent invented collision diagnostic is sealed at
-`analysis/persistence_collision_v1/artifact_manifest_v1.json`, SHA-256
-`529a671b9d682c76eae1719f6bcad9e36d8a747ed0afb8ae6edf115a80d7ca20`.
-Root's isolated W1 repair retains all reload candidates and withholds promotion
-for a template with ambiguous own keys. The same focused file changes from
-3 failures/13 passes to 16 passes; independent source and boundary checks pass.
-Focused source checkpoint `284d80c` is in `runs/.w1_worktree`, with no main
-adoption. Full-suite and five dedicated-corpus instruments passed independent
-review, source/data freeze and all six metadata-only preflights. Source freeze
-is `583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62`;
-corpus freeze is `b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e`.
-Root independently rehashed 324 source/test/instrument/input bindings and the
-seven phase artifacts, then reconstructed all seven proposed commands exactly.
-`baseline_verification` launched five corpus jobs on CPUs 0–4 and the canonical
-full suite on CPU 5, on host from the candidate worktree. All five corpus jobs
-completed with exit 0 and verified source/import postflight; all are reaped.
-The approved CPU-6 comparator then ran once and found no differences in any
-of the six retained components for any corpus, including all existing wrong,
-ambiguous and abstained outcomes. It authenticated the B1-to-G2 comparison
-chain with the B1 import-origin qualification intact. The comparator is reaped.
-The full suite reports 631 passed, three skipped and one xfailed across 635
-cases, with pytest return code 0. Its wrapper returned 1 because the bytecode prefix
-existed at postflight. The owner retained its nine directories and zero final
-files; source inspection identifies five manifest tests that deliberately write
-then remove forged/stale caches at those paths. Final emptiness does not imply
-no transient files. Independent forensic and custody review accepts preservation
-of the failed attempt. The 121-file seal is `47518651d62874ed1d52536bacbdb4fc088e16e848a5462be07bde7780cfc851`.
-Main retains 123 exact files in `development/widget_persistence_v1/retained_validation_v1/`,
-including the seal and its external execution receipt. Root's acceptance
-`root_preserved_attempt_acceptance_v1.json` is `69becd399b8ce0c6b3438152756882e9b8c0db35869d358085a9e853359757db`.
-No clean full-suite gate or main adoption follows from this attempt. The exact GO,
-launch and process records remain in the W1 evidence directories. Root's independent live sample confirms all
-12 runner/child commands, working directories, affinities, nice 0 and required
-environment values. Each had one thread; bytecode prefixes were absent at that live sample and
-host available memory was approximately 20 GB. The six child/group IDs are
-1270424, 1270633, 1270767, 1270910, 1271056 and 1271168, with tool sessions
-13967, 42729, 18647, 38432, 75397 and 23639 respectively. All are reaped. This repair
-supports sound future reload probes; J1 had no qualifying reload pairs, so W1
-does not itself repair its representation failure.
-An isolated test-only repair now places the intentional cache contexts under
-each affected test's existing temporary directory and restores the runtime
-prefix in an outer finally. The original worktree and cache residue remain held.
-The new worktree is `runs/.w1_validation_worktree`; native bytes remain identical
-to W1. Focused source and observer review are complete apart from the final
-explicit pytest-configuration binding. The five affected tests will run before
-a test-only source commit and separately frozen canonical full-suite retry.
-The five unchanged corpus runs do not need repetition if dependency identity holds.
-W2 source and concrete metadata review passed after four bounded pre-freeze
-corrections, with the initial five source files retained. Root then froze
-235 source/test/instrument/input files and ran the native diagnostic once on
-CPU 7. It completed with exit 0; runner 1294537, child/group 1294539 and session
-59818 are terminated/reaped. The independent host sample occurred after exit.
-Root's preserver passes 540 custody checks and seals 37 attempt files with
-SHA-256 `d32f9fa33955b083ba5a37ef66c1f26244ea3c15927b6e8d56a5c5cd694eaa38`.
-Only afterward did root read the semantic results: all 133 controls pass, and
-the same keyed/promoted widget attribute delta changes from SPURIOUS under
-CURRENT to EXPLAINED under the diagnostic predicate, with error 1-to-0 and
-explanation 0-to-1. Its native comparison preference also reverses; the other
-three interpretation conditions remain NOTHING. This isolates a score omission
-for an already represented widget; it does not earn identity or persistence.
-The full result and limits are in `development/widget_observation_v1/report_v1.md`.
-Independent outcome review verifies 597 custody checks, 691 result checks and
-all 64 native comparisons. Its five-file seal is `ba40439f30973b9455d93fddc83f1668f33d1e481380d762e423fd743eb7aa6c`;
-root accepts the bounded result in `root_final_acceptance_v1.json` (`16b558c7…`).
-No production score change has been made, and main native/test bytes remain unchanged.
-The proposed V4 observation repair must compare raw values at unambiguous,
-actively owned persistent fields: pooled values can hide swaps, while canonical
-key reassignment can manufacture apparent changes. Empty/checked-value carriers
-also need explicit parser evidence before any general support claim.
-W3's source-only diagnostic in `development/widget_key_revision_v1/` tests two
-actual default fits with identical raw observations and a supplied after-only
-key bijection. It predicts stale widget promotion under revised keys; that is a
-prediction awaiting source review, freeze and one execution, not a measured result.
-All completed W1/W2 jobs are reaped; no new native job is active at this checkpoint.
+[W3](development/widget_key_revision_v1/report_v1.md) now executes two actual
+default fits on identical invented observations. An after-only supplied key
+bijection keeps unique non-positional identities but retains widget promotion
+with zero surviving/two lost same-key reload values; the native tracker records
+two opposite attribute changes. CONTROL retains two values and has no delta.
+All 14 predictions match. Root inspected the semantic result only after its
+26-file seal `4c51d39889083683cb6779fdc4a219e0c7ab41f69cafde21066b40c304cb6086`
+passed 6,228 custody checks. Independent saved-result review is accepted in
+the three-file review seal `9593ab7e…`; it preserves the initially mistaken
+serialization comparison and its correction. Root acceptance is `4be6a031…`.
+This shows inconsistency under supplied identity, not identity truth or normal induction.
 
-W1 preparation also found a historical provenance limit: the unchanged legacy
-`link_probe.py` prepends main before B1's corpus child imports SemABI. The old
-jobs recorded copied source hashes but no loaded-module paths. B1's numerical
-outputs remain an authenticated retained baseline and match G2; their production
-by the intended B1 worktree source is unestablished. W1 explicitly anchors its
-candidate package and records loaded native origins before/after each run.
-Full-suite synthetic authority-test subprocesses retain their documented scope.
+The [W3 repair contract](development/widget_key_revision_v1/repair_contract_v1.md)
+defines revocable reload-owned persistence after key/context/composite changes.
+Configured support is preserved. Invalid selected-key dependencies cause an
+explicit failed candidate build. Worktree `runs/.w3_repair_worktree` on branch
+`w3-revocable-widget-persistence` starts at `a1c0bc96`; a worker owns the two V2
+native files and two existing test files. Tests/source are being prepared; no
+native repair execution or adoption has occurred.
+
+Next actions: finish the W1 full-suite source/metadata review and launch its
+single owned retry; implement and review the bounded persistence
+revision mechanism; then repair V4's raw-widget scoring criterion against owner,
+field-swap and key-revision controls. The proposed scoring mechanism and its
+carrier limits are in [W2 repair design](development/widget_observation_v1/repair_design_v1.md).
+Source design must preserve separately
+validated persistent-widget evidence and keep unsupported carriers explicit.
+No production score change or W3 native repair is adopted yet.
+
+Owned processes: all prior W1/W2 jobs and the W1 focused retry are reaped. W3
+runner 1353891 and child/group 1353902 completed directly with exit zero at
+07:02:36 UTC; the actual later host sample finds both and the group absent.
+The canonical full suite is the sole active native job: owner
+`/root/baseline_verification`, session 71974, runner 1388929 and child/group
+1388940 on CPU 6. Available heavy-job
+budget is CPUs 0–23 with normal priority and one numerical thread per worker;
+small diagnostics remain on one CPU. P15, automatic link/union revision and
+whole-rival acquisition remain open. Continue after each verified checkpoint.
 
 The paragraphs below retain the earlier campaign sequence and exposure state
 at each checkpoint; the active status above supersedes earlier pending actions.

@@ -1,0 +1,18 @@
+{
+  "schema": "semabi.widget_key_revision.root_execution_go.v1",
+  "decision": "GO_ONCE",
+  "root": "/root",
+  "freeze_sha256": "840f5c1032201f13ba597a6c8a0ecee39619949109de0cc673d3d24d09e6e16d",
+  "launch_sha256": "fa70e5587c5a347eefe88b559ae2388fe1c8d151d42cc05e8840701bfac5cf1c",
+  "preserver_sha256": "bcb7007c157bb25a2bb05544b530da870c038f422364091ff17d317a1e8f453f",
+  "core_review": "Independent ACCEPT after bounded startup and digest corrections; root reviewed the complete instrument and reconstructed the concrete launch metadata.",
+  "preserver_review": "Independent ACCEPT including direct/session receipt continuity; no semantic rows will be inspected before the completed attempt seal.",
+  "exec_command_arguments": {
+    "cmd": "taskset --cpu-list 8 /usr/bin/env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w3_key_revision_v1_no_pyc PYTHONPATH= /home/moloch/semabi/.venv/bin/python -P -B /home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/run_job.py /home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/job_v1 -- taskset --cpu-list 8 /usr/bin/env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w3_key_revision_v1_no_pyc PYTHONPATH= /home/moloch/semabi/.venv/bin/python -P -B -X pycache_prefix=/tmp/semabi_w3_key_revision_v1_no_pyc /home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/diagnostic.py --freeze /home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/freeze_v1.json --freeze-sha256 840f5c1032201f13ba597a6c8a0ecee39619949109de0cc673d3d24d09e6e16d --output /home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/result_v1",
+    "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Run the single reviewed W3 native identity-revision diagnostic on frozen W1 source, with CPU 8 and isolated startup paths.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 2500
+  }
+}

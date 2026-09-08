@@ -2997,10 +2997,12 @@ components, including wrong, ambiguous, unestablished and abstaining rows. The f
 suite passes 631 tests with three skips and one expected failure, but its wrapper
 fails on directories left by intentional manifest-test cache fixtures. The
 121-file attempt seal `47518651…` remains failed and immutable; an isolated
-test-only cache repair and new full-suite validation precede adoption.
-Already-promoted slots followed by key revision form a separate source-grounded
-variant to investigate; the focused W1 result does not establish that broader
-final-key invariant.
+test-only cache repair and new full-suite validation precede adoption. The
+test repair is now isolated source commit `a1c0bc96`, with five affected tests
+passing and wrapper postflight verified under the `98a0fe11…` focused seal.
+Its canonical full-suite retry is frozen and awaiting final review/GO. Native
+and five-corpus dependencies remain unchanged; no repeat of those measurements
+is needed for this test-only change.
 
 ## P48 / W2: observation evidence for promoted widgets (recorded 2026-09-08)
 
@@ -3021,5 +3023,30 @@ This diagnoses a score omission for an already represented attribute. It does
 not establish J1's missing identities, endpoint references, receiver naming or
 JOIN competence. Production observation evidence must handle owner/field swaps,
 active attachment and raw key witnesses without treating key reassignment as
-widget value change. W3's separate, unexecuted instrument tests stale promotion
-after a supplied key bijection through actual default fitting.
+widget value change.
+
+## P49 / W3: persistence after key revision (recorded 2026-09-08)
+
+The [saved diagnostic](../transport/development/widget_key_revision_v1/report_v1.md)
+executes two actual default fits at W1 source `284d80c` on identical invented
+observations. CONTROL retains two same-key reload values and loses none. A
+supplied after-only Alpha/Beta bijection keeps keys unique and non-positional
+but changes those counts to zero kept/two lost, while widget persistence remains
+asserted. The tracker emits two opposite attribute changes under those final
+identities. All 14 predictions match. The read-only trace records the initial
+promotion, the final key rewrite and the unchanged persistent marker.
+
+The 26-file result seal `4c51d398…` precedes root's semantic inspection and has
+6,228 passing custody checks. Independent review accepts the bounded evidence;
+its `9593ab7e…` three-file seal preserves an initially mistaken direct input/native
+serialization comparison and the corrected checks. Root acceptance `4be6a031…`
+requires native repair but grants no adoption. The key mapping and reload meaning
+are diagnostic inputs, not independently validated identities or application
+truth. No action objective or JOIN measurement ran here.
+
+The [repair contract](../transport/development/widget_key_revision_v1/repair_contract_v1.md)
+tracks internally reload-owned claims, revalidates after entity-builder key and
+context changes, and preserves separately configured evidence. Unsupported
+fields demote coherently; a dependent selected key makes the candidate fail
+explicitly rather than silently changing identity. The implementation is being
+prepared in a new worktree based on `a1c0bc96`, with tests in existing files.

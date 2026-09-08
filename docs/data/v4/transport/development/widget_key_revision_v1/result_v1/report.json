@@ -1,0 +1,4175 @@
+{
+  "affinity": [
+    8
+  ],
+  "all_predictions_match": true,
+  "cwd": "/home/moloch/semabi/runs/.w1_worktree",
+  "environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONPATH": "",
+    "PYTHONPYCACHEPREFIX": "/tmp/semabi_w3_key_revision_v1_no_pyc",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "finished_utc": "2026-09-08T07:02:36.397512+00:00",
+  "fresh_native_objects": true,
+  "invented_inputs": {
+    "claimed_reload": [
+      "BEFORE",
+      "AFTER"
+    ],
+    "conditions": [
+      {
+        "after_key_overrides": {},
+        "name": "CONTROL"
+      },
+      {
+        "after_key_overrides": {
+          "Alpha": "Beta",
+          "Beta": "Alpha"
+        },
+        "name": "AFTER_BIJECTION"
+      }
+    ],
+    "observation_order": [
+      "BEFORE",
+      "AFTER"
+    ],
+    "observations": {
+      "AFTER": {
+        "nodes": [
+          {
+            "i": 0,
+            "name": "",
+            "parent": -1,
+            "role": "group"
+          },
+          {
+            "i": 1,
+            "name": "After",
+            "parent": 0,
+            "role": "status"
+          },
+          {
+            "i": 2,
+            "name": "",
+            "parent": 0,
+            "role": "list"
+          },
+          {
+            "i": 3,
+            "name": "Alpha",
+            "parent": 2,
+            "role": "listitem"
+          },
+          {
+            "i": 4,
+            "name": "",
+            "parent": 3,
+            "role": "combobox",
+            "value": "Red"
+          },
+          {
+            "i": 5,
+            "name": "Beta",
+            "parent": 2,
+            "role": "listitem"
+          },
+          {
+            "i": 6,
+            "name": "",
+            "parent": 5,
+            "role": "combobox",
+            "value": "Blue"
+          },
+          {
+            "i": 7,
+            "name": "Help",
+            "parent": 0,
+            "role": "button"
+          },
+          {
+            "i": 8,
+            "name": "About",
+            "parent": 0,
+            "role": "link"
+          },
+          {
+            "i": 9,
+            "name": "Inventory",
+            "parent": 0,
+            "role": "heading"
+          }
+        ],
+        "url": ""
+      },
+      "BEFORE": {
+        "nodes": [
+          {
+            "i": 0,
+            "name": "",
+            "parent": -1,
+            "role": "group"
+          },
+          {
+            "i": 1,
+            "name": "Before",
+            "parent": 0,
+            "role": "status"
+          },
+          {
+            "i": 2,
+            "name": "",
+            "parent": 0,
+            "role": "list"
+          },
+          {
+            "i": 3,
+            "name": "Alpha",
+            "parent": 2,
+            "role": "listitem"
+          },
+          {
+            "i": 4,
+            "name": "",
+            "parent": 3,
+            "role": "combobox",
+            "value": "Red"
+          },
+          {
+            "i": 5,
+            "name": "Beta",
+            "parent": 2,
+            "role": "listitem"
+          },
+          {
+            "i": 6,
+            "name": "",
+            "parent": 5,
+            "role": "combobox",
+            "value": "Blue"
+          },
+          {
+            "i": 7,
+            "name": "Help",
+            "parent": 0,
+            "role": "button"
+          },
+          {
+            "i": 8,
+            "name": "About",
+            "parent": 0,
+            "role": "link"
+          },
+          {
+            "i": 9,
+            "name": "Inventory",
+            "parent": 0,
+            "role": "heading"
+          }
+        ],
+        "url": ""
+      }
+    },
+    "outside_status_node": 1,
+    "predictions": {
+      "AFTER_BIJECTION": {
+        "kept": 0,
+        "lost": 2,
+        "selected_widget_attribute_changes": 2
+      },
+      "CONTROL": {
+        "kept": 2,
+        "lost": 0,
+        "selected_widget_attribute_changes": 0
+      },
+      "persistent_widget": true,
+      "selected_key": "listitem#0",
+      "widget_slot": "combobox#0"
+    },
+    "schema": "semabi.widget_key_revision.invented_inputs.v1",
+    "unit_roots": [
+      3,
+      5
+    ],
+    "widget_nodes": [
+      4,
+      6
+    ]
+  },
+  "native_anchor": {
+    "modules": {
+      "semabi": {
+        "package_paths": [
+          "/home/moloch/semabi/runs/.w1_worktree/semabi"
+        ],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/__init__.py",
+        "relative_path": "semabi/__init__.py",
+        "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/__init__.py"
+      }
+    },
+    "phase": "candidate_package_anchor",
+    "recorded_utc": "2026-09-08T07:02:36.109458+00:00",
+    "violations": []
+  },
+  "native_origins_after": {
+    "modules": {
+      "semabi": {
+        "package_paths": [
+          "/home/moloch/semabi/runs/.w1_worktree/semabi"
+        ],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/__init__.py",
+        "relative_path": "semabi/__init__.py",
+        "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/__init__.py"
+      },
+      "semabi.compiler": {
+        "package_paths": [
+          "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler"
+        ],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/__init__.py",
+        "relative_path": "semabi/compiler/__init__.py",
+        "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/__init__.py"
+      },
+      "semabi.compiler.abstract": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/abstract.py",
+        "relative_path": "semabi/compiler/abstract.py",
+        "sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/abstract.py"
+      },
+      "semabi.compiler.belief": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/belief.py",
+        "relative_path": "semabi/compiler/belief.py",
+        "sha256": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/belief.py"
+      },
+      "semabi.compiler.browser": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/browser.py",
+        "relative_path": "semabi/compiler/browser.py",
+        "sha256": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/browser.py"
+      },
+      "semabi.compiler.evidence": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/evidence.py",
+        "relative_path": "semabi/compiler/evidence.py",
+        "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/evidence.py"
+      },
+      "semabi.compiler.explorer": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/explorer.py",
+        "relative_path": "semabi/compiler/explorer.py",
+        "sha256": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/explorer.py"
+      },
+      "semabi.compiler.observation": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/observation.py",
+        "relative_path": "semabi/compiler/observation.py",
+        "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/observation.py"
+      },
+      "semabi.compiler.parse": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/parse.py",
+        "relative_path": "semabi/compiler/parse.py",
+        "sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/parse.py"
+      },
+      "semabi.compiler.v2": {
+        "package_paths": [
+          "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2"
+        ],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/__init__.py",
+        "relative_path": "semabi/compiler/v2/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/__init__.py"
+      },
+      "semabi.compiler.v2.abstractor": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/abstractor.py",
+        "relative_path": "semabi/compiler/v2/abstractor.py",
+        "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/abstractor.py"
+      },
+      "semabi.compiler.v2.controls": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/controls.py",
+        "relative_path": "semabi/compiler/v2/controls.py",
+        "sha256": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/controls.py"
+      },
+      "semabi.compiler.v2.graph": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/graph.py",
+        "relative_path": "semabi/compiler/v2/graph.py",
+        "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/graph.py"
+      },
+      "semabi.compiler.v2.hypotheses": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/hypotheses.py",
+        "relative_path": "semabi/compiler/v2/hypotheses.py",
+        "sha256": "637347222e7212fd04a9ce367c9972ed9cdbc96c5768d021793c8a9774eda344",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/hypotheses.py"
+      },
+      "semabi.compiler.v2.units": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/units.py",
+        "relative_path": "semabi/compiler/v2/units.py",
+        "sha256": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/units.py"
+      },
+      "semabi.compiler.v4": {
+        "package_paths": [
+          "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4"
+        ],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/__init__.py",
+        "relative_path": "semabi/compiler/v4/__init__.py",
+        "sha256": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/__init__.py"
+      },
+      "semabi.compiler.v4.abstractor": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/abstractor.py",
+        "relative_path": "semabi/compiler/v4/abstractor.py",
+        "sha256": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/abstractor.py"
+      },
+      "semabi.compiler.v4.emission": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/emission.py",
+        "relative_path": "semabi/compiler/v4/emission.py",
+        "sha256": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/emission.py"
+      }
+    },
+    "phase": "after_native_fits_or_failure",
+    "recorded_utc": "2026-09-08T07:02:36.339587+00:00",
+    "violations": []
+  },
+  "native_origins_before": {
+    "modules": {
+      "semabi": {
+        "package_paths": [
+          "/home/moloch/semabi/runs/.w1_worktree/semabi"
+        ],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/__init__.py",
+        "relative_path": "semabi/__init__.py",
+        "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/__init__.py"
+      },
+      "semabi.compiler": {
+        "package_paths": [
+          "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler"
+        ],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/__init__.py",
+        "relative_path": "semabi/compiler/__init__.py",
+        "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/__init__.py"
+      },
+      "semabi.compiler.abstract": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/abstract.py",
+        "relative_path": "semabi/compiler/abstract.py",
+        "sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/abstract.py"
+      },
+      "semabi.compiler.belief": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/belief.py",
+        "relative_path": "semabi/compiler/belief.py",
+        "sha256": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/belief.py"
+      },
+      "semabi.compiler.browser": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/browser.py",
+        "relative_path": "semabi/compiler/browser.py",
+        "sha256": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/browser.py"
+      },
+      "semabi.compiler.evidence": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/evidence.py",
+        "relative_path": "semabi/compiler/evidence.py",
+        "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/evidence.py"
+      },
+      "semabi.compiler.explorer": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/explorer.py",
+        "relative_path": "semabi/compiler/explorer.py",
+        "sha256": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/explorer.py"
+      },
+      "semabi.compiler.observation": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/observation.py",
+        "relative_path": "semabi/compiler/observation.py",
+        "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/observation.py"
+      },
+      "semabi.compiler.parse": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/parse.py",
+        "relative_path": "semabi/compiler/parse.py",
+        "sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/parse.py"
+      },
+      "semabi.compiler.v2": {
+        "package_paths": [
+          "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2"
+        ],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/__init__.py",
+        "relative_path": "semabi/compiler/v2/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/__init__.py"
+      },
+      "semabi.compiler.v2.abstractor": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/abstractor.py",
+        "relative_path": "semabi/compiler/v2/abstractor.py",
+        "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/abstractor.py"
+      },
+      "semabi.compiler.v2.controls": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/controls.py",
+        "relative_path": "semabi/compiler/v2/controls.py",
+        "sha256": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/controls.py"
+      },
+      "semabi.compiler.v2.graph": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/graph.py",
+        "relative_path": "semabi/compiler/v2/graph.py",
+        "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/graph.py"
+      },
+      "semabi.compiler.v2.hypotheses": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/hypotheses.py",
+        "relative_path": "semabi/compiler/v2/hypotheses.py",
+        "sha256": "637347222e7212fd04a9ce367c9972ed9cdbc96c5768d021793c8a9774eda344",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/hypotheses.py"
+      },
+      "semabi.compiler.v2.units": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/units.py",
+        "relative_path": "semabi/compiler/v2/units.py",
+        "sha256": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v2/units.py"
+      },
+      "semabi.compiler.v4": {
+        "package_paths": [
+          "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4"
+        ],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/__init__.py",
+        "relative_path": "semabi/compiler/v4/__init__.py",
+        "sha256": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/__init__.py"
+      },
+      "semabi.compiler.v4.abstractor": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/abstractor.py",
+        "relative_path": "semabi/compiler/v4/abstractor.py",
+        "sha256": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/abstractor.py"
+      },
+      "semabi.compiler.v4.emission": {
+        "package_paths": [],
+        "path": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/emission.py",
+        "relative_path": "semabi/compiler/v4/emission.py",
+        "sha256": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe",
+        "spec_origin": "/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4/emission.py"
+      }
+    },
+    "phase": "before_native_fits",
+    "recorded_utc": "2026-09-08T07:02:36.329104+00:00",
+    "violations": []
+  },
+  "original_argv": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "-P",
+    "-B",
+    "-X",
+    "pycache_prefix=/tmp/semabi_w3_key_revision_v1_no_pyc",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/diagnostic.py",
+    "--freeze",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/freeze_v1.json",
+    "--freeze-sha256",
+    "840f5c1032201f13ba597a6c8a0ecee39619949109de0cc673d3d24d09e6e16d",
+    "--output",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/result_v1"
+  ],
+  "parent_pid": 1353891,
+  "pid": 1353902,
+  "postflight": "VERIFIED",
+  "preloaded_native_modules": [],
+  "process_group": 1353902,
+  "rows": [
+    {
+      "canonical_match_counts": {
+        "ambiguous": 0,
+        "kept": 2,
+        "lost": 0,
+        "missing": 0
+      },
+      "canonical_matches": [
+        {
+          "after_multiplicity": 1,
+          "after_root": 3,
+          "after_value": "Red",
+          "before_multiplicity": 1,
+          "before_root": 3,
+          "before_value": "Red",
+          "key": "Alpha",
+          "match": "kept"
+        },
+        {
+          "after_multiplicity": 1,
+          "after_root": 5,
+          "after_value": "Blue",
+          "before_multiplicity": 1,
+          "before_root": 5,
+          "before_value": "Blue",
+          "key": "Beta",
+          "match": "kept"
+        }
+      ],
+      "discovered": {
+        "after": [],
+        "initial": []
+      },
+      "fitted": {
+        "all_units": {
+          "listitem[_](combobox[_])": {
+            "evidence": [
+              "key listitem#0 score 1.00 fd 1.00 values 2"
+            ],
+            "instances": [
+              {
+                "nested": [],
+                "parent_root": null,
+                "positional": false,
+                "root": 3,
+                "sig": "73abec1162ee1ff5",
+                "slot_nodes": {
+                  "combobox#0": 4,
+                  "listitem#0": 3
+                },
+                "slots": {
+                  "combobox#0": "Red",
+                  "listitem#0": "Alpha"
+                },
+                "template": "listitem[_](combobox[_])"
+              },
+              {
+                "nested": [],
+                "parent_root": null,
+                "positional": false,
+                "root": 5,
+                "sig": "73abec1162ee1ff5",
+                "slot_nodes": {
+                  "combobox#0": 6,
+                  "listitem#0": 5
+                },
+                "slots": {
+                  "combobox#0": "Blue",
+                  "listitem#0": "Beta"
+                },
+                "template": "listitem[_](combobox[_])"
+              },
+              {
+                "nested": [],
+                "parent_root": null,
+                "positional": false,
+                "root": 3,
+                "sig": "f15c48cd38608f23",
+                "slot_nodes": {
+                  "combobox#0": 4,
+                  "listitem#0": 3
+                },
+                "slots": {
+                  "combobox#0": "Red",
+                  "listitem#0": "Alpha"
+                },
+                "template": "listitem[_](combobox[_])"
+              },
+              {
+                "nested": [],
+                "parent_root": null,
+                "positional": false,
+                "root": 5,
+                "sig": "f15c48cd38608f23",
+                "slot_nodes": {
+                  "combobox#0": 6,
+                  "listitem#0": 5
+                },
+                "slots": {
+                  "combobox#0": "Blue",
+                  "listitem#0": "Beta"
+                },
+                "template": "listitem[_](combobox[_])"
+              }
+            ],
+            "key_score": 1.0,
+            "key_slot": "listitem#0",
+            "max_per_obs": 2,
+            "slots": {
+              "combobox#0": {
+                "crowded": 0,
+                "id": "combobox#0",
+                "n": 4,
+                "n_obs_values": {
+                  "Blue": 2,
+                  "Red": 2
+                },
+                "numeric": 0,
+                "unique_in_parent": 4,
+                "values": {
+                  "Blue": 2,
+                  "Red": 2
+                }
+              },
+              "listitem#0": {
+                "crowded": 0,
+                "id": "listitem#0",
+                "n": 4,
+                "n_obs_values": {
+                  "Alpha": 2,
+                  "Beta": 2
+                },
+                "numeric": 0,
+                "unique_in_parent": 4,
+                "values": {
+                  "Alpha": 2,
+                  "Beta": 2
+                }
+              }
+            },
+            "template": "listitem[_](combobox[_])"
+          }
+        },
+        "entity_types": {
+          "mapping": [
+            [
+              0,
+              {
+                "attr_slots": {
+                  "listitem[_](combobox[_])": [
+                    "combobox#0"
+                  ]
+                },
+                "contain": {},
+                "evidence": [
+                  "key listitem#0 score 1.00 fd 1.00 values 2"
+                ],
+                "key_slot": {
+                  "listitem[_](combobox[_])": "listitem#0"
+                },
+                "link_parent": {},
+                "matrix": [],
+                "ref_slots": {},
+                "tid": 0,
+                "units": [
+                  "listitem[_](combobox[_])"
+                ]
+              }
+            ]
+          ]
+        },
+        "key_overrides": {},
+        "persistent_widgets": [
+          [
+            "listitem[_](combobox[_])",
+            "combobox#0"
+          ]
+        ],
+        "selected_unit": {
+          "evidence": [
+            "key listitem#0 score 1.00 fd 1.00 values 2"
+          ],
+          "instances": [
+            {
+              "nested": [],
+              "parent_root": null,
+              "positional": false,
+              "root": 3,
+              "sig": "73abec1162ee1ff5",
+              "slot_nodes": {
+                "combobox#0": 4,
+                "listitem#0": 3
+              },
+              "slots": {
+                "combobox#0": "Red",
+                "listitem#0": "Alpha"
+              },
+              "template": "listitem[_](combobox[_])"
+            },
+            {
+              "nested": [],
+              "parent_root": null,
+              "positional": false,
+              "root": 5,
+              "sig": "73abec1162ee1ff5",
+              "slot_nodes": {
+                "combobox#0": 6,
+                "listitem#0": 5
+              },
+              "slots": {
+                "combobox#0": "Blue",
+                "listitem#0": "Beta"
+              },
+              "template": "listitem[_](combobox[_])"
+            },
+            {
+              "nested": [],
+              "parent_root": null,
+              "positional": false,
+              "root": 3,
+              "sig": "f15c48cd38608f23",
+              "slot_nodes": {
+                "combobox#0": 4,
+                "listitem#0": 3
+              },
+              "slots": {
+                "combobox#0": "Red",
+                "listitem#0": "Alpha"
+              },
+              "template": "listitem[_](combobox[_])"
+            },
+            {
+              "nested": [],
+              "parent_root": null,
+              "positional": false,
+              "root": 5,
+              "sig": "f15c48cd38608f23",
+              "slot_nodes": {
+                "combobox#0": 6,
+                "listitem#0": 5
+              },
+              "slots": {
+                "combobox#0": "Blue",
+                "listitem#0": "Beta"
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          ],
+          "key_score": 1.0,
+          "key_slot": "listitem#0",
+          "max_per_obs": 2,
+          "slots": {
+            "combobox#0": {
+              "crowded": 0,
+              "id": "combobox#0",
+              "n": 4,
+              "n_obs_values": {
+                "Blue": 2,
+                "Red": 2
+              },
+              "numeric": 0,
+              "unique_in_parent": 4,
+              "values": {
+                "Blue": 2,
+                "Red": 2
+              }
+            },
+            "listitem#0": {
+              "crowded": 0,
+              "id": "listitem#0",
+              "n": 4,
+              "n_obs_values": {
+                "Alpha": 2,
+                "Beta": 2
+              },
+              "numeric": 0,
+              "unique_in_parent": 4,
+              "values": {
+                "Alpha": 2,
+                "Beta": 2
+              }
+            }
+          },
+          "template": "listitem[_](combobox[_])"
+        },
+        "tid_of_template": {
+          "listitem[_](combobox[_])": 0
+        }
+      },
+      "name": "CONTROL",
+      "native_delta": {
+        "added": [],
+        "attr_changes": [],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {}
+      },
+      "native_instance_ids": {
+        "A": 140067142060080,
+        "G": 140067136406832,
+        "H": 140067139299200
+      },
+      "native_observations": {
+        "AFTER": {
+          "nodes": [
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 0,
+              "name": "",
+              "parent": -1,
+              "role": "group"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 1,
+              "name": "After",
+              "parent": 0,
+              "role": "status"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 2,
+              "name": "",
+              "parent": 0,
+              "role": "list"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 3,
+              "name": "Alpha",
+              "parent": 2,
+              "role": "listitem"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 4,
+              "name": "",
+              "parent": 3,
+              "role": "combobox",
+              "value": "Red"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 5,
+              "name": "Beta",
+              "parent": 2,
+              "role": "listitem"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 6,
+              "name": "",
+              "parent": 5,
+              "role": "combobox",
+              "value": "Blue"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 7,
+              "name": "Help",
+              "parent": 0,
+              "role": "button"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 8,
+              "name": "About",
+              "parent": 0,
+              "role": "link"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 9,
+              "name": "Inventory",
+              "parent": 0,
+              "role": "heading"
+            }
+          ],
+          "url": ""
+        },
+        "BEFORE": {
+          "nodes": [
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 0,
+              "name": "",
+              "parent": -1,
+              "role": "group"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 1,
+              "name": "Before",
+              "parent": 0,
+              "role": "status"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 2,
+              "name": "",
+              "parent": 0,
+              "role": "list"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 3,
+              "name": "Alpha",
+              "parent": 2,
+              "role": "listitem"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 4,
+              "name": "",
+              "parent": 3,
+              "role": "combobox",
+              "value": "Red"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 5,
+              "name": "Beta",
+              "parent": 2,
+              "role": "listitem"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 6,
+              "name": "",
+              "parent": 5,
+              "role": "combobox",
+              "value": "Blue"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 7,
+              "name": "Help",
+              "parent": 0,
+              "role": "button"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 8,
+              "name": "About",
+              "parent": 0,
+              "role": "link"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 9,
+              "name": "Inventory",
+              "parent": 0,
+              "role": "heading"
+            }
+          ],
+          "url": ""
+        }
+      },
+      "native_states": {
+        "after": {
+          "objs": {
+            "mapping": [
+              [
+                [
+                  0,
+                  "Alpha"
+                ],
+                {
+                  "attrs": {
+                    "attr:combobox#0": "Red"
+                  },
+                  "key": "Alpha",
+                  "node": 3,
+                  "ordinal": 0,
+                  "parent": null,
+                  "positional": false,
+                  "refs": {},
+                  "tid": 0
+                }
+              ],
+              [
+                [
+                  0,
+                  "Beta"
+                ],
+                {
+                  "attrs": {
+                    "attr:combobox#0": "Blue"
+                  },
+                  "key": "Beta",
+                  "node": 5,
+                  "ordinal": 0,
+                  "parent": null,
+                  "positional": false,
+                  "refs": {},
+                  "tid": 0
+                }
+              ]
+            ]
+          },
+          "partial": true,
+          "provisional": [],
+          "unidentified": [],
+          "unknown_is_none": true,
+          "view": {
+            "button:Help": true,
+            "heading#0": "Inventory",
+            "link:About": true
+          }
+        },
+        "before": {
+          "objs": {
+            "mapping": [
+              [
+                [
+                  0,
+                  "Alpha"
+                ],
+                {
+                  "attrs": {
+                    "attr:combobox#0": "Red"
+                  },
+                  "key": "Alpha",
+                  "node": 3,
+                  "ordinal": 0,
+                  "parent": null,
+                  "positional": false,
+                  "refs": {},
+                  "tid": 0
+                }
+              ],
+              [
+                [
+                  0,
+                  "Beta"
+                ],
+                {
+                  "attrs": {
+                    "attr:combobox#0": "Blue"
+                  },
+                  "key": "Beta",
+                  "node": 5,
+                  "ordinal": 0,
+                  "parent": null,
+                  "positional": false,
+                  "refs": {},
+                  "tid": 0
+                }
+              ]
+            ]
+          },
+          "partial": true,
+          "provisional": [],
+          "unidentified": [],
+          "unknown_is_none": true,
+          "view": {
+            "button:Help": true,
+            "heading#0": "Inventory",
+            "link:About": true
+          }
+        }
+      },
+      "parsed_observations": {
+        "AFTER": {
+          "instances": [
+            {
+              "anchor": "v2",
+              "context": {},
+              "parent": null,
+              "positional": false,
+              "root": 3,
+              "slots": {
+                "attr:combobox#0": [
+                  "",
+                  "Red"
+                ],
+                "combobox#0": [
+                  "",
+                  "Red"
+                ],
+                "id": [
+                  "",
+                  "Alpha"
+                ],
+                "listitem#0": [
+                  "Alpha",
+                  "Alpha"
+                ]
+              },
+              "tid": 0
+            },
+            {
+              "anchor": "v2",
+              "context": {},
+              "parent": null,
+              "positional": false,
+              "root": 5,
+              "slots": {
+                "attr:combobox#0": [
+                  "",
+                  "Blue"
+                ],
+                "combobox#0": [
+                  "",
+                  "Blue"
+                ],
+                "id": [
+                  "",
+                  "Beta"
+                ],
+                "listitem#0": [
+                  "Beta",
+                  "Beta"
+                ]
+              },
+              "tid": 0
+            }
+          ],
+          "node_instance": {
+            "mapping": [
+              [
+                3,
+                0
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                5,
+                1
+              ],
+              [
+                6,
+                1
+              ]
+            ]
+          },
+          "node_key": {
+            "mapping": [
+              [
+                3,
+                "listitem#0"
+              ],
+              [
+                4,
+                "combobox#0"
+              ],
+              [
+                5,
+                "listitem#0"
+              ],
+              [
+                6,
+                "combobox#0"
+              ],
+              [
+                7,
+                "button:Help"
+              ],
+              [
+                8,
+                "link:About"
+              ],
+              [
+                9,
+                "heading#0"
+              ]
+            ]
+          }
+        },
+        "BEFORE": {
+          "instances": [
+            {
+              "anchor": "v2",
+              "context": {},
+              "parent": null,
+              "positional": false,
+              "root": 3,
+              "slots": {
+                "attr:combobox#0": [
+                  "",
+                  "Red"
+                ],
+                "combobox#0": [
+                  "",
+                  "Red"
+                ],
+                "id": [
+                  "",
+                  "Alpha"
+                ],
+                "listitem#0": [
+                  "Alpha",
+                  "Alpha"
+                ]
+              },
+              "tid": 0
+            },
+            {
+              "anchor": "v2",
+              "context": {},
+              "parent": null,
+              "positional": false,
+              "root": 5,
+              "slots": {
+                "attr:combobox#0": [
+                  "",
+                  "Blue"
+                ],
+                "combobox#0": [
+                  "",
+                  "Blue"
+                ],
+                "id": [
+                  "",
+                  "Beta"
+                ],
+                "listitem#0": [
+                  "Beta",
+                  "Beta"
+                ]
+              },
+              "tid": 0
+            }
+          ],
+          "node_instance": {
+            "mapping": [
+              [
+                3,
+                0
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                5,
+                1
+              ],
+              [
+                6,
+                1
+              ]
+            ]
+          },
+          "node_key": {
+            "mapping": [
+              [
+                3,
+                "listitem#0"
+              ],
+              [
+                4,
+                "combobox#0"
+              ],
+              [
+                5,
+                "listitem#0"
+              ],
+              [
+                6,
+                "combobox#0"
+              ],
+              [
+                7,
+                "button:Help"
+              ],
+              [
+                8,
+                "link:About"
+              ],
+              [
+                9,
+                "heading#0"
+              ]
+            ]
+          }
+        }
+      },
+      "parsed_units": {
+        "AFTER": [
+          {
+            "nested": [],
+            "parent_root": null,
+            "positional": false,
+            "root": 3,
+            "sig": "f15c48cd38608f23",
+            "slot_nodes": {
+              "combobox#0": 4,
+              "listitem#0": 3
+            },
+            "slots": {
+              "combobox#0": "Red",
+              "listitem#0": "Alpha"
+            },
+            "template": "listitem[_](combobox[_])"
+          },
+          {
+            "nested": [],
+            "parent_root": null,
+            "positional": false,
+            "root": 5,
+            "sig": "f15c48cd38608f23",
+            "slot_nodes": {
+              "combobox#0": 6,
+              "listitem#0": 5
+            },
+            "slots": {
+              "combobox#0": "Blue",
+              "listitem#0": "Beta"
+            },
+            "template": "listitem[_](combobox[_])"
+          }
+        ],
+        "BEFORE": [
+          {
+            "nested": [],
+            "parent_root": null,
+            "positional": false,
+            "root": 3,
+            "sig": "73abec1162ee1ff5",
+            "slot_nodes": {
+              "combobox#0": 4,
+              "listitem#0": 3
+            },
+            "slots": {
+              "combobox#0": "Red",
+              "listitem#0": "Alpha"
+            },
+            "template": "listitem[_](combobox[_])"
+          },
+          {
+            "nested": [],
+            "parent_root": null,
+            "positional": false,
+            "root": 5,
+            "sig": "73abec1162ee1ff5",
+            "slot_nodes": {
+              "combobox#0": 6,
+              "listitem#0": 5
+            },
+            "slots": {
+              "combobox#0": "Blue",
+              "listitem#0": "Beta"
+            },
+            "template": "listitem[_](combobox[_])"
+          }
+        ]
+      },
+      "persistent_widget": true,
+      "prediction_checks": {
+        "kept": true,
+        "lost": true,
+        "no_positional_keys": true,
+        "persistent_widget": true,
+        "selected_attribute_change_count": true,
+        "selected_key": true,
+        "unambiguous_complete_matches": true
+      },
+      "raw_evidence_sha256": "01e1d6e2551cd084e385885389698ded5ef40e94790db5fa9204922c840a8caf",
+      "selected_key": "listitem#0",
+      "selected_parsed_positional": {
+        "AFTER": [
+          false,
+          false
+        ],
+        "BEFORE": [
+          false,
+          false
+        ]
+      },
+      "selected_widget_attribute_changes": [],
+      "signatures": {
+        "AFTER": "f15c48cd38608f23",
+        "BEFORE": "73abec1162ee1ff5"
+      },
+      "stale_promotion_under_final_keys": false,
+      "status": "RECORDED",
+      "supplied_condition": {
+        "after_key_overrides": {},
+        "name": "CONTROL"
+      },
+      "supplied_key_overrides": {},
+      "template": "listitem[_](combobox[_])",
+      "trace_events": [
+        {
+          "event": "call",
+          "method": "_promote_persistent_widgets",
+          "snapshot": {
+            "key_overrides": {},
+            "persistent_widgets": [],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0~": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0~": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0~": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0~": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0~": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0~": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0~": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0~": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0~": {
+                  "crowded": 0,
+                  "id": "combobox#0~",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "return",
+          "method": "_promote_persistent_widgets",
+          "snapshot": {
+            "key_overrides": {},
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2",
+                "widget slot combobox#0~ survives reloads (2): attribute"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "call",
+          "method": "_promote_persistent_widgets",
+          "snapshot": {
+            "key_overrides": {},
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "return",
+          "method": "_promote_persistent_widgets",
+          "snapshot": {
+            "key_overrides": {},
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "call",
+          "method": "_apply_key_associations",
+          "snapshot": {
+            "key_overrides": {},
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "return",
+          "method": "_apply_key_associations",
+          "snapshot": {
+            "key_overrides": {},
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        }
+      ],
+      "trace_restored": true
+    },
+    {
+      "canonical_match_counts": {
+        "ambiguous": 0,
+        "kept": 0,
+        "lost": 2,
+        "missing": 0
+      },
+      "canonical_matches": [
+        {
+          "after_multiplicity": 1,
+          "after_root": 5,
+          "after_value": "Blue",
+          "before_multiplicity": 1,
+          "before_root": 3,
+          "before_value": "Red",
+          "key": "Alpha",
+          "match": "lost"
+        },
+        {
+          "after_multiplicity": 1,
+          "after_root": 3,
+          "after_value": "Red",
+          "before_multiplicity": 1,
+          "before_root": 5,
+          "before_value": "Blue",
+          "key": "Beta",
+          "match": "lost"
+        }
+      ],
+      "discovered": {
+        "after": [],
+        "initial": []
+      },
+      "fitted": {
+        "all_units": {
+          "listitem[_](combobox[_])": {
+            "evidence": [
+              "key listitem#0 score 1.00 fd 1.00 values 2",
+              "key association rewrote 2 fitted instances from supported observation evidence"
+            ],
+            "instances": [
+              {
+                "nested": [],
+                "parent_root": null,
+                "positional": false,
+                "root": 3,
+                "sig": "73abec1162ee1ff5",
+                "slot_nodes": {
+                  "combobox#0": 4,
+                  "listitem#0": 3
+                },
+                "slots": {
+                  "combobox#0": "Red",
+                  "listitem#0": "Alpha"
+                },
+                "template": "listitem[_](combobox[_])"
+              },
+              {
+                "nested": [],
+                "parent_root": null,
+                "positional": false,
+                "root": 5,
+                "sig": "73abec1162ee1ff5",
+                "slot_nodes": {
+                  "combobox#0": 6,
+                  "listitem#0": 5
+                },
+                "slots": {
+                  "combobox#0": "Blue",
+                  "listitem#0": "Beta"
+                },
+                "template": "listitem[_](combobox[_])"
+              },
+              {
+                "nested": [],
+                "parent_root": null,
+                "positional": false,
+                "root": 3,
+                "sig": "f15c48cd38608f23",
+                "slot_nodes": {
+                  "combobox#0": 4,
+                  "listitem#0": 3
+                },
+                "slots": {
+                  "combobox#0": "Red",
+                  "listitem#0": "Beta"
+                },
+                "template": "listitem[_](combobox[_])"
+              },
+              {
+                "nested": [],
+                "parent_root": null,
+                "positional": false,
+                "root": 5,
+                "sig": "f15c48cd38608f23",
+                "slot_nodes": {
+                  "combobox#0": 6,
+                  "listitem#0": 5
+                },
+                "slots": {
+                  "combobox#0": "Blue",
+                  "listitem#0": "Alpha"
+                },
+                "template": "listitem[_](combobox[_])"
+              }
+            ],
+            "key_score": 1.0,
+            "key_slot": "listitem#0",
+            "max_per_obs": 2,
+            "slots": {
+              "combobox#0": {
+                "crowded": 0,
+                "id": "combobox#0",
+                "n": 4,
+                "n_obs_values": {
+                  "Blue": 2,
+                  "Red": 2
+                },
+                "numeric": 0,
+                "unique_in_parent": 4,
+                "values": {
+                  "Blue": 2,
+                  "Red": 2
+                }
+              },
+              "listitem#0": {
+                "crowded": 0,
+                "id": "listitem#0",
+                "n": 4,
+                "n_obs_values": {
+                  "Alpha": 2,
+                  "Beta": 2
+                },
+                "numeric": 0,
+                "unique_in_parent": 4,
+                "values": {
+                  "Alpha": 2,
+                  "Beta": 2
+                }
+              }
+            },
+            "template": "listitem[_](combobox[_])"
+          }
+        },
+        "entity_types": {
+          "mapping": [
+            [
+              0,
+              {
+                "attr_slots": {
+                  "listitem[_](combobox[_])": [
+                    "combobox#0"
+                  ]
+                },
+                "contain": {},
+                "evidence": [
+                  "key listitem#0 score 1.00 fd 1.00 values 2",
+                  "key association rewrote 2 fitted instances from supported observation evidence"
+                ],
+                "key_slot": {
+                  "listitem[_](combobox[_])": "listitem#0"
+                },
+                "link_parent": {},
+                "matrix": [],
+                "ref_slots": {},
+                "tid": 0,
+                "units": [
+                  "listitem[_](combobox[_])"
+                ]
+              }
+            ]
+          ]
+        },
+        "key_overrides": {
+          "mapping": [
+            [
+              [
+                "f15c48cd38608f23",
+                "listitem[_](combobox[_])",
+                "Alpha"
+              ],
+              "Beta"
+            ],
+            [
+              [
+                "f15c48cd38608f23",
+                "listitem[_](combobox[_])",
+                "Beta"
+              ],
+              "Alpha"
+            ]
+          ]
+        },
+        "persistent_widgets": [
+          [
+            "listitem[_](combobox[_])",
+            "combobox#0"
+          ]
+        ],
+        "selected_unit": {
+          "evidence": [
+            "key listitem#0 score 1.00 fd 1.00 values 2",
+            "key association rewrote 2 fitted instances from supported observation evidence"
+          ],
+          "instances": [
+            {
+              "nested": [],
+              "parent_root": null,
+              "positional": false,
+              "root": 3,
+              "sig": "73abec1162ee1ff5",
+              "slot_nodes": {
+                "combobox#0": 4,
+                "listitem#0": 3
+              },
+              "slots": {
+                "combobox#0": "Red",
+                "listitem#0": "Alpha"
+              },
+              "template": "listitem[_](combobox[_])"
+            },
+            {
+              "nested": [],
+              "parent_root": null,
+              "positional": false,
+              "root": 5,
+              "sig": "73abec1162ee1ff5",
+              "slot_nodes": {
+                "combobox#0": 6,
+                "listitem#0": 5
+              },
+              "slots": {
+                "combobox#0": "Blue",
+                "listitem#0": "Beta"
+              },
+              "template": "listitem[_](combobox[_])"
+            },
+            {
+              "nested": [],
+              "parent_root": null,
+              "positional": false,
+              "root": 3,
+              "sig": "f15c48cd38608f23",
+              "slot_nodes": {
+                "combobox#0": 4,
+                "listitem#0": 3
+              },
+              "slots": {
+                "combobox#0": "Red",
+                "listitem#0": "Beta"
+              },
+              "template": "listitem[_](combobox[_])"
+            },
+            {
+              "nested": [],
+              "parent_root": null,
+              "positional": false,
+              "root": 5,
+              "sig": "f15c48cd38608f23",
+              "slot_nodes": {
+                "combobox#0": 6,
+                "listitem#0": 5
+              },
+              "slots": {
+                "combobox#0": "Blue",
+                "listitem#0": "Alpha"
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          ],
+          "key_score": 1.0,
+          "key_slot": "listitem#0",
+          "max_per_obs": 2,
+          "slots": {
+            "combobox#0": {
+              "crowded": 0,
+              "id": "combobox#0",
+              "n": 4,
+              "n_obs_values": {
+                "Blue": 2,
+                "Red": 2
+              },
+              "numeric": 0,
+              "unique_in_parent": 4,
+              "values": {
+                "Blue": 2,
+                "Red": 2
+              }
+            },
+            "listitem#0": {
+              "crowded": 0,
+              "id": "listitem#0",
+              "n": 4,
+              "n_obs_values": {
+                "Alpha": 2,
+                "Beta": 2
+              },
+              "numeric": 0,
+              "unique_in_parent": 4,
+              "values": {
+                "Alpha": 2,
+                "Beta": 2
+              }
+            }
+          },
+          "template": "listitem[_](combobox[_])"
+        },
+        "tid_of_template": {
+          "listitem[_](combobox[_])": 0
+        }
+      },
+      "name": "AFTER_BIJECTION",
+      "native_delta": {
+        "added": [],
+        "attr_changes": [
+          [
+            [
+              0,
+              "Alpha"
+            ],
+            "attr:combobox#0",
+            "Red",
+            "Blue"
+          ],
+          [
+            [
+              0,
+              "Beta"
+            ],
+            "attr:combobox#0",
+            "Blue",
+            "Red"
+          ]
+        ],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {}
+      },
+      "native_instance_ids": {
+        "A": 140067136421616,
+        "G": 140067136421472,
+        "H": 140067136421520
+      },
+      "native_observations": {
+        "AFTER": {
+          "nodes": [
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 0,
+              "name": "",
+              "parent": -1,
+              "role": "group"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 1,
+              "name": "After",
+              "parent": 0,
+              "role": "status"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 2,
+              "name": "",
+              "parent": 0,
+              "role": "list"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 3,
+              "name": "Alpha",
+              "parent": 2,
+              "role": "listitem"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 4,
+              "name": "",
+              "parent": 3,
+              "role": "combobox",
+              "value": "Red"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 5,
+              "name": "Beta",
+              "parent": 2,
+              "role": "listitem"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 6,
+              "name": "",
+              "parent": 5,
+              "role": "combobox",
+              "value": "Blue"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 7,
+              "name": "Help",
+              "parent": 0,
+              "role": "button"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 8,
+              "name": "About",
+              "parent": 0,
+              "role": "link"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 9,
+              "name": "Inventory",
+              "parent": 0,
+              "role": "heading"
+            }
+          ],
+          "url": ""
+        },
+        "BEFORE": {
+          "nodes": [
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 0,
+              "name": "",
+              "parent": -1,
+              "role": "group"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 1,
+              "name": "Before",
+              "parent": 0,
+              "role": "status"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 2,
+              "name": "",
+              "parent": 0,
+              "role": "list"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 3,
+              "name": "Alpha",
+              "parent": 2,
+              "role": "listitem"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 4,
+              "name": "",
+              "parent": 3,
+              "role": "combobox",
+              "value": "Red"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 5,
+              "name": "Beta",
+              "parent": 2,
+              "role": "listitem"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 6,
+              "name": "",
+              "parent": 5,
+              "role": "combobox",
+              "value": "Blue"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 7,
+              "name": "Help",
+              "parent": 0,
+              "role": "button"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 8,
+              "name": "About",
+              "parent": 0,
+              "role": "link"
+            },
+            {
+              "bbox": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "i": 9,
+              "name": "Inventory",
+              "parent": 0,
+              "role": "heading"
+            }
+          ],
+          "url": ""
+        }
+      },
+      "native_states": {
+        "after": {
+          "objs": {
+            "mapping": [
+              [
+                [
+                  0,
+                  "Alpha"
+                ],
+                {
+                  "attrs": {
+                    "attr:combobox#0": "Blue"
+                  },
+                  "key": "Alpha",
+                  "node": 5,
+                  "ordinal": 0,
+                  "parent": null,
+                  "positional": false,
+                  "refs": {},
+                  "tid": 0
+                }
+              ],
+              [
+                [
+                  0,
+                  "Beta"
+                ],
+                {
+                  "attrs": {
+                    "attr:combobox#0": "Red"
+                  },
+                  "key": "Beta",
+                  "node": 3,
+                  "ordinal": 0,
+                  "parent": null,
+                  "positional": false,
+                  "refs": {},
+                  "tid": 0
+                }
+              ]
+            ]
+          },
+          "partial": true,
+          "provisional": [],
+          "unidentified": [],
+          "unknown_is_none": true,
+          "view": {
+            "button:Help": true,
+            "heading#0": "Inventory",
+            "link:About": true
+          }
+        },
+        "before": {
+          "objs": {
+            "mapping": [
+              [
+                [
+                  0,
+                  "Alpha"
+                ],
+                {
+                  "attrs": {
+                    "attr:combobox#0": "Red"
+                  },
+                  "key": "Alpha",
+                  "node": 3,
+                  "ordinal": 0,
+                  "parent": null,
+                  "positional": false,
+                  "refs": {},
+                  "tid": 0
+                }
+              ],
+              [
+                [
+                  0,
+                  "Beta"
+                ],
+                {
+                  "attrs": {
+                    "attr:combobox#0": "Blue"
+                  },
+                  "key": "Beta",
+                  "node": 5,
+                  "ordinal": 0,
+                  "parent": null,
+                  "positional": false,
+                  "refs": {},
+                  "tid": 0
+                }
+              ]
+            ]
+          },
+          "partial": true,
+          "provisional": [],
+          "unidentified": [],
+          "unknown_is_none": true,
+          "view": {
+            "button:Help": true,
+            "heading#0": "Inventory",
+            "link:About": true
+          }
+        }
+      },
+      "parsed_observations": {
+        "AFTER": {
+          "instances": [
+            {
+              "anchor": "v2",
+              "context": {},
+              "parent": null,
+              "positional": false,
+              "root": 3,
+              "slots": {
+                "attr:combobox#0": [
+                  "",
+                  "Red"
+                ],
+                "combobox#0": [
+                  "",
+                  "Red"
+                ],
+                "id": [
+                  "",
+                  "Beta"
+                ],
+                "listitem#0": [
+                  "Alpha",
+                  "Alpha"
+                ]
+              },
+              "tid": 0
+            },
+            {
+              "anchor": "v2",
+              "context": {},
+              "parent": null,
+              "positional": false,
+              "root": 5,
+              "slots": {
+                "attr:combobox#0": [
+                  "",
+                  "Blue"
+                ],
+                "combobox#0": [
+                  "",
+                  "Blue"
+                ],
+                "id": [
+                  "",
+                  "Alpha"
+                ],
+                "listitem#0": [
+                  "Beta",
+                  "Beta"
+                ]
+              },
+              "tid": 0
+            }
+          ],
+          "node_instance": {
+            "mapping": [
+              [
+                3,
+                0
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                5,
+                1
+              ],
+              [
+                6,
+                1
+              ]
+            ]
+          },
+          "node_key": {
+            "mapping": [
+              [
+                3,
+                "listitem#0"
+              ],
+              [
+                4,
+                "combobox#0"
+              ],
+              [
+                5,
+                "listitem#0"
+              ],
+              [
+                6,
+                "combobox#0"
+              ],
+              [
+                7,
+                "button:Help"
+              ],
+              [
+                8,
+                "link:About"
+              ],
+              [
+                9,
+                "heading#0"
+              ]
+            ]
+          }
+        },
+        "BEFORE": {
+          "instances": [
+            {
+              "anchor": "v2",
+              "context": {},
+              "parent": null,
+              "positional": false,
+              "root": 3,
+              "slots": {
+                "attr:combobox#0": [
+                  "",
+                  "Red"
+                ],
+                "combobox#0": [
+                  "",
+                  "Red"
+                ],
+                "id": [
+                  "",
+                  "Alpha"
+                ],
+                "listitem#0": [
+                  "Alpha",
+                  "Alpha"
+                ]
+              },
+              "tid": 0
+            },
+            {
+              "anchor": "v2",
+              "context": {},
+              "parent": null,
+              "positional": false,
+              "root": 5,
+              "slots": {
+                "attr:combobox#0": [
+                  "",
+                  "Blue"
+                ],
+                "combobox#0": [
+                  "",
+                  "Blue"
+                ],
+                "id": [
+                  "",
+                  "Beta"
+                ],
+                "listitem#0": [
+                  "Beta",
+                  "Beta"
+                ]
+              },
+              "tid": 0
+            }
+          ],
+          "node_instance": {
+            "mapping": [
+              [
+                3,
+                0
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                5,
+                1
+              ],
+              [
+                6,
+                1
+              ]
+            ]
+          },
+          "node_key": {
+            "mapping": [
+              [
+                3,
+                "listitem#0"
+              ],
+              [
+                4,
+                "combobox#0"
+              ],
+              [
+                5,
+                "listitem#0"
+              ],
+              [
+                6,
+                "combobox#0"
+              ],
+              [
+                7,
+                "button:Help"
+              ],
+              [
+                8,
+                "link:About"
+              ],
+              [
+                9,
+                "heading#0"
+              ]
+            ]
+          }
+        }
+      },
+      "parsed_units": {
+        "AFTER": [
+          {
+            "nested": [],
+            "parent_root": null,
+            "positional": false,
+            "root": 3,
+            "sig": "f15c48cd38608f23",
+            "slot_nodes": {
+              "combobox#0": 4,
+              "listitem#0": 3
+            },
+            "slots": {
+              "combobox#0": "Red",
+              "listitem#0": "Beta"
+            },
+            "template": "listitem[_](combobox[_])"
+          },
+          {
+            "nested": [],
+            "parent_root": null,
+            "positional": false,
+            "root": 5,
+            "sig": "f15c48cd38608f23",
+            "slot_nodes": {
+              "combobox#0": 6,
+              "listitem#0": 5
+            },
+            "slots": {
+              "combobox#0": "Blue",
+              "listitem#0": "Alpha"
+            },
+            "template": "listitem[_](combobox[_])"
+          }
+        ],
+        "BEFORE": [
+          {
+            "nested": [],
+            "parent_root": null,
+            "positional": false,
+            "root": 3,
+            "sig": "73abec1162ee1ff5",
+            "slot_nodes": {
+              "combobox#0": 4,
+              "listitem#0": 3
+            },
+            "slots": {
+              "combobox#0": "Red",
+              "listitem#0": "Alpha"
+            },
+            "template": "listitem[_](combobox[_])"
+          },
+          {
+            "nested": [],
+            "parent_root": null,
+            "positional": false,
+            "root": 5,
+            "sig": "73abec1162ee1ff5",
+            "slot_nodes": {
+              "combobox#0": 6,
+              "listitem#0": 5
+            },
+            "slots": {
+              "combobox#0": "Blue",
+              "listitem#0": "Beta"
+            },
+            "template": "listitem[_](combobox[_])"
+          }
+        ]
+      },
+      "persistent_widget": true,
+      "prediction_checks": {
+        "kept": true,
+        "lost": true,
+        "no_positional_keys": true,
+        "persistent_widget": true,
+        "selected_attribute_change_count": true,
+        "selected_key": true,
+        "unambiguous_complete_matches": true
+      },
+      "raw_evidence_sha256": "01e1d6e2551cd084e385885389698ded5ef40e94790db5fa9204922c840a8caf",
+      "selected_key": "listitem#0",
+      "selected_parsed_positional": {
+        "AFTER": [
+          false,
+          false
+        ],
+        "BEFORE": [
+          false,
+          false
+        ]
+      },
+      "selected_widget_attribute_changes": [
+        [
+          [
+            0,
+            "Alpha"
+          ],
+          "attr:combobox#0",
+          "Red",
+          "Blue"
+        ],
+        [
+          [
+            0,
+            "Beta"
+          ],
+          "attr:combobox#0",
+          "Blue",
+          "Red"
+        ]
+      ],
+      "signatures": {
+        "AFTER": "f15c48cd38608f23",
+        "BEFORE": "73abec1162ee1ff5"
+      },
+      "stale_promotion_under_final_keys": true,
+      "status": "RECORDED",
+      "supplied_condition": {
+        "after_key_overrides": {
+          "Alpha": "Beta",
+          "Beta": "Alpha"
+        },
+        "name": "AFTER_BIJECTION"
+      },
+      "supplied_key_overrides": {
+        "mapping": [
+          [
+            [
+              "f15c48cd38608f23",
+              "listitem[_](combobox[_])",
+              "Alpha"
+            ],
+            "Beta"
+          ],
+          [
+            [
+              "f15c48cd38608f23",
+              "listitem[_](combobox[_])",
+              "Beta"
+            ],
+            "Alpha"
+          ]
+        ]
+      },
+      "template": "listitem[_](combobox[_])",
+      "trace_events": [
+        {
+          "event": "call",
+          "method": "_promote_persistent_widgets",
+          "snapshot": {
+            "key_overrides": {
+              "mapping": [
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Alpha"
+                  ],
+                  "Beta"
+                ],
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Beta"
+                  ],
+                  "Alpha"
+                ]
+              ]
+            },
+            "persistent_widgets": [],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0~": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0~": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0~": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0~": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0~": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0~": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0~": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0~": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0~": {
+                  "crowded": 0,
+                  "id": "combobox#0~",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "return",
+          "method": "_promote_persistent_widgets",
+          "snapshot": {
+            "key_overrides": {
+              "mapping": [
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Alpha"
+                  ],
+                  "Beta"
+                ],
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Beta"
+                  ],
+                  "Alpha"
+                ]
+              ]
+            },
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2",
+                "widget slot combobox#0~ survives reloads (2): attribute"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "call",
+          "method": "_promote_persistent_widgets",
+          "snapshot": {
+            "key_overrides": {
+              "mapping": [
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Alpha"
+                  ],
+                  "Beta"
+                ],
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Beta"
+                  ],
+                  "Alpha"
+                ]
+              ]
+            },
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "return",
+          "method": "_promote_persistent_widgets",
+          "snapshot": {
+            "key_overrides": {
+              "mapping": [
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Alpha"
+                  ],
+                  "Beta"
+                ],
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Beta"
+                  ],
+                  "Alpha"
+                ]
+              ]
+            },
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "call",
+          "method": "_apply_key_associations",
+          "snapshot": {
+            "key_overrides": {
+              "mapping": [
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Alpha"
+                  ],
+                  "Beta"
+                ],
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Beta"
+                  ],
+                  "Alpha"
+                ]
+              ]
+            },
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        },
+        {
+          "event": "return",
+          "method": "_apply_key_associations",
+          "snapshot": {
+            "key_overrides": {
+              "mapping": [
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Alpha"
+                  ],
+                  "Beta"
+                ],
+                [
+                  [
+                    "f15c48cd38608f23",
+                    "listitem[_](combobox[_])",
+                    "Beta"
+                  ],
+                  "Alpha"
+                ]
+              ]
+            },
+            "persistent_widgets": [
+              [
+                "listitem[_](combobox[_])",
+                "combobox#0"
+              ]
+            ],
+            "selected_unit": {
+              "evidence": [
+                "key listitem#0 score 1.00 fd 1.00 values 2",
+                "key association rewrote 2 fitted instances from supported observation evidence"
+              ],
+              "instances": [
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "73abec1162ee1ff5",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 3,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 4,
+                    "listitem#0": 3
+                  },
+                  "slots": {
+                    "combobox#0": "Red",
+                    "listitem#0": "Beta"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                },
+                {
+                  "nested": [],
+                  "parent_root": null,
+                  "positional": false,
+                  "root": 5,
+                  "sig": "f15c48cd38608f23",
+                  "slot_nodes": {
+                    "combobox#0": 6,
+                    "listitem#0": 5
+                  },
+                  "slots": {
+                    "combobox#0": "Blue",
+                    "listitem#0": "Alpha"
+                  },
+                  "template": "listitem[_](combobox[_])"
+                }
+              ],
+              "key_score": 1.0,
+              "key_slot": "listitem#0",
+              "max_per_obs": 2,
+              "slots": {
+                "combobox#0": {
+                  "crowded": 0,
+                  "id": "combobox#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Blue": 2,
+                    "Red": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Blue": 2,
+                    "Red": 2
+                  }
+                },
+                "listitem#0": {
+                  "crowded": 0,
+                  "id": "listitem#0",
+                  "n": 4,
+                  "n_obs_values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  },
+                  "numeric": 0,
+                  "unique_in_parent": 4,
+                  "values": {
+                    "Alpha": 2,
+                    "Beta": 2
+                  }
+                }
+              },
+              "template": "listitem[_](combobox[_])"
+            }
+          }
+        }
+      ],
+      "trace_restored": true
+    }
+  ],
+  "runtime_python": {
+    "invoked": "/home/moloch/semabi/.venv/bin/python",
+    "resolved": "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+    "sha256": "d713474fd44339f8bd8150edc7b324d0be494dbf2998a1de04a7b0ecdbc1c2ed"
+  },
+  "same_raw_evidence": true,
+  "schema": "semabi.widget_key_revision.native_diagnostic.v1",
+  "source_freezes": {
+    "corpus": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+    "source": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62"
+  },
+  "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+  "started_utc": "2026-09-08T07:02:36.006833+00:00",
+  "status": "EXECUTED",
+  "study_postflight": {
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/command_plan_v1.md": "36d874a511c6118ad48ea677bfafe9be3df4e05e11610bb178724c8f1dcad143",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/contract_v1.md": "9fe796471502e3cef1de07ecc6011670f7e9c2d89b85674edd09857fc40b6e54",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/diagnostic.py": "75fc450fff0ed3311ccb7dd3641b379034d04783712a2580186f2e163b5712c4",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/freeze.py": "72fe25341c784d0c069c9dd86a2dc0f5bc3f32aad311b9ae7e1cf40e4fb28404",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/invented_inputs_v1.json": "ae3f64d0129350f86d6cfab63012ebbda34d4b425d789e6e6a92fab619e826ee",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_observation_v1/diagnostic.py": "7440426fac24c9ed75defb8f37a03c57639346d87690e1a6e1145ae2867dc2b3",
+    "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+    "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/source_freeze_v1.json": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+    "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_guard.py": "5aeb711a5b1cf98acfb8ad25072e50de37b6b5f0381c2bf36a013462ddb67c41",
+    "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/run_job.py": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7",
+    "/home/moloch/semabi/runs/.w1_worktree/scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+    "/home/moloch/semabi/runs/.w1_worktree/scripts/transport_score.py": "9a4cd7cadc8646e031e54368de6a32b4f9628698de3b8c321a39219b19dee7cc"
+  },
+  "study_preflight": {
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/command_plan_v1.md": "36d874a511c6118ad48ea677bfafe9be3df4e05e11610bb178724c8f1dcad143",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/contract_v1.md": "9fe796471502e3cef1de07ecc6011670f7e9c2d89b85674edd09857fc40b6e54",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/diagnostic.py": "75fc450fff0ed3311ccb7dd3641b379034d04783712a2580186f2e163b5712c4",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/freeze.py": "72fe25341c784d0c069c9dd86a2dc0f5bc3f32aad311b9ae7e1cf40e4fb28404",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/invented_inputs_v1.json": "ae3f64d0129350f86d6cfab63012ebbda34d4b425d789e6e6a92fab619e826ee",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_observation_v1/diagnostic.py": "7440426fac24c9ed75defb8f37a03c57639346d87690e1a6e1145ae2867dc2b3",
+    "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+    "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/source_freeze_v1.json": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+    "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_guard.py": "5aeb711a5b1cf98acfb8ad25072e50de37b6b5f0381c2bf36a013462ddb67c41",
+    "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/run_job.py": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7",
+    "/home/moloch/semabi/runs/.w1_worktree/scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+    "/home/moloch/semabi/runs/.w1_worktree/scripts/transport_score.py": "9a4cd7cadc8646e031e54368de6a32b4f9628698de3b8c321a39219b19dee7cc"
+  },
+  "trace_at_entry": null,
+  "trace_restored": true
+}
