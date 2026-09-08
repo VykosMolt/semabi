@@ -1,0 +1,2578 @@
+{
+  "provenance": {
+    "case": "pilot",
+    "owner": "/root/baseline_verification",
+    "pid": 1270767,
+    "started_utc": "2026-09-08T05:33:01.561098+00:00",
+    "state": "running",
+    "dev": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev",
+    "hold": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold",
+    "control": "button:Book pilot",
+    "command": [
+      "/home/moloch/semabi/.venv/bin/python",
+      "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+      "pilot"
+    ],
+    "working_directory": "/home/moloch/semabi/runs/.w1_worktree",
+    "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+    "source_snapshot_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+    "scope": "disclosed retained development regression; no fresh-generalization claim",
+    "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+    "input_files": {
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2",
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b",
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef",
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+      "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c"
+    }
+  },
+  "reading": {
+    "version": 1,
+    "name": "link-probe",
+    "families": {
+      "button[_]": {
+        "family": "button[_]",
+        "key_slot": "button#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+        "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+        "key_slot": "table/rowgroup/row/cell@Vessel#0",
+        "status": "UNSUPPORTED",
+        "discrimination": null
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+        "key_slot": "cell@Berth#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+        "key_slot": "cell@Pilot#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+        "key_slot": "cell@Vessel#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
+        "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+        "key_slot": null,
+        "status": "NO_IDENTITY",
+        "discrimination": 0.0
+      }
+    },
+    "promoted_families": [],
+    "refuted": {
+      "button[_]": [
+        null
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": [
+        "cell@Takes up to#0"
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": [
+        "cell@Ticket to#0"
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+        null,
+        "cell@Cargo#0",
+        "cell@Length overall#0"
+      ],
+      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
+        "cell@Status#0"
+      ]
+    },
+    "provenance": {
+      "source_run": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev",
+      "role": "SOURCE"
+    }
+  },
+  "fit": {
+    "roles": {
+      "relation['forward', 'rel:0']:0<owner": {
+        "name": "relation['forward', 'rel:0']:0<owner",
+        "kind": "relation",
+        "form": [
+          "forward",
+          "rel:0"
+        ],
+        "tid": 0,
+        "anchor": "owner"
+      },
+      "owner": {
+        "name": "owner",
+        "kind": "action",
+        "form": [],
+        "tid": 3,
+        "anchor": null
+      },
+      "selection['combobox#1']:2": {
+        "name": "selection['combobox#1']:2",
+        "kind": "selection",
+        "form": [
+          "combobox#1"
+        ],
+        "tid": 2,
+        "anchor": null
+      },
+      "relation['forward', 'rel:0']:0<selection['combobox#1']:2": {
+        "name": "relation['forward', 'rel:0']:0<selection['combobox#1']:2",
+        "kind": "relation",
+        "form": [
+          "forward",
+          "rel:0"
+        ],
+        "tid": 0,
+        "anchor": "selection['combobox#1']:2"
+      }
+    },
+    "rules": [
+      "('unnamed', \"selection['combobox#1']:2\")  ->  Nothing chosen in the pilot list .   [6]",
+      "attr:Duty#0(selection['combobox#1']:2) == 'off'  ->  <> is not <> .   [4]",
+      "attr:Length overall#0(owner) < '88'  ->  <> booked for call <> .   [3]",
+      "attr:Ticket to#0(selection['combobox#1']:2) < '150' & ('ref_set', \"selection['combobox#1']:2\", 'rel:0')  ->  <> is already booked for call <> .   [3]",
+      "attr:Ticket to#0(selection['combobox#1']:2) < attr:Length overall#0(owner)  ->  <> holds a <> ; <> is <> overall .   [6]",
+      "('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#1']:2\")  ->  <> booked for call <> .   [2]"
+    ],
+    "ordered": {
+      "3": {
+        "attr:Length overall#0": [
+          "54",
+          "64",
+          "78",
+          "88",
+          "96",
+          "112",
+          "132",
+          "148"
+        ]
+      },
+      "2": {
+        "attr:Ticket to#0": [
+          "80",
+          "100",
+          "130",
+          "150"
+        ]
+      }
+    },
+    "pairs": "frozenset({frozenset({(3, 'attr:Length overall#0'), (2, 'attr:Ticket to#0')})})",
+    "events": {
+      "Nothing chosen in the pilot list .": 6,
+      "<> holds a <> ; <> is <> overall .": 6,
+      "<> booked for call <> .": 5,
+      "<> is not <> .": 4,
+      "<> is already booked for call <> .": 3,
+      "Call <> is already <> ; <> pilot is needed .": 1
+    },
+    "default": "Call <> is already <> ; <> pilot is needed .",
+    "arg_roles": {
+      "<> booked for call <> .": {
+        "0": "selection['combobox#1']:2",
+        "1": "relation['forward', 'rel:0']:0<owner"
+      },
+      "Call <> is already <> ; <> pilot is needed .": {
+        "0": "relation['forward', 'rel:0']:0<owner"
+      },
+      "<> is not <> .": {
+        "0": "selection['combobox#1']:2"
+      },
+      "<> holds a <> ; <> is <> overall .": {
+        "0": "selection['combobox#1']:2",
+        "2": "owner"
+      },
+      "<> is already booked for call <> .": {
+        "0": "selection['combobox#1']:2",
+        "1": "relation['forward', 'rel:0']:0<selection['combobox#1']:2"
+      }
+    },
+    "fitted": 25
+  },
+  "dev_steps": 451,
+  "outcome_cut": 450,
+  "development": {
+    "target_clicks": 30,
+    "failed_attempts": 0,
+    "recognition_mismatches": 0,
+    "visible_check_ledger": {
+      "match": 90
+    },
+    "visible_check_scope": {
+      "bound vessel length survives representation": {
+        "match": 30
+      },
+      "selected object retained": {
+        "match": 30
+      },
+      "sheet vessel available in action binding": {
+        "match": 30
+      }
+    },
+    "version_space_ledger": {},
+    "decision_list_ledger": {},
+    "rows": [
+      {
+        "step": 9,
+        "episode": 2,
+        "ok": true,
+        "error": null,
+        "before": "c34cfbbe08dcfdb7",
+        "after": "91e52d3cfd51d298",
+        "raw_target": 71,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Ardent Rose",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "containers",
+              "attr:Flag#0": "Panama",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "96",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "2"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 70,
+            "visible": "no pilot chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 30,
+        "episode": 2,
+        "ok": true,
+        "error": null,
+        "before": "57cd0169bbde042c",
+        "after": "fb693f0a12b99e26",
+        "raw_target": 71,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Kittiwake",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "sawn timber",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "78",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "alongside",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "0"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 70,
+            "visible": "no pilot chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Kittiwake",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "78 m",
+            "expected_scalar": "78",
+            "bound_scalars": {
+              "owner": "78"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 45,
+        "episode": 2,
+        "ok": true,
+        "error": null,
+        "before": "05b6c8a455c790e2",
+        "after": "719a3ac2d7db36e9",
+        "raw_target": 71,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Nordkapp",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "bagged fertiliser",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "132",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "4"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 70,
+            "visible": "no pilot chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 134,
+        "episode": 4,
+        "ok": true,
+        "error": null,
+        "before": "db15560065555718",
+        "after": "bcefb83c268bff5f",
+        "raw_target": 63,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Nordkapp",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "bagged fertiliser",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "132",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "alongside",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "2"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 62,
+            "visible": "no pilot chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 34,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 40,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 143,
+        "episode": 4,
+        "ok": true,
+        "error": null,
+        "before": "76792bc0ba851362",
+        "after": "c90c69e90692e412",
+        "raw_target": 71,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Nordkapp",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "bagged fertiliser",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "132",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "alongside",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "2"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 70,
+            "visible": "no pilot chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 167,
+        "episode": 4,
+        "ok": true,
+        "error": null,
+        "before": "4268497e9513136a",
+        "after": "5eed453ce96776f8",
+        "raw_target": 79,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Hafnarfjord",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "frozen fish",
+              "attr:Flag#0": "Iceland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "112",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 78,
+            "visible": "no pilot chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 202,
+        "episode": 5,
+        "ok": true,
+        "error": null,
+        "before": "b52d60161e4eb4b0",
+        "after": "213b29fd7d6a7d94",
+        "raw_target": 71,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Selkie",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "drummed solvents",
+              "attr:Flag#0": "United Kingdom",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "64",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Ruth Kealy",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "130"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 70,
+            "visible": "Ruth Kealy - ticket to 130 m - on duty",
+            "expected_key": "Ruth Kealy",
+            "bound_selection_keys": [
+              "Ruth Kealy"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Selkie",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "64 m",
+            "expected_scalar": "64",
+            "bound_scalars": {
+              "owner": "64"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 269,
+        "episode": 6,
+        "ok": true,
+        "error": null,
+        "before": "7c48436075ebc3cc",
+        "after": "ce1861bd89f9e324",
+        "raw_target": 79,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "named"
+        },
+        "bound": {
+          "owner": {
+            "key": "Hafnarfjord",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "frozen fish",
+              "attr:Flag#0": "Iceland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "112",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "alongside",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "4"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Aoife Marr",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "150"
+            }
+          },
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 78,
+            "visible": "Aoife Marr - ticket to 150 m - on duty",
+            "expected_key": "Aoife Marr",
+            "bound_selection_keys": [
+              "Aoife Marr"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 295,
+        "episode": 6,
+        "ok": true,
+        "error": null,
+        "before": "df7540dbe1cd849b",
+        "after": "f23f417963c1b257",
+        "raw_target": 71,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Bregagh",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "milling grain",
+              "attr:Flag#0": "Ireland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "88",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Ruth Kealy",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "off",
+              "attr:Ticket to#0": "130"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 70,
+            "visible": "Ruth Kealy - ticket to 130 m - off duty",
+            "expected_key": "Ruth Kealy",
+            "bound_selection_keys": [
+              "Ruth Kealy"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 378,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "dd5fb6622a2f0817",
+        "after": "a472c311efb293c3",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Hafnarfjord",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "frozen fish",
+              "attr:Flag#0": "Iceland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "112",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 381,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "f23ffb9b2555e2e3",
+        "after": "f9c4e1c2e9074e45",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Petrel Star",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "naphtha",
+              "attr:Flag#0": "Malta",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "148",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "0"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 384,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "7619cd9efd47aba4",
+        "after": "04d4dbcbb7806902",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Bregagh",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "milling grain",
+              "attr:Flag#0": "Ireland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "88",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "2"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-104",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 388,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "44f31715dfb3781a",
+        "after": "603305d9be11067d",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Selkie",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "drummed solvents",
+              "attr:Flag#0": "United Kingdom",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "64",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Aoife Marr",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "off",
+              "attr:Ticket to#0": "150"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Aoife Marr - ticket to 150 m - off duty",
+            "expected_key": "Aoife Marr",
+            "bound_selection_keys": [
+              "Aoife Marr"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Selkie",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "64 m",
+            "expected_scalar": "64",
+            "bound_scalars": {
+              "owner": "64"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 391,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "e157c032dd363bab",
+        "after": "e157c032dd363bab",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Hafnarfjord",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "frozen fish",
+              "attr:Flag#0": "Iceland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "112",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Aoife Marr",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "off",
+              "attr:Ticket to#0": "150"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Aoife Marr - ticket to 150 m - off duty",
+            "expected_key": "Aoife Marr",
+            "bound_selection_keys": [
+              "Aoife Marr"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 395,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "9921c60a524e4165",
+        "after": "6823cad197d5f5f5",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Selkie",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "drummed solvents",
+              "attr:Flag#0": "United Kingdom",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "64",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Selkie",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "64 m",
+            "expected_scalar": "64",
+            "bound_scalars": {
+              "owner": "64"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 398,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "2ee15f158b2b5702",
+        "after": "2f2d7b1c56c6698c",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Hafnarfjord",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "frozen fish",
+              "attr:Flag#0": "Iceland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "112",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Aoife Marr",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "150"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Aoife Marr - ticket to 150 m - on duty",
+            "expected_key": "Aoife Marr",
+            "bound_selection_keys": [
+              "Aoife Marr"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 401,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "93dfcfaf3e8ef7aa",
+        "after": "9348ad05c0ac56a8",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "named"
+        },
+        "bound": {
+          "owner": {
+            "key": "Hafnarfjord",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "frozen fish",
+              "attr:Flag#0": "Iceland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "112",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          },
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 404,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "475326f8491b259b",
+        "after": "475326f8491b259b",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "named"
+        },
+        "bound": {
+          "owner": {
+            "key": "Petrel Star",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "naphtha",
+              "attr:Flag#0": "Malta",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "148",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "0"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          },
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 409,
+        "episode": 9,
+        "ok": true,
+        "error": null,
+        "before": "29218f0d822300f9",
+        "after": "82c171aa2dbaa96a",
+        "raw_target": 79,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Petrel Star",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "naphtha",
+              "attr:Flag#0": "Malta",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "148",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "4"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Ruth Kealy",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "130"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 78,
+            "visible": "Ruth Kealy - ticket to 130 m - on duty",
+            "expected_key": "Ruth Kealy",
+            "bound_selection_keys": [
+              "Ruth Kealy"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 413,
+        "episode": 9,
+        "ok": true,
+        "error": null,
+        "before": "0cf866c16479d87f",
+        "after": "cc43ebcdbba87c9b",
+        "raw_target": 79,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Petrel Star",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "naphtha",
+              "attr:Flag#0": "Malta",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "148",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "4"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Ruth Kealy",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "off",
+              "attr:Ticket to#0": "130"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 78,
+            "visible": "Ruth Kealy - ticket to 130 m - off duty",
+            "expected_key": "Ruth Kealy",
+            "bound_selection_keys": [
+              "Ruth Kealy"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 416,
+        "episode": 9,
+        "ok": true,
+        "error": null,
+        "before": "ebf9ce487d963ada",
+        "after": "ebf9ce487d963ada",
+        "raw_target": 79,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Bregagh",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "milling grain",
+              "attr:Flag#0": "Ireland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "88",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Ruth Kealy",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "off",
+              "attr:Ticket to#0": "130"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 78,
+            "visible": "Ruth Kealy - ticket to 130 m - off duty",
+            "expected_key": "Ruth Kealy",
+            "bound_selection_keys": [
+              "Ruth Kealy"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 420,
+        "episode": 9,
+        "ok": true,
+        "error": null,
+        "before": "b1ccabf39120fc4d",
+        "after": "236760114b73de4b",
+        "raw_target": 79,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Bregagh",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "milling grain",
+              "attr:Flag#0": "Ireland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "88",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Ruth Kealy",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "130"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 78,
+            "visible": "Ruth Kealy - ticket to 130 m - on duty",
+            "expected_key": "Ruth Kealy",
+            "bound_selection_keys": [
+              "Ruth Kealy"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 423,
+        "episode": 9,
+        "ok": true,
+        "error": null,
+        "before": "6eed9bdb84638a4b",
+        "after": "14666acb170dadb7",
+        "raw_target": 79,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "named"
+        },
+        "bound": {
+          "owner": {
+            "key": "Petrel Star",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "naphtha",
+              "attr:Flag#0": "Malta",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "148",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "4"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Ruth Kealy",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "130"
+            }
+          },
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 78,
+            "visible": "Ruth Kealy - ticket to 130 m - on duty",
+            "expected_key": "Ruth Kealy",
+            "bound_selection_keys": [
+              "Ruth Kealy"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 429,
+        "episode": 10,
+        "ok": true,
+        "error": null,
+        "before": "8ea1f60e625fd36b",
+        "after": "5b381bc8ac4e92a7",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Petrel Star",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "naphtha",
+              "attr:Flag#0": "Malta",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "148",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 432,
+        "episode": 10,
+        "ok": true,
+        "error": null,
+        "before": "95453adfb5caecac",
+        "after": "93ce3a40b8fe5755",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Bregagh",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "milling grain",
+              "attr:Flag#0": "Ireland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "88",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "0"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 436,
+        "episode": 10,
+        "ok": true,
+        "error": null,
+        "before": "6f034fde024e4ec8",
+        "after": "5f9bfebf81a4394b",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Petrel Star",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "naphtha",
+              "attr:Flag#0": "Malta",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "148",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "off",
+              "attr:Ticket to#0": "80"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - off duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 439,
+        "episode": 10,
+        "ok": true,
+        "error": null,
+        "before": "58aa4eff1abad66f",
+        "after": "58aa4eff1abad66f",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Bregagh",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "milling grain",
+              "attr:Flag#0": "Ireland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "88",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "0"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "off",
+              "attr:Ticket to#0": "80"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - off duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 443,
+        "episode": 10,
+        "ok": true,
+        "error": null,
+        "before": "8cd59ae617b0a876",
+        "after": "74e0000b9c7f2915",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Corrina B",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "livestock",
+              "attr:Flag#0": "United Kingdom",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "54",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "2"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Corrina B",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "54 m",
+            "expected_scalar": "54",
+            "bound_scalars": {
+              "owner": "54"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 446,
+        "episode": 10,
+        "ok": true,
+        "error": null,
+        "before": "acf8d53611731da3",
+        "after": "192c3893980d76d1",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "named"
+        },
+        "bound": {
+          "owner": {
+            "key": "Petrel Star",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "naphtha",
+              "attr:Flag#0": "Malta",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "148",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          },
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 449,
+        "episode": 10,
+        "ok": true,
+        "error": null,
+        "before": "72cc464b395931d7",
+        "after": "72cc464b395931d7",
+        "raw_target": 87,
+        "recognized_control": "button:Book pilot",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#1']:2": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": "named"
+        },
+        "bound": {
+          "owner": {
+            "key": "Bregagh",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "milling grain",
+              "attr:Flag#0": "Ireland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "88",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "0"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#1']:2": {
+            "key": "Silas Nunn",
+            "tid": 2,
+            "attrs": {
+              "attr:Duty#0": "on",
+              "attr:Ticket to#0": "80"
+            }
+          },
+          "relation['forward', 'rel:0']:0<selection['combobox#1']:2": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 86,
+            "visible": "Silas Nunn - ticket to 80 m - on duty",
+            "expected_key": "Silas Nunn",
+            "bound_selection_keys": [
+              "Silas Nunn"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "semabi.transport.w1_terminal_receipt.v1",
+  "coordinator": "/root/baseline_verification",
+  "job_name": "corpus_allocation_positive",
+  "tool_session_id": 13967,
+  "exit_code": 0,
+  "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270424, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:44:37.553930+00:00\"}\n",
+  "actual_tool_call": {
+    "name": "corpus_allocation_positive",
+    "tool": "write_stdin",
+    "arguments": {
+      "session_id": 13967,
+      "chars": "",
+      "yield_time_ms": 1000,
+      "max_output_tokens": 2000
+    },
+    "result": {
+      "chunk_id": "5b5a5e",
+      "wall_time_seconds": 0.00000213,
+      "exit_code": 0,
+      "original_token_count": 34,
+      "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270424, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:44:37.553930+00:00\"}\n"
+    }
+  },
+  "root_execution_go_sha256": "96cbec7605f2835c72ac0ffe78530e38a0f67ee4c750ce1cfb266c176b848402",
+  "scope": "Actual terminal write_stdin tool return for the single owned host job; no retry."
+}

@@ -1,0 +1,27 @@
+{
+  "copy_receipt_sha256": "dbc075f75dcb1931e437e0d6e1a57d2f600a787b2f3d44a5f3c55cb314f93227",
+  "copy_semantics": "Exact copies for the main evidence checkpoint. Embedded original paths remain the source of execution authority; copies were not executed.",
+  "created_utc": "2026-09-08T06:45:06.540092+00:00",
+  "exact_copied_files_verified": 123,
+  "independent_review": {
+    "artifact_members_verified": 121,
+    "completed_utc": "2026-09-08T06:32:05Z",
+    "findings": [],
+    "jobs_consistent": 7,
+    "reviewer": "/root/baseline_verification/post_controls_review",
+    "verdict": "ACCEPT_PRESERVED_FAILED_WRAPPER_ATTEMPT"
+  },
+  "native_source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+  "original_worktree": "/home/moloch/semabi/runs/.w1_worktree",
+  "retained_seal_sha256": "47518651d62874ed1d52536bacbdb4fc088e16e848a5462be07bde7780cfc851",
+  "root": "/root",
+  "root_adjudication": [
+    "All seven owned jobs are retained and reaped. Five corpus jobs and their reviewed comparator returned zero; all six semantic components match each retained case with residual errors preserved.",
+    "Pytest returned zero: 631 passed, three skipped and one xfailed. The full wrapper returned one and retains its failed bytecode-prefix postflight. This is not a clean full-suite gate.",
+    "Source-derived cache forensics explain nine final directories, with no final files or symlinks. No continuous writer/reader trace was collected, and final emptiness does not establish runtime absence.",
+    "B1 numerical output comparison remains retained; production by its intended worktree source is historically unestablished. W1 corpus origin snapshots support their candidate source association with the recorded snapshot limits.",
+    "The test-only isolation repair and any later identity/scoring change require their own reviewed source and execution records. Main native adoption remains pending."
+  ],
+  "schema": "semabi.transport.w1_root_preserved_attempt_acceptance.v1",
+  "status": "ACCEPT_PRESERVED_FAILED_WRAPPER_ATTEMPT"
+}

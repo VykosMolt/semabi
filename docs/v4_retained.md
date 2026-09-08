@@ -1755,12 +1755,26 @@ The isolated W1 source checkpoint `284d80c` repairs a separately demonstrated
 false-persistence path: duplicated child keys could hide an observed reversion.
 It now withholds promotion when reload correspondence is ambiguous. The same
 focused file changes from 3 failures/13 passes to 16 passes, with independent
-source and boundary checks. Full-suite and five-corpus validation remain pending;
-the candidate is not adopted. J1 had no qualifying reload pairs, so this repair
+source and boundary checks. Five dedicated corpus runs preserve all six retained
+components and existing residual errors. The full suite reports 631 passes,
+three skips and one expected failure, but its wrapper fails because intentional
+manifest-test caches leave directories under the unused prefix. The
+[preserved attempt](data/v4/transport/development/widget_persistence_v1/retained_validation_v1/validation_completion_v1.md)
+and 121-file seal retain that failure; an isolated test-fixture repair precedes
+a new full-suite gate. The candidate is not adopted. J1 had no qualifying reload pairs, so this repair
 supports future probes without claiming to fix its original failure.
 A later source observation about already-promoted slots and key revision remains
 a separate production-flow investigation; W1's focused result is limited to its
 tested promotion boundary.
+The reviewed [W2 diagnostic](data/v4/transport/development/widget_observation_v1/report_v1.md)
+isolates a separate scoring omission. The same native keyed/promoted widget
+attribute delta is SPURIOUS under the current predicate and EXPLAINED when its
+raw value becomes eligible observation evidence; the other three interpretation
+conditions remain NOTHING. All eight rows, 133 controls and 64 native comparisons
+are retained. Supplied identities and invented reload calibration make this a
+diagnostic, not earned identity, production scoring or JOIN competence. A proposed
+repair must distinguish value swaps from identity revision and resolve active
+field ownership before adoption.
 P15's real conditional-base experiment, automatic link/union revision and
 whole-rival acquisition remain open questions.
 

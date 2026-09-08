@@ -1,0 +1,223 @@
+{
+  "actions": "No prefix cleanup, instrument change, test rerun, corpus rerun, or main adoption. Original frozen policy and failure remain retained.",
+  "cache_source_files": {
+    "semabi/compiler/v4/pinned.py": {
+      "expected_cache_parent": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4",
+      "sha256": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b"
+    },
+    "semabi/run_v4_transfer.py": {
+      "expected_cache_parent": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home/moloch/semabi/runs/.w1_worktree/semabi",
+      "sha256": "7209b315253b246e6a78551e0dc8739444afe734724b38235e7e6c96ed952c93"
+    }
+  },
+  "corpus_freeze_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+  "directory_mapping": [
+    {
+      "evidence_status": "SOURCE_DERIVED_MAPPING; no mkdir syscall trace or writer attribution was recorded.",
+      "host_mtime_utc": "2026-09-08T05:45:14.049407+00:00",
+      "path": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc",
+      "role": "ancestor created by mkdir(parents=True)",
+      "source_derived_cache_parent_for": [
+        "semabi/compiler/v4/pinned.py",
+        "semabi/run_v4_transfer.py"
+      ]
+    },
+    {
+      "evidence_status": "SOURCE_DERIVED_MAPPING; no mkdir syscall trace or writer attribution was recorded.",
+      "host_mtime_utc": "2026-09-08T05:45:14.049407+00:00",
+      "path": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home",
+      "role": "ancestor created by mkdir(parents=True)",
+      "source_derived_cache_parent_for": [
+        "semabi/compiler/v4/pinned.py",
+        "semabi/run_v4_transfer.py"
+      ]
+    },
+    {
+      "evidence_status": "SOURCE_DERIVED_MAPPING; no mkdir syscall trace or writer attribution was recorded.",
+      "host_mtime_utc": "2026-09-08T05:45:14.049407+00:00",
+      "path": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home/moloch",
+      "role": "ancestor created by mkdir(parents=True)",
+      "source_derived_cache_parent_for": [
+        "semabi/compiler/v4/pinned.py",
+        "semabi/run_v4_transfer.py"
+      ]
+    },
+    {
+      "evidence_status": "SOURCE_DERIVED_MAPPING; no mkdir syscall trace or writer attribution was recorded.",
+      "host_mtime_utc": "2026-09-08T05:45:14.049407+00:00",
+      "path": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home/moloch/semabi",
+      "role": "ancestor created by mkdir(parents=True)",
+      "source_derived_cache_parent_for": [
+        "semabi/compiler/v4/pinned.py",
+        "semabi/run_v4_transfer.py"
+      ]
+    },
+    {
+      "evidence_status": "SOURCE_DERIVED_MAPPING; no mkdir syscall trace or writer attribution was recorded.",
+      "host_mtime_utc": "2026-09-08T05:45:14.049407+00:00",
+      "path": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home/moloch/semabi/runs",
+      "role": "ancestor created by mkdir(parents=True)",
+      "source_derived_cache_parent_for": [
+        "semabi/compiler/v4/pinned.py",
+        "semabi/run_v4_transfer.py"
+      ]
+    },
+    {
+      "evidence_status": "SOURCE_DERIVED_MAPPING; no mkdir syscall trace or writer attribution was recorded.",
+      "host_mtime_utc": "2026-09-08T05:45:14.049407+00:00",
+      "path": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home/moloch/semabi/runs/.w1_worktree",
+      "role": "ancestor created by mkdir(parents=True)",
+      "source_derived_cache_parent_for": [
+        "semabi/compiler/v4/pinned.py",
+        "semabi/run_v4_transfer.py"
+      ]
+    },
+    {
+      "evidence_status": "SOURCE_DERIVED_MAPPING; no mkdir syscall trace or writer attribution was recorded.",
+      "host_mtime_utc": "2026-09-08T05:45:20.525453+00:00",
+      "path": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home/moloch/semabi/runs/.w1_worktree/semabi",
+      "role": "direct cache parent",
+      "source_derived_cache_parent_for": [
+        "semabi/compiler/v4/pinned.py",
+        "semabi/run_v4_transfer.py"
+      ]
+    },
+    {
+      "evidence_status": "SOURCE_DERIVED_MAPPING; no mkdir syscall trace or writer attribution was recorded.",
+      "host_mtime_utc": "2026-09-08T05:45:14.049407+00:00",
+      "path": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home/moloch/semabi/runs/.w1_worktree/semabi/compiler",
+      "role": "ancestor created by mkdir(parents=True)",
+      "source_derived_cache_parent_for": [
+        "semabi/compiler/v4/pinned.py"
+      ]
+    },
+    {
+      "evidence_status": "SOURCE_DERIVED_MAPPING; no mkdir syscall trace or writer attribution was recorded.",
+      "host_mtime_utc": "2026-09-08T05:45:17.484431+00:00",
+      "path": "/tmp/semabi_w1_job_full_pytest_v1_no_pyc/home/moloch/semabi/runs/.w1_worktree/semabi/compiler/v4",
+      "role": "direct cache parent",
+      "source_derived_cache_parent_for": [
+        "semabi/compiler/v4/pinned.py"
+      ]
+    }
+  ],
+  "final_tree_counts": {
+    "directory": 9,
+    "file": 0,
+    "other": 0,
+    "symlink": 0
+  },
+  "findings": [
+    "The frozen _installed_cache helper computes cache paths using the active PYTHONPYCACHEPREFIX, creates all parent directories, explicitly writes supplied bytecode, then unlinks each newly created file without removing parent directories.",
+    "The five named tests passed in the retained JUnit result. Their two source-derived cache parent paths cover all nine observed directories. This is a supported explanation of the final tree, without per-write runtime tracing.",
+    "The original frozen guard requires the prefix itself to be absent or contain no entries. Nine directories violate that rule even when no files remain; the original wrapper failure is preserved.",
+    "The tests deliberately create transient cache files. A final tree with zero files cannot prove bytecode was absent during execution; final source hashes and module origin metadata do not establish executed code bytes while those fixtures were present."
+  ],
+  "fixture_contexts": {
+    "basis": "Static expansion of current frozen source, not an observed runtime write count.",
+    "by_test": {
+      "test_chain_replay_closure_also_rejects_a_live_divergent_cache": 1,
+      "test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list": 4,
+      "test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected": 1,
+      "test_live_divergent_bytecode_cache_is_rejected": 1,
+      "test_stale_bytecode_cache_is_not_rejected": 1
+    },
+    "count": 8
+  },
+  "host_stat": {
+    "bytes": 11126,
+    "path": "full_pytest_cache_host_stat_v1.json",
+    "sha256": "25702ac87e796093644455ff58674e210d3aa15ed50d044e55fe8a475f1ab977"
+  },
+  "original_postflight_error": "ValueError: Bytecode lookup prefix must remain absent or empty",
+  "original_pytest_returncode": 0,
+  "original_wrapper_returncode": 1,
+  "original_wrapper_status": "FAILED",
+  "pytest_rewrite_source_observation": {
+    "bytes": 47740,
+    "line_end": 169,
+    "line_start": 164,
+    "path": "/home/moloch/semabi/.venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py",
+    "scope": "Post-run read of installed third-party source; its rewrite loader checks sys.dont_write_bytecode before try_makedirs. This is not runtime writer tracing.",
+    "sha256": "17f1eefbd1c2fe5326cb7592ff3af92a773582cf9d01727b09d3ab864906ee50",
+    "text": "        write = not sys.dont_write_bytecode\n        cache_dir = get_cache_dir(fn)\n        if write:\n            ok = try_makedirs(cache_dir)\n            if not ok:\n                write = False"
+  },
+  "recorded_utc": "2026-09-08T06:10:46.448701+00:00",
+  "retained_passing_fixture_tests": [
+    {
+      "classname": "tests.test_v4_manifests",
+      "name": "test_live_divergent_bytecode_cache_is_rejected",
+      "outcomes": [],
+      "time": "1.191"
+    },
+    {
+      "classname": "tests.test_v4_manifests",
+      "name": "test_stale_bytecode_cache_is_not_rejected",
+      "outcomes": [],
+      "time": "0.640"
+    },
+    {
+      "classname": "tests.test_v4_manifests",
+      "name": "test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected",
+      "outcomes": [],
+      "time": "0.698"
+    },
+    {
+      "classname": "tests.test_v4_manifests",
+      "name": "test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list",
+      "outcomes": [],
+      "time": "1.820"
+    },
+    {
+      "classname": "tests.test_v4_manifests",
+      "name": "test_chain_replay_closure_also_rejects_a_live_divergent_cache",
+      "outcomes": [],
+      "time": "3.429"
+    }
+  ],
+  "schema": "semabi.transport.w1_full_pytest_cache_diagnosis.v1",
+  "source_evidence": {
+    "equals_frozen_hash": true,
+    "functions": {
+      "_closure_file": {
+        "line_end": 614,
+        "line_start": 609,
+        "source": "def _closure_file() -> str:\n    \"\"\"Pick one authenticated generator-closure file to forge a cache for.\"\"\"\n\n    relative = \"semabi/compiler/v4/pinned.py\"\n    assert relative in manifests.GENERATOR_IMPLEMENTATION_FILES\n    return relative"
+      },
+      "_installed_cache": {
+        "line_end": 636,
+        "line_start": 618,
+        "source": "def _installed_cache(relative: str, data: bytes, optimization: str = \"\"):\n    \"\"\"Install one bytecode cache for a closure file and always restore the original.\n\n    Only the cache file is touched; the authenticated ``.py`` source and its mtime are\n    never modified, which is exactly the condition the repair defends against.\n    \"\"\"\n\n    source = ROOT / relative\n    cache = Path(importlib.util.cache_from_source(str(source), optimization=optimization))\n    original = cache.read_bytes() if cache.is_file() else None\n    cache.parent.mkdir(parents=True, exist_ok=True)\n    cache.write_bytes(data)\n    try:\n        yield cache\n    finally:\n        if original is None:\n            cache.unlink()\n        else:\n            cache.write_bytes(original)"
+      },
+      "test_chain_replay_closure_also_rejects_a_live_divergent_cache": {
+        "line_end": 789,
+        "line_start": 755,
+        "source": "def test_chain_replay_closure_also_rejects_a_live_divergent_cache(tmp_path):\n    \"\"\"The same check guards chain construction and replay, not only generation.\"\"\"\n\n    relative = \"semabi/run_v4_transfer.py\"\n    assert relative in manifests.REPLAY_IMPLEMENTATION_FILES\n    source = _run(tmp_path / \"source\", \"source\")\n    source_manifest_path = tmp_path / \"source_manifest.json\"\n    manifests.save_source_manifest(\n        manifests.build_source_manifest(\n            source, [_reading(source)], _summary(), source_manifest_path, repo_root=ROOT\n        ),\n        source_manifest_path,\n        repo_root=ROOT,\n    )\n    chain_path = tmp_path / \"chain.json\"\n    manifests.save_chain_manifest(\n        manifests.build_chain_manifest(\n            source_manifest_path,\n            _run(tmp_path / \"transfer\", \"transfer\"),\n            _run(tmp_path / \"holdout\", \"holdout\"),\n            chain_path,\n            repo_root=ROOT,\n        ),\n        chain_path,\n        repo_root=ROOT,\n    )\n    manifests.load_chain_manifest(chain_path, repo_root=ROOT)\n    stat_result = (ROOT / relative).stat()\n    forged = _timestamp_pyc(\n        _divergent_code(relative), int(stat_result.st_mtime), stat_result.st_size\n    )\n    with _installed_cache(relative, forged):\n        with pytest.raises(manifests.ManifestError, match=\"diverges from authenticated source\"):\n            manifests.load_chain_manifest(chain_path, repo_root=ROOT)\n    manifests.load_chain_manifest(chain_path, repo_root=ROOT)"
+      },
+      "test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list": {
+        "line_end": 752,
+        "line_start": 714,
+        "source": "def test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list(tmp_path):\n    \"\"\"Cache variants are enumerated from the cache directory, not from a fixed tuple.\n\n    Round-four review found the previous fixed ``('', '1', '2')`` could not be\n    exhaustive: ``-OOO`` writes ``opt-3`` and ``cache_from_source`` accepts any\n    alphanumeric token.  A level whose bytecode ``compile`` cannot reproduce is now\n    refused rather than skipped, and a level it can reproduce is compared.\n    \"\"\"\n\n    relative = _closure_file()\n    stat_result = (ROOT / relative).stat()\n    _source, manifest, _payload = _source_manifest(tmp_path)\n    manifests.load_source_manifest(manifest, repo_root=ROOT)\n\n    forged = _timestamp_pyc(\n        _divergent_code(relative), int(stat_result.st_mtime), stat_result.st_size\n    )\n    for optimization in (\"1\", \"2\"):\n        with _installed_cache(relative, forged, optimization):\n            with pytest.raises(\n                manifests.ManifestError, match=\"diverges from authenticated source\"\n            ):\n                manifests.load_source_manifest(manifest, repo_root=ROOT)\n\n    with _installed_cache(relative, forged, \"3\"):\n        with pytest.raises(\n            manifests.ManifestError,\n            match=\"optimization level this check cannot reproduce\",\n        ):\n            manifests.load_source_manifest(manifest, repo_root=ROOT)\n\n    with _installed_cache(relative, forged, \"custom\"):\n        with pytest.raises(\n            manifests.ManifestError,\n            match=\"optimization level this check cannot reproduce\",\n        ):\n            manifests.load_source_manifest(manifest, repo_root=ROOT)\n\n    manifests.load_source_manifest(manifest, repo_root=ROOT)"
+      },
+      "test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected": {
+        "line_end": 711,
+        "line_start": 702,
+        "source": "def test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected(tmp_path):\n    relative = _closure_file()\n    _source, manifest, _payload = _source_manifest(tmp_path)\n    forged = _hash_pyc(_divergent_code(relative), b\"\\x00\" * 8)\n    with _installed_cache(relative, forged):\n        with pytest.raises(\n            manifests.ManifestError,\n            match=\"hash-based bytecode cache does not match authenticated source\",\n        ):\n            manifests.load_source_manifest(manifest, repo_root=ROOT)"
+      },
+      "test_live_divergent_bytecode_cache_is_rejected": {
+        "line_end": 686,
+        "line_start": 667,
+        "source": "def test_live_divergent_bytecode_cache_is_rejected(tmp_path):\n    \"\"\"A forged cache the interpreter would execute must fail authentication.\n\n    Source hashing alone cannot see this: the ``.py`` bytes and the checkout stay\n    untouched while the executed decision procedure is replaced.\n    \"\"\"\n\n    relative = _closure_file()\n    stat_result = (ROOT / relative).stat()\n    _source, manifest, _payload = _source_manifest(tmp_path)\n    # The manifest authenticates cleanly before the cache is forged.\n    manifests.load_source_manifest(manifest, repo_root=ROOT)\n    forged = _timestamp_pyc(\n        _divergent_code(relative), int(stat_result.st_mtime), stat_result.st_size\n    )\n    with _installed_cache(relative, forged):\n        with pytest.raises(manifests.ManifestError, match=\"diverges from authenticated source\"):\n            manifests.load_source_manifest(manifest, repo_root=ROOT)\n    # The restored cache authenticates again.\n    manifests.load_source_manifest(manifest, repo_root=ROOT)"
+      },
+      "test_stale_bytecode_cache_is_not_rejected": {
+        "line_end": 699,
+        "line_start": 689,
+        "source": "def test_stale_bytecode_cache_is_not_rejected(tmp_path):\n    \"\"\"A cache the interpreter would discard is inert, not a forgery.\"\"\"\n\n    relative = _closure_file()\n    stat_result = (ROOT / relative).stat()\n    _source, manifest, _payload = _source_manifest(tmp_path)\n    stale = _timestamp_pyc(\n        _divergent_code(relative), int(stat_result.st_mtime) + 1, stat_result.st_size\n    )\n    with _installed_cache(relative, stale):\n        manifests.load_source_manifest(manifest, repo_root=ROOT)"
+      }
+    },
+    "path": "tests/test_v4_manifests.py",
+    "sha256": "c1983daae99cbc01a7b491ce7b2e355b1c25976fc657d52551906ebea20e252d"
+  },
+  "source_freeze_sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+  "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4"
+}

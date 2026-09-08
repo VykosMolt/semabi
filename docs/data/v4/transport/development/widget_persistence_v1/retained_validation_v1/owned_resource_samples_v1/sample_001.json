@@ -1,0 +1,23 @@
+{
+  "schema": "semabi.transport.w1_owned_resource_sample.v1",
+  "coordinator": "/root/baseline_verification",
+  "actual_tool_call": {
+    "tool": "exec_command",
+    "arguments": {
+      "cmd": "python3 -B - <<'PY'\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nimport json,os\npids=[1270424,1270633,1270767,1270910,1271056,1271168];rows={}\nfor pid in pids:\n base=Path('/proc')/str(pid)\n try:\n  fields={k:v.strip() for k,v in (line.split(':',1) for line in (base/'status').read_text().splitlines() if ':' in line)}\n  rows[str(pid)]={'state':fields['State'],'rss_kb':int(fields.get('VmRSS','0 kB').split()[0]),'threads':int(fields['Threads']),'affinity':sorted(os.sched_getaffinity(pid)),'nice':os.getpriority(os.PRIO_PROCESS,pid)}\n except FileNotFoundError:rows[str(pid)]={'state':'ABSENT'}\nmem={k:int(v.split()[0]) for k,v in (line.split(':',1) for line in Path('/proc/meminfo').read_text().splitlines())}\nprint(json.dumps({'recorded_utc':datetime.now(timezone.utc).isoformat(),'children':rows,'mem_available_kb':mem['MemAvailable'],'scope':'Read-only host sample of the six explicitly owned child PIDs.'}))\nPY",
+      "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+      "sandbox_permissions": "require_escalated",
+      "justification": "Read the six owned W1 host process RSS, CPU affinity, thread count, priority and available memory while validation runs?",
+      "yield_time_ms": 1000,
+      "max_output_tokens": 2000
+    },
+    "result": {
+      "chunk_id": "e0b3b0",
+      "wall_time_seconds": 0.000003465,
+      "exit_code": 0,
+      "original_token_count": 189,
+      "output": "{\"recorded_utc\": \"2026-09-08T05:37:55.153584+00:00\", \"children\": {\"1270424\": {\"state\": \"R (running)\", \"rss_kb\": 428180, \"threads\": 1, \"affinity\": [0], \"nice\": 0}, \"1270633\": {\"state\": \"R (running)\", \"rss_kb\": 363364, \"threads\": 1, \"affinity\": [1], \"nice\": 0}, \"1270767\": {\"state\": \"R (running)\", \"rss_kb\": 415128, \"threads\": 1, \"affinity\": [2], \"nice\": 0}, \"1270910\": {\"state\": \"R (running)\", \"rss_kb\": 358360, \"threads\": 1, \"affinity\": [3], \"nice\": 0}, \"1271056\": {\"state\": \"R (running)\", \"rss_kb\": 437824, \"threads\": 1, \"affinity\": [4], \"nice\": 0}, \"1271168\": {\"state\": \"R (running)\", \"rss_kb\": 382292, \"threads\": 1, \"affinity\": [5], \"nice\": 0}}, \"mem_available_kb\": 21615052, \"scope\": \"Read-only host sample of the six explicitly owned child PIDs.\"}\n"
+    }
+  },
+  "scope": "Read-only host check of the six declared W1 child PIDs, after root's independent initial sample."
+}

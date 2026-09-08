@@ -1,0 +1,29 @@
+{
+  "schema": "semabi.transport.w1_terminal_receipt.v1",
+  "coordinator": "/root/baseline_verification",
+  "job_name": "corpus_comparison_v1",
+  "tool_session_id": null,
+  "exit_code": 0,
+  "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1295423, \"child_terminated\": true, \"end_utc\": \"2026-09-08T06:01:09.978416+00:00\"}\n",
+  "actual_tool_call": {
+    "name": "corpus_comparison_v1",
+    "tool": "exec_command",
+    "arguments": {
+      "cmd": "taskset -c 6 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_job_corpus_comparison_v1_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_comparison_v1 -- /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/compare_corpora.py --b1-manifest-sha af3c7131375798bbf0cc0f4050617cc8ebea901a6313d7be7879f23409597e8d --source-freeze-sha256 583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62 --corpus-freeze-sha256 b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+      "justification": "Run this reviewed W1 validation job on the host with frozen source and inputs, one CPU/thread, and owned host PID records?",
+      "max_output_tokens": 2000,
+      "sandbox_permissions": "require_escalated",
+      "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+      "yield_time_ms": 1000
+    },
+    "result": {
+      "chunk_id": "33559a",
+      "wall_time_seconds": 0.304066244,
+      "exit_code": 0,
+      "original_token_count": 34,
+      "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1295423, \"child_terminated\": true, \"end_utc\": \"2026-09-08T06:01:09.978416+00:00\"}\n"
+    }
+  },
+  "root_execution_go_sha256": "96cbec7605f2835c72ac0ffe78530e38a0f67ee4c750ce1cfb266c176b848402",
+  "scope": "Exact host exec_command launch and terminal return; comparator completed within initial call, no continuing session or retry."
+}

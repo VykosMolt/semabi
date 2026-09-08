@@ -1,0 +1,470 @@
+{
+  "schema": "semabi.transport.widget_observation_invented_inputs.v1",
+  "scope": "Entirely invented observations and claimed calibration reload interventions. Predictions are hypotheses, never observed result fields.",
+  "unit_root": 1,
+  "key_node": 2,
+  "widget_node": 3,
+  "outside_status_node": 4,
+  "observation_order": [
+    "A1",
+    "B1",
+    "C1",
+    "A2",
+    "B2",
+    "C2",
+    "S_BEFORE",
+    "S_AFTER"
+  ],
+  "observations": {
+    "A1": {
+      "url": "invented://widget-observation-v1",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "document",
+          "name": ""
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": ""
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "heading",
+          "name": "1"
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "combobox",
+          "name": "Shade",
+          "value": "amber",
+          "options": [
+            "amber",
+            "green",
+            "red",
+            "blue"
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 0,
+          "role": "status",
+          "name": "Calibration before"
+        }
+      ]
+    },
+    "B1": {
+      "url": "invented://widget-observation-v1",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "document",
+          "name": ""
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": ""
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "heading",
+          "name": "1"
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "combobox",
+          "name": "Shade",
+          "value": "amber",
+          "options": [
+            "amber",
+            "green",
+            "red",
+            "blue"
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 0,
+          "role": "status",
+          "name": "Calibration after"
+        }
+      ]
+    },
+    "C1": {
+      "url": "invented://widget-observation-v1",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "document",
+          "name": ""
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": ""
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "heading",
+          "name": "1"
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "combobox",
+          "name": "Shade",
+          "value": "red",
+          "options": [
+            "amber",
+            "green",
+            "red",
+            "blue"
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 0,
+          "role": "status",
+          "name": "Calibration after"
+        }
+      ]
+    },
+    "A2": {
+      "url": "invented://widget-observation-v1",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "document",
+          "name": ""
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": ""
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "heading",
+          "name": "2"
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "combobox",
+          "name": "Shade",
+          "value": "green",
+          "options": [
+            "amber",
+            "green",
+            "red",
+            "blue"
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 0,
+          "role": "status",
+          "name": "Calibration before"
+        }
+      ]
+    },
+    "B2": {
+      "url": "invented://widget-observation-v1",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "document",
+          "name": ""
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": ""
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "heading",
+          "name": "2"
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "combobox",
+          "name": "Shade",
+          "value": "green",
+          "options": [
+            "amber",
+            "green",
+            "red",
+            "blue"
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 0,
+          "role": "status",
+          "name": "Calibration after"
+        }
+      ]
+    },
+    "C2": {
+      "url": "invented://widget-observation-v1",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "document",
+          "name": ""
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": ""
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "heading",
+          "name": "2"
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "combobox",
+          "name": "Shade",
+          "value": "blue",
+          "options": [
+            "amber",
+            "green",
+            "red",
+            "blue"
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 0,
+          "role": "status",
+          "name": "Calibration after"
+        }
+      ]
+    },
+    "S_BEFORE": {
+      "url": "invented://widget-observation-v1",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "document",
+          "name": ""
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": ""
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "heading",
+          "name": "3"
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "combobox",
+          "name": "Shade",
+          "value": "red",
+          "options": [
+            "amber",
+            "green",
+            "red",
+            "blue"
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 0,
+          "role": "status",
+          "name": "Scored ready"
+        }
+      ]
+    },
+    "S_AFTER": {
+      "url": "invented://widget-observation-v1",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "document",
+          "name": ""
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": ""
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "heading",
+          "name": "3"
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "combobox",
+          "name": "Shade",
+          "value": "blue",
+          "options": [
+            "amber",
+            "green",
+            "red",
+            "blue"
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 0,
+          "role": "status",
+          "name": "Scored ready"
+        }
+      ]
+    }
+  },
+  "calibration_pairs": {
+    "PROMOTED": [
+      [
+        "A1",
+        "B1"
+      ],
+      [
+        "A2",
+        "B2"
+      ]
+    ],
+    "TRANSIENT": [
+      [
+        "A1",
+        "C1"
+      ],
+      [
+        "A2",
+        "C2"
+      ]
+    ]
+  },
+  "scored_step": {
+    "step": 0,
+    "episode": 0,
+    "action": {
+      "kind": "select",
+      "target": 3,
+      "text": "blue",
+      "target_desc": {
+        "role": "combobox",
+        "name": "Shade"
+      }
+    },
+    "ok": true,
+    "error": null,
+    "before": "S_BEFORE",
+    "after": "S_AFTER",
+    "typed_tokens": []
+  },
+  "predictions": {
+    "KEYED+TRANSIENT/CURRENT": {
+      "behaviour": {
+        "explained": 0,
+        "errors": 0,
+        "delta_atoms": 0,
+        "complexity": 5
+      },
+      "verdict": "NOTHING"
+    },
+    "KEYED+TRANSIENT/DIAGNOSTIC": {
+      "behaviour": {
+        "explained": 0,
+        "errors": 0,
+        "delta_atoms": 0,
+        "complexity": 5
+      },
+      "verdict": "NOTHING"
+    },
+    "KEYED+PROMOTED/CURRENT": {
+      "behaviour": {
+        "explained": 0,
+        "errors": 1,
+        "delta_atoms": 0,
+        "complexity": 6
+      },
+      "verdict": "SPURIOUS"
+    },
+    "KEYED+PROMOTED/DIAGNOSTIC": {
+      "behaviour": {
+        "explained": 1,
+        "errors": 0,
+        "delta_atoms": 1,
+        "complexity": 6
+      },
+      "verdict": "EXPLAINED"
+    },
+    "NONE+TRANSIENT/CURRENT": {
+      "behaviour": {
+        "explained": 0,
+        "errors": 0,
+        "delta_atoms": 0,
+        "complexity": 0
+      },
+      "verdict": "NOTHING"
+    },
+    "NONE+TRANSIENT/DIAGNOSTIC": {
+      "behaviour": {
+        "explained": 0,
+        "errors": 0,
+        "delta_atoms": 0,
+        "complexity": 0
+      },
+      "verdict": "NOTHING"
+    },
+    "NONE+PROMOTED/CURRENT": {
+      "behaviour": {
+        "explained": 0,
+        "errors": 0,
+        "delta_atoms": 0,
+        "complexity": 0
+      },
+      "verdict": "NOTHING"
+    },
+    "NONE+PROMOTED/DIAGNOSTIC": {
+      "behaviour": {
+        "explained": 0,
+        "errors": 0,
+        "delta_atoms": 0,
+        "complexity": 0
+      },
+      "verdict": "NOTHING"
+    }
+  }
+}

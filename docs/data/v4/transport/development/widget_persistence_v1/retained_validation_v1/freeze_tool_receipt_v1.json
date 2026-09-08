@@ -1,0 +1,32 @@
+{
+  "schema": "semabi.transport.w1_freeze_tool_receipt.v1",
+  "coordinator": "/root/baseline_verification",
+  "authorization_sha256": "3d989284d548f8044430d5fc73bb63a41ab7e4fed5d58719529c8f7105ec924c",
+  "actual_tool_call": {
+    "tool": "exec_command",
+    "arguments": {
+      "cmd": "taskset -c 8 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_freeze_v1_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/freeze_validation_v1.py",
+      "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+      "yield_time_ms": 10000,
+      "max_output_tokens": 2000
+    },
+    "result": {
+      "chunk_id": "3a97e5",
+      "wall_time_seconds": 0.481731016,
+      "exit_code": 0,
+      "original_token_count": 87,
+      "output": "{\"source_freeze_sha256\": \"583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62\", \"corpus_freeze_sha256\": \"b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e\", \"source_head\": \"284d80c855ff37c42a509ae1dd88f83d4e04e3f4\", \"runtime_files\": 67, \"source_files\": 156, \"test_files\": 70, \"corpus_files\": 45, \"suite_run_files\": 18}\n"
+    }
+  },
+  "output": {
+    "source_freeze_sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+    "corpus_freeze_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+    "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+    "runtime_files": 67,
+    "source_files": 156,
+    "test_files": 70,
+    "corpus_files": 45,
+    "suite_run_files": 18
+  },
+  "scope": "Reviewed metadata-only freezer executed once. No native imports, pytest, Fit or measurement."
+}

@@ -1,0 +1,170 @@
+"""Preserve reviewed W1 evidence custody, including actual nonpasses/differences."""
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import types
+import xml.etree.ElementTree as ET
+
+ROOT = Path(__file__).resolve().parents[6]
+HERE = Path(__file__).resolve().parent
+CASES = ('allocation_positive', 'allocation_refusals', 'pilot', 'separating', 'separating_extended')
+JOBS = {'full_pytest_v1': 'full_pytest_v1_v1.json',
+        **{'corpus_' + case: case + '_v1.json' for case in CASES},
+        'corpus_comparison_v1': 'corpus_comparison_v1.json'}
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha(path):
+    require(path.resolve(strict=True) == path and path.is_file(), 'Noncanonical artifact: ' + str(path))
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def read(path, expected=None):
+    require(expected is None or sha(path) == expected, 'Changed authenticated artifact: ' + str(path))
+    return json.loads(path.read_text())
+
+
+def load_guard(source_sha):
+    path = HERE / 'source_freeze_v1.json'
+    source = read(path, source_sha)
+    for path in (Path(__file__).resolve(), HERE / 'validation_guard.py'):
+        require(source['verification_files'].get(path.relative_to(ROOT).as_posix()) == sha(path),
+                'Entry point or shared guard changed')
+    guard = types.ModuleType('w1_validation_guard')
+    guard.__file__ = str(path)
+    exec(compile(path.read_bytes(), str(path), 'exec'), guard.__dict__)
+    return guard
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
+    parser.add_argument('--proposal-sha', required=True)
+    parser.add_argument('--source-freeze-sha256', required=True)
+    parser.add_argument('--corpus-freeze-sha256', required=True)
+    args = parser.parse_args()
+    guard = load_guard(args.source_freeze_sha256)
+    source, _, _ = guard.verify(args.source_freeze_sha256, args.corpus_freeze_sha256)
+    output = HERE / 'results_manifest_v1.json'
+    require(not output.exists() and not output.is_symlink(), 'Final manifest identity is exclusive')
+    proposal_path = HERE / 'artifact_manifest_proposal_v1.json'
+    proposal = read(proposal_path, args.proposal_sha)
+    require(proposal['schema'] == 'semabi.transport.w1_validation_artifact_proposal.v1'
+            and proposal['source_head'] == guard.HEAD, 'Wrong W1 artifact proposal')
+    expected_names = set(proposal['files']) | {proposal_path.relative_to(ROOT).as_posix()}
+    scratch = HERE / 'pytest_tmp_v1'
+
+    def verify_inventory():
+        require(not scratch.is_symlink() and (not scratch.exists() or
+                (scratch.is_dir() and scratch.resolve(strict=True) == scratch)), 'Noncanonical pytest scratch root')
+        actual = set()
+        for path in HERE.rglob('*'):
+            if path == scratch or path.is_relative_to(scratch):
+                continue
+            require(not path.is_symlink(), 'Symlink in validation inventory')
+            if path.is_dir():
+                continue
+            require(path.is_file(), 'Nonregular validation artifact')
+            actual.add(path.relative_to(ROOT).as_posix())
+        require(actual == expected_names, 'Validation artifact membership changed')
+        for name, entry in proposal['files'].items():
+            require(not (ROOT / name).is_relative_to(scratch), 'Fixture scratch must not appear in artifact proposal')
+            path = guard.checked(name)
+            require(path.is_relative_to(HERE) and set(entry) == {'bytes', 'sha256'}, 'Invalid proposed artifact')
+            require(path.stat().st_size == entry['bytes'] and sha(path) == entry['sha256'], 'Proposed artifact bytes changed: ' + name)
+        require(sha(proposal_path) == args.proposal_sha, 'Proposal changed')
+
+    verify_inventory()
+    guard.verify_files(source['tracked_files'])
+    jobs = {}
+    for name, receipt_name in JOBS.items():
+        path = HERE / 'jobs' / name / 'process.json'
+        job = read(path)
+        receipt_path = HERE / 'terminal_receipts' / receipt_name
+        receipt = read(receipt_path)
+        terminal = json.loads(receipt['output'])
+        require(receipt['coordinator'] in ('/root', '/root/baseline_verification'), 'Unknown terminal receipt coordinator')
+        require(job['status'] == terminal['status'] and job['status'] in ('FINISHED', 'FAILED', 'INTERRUPTED')
+                and isinstance(job['returncode'], int) and job['returncode'] == terminal['returncode'] == receipt['exit_code']
+                and job['child_terminated'] is terminal['child_terminated'] is True
+                and job['child_pid'] == terminal['child_pid'] and job['end_utc'] == terminal['end_utc'], 'Job/terminal mismatch: ' + name)
+        require(job['source_head'] == guard.HEAD and job['source_hashes'] == source['source_files']
+                and job['log_sha256'] == sha(path.parent / 'output.log'), 'Job source/log mismatch: ' + name)
+        jobs[name] = {'process': path.relative_to(ROOT).as_posix(), 'process_sha256': sha(path),
+            'terminal_receipt': receipt_path.relative_to(ROOT).as_posix(), 'terminal_receipt_sha256': sha(receipt_path),
+            'child_pid': job['child_pid'], 'tool_session_id': receipt.get('tool_session_id'),
+            'returncode': job['returncode'], 'status': job['status'], 'child_terminated': True}
+    suite = {'returncode': jobs['full_pytest_v1']['returncode'], 'junit_present': False, 'origin_receipt_present': False}
+    junit = HERE / 'full_pytest_v1.xml'
+    if junit.exists():
+        cases = list(ET.parse(junit).getroot().iter('testcase'))
+        counts = {'passed': 0, 'failed': 0, 'errors': 0, 'skipped': 0, 'xfailed': 0}
+        nonpasses = []
+        for case in cases:
+            outcomes = [child for child in case if child.tag in ('failure', 'error', 'skipped')]
+            if not outcomes:
+                counts['passed'] += 1
+            for child in outcomes:
+                kind = {'failure': 'failed', 'error': 'errors', 'skipped': 'skipped'}[child.tag]
+                if child.tag == 'skipped' and child.get('type') == 'pytest.xfail':
+                    kind = 'xfailed'
+                counts[kind] += 1
+                nonpasses.append({'classname': case.get('classname'), 'name': case.get('name'),
+                                  'outcome': kind, 'attributes': dict(child.attrib), 'text': child.text})
+        suite.update(junit_present=True, junit_sha256=sha(junit), testcases=len(cases), counts=counts, nonpasses=nonpasses)
+    audit_path = HERE / 'full_suite_v1/import_origins_v1.json'
+    if audit_path.exists():
+        audit = read(audit_path)
+        require(audit['source_head'] == guard.HEAD and audit['source_freeze_sha256'] == args.source_freeze_sha256
+                and audit['corpus_freeze_sha256'] == args.corpus_freeze_sha256
+                and audit['scope'] == 'PRIMARY_PYTEST_INTERPRETER', 'Full-suite origin association differs')
+        suite.update(origin_receipt_present=True, origin_receipt_sha256=sha(audit_path),
+                     origin_postflight_status=audit.get('postflight_status'), origin_scope=audit['subprocess_scope'])
+        if 'pytest_returncode' in audit:
+            require(audit['pytest_returncode'] == suite['returncode'], 'Pytest/owned return codes differ')
+    comparison_path = HERE / 'corpus_comparison_v1.json'
+    comparison_summary = {'present': comparison_path.exists(), 'returncode': jobs['corpus_comparison_v1']['returncode']}
+    if comparison_path.exists():
+        comparison = read(comparison_path)
+        require(comparison['schema'] == 'semabi.transport.w1_b1_corpus_comparison.v1'
+                and comparison['source_freeze_sha256'] == args.source_freeze_sha256
+                and comparison['corpus_freeze_sha256'] == args.corpus_freeze_sha256
+                and set(comparison['comparisons']) == set(CASES), 'Comparison association differs')
+        for phase, files in comparison['inputs'].items():
+            root = Path(comparison['artifact_roots'][phase])
+            for name, expected in files.items():
+                require(sha(root / name) == expected, 'Comparison input changed: ' + phase + ':' + name)
+        comparison_summary.update(sha256=sha(comparison_path),
+            semantic_payloads_equal={name: row['semantic_payloads_equal'] for name, row in comparison['comparisons'].items()},
+            difference_counts={name: len(row['differences']) for name, row in comparison['comparisons'].items()},
+            accepted_b1_g2_chain=comparison['accepted_b1_g2_chain'])
+    require(jobs['full_pytest_v1']['returncode'] != 0 or (suite['junit_present'] and suite['origin_receipt_present']),
+            'Successful suite lacks required evidence')
+    require(jobs['corpus_comparison_v1']['returncode'] != 0 or comparison_summary['present'],
+            'Successful comparison lacks required evidence')
+    guard.verify(args.source_freeze_sha256, args.corpus_freeze_sha256)
+    verify_inventory()
+    artifacts = dict(proposal['files'])
+    artifacts[proposal_path.relative_to(ROOT).as_posix()] = {'bytes': proposal_path.stat().st_size, 'sha256': args.proposal_sha}
+    record = {'schema': 'semabi.transport.w1_validation_results.v1', 'status': 'PRESERVED',
+        'created_utc': datetime.now(timezone.utc).isoformat(), 'source_head': guard.HEAD,
+        'coordinator': '/root/baseline_verification', 'working_directory': str(ROOT),
+        'source_freeze_sha256': args.source_freeze_sha256, 'corpus_freeze_sha256': args.corpus_freeze_sha256,
+        'reviewed_proposal_sha256': args.proposal_sha, 'files': artifacts, 'jobs': jobs,
+        'all_owned_jobs_terminated': True, 'full_suite': suite, 'corpus_comparison': comparison_summary,
+        'execution_nonzero_jobs': [name for name, row in jobs.items() if row['returncode'] != 0],
+        'excluded_runtime_scratch': {'path': scratch.relative_to(ROOT).as_posix(), 'present': scratch.exists(),
+            'policy': 'Only this real non-symlink directory and its lexical descendants are excluded. Synthetic pytest fixture scratch is not retained run evidence; all other symlinks are rejected.'},
+        'adoption_status': 'ROOT_REVIEW_REQUIRED; preservation is not semantic acceptance or main adoption.',
+        'scope': 'W1 retained validation evidence custody. Actual nonpasses, execution failures and semantic differences remain preserved without hard-coded passing counts or equality requirements.'}
+    guard.write_json(output, record)
+    print(json.dumps({'path': output.relative_to(ROOT).as_posix(), 'sha256': sha(output), 'files': len(artifacts), 'jobs': len(jobs)}))
+
+
+if __name__ == '__main__':
+    main()

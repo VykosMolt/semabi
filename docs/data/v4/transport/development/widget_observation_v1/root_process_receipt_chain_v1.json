@@ -1,0 +1,18 @@
+{
+  "schema": "semabi.widget_observation.root_process_receipt_chain.v1",
+  "launch_arguments_record": "root_execution_go_v1.json:exec_command_arguments",
+  "launch_tool_result": "root_launch_tool_v1.json",
+  "launch_tool_chunk": "6774b4",
+  "owned_session_id": 59818,
+  "reap_tool": "write_stdin",
+  "reap_arguments": {
+    "session_id": 59818,
+    "chars": "",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 2500
+  },
+  "reap_tool_result": "root_reap_tool_v1.json",
+  "reap_tool_chunk": "4325db",
+  "host_sample_tool_result": "root_host_sample_tool_v1.json",
+  "scope": "Actual root-owned tool invocation continuity. The host /proc sample occurred after the short diagnostic had exited; it is absence evidence. No retry or alternate launch occurred."
+}

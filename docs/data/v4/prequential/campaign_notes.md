@@ -2991,10 +2991,35 @@ The next isolated source checkpoint W1 (`284d80c`) addresses a separately
 demonstrated soundness defect in reload correspondence. Duplicated child keys
 can no longer overwrite a reversion and establish slot-wide persistence.
 The same focused file moves from 3 failures/13 passes to 16 passes; independent
-review covers source, multiple pairs/slots and unaffected templates. Full-suite
-and dedicated allocation-positive/refusals, pilot and separating validation are
-being prepared before adoption. A separate controlled observation/scoring
-diagnostic follows; no normal JOIN competence is claimed.
+review covers source, multiple pairs/slots and unaffected templates. Five dedicated
+allocation-positive/refusals, pilot and separating runs preserve all six retained
+components, including wrong, ambiguous, unestablished and abstaining rows. The full
+suite passes 631 tests with three skips and one expected failure, but its wrapper
+fails on directories left by intentional manifest-test cache fixtures. The
+121-file attempt seal `47518651…` remains failed and immutable; an isolated
+test-only cache repair and new full-suite validation precede adoption.
 Already-promoted slots followed by key revision form a separate source-grounded
 variant to investigate; the focused W1 result does not establish that broader
 final-key invariant.
+
+## P48 / W2: observation evidence for promoted widgets (recorded 2026-09-08)
+
+The reviewed [native diagnostic](../transport/development/widget_observation_v1/report_v1.md)
+uses eight fresh abstractors on identical invented observations: keyed or absent
+identity, transient or promoted widget, and current or diagnostic observation
+predicate. The keyed/promoted red-to-blue attribute delta is identical across
+scorer arms, but changes from SPURIOUS (zero explained, one error) to EXPLAINED
+(one explained, zero errors) when the raw widget value is admitted. The other
+three conditions remain NOTHING. All 133 controls pass, with all 64 native
+preference comparisons retained. The 37-file attempt seal is `d32f9fa3…`; root
+opens the outcomes only afterward. Independent result review and root acceptance
+preserve the causal limits.
+
+The native promotion method runs on supplied keys and invented distinct-observation
+reload pairs; no normal fit, browser or fresh transfer evaluation runs in W2.
+This diagnoses a score omission for an already represented attribute. It does
+not establish J1's missing identities, endpoint references, receiver naming or
+JOIN competence. Production observation evidence must handle owner/field swaps,
+active attachment and raw key witnesses without treating key reassignment as
+widget value change. W3's separate, unexecuted instrument tests stale promotion
+after a supplied key bijection through actual default fitting.

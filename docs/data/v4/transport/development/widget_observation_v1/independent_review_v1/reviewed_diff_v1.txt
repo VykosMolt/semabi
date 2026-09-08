@@ -1,0 +1,82 @@
+--- initial/diagnostic.py
++++ corrected/diagnostic.py
+@@ -23,7 +23,7 @@
+ 
+ 
+ def pack(value):
+-    """Lossless JSON for the native values used here; tuple-key maps stay explicit."""
++    """Deterministic encoding of this known schema; parsed associations are separate."""
+     if is_dataclass(value):
+         return {f.name: pack(getattr(value, f.name)) for f in fields(value)
+                 if f.name != "parsed"}
+@@ -418,6 +418,9 @@
+                 {"step": 0, "episode": 0, "action": {"kind": "select", "target": data["widget_node"],
+                  "text": "blue", "target_desc": {"role": "combobox", "name": "Shade"}}, "ok": True,
+                  "error": None, "before": "S_BEFORE", "after": "S_AFTER", "typed_tokens": []})
++        report["preloaded_native_modules"] = sorted(
++            name for name in sys.modules if name == "semabi" or name.startswith("semabi."))
++        require(not report["preloaded_native_modules"], "Native modules were already loaded before the first permitted import")
+         run_native(data, report, freeze)
+     except BaseException:
+         report["exception"] = traceback.format_exc()
+--- initial/freeze.py
++++ corrected/freeze.py
+@@ -9,6 +9,7 @@
+ import json
+ import os
+ from pathlib import Path
++import shlex
+ import subprocess
+ import sys
+ 
+@@ -109,13 +110,15 @@
+     write_exclusive(freeze_path, freeze)
+     frozen_sha = sha(freeze_path)
+     concrete_python = [value.replace("{FREEZE_SHA256}", frozen_sha) for value in python_argv]
+-    child = ["taskset", "--cpu-list", str(args.cpu), "/usr/bin/env"]
+-    child += [name + "=" + value for name, value in environment.items()]
+-    child += concrete_python
+-    command = [str(python), "-B", str(ROOT / "docs/data/v4/transport/run_job.py"), str(job), "--", *child]
++    prefix_argv = ["taskset", "--cpu-list", str(args.cpu), "/usr/bin/env"]
++    prefix_argv += [name + "=" + value for name, value in environment.items()]
++    child = [*prefix_argv, *concrete_python]
++    runner_argv = [str(python), "-B", str(ROOT / "docs/data/v4/transport/run_job.py"), str(job), "--", *child]
++    command = [*prefix_argv, *runner_argv]
+     launch = {"schema": "semabi.transport.widget_observation_launch.v1",
+               "freeze": str(freeze_path), "freeze_sha256": frozen_sha,
+               "cwd": str(ROOT), "command": command, "child_command": child,
++              "runner_argv": runner_argv, "shell_command": shlex.join(command),
+               "environment": environment, "cpu": args.cpu,
+               "gate": "Root and independent review of source, inputs, freeze and this exact command, followed by explicit root GO"}
+     write_exclusive(launch_path, launch)
+--- initial/command_plan_v1.md
++++ corrected/command_plan_v1.md
+@@ -39,14 +39,22 @@
+ launch plan before root gives GO.
+ 
+ Execute `launch_plan_v1.json`'s `command` array exactly once from the recorded
+-working directory using an owned tool/process, without a shell command string.
+-Retain the launch tool receipt. The existing runner owns and reaps the child and
+-records `job_v1/process.json` and `job_v1/output.log`. `taskset` confines that child
+-to the frozen CPU. The command pins `PYTHONHASHSEED=0` and all six thread limits
++working directory using an owned tool/process. The execution tool accepts a
++shell command string, so submit the recorded `shell_command`, which is derived
++with `shlex.join(command)`. Independently verify that `shlex.split(shell_command)`
++equals the complete argv before launch; add no shell operations or substitutions.
++Retain both exact argv and the submitted command string in the launch tool
++receipt. The existing runner owns and reaps the child and records
++`job_v1/process.json` and `job_v1/output.log`. The outer `taskset` and environment
++prefix apply to the complete runner invocation, and the child retains the same
++prefix. Both interpreters use `-B` and share the frozen CPU. The command pins
++`PYTHONHASHSEED=0` and all six thread limits
+ (`OMP`, `OPENBLAS`, `MKL`, `NUMEXPR`, `VECLIB_MAXIMUM_THREADS`, `BLIS`) to one,
+ sets the repository `PYTHONPATH`, disables bytecode writes, and directs bytecode
+-lookups to the absent `absent_bytecode_v1` path. The diagnostic refuses any
+-preexisting `result_v1` directory or different Python argv/environment.
++lookups to the absent `absent_bytecode_v1` path. After the stdlib gates and before
++the first permitted native import, the diagnostic records and rejects any
++preloaded `semabi` module. It refuses any preexisting `result_v1` directory or
++different Python argv/environment.
+ 
+ Eight independently built abstractors evaluate the two arms for each supplied
+ interpretation. Calibration is stored as native reload Steps outside the sole

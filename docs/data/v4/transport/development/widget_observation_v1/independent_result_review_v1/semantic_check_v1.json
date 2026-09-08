@@ -1,0 +1,3887 @@
+{
+  "bindings": {
+    "custody_check_v1.json": "572a60f76abf47d4919f5e42b05239ef82dcacd432a44900b358ca0b610a1dd3",
+    "docs/data/v4/transport/development/widget_observation_v1/invented_inputs_v1.json": "6a78e73ec7459cc88217c2a1a3f3fb894b077347e59d0ad0042c9afbafd34fb6",
+    "docs/data/v4/transport/development/widget_observation_v1/result_v1/report.json": "b6c4c302fde78e022aeb694b5b5f6d4fe9582fcb012a3078afbfbfd9ec37c604",
+    "semabi/compiler/v4/objective.py": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef"
+  },
+  "calibrations": [
+    {
+      "kept": 0,
+      "keys": [
+        "1",
+        "2"
+      ],
+      "lost": 2,
+      "name": "KEYED+TRANSIENT/CURRENT",
+      "native_persistent_widgets": [],
+      "pairs": [
+        [
+          "A1",
+          "C1"
+        ],
+        [
+          "A2",
+          "C2"
+        ]
+      ]
+    },
+    {
+      "kept": 0,
+      "keys": [
+        "1",
+        "2"
+      ],
+      "lost": 2,
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC",
+      "native_persistent_widgets": [],
+      "pairs": [
+        [
+          "A1",
+          "C1"
+        ],
+        [
+          "A2",
+          "C2"
+        ]
+      ]
+    },
+    {
+      "kept": 2,
+      "keys": [
+        "1",
+        "2"
+      ],
+      "lost": 0,
+      "name": "KEYED+PROMOTED/CURRENT",
+      "native_persistent_widgets": [
+        [
+          "group[](heading[_],combobox[_])",
+          "combobox#0"
+        ]
+      ],
+      "pairs": [
+        [
+          "A1",
+          "B1"
+        ],
+        [
+          "A2",
+          "B2"
+        ]
+      ]
+    },
+    {
+      "kept": 2,
+      "keys": [
+        "1",
+        "2"
+      ],
+      "lost": 0,
+      "name": "KEYED+PROMOTED/DIAGNOSTIC",
+      "native_persistent_widgets": [
+        [
+          "group[](heading[_],combobox[_])",
+          "combobox#0"
+        ]
+      ],
+      "pairs": [
+        [
+          "A1",
+          "B1"
+        ],
+        [
+          "A2",
+          "B2"
+        ]
+      ]
+    },
+    {
+      "kept": 0,
+      "keys": [
+        "1",
+        "2"
+      ],
+      "lost": 2,
+      "name": "NONE+TRANSIENT/CURRENT",
+      "native_persistent_widgets": [],
+      "pairs": [
+        [
+          "A1",
+          "C1"
+        ],
+        [
+          "A2",
+          "C2"
+        ]
+      ]
+    },
+    {
+      "kept": 0,
+      "keys": [
+        "1",
+        "2"
+      ],
+      "lost": 2,
+      "name": "NONE+TRANSIENT/DIAGNOSTIC",
+      "native_persistent_widgets": [],
+      "pairs": [
+        [
+          "A1",
+          "C1"
+        ],
+        [
+          "A2",
+          "C2"
+        ]
+      ]
+    },
+    {
+      "kept": 2,
+      "keys": [
+        "1",
+        "2"
+      ],
+      "lost": 0,
+      "name": "NONE+PROMOTED/CURRENT",
+      "native_persistent_widgets": [
+        [
+          "group[](heading[_],combobox[_])",
+          "combobox#0"
+        ]
+      ],
+      "pairs": [
+        [
+          "A1",
+          "B1"
+        ],
+        [
+          "A2",
+          "B2"
+        ]
+      ]
+    },
+    {
+      "kept": 2,
+      "keys": [
+        "1",
+        "2"
+      ],
+      "lost": 0,
+      "name": "NONE+PROMOTED/DIAGNOSTIC",
+      "native_persistent_widgets": [
+        [
+          "group[](heading[_],combobox[_])",
+          "combobox#0"
+        ]
+      ],
+      "pairs": [
+        [
+          "A1",
+          "B1"
+        ],
+        [
+          "A2",
+          "B2"
+        ]
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "held prior custody audit",
+      "passed": true
+    },
+    {
+      "name": "custody audit passed before semantic reads",
+      "passed": true
+    },
+    {
+      "name": "authenticated semantic input: docs/data/v4/transport/development/widget_observation_v1/result_v1/report.json",
+      "passed": true
+    },
+    {
+      "name": "authenticated semantic input: docs/data/v4/transport/development/widget_observation_v1/invented_inputs_v1.json",
+      "passed": true
+    },
+    {
+      "name": "authenticated semantic input: semabi/compiler/v4/objective.py",
+      "passed": true
+    },
+    {
+      "name": "report passed without execution exceptions",
+      "passed": true
+    },
+    {
+      "name": "all 133 native controls pass with matching serialized observations",
+      "passed": true
+    },
+    {
+      "name": "invented inputs in report equal frozen input bytes",
+      "passed": true
+    },
+    {
+      "name": "all eight native rows recorded once in declared order",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: declared row identity",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: eight distinct native observation signatures",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: only the successful select is scored",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: sole raw scored change is red-to-blue widget",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: recomputed raw_evidence_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: recomputed candidate_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: recomputed states_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: recomputed delta_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native calibration unit structure",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: one unambiguous native unit per observation",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration slot/node values: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed owner follows declared identity: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration slot/node values: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed owner follows declared identity: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration slot/node values: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed owner follows declared identity: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration slot/node values: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed owner follows declared identity: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration slot/node values: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed owner follows declared identity: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration slot/node values: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed owner follows declared identity: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration slot/node values: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed owner follows declared identity: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration slot/node values: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: parsed owner follows declared identity: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native widget promotion retained after identity setting",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: declared native calibration pairs",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: actual calibration correspondence 0",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration is native reload evidence outside scored log 0",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: actual calibration correspondence 1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: calibration is native reload evidence outside scored log 1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: two distinct calibration keys separate from scored key",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: modeled object count before",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: same scored object and intended attribute before",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: modeled object count after",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: same scored object and intended attribute after",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: only recorded widget channels change in native states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native replay delta matches stored states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: observable delta signature matches actual domain changes",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: recorded raw predicates and owner-gated widget counts",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: all native Behaviour fields retained",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: native verdict and per-step signature",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: totals describe actual verdict",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: derived errors and reporting order",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/CURRENT: original predicate restored after evaluation",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: declared row identity",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: eight distinct native observation signatures",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: only the successful select is scored",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: sole raw scored change is red-to-blue widget",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: recomputed raw_evidence_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: recomputed candidate_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: recomputed states_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: recomputed delta_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native calibration unit structure",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: one unambiguous native unit per observation",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration slot/node values: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration slot/node values: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration slot/node values: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration slot/node values: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration slot/node values: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration slot/node values: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration slot/node values: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration slot/node values: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native widget promotion retained after identity setting",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: declared native calibration pairs",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: actual calibration correspondence 0",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration is native reload evidence outside scored log 0",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: actual calibration correspondence 1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: calibration is native reload evidence outside scored log 1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: two distinct calibration keys separate from scored key",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: modeled object count before",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: same scored object and intended attribute before",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: modeled object count after",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: same scored object and intended attribute after",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: only recorded widget channels change in native states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native replay delta matches stored states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: observable delta signature matches actual domain changes",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: recorded raw predicates and owner-gated widget counts",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: all native Behaviour fields retained",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: native verdict and per-step signature",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: totals describe actual verdict",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: derived errors and reporting order",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC: original predicate restored after evaluation",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: declared row identity",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: eight distinct native observation signatures",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: only the successful select is scored",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: sole raw scored change is red-to-blue widget",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: recomputed raw_evidence_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: recomputed candidate_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: recomputed states_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: recomputed delta_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native calibration unit structure",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: one unambiguous native unit per observation",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration slot/node values: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed owner follows declared identity: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration slot/node values: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed owner follows declared identity: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration slot/node values: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed owner follows declared identity: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration slot/node values: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed owner follows declared identity: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration slot/node values: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed owner follows declared identity: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration slot/node values: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed owner follows declared identity: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration slot/node values: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed owner follows declared identity: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration slot/node values: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: parsed owner follows declared identity: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native widget promotion retained after identity setting",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: declared native calibration pairs",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: actual calibration correspondence 0",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration is native reload evidence outside scored log 0",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: actual calibration correspondence 1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: calibration is native reload evidence outside scored log 1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: two distinct calibration keys separate from scored key",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: modeled object count before",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: same scored object and intended attribute before",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: modeled object count after",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: same scored object and intended attribute after",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: only recorded widget channels change in native states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native replay delta matches stored states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: observable delta signature matches actual domain changes",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: recorded raw predicates and owner-gated widget counts",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: all native Behaviour fields retained",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: native verdict and per-step signature",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: totals describe actual verdict",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: derived errors and reporting order",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/CURRENT: original predicate restored after evaluation",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: declared row identity",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: eight distinct native observation signatures",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: only the successful select is scored",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: sole raw scored change is red-to-blue widget",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: recomputed raw_evidence_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: recomputed candidate_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: recomputed states_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: recomputed delta_sha256",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native calibration unit structure",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: one unambiguous native unit per observation",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration slot/node values: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: A1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration slot/node values: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: A2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration slot/node values: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: B1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration slot/node values: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: B2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration slot/node values: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: C1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration slot/node values: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: C2",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration slot/node values: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration slot/node values: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native widget promotion retained after identity setting",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: declared native calibration pairs",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: actual calibration correspondence 0",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration is native reload evidence outside scored log 0",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: actual calibration correspondence 1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: calibration is native reload evidence outside scored log 1",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: two distinct calibration keys separate from scored key",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: modeled object count before",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: same scored object and intended attribute before",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: modeled object count after",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: same scored object and intended attribute after",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: only recorded widget channels change in native states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native replay delta matches stored states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: observable delta signature matches actual domain changes",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: recorded raw predicates and owner-gated widget counts",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: all native Behaviour fields retained",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: native verdict and per-step signature",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: totals describe actual verdict",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: derived errors and reporting order",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED/DIAGNOSTIC: original predicate restored after evaluation",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: declared row identity",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: eight distinct native observation signatures",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native raw page equals supplied page plus bbox defaults: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: only the successful select is scored",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: sole raw scored change is red-to-blue widget",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: recomputed raw_evidence_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: recomputed candidate_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: recomputed states_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: recomputed delta_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native calibration unit structure",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: one unambiguous native unit per observation",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration slot/node values: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed owner follows declared identity: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration slot/node values: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed owner follows declared identity: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration slot/node values: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed owner follows declared identity: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration slot/node values: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed owner follows declared identity: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration slot/node values: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed owner follows declared identity: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration slot/node values: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed owner follows declared identity: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration slot/node values: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed owner follows declared identity: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration slot/node values: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: promotion only renames widget slot with node association intact: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed native unit retains promoted/transient association: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: parsed owner follows declared identity: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native widget promotion retained after identity setting",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: declared native calibration pairs",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: actual calibration correspondence 0",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration is native reload evidence outside scored log 0",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: actual calibration correspondence 1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: calibration is native reload evidence outside scored log 1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: two distinct calibration keys separate from scored key",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: modeled object count before",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: modeled object count after",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: only recorded widget channels change in native states",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native replay delta matches stored states",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: observable delta signature matches actual domain changes",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: recorded raw predicates and owner-gated widget counts",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: all native Behaviour fields retained",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: native verdict and per-step signature",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: totals describe actual verdict",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: derived errors and reporting order",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/CURRENT: original predicate restored after evaluation",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: declared row identity",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: eight distinct native observation signatures",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: only the successful select is scored",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: sole raw scored change is red-to-blue widget",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: recomputed raw_evidence_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: recomputed candidate_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: recomputed states_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: recomputed delta_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native calibration unit structure",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: one unambiguous native unit per observation",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration slot/node values: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration slot/node values: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration slot/node values: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration slot/node values: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration slot/node values: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration slot/node values: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration slot/node values: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration slot/node values: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: promotion only renames widget slot with node association intact: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed native unit retains promoted/transient association: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: parsed owner follows declared identity: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native widget promotion retained after identity setting",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: declared native calibration pairs",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: actual calibration correspondence 0",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration is native reload evidence outside scored log 0",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: actual calibration correspondence 1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: calibration is native reload evidence outside scored log 1",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: two distinct calibration keys separate from scored key",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: modeled object count before",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: modeled object count after",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: only recorded widget channels change in native states",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native replay delta matches stored states",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: observable delta signature matches actual domain changes",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: recorded raw predicates and owner-gated widget counts",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: all native Behaviour fields retained",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: native verdict and per-step signature",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: totals describe actual verdict",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: derived errors and reporting order",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT/DIAGNOSTIC: original predicate restored after evaluation",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: declared row identity",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: eight distinct native observation signatures",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native raw page equals supplied page plus bbox defaults: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: only the successful select is scored",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: sole raw scored change is red-to-blue widget",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: recomputed raw_evidence_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: recomputed candidate_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: recomputed states_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: recomputed delta_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native calibration unit structure",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: one unambiguous native unit per observation",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration slot/node values: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed owner follows declared identity: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration slot/node values: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed owner follows declared identity: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration slot/node values: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed owner follows declared identity: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration slot/node values: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed owner follows declared identity: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration slot/node values: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed owner follows declared identity: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration slot/node values: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed owner follows declared identity: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration slot/node values: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed owner follows declared identity: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration slot/node values: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: promotion only renames widget slot with node association intact: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed native unit retains promoted/transient association: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: parsed owner follows declared identity: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native widget promotion retained after identity setting",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: declared native calibration pairs",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: actual calibration correspondence 0",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration is native reload evidence outside scored log 0",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: actual calibration correspondence 1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: calibration is native reload evidence outside scored log 1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: two distinct calibration keys separate from scored key",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: modeled object count before",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: modeled object count after",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: only recorded widget channels change in native states",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native replay delta matches stored states",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: observable delta signature matches actual domain changes",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: recorded raw predicates and owner-gated widget counts",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: all native Behaviour fields retained",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: native verdict and per-step signature",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: totals describe actual verdict",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: derived errors and reporting order",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/CURRENT: original predicate restored after evaluation",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: declared row identity",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: eight distinct native observation signatures",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native raw page equals supplied page plus bbox defaults: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: only the successful select is scored",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: sole raw scored change is red-to-blue widget",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: recomputed raw_evidence_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: recomputed candidate_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: recomputed states_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: recomputed delta_sha256",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native calibration unit structure",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: one unambiguous native unit per observation",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration slot/node values: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: A1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration slot/node values: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: A2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration slot/node values: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: B1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration slot/node values: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: B2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration slot/node values: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: C1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration slot/node values: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: C2",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration slot/node values: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: S_AFTER",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration slot/node values: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: promotion only renames widget slot with node association intact: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed native unit retains promoted/transient association: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: parsed owner follows declared identity: S_BEFORE",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native widget promotion retained after identity setting",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: declared native calibration pairs",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: actual calibration correspondence 0",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration is native reload evidence outside scored log 0",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: actual calibration correspondence 1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: calibration is native reload evidence outside scored log 1",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: two distinct calibration keys separate from scored key",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: modeled object count before",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: modeled object count after",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: only recorded widget channels change in native states",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native replay delta matches stored states",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: observable delta signature matches actual domain changes",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: recorded raw predicates and owner-gated widget counts",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: all native Behaviour fields retained",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: native verdict and per-step signature",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: totals describe actual verdict",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: derived errors and reporting order",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED/DIAGNOSTIC: original predicate restored after evaluation",
+      "passed": true
+    },
+    {
+      "name": "identical complete raw evidence in every condition",
+      "passed": true
+    },
+    {
+      "name": "identical native units before each calibration intervention",
+      "passed": true
+    },
+    {
+      "name": "eight distinct retained native abstractor identities",
+      "passed": true
+    },
+    {
+      "name": "eight distinct retained native hypotheses identities",
+      "passed": true
+    },
+    {
+      "name": "eight distinct retained native graph identities",
+      "passed": true
+    },
+    {
+      "name": "eight distinct retained native log identities",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for raw_evidence",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for candidate",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for native_replay_delta",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for parsed",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for calibration_matches",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for before_promotion",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for after_native_promotion",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for replay_delta_signature",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: complete arm equality for raw_change_predicates",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: identical native delta-signature digest across arms",
+      "passed": true
+    },
+    {
+      "name": "KEYED+TRANSIENT: only the intended Behaviour fields differ",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for raw_evidence",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for candidate",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for states",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for native_replay_delta",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for parsed",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for calibration_matches",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for before_promotion",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for after_native_promotion",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for replay_delta_signature",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: complete arm equality for raw_change_predicates",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: identical native delta-signature digest across arms",
+      "passed": true
+    },
+    {
+      "name": "KEYED+PROMOTED: only the intended Behaviour fields differ",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for raw_evidence",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for candidate",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for states",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for native_replay_delta",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for parsed",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for calibration_matches",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for before_promotion",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for after_native_promotion",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for replay_delta_signature",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: complete arm equality for raw_change_predicates",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: identical native delta-signature digest across arms",
+      "passed": true
+    },
+    {
+      "name": "NONE+TRANSIENT: only the intended Behaviour fields differ",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for raw_evidence",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for candidate",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for states",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for native_replay_delta",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for parsed",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for calibration_matches",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for before_promotion",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for after_native_promotion",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for replay_delta_signature",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: complete arm equality for raw_change_predicates",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: identical native delta-signature digest across arms",
+      "passed": true
+    },
+    {
+      "name": "NONE+PROMOTED: only the intended Behaviour fields differ",
+      "passed": true
+    },
+    {
+      "name": "complete eight-by-eight actual native comparison matrix",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/CURRENT > KEYED+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/CURRENT > KEYED+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/CURRENT > KEYED+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/CURRENT > KEYED+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/CURRENT > NONE+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/CURRENT > NONE+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/CURRENT > NONE+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/CURRENT > NONE+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/DIAGNOSTIC > KEYED+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/DIAGNOSTIC > KEYED+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/DIAGNOSTIC > KEYED+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/DIAGNOSTIC > KEYED+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/DIAGNOSTIC > NONE+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/DIAGNOSTIC > NONE+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/DIAGNOSTIC > NONE+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+PROMOTED/DIAGNOSTIC > NONE+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/CURRENT > KEYED+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/CURRENT > KEYED+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/CURRENT > KEYED+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/CURRENT > KEYED+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/CURRENT > NONE+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/CURRENT > NONE+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/CURRENT > NONE+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/CURRENT > NONE+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/DIAGNOSTIC > KEYED+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/DIAGNOSTIC > KEYED+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/DIAGNOSTIC > KEYED+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/DIAGNOSTIC > KEYED+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/DIAGNOSTIC > NONE+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/DIAGNOSTIC > NONE+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/DIAGNOSTIC > NONE+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: KEYED+TRANSIENT/DIAGNOSTIC > NONE+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/CURRENT > KEYED+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/CURRENT > KEYED+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/CURRENT > KEYED+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/CURRENT > KEYED+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/CURRENT > NONE+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/CURRENT > NONE+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/CURRENT > NONE+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/CURRENT > NONE+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/DIAGNOSTIC > KEYED+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/DIAGNOSTIC > KEYED+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/DIAGNOSTIC > KEYED+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/DIAGNOSTIC > KEYED+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/DIAGNOSTIC > NONE+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/DIAGNOSTIC > NONE+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/DIAGNOSTIC > NONE+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+PROMOTED/DIAGNOSTIC > NONE+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/CURRENT > KEYED+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/CURRENT > KEYED+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/CURRENT > KEYED+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/CURRENT > KEYED+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/CURRENT > NONE+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/CURRENT > NONE+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/CURRENT > NONE+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/CURRENT > NONE+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/DIAGNOSTIC > KEYED+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/DIAGNOSTIC > KEYED+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/DIAGNOSTIC > KEYED+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/DIAGNOSTIC > KEYED+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/DIAGNOSTIC > NONE+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/DIAGNOSTIC > NONE+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/DIAGNOSTIC > NONE+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "native comparison agrees with recorded score fields: NONE+TRANSIENT/DIAGNOSTIC > NONE+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "diagnostic promoted candidate dominates all other recorded rows",
+      "passed": true
+    },
+    {
+      "name": "global original callable identity restored",
+      "passed": true
+    },
+    {
+      "name": "observed result matches separately stored prediction: KEYED+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "observed result matches separately stored prediction: KEYED+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "observed result matches separately stored prediction: KEYED+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "observed result matches separately stored prediction: KEYED+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "observed result matches separately stored prediction: NONE+TRANSIENT/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "observed result matches separately stored prediction: NONE+TRANSIENT/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "observed result matches separately stored prediction: NONE+PROMOTED/CURRENT",
+      "passed": true
+    },
+    {
+      "name": "observed result matches separately stored prediction: NONE+PROMOTED/DIAGNOSTIC",
+      "passed": true
+    },
+    {
+      "name": "reviewer imported no native modules",
+      "passed": true
+    }
+  ],
+  "interpretation_limit": "Invented supplied identity and reload calibration. The intervention counts widgets through candidate-dependent promoted owners; the result isolates score treatment, not correct identity, natural persistence, a general repair or J1 induction.",
+  "matched_arm_fields": [
+    "raw_evidence",
+    "candidate",
+    "states",
+    "native_replay_delta",
+    "parsed",
+    "calibration_matches",
+    "before_promotion",
+    "after_native_promotion",
+    "replay_delta_signature",
+    "raw_change_predicates"
+  ],
+  "native_behaviour_fields": [
+    "churn",
+    "churn_steps",
+    "complexity",
+    "conflicts",
+    "contradiction_steps",
+    "contradictions",
+    "delta_atoms",
+    "delta_signatures",
+    "explained",
+    "named",
+    "positional",
+    "spurious",
+    "steps",
+    "unexplained",
+    "verdicts",
+    "visibility",
+    "visibility_steps"
+  ],
+  "native_better_than": {
+    "KEYED+PROMOTED/CURRENT": {
+      "KEYED+PROMOTED/CURRENT": false,
+      "KEYED+PROMOTED/DIAGNOSTIC": false,
+      "KEYED+TRANSIENT/CURRENT": false,
+      "KEYED+TRANSIENT/DIAGNOSTIC": false,
+      "NONE+PROMOTED/CURRENT": false,
+      "NONE+PROMOTED/DIAGNOSTIC": false,
+      "NONE+TRANSIENT/CURRENT": false,
+      "NONE+TRANSIENT/DIAGNOSTIC": false
+    },
+    "KEYED+PROMOTED/DIAGNOSTIC": {
+      "KEYED+PROMOTED/CURRENT": true,
+      "KEYED+PROMOTED/DIAGNOSTIC": false,
+      "KEYED+TRANSIENT/CURRENT": true,
+      "KEYED+TRANSIENT/DIAGNOSTIC": true,
+      "NONE+PROMOTED/CURRENT": true,
+      "NONE+PROMOTED/DIAGNOSTIC": true,
+      "NONE+TRANSIENT/CURRENT": true,
+      "NONE+TRANSIENT/DIAGNOSTIC": true
+    },
+    "KEYED+TRANSIENT/CURRENT": {
+      "KEYED+PROMOTED/CURRENT": true,
+      "KEYED+PROMOTED/DIAGNOSTIC": false,
+      "KEYED+TRANSIENT/CURRENT": false,
+      "KEYED+TRANSIENT/DIAGNOSTIC": false,
+      "NONE+PROMOTED/CURRENT": false,
+      "NONE+PROMOTED/DIAGNOSTIC": false,
+      "NONE+TRANSIENT/CURRENT": false,
+      "NONE+TRANSIENT/DIAGNOSTIC": false
+    },
+    "KEYED+TRANSIENT/DIAGNOSTIC": {
+      "KEYED+PROMOTED/CURRENT": true,
+      "KEYED+PROMOTED/DIAGNOSTIC": false,
+      "KEYED+TRANSIENT/CURRENT": false,
+      "KEYED+TRANSIENT/DIAGNOSTIC": false,
+      "NONE+PROMOTED/CURRENT": false,
+      "NONE+PROMOTED/DIAGNOSTIC": false,
+      "NONE+TRANSIENT/CURRENT": false,
+      "NONE+TRANSIENT/DIAGNOSTIC": false
+    },
+    "NONE+PROMOTED/CURRENT": {
+      "KEYED+PROMOTED/CURRENT": true,
+      "KEYED+PROMOTED/DIAGNOSTIC": false,
+      "KEYED+TRANSIENT/CURRENT": true,
+      "KEYED+TRANSIENT/DIAGNOSTIC": true,
+      "NONE+PROMOTED/CURRENT": false,
+      "NONE+PROMOTED/DIAGNOSTIC": false,
+      "NONE+TRANSIENT/CURRENT": false,
+      "NONE+TRANSIENT/DIAGNOSTIC": false
+    },
+    "NONE+PROMOTED/DIAGNOSTIC": {
+      "KEYED+PROMOTED/CURRENT": true,
+      "KEYED+PROMOTED/DIAGNOSTIC": false,
+      "KEYED+TRANSIENT/CURRENT": true,
+      "KEYED+TRANSIENT/DIAGNOSTIC": true,
+      "NONE+PROMOTED/CURRENT": false,
+      "NONE+PROMOTED/DIAGNOSTIC": false,
+      "NONE+TRANSIENT/CURRENT": false,
+      "NONE+TRANSIENT/DIAGNOSTIC": false
+    },
+    "NONE+TRANSIENT/CURRENT": {
+      "KEYED+PROMOTED/CURRENT": true,
+      "KEYED+PROMOTED/DIAGNOSTIC": false,
+      "KEYED+TRANSIENT/CURRENT": true,
+      "KEYED+TRANSIENT/DIAGNOSTIC": true,
+      "NONE+PROMOTED/CURRENT": false,
+      "NONE+PROMOTED/DIAGNOSTIC": false,
+      "NONE+TRANSIENT/CURRENT": false,
+      "NONE+TRANSIENT/DIAGNOSTIC": false
+    },
+    "NONE+TRANSIENT/DIAGNOSTIC": {
+      "KEYED+PROMOTED/CURRENT": true,
+      "KEYED+PROMOTED/DIAGNOSTIC": false,
+      "KEYED+TRANSIENT/CURRENT": true,
+      "KEYED+TRANSIENT/DIAGNOSTIC": true,
+      "NONE+PROMOTED/CURRENT": false,
+      "NONE+PROMOTED/DIAGNOSTIC": false,
+      "NONE+TRANSIENT/CURRENT": false,
+      "NONE+TRANSIENT/DIAGNOSTIC": false
+    }
+  },
+  "observed_preference": {
+    "CURRENT": [
+      "NONE+PROMOTED = NONE+TRANSIENT",
+      "KEYED+TRANSIENT",
+      "KEYED+PROMOTED"
+    ],
+    "DIAGNOSTIC": [
+      "KEYED+PROMOTED",
+      "NONE+PROMOTED = NONE+TRANSIENT",
+      "KEYED+TRANSIENT"
+    ]
+  },
+  "rows": [
+    {
+      "behaviour": {
+        "churn": 0,
+        "churn_steps": [],
+        "complexity": 5,
+        "conflicts": 0,
+        "contradiction_steps": [],
+        "contradictions": 0,
+        "delta_atoms": 0,
+        "delta_signature_digest": "a74b57a592e8a96a38aeaa318722b49556075f5284dbac327d9672ae79a7b0bb",
+        "delta_signatures": {
+          "mapping": [
+            [
+              0,
+              [
+                0,
+                0,
+                0,
+                [],
+                0
+              ]
+            ]
+          ]
+        },
+        "errors": 0,
+        "explained": 0,
+        "named": 0,
+        "order": [
+          0,
+          0,
+          0,
+          0,
+          5
+        ],
+        "positional": 0,
+        "spurious": 0,
+        "steps": 1,
+        "unexplained": 0,
+        "verdicts": {
+          "mapping": [
+            [
+              0,
+              "NOTHING"
+            ]
+          ]
+        },
+        "visibility": 0,
+        "visibility_steps": []
+      },
+      "candidate_sha256": "a5004203339e95f491cc23fae8e93fcc3d86793f6cbc736396c32cb2932c290c",
+      "delta_sha256": "702ffcb8d807b243121b795b4205ae80ac39d8f3a1b584323b87d1037470dc61",
+      "domain_changed": false,
+      "name": "KEYED+TRANSIENT/CURRENT",
+      "native_replay_delta": {
+        "added": [],
+        "attr_changes": [],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {
+          "combobox#0": [
+            "red",
+            "blue"
+          ]
+        }
+      },
+      "per_step": [
+        {
+          "delta_signature": [
+            0,
+            0,
+            0,
+            [],
+            0
+          ],
+          "step": 0,
+          "verdict": "NOTHING"
+        }
+      ],
+      "raw_change_predicates": {
+        "current_nonwidget": false,
+        "diagnostic": false,
+        "promoted_widgets_after": {},
+        "promoted_widgets_before": {}
+      },
+      "raw_evidence_sha256": "f0c4e272dfc8a8344569fb65b1d229656ed7dc8f1f55bace809cf084eeb6e457",
+      "states_sha256": "d830a3b2573e19a19d875a7fd7e28f38a5e2465034c321887011869c4a508619"
+    },
+    {
+      "behaviour": {
+        "churn": 0,
+        "churn_steps": [],
+        "complexity": 5,
+        "conflicts": 0,
+        "contradiction_steps": [],
+        "contradictions": 0,
+        "delta_atoms": 0,
+        "delta_signature_digest": "a74b57a592e8a96a38aeaa318722b49556075f5284dbac327d9672ae79a7b0bb",
+        "delta_signatures": {
+          "mapping": [
+            [
+              0,
+              [
+                0,
+                0,
+                0,
+                [],
+                0
+              ]
+            ]
+          ]
+        },
+        "errors": 0,
+        "explained": 0,
+        "named": 0,
+        "order": [
+          0,
+          0,
+          0,
+          0,
+          5
+        ],
+        "positional": 0,
+        "spurious": 0,
+        "steps": 1,
+        "unexplained": 0,
+        "verdicts": {
+          "mapping": [
+            [
+              0,
+              "NOTHING"
+            ]
+          ]
+        },
+        "visibility": 0,
+        "visibility_steps": []
+      },
+      "candidate_sha256": "a5004203339e95f491cc23fae8e93fcc3d86793f6cbc736396c32cb2932c290c",
+      "delta_sha256": "702ffcb8d807b243121b795b4205ae80ac39d8f3a1b584323b87d1037470dc61",
+      "domain_changed": false,
+      "name": "KEYED+TRANSIENT/DIAGNOSTIC",
+      "native_replay_delta": {
+        "added": [],
+        "attr_changes": [],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {
+          "combobox#0": [
+            "red",
+            "blue"
+          ]
+        }
+      },
+      "per_step": [
+        {
+          "delta_signature": [
+            0,
+            0,
+            0,
+            [],
+            0
+          ],
+          "step": 0,
+          "verdict": "NOTHING"
+        }
+      ],
+      "raw_change_predicates": {
+        "current_nonwidget": false,
+        "diagnostic": false,
+        "promoted_widgets_after": {},
+        "promoted_widgets_before": {}
+      },
+      "raw_evidence_sha256": "f0c4e272dfc8a8344569fb65b1d229656ed7dc8f1f55bace809cf084eeb6e457",
+      "states_sha256": "d830a3b2573e19a19d875a7fd7e28f38a5e2465034c321887011869c4a508619"
+    },
+    {
+      "behaviour": {
+        "churn": 0,
+        "churn_steps": [],
+        "complexity": 6,
+        "conflicts": 0,
+        "contradiction_steps": [],
+        "contradictions": 0,
+        "delta_atoms": 0,
+        "delta_signature_digest": "df6b2749788ed6bed0c8f284cde3215068f7947a0ba920d2bc00cc828fd51abe",
+        "delta_signatures": {
+          "mapping": [
+            [
+              0,
+              [
+                0,
+                0,
+                0,
+                [
+                  [
+                    [
+                      "attr:combobox#0",
+                      "'red'",
+                      "'blue'"
+                    ],
+                    1
+                  ]
+                ],
+                0
+              ]
+            ]
+          ]
+        },
+        "errors": 1,
+        "explained": 0,
+        "named": 0,
+        "order": [
+          1,
+          0,
+          0,
+          0,
+          6
+        ],
+        "positional": 0,
+        "spurious": 1,
+        "steps": 1,
+        "unexplained": 0,
+        "verdicts": {
+          "mapping": [
+            [
+              0,
+              "SPURIOUS"
+            ]
+          ]
+        },
+        "visibility": 0,
+        "visibility_steps": []
+      },
+      "candidate_sha256": "ba390aec7de685dfe2546a3188f9991a4fa18cbae705d24e5a87aa0edc3c60fd",
+      "delta_sha256": "d39ab2e65d7a893b47493d71b6600ddc1183838b744427b62e8616e009e8f0a8",
+      "domain_changed": true,
+      "name": "KEYED+PROMOTED/CURRENT",
+      "native_replay_delta": {
+        "added": [],
+        "attr_changes": [
+          [
+            [
+              0,
+              "3"
+            ],
+            "attr:combobox#0",
+            "red",
+            "blue"
+          ]
+        ],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {
+          "combobox#0": [
+            "red",
+            "blue"
+          ]
+        }
+      },
+      "per_step": [
+        {
+          "delta_signature": [
+            0,
+            0,
+            0,
+            [
+              [
+                [
+                  "attr:combobox#0",
+                  "'red'",
+                  "'blue'"
+                ],
+                1
+              ]
+            ],
+            0
+          ],
+          "step": 0,
+          "verdict": "SPURIOUS"
+        }
+      ],
+      "raw_change_predicates": {
+        "current_nonwidget": false,
+        "diagnostic": true,
+        "promoted_widgets_after": {
+          "mapping": [
+            [
+              [
+                0,
+                "combobox",
+                "blue",
+                null
+              ],
+              1
+            ]
+          ]
+        },
+        "promoted_widgets_before": {
+          "mapping": [
+            [
+              [
+                0,
+                "combobox",
+                "red",
+                null
+              ],
+              1
+            ]
+          ]
+        }
+      },
+      "raw_evidence_sha256": "f0c4e272dfc8a8344569fb65b1d229656ed7dc8f1f55bace809cf084eeb6e457",
+      "states_sha256": "59f641249db8421703dd97559d0f5c0bd87f96e3995b776a4fb7dee25321ecc0"
+    },
+    {
+      "behaviour": {
+        "churn": 0,
+        "churn_steps": [],
+        "complexity": 6,
+        "conflicts": 0,
+        "contradiction_steps": [],
+        "contradictions": 0,
+        "delta_atoms": 1,
+        "delta_signature_digest": "df6b2749788ed6bed0c8f284cde3215068f7947a0ba920d2bc00cc828fd51abe",
+        "delta_signatures": {
+          "mapping": [
+            [
+              0,
+              [
+                0,
+                0,
+                0,
+                [
+                  [
+                    [
+                      "attr:combobox#0",
+                      "'red'",
+                      "'blue'"
+                    ],
+                    1
+                  ]
+                ],
+                0
+              ]
+            ]
+          ]
+        },
+        "errors": 0,
+        "explained": 1,
+        "named": 0,
+        "order": [
+          0,
+          -1,
+          1,
+          0,
+          6
+        ],
+        "positional": 0,
+        "spurious": 0,
+        "steps": 1,
+        "unexplained": 0,
+        "verdicts": {
+          "mapping": [
+            [
+              0,
+              "EXPLAINED"
+            ]
+          ]
+        },
+        "visibility": 0,
+        "visibility_steps": []
+      },
+      "candidate_sha256": "ba390aec7de685dfe2546a3188f9991a4fa18cbae705d24e5a87aa0edc3c60fd",
+      "delta_sha256": "d39ab2e65d7a893b47493d71b6600ddc1183838b744427b62e8616e009e8f0a8",
+      "domain_changed": true,
+      "name": "KEYED+PROMOTED/DIAGNOSTIC",
+      "native_replay_delta": {
+        "added": [],
+        "attr_changes": [
+          [
+            [
+              0,
+              "3"
+            ],
+            "attr:combobox#0",
+            "red",
+            "blue"
+          ]
+        ],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {
+          "combobox#0": [
+            "red",
+            "blue"
+          ]
+        }
+      },
+      "per_step": [
+        {
+          "delta_signature": [
+            0,
+            0,
+            0,
+            [
+              [
+                [
+                  "attr:combobox#0",
+                  "'red'",
+                  "'blue'"
+                ],
+                1
+              ]
+            ],
+            0
+          ],
+          "step": 0,
+          "verdict": "EXPLAINED"
+        }
+      ],
+      "raw_change_predicates": {
+        "current_nonwidget": false,
+        "diagnostic": true,
+        "promoted_widgets_after": {
+          "mapping": [
+            [
+              [
+                0,
+                "combobox",
+                "blue",
+                null
+              ],
+              1
+            ]
+          ]
+        },
+        "promoted_widgets_before": {
+          "mapping": [
+            [
+              [
+                0,
+                "combobox",
+                "red",
+                null
+              ],
+              1
+            ]
+          ]
+        }
+      },
+      "raw_evidence_sha256": "f0c4e272dfc8a8344569fb65b1d229656ed7dc8f1f55bace809cf084eeb6e457",
+      "states_sha256": "59f641249db8421703dd97559d0f5c0bd87f96e3995b776a4fb7dee25321ecc0"
+    },
+    {
+      "behaviour": {
+        "churn": 0,
+        "churn_steps": [],
+        "complexity": 0,
+        "conflicts": 0,
+        "contradiction_steps": [],
+        "contradictions": 0,
+        "delta_atoms": 0,
+        "delta_signature_digest": "a74b57a592e8a96a38aeaa318722b49556075f5284dbac327d9672ae79a7b0bb",
+        "delta_signatures": {
+          "mapping": [
+            [
+              0,
+              [
+                0,
+                0,
+                0,
+                [],
+                0
+              ]
+            ]
+          ]
+        },
+        "errors": 0,
+        "explained": 0,
+        "named": 0,
+        "order": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "positional": 0,
+        "spurious": 0,
+        "steps": 1,
+        "unexplained": 0,
+        "verdicts": {
+          "mapping": [
+            [
+              0,
+              "NOTHING"
+            ]
+          ]
+        },
+        "visibility": 0,
+        "visibility_steps": []
+      },
+      "candidate_sha256": "fb5a75d2b1c398a9e75784eaf40869c9da56b09251e33aebf48959f1cbe87202",
+      "delta_sha256": "702ffcb8d807b243121b795b4205ae80ac39d8f3a1b584323b87d1037470dc61",
+      "domain_changed": false,
+      "name": "NONE+TRANSIENT/CURRENT",
+      "native_replay_delta": {
+        "added": [],
+        "attr_changes": [],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {
+          "combobox#0": [
+            "red",
+            "blue"
+          ]
+        }
+      },
+      "per_step": [
+        {
+          "delta_signature": [
+            0,
+            0,
+            0,
+            [],
+            0
+          ],
+          "step": 0,
+          "verdict": "NOTHING"
+        }
+      ],
+      "raw_change_predicates": {
+        "current_nonwidget": false,
+        "diagnostic": false,
+        "promoted_widgets_after": {},
+        "promoted_widgets_before": {}
+      },
+      "raw_evidence_sha256": "f0c4e272dfc8a8344569fb65b1d229656ed7dc8f1f55bace809cf084eeb6e457",
+      "states_sha256": "7a72e3f70ec11fe067cfa430c3a2e0cc65df8a5d4f7a870bd70efd3b268e8520"
+    },
+    {
+      "behaviour": {
+        "churn": 0,
+        "churn_steps": [],
+        "complexity": 0,
+        "conflicts": 0,
+        "contradiction_steps": [],
+        "contradictions": 0,
+        "delta_atoms": 0,
+        "delta_signature_digest": "a74b57a592e8a96a38aeaa318722b49556075f5284dbac327d9672ae79a7b0bb",
+        "delta_signatures": {
+          "mapping": [
+            [
+              0,
+              [
+                0,
+                0,
+                0,
+                [],
+                0
+              ]
+            ]
+          ]
+        },
+        "errors": 0,
+        "explained": 0,
+        "named": 0,
+        "order": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "positional": 0,
+        "spurious": 0,
+        "steps": 1,
+        "unexplained": 0,
+        "verdicts": {
+          "mapping": [
+            [
+              0,
+              "NOTHING"
+            ]
+          ]
+        },
+        "visibility": 0,
+        "visibility_steps": []
+      },
+      "candidate_sha256": "fb5a75d2b1c398a9e75784eaf40869c9da56b09251e33aebf48959f1cbe87202",
+      "delta_sha256": "702ffcb8d807b243121b795b4205ae80ac39d8f3a1b584323b87d1037470dc61",
+      "domain_changed": false,
+      "name": "NONE+TRANSIENT/DIAGNOSTIC",
+      "native_replay_delta": {
+        "added": [],
+        "attr_changes": [],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {
+          "combobox#0": [
+            "red",
+            "blue"
+          ]
+        }
+      },
+      "per_step": [
+        {
+          "delta_signature": [
+            0,
+            0,
+            0,
+            [],
+            0
+          ],
+          "step": 0,
+          "verdict": "NOTHING"
+        }
+      ],
+      "raw_change_predicates": {
+        "current_nonwidget": false,
+        "diagnostic": false,
+        "promoted_widgets_after": {},
+        "promoted_widgets_before": {}
+      },
+      "raw_evidence_sha256": "f0c4e272dfc8a8344569fb65b1d229656ed7dc8f1f55bace809cf084eeb6e457",
+      "states_sha256": "7a72e3f70ec11fe067cfa430c3a2e0cc65df8a5d4f7a870bd70efd3b268e8520"
+    },
+    {
+      "behaviour": {
+        "churn": 0,
+        "churn_steps": [],
+        "complexity": 0,
+        "conflicts": 0,
+        "contradiction_steps": [],
+        "contradictions": 0,
+        "delta_atoms": 0,
+        "delta_signature_digest": "a74b57a592e8a96a38aeaa318722b49556075f5284dbac327d9672ae79a7b0bb",
+        "delta_signatures": {
+          "mapping": [
+            [
+              0,
+              [
+                0,
+                0,
+                0,
+                [],
+                0
+              ]
+            ]
+          ]
+        },
+        "errors": 0,
+        "explained": 0,
+        "named": 0,
+        "order": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "positional": 0,
+        "spurious": 0,
+        "steps": 1,
+        "unexplained": 0,
+        "verdicts": {
+          "mapping": [
+            [
+              0,
+              "NOTHING"
+            ]
+          ]
+        },
+        "visibility": 0,
+        "visibility_steps": []
+      },
+      "candidate_sha256": "c82bda5b7c43d3eb561a9ce6b10f1e3453b0aff96002d289f572f5bad13a91ea",
+      "delta_sha256": "702ffcb8d807b243121b795b4205ae80ac39d8f3a1b584323b87d1037470dc61",
+      "domain_changed": false,
+      "name": "NONE+PROMOTED/CURRENT",
+      "native_replay_delta": {
+        "added": [],
+        "attr_changes": [],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {
+          "combobox#0": [
+            "red",
+            "blue"
+          ]
+        }
+      },
+      "per_step": [
+        {
+          "delta_signature": [
+            0,
+            0,
+            0,
+            [],
+            0
+          ],
+          "step": 0,
+          "verdict": "NOTHING"
+        }
+      ],
+      "raw_change_predicates": {
+        "current_nonwidget": false,
+        "diagnostic": false,
+        "promoted_widgets_after": {},
+        "promoted_widgets_before": {}
+      },
+      "raw_evidence_sha256": "f0c4e272dfc8a8344569fb65b1d229656ed7dc8f1f55bace809cf084eeb6e457",
+      "states_sha256": "7a72e3f70ec11fe067cfa430c3a2e0cc65df8a5d4f7a870bd70efd3b268e8520"
+    },
+    {
+      "behaviour": {
+        "churn": 0,
+        "churn_steps": [],
+        "complexity": 0,
+        "conflicts": 0,
+        "contradiction_steps": [],
+        "contradictions": 0,
+        "delta_atoms": 0,
+        "delta_signature_digest": "a74b57a592e8a96a38aeaa318722b49556075f5284dbac327d9672ae79a7b0bb",
+        "delta_signatures": {
+          "mapping": [
+            [
+              0,
+              [
+                0,
+                0,
+                0,
+                [],
+                0
+              ]
+            ]
+          ]
+        },
+        "errors": 0,
+        "explained": 0,
+        "named": 0,
+        "order": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "positional": 0,
+        "spurious": 0,
+        "steps": 1,
+        "unexplained": 0,
+        "verdicts": {
+          "mapping": [
+            [
+              0,
+              "NOTHING"
+            ]
+          ]
+        },
+        "visibility": 0,
+        "visibility_steps": []
+      },
+      "candidate_sha256": "c82bda5b7c43d3eb561a9ce6b10f1e3453b0aff96002d289f572f5bad13a91ea",
+      "delta_sha256": "702ffcb8d807b243121b795b4205ae80ac39d8f3a1b584323b87d1037470dc61",
+      "domain_changed": false,
+      "name": "NONE+PROMOTED/DIAGNOSTIC",
+      "native_replay_delta": {
+        "added": [],
+        "attr_changes": [],
+        "rel_changes": [],
+        "removed": [],
+        "view_changes": {
+          "combobox#0": [
+            "red",
+            "blue"
+          ]
+        }
+      },
+      "per_step": [
+        {
+          "delta_signature": [
+            0,
+            0,
+            0,
+            [],
+            0
+          ],
+          "step": 0,
+          "verdict": "NOTHING"
+        }
+      ],
+      "raw_change_predicates": {
+        "current_nonwidget": false,
+        "diagnostic": false,
+        "promoted_widgets_after": {},
+        "promoted_widgets_before": {}
+      },
+      "raw_evidence_sha256": "f0c4e272dfc8a8344569fb65b1d229656ed7dc8f1f55bace809cf084eeb6e457",
+      "states_sha256": "7a72e3f70ec11fe067cfa430c3a2e0cc65df8a5d4f7a870bd70efd3b268e8520"
+    }
+  ],
+  "schema": "semabi.widget_observation.independent_semantic_review.v1",
+  "scope": "Authenticated JSON/AST/arithmetic inspection only; no native execution or rerun.",
+  "status": "PASS"
+}

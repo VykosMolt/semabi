@@ -1,0 +1,271 @@
+{
+  "schema": "semabi.transport.w1_metadata_preflight_tools.v1",
+  "coordinator": "/root/baseline_verification",
+  "authorization_sha256": "3d989284d548f8044430d5fc73bb63a41ab7e4fed5d58719529c8f7105ec924c",
+  "source_freeze_sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+  "corpus_freeze_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+  "status": "ALL_SIX_METADATA_ONLY_PREFLIGHTS_PASSED",
+  "tool_calls": [
+    {
+      "name": "allocation_positive",
+      "prefix": "/tmp/semabi_w1_preflight_allocation_positive_v1_no_pyc",
+      "argv": [
+        "taskset",
+        "-c",
+        "8",
+        "env",
+        "PYTHONHASHSEED=0",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_allocation_positive_v1_no_pyc",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        "BLIS_NUM_THREADS=1",
+        "/home/moloch/semabi/.venv/bin/python",
+        "-B",
+        "docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py",
+        "allocation_positive",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json",
+        "--source-freeze-sha256",
+        "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+        "--corpus-freeze-sha256",
+        "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "--verify-only"
+      ],
+      "arguments": {
+        "cmd": "'taskset' '-c' '8' 'env' 'PYTHONHASHSEED=0' 'PYTHONDONTWRITEBYTECODE=1' 'PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_allocation_positive_v1_no_pyc' 'OMP_NUM_THREADS=1' 'OPENBLAS_NUM_THREADS=1' 'MKL_NUM_THREADS=1' 'NUMEXPR_NUM_THREADS=1' 'VECLIB_MAXIMUM_THREADS=1' 'BLIS_NUM_THREADS=1' '/home/moloch/semabi/.venv/bin/python' '-B' 'docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py' 'allocation_positive' 'docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive' 'docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json' '--source-freeze-sha256' '583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62' '--corpus-freeze-sha256' 'b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e' '--verify-only'",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 10000,
+        "max_output_tokens": 1500
+      },
+      "result": {
+        "chunk_id": "79d8ff",
+        "wall_time_seconds": 0.811121647,
+        "exit_code": 0,
+        "original_token_count": 108,
+        "output": "{\"status\": \"VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT\", \"case\": \"allocation_positive\", \"source_freeze_sha256\": \"583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62\", \"corpus_freeze_sha256\": \"b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e\", \"input_files\": 45, \"output\": \"/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive\"}\n"
+      }
+    },
+    {
+      "name": "allocation_refusals",
+      "prefix": "/tmp/semabi_w1_preflight_allocation_refusals_v1_no_pyc",
+      "argv": [
+        "taskset",
+        "-c",
+        "8",
+        "env",
+        "PYTHONHASHSEED=0",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_allocation_refusals_v1_no_pyc",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        "BLIS_NUM_THREADS=1",
+        "/home/moloch/semabi/.venv/bin/python",
+        "-B",
+        "docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py",
+        "allocation_refusals",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json",
+        "--source-freeze-sha256",
+        "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+        "--corpus-freeze-sha256",
+        "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "--verify-only"
+      ],
+      "arguments": {
+        "cmd": "'taskset' '-c' '8' 'env' 'PYTHONHASHSEED=0' 'PYTHONDONTWRITEBYTECODE=1' 'PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_allocation_refusals_v1_no_pyc' 'OMP_NUM_THREADS=1' 'OPENBLAS_NUM_THREADS=1' 'MKL_NUM_THREADS=1' 'NUMEXPR_NUM_THREADS=1' 'VECLIB_MAXIMUM_THREADS=1' 'BLIS_NUM_THREADS=1' '/home/moloch/semabi/.venv/bin/python' '-B' 'docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py' 'allocation_refusals' 'docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals' 'docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json' '--source-freeze-sha256' '583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62' '--corpus-freeze-sha256' 'b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e' '--verify-only'",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 10000,
+        "max_output_tokens": 1500
+      },
+      "result": {
+        "chunk_id": "e8f8b3",
+        "wall_time_seconds": 0.812778462,
+        "exit_code": 0,
+        "original_token_count": 108,
+        "output": "{\"status\": \"VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT\", \"case\": \"allocation_refusals\", \"source_freeze_sha256\": \"583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62\", \"corpus_freeze_sha256\": \"b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e\", \"input_files\": 45, \"output\": \"/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals\"}\n"
+      }
+    },
+    {
+      "name": "pilot",
+      "prefix": "/tmp/semabi_w1_preflight_pilot_v1_no_pyc",
+      "argv": [
+        "taskset",
+        "-c",
+        "8",
+        "env",
+        "PYTHONHASHSEED=0",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_pilot_v1_no_pyc",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        "BLIS_NUM_THREADS=1",
+        "/home/moloch/semabi/.venv/bin/python",
+        "-B",
+        "docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py",
+        "pilot",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json",
+        "--source-freeze-sha256",
+        "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+        "--corpus-freeze-sha256",
+        "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "--verify-only"
+      ],
+      "arguments": {
+        "cmd": "'taskset' '-c' '8' 'env' 'PYTHONHASHSEED=0' 'PYTHONDONTWRITEBYTECODE=1' 'PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_pilot_v1_no_pyc' 'OMP_NUM_THREADS=1' 'OPENBLAS_NUM_THREADS=1' 'MKL_NUM_THREADS=1' 'NUMEXPR_NUM_THREADS=1' 'VECLIB_MAXIMUM_THREADS=1' 'BLIS_NUM_THREADS=1' '/home/moloch/semabi/.venv/bin/python' '-B' 'docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py' 'pilot' 'docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot' 'docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json' '--source-freeze-sha256' '583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62' '--corpus-freeze-sha256' 'b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e' '--verify-only'",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 10000,
+        "max_output_tokens": 1500
+      },
+      "result": {
+        "chunk_id": "728562",
+        "wall_time_seconds": 0.791707835,
+        "exit_code": 0,
+        "original_token_count": 101,
+        "output": "{\"status\": \"VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT\", \"case\": \"pilot\", \"source_freeze_sha256\": \"583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62\", \"corpus_freeze_sha256\": \"b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e\", \"input_files\": 45, \"output\": \"/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot\"}\n"
+      }
+    },
+    {
+      "name": "separating",
+      "prefix": "/tmp/semabi_w1_preflight_separating_v1_no_pyc",
+      "argv": [
+        "taskset",
+        "-c",
+        "8",
+        "env",
+        "PYTHONHASHSEED=0",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_separating_v1_no_pyc",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        "BLIS_NUM_THREADS=1",
+        "/home/moloch/semabi/.venv/bin/python",
+        "-B",
+        "docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py",
+        "separating",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json",
+        "--source-freeze-sha256",
+        "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+        "--corpus-freeze-sha256",
+        "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "--verify-only"
+      ],
+      "arguments": {
+        "cmd": "'taskset' '-c' '8' 'env' 'PYTHONHASHSEED=0' 'PYTHONDONTWRITEBYTECODE=1' 'PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_separating_v1_no_pyc' 'OMP_NUM_THREADS=1' 'OPENBLAS_NUM_THREADS=1' 'MKL_NUM_THREADS=1' 'NUMEXPR_NUM_THREADS=1' 'VECLIB_MAXIMUM_THREADS=1' 'BLIS_NUM_THREADS=1' '/home/moloch/semabi/.venv/bin/python' '-B' 'docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py' 'separating' 'docs/data/v4/transport/development/widget_persistence_v1/corpora/separating' 'docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json' '--source-freeze-sha256' '583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62' '--corpus-freeze-sha256' 'b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e' '--verify-only'",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 10000,
+        "max_output_tokens": 1500
+      },
+      "result": {
+        "chunk_id": "ac8793",
+        "wall_time_seconds": 0.694066331,
+        "exit_code": 0,
+        "original_token_count": 103,
+        "output": "{\"status\": \"VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT\", \"case\": \"separating\", \"source_freeze_sha256\": \"583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62\", \"corpus_freeze_sha256\": \"b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e\", \"input_files\": 45, \"output\": \"/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating\"}\n"
+      }
+    },
+    {
+      "name": "separating_extended",
+      "prefix": "/tmp/semabi_w1_preflight_separating_extended_v1_no_pyc",
+      "argv": [
+        "taskset",
+        "-c",
+        "8",
+        "env",
+        "PYTHONHASHSEED=0",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_separating_extended_v1_no_pyc",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        "BLIS_NUM_THREADS=1",
+        "/home/moloch/semabi/.venv/bin/python",
+        "-B",
+        "docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py",
+        "separating_extended",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended",
+        "docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json",
+        "--source-freeze-sha256",
+        "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+        "--corpus-freeze-sha256",
+        "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "--verify-only"
+      ],
+      "arguments": {
+        "cmd": "'taskset' '-c' '8' 'env' 'PYTHONHASHSEED=0' 'PYTHONDONTWRITEBYTECODE=1' 'PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_separating_extended_v1_no_pyc' 'OMP_NUM_THREADS=1' 'OPENBLAS_NUM_THREADS=1' 'MKL_NUM_THREADS=1' 'NUMEXPR_NUM_THREADS=1' 'VECLIB_MAXIMUM_THREADS=1' 'BLIS_NUM_THREADS=1' '/home/moloch/semabi/.venv/bin/python' '-B' 'docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py' 'separating_extended' 'docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended' 'docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json' '--source-freeze-sha256' '583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62' '--corpus-freeze-sha256' 'b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e' '--verify-only'",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 10000,
+        "max_output_tokens": 1500
+      },
+      "result": {
+        "chunk_id": "9e6499",
+        "wall_time_seconds": 0.796206706,
+        "exit_code": 0,
+        "original_token_count": 108,
+        "output": "{\"status\": \"VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT\", \"case\": \"separating_extended\", \"source_freeze_sha256\": \"583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62\", \"corpus_freeze_sha256\": \"b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e\", \"input_files\": 45, \"output\": \"/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended\"}\n"
+      }
+    },
+    {
+      "name": "full_pytest_v1",
+      "prefix": "/tmp/semabi_w1_preflight_full_pytest_v1_v1_no_pyc",
+      "argv": [
+        "taskset",
+        "-c",
+        "8",
+        "env",
+        "PYTHONHASHSEED=0",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_full_pytest_v1_v1_no_pyc",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        "BLIS_NUM_THREADS=1",
+        "/home/moloch/semabi/.venv/bin/python",
+        "-B",
+        "docs/data/v4/transport/development/widget_persistence_v1/run_full_suite.py",
+        "--source-freeze-sha256",
+        "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+        "--corpus-freeze-sha256",
+        "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "--verify-only",
+        "--",
+        "-q",
+        "tests",
+        "--junitxml=docs/data/v4/transport/development/widget_persistence_v1/full_pytest_v1.xml",
+        "--basetemp=docs/data/v4/transport/development/widget_persistence_v1/pytest_tmp_v1"
+      ],
+      "arguments": {
+        "cmd": "'taskset' '-c' '8' 'env' 'PYTHONHASHSEED=0' 'PYTHONDONTWRITEBYTECODE=1' 'PYTHONPYCACHEPREFIX=/tmp/semabi_w1_preflight_full_pytest_v1_v1_no_pyc' 'OMP_NUM_THREADS=1' 'OPENBLAS_NUM_THREADS=1' 'MKL_NUM_THREADS=1' 'NUMEXPR_NUM_THREADS=1' 'VECLIB_MAXIMUM_THREADS=1' 'BLIS_NUM_THREADS=1' '/home/moloch/semabi/.venv/bin/python' '-B' 'docs/data/v4/transport/development/widget_persistence_v1/run_full_suite.py' '--source-freeze-sha256' '583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62' '--corpus-freeze-sha256' 'b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e' '--verify-only' '--' '-q' 'tests' '--junitxml=docs/data/v4/transport/development/widget_persistence_v1/full_pytest_v1.xml' '--basetemp=docs/data/v4/transport/development/widget_persistence_v1/pytest_tmp_v1'",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 10000,
+        "max_output_tokens": 1500
+      },
+      "result": {
+        "chunk_id": "7db2d2",
+        "wall_time_seconds": 0.928962384,
+        "exit_code": 0,
+        "original_token_count": 112,
+        "output": "{\"status\": \"VERIFIED_WITHOUT_NATIVE_OR_PYTEST_IMPORT\", \"source_freeze_sha256\": \"583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62\", \"corpus_freeze_sha256\": \"b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e\", \"pytest_args\": [\"-q\", \"tests\", \"--junitxml=docs/data/v4/transport/development/widget_persistence_v1/full_pytest_v1.xml\", \"--basetemp=docs/data/v4/transport/development/widget_persistence_v1/pytest_tmp_v1\"]}\n"
+      }
+    }
+  ],
+  "scope": "Each adapter returned through --verify-only before candidate package/measurement/pytest import or output reservation. Commands use CPU8 and distinct fresh bytecode prefixes; no native jobs were launched."
+}

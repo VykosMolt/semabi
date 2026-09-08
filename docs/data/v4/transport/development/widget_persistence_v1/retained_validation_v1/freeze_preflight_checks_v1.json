@@ -1,0 +1,126 @@
+{
+  "bytecode_prefix_checks": {
+    "/tmp/semabi_w1_freeze_v1_no_pyc": "ABSENT_AFTER_FREEZE",
+    "/tmp/semabi_w1_preflight_allocation_positive_v1_no_pyc": "ABSENT_AFTER_PREFLIGHT",
+    "/tmp/semabi_w1_preflight_allocation_refusals_v1_no_pyc": "ABSENT_AFTER_PREFLIGHT",
+    "/tmp/semabi_w1_preflight_full_pytest_v1_v1_no_pyc": "ABSENT_AFTER_PREFLIGHT",
+    "/tmp/semabi_w1_preflight_pilot_v1_no_pyc": "ABSENT_AFTER_PREFLIGHT",
+    "/tmp/semabi_w1_preflight_separating_extended_v1_no_pyc": "ABSENT_AFTER_PREFLIGHT",
+    "/tmp/semabi_w1_preflight_separating_v1_no_pyc": "ABSENT_AFTER_PREFLIGHT"
+  },
+  "corpus_freeze_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+  "corpus_source_link": {
+    "path": "docs/data/v4/transport/development/widget_persistence_v1/source_freeze_v1.json",
+    "sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62"
+  },
+  "counts": {
+    "corpus_bytes": 61808102,
+    "corpus_files": 45,
+    "files": 67,
+    "source_files": 156,
+    "suite_retained_run_files": 18,
+    "test_files": 70,
+    "tracked_files": 2841,
+    "unique_frozen_files_rehashed": 2912,
+    "verification_files": 33
+  },
+  "input_copy_sha256": "b9e6b39c033faa12b207dff0ddf340d3077806b180a3e2ea1e7148ddf9ae883c",
+  "main_head_observed": "5960a0ff844a0449a02b7f9813c83b24d62f081c",
+  "nice_inherited": 0,
+  "persistent_manifest": {
+    "path": "docs/data/v4/transport/development/g1/rebuild_v1/input_manifest.json",
+    "sha256": "0a2fc2a9833f290fb23d9300e0547b53b83af2ec93ab3a92cde63b1f0ddc1dc1"
+  },
+  "preflights": {
+    "allocation_positive": {
+      "chunk_id": "79d8ff",
+      "exit_code": 0,
+      "status": "VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT"
+    },
+    "allocation_refusals": {
+      "chunk_id": "e8f8b3",
+      "exit_code": 0,
+      "status": "VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT"
+    },
+    "full_pytest_v1": {
+      "chunk_id": "7db2d2",
+      "exit_code": 0,
+      "status": "VERIFIED_WITHOUT_NATIVE_OR_PYTEST_IMPORT"
+    },
+    "pilot": {
+      "chunk_id": "728562",
+      "exit_code": 0,
+      "status": "VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT"
+    },
+    "separating": {
+      "chunk_id": "ac8793",
+      "exit_code": 0,
+      "status": "VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT"
+    },
+    "separating_extended": {
+      "chunk_id": "9e6499",
+      "exit_code": 0,
+      "status": "VERIFIED_WITHOUT_NATIVE_OR_MEASUREMENT_IMPORT"
+    }
+  },
+  "prior_b1": {
+    "path": "/home/moloch/semabi/docs/data/v4/transport/development/b1_validation/source_freeze_v1.json",
+    "qualification": "Accepted retained-output baseline; historical loaded native origins were not recorded. Fresh B1 helper import order gives main precedence.",
+    "sha256": "c40e565fb6f6fda6116a442a6291ba987e0d2e445ed8d63ec3f58082743b730d",
+    "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5"
+  },
+  "recorded_utc": "2026-09-08T05:27:08.232610+00:00",
+  "schema": "semabi.transport.w1_freeze_preflight_binding_checks.v1",
+  "scope": "Freeze and six metadata-only preflights only. No SemABI import, pytest, Fit or measurement job. Exact source/data/verification/tracked inventories rehashed after preflights.",
+  "source_freeze_sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+  "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+  "status": "VERIFIED",
+  "tool_receipts": {
+    "freeze_tool_receipt_v1.json": "7e6e4844ea43614e9b2d8cff71fe5ebcfbce6b9fcafe1460353753d52c0d57b7",
+    "metadata_preflight_tools_v1.json": "ef3bba853295ed91b0710249936b45d7e38e461e227e5fd7de40d1baadc93870"
+  },
+  "unreserved_native_outputs": [
+    "docs/data/v4/transport/development/widget_persistence_v1/jobs",
+    "docs/data/v4/transport/development/widget_persistence_v1/corpora",
+    "docs/data/v4/transport/development/widget_persistence_v1/full_suite_v1",
+    "docs/data/v4/transport/development/widget_persistence_v1/full_pytest_v1.xml",
+    "docs/data/v4/transport/development/widget_persistence_v1/pytest_tmp_v1",
+    "docs/data/v4/transport/development/widget_persistence_v1/corpus_comparison_v1.json"
+  ],
+  "verification_files": {
+    "docs/data/v4/prequential/instruments/link_probe.py": "b3dc46628f60956a6d3967114cb1a6fd00a376acbdd25ccef08bedf923864dae",
+    "docs/data/v4/transport/baseline/check_corpora.py": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+    "docs/data/v4/transport/development/widget_persistence_v1/compare_corpora.py": "64da152c71531e29bb8b6dc866643be52d016efa142abb553bc215257ea69236",
+    "docs/data/v4/transport/development/widget_persistence_v1/freeze_validation_v1.py": "f4b620482a36b6bd0e124211fd5db1948e3a7bc8d13eaa5e9e1c58fb972db2f9",
+    "docs/data/v4/transport/development/widget_persistence_v1/input_copy_v1.json": "b9e6b39c033faa12b207dff0ddf340d3077806b180a3e2ea1e7148ddf9ae883c",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/compare_corpora.py.before_custody_corrections.txt": "820d17b3349f43d15d266d7fadd58244e11c4edceba98c75fd8e0411a32aa64d",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/compare_corpora.py.before_final_review_fixes.txt": "dc546d84fb71100b3b9732bea4d58cfe9a8165f2b4c3cce43bd662538128f870",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/custody_corrections_v1.diff": "49bc1b489fb421f684911225281c6d668622a25fcc2c5ea5b893fe9e78eb969e",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/final_review_before_v1.json": "28e97cfd9a01de3d0fe2bb89b81c77b49f65e48d6a17d763aceb09d0c13682a8",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/final_review_fixes_v1.diff": "a35b02d96f2c481fb3b1394732529963ef0c63b8c9c92371f5670bf637fa45f8",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/final_source_checks_v1.json": "dbaddb05e2dcf48315a68409e571939a774caddb8aa17748bdd0ccb2169781c5",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/independent_instrument_review_v1.md": "4f7d07e4775569e1b38b0f841800228c2e40cb70a73434991c4abe2bf143a438",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/manifest_v1.json": "cb2b48e92f21f89e12b3435a32de64985eea1340f07a051abd33de92f6d12f2d",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/preserve_validation_v1.py.before_custody_corrections.txt": "c6e4a8af6e8631741c4f4986562df3a20db3b3053976f318e94e6fe89f8aa9ba",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/preserve_validation_v1.py.before_final_review_fixes.txt": "70a985100c813eb266eeb24b711e833747846c930282c9237d0a0b600706fd62",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/root_instrument_acceptance_v1.json": "3d989284d548f8044430d5fc73bb63a41ab7e4fed5d58719529c8f7105ec924c",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/validation_guard.py.before_custody_corrections.txt": "21a17ee676c2a462e29c50e24561691159b79b8ba00a81245b77218b757d476b",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/validation_plan_v1.md.before_custody_corrections.txt": "e03984b93c0628e9986c032562204dbbb8979faf82a81de52912c609fe8bfe90",
+    "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/validation_plan_v1.md.before_final_review_fixes.txt": "cb9a256639e71848ae127e8e9011e0b7d1bc4c7a7a1e61342ff7342d112bd139",
+    "docs/data/v4/transport/development/widget_persistence_v1/preserve_validation_v1.py": "ddb6b61cf5eec5582031a72c70d5342f6e2e7d2f9a263f7ea2b5bc0142230852",
+    "docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py": "7cdb82945897f591f46c3085d58539f3b34c2f2d9bc141f9fe05e377e2081221",
+    "docs/data/v4/transport/development/widget_persistence_v1/run_full_suite.py": "7207b21bf2b2d96f2192b64a94fa6bebdbab8cf02539b3abf7b2fea5dda859d0",
+    "docs/data/v4/transport/development/widget_persistence_v1/validation_guard.py": "5aeb711a5b1cf98acfb8ad25072e50de37b6b5f0381c2bf36a013462ddb67c41",
+    "docs/data/v4/transport/development/widget_persistence_v1/validation_plan_v1.md": "a93c0009040a9f5750c443d9dbb6353da7d5c5a9ae280c59a35e5ead270d119c",
+    "docs/data/v4/transport/development/widget_persistence_v1/verification_preparation/artifact_manifest_v1.json": "345905714f84cac12e3accbd10614ea2b3374155e254de898b550a03744aa9db",
+    "docs/data/v4/transport/development/widget_persistence_v1/verification_preparation/commands_v1.json": "6f8dbe2e4ef0a99a84ec40d79405638655f319aa008f00b3bf571189df68133b",
+    "docs/data/v4/transport/development/widget_persistence_v1/verification_preparation/evidence_bindings_v1.json": "317eda736ff2ee62cb9f04a4c8c941a23d0ff065223373dc7e7a4ec6e6a8aeab",
+    "docs/data/v4/transport/development/widget_persistence_v1/verification_preparation/plan_v1.md": "84026e55941fd83c6e09dd4047a71d1d7166920ed25391aee2caa7af8aec65fe",
+    "docs/data/v4/transport/run_job.py": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7",
+    "pyproject.toml": "856abafeb3e6ea04e7c4448c0d5b132bf4c3efcbcc18349e89cdfa6f981353f8",
+    "pytest.ini": "7a230f8bff3b84770b27da73d30c5825e7e161bacf1e7d9c47f58fa3adfd4d43",
+    "scripts/v4_authority.py": "9bfb78c998a3ad9467f5c0d3dc3c0c2d2e9504df94cf591bc0fd79af5dd40848",
+    "scripts/v4_freeze_evaluator_inputs.py": "fabc4f9d59fcb592a7c283eb3e11b1237716eb76aec6bae7582e1d30a19ca87c"
+  },
+  "working_directory": "/home/moloch/semabi/runs/.w1_worktree"
+}

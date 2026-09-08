@@ -1,0 +1,42 @@
+{
+  "files": {
+    "compare_corpora.py": {
+      "bytes": 19928,
+      "sha256": "64da152c71531e29bb8b6dc866643be52d016efa142abb553bc215257ea69236"
+    },
+    "freeze_validation_v1.py": {
+      "bytes": 8910,
+      "sha256": "f4b620482a36b6bd0e124211fd5db1948e3a7bc8d13eaa5e9e1c58fb972db2f9"
+    },
+    "preserve_validation_v1.py": {
+      "bytes": 11002,
+      "sha256": "ddb6b61cf5eec5582031a72c70d5342f6e2e7d2f9a263f7ea2b5bc0142230852"
+    },
+    "run_corpus.py": {
+      "bytes": 6815,
+      "sha256": "7cdb82945897f591f46c3085d58539f3b34c2f2d9bc141f9fe05e377e2081221"
+    },
+    "run_full_suite.py": {
+      "bytes": 4605,
+      "sha256": "7207b21bf2b2d96f2192b64a94fa6bebdbab8cf02539b3abf7b2fea5dda859d0"
+    },
+    "validation_guard.py": {
+      "bytes": 8516,
+      "sha256": "5aeb711a5b1cf98acfb8ad25072e50de37b6b5f0381c2bf36a013462ddb67c41"
+    },
+    "validation_plan_v1.md": {
+      "bytes": 7121,
+      "sha256": "a93c0009040a9f5750c443d9dbb6353da7d5c5a9ae280c59a35e5ead270d119c"
+    }
+  },
+  "final_diff_sha256": "a35b02d96f2c481fb3b1394732529963ef0c63b8c9c92371f5670bf637fa45f8",
+  "metadata_checks": "All five known B1 source156/job/command/process/adapter/log/result/snapshot seals passed; source156/test70/runtime67 have only reviewed W1 changes; suite18 and dedicated45 exact input hashes/membership passed.",
+  "recorded_utc": "2026-09-08T05:16:15.906944+00:00",
+  "review_corrections": [
+    "Require hypotheses native origin only after measurement; no eager import added.",
+    "Preserve pytest return separately from wrapper/postflight outcome and compare only for verified/no-execution-error wrapper."
+  ],
+  "runtime_scope": "Shared Python/pytest runtime is not hermetically frozen; explicit residual in validation_plan_v1.md.",
+  "schema": "semabi.transport.w1_final_instrument_source_checks.v1",
+  "status": "AST_PARSE_AND_COMPILE_PASSED_NO_NATIVE_EXECUTION"
+}

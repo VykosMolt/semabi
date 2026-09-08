@@ -1,0 +1,71 @@
+--- validation_guard.py.before
++++ validation_guard.py.after
+@@ -71,6 +71,8 @@
+             and source['source_head'] == corpus['source_head'] == HEAD
+             and source['working_directory'] == corpus['working_directory'] == str(ROOT),
+             'Wrong W1 phase, source or worktree')
++    require({name: os.environ.get(name) for name in source['pytest_environment']} == source['pytest_environment'],
++            'Frozen pytest environment overrides changed')
+     require(corpus['source_freeze'] == {'path': source_path.relative_to(ROOT).as_posix(), 'sha256': source_sha}
+             and corpus['files'] == source['files'] and corpus['corpora'] == source['corpora']
+             and corpus['verification_files'] == {**source['verification_files'], source_path.relative_to(ROOT).as_posix(): source_sha},
+--- compare_corpora.py.before
++++ compare_corpora.py.after
+@@ -148,6 +148,11 @@
+                 return json.loads(preserved(phase, path)) if phase == 'B1' else read(phase, path)
+ 
+             result = artifact(directory / (case + '.json'))
++            fit = artifact(directory / (case + '_fit.json'))
++            partial = artifact(directory / (case + '_partial.json'))
++            require(fit == {name: result[name] for name in ('provenance', 'reading', 'fit', 'dev_steps', 'outcome_cut')}
++                    and partial == {name: result[name] for name in ('provenance', 'reading', 'fit', 'dev_steps', 'outcome_cut', 'development')},
++                    'Fit/partial prefixes differ from completed corpus result')
+             inner = artifact(directory / (case + '_process.json'))
+             snapshot = artifact(directory / 'source_snapshot.json')
+             adapter = artifact(directory / 'adapter.json')
+--- preserve_validation_v1.py.before
++++ preserve_validation_v1.py.after
+@@ -57,10 +57,15 @@
+     require(proposal['schema'] == 'semabi.transport.w1_validation_artifact_proposal.v1'
+             and proposal['source_head'] == guard.HEAD, 'Wrong W1 artifact proposal')
+     expected_names = set(proposal['files']) | {proposal_path.relative_to(ROOT).as_posix()}
++    scratch = HERE / 'pytest_tmp_v1'
+ 
+     def verify_inventory():
++        require(not scratch.is_symlink() and (not scratch.exists() or
++                (scratch.is_dir() and scratch.resolve(strict=True) == scratch)), 'Noncanonical pytest scratch root')
+         actual = set()
+         for path in HERE.rglob('*'):
++            if path == scratch or path.is_relative_to(scratch):
++                continue
+             require(not path.is_symlink(), 'Symlink in validation inventory')
+             if path.is_dir():
+                 continue
+@@ -68,6 +73,7 @@
+             actual.add(path.relative_to(ROOT).as_posix())
+         require(actual == expected_names, 'Validation artifact membership changed')
+         for name, entry in proposal['files'].items():
++            require(not (ROOT / name).is_relative_to(scratch), 'Fixture scratch must not appear in artifact proposal')
+             path = guard.checked(name)
+             require(path.is_relative_to(HERE) and set(entry) == {'bytes', 'sha256'}, 'Invalid proposed artifact')
+             require(path.stat().st_size == entry['bytes'] and sha(path) == entry['sha256'], 'Proposed artifact bytes changed: ' + name)
+@@ -152,6 +158,8 @@
+         'reviewed_proposal_sha256': args.proposal_sha, 'files': artifacts, 'jobs': jobs,
+         'all_owned_jobs_terminated': True, 'full_suite': suite, 'corpus_comparison': comparison_summary,
+         'execution_nonzero_jobs': [name for name, row in jobs.items() if row['returncode'] != 0],
++        'excluded_runtime_scratch': {'path': scratch.relative_to(ROOT).as_posix(), 'present': scratch.exists(),
++            'policy': 'Only this real non-symlink directory and its lexical descendants are excluded. Synthetic pytest fixture scratch is not retained run evidence; all other symlinks are rejected.'},
+         'adoption_status': 'ROOT_REVIEW_REQUIRED; preservation is not semantic acceptance or main adoption.',
+         'scope': 'W1 retained validation evidence custody. Actual nonpasses, execution failures and semantic differences remain preserved without hard-coded passing counts or equality requirements.'}
+     guard.write_json(output, record)
+--- validation_plan_v1.md.before
++++ validation_plan_v1.md.after
+@@ -89,3 +89,8 @@
+ `full_pytest_v1_v1.json`, each `<case>_v1.json`, and
+ `corpus_comparison_v1.json`. Each receipt retains the actual runner terminal
+ JSON as `output`, tool exit code, coordinator, and tool session identity.
++The exact `pytest_tmp_v1` subtree is excluded from the artifact proposal and
++manifest: it contains intentional synthetic fixture repositories and symlinks.
++Its top-level path must remain a real non-symlink directory; only its lexical
++descendants are excluded, without following their targets. The manifest records
++that exclusion and its presence. Symlinks elsewhere remain disallowed.

@@ -1,0 +1,14 @@
+{
+  "schema": "semabi.widget_persistence.root_preservation_go.v1",
+  "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+  "reviewed_proposal_sha256": "aa685eff4bcc13aec2052d0488a95734105667e34dd35cd4c2e38e8ade2a447f",
+  "source_freeze_sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+  "corpus_freeze_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+  "root_rehashed_proposed_files": 120,
+  "root_rehashed_proposed_bytes": 3786806,
+  "decision": "GO_ONCE_FOR_PRESERVATION_ONLY",
+  "coordinator": "/root/baseline_verification",
+  "scope": "Root read the completion report, complete full-suite record, cache diagnosis and unchanged preservation source, and rehashed every proposed artifact. Authorize the already frozen stdlib preserver once on host CPU 6 with all six thread limits one, hash seed zero, -B and a new absent bytecode prefix. Preserve exact invocation and tool completion outside the final manifest. Keep the 120 proposed files and proposal immutable.",
+  "full_suite_status": "Pytest 631 passed, 3 skipped, 1 xfailed; original wrapper FAILED with return code 1 and failed bytecode-prefix postflight. Preservation does not grant a clean wrapper pass, runtime bytecode absence, source adoption, or semantic acceptance.",
+  "next": "Independent result and cache-forensic review before deciding the bounded source checkpoint. No full-suite/corpus retry or frozen-policy change is authorized by this GO."
+}

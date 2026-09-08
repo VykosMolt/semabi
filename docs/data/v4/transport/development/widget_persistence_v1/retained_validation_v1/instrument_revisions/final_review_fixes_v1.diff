@@ -1,0 +1,55 @@
+--- compare_corpora.py.before
++++ compare_corpora.py.after
+@@ -222,8 +222,8 @@
+                         require((name == 'semabi' or name.startswith('semabi.')) and row['path'] == row['spec_origin'] == str(path)
+                                 and source['source_files'][row['relative_path']] == row['sha256']
+                                 and row['package_paths'] in ([], [str(path.parent)]), 'Native origin row differs')
+-                for boundary in audit['snapshots'][1:]:
+-                    require('semabi.compiler.v2.hypotheses' in boundary['modules'], 'Candidate hypotheses origin was not recorded')
++                require('semabi.compiler.v2.hypotheses' in audit['snapshots'][-1]['modules'],
++                        'Candidate hypotheses origin was not recorded after measurement')
+             require(set(result) == {'provenance', *COMPONENTS}, 'Unreviewed semantic component inventory')
+             source_run = result['reading']['provenance'].get('source_run')
+             require(source_run == str(corpus_roots[phase] / pair[0]), 'Reading source-run routing differs')
+--- preserve_validation_v1.py.before
++++ preserve_validation_v1.py.after
+@@ -124,8 +124,12 @@
+                 and audit['corpus_freeze_sha256'] == args.corpus_freeze_sha256
+                 and audit['scope'] == 'PRIMARY_PYTEST_INTERPRETER', 'Full-suite origin association differs')
+         suite.update(origin_receipt_present=True, origin_receipt_sha256=sha(audit_path),
+-                     origin_postflight_status=audit.get('postflight_status'), origin_scope=audit['subprocess_scope'])
+-        if 'pytest_returncode' in audit:
++                     origin_postflight_status=audit.get('postflight_status'), origin_scope=audit['subprocess_scope'],
++                     pytest_returncode=audit.get('pytest_returncode'),
++                     wrapper_execution_error=audit.get('execution_error'),
++                     wrapper_postflight_error=audit.get('postflight_error'))
++        if (audit.get('postflight_status') == 'VERIFIED' and 'execution_error' not in audit
++                and 'pytest_returncode' in audit):
+             require(audit['pytest_returncode'] == suite['returncode'], 'Pytest/owned return codes differ')
+     comparison_path = HERE / 'corpus_comparison_v1.json'
+     comparison_summary = {'present': comparison_path.exists(), 'returncode': jobs['corpus_comparison_v1']['returncode']}
+--- validation_plan_v1.md.before
++++ validation_plan_v1.md.after
+@@ -46,6 +46,12 @@
+ and checked without changing pytest selection or built-in plugin behavior.
+ The absent `PYTEST_ADDOPTS`, `PYTEST_PLUGINS` and
+ `PYTEST_DISABLE_PLUGIN_AUTOLOAD` overrides are also frozen and checked.
++The existing shared Python/pytest runtime is not a hermetically frozen
++toolchain. Its dependency bytes and inherited environment outside the explicit
++checked set are not authenticated by this ledger. In particular `PYTHONPATH`
++and `PYTHONOPTIMIZE` were absent during preparation but are outside the current
++checked set; receipts establish the stated candidate source routing and
++bound-file custody, not runtime-wide execution authority.
+ 
+ The full suite intentionally launches synthetic temporary SemABI packages in
+ `test_v4_execution_authority.py`: static expansion gives 27 authority-helper,
+@@ -85,6 +91,9 @@
+ This preserves completed attempts even if a job failed; a missing comparison
+ or JUnit report remains explicitly missing. `PRESERVED` is an artifact custody
+ status. Root must separately assess execution completion and semantic results.
++Pytest's own result is separate from wrapper/postflight failure: both return
++outcomes and any wrapper errors remain recorded. They must match only when
++postflight verified and the wrapper recorded no execution error.
+ Terminal receipt names retain B1's convention in `terminal_receipts/`:
+ `full_pytest_v1_v1.json`, each `<case>_v1.json`, and
+ `corpus_comparison_v1.json`. Each receipt retains the actual runner terminal

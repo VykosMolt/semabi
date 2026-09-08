@@ -1,0 +1,315 @@
+{
+  "anchors": {
+    "b1_comparison": {
+      "path": "docs/data/v4/transport/development/b1_validation/corpus_comparison_v1.json",
+      "sha256": "ef415af9df5c4d48d658a29fb85209ef32e743e7107b9d62f0782fab516fc981"
+    },
+    "b1_corpus": {
+      "path": "docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "sha256": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535"
+    },
+    "b1_input_copy": {
+      "path": "docs/data/v4/transport/development/b1_validation/input_copy_v1.json",
+      "sha256": "8a2f6661b6a29d84d5aafed4dd54816b7b50e9e5e699e0bcad9930439b6ad488"
+    },
+    "b1_report": {
+      "path": "docs/data/v4/transport/development/b1_validation/validation_review_v1.md",
+      "sha256": "417c852a5e103b83a535d56d2f028fd89677dd11257b512d4ea2a00d6f02369e"
+    },
+    "b1_results": {
+      "path": "docs/data/v4/transport/development/b1_validation/results_manifest_v1.json",
+      "sha256": "af3c7131375798bbf0cc0f4050617cc8ebea901a6313d7be7879f23409597e8d"
+    },
+    "b1_source": {
+      "path": "docs/data/v4/transport/development/b1_validation/source_freeze_v1.json",
+      "sha256": "c40e565fb6f6fda6116a442a6291ba987e0d2e445ed8d63ec3f58082743b730d"
+    },
+    "b1_suite": {
+      "path": "docs/data/v4/transport/development/b1_validation/full_pytest_checks_v1.json",
+      "sha256": "d928495728380cc55f71f769c2341fdb77efb9ee2c4a9fb4f4b3d74f3390a602"
+    },
+    "contract": {
+      "path": "docs/data/v4/transport/development/widget_persistence_v1/contract_v1.md",
+      "sha256": "9c5804e4ffaf674c6b71c0636fe1e00670e438bc18fa039bc5c646cfa4136d30"
+    },
+    "g2_comparison": {
+      "path": "docs/data/v4/transport/development/g2/corpus_comparison_v1.json",
+      "sha256": "f3978dbcb371372cd486b33231007e8ff1264ed98e9aff8c77ae8157ba60c666"
+    },
+    "g2_report": {
+      "path": "docs/data/v4/transport/development/g2/integrated_report_v1.md",
+      "sha256": "c3ab689bf5bcec075f6a2cd0f27912bf24cffab7c29c7e7d5ed451cfdbf3093b"
+    },
+    "g2_results": {
+      "path": "docs/data/v4/transport/development/g2/results_manifest_v1.json",
+      "sha256": "481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e"
+    },
+    "g2_source": {
+      "path": "docs/data/v4/transport/development/g2/freeze_v1.json",
+      "sha256": "3f88423e84622313263c097a289fb4c8fddb2a0d8d2d56176186229759848df6"
+    },
+    "persistent_inputs": {
+      "path": "docs/data/v4/transport/development/g1/rebuild_v1/input_manifest.json",
+      "sha256": "0a2fc2a9833f290fb23d9300e0547b53b83af2ec93ab3a92cde63b1f0ddc1dc1"
+    }
+  },
+  "baseline_cases": {
+    "allocation_positive": {
+      "accepted_component_equality": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "accepted_differences": [],
+      "results": {
+        "B1": {
+          "path": "docs/data/v4/transport/development/b1_validation/corpora/allocation_positive/allocation_positive.json",
+          "sha256": "f7c39f3fa5eacab7e60ddf5edb6e83cda431957073c2194a59088d3127cfe41f"
+        },
+        "G2": {
+          "path": "docs/data/v4/transport/development/g2/corpora/allocation_positive/allocation_positive.json",
+          "sha256": "429cb5c1da0735a3440281d20972069f82ebb77591e63a5a661c531d78064a98"
+        }
+      }
+    },
+    "allocation_refusals": {
+      "accepted_component_equality": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "accepted_differences": [],
+      "results": {
+        "B1": {
+          "path": "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/allocation_refusals.json",
+          "sha256": "b31c7b0c7342eca80fad435f9d4629bc091b7672bca9d87da8cc23b258f6c9d9"
+        },
+        "G2": {
+          "path": "docs/data/v4/transport/development/g2/corpora/allocation_refusals/allocation_refusals.json",
+          "sha256": "17c76c1751577515f43637152cfb09c887bbc8ade689b389f53962cf9dee0df9"
+        }
+      }
+    },
+    "pilot": {
+      "accepted_component_equality": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "accepted_differences": [],
+      "results": {
+        "B1": {
+          "path": "docs/data/v4/transport/development/b1_validation/corpora/pilot/pilot.json",
+          "sha256": "a9a2b96c111b2ce1b3565ef590947ebded3de0d6ab0d41c46a81733d84368c22"
+        },
+        "G2": {
+          "path": "docs/data/v4/transport/development/g2/corpora/pilot/pilot.json",
+          "sha256": "5f287d841f5542aede63451a9e54d0467d328d441bb3afc6b7e66053f5101302"
+        }
+      }
+    },
+    "separating": {
+      "accepted_component_equality": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "accepted_differences": [],
+      "results": {
+        "B1": {
+          "path": "docs/data/v4/transport/development/b1_validation/corpora/separating/separating.json",
+          "sha256": "d54cc1e4c0e6bae71ec7f3f25bef69f7f9aae3620a95609cd3129f7420ad3c0f"
+        },
+        "G2": {
+          "path": "docs/data/v4/transport/development/g2/corpora/separating/separating.json",
+          "sha256": "26eb2bb1818441ca0e2baf35669d663d3a7f66ffae0f3c2cfa693b724e964469"
+        }
+      }
+    },
+    "separating_extended": {
+      "accepted_component_equality": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "accepted_differences": [],
+      "results": {
+        "B1": {
+          "path": "docs/data/v4/transport/development/b1_validation/corpora/separating_extended/separating_extended.json",
+          "sha256": "0fc5ec7c481cb184155a88ddc060ea0df75c2eb769745aca0c2e8644eded63ad"
+        },
+        "G2": {
+          "path": "docs/data/v4/transport/development/g2/corpora/separating_extended/separating_extended.json",
+          "sha256": "d375d0adaf8d463a4cfd1ce15caa44d82cb7d62ec83267a50fc3a59e700c5f4f"
+        }
+      }
+    }
+  },
+  "baseline_components": [
+    "reading",
+    "fit",
+    "dev_steps",
+    "outcome_cut",
+    "development",
+    "holdout"
+  ],
+  "baseline_root_mapping": {
+    "B1": {
+      "artifact_root": "/home/moloch/semabi",
+      "declared_original_corpus_root": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1",
+      "declared_original_worktree_root": "/home/moloch/semabi/runs/.b1_validation_worktree",
+      "qualification": "Accepted retained-output baseline; original loaded native origins were not recorded and fresh-process helper import gives main precedence."
+    },
+    "G2": {
+      "artifact_root": "/home/moloch/semabi",
+      "declared_corpus_root": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1",
+      "qualification": "Source-aligned retained baseline; intended source root was main."
+    },
+    "W1": {
+      "artifact_root": "/home/moloch/semabi/runs/.w1_worktree",
+      "declared_corpus_root": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1",
+      "qualification": "New candidate commit and package/module origin ledger must be frozen before measurements."
+    }
+  },
+  "current_worktree_preparation": {
+    "persistent_corpus_root_exists": false,
+    "root": "/home/moloch/semabi/runs/.w1_worktree",
+    "venv_link_exists": false
+  },
+  "instrument_sources": {
+    "docs/data/v4/prequential/instruments/link_probe.py": "b3dc46628f60956a6d3967114cb1a6fd00a376acbdd25ccef08bedf923864dae",
+    "docs/data/v4/transport/baseline/check_corpora.py": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+    "docs/data/v4/transport/development/b1_validation/compare_corpora.py": "8031d30ed0c5f6f411133a59da672b88e2ac2ffcbcef15a2a51cd2571ed8e72c",
+    "docs/data/v4/transport/development/b1_validation/freeze_validation_v1.py": "0f4e17dcc107ccd58f8ac092acd5c08870f7cb411f4445c6a5180c3f50fb1559",
+    "docs/data/v4/transport/development/b1_validation/preserve_validation_v1.py": "832e26fedde78ad1acde2376fb1151517c1d2c8c9f022ffdae71205a944e4bb8",
+    "docs/data/v4/transport/development/b1_validation/run_corpus.py": "7774152df03cc6fcc1dd59051b4993045115fb51074e3b0f77080ac31bc0fb57",
+    "docs/data/v4/transport/development/g2/compare_corpora.py": "6a4c7eedcfd6143581a8cd75e47c0459b48ac8614657fcf0e0a615d1558ad001",
+    "docs/data/v4/transport/development/g2/run_corpus.py": "e2c8b75cd7003855aceceddb322b2cd9e7f2302bf8c734acde50bc26152cbd87",
+    "docs/data/v4/transport/run_job.py": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7",
+    "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8"
+  },
+  "main_base_head": "6aea64baac1678cbce8ba4b1a41ab04756225c7d",
+  "main_base_vs_b1_file_inventory": {
+    "source_files": {
+      "changed_or_missing": [],
+      "file_count": 156,
+      "new": []
+    },
+    "test_files": {
+      "changed_or_missing": [],
+      "file_count": 70,
+      "new": []
+    }
+  },
+  "recorded_utc": "2026-09-08T04:40:25.865532+00:00",
+  "schema": "semabi.w1.verification_preparation_bindings.v1",
+  "scope": "Source/metadata/hash preparation only. No source or test edits, native imports, jobs, Fits, measurements or main-HEAD mutation.",
+  "source_findings": [
+    {
+      "finding": "Baseline helper inserts main before the first native import in a fresh B1 corpus process. File inventories do not record loaded native module origins.",
+      "independent_review": "/root/baseline_verification/post_controls_review confirmed the source import order; exact historical loaded-main revision remains an inference.",
+      "severity": "HIGH",
+      "source_locations": {
+        "docs/data/v4/prequential/instruments/link_probe.py": 18,
+        "docs/data/v4/transport/baseline/check_corpora.py": 24,
+        "docs/data/v4/transport/development/b1_validation/run_corpus.py": 115
+      },
+      "w1_adaptation": "Anchor the authenticated candidate package after preflight; verify package path and all loaded native origins/digests before and after measurement; retain empty bytecode prefix."
+    },
+    {
+      "finding": "Preserved B1 artifact root differs from recorded historical B1 corpus root.",
+      "severity": "MEDIUM",
+      "w1_adaptation": "Separate artifact roots from authenticated declared provenance roots; retain original absolute paths and exact manifest-relative hash maps."
+    }
+  ],
+  "status": "PLAN_ONLY_NO_VALIDATION_EXECUTION",
+  "suite_input_files": {
+    "runs/v4/blend_book_transfer/field_theories_v4.json": {
+      "present_and_matching": true,
+      "sha256": "408cf3034e1346ccfbf309ec196c882c5236e3cbdda88100e14ea49ae8ec2097"
+    },
+    "runs/v4/blend_book_transfer/hidden_domain.json": {
+      "present_and_matching": true,
+      "sha256": "642c99bb8a9fd130be004c0a3346531880a8f77a9227533d5651a2837eafd0e7"
+    },
+    "runs/v4/blend_book_transfer/observations.jsonl": {
+      "present_and_matching": true,
+      "sha256": "a8819b9013a00627046a1066b33dbf79ef6be3b6b265d7f7bbbf867865f164e5"
+    },
+    "runs/v4/blend_book_transfer/oracle.jsonl": {
+      "present_and_matching": true,
+      "sha256": "ace8989d80c4ebddbb4c74215da189e51c59901b2ecf78df8a1fe76bc954a257"
+    },
+    "runs/v4/blend_book_transfer/probes.jsonl": {
+      "present_and_matching": true,
+      "sha256": "5c18fff0e2394914364aecd100b442eb95bd2a8fd9256d711ade2986d009d9fb"
+    },
+    "runs/v4/blend_book_transfer/steps.jsonl": {
+      "present_and_matching": true,
+      "sha256": "22e7be1d2a809d081218f9daa1828a753be3857b08eff1848aba7d864dd29dbe"
+    },
+    "runs/v4/harbour_dev/hidden_domain.json": {
+      "present_and_matching": true,
+      "sha256": "37a2958c71673000e876e79109af4b78c099f934c973e42db2d4dc804578af12"
+    },
+    "runs/v4/harbour_dev/identity_refutations_v4.json": {
+      "present_and_matching": true,
+      "sha256": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb"
+    },
+    "runs/v4/harbour_dev/observations.jsonl": {
+      "present_and_matching": true,
+      "sha256": "c1018d5dcf2605cedc6408d32205e7799753729dc4e2a6d29cda7dc08fcc9b3c"
+    },
+    "runs/v4/harbour_dev/oracle.jsonl": {
+      "present_and_matching": true,
+      "sha256": "77a5799ccc91280e594d917551c0ab78e0f6af7679aa0fdb265c36caa7655a34"
+    },
+    "runs/v4/harbour_dev/probes.acquired.jsonl": {
+      "present_and_matching": true,
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/harbour_dev/steps.jsonl": {
+      "present_and_matching": true,
+      "sha256": "37465c9e493fcb3a861222958f4dba697d81d4b4844eaf937d0f152db3e69d13"
+    },
+    "runs/v4/harbour_transfer/hidden_domain.json": {
+      "present_and_matching": true,
+      "sha256": "37a2958c71673000e876e79109af4b78c099f934c973e42db2d4dc804578af12"
+    },
+    "runs/v4/harbour_transfer/observations.jsonl": {
+      "present_and_matching": true,
+      "sha256": "0b8164158f9deea849bc11cb90f0e4b908bfc5b91f9fc406676465add6f23b27"
+    },
+    "runs/v4/harbour_transfer/oracle.jsonl": {
+      "present_and_matching": true,
+      "sha256": "dbe7dfbc00c6fc3cdeb06f3f477993c10497ba560c24f62cd67f67452472e17a"
+    },
+    "runs/v4/harbour_transfer/probes.acquired.jsonl": {
+      "present_and_matching": true,
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/harbour_transfer/probes.jsonl": {
+      "present_and_matching": true,
+      "sha256": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199"
+    },
+    "runs/v4/harbour_transfer/steps.jsonl": {
+      "present_and_matching": true,
+      "sha256": "45f9645ab9b4a5ebc3d1827f30cf9289abae8f01744e4de3537154371857ad83"
+    }
+  }
+}

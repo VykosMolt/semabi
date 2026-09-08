@@ -1,0 +1,249 @@
+{
+  "schema": "semabi.transport.w1_native_runtime_tools.v1",
+  "coordinator": "/root/baseline_verification",
+  "polls": [
+    {
+      "name": "full_pytest_v1",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 23639,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "d7f09e",
+        "wall_time_seconds": 5.000848021,
+        "session_id": 23639,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "name": "corpus_allocation_positive",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 13967,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "5b5a5e",
+        "wall_time_seconds": 0.00000213,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270424, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:44:37.553930+00:00\"}\n"
+      }
+    },
+    {
+      "name": "corpus_pilot",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 18647,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "32c2ee",
+        "wall_time_seconds": 0.000002415,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270767, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:49:25.346037+00:00\"}\n"
+      }
+    },
+    {
+      "name": "corpus_allocation_refusals",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 42729,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "7b9208",
+        "wall_time_seconds": 0.000001622,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270633, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:50:53.771965+00:00\"}\n"
+      }
+    },
+    {
+      "name": "corpus_separating",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 38432,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "a67af0",
+        "wall_time_seconds": 0.000001974,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270910, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:51:13.710283+00:00\"}\n"
+      }
+    },
+    {
+      "name": "corpus_separating_extended",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 75397,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "37fb64",
+        "wall_time_seconds": 0.000002105,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1271056, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:57:55.191782+00:00\"}\n"
+      }
+    },
+    {
+      "name": "full_pytest_v1",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 23639,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "52ed91",
+        "wall_time_seconds": 0.000002163,
+        "exit_code": 1,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FAILED\", \"returncode\": 1, \"child_pid\": 1271168, \"child_terminated\": true, \"end_utc\": \"2026-09-08T06:01:14.709609+00:00\"}\n"
+      }
+    }
+  ],
+  "terminal_tool_calls": [
+    {
+      "name": "corpus_allocation_positive",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 13967,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "5b5a5e",
+        "wall_time_seconds": 0.00000213,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270424, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:44:37.553930+00:00\"}\n"
+      }
+    },
+    {
+      "name": "corpus_pilot",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 18647,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "32c2ee",
+        "wall_time_seconds": 0.000002415,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270767, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:49:25.346037+00:00\"}\n"
+      }
+    },
+    {
+      "name": "corpus_allocation_refusals",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 42729,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "7b9208",
+        "wall_time_seconds": 0.000001622,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270633, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:50:53.771965+00:00\"}\n"
+      }
+    },
+    {
+      "name": "corpus_separating",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 38432,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "a67af0",
+        "wall_time_seconds": 0.000001974,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1270910, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:51:13.710283+00:00\"}\n"
+      }
+    },
+    {
+      "name": "corpus_separating_extended",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 75397,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "37fb64",
+        "wall_time_seconds": 0.000002105,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1271056, \"child_terminated\": true, \"end_utc\": \"2026-09-08T05:57:55.191782+00:00\"}\n"
+      }
+    },
+    {
+      "name": "corpus_comparison_v1",
+      "tool": "exec_command",
+      "arguments": {
+        "cmd": "taskset -c 6 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_job_corpus_comparison_v1_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_comparison_v1 -- /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/compare_corpora.py --b1-manifest-sha af3c7131375798bbf0cc0f4050617cc8ebea901a6313d7be7879f23409597e8d --source-freeze-sha256 583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62 --corpus-freeze-sha256 b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "justification": "Run this reviewed W1 validation job on the host with frozen source and inputs, one CPU/thread, and owned host PID records?",
+        "max_output_tokens": 2000,
+        "sandbox_permissions": "require_escalated",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 1000
+      },
+      "result": {
+        "chunk_id": "33559a",
+        "wall_time_seconds": 0.304066244,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1295423, \"child_terminated\": true, \"end_utc\": \"2026-09-08T06:01:09.978416+00:00\"}\n"
+      }
+    },
+    {
+      "name": "full_pytest_v1",
+      "tool": "write_stdin",
+      "arguments": {
+        "session_id": 23639,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 2000
+      },
+      "result": {
+        "chunk_id": "52ed91",
+        "wall_time_seconds": 0.000002163,
+        "exit_code": 1,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FAILED\", \"returncode\": 1, \"child_pid\": 1271168, \"child_terminated\": true, \"end_utc\": \"2026-09-08T06:01:14.709609+00:00\"}\n"
+      }
+    }
+  ],
+  "scope": "Retained raw session polls and terminal exec/write_stdin calls. Launch calls are in native_launch_tools_v1.json and comparison_launch_tools_v1.json."
+}

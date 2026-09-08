@@ -1,6 +1,6 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-08 05:18 UTC)
+## Active checkpoint (2026-09-08 06:49 UTC)
 
 Current question: which observation, identity and field-attachment changes can
 earn J1's missing relational records and endpoint binding?
@@ -63,8 +63,9 @@ files, and accepted `root_closeout_v1.json`, SHA-256
 `66095786a5b6d2d7279f99d245050977ae62a4137856bad44d4a5747d80bc4aa`.
 The review retains its helper corrections and explicitly limits authentication
 order for historical preparation members. The original first pass, invalid attempts,
-corrected results and all existing seals remain immutable. Main native source
-is still unchanged at `6aea64ba`; its J1 evidence checkpoint is next.
+corrected results and all existing seals remain immutable. J1's source association
+remains `6aea64ba`. Main evidence checkpoint `5960a0f` preserves the reviewed
+measurement and focused W1 records; its native and test bytes are unchanged.
 
 The independent invented collision diagnostic is sealed at
 `analysis/persistence_collision_v1/artifact_manifest_v1.json`, SHA-256
@@ -73,17 +74,73 @@ Root's isolated W1 repair retains all reload candidates and withholds promotion
 for a template with ambiguous own keys. The same focused file changes from
 3 failures/13 passes to 16 passes; independent source and boundary checks pass.
 Focused source checkpoint `284d80c` is in `runs/.w1_worktree`, with no main
-adoption. Full-suite and five dedicated-corpus instruments have passed independent
-review; source/data freeze and metadata preflight are next. No validation jobs
-are running. This repair
+adoption. Full-suite and five dedicated-corpus instruments passed independent
+review, source/data freeze and all six metadata-only preflights. Source freeze
+is `583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62`;
+corpus freeze is `b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e`.
+Root independently rehashed 324 source/test/instrument/input bindings and the
+seven phase artifacts, then reconstructed all seven proposed commands exactly.
+`baseline_verification` launched five corpus jobs on CPUs 0–4 and the canonical
+full suite on CPU 5, on host from the candidate worktree. All five corpus jobs
+completed with exit 0 and verified source/import postflight; all are reaped.
+The approved CPU-6 comparator then ran once and found no differences in any
+of the six retained components for any corpus, including all existing wrong,
+ambiguous and abstained outcomes. It authenticated the B1-to-G2 comparison
+chain with the B1 import-origin qualification intact. The comparator is reaped.
+The full suite reports 631 passed, three skipped and one xfailed across 635
+cases, with pytest return code 0. Its wrapper returned 1 because the bytecode prefix
+existed at postflight. The owner retained its nine directories and zero final
+files; source inspection identifies five manifest tests that deliberately write
+then remove forged/stale caches at those paths. Final emptiness does not imply
+no transient files. Independent forensic and custody review accepts preservation
+of the failed attempt. The 121-file seal is `47518651d62874ed1d52536bacbdb4fc088e16e848a5462be07bde7780cfc851`.
+Main retains 123 exact files in `development/widget_persistence_v1/retained_validation_v1/`,
+including the seal and its external execution receipt. Root's acceptance
+`root_preserved_attempt_acceptance_v1.json` is `69becd399b8ce0c6b3438152756882e9b8c0db35869d358085a9e853359757db`.
+No clean full-suite gate or main adoption follows from this attempt. The exact GO,
+launch and process records remain in the W1 evidence directories. Root's independent live sample confirms all
+12 runner/child commands, working directories, affinities, nice 0 and required
+environment values. Each had one thread; bytecode prefixes were absent at that live sample and
+host available memory was approximately 20 GB. The six child/group IDs are
+1270424, 1270633, 1270767, 1270910, 1271056 and 1271168, with tool sessions
+13967, 42729, 18647, 38432, 75397 and 23639 respectively. All are reaped. This repair
 supports sound future reload probes; J1 had no qualifying reload pairs, so W1
-does not itself repair its representation failure. The next invented diagnostic
-will separate keyed identity and widget promotion from the raw-change score,
-without changing J1's original evidence or claiming natural reload persistence.
-Separately, a source audit notes that previously promoted widgets and later key
-associations can bypass a subsequent transient-slot collision check. W1's direct
-overwrite regression does not establish a broader invariant after key revision;
-that production-flow variant needs its own executable investigation.
+does not itself repair its representation failure.
+An isolated test-only repair now places the intentional cache contexts under
+each affected test's existing temporary directory and restores the runtime
+prefix in an outer finally. The original worktree and cache residue remain held.
+The new worktree is `runs/.w1_validation_worktree`; native bytes remain identical
+to W1. Focused source and observer review are complete apart from the final
+explicit pytest-configuration binding. The five affected tests will run before
+a test-only source commit and separately frozen canonical full-suite retry.
+The five unchanged corpus runs do not need repetition if dependency identity holds.
+W2 source and concrete metadata review passed after four bounded pre-freeze
+corrections, with the initial five source files retained. Root then froze
+235 source/test/instrument/input files and ran the native diagnostic once on
+CPU 7. It completed with exit 0; runner 1294537, child/group 1294539 and session
+59818 are terminated/reaped. The independent host sample occurred after exit.
+Root's preserver passes 540 custody checks and seals 37 attempt files with
+SHA-256 `d32f9fa33955b083ba5a37ef66c1f26244ea3c15927b6e8d56a5c5cd694eaa38`.
+Only afterward did root read the semantic results: all 133 controls pass, and
+the same keyed/promoted widget attribute delta changes from SPURIOUS under
+CURRENT to EXPLAINED under the diagnostic predicate, with error 1-to-0 and
+explanation 0-to-1. Its native comparison preference also reverses; the other
+three interpretation conditions remain NOTHING. This isolates a score omission
+for an already represented widget; it does not earn identity or persistence.
+The full result and limits are in `development/widget_observation_v1/report_v1.md`.
+Independent outcome review verifies 597 custody checks, 691 result checks and
+all 64 native comparisons. Its five-file seal is `ba40439f30973b9455d93fddc83f1668f33d1e481380d762e423fd743eb7aa6c`;
+root accepts the bounded result in `root_final_acceptance_v1.json` (`16b558c7…`).
+No production score change has been made, and main native/test bytes remain unchanged.
+The proposed V4 observation repair must compare raw values at unambiguous,
+actively owned persistent fields: pooled values can hide swaps, while canonical
+key reassignment can manufacture apparent changes. Empty/checked-value carriers
+also need explicit parser evidence before any general support claim.
+W3's source-only diagnostic in `development/widget_key_revision_v1/` tests two
+actual default fits with identical raw observations and a supplied after-only
+key bijection. It predicts stale widget promotion under revised keys; that is a
+prediction awaiting source review, freeze and one execution, not a measured result.
+All completed W1/W2 jobs are reaped; no new native job is active at this checkpoint.
 
 W1 preparation also found a historical provenance limit: the unchanged legacy
 `link_probe.py` prepends main before B1's corpus child imports SemABI. The old

@@ -1,0 +1,199 @@
+{
+  "schema": "semabi.transport.w1_native_launch_tools.v1",
+  "coordinator": "/root/baseline_verification",
+  "root_execution_go_sha256": "96cbec7605f2835c72ac0ffe78530e38a0f67ee4c750ce1cfb266c176b848402",
+  "native_proposal_sha256": "0dd1da687b82148b35b69402a721f00e4f4ec242a99b504649442ca2b57a8496",
+  "source_freeze_sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+  "corpus_freeze_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+  "tool_calls": [
+    {
+      "name": "corpus_allocation_positive",
+      "tool": "exec_command",
+      "arguments": {
+        "cmd": "taskset -c 0 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_job_corpus_allocation_positive_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_positive -- /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py allocation_positive docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json --source-freeze-sha256 583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62 --corpus-freeze-sha256 b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "justification": "Run this reviewed W1 validation job on the host with frozen source and inputs, one CPU/thread, and owned host PID records?",
+        "max_output_tokens": 2000,
+        "sandbox_permissions": "require_escalated",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 1000
+      },
+      "result": {
+        "chunk_id": "7e748d",
+        "wall_time_seconds": 1.001331828,
+        "session_id": 13967,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "name": "corpus_allocation_refusals",
+      "tool": "exec_command",
+      "arguments": {
+        "cmd": "taskset -c 1 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_job_corpus_allocation_refusals_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_refusals -- /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py allocation_refusals docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json --source-freeze-sha256 583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62 --corpus-freeze-sha256 b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "justification": "Run this reviewed W1 validation job on the host with frozen source and inputs, one CPU/thread, and owned host PID records?",
+        "max_output_tokens": 2000,
+        "sandbox_permissions": "require_escalated",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 1000
+      },
+      "result": {
+        "chunk_id": "90fd94",
+        "wall_time_seconds": 1.000809731,
+        "session_id": 42729,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "name": "corpus_pilot",
+      "tool": "exec_command",
+      "arguments": {
+        "cmd": "taskset -c 2 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_job_corpus_pilot_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_pilot -- /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py pilot docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json --source-freeze-sha256 583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62 --corpus-freeze-sha256 b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "justification": "Run this reviewed W1 validation job on the host with frozen source and inputs, one CPU/thread, and owned host PID records?",
+        "max_output_tokens": 2000,
+        "sandbox_permissions": "require_escalated",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 1000
+      },
+      "result": {
+        "chunk_id": "b7f843",
+        "wall_time_seconds": 1.002032261,
+        "session_id": 18647,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "name": "corpus_separating",
+      "tool": "exec_command",
+      "arguments": {
+        "cmd": "taskset -c 3 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_job_corpus_separating_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating -- /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py separating docs/data/v4/transport/development/widget_persistence_v1/corpora/separating docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json --source-freeze-sha256 583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62 --corpus-freeze-sha256 b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "justification": "Run this reviewed W1 validation job on the host with frozen source and inputs, one CPU/thread, and owned host PID records?",
+        "max_output_tokens": 2000,
+        "sandbox_permissions": "require_escalated",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 1000
+      },
+      "result": {
+        "chunk_id": "f27fff",
+        "wall_time_seconds": 1.001256373,
+        "session_id": 38432,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "name": "corpus_separating_extended",
+      "tool": "exec_command",
+      "arguments": {
+        "cmd": "taskset -c 4 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_job_corpus_separating_extended_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating_extended -- /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py separating_extended docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json --source-freeze-sha256 583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62 --corpus-freeze-sha256 b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+        "justification": "Run this reviewed W1 validation job on the host with frozen source and inputs, one CPU/thread, and owned host PID records?",
+        "max_output_tokens": 2000,
+        "sandbox_permissions": "require_escalated",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 1000
+      },
+      "result": {
+        "chunk_id": "0f11b3",
+        "wall_time_seconds": 1.000581036,
+        "session_id": 75397,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "name": "full_pytest_v1",
+      "tool": "exec_command",
+      "arguments": {
+        "cmd": "taskset -c 5 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_job_full_pytest_v1_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/jobs/full_pytest_v1 -- /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/run_full_suite.py --source-freeze-sha256 583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62 --corpus-freeze-sha256 b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e -- -q tests --junitxml=docs/data/v4/transport/development/widget_persistence_v1/full_pytest_v1.xml --basetemp=docs/data/v4/transport/development/widget_persistence_v1/pytest_tmp_v1",
+        "justification": "Run this reviewed W1 validation job on the host with frozen source and inputs, one CPU/thread, and owned host PID records?",
+        "max_output_tokens": 2000,
+        "sandbox_permissions": "require_escalated",
+        "workdir": "/home/moloch/semabi/runs/.w1_worktree",
+        "yield_time_ms": 1000
+      },
+      "result": {
+        "chunk_id": "201077",
+        "wall_time_seconds": 1.001905667,
+        "session_id": 23639,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  ],
+  "immediate_owned_process_ids": [
+    {
+      "name": "corpus_allocation_positive",
+      "session_id": 13967,
+      "status": "RUNNING",
+      "runner_pid": 1270413,
+      "child_pid": 1270424,
+      "owned_process_group": 1270424,
+      "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+      "start_utc": "2026-09-08T05:32:51.317048+00:00",
+      "returncode": null,
+      "child_terminated": null
+    },
+    {
+      "name": "corpus_allocation_refusals",
+      "session_id": 42729,
+      "status": "RUNNING",
+      "runner_pid": 1270622,
+      "child_pid": 1270633,
+      "owned_process_group": 1270633,
+      "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+      "start_utc": "2026-09-08T05:32:57.010333+00:00",
+      "returncode": null,
+      "child_terminated": null
+    },
+    {
+      "name": "corpus_pilot",
+      "session_id": 18647,
+      "status": "RUNNING",
+      "runner_pid": 1270756,
+      "child_pid": 1270767,
+      "owned_process_group": 1270767,
+      "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+      "start_utc": "2026-09-08T05:33:01.128354+00:00",
+      "returncode": null,
+      "child_terminated": null
+    },
+    {
+      "name": "corpus_separating",
+      "session_id": 38432,
+      "status": "RUNNING",
+      "runner_pid": 1270897,
+      "child_pid": 1270910,
+      "owned_process_group": 1270910,
+      "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+      "start_utc": "2026-09-08T05:33:05.546616+00:00",
+      "returncode": null,
+      "child_terminated": null
+    },
+    {
+      "name": "corpus_separating_extended",
+      "session_id": 75397,
+      "status": "RUNNING",
+      "runner_pid": 1271044,
+      "child_pid": 1271056,
+      "owned_process_group": 1271056,
+      "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+      "start_utc": "2026-09-08T05:33:10.917900+00:00",
+      "returncode": null,
+      "child_terminated": null
+    },
+    {
+      "name": "full_pytest_v1",
+      "session_id": 23639,
+      "status": "RUNNING",
+      "runner_pid": 1271157,
+      "child_pid": 1271168,
+      "owned_process_group": 1271168,
+      "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+      "start_utc": "2026-09-08T05:33:15.745952+00:00",
+      "returncode": null,
+      "child_terminated": null
+    }
+  ],
+  "scope": "Six initial host owned jobs. Each exact reviewed command launched once using require_escalated; comparator remains pending corpus termination. Terminal outcomes are not yet claimed."
+}

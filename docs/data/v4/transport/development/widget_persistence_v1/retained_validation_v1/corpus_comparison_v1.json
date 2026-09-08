@@ -1,0 +1,908 @@
+{
+  "accepted_b1_g2_chain": {
+    "all_five_semantic_payloads_equal": true,
+    "comparison_sha256": "ef415af9df5c4d48d658a29fb85209ef32e743e7107b9d62f0782fab516fc981",
+    "g2_results_manifest_sha256": "481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e",
+    "qualification": "Accepted retained-output baseline; B1 historical loaded origins were not recorded and fresh-process helper import gives main precedence. G2 intended source root was main."
+  },
+  "artifact_roots": {
+    "B1": "/home/moloch/semabi",
+    "G2": "/home/moloch/semabi",
+    "W1": "/home/moloch/semabi/runs/.w1_worktree"
+  },
+  "b1_results_manifest_sha256": "af3c7131375798bbf0cc0f4050617cc8ebea901a6313d7be7879f23409597e8d",
+  "comparisons": {
+    "allocation_positive": {
+      "components_equal": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "consumed_absolute_paths": {
+        "B1": {
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+        },
+        "W1": {
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+        }
+      },
+      "consumed_relative_to_declared_roots": {
+        "B1": {
+          "harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+          "harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+          "harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+          "harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+          "harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+          "harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+        },
+        "W1": {
+          "harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+          "harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+          "harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+          "harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+          "harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+          "harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+        }
+      },
+      "differences": [],
+      "excluded_execution_and_source_run_provenance": {
+        "B1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+          "top_level_execution_provenance": {
+            "case": "allocation_positive",
+            "command": [
+              "/home/moloch/semabi/runs/.b1_validation_worktree/.venv/bin/python",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "allocation_positive"
+            ],
+            "control": "button:Allocate berth",
+            "dev": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 13,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+            "started_utc": "2026-09-07T20:23:57.061303+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.b1_validation_worktree"
+          }
+        },
+        "W1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+          "top_level_execution_provenance": {
+            "case": "allocation_positive",
+            "command": [
+              "/home/moloch/semabi/.venv/bin/python",
+              "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "allocation_positive"
+            ],
+            "control": "button:Allocate berth",
+            "dev": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 1270424,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+            "started_utc": "2026-09-08T05:32:51.668252+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.w1_worktree"
+          }
+        }
+      },
+      "semantic_payloads_equal": true
+    },
+    "allocation_refusals": {
+      "components_equal": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "consumed_absolute_paths": {
+        "B1": {
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/join_merge.json": "fe105c196b2e499c15f7a5ddfab3821ccc4e61e007900683cd9c62f9c5cf2447",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/observations.jsonl": "aaeae065bd32dab494f3168624683c376bf586a4c44aa3c49f4283b448128082",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/steps.jsonl": "517f0b2fabeec9a707f9066013c950f6e1a4e4fa5886616116eeb8c5586ff573",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/join_merge.json": "6ea308426a965a645e165741410c1d2f16ffa20ad52384c81f9a70fe30931acd",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/observations.jsonl": "ab75c3ac61a176a319ef4ff80069bdffc85dc944e12c758f0923439ce491aea7",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/steps.jsonl": "e8993d7047d19ee266d2383f37b8baae031d69a8463c5064ddab86066a380b0c"
+        },
+        "W1": {
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/join_merge.json": "fe105c196b2e499c15f7a5ddfab3821ccc4e61e007900683cd9c62f9c5cf2447",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/observations.jsonl": "aaeae065bd32dab494f3168624683c376bf586a4c44aa3c49f4283b448128082",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/steps.jsonl": "517f0b2fabeec9a707f9066013c950f6e1a4e4fa5886616116eeb8c5586ff573",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/join_merge.json": "6ea308426a965a645e165741410c1d2f16ffa20ad52384c81f9a70fe30931acd",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/observations.jsonl": "ab75c3ac61a176a319ef4ff80069bdffc85dc944e12c758f0923439ce491aea7",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/steps.jsonl": "e8993d7047d19ee266d2383f37b8baae031d69a8463c5064ddab86066a380b0c"
+        }
+      },
+      "consumed_relative_to_declared_roots": {
+        "B1": {
+          "harbour_ref_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_ref_dev/join_merge.json": "fe105c196b2e499c15f7a5ddfab3821ccc4e61e007900683cd9c62f9c5cf2447",
+          "harbour_ref_dev/observations.jsonl": "aaeae065bd32dab494f3168624683c376bf586a4c44aa3c49f4283b448128082",
+          "harbour_ref_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_ref_dev/steps.jsonl": "517f0b2fabeec9a707f9066013c950f6e1a4e4fa5886616116eeb8c5586ff573",
+          "harbour_ref_hold/join_merge.json": "6ea308426a965a645e165741410c1d2f16ffa20ad52384c81f9a70fe30931acd",
+          "harbour_ref_hold/observations.jsonl": "ab75c3ac61a176a319ef4ff80069bdffc85dc944e12c758f0923439ce491aea7",
+          "harbour_ref_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_ref_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_ref_hold/steps.jsonl": "e8993d7047d19ee266d2383f37b8baae031d69a8463c5064ddab86066a380b0c"
+        },
+        "W1": {
+          "harbour_ref_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_ref_dev/join_merge.json": "fe105c196b2e499c15f7a5ddfab3821ccc4e61e007900683cd9c62f9c5cf2447",
+          "harbour_ref_dev/observations.jsonl": "aaeae065bd32dab494f3168624683c376bf586a4c44aa3c49f4283b448128082",
+          "harbour_ref_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_ref_dev/steps.jsonl": "517f0b2fabeec9a707f9066013c950f6e1a4e4fa5886616116eeb8c5586ff573",
+          "harbour_ref_hold/join_merge.json": "6ea308426a965a645e165741410c1d2f16ffa20ad52384c81f9a70fe30931acd",
+          "harbour_ref_hold/observations.jsonl": "ab75c3ac61a176a319ef4ff80069bdffc85dc944e12c758f0923439ce491aea7",
+          "harbour_ref_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_ref_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_ref_hold/steps.jsonl": "e8993d7047d19ee266d2383f37b8baae031d69a8463c5064ddab86066a380b0c"
+        }
+      },
+      "differences": [],
+      "excluded_execution_and_source_run_provenance": {
+        "B1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev",
+          "top_level_execution_provenance": {
+            "case": "allocation_refusals",
+            "command": [
+              "/home/moloch/semabi/runs/.b1_validation_worktree/.venv/bin/python",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "allocation_refusals"
+            ],
+            "control": "button:Allocate berth",
+            "dev": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/join_merge.json": "fe105c196b2e499c15f7a5ddfab3821ccc4e61e007900683cd9c62f9c5cf2447",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/observations.jsonl": "aaeae065bd32dab494f3168624683c376bf586a4c44aa3c49f4283b448128082",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/steps.jsonl": "517f0b2fabeec9a707f9066013c950f6e1a4e4fa5886616116eeb8c5586ff573",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/join_merge.json": "6ea308426a965a645e165741410c1d2f16ffa20ad52384c81f9a70fe30931acd",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/observations.jsonl": "ab75c3ac61a176a319ef4ff80069bdffc85dc944e12c758f0923439ce491aea7",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/steps.jsonl": "e8993d7047d19ee266d2383f37b8baae031d69a8463c5064ddab86066a380b0c"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 13,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+            "started_utc": "2026-09-07T20:23:57.090346+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.b1_validation_worktree"
+          }
+        },
+        "W1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev",
+          "top_level_execution_provenance": {
+            "case": "allocation_refusals",
+            "command": [
+              "/home/moloch/semabi/.venv/bin/python",
+              "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "allocation_refusals"
+            ],
+            "control": "button:Allocate berth",
+            "dev": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/join_merge.json": "fe105c196b2e499c15f7a5ddfab3821ccc4e61e007900683cd9c62f9c5cf2447",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/observations.jsonl": "aaeae065bd32dab494f3168624683c376bf586a4c44aa3c49f4283b448128082",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/steps.jsonl": "517f0b2fabeec9a707f9066013c950f6e1a4e4fa5886616116eeb8c5586ff573",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/join_merge.json": "6ea308426a965a645e165741410c1d2f16ffa20ad52384c81f9a70fe30931acd",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/observations.jsonl": "ab75c3ac61a176a319ef4ff80069bdffc85dc944e12c758f0923439ce491aea7",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/steps.jsonl": "e8993d7047d19ee266d2383f37b8baae031d69a8463c5064ddab86066a380b0c"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 1270633,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+            "started_utc": "2026-09-08T05:32:57.420237+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.w1_worktree"
+          }
+        }
+      },
+      "semantic_payloads_equal": true
+    },
+    "pilot": {
+      "components_equal": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "consumed_absolute_paths": {
+        "B1": {
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c"
+        },
+        "W1": {
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c"
+        }
+      },
+      "consumed_relative_to_declared_roots": {
+        "B1": {
+          "harbour_pil_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_pil_dev/join_merge.json": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2",
+          "harbour_pil_dev/observations.jsonl": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+          "harbour_pil_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_pil_dev/steps.jsonl": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b",
+          "harbour_pil_hold/join_merge.json": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef",
+          "harbour_pil_hold/observations.jsonl": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+          "harbour_pil_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_pil_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_pil_hold/steps.jsonl": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c"
+        },
+        "W1": {
+          "harbour_pil_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_pil_dev/join_merge.json": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2",
+          "harbour_pil_dev/observations.jsonl": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+          "harbour_pil_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_pil_dev/steps.jsonl": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b",
+          "harbour_pil_hold/join_merge.json": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef",
+          "harbour_pil_hold/observations.jsonl": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+          "harbour_pil_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_pil_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_pil_hold/steps.jsonl": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c"
+        }
+      },
+      "differences": [],
+      "excluded_execution_and_source_run_provenance": {
+        "B1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev",
+          "top_level_execution_provenance": {
+            "case": "pilot",
+            "command": [
+              "/home/moloch/semabi/runs/.b1_validation_worktree/.venv/bin/python",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "pilot"
+            ],
+            "control": "button:Book pilot",
+            "dev": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 13,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+            "started_utc": "2026-09-07T20:23:57.108021+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.b1_validation_worktree"
+          }
+        },
+        "W1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev",
+          "top_level_execution_provenance": {
+            "case": "pilot",
+            "command": [
+              "/home/moloch/semabi/.venv/bin/python",
+              "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "pilot"
+            ],
+            "control": "button:Book pilot",
+            "dev": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 1270767,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+            "started_utc": "2026-09-08T05:33:01.561098+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.w1_worktree"
+          }
+        }
+      },
+      "semantic_payloads_equal": true
+    },
+    "separating": {
+      "components_equal": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "consumed_absolute_paths": {
+        "B1": {
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/join_merge.json": "7d96a0c35d96f5bf9164651df88b1b160ad02629d05d722cbcd3dd56f0d48ed9",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/steps.jsonl": "bcdae2015f91cb080c3ba87b9d0ee23a6d8f5f2934ded4ebaea59f7e26c3d9d5",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+        },
+        "W1": {
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/join_merge.json": "7d96a0c35d96f5bf9164651df88b1b160ad02629d05d722cbcd3dd56f0d48ed9",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/steps.jsonl": "bcdae2015f91cb080c3ba87b9d0ee23a6d8f5f2934ded4ebaea59f7e26c3d9d5",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+        }
+      },
+      "consumed_relative_to_declared_roots": {
+        "B1": {
+          "harbour_sep_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_sep_dev/join_merge.json": "7d96a0c35d96f5bf9164651df88b1b160ad02629d05d722cbcd3dd56f0d48ed9",
+          "harbour_sep_dev/observations.jsonl": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da",
+          "harbour_sep_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_sep_dev/steps.jsonl": "bcdae2015f91cb080c3ba87b9d0ee23a6d8f5f2934ded4ebaea59f7e26c3d9d5",
+          "harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+          "harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+          "harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+        },
+        "W1": {
+          "harbour_sep_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_sep_dev/join_merge.json": "7d96a0c35d96f5bf9164651df88b1b160ad02629d05d722cbcd3dd56f0d48ed9",
+          "harbour_sep_dev/observations.jsonl": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da",
+          "harbour_sep_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_sep_dev/steps.jsonl": "bcdae2015f91cb080c3ba87b9d0ee23a6d8f5f2934ded4ebaea59f7e26c3d9d5",
+          "harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+          "harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+          "harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+        }
+      },
+      "differences": [],
+      "excluded_execution_and_source_run_provenance": {
+        "B1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev",
+          "top_level_execution_provenance": {
+            "case": "separating",
+            "command": [
+              "/home/moloch/semabi/runs/.b1_validation_worktree/.venv/bin/python",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "separating"
+            ],
+            "control": "button:Book pilot",
+            "dev": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/join_merge.json": "7d96a0c35d96f5bf9164651df88b1b160ad02629d05d722cbcd3dd56f0d48ed9",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/steps.jsonl": "bcdae2015f91cb080c3ba87b9d0ee23a6d8f5f2934ded4ebaea59f7e26c3d9d5",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 13,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+            "started_utc": "2026-09-07T20:23:57.072898+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.b1_validation_worktree"
+          }
+        },
+        "W1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev",
+          "top_level_execution_provenance": {
+            "case": "separating",
+            "command": [
+              "/home/moloch/semabi/.venv/bin/python",
+              "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "separating"
+            ],
+            "control": "button:Book pilot",
+            "dev": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/join_merge.json": "7d96a0c35d96f5bf9164651df88b1b160ad02629d05d722cbcd3dd56f0d48ed9",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/steps.jsonl": "bcdae2015f91cb080c3ba87b9d0ee23a6d8f5f2934ded4ebaea59f7e26c3d9d5",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 1270910,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+            "started_utc": "2026-09-08T05:33:06.031100+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.w1_worktree"
+          }
+        }
+      },
+      "semantic_payloads_equal": true
+    },
+    "separating_extended": {
+      "components_equal": {
+        "dev_steps": true,
+        "development": true,
+        "fit": true,
+        "holdout": true,
+        "outcome_cut": true,
+        "reading": true
+      },
+      "consumed_absolute_paths": {
+        "B1": {
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/join_merge.json": "62c23d397b620e092e05984fcc4b044e1adb809a65cdca7b4dfce39aeea16e12",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/observations.jsonl": "16ae0575207a4cdb3b2fcabea4d9262b98097cd1d8b40e819599aedc630a7a31",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/steps.jsonl": "dcca0caa8dcaefe3631250c7c29957d481779eb3c3e7b3966301394a3d7170c9",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+        },
+        "W1": {
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/join_merge.json": "62c23d397b620e092e05984fcc4b044e1adb809a65cdca7b4dfce39aeea16e12",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/observations.jsonl": "16ae0575207a4cdb3b2fcabea4d9262b98097cd1d8b40e819599aedc630a7a31",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/steps.jsonl": "dcca0caa8dcaefe3631250c7c29957d481779eb3c3e7b3966301394a3d7170c9",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+        }
+      },
+      "consumed_relative_to_declared_roots": {
+        "B1": {
+          "harbour_sep2_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_sep2_dev/join_merge.json": "62c23d397b620e092e05984fcc4b044e1adb809a65cdca7b4dfce39aeea16e12",
+          "harbour_sep2_dev/observations.jsonl": "16ae0575207a4cdb3b2fcabea4d9262b98097cd1d8b40e819599aedc630a7a31",
+          "harbour_sep2_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_sep2_dev/steps.jsonl": "dcca0caa8dcaefe3631250c7c29957d481779eb3c3e7b3966301394a3d7170c9",
+          "harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+          "harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+          "harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+        },
+        "W1": {
+          "harbour_sep2_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+          "harbour_sep2_dev/join_merge.json": "62c23d397b620e092e05984fcc4b044e1adb809a65cdca7b4dfce39aeea16e12",
+          "harbour_sep2_dev/observations.jsonl": "16ae0575207a4cdb3b2fcabea4d9262b98097cd1d8b40e819599aedc630a7a31",
+          "harbour_sep2_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_sep2_dev/steps.jsonl": "dcca0caa8dcaefe3631250c7c29957d481779eb3c3e7b3966301394a3d7170c9",
+          "harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+          "harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+          "harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+          "harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+          "harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+        }
+      },
+      "differences": [],
+      "excluded_execution_and_source_run_provenance": {
+        "B1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev",
+          "top_level_execution_provenance": {
+            "case": "separating_extended",
+            "command": [
+              "/home/moloch/semabi/runs/.b1_validation_worktree/.venv/bin/python",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "separating_extended"
+            ],
+            "control": "button:Book pilot",
+            "dev": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/join_merge.json": "62c23d397b620e092e05984fcc4b044e1adb809a65cdca7b4dfce39aeea16e12",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/observations.jsonl": "16ae0575207a4cdb3b2fcabea4d9262b98097cd1d8b40e819599aedc630a7a31",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/steps.jsonl": "dcca0caa8dcaefe3631250c7c29957d481779eb3c3e7b3966301394a3d7170c9",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 13,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+            "started_utc": "2026-09-07T20:23:57.039150+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.b1_validation_worktree"
+          }
+        },
+        "W1": {
+          "reading_provenance_source_run": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev",
+          "top_level_execution_provenance": {
+            "case": "separating_extended",
+            "command": [
+              "/home/moloch/semabi/.venv/bin/python",
+              "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+              "separating_extended"
+            ],
+            "control": "button:Book pilot",
+            "dev": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev",
+            "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+            "hold": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold",
+            "input_files": {
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/join_merge.json": "62c23d397b620e092e05984fcc4b044e1adb809a65cdca7b4dfce39aeea16e12",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/observations.jsonl": "16ae0575207a4cdb3b2fcabea4d9262b98097cd1d8b40e819599aedc630a7a31",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/steps.jsonl": "dcca0caa8dcaefe3631250c7c29957d481779eb3c3e7b3966301394a3d7170c9",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+              "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+            },
+            "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+            "owner": "/root/baseline_verification",
+            "pid": 1271056,
+            "scope": "disclosed retained development regression; no fresh-generalization claim",
+            "source_snapshot_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+            "started_utc": "2026-09-08T05:33:11.428483+00:00",
+            "state": "running",
+            "working_directory": "/home/moloch/semabi/runs/.w1_worktree"
+          }
+        }
+      },
+      "semantic_payloads_equal": true
+    }
+  },
+  "corpus_freeze_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+  "declared_corpus_roots": {
+    "B1": "/home/moloch/semabi/runs/.b1_validation_worktree/runs/v4/transport_g1_corpora_v1",
+    "W1": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1"
+  },
+  "declared_original_worktree_roots": {
+    "B1": "/home/moloch/semabi/runs/.b1_validation_worktree",
+    "W1": "/home/moloch/semabi/runs/.w1_worktree"
+  },
+  "difference_algorithm": "Unchanged G2 differences() AST; only top-level report labels G1/G2 relabeled B1/W1.",
+  "inputs": {
+    "B1": {
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_positive/adapter.json": "de0a8157ad89183237cb7e123e518759fbf539f28787b0cf2574c54bc6b93c79",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_positive/adapter_postflight.json": "551cacda8c81deb90e40f938c805126071affe19e11fb4d55881cf5360d1b988",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_positive/allocation_positive.json": "f7c39f3fa5eacab7e60ddf5edb6e83cda431957073c2194a59088d3127cfe41f",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_positive/allocation_positive_fit.json": "470203107dba0d75ee604d9ad7b311996cc649143d92e3be57e36337002631fd",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_positive/allocation_positive_partial.json": "b90a41beac3aa100ebc9986ad777e58cda440bec3f34997ac521fcff8471c45e",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_positive/allocation_positive_process.json": "2803cca0ba1af22faf5b6b9aa5892c676ad6c5121f25fdfa398adb8293c2da85",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_positive/source_snapshot.json": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/adapter.json": "bdcb8eba3b8507e71ab08a6e691ca4699f1bf8a6def7b99d4798fe13cb170eb2",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/adapter_postflight.json": "e0e195b77585dfd1908f2139309bf20ee363a0932631fb129d8aa901c2fc8c68",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/allocation_refusals.json": "b31c7b0c7342eca80fad435f9d4629bc091b7672bca9d87da8cc23b258f6c9d9",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/allocation_refusals_fit.json": "02d04998375f7d473331aaae5b829c76377194d7391d114a0a78d5b24a95fa47",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/allocation_refusals_partial.json": "41cf40928e3e69f1e088d78aa99a71527cb1934be5d992ac7f3c11a2bdcc3bd8",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/allocation_refusals_process.json": "a7d2bb5225fad17809925ca6f5431e68686fcaf097b9ac5133e217e3f014bf78",
+      "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/source_snapshot.json": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+      "docs/data/v4/transport/development/b1_validation/corpora/pilot/adapter.json": "04ce75e5f2372595c57e36411f3ecb7395813dffd17503e506a7334a88537dba",
+      "docs/data/v4/transport/development/b1_validation/corpora/pilot/adapter_postflight.json": "13081d2797e2142a21912ec94e0b2b3a8cfcd76b14b620535e04c2bbcbd60e53",
+      "docs/data/v4/transport/development/b1_validation/corpora/pilot/pilot.json": "a9a2b96c111b2ce1b3565ef590947ebded3de0d6ab0d41c46a81733d84368c22",
+      "docs/data/v4/transport/development/b1_validation/corpora/pilot/pilot_fit.json": "f3cd9a422100920f56cfeefb72dee1875deedc33fa696fd28442ebeee146753a",
+      "docs/data/v4/transport/development/b1_validation/corpora/pilot/pilot_partial.json": "b12f1ad00ab6571e669a4e4868737e76b533a4f0e72247e4730d6b0813330b70",
+      "docs/data/v4/transport/development/b1_validation/corpora/pilot/pilot_process.json": "c9a61000db81719d483901b48a752057338cd35e149908bacce612ac27667c31",
+      "docs/data/v4/transport/development/b1_validation/corpora/pilot/source_snapshot.json": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating/adapter.json": "672a7b5753da71badb671d7c6d1a0210ba8e3528cc1233fd9591d750b7f01177",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating/adapter_postflight.json": "6eb12f926cfc7575c042bcfa98929061ff215d02da7660366b83044086ffe9ce",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating/separating.json": "d54cc1e4c0e6bae71ec7f3f25bef69f7f9aae3620a95609cd3129f7420ad3c0f",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating/separating_fit.json": "88ea9e566a7a2d0098465ebef3ac1800595f47c56660aa078849f73bc741594b",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating/separating_partial.json": "e3960a8ecc84b56b5d3fe7a69ad2894062793c3b74bda81edf88d34ffde1483b",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating/separating_process.json": "9afabf22fd818533996a08ed324f9c3264c398350f77d8b25a2504265ecf0bfd",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating/source_snapshot.json": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating_extended/adapter.json": "84b2a90e67fa754434a18375e8b93e6bee32ba8ea21e36c51e67f18a17c330aa",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating_extended/adapter_postflight.json": "b04c54a21ee77b839afe84a51c7103d9fd10a369f89ea8e0a11605b79fe2b763",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating_extended/separating_extended.json": "0fc5ec7c481cb184155a88ddc060ea0df75c2eb769745aca0c2e8644eded63ad",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating_extended/separating_extended_fit.json": "6150a7c397d8a3fdc675d855a5398c57287ff66b11894bad569b33098b4e9a71",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating_extended/separating_extended_partial.json": "e74fe45dacb86ac903bc245b4e4c6d31965855640699d047352decb2e99b959d",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating_extended/separating_extended_process.json": "2a34e7decece9f023f6e603192d9744358f5de62320c2cc207496c4a365bd208",
+      "docs/data/v4/transport/development/b1_validation/corpora/separating_extended/source_snapshot.json": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+      "docs/data/v4/transport/development/b1_validation/corpus_comparison_v1.json": "ef415af9df5c4d48d658a29fb85209ef32e743e7107b9d62f0782fab516fc981",
+      "docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_positive/output.log": "fb07e29e06dc104ef5b7f2d60ac55ae192c75144fde04ed4fc9d367fa391c696",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_positive/process.json": "fa8df56c6aeb877d4dd18d1d10e5c1c011ac23fe16a856344d09d1f2787f0d99",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_refusals/output.log": "a7d7befefca290a9429f6c370753ca0a684781e2ea86571784101c104b9990f5",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_refusals/process.json": "37833894ea2163bc2927c330aaf25035f4ef78937120eb37d08a37a712218a28",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_pilot/output.log": "481b4734b098215c69d6cf513d118870b4f179d249384e781fba98fd4bd23127",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_pilot/process.json": "9e270dc8fc82b5af65c187606216555ae431fded26ed33b0d69964195cb6041f",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_separating/output.log": "ca0b09390bdf6cc3111f5c586bc860511fc03dcb9777b4279365d412a24c009a",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_separating/process.json": "f0df53b8b7621cddad315607e466adad87e514c04f947b140db5851f9f8fd1d4",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_separating_extended/output.log": "9361c3c7ecbe23f0446a8c8a72d0bdbdbfd4a0c7bcf42ed308c25062efbc0dcc",
+      "docs/data/v4/transport/development/b1_validation/jobs/corpus_separating_extended/process.json": "451989ce775ba0bbd3697add044f9b6e139723f727e55b1860f0d9d82539c221",
+      "docs/data/v4/transport/development/b1_validation/results_manifest_v1.json": "af3c7131375798bbf0cc0f4050617cc8ebea901a6313d7be7879f23409597e8d",
+      "docs/data/v4/transport/development/b1_validation/source_freeze_v1.json": "c40e565fb6f6fda6116a442a6291ba987e0d2e445ed8d63ec3f58082743b730d"
+    },
+    "G2": {
+      "docs/data/v4/transport/development/g2/compare_corpora.py": "6a4c7eedcfd6143581a8cd75e47c0459b48ac8614657fcf0e0a615d1558ad001",
+      "docs/data/v4/transport/development/g2/corpora/allocation_positive/allocation_positive.json": "429cb5c1da0735a3440281d20972069f82ebb77591e63a5a661c531d78064a98",
+      "docs/data/v4/transport/development/g2/corpora/allocation_refusals/allocation_refusals.json": "17c76c1751577515f43637152cfb09c887bbc8ade689b389f53962cf9dee0df9",
+      "docs/data/v4/transport/development/g2/corpora/pilot/pilot.json": "5f287d841f5542aede63451a9e54d0467d328d441bb3afc6b7e66053f5101302",
+      "docs/data/v4/transport/development/g2/corpora/separating/separating.json": "26eb2bb1818441ca0e2baf35669d663d3a7f66ffae0f3c2cfa693b724e964469",
+      "docs/data/v4/transport/development/g2/corpora/separating_extended/separating_extended.json": "d375d0adaf8d463a4cfd1ce15caa44d82cb7d62ec83267a50fc3a59e700c5f4f",
+      "docs/data/v4/transport/development/g2/results_manifest_v1.json": "481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e"
+    },
+    "W1": {
+      "docs/data/v4/prequential/instruments/link_probe.py": "b3dc46628f60956a6d3967114cb1a6fd00a376acbdd25ccef08bedf923864dae",
+      "docs/data/v4/transport/baseline/check_corpora.py": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+      "docs/data/v4/transport/development/g1/rebuild_v1/input_manifest.json": "0a2fc2a9833f290fb23d9300e0547b53b83af2ec93ab3a92cde63b1f0ddc1dc1",
+      "docs/data/v4/transport/development/widget_persistence_v1/compare_corpora.py": "64da152c71531e29bb8b6dc866643be52d016efa142abb553bc215257ea69236",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/adapter.json": "4c09f81f6d7b0f5e3042d48dd0b49f2270e350540977c2111fd74e428d598faf",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/adapter_postflight.json": "6dd304273e695c1773ca01a21deaab962e27c09badb528ec28a9b7d47487dc20",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/allocation_positive.json": "9bbcbfa7616c20d4e878cfbae0ef15fbda38c912f59752bf7c5060c4b558bd46",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/allocation_positive_fit.json": "78f7380da46340c6f1c61159d0733f70af279d6f3ccd9708a2ea30820d06ca90",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/allocation_positive_partial.json": "ccd0c1b812342a2abb8988e0db71dc92a94bb6bd06df4218ddce2c605fc8f392",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/allocation_positive_process.json": "ab4532315b5ef5e85c988a99066430731e43845060102e30c07ad98ba36df351",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/import_origins_v1.json": "f4616fa1c756876b49c4b6985e366386aea950b9824ec88d0728ddf068ff3f43",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/source_snapshot.json": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/adapter.json": "bffd2a3c13bd8a7459afaa776b35327a9b2bcf8b55aad6799fe7b13653802d62",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/adapter_postflight.json": "3a82de04a6fe099dac7c2e49258c324635311c6043ace52e512f6487b8203be2",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/allocation_refusals.json": "c4d49d8f43258408d8618656d7610c48334f41dfe7ed8f2425f6073b069b34cf",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/allocation_refusals_fit.json": "2cc7c2216ce91219de741fc22c8a868232347867a6471760cba5a4810aaccb2f",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/allocation_refusals_partial.json": "c6583dd20e7fcbe0b6ae36136773ed2e2b1b5f7705c239c60c8373a63d58c8a3",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/allocation_refusals_process.json": "a5c22232a8ec3f750be697208c2ba419f6af63544853f294d1099a4638b6b9df",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/import_origins_v1.json": "cee6fd93cd9b04d3b3622663e130310735a2476f7ab81514aabc1ad5ab701410",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/source_snapshot.json": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/adapter.json": "4a4b1843f81ade49b41871a8179f71bd7ca520419229c740c69eba6d1d234a18",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/adapter_postflight.json": "9af45fc1e73bc91ea675767a3a3fd7e73dff48b3e6bc4cc08974c0127294e2c7",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/import_origins_v1.json": "f7534a0cdbcb23098b9eb9972017d3069c8295c6f3461b36e658ef55b2ac4546",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/pilot.json": "ca0992ec70b89c556cd36308a3e6d3cadb7bc0bd25b778d1ceb308766efcf731",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/pilot_fit.json": "191029abd2de362879aba0326ff7948f8e7a9a4dc19a0aee16919d808f86e588",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/pilot_partial.json": "f1a85338af494e4fcc44db82fc23601195c89e31a2167b96d738ac3461efbeaf",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/pilot_process.json": "76379fd74342a8ef309d5790584591328f55fbb7b22e50b0a006d794a76184ba",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/source_snapshot.json": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/adapter.json": "cb456148984b12113ded4ae482f9818c11df37b666167931b0b97c55b3911052",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/adapter_postflight.json": "714d4fd3520d051f7bb9e42900613e00263434130776dd72102dbc81cb921f09",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/import_origins_v1.json": "1408d578cb93774bad15eb8a0aa0ed69b90e15ca2465b85435ee968098cee969",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/separating.json": "0953f522b48c486aaeacc210a971bbd7d216be26450a3adfbced231c61eb95e9",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/separating_fit.json": "1a6338cab62200cdc3f251d3dcb086300cca29ad4f3a0a58f69484f0cdba1042",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/separating_partial.json": "bfaf1b30bcc945b3add5a0e46ff24c15c0e273b79541c4ce40e09a0c07c5a012",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/separating_process.json": "2d3b7a70ccae0fb27f71813b2ad955a0119ef344e85e308303f033d890157c1a",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/source_snapshot.json": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/adapter.json": "88ab98f257ea1340fe7b8de9b37954f472ff0bdb05a56ec76aef5182e1d626c7",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/adapter_postflight.json": "42f9bc5e0e805bd971dc096847f28f0efdd9572881137d03a9bb20acd5a06022",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/import_origins_v1.json": "0108c7778a442336b8eed1655eaa893b3771c437a21fae2ca51e45aedadcab51",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/separating_extended.json": "2f949136b491a6b61cb66cfc7e4b631b92a130878b06080f0aff1eeaf97817ef",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/separating_extended_fit.json": "d8f255895d3a2cedc560ff2ade97f75816de922af744bc53947b84988b2f5391",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/separating_extended_partial.json": "786986380355c88b15eb8393abf1881c0c69422060d1b33bbdc249e6b8dbaa77",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/separating_extended_process.json": "6aab4dbb14194eb7ffadf6fae36c3d223f5331a720863702839861bc90de4738",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/source_snapshot.json": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+      "docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+      "docs/data/v4/transport/development/widget_persistence_v1/freeze_validation_v1.py": "f4b620482a36b6bd0e124211fd5db1948e3a7bc8d13eaa5e9e1c58fb972db2f9",
+      "docs/data/v4/transport/development/widget_persistence_v1/input_copy_v1.json": "b9e6b39c033faa12b207dff0ddf340d3077806b180a3e2ea1e7148ddf9ae883c",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/compare_corpora.py.before_custody_corrections.txt": "820d17b3349f43d15d266d7fadd58244e11c4edceba98c75fd8e0411a32aa64d",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/compare_corpora.py.before_final_review_fixes.txt": "dc546d84fb71100b3b9732bea4d58cfe9a8165f2b4c3cce43bd662538128f870",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/custody_corrections_v1.diff": "49bc1b489fb421f684911225281c6d668622a25fcc2c5ea5b893fe9e78eb969e",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/final_review_before_v1.json": "28e97cfd9a01de3d0fe2bb89b81c77b49f65e48d6a17d763aceb09d0c13682a8",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/final_review_fixes_v1.diff": "a35b02d96f2c481fb3b1394732529963ef0c63b8c9c92371f5670bf637fa45f8",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/final_source_checks_v1.json": "dbaddb05e2dcf48315a68409e571939a774caddb8aa17748bdd0ccb2169781c5",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/independent_instrument_review_v1.md": "4f7d07e4775569e1b38b0f841800228c2e40cb70a73434991c4abe2bf143a438",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/manifest_v1.json": "cb2b48e92f21f89e12b3435a32de64985eea1340f07a051abd33de92f6d12f2d",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/preserve_validation_v1.py.before_custody_corrections.txt": "c6e4a8af6e8631741c4f4986562df3a20db3b3053976f318e94e6fe89f8aa9ba",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/preserve_validation_v1.py.before_final_review_fixes.txt": "70a985100c813eb266eeb24b711e833747846c930282c9237d0a0b600706fd62",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/root_instrument_acceptance_v1.json": "3d989284d548f8044430d5fc73bb63a41ab7e4fed5d58719529c8f7105ec924c",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/validation_guard.py.before_custody_corrections.txt": "21a17ee676c2a462e29c50e24561691159b79b8ba00a81245b77218b757d476b",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/validation_plan_v1.md.before_custody_corrections.txt": "e03984b93c0628e9986c032562204dbbb8979faf82a81de52912c609fe8bfe90",
+      "docs/data/v4/transport/development/widget_persistence_v1/instrument_revisions/validation_plan_v1.md.before_final_review_fixes.txt": "cb9a256639e71848ae127e8e9011e0b7d1bc4c7a7a1e61342ff7342d112bd139",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_positive/output.log": "93807ee15bfa3183c47233d505c3100c0bdd083b30fd44449f9cdf9ce81e2bd2",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_positive/process.json": "e50896ccf64fa886b1b424378a6bb087f36f5181dc9c519ab72cda78d2735e83",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_refusals/output.log": "cb8f821371894f1ea62ae17fd88e0730bf7bef1d50cd13f0494a16f3517f5594",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_refusals/process.json": "f771fe6e0bafe62b67acac5f39fcfa2967940a33d807b4dd81a6f8a094020fca",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_pilot/output.log": "1b3b94f9b9b7de73b9883636ac243933c38a4166ba43bbd8f18d547cfe30d4ac",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_pilot/process.json": "bb44b3eacb0078c99a8762498d4a6e68c00c2158a69cb21c6cbbbea49c7a4bc7",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating/output.log": "1de506877a1b1b22d04711f6df0be41c51cece21ed5886de69629fcc87547114",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating/process.json": "fb12e102d20a98d4aecd5c96abc54f3e98c094baa230c619693db9deed19b1b4",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating_extended/output.log": "42ae1c8219021e637ae7d0776932e121e77e0f65fedfc732171e9ca3899f6624",
+      "docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating_extended/process.json": "278faf25a15b3f3a555316ac321ac5508c6d7245af443fc7fd456bebb8a10b7c",
+      "docs/data/v4/transport/development/widget_persistence_v1/preserve_validation_v1.py": "ddb6b61cf5eec5582031a72c70d5342f6e2e7d2f9a263f7ea2b5bc0142230852",
+      "docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py": "7cdb82945897f591f46c3085d58539f3b34c2f2d9bc141f9fe05e377e2081221",
+      "docs/data/v4/transport/development/widget_persistence_v1/run_full_suite.py": "7207b21bf2b2d96f2192b64a94fa6bebdbab8cf02539b3abf7b2fea5dda859d0",
+      "docs/data/v4/transport/development/widget_persistence_v1/source_freeze_v1.json": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+      "docs/data/v4/transport/development/widget_persistence_v1/validation_guard.py": "5aeb711a5b1cf98acfb8ad25072e50de37b6b5f0381c2bf36a013462ddb67c41",
+      "docs/data/v4/transport/development/widget_persistence_v1/validation_plan_v1.md": "a93c0009040a9f5750c443d9dbb6353da7d5c5a9ae280c59a35e5ead270d119c",
+      "docs/data/v4/transport/development/widget_persistence_v1/verification_preparation/artifact_manifest_v1.json": "345905714f84cac12e3accbd10614ea2b3374155e254de898b550a03744aa9db",
+      "docs/data/v4/transport/development/widget_persistence_v1/verification_preparation/commands_v1.json": "6f8dbe2e4ef0a99a84ec40d79405638655f319aa008f00b3bf571189df68133b",
+      "docs/data/v4/transport/development/widget_persistence_v1/verification_preparation/evidence_bindings_v1.json": "317eda736ff2ee62cb9f04a4c8c941a23d0ff065223373dc7e7a4ec6e6a8aeab",
+      "docs/data/v4/transport/development/widget_persistence_v1/verification_preparation/plan_v1.md": "84026e55941fd83c6e09dd4047a71d1d7166920ed25391aee2caa7af8aec65fe",
+      "docs/data/v4/transport/run_job.py": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7",
+      "pyproject.toml": "856abafeb3e6ea04e7c4448c0d5b132bf4c3efcbcc18349e89cdfa6f981353f8",
+      "pytest.ini": "7a230f8bff3b84770b27da73d30c5825e7e161bacf1e7d9c47f58fa3adfd4d43",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+      "runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+      "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/join_merge.json": "fe105c196b2e499c15f7a5ddfab3821ccc4e61e007900683cd9c62f9c5cf2447",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/observations.jsonl": "aaeae065bd32dab494f3168624683c376bf586a4c44aa3c49f4283b448128082",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/steps.jsonl": "517f0b2fabeec9a707f9066013c950f6e1a4e4fa5886616116eeb8c5586ff573",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/join_merge.json": "6ea308426a965a645e165741410c1d2f16ffa20ad52384c81f9a70fe30931acd",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/observations.jsonl": "ab75c3ac61a176a319ef4ff80069bdffc85dc944e12c758f0923439ce491aea7",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+      "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/steps.jsonl": "e8993d7047d19ee266d2383f37b8baae031d69a8463c5064ddab86066a380b0c",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/join_merge.json": "62c23d397b620e092e05984fcc4b044e1adb809a65cdca7b4dfce39aeea16e12",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/observations.jsonl": "16ae0575207a4cdb3b2fcabea4d9262b98097cd1d8b40e819599aedc630a7a31",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/steps.jsonl": "dcca0caa8dcaefe3631250c7c29957d481779eb3c3e7b3966301394a3d7170c9",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/join_merge.json": "7d96a0c35d96f5bf9164651df88b1b160ad02629d05d722cbcd3dd56f0d48ed9",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/steps.jsonl": "bcdae2015f91cb080c3ba87b9d0ee23a6d8f5f2934ded4ebaea59f7e26c3d9d5",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+      "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f",
+      "scripts/v4_authority.py": "9bfb78c998a3ad9467f5c0d3dc3c0c2d2e9504df94cf591bc0fd79af5dd40848",
+      "scripts/v4_freeze_evaluator_inputs.py": "fabc4f9d59fcb592a7c283eb3e11b1237716eb76aec6bae7582e1d30a19ca87c"
+    }
+  },
+  "projection": "Exactly the G2 projection: all reading/fit/dev_steps/outcome_cut/development/holdout fields; only top-level execution provenance and reading.provenance.source_run excluded.",
+  "retained_comparator_sha256": "6a4c7eedcfd6143581a8cd75e47c0459b48ac8614657fcf0e0a615d1558ad001",
+  "routing": "Historical B1 absolute input paths remain declared provenance. Maps are authenticated against the same45 manifest-relative paths/hashes and byte-identical W1 input copies; original baseline roots are not treated as current artifact locations.",
+  "schema": "semabi.transport.w1_b1_corpus_comparison.v1",
+  "scope": "Same-seed retained development regression. Every difference retained; no fresh-transfer or equivalence hypothesis is automatically established.",
+  "source_freeze_sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+  "source_sha256": "64da152c71531e29bb8b6dc866643be52d016efa142abb553bc215257ea69236"
+}

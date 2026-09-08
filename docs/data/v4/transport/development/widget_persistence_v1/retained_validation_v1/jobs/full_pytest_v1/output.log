@@ -1,0 +1,21 @@
+.........x.............................................................. [ 11%]
+........................................................................ [ 22%]
+...............................s......................................s. [ 34%]
+........................................................................ [ 45%]
+........................................................................ [ 56%]
+........................................................................ [ 68%]
+........................................................................ [ 79%]
+.................s...................................................... [ 90%]
+...........................................................              [100%]
+631 passed, 3 skipped, 1 xfailed in 1677.80s (0:27:57)
+Traceback (most recent call last):
+  File "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/run_full_suite.py", line 93, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/run_full_suite.py", line 81, in main
+    guard.verify(args.source_freeze_sha256, args.corpus_freeze_sha256)
+  File "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_guard.py", line 59, in verify
+    require(not prefix.exists() or (prefix.is_dir() and not any(prefix.iterdir())),
+  File "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_guard.py", line 22, in require
+    raise ValueError(message)
+ValueError: Bytecode lookup prefix must remain absent or empty

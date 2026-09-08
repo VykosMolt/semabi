@@ -1,0 +1,139 @@
+{
+  "child_terminated": true,
+  "corpus_freeze_sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e",
+  "files": {
+    "final_independent_custody_v1.json": {
+      "bytes": 431708,
+      "sha256": "589e1101221902e77aa40a2ca586626659863c1c2fafe3006398bdca21602024"
+    },
+    "full_pytest_cache_host_stat_v1.json": {
+      "bytes": 11126,
+      "sha256": "25702ac87e796093644455ff58674e210d3aa15ed50d044e55fe8a475f1ab977"
+    },
+    "full_pytest_v1.xml": {
+      "bytes": 86664,
+      "sha256": "378fb348dbcd74c7ec6d5bb519c846620c3ab3e1fa66b038772ca03b21ec6691"
+    },
+    "full_suite_v1/import_origins_v1.json": {
+      "bytes": 40324,
+      "sha256": "086deeaa09e46f09c7db82ed3aebc995e730b9ac65d96cc9db9c0a50141a1710"
+    },
+    "jobs/full_pytest_v1/output.log": {
+      "bytes": 1688,
+      "sha256": "80035458dca66557943acdf9ed6976cb3f1e3ecad8b1ecd8f52516f396961fcb"
+    },
+    "jobs/full_pytest_v1/process.json": {
+      "bytes": 17913,
+      "sha256": "00b67943876ab12415b1f912c70f6248f916731832ed42553843d9920b2a0824"
+    },
+    "terminal_receipts/full_pytest_v1_v1.json": {
+      "bytes": 1097,
+      "sha256": "d11b282549738c4ce3e9e4f12b44fc70224bb72d6ea21a52d33cf9a6d2a5ec79"
+    }
+  },
+  "job_pid": 1271168,
+  "junit_counts": {
+    "errors": 0,
+    "failed": 0,
+    "passed": 631,
+    "skipped": 3,
+    "xfailed": 1
+  },
+  "junit_testcases": 635,
+  "nonpasses": [
+    {
+      "attributes": {
+        "message": "minimal synthetic lanes: an empty lane shares too little structure (Jaccard<0.5); real UIs carry more skeleton",
+        "type": "pytest.xfail"
+      },
+      "classname": "tests.test_parse",
+      "name": "test_empty_lane_still_parses_as_instance",
+      "outcome": "xfailed",
+      "text": null
+    },
+    {
+      "attributes": {
+        "message": "harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)",
+        "type": "pytest.skip"
+      },
+      "classname": "tests.test_v4_binding",
+      "name": "test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_not",
+      "outcome": "skipped",
+      "text": "/home/moloch/semabi/runs/.w1_worktree/tests/test_v4_prospective.py:176: harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)"
+    },
+    {
+      "attributes": {
+        "message": "harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)",
+        "type": "pytest.skip"
+      },
+      "classname": "tests.test_v4_binding",
+      "name": "test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema",
+      "outcome": "skipped",
+      "text": "/home/moloch/semabi/runs/.w1_worktree/tests/test_v4_prospective.py:176: harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)"
+    },
+    {
+      "attributes": {
+        "message": "harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)",
+        "type": "pytest.skip"
+      },
+      "classname": "tests.test_v4_prospective",
+      "name": "test_determinacy_never_compares_one_readings_literals_with_anothers",
+      "outcome": "skipped",
+      "text": "/home/moloch/semabi/runs/.w1_worktree/tests/test_v4_prospective.py:176: harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)"
+    }
+  ],
+  "origin_ledger": {
+    "bytes": 40324,
+    "limitation": "Snapshots cover SemABI entries present in this interpreter at each boundary. They do not observe child module tables or modules removed between snapshots.",
+    "path": "full_suite_v1/import_origins_v1.json",
+    "recorded_postflight_error": "ValueError: Bytecode lookup prefix must remain absent or empty",
+    "recorded_postflight_status": "FAILED",
+    "scope": "PRIMARY_PYTEST_INTERPRETER",
+    "sha256": "086deeaa09e46f09c7db82ed3aebc995e730b9ac65d96cc9db9c0a50141a1710",
+    "snapshot_checks": {
+      "after_pytest_or_failure": {
+        "module_count": 85,
+        "violations": []
+      },
+      "before_pytest": {
+        "module_count": 1,
+        "violations": []
+      },
+      "candidate_package_anchor": {
+        "module_count": 1,
+        "violations": []
+      }
+    }
+  },
+  "postflight_error": "ValueError: Bytecode lookup prefix must remain absent or empty",
+  "postflight_status": "FAILED",
+  "project_local_non_semabi_exec": {
+    "scripts/v4_authority.py": "9bfb78c998a3ad9467f5c0d3dc3c0c2d2e9504df94cf591bc0fd79af5dd40848",
+    "scripts/v4_freeze_evaluator_inputs.py": "fabc4f9d59fcb592a7c283eb3e11b1237716eb76aec6bae7582e1d30a19ca87c"
+  },
+  "pytest_returncode": 0,
+  "recorded_utc": "2026-09-08T06:08:26.074848+00:00",
+  "schema": "semabi.transport.w1_full_pytest_completion_checks.v1",
+  "scope": "Retains the original pytest result separately from wrapper failure. Post-termination source hashing and final empty-file cache tree do not retroactively satisfy the frozen empty-directory policy or establish absence of transient cache files.",
+  "source_freeze_sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62",
+  "source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+  "status": "TEST_RESULT_RETAINED_WRAPPER_POSTFLIGHT_FAILED",
+  "subprocess_scope": {
+    "other_children": "Playwright browser/driver descendants are not Python SemABI workers; third-party process behavior is outside the native origin ledger.",
+    "primary": "PRIMARY_PYTEST_INTERPRETER; canonical anchored SemABI package and before/after module table paths/hashes.",
+    "private_script_execution": "scripts/v4_authority.py and scripts/v4_freeze_evaluator_inputs.py execute under private names. Source custody binds their bytes; SemABI origin snapshots do not observe those executions.",
+    "python_children": "CONTROLLED_SYNTHETIC_AUTHORITY_TESTS; test_v4_execution_authority.py intentionally executes synthetic temporary SemABI packages. These children are excluded from the parent origin ledger and remain unmodified.",
+    "static_child_inventory": {
+      "authority_helper_calls": 27,
+      "count_basis": "Static current test parametrization/loops; no runtime count claim.",
+      "direct_calls": 2,
+      "plain_import_helper_calls": 4,
+      "sha256": "c92176562a009479c497a080c61bb553ee0d334ff7b15864ba437dbf53e20de7",
+      "test_file": "tests/test_v4_execution_authority.py",
+      "total_expanded_python_launches": 33
+    }
+  },
+  "tool_session_id": 23639,
+  "wrapper_returncode": 1,
+  "wrapper_status": "FAILED"
+}
