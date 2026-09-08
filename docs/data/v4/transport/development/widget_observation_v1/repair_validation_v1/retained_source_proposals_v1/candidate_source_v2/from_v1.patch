@@ -1,0 +1,27 @@
+--- candidate_source_v1
++++ candidate_source_v2
+@@ -64,6 +64,7 @@
+     parsed = A.parsed(obs)
+     sig = obs.structural_signature()
+     units = H._parse_units(sig, raw_keys=True)
++    raw_by_root = {ui.root: ui for ui in units}
+     by_root = defaultdict(list)
+     identities = Counter()
+     for index, inst in enumerate(parsed.instances):
+@@ -115,8 +116,15 @@
+                     or sid.startswith("attached:") or sid not in ui.slot_nodes):
+                 continue
+             node = ui.slot_nodes[sid]
++            owns_node = parsed.node_instance.get(node) == index
++            if sid.startswith("^"):
++                # The parser moved the frame's transient field onto its sole
++                # child. Its DOM node can remain a sibling of that child.
++                frame = raw_by_root.get(ui.parent_root)
++                owns_node = (frame is not None and frame.nested == [ui.root] and not frame.slots
++                             and frame.slot_nodes.get(sid[1:] + "~") == node)
+             if (obs.node(node).role not in ("combobox", "textbox")
+-                    or parsed.node_instance.get(node) != index
++                    or not owns_node
+                     or not name.startswith("attr:")
+                     or name not in owner.slots or owner.slots[name][1] != ui.slots[sid]):
+                 continue

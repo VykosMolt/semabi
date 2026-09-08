@@ -1,0 +1,15 @@
+{
+  "args": {
+    "cmd": "env PYTHONPATH= PYTHONOPTIMIZE=0 /home/moloch/semabi/.venv/bin/python -B -P /home/moloch/semabi/docs/data/v4/transport/development/widget_observation_v1/repair_validation_v1/prepare_pair_v1.py --test-sha256 93ebc7c829c8686765d535887f21a7f85c9e27c6fa03df029ea769644a307722 --test-manifest /home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/baseline_v2/manifest_v2.json --test-manifest-sha256 d67879503fb5e6f23b46b36c26811e7f27a336f7a45f60748f3450745c7457f4",
+    "workdir": "/home/moloch/semabi",
+    "max_output_tokens": 4000,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "d7e7e0",
+    "wall_time_seconds": 0.452716102,
+    "exit_code": 0,
+    "original_token_count": 223,
+    "output": "{\"conditions\": {\"BASELINE\": {\"command_sha256\": \"175af11281c7de112e0ad315a37a39dcf10d39b65f6c611030511cd075f8eca9\", \"directory\": \"/home/moloch/semabi/runs/.w2_scoring_baseline_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/root_focused_v1\", \"source_freeze_sha256\": \"ca31bf6b7361085de980866298c8657a65a29db47db97a08e94d9c6e61de59da\"}, \"CANDIDATE\": {\"command_sha256\": \"f24741cb9e8d38863365b91e8efb1e315fec9b88cb2e83bfb162475ac0fc0f08\", \"directory\": \"/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/root_focused_v1\", \"source_freeze_sha256\": \"7ad8f54abd143623e94ca9d0185309f640e2c9ca0f9cc1c684f19052fff731d8\"}}, \"external_files_per_arm\": 7, \"files_per_arm\": 229, \"native_executed\": false, \"only_different_file\": \"semabi/compiler/v4/objective.py\", \"schema\": \"semabi.widget_observation.paired_preparation.v1\"}\n"
+  }
+}

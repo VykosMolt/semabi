@@ -1,0 +1,297 @@
+--- a/semabi/compiler/v2/hypotheses.py
++++ b/semabi/compiler/v2/hypotheses.py
+@@ -130,6 +130,7 @@
+         # heading/region context).  Populated only by a verified local intervention.
+         self.record_splits: list[dict] = []
+         self._split_done = False
++        self._context_key_materialization_error: str | None = None
+         self.frozen = False
+ 
+     # ------------------------------------------------------------- templates
+@@ -154,8 +155,8 @@
+         """Unit instances of one observation (all recurring templates; nested allowed)."""
+         return self._parse_units(sig)
+ 
+-    def _parse_units(self, sig: str, *, raw_keys: bool = False) -> list[UnitInstance]:
+-        """The native parser, optionally retaining raw keys without replacing the page cache."""
++    def _parse_units(self, sig: str, *, raw_keys: bool = False, cache: bool = True) -> list[UnitInstance]:
++        """The native parser; raw keys and detached ordinary parses never replace the cache."""
+         obs = self.G.obs[sig]
+         insts: list[UnitInstance] = []
+         by_root: dict[int, UnitInstance] = {}
+@@ -313,7 +314,7 @@
+                 if seen[k] > 1:
+                     ui.slots[u.key_slot] = f"{ui.slots[u.key_slot]}#{seen[k]}"
+                     ui.positional = True
+-        if not raw_keys:
++        if not raw_keys and cache:
+             self._page_instances[sig] = {ui.root: ui for ui in insts}
+         return insts
+ 
+@@ -785,6 +786,65 @@
+         return {(ui.sig, ui.template, ui.root): ui
+                 for sig in self.G.obs for ui in self._parse_units(sig, raw_keys=True)}
+ 
++    def _has_key_associations(self, template: str) -> bool:
++        return (any(t == template for t, _key in self.alias_map)
++                or any(t == template for _sig, t, _key in self.key_overrides))
++
++    def _key_materialization(self, ui: UnitInstance, template: str, key_slot: str,
++                             former_key: str, raw: dict, former_template: str | None = None) -> tuple[dict, dict]:
++        parsed = raw.get((ui.sig, template, ui.root))
++        parts = set(key_slot.split("|")) | set(former_key.split("|"))
++        if (ui.template not in (template, former_template) or parsed is None
++                or parsed.parent_root != ui.parent_root
++                or any(p not in parsed.slots or p not in ui.slots or parsed.slot_nodes.get(p) is None
++                       or parsed.slot_nodes[p] != ui.slot_nodes.get(p) for p in parts)
++                or any(slot in ui.slots and ui.slot_nodes.get(slot) != parsed.slot_nodes[slot.split("|")[0]]
++                       for slot in (former_key, key_slot))):
++            raise ValueError(f"cannot materialize selected key {key_slot} from its raw instance")
++        slots = {p: parsed.slots[p] for p in parts}
++        nodes = {p: parsed.slot_nodes[p] for p in parts}
++        slots[former_key] = "|".join(parsed.slots[p] for p in former_key.split("|"))
++        nodes[former_key] = parsed.slot_nodes[former_key.split("|")[0]]
++        slots[key_slot] = self._canonical_key(ui.sig, template,
++                                              "|".join(parsed.slots[p] for p in key_slot.split("|")))
++        nodes[key_slot] = parsed.slot_nodes[key_slot.split("|")[0]]
++        return slots, nodes
++
++    def _materialize_key(self, u: UnitHyp, key_slot: str, former_key: str, raw: dict,
++                         former_template: str | None = None) -> None:
++        updates = [(ui, *self._key_materialization(ui, u.template, key_slot, former_key, raw), False)
++                   for ui in u.instances]
++        if former_template is not None:
++            parsed_pages = {}
++            for ui in u.instances:
++                cached = self._page_instances.get(ui.sig, {}).get(ui.root)
++                if (cached is None or cached.sig != ui.sig or cached.root != ui.root
++                        or cached.template not in (u.template, former_template)):
++                    continue
++                fields, _nodes = self._key_materialization(cached, u.template, key_slot, former_key,
++                                                          raw, former_template)
++                if ui.sig not in parsed_pages:
++                    parsed_pages[ui.sig] = {instance.root: instance
++                                           for instance in self._parse_units(ui.sig, cache=False)}
++                parsed = parsed_pages[ui.sig].get(ui.root)
++                if parsed is None or parsed.template != u.template:
++                    raise ValueError(f"cannot refresh selected key {key_slot} in its cached instance")
++                updates.append((cached, {sid: parsed.slots.get(sid) for sid in fields},
++                                {sid: parsed.slot_nodes.get(sid) for sid in fields}, parsed.positional))
++        # Validate every participating binding before updating any instance. Cache
++        # updates use an ordinary detached parse, including positional key suffixes.
++        for ui, slots, nodes, positional in updates:
++            ui.template = u.template
++            ui.positional = positional
++            for sid, value in slots.items():
++                if value is None:
++                    ui.slots.pop(sid, None)
++                    ui.slot_nodes.pop(sid, None)
++                else:
++                    ui.slots[sid] = value
++                    ui.slot_nodes[sid] = nodes[sid]
++        self._slot_stats(u)
++
+     def _demote_widget(self, ui: UnitInstance, sid: str, raw: UnitInstance | None) -> None:
+         ui.slots.pop(sid, None)
+         ui.slot_nodes.pop(sid, None)
+@@ -937,10 +997,12 @@
+         """One template can realise different things in different containers (a row
+         'X loads N' lists hives under a bloom and blooms under a hive): split a keyed unit
+         type by enclosing template when the key sets of the contexts barely overlap."""
++        changed_keys = []
+         for t in list(self.units):
+             u = self.units[t]
+             if not u.key_slot:
+                 continue
++            former_key = u.key_slot
+             fam_root = {}
+             for f in self._families():
+                 for v in f:
+@@ -983,13 +1045,29 @@
+                     self._choose_key(nu)
+                     nu.evidence.append(f"split from {t[:40]} by context {str(c)[:40]}")
+                     self.units[nt] = nu
++                    if nu.key_slot and nu.key_slot != former_key and self._has_key_associations(nt):
++                        changed_keys.append((nu, former_key, t))
+                     u.instances = [ui for ui in u.instances if ui.template == t]
+             self._slot_stats(u)
+             self._choose_key(u)
++            if u.key_slot and u.key_slot != former_key and self._has_key_associations(t):
++                changed_keys.append((u, former_key, t))
++        if changed_keys:
++            # All derived units and mappings must exist before the parser resolves
++            # their new selected keys. Do not run key selection again after this.
++            try:
++                raw = self._raw_unit_instances()
++                for u, former_key, former_template in changed_keys:
++                    self._materialize_key(u, u.key_slot, former_key, raw, former_template)
++            except Exception as error:
++                self._context_key_materialization_error = str(error)
++                raise
+ 
+     def _build_entity_types(self) -> None:
+         """Finalize the current identity, removing unsupported automatic widget claims."""
+         try:
++            if self._context_key_materialization_error is not None:
++                raise ValueError("context key materialization previously failed: " + self._context_key_materialization_error)
+             if not self._split_done:
+                 self._split_by_context()
+                 self._split_done = True
+@@ -1066,29 +1144,17 @@
+                 parts = comp.split("|")
+                 for u in us:
+                     if "|" not in u.key_slot and all(p in u.slots for p in parts):
+-                        associated = (any(t == u.template for t, _key in self.alias_map)
+-                                      or any(t == u.template for _sig, t, _key in self.key_overrides))
++                        associated = self._has_key_associations(u.template)
+                         if associated and raw_composites is None:
+                             raw_composites = self._raw_unit_instances()
+-                        for ui in u.instances:
+-                            if not associated:
++                        if associated:
++                            self._materialize_key(u, comp, u.key_slot, raw_composites)
++                        else:
++                            for ui in u.instances:
+                                 if all(p in ui.slots for p in parts):
+                                     ui.slots[comp] = "|".join(ui.slots[p] for p in parts)
+                                     ui.slot_nodes[comp] = ui.slot_nodes[parts[0]]
+-                                continue
+-                            parsed = raw_composites.get((ui.sig, u.template, ui.root))
+-                            if (parsed is None or parsed.parent_root != ui.parent_root
+-                                    or any(p not in parsed.slots or parsed.slot_nodes.get(p) is None
+-                                           or parsed.slot_nodes[p] != ui.slot_nodes.get(p) for p in parts)):
+-                                raise ValueError(f"cannot materialize selected composite key {comp} from its raw instance")
+-                            # The former key becomes an ordinary raw component. Apply a
+-                            # correspondence only to the newly selected whole composite.
+-                            for p in parts:
+-                                ui.slots[p] = parsed.slots[p]
+-                            ui.slots[comp] = self._canonical_key(ui.sig, u.template,
+-                                                                 "|".join(parsed.slots[p] for p in parts))
+-                            ui.slot_nodes[comp] = parsed.slot_nodes[parts[0]]
+-                        self._slot_stats(u)
++                            self._slot_stats(u)
+                         u.key_slot = comp
+                         u.evidence.append(f"composite key {comp} adopted from a sibling template")
+             et = EntityType(tid, [u.template for u in us], {u.template: u.key_slot for u in us})
+--- a/tests/test_v2_collection_variation.py
++++ b/tests/test_v2_collection_variation.py
+@@ -504,6 +504,108 @@
+     expected = [_widget_build_state(hypothesis, t) for t in (template, derived)]
+     hypothesis._build_entity_types()
+     assert [_widget_build_state(hypothesis, t) for t in (template, derived)] == expected
++
++
++def _context_key_change_hypothesis(association):
++    contexts = [
++        ("article", [("Alpha", "Amber", "Red"), ("Beta", "Bronze", "Blue")]),
++        ("section", [("Gamma", "Copper", "Green"), ("Delta", "Denim", "Gold")]),
++    ]
++    pages = []
++    for status in ("Before", "After"):
++        nodes = [("group", "", -1), ("status", status, 0)]
++        for role, rows in contexts:
++            parent = len(nodes)
++            nodes += [(role, "", 0), ("list", "", parent)]
++            for name, old_key, value in rows:
++                root = len(nodes)
++                nodes += [("listitem", name, parent + 1), ("text", old_key, root),
++                          ("combobox", "", root, value)]
++        pages.append(build(*nodes))
++    hypothesis, templates, sigs = _parsed_widget_units(pages, [4, 12], [2, 10])
++    template = templates[0]
++    assert templates == [template, template]
++    hypothesis.units[template].key_slot = "text#0"
++    hypothesis._promote_persistent_widgets()
++    assert (template, "combobox#0") in hypothesis.persistent_widgets
++    swaps = {"Alpha": "Beta", "Beta": "Alpha", "Gamma": "Delta", "Delta": "Gamma",
++             "Amber": "Bronze", "Bronze": "Amber", "Copper": "Denim", "Denim": "Copper"}
++    for rendered, canonical in swaps.items():
++        if association == "alias":
++            hypothesis.alias_map[(template, rendered)] = canonical
++        elif association == "override":
++            for sig in sigs:
++                hypothesis.key_overrides[(sig, template, rendered)] = canonical
++    hypothesis._apply_key_associations()
++    assert hypothesis.units[template].key_slot == "text#0"
++    if association != "none":
++        assert [ui.slots["text#0"] for ui in hypothesis.units[template].instances] == [
++            "Bronze", "Amber", "Denim", "Copper", "Bronze", "Amber", "Denim", "Copper"]
++    return hypothesis, template, sigs, contexts
++
++
++@pytest.mark.parametrize("association", ["none", "alias", "override"])
++def test_context_key_changes_materialize_associations_from_raw_fields(association):
++    """Native key choice changes both split scopes from a later field to the earlier name."""
++    hypothesis, template, sigs, contexts = _context_key_change_hypothesis(association)
++    swaps = {"Alpha": "Beta", "Beta": "Alpha", "Gamma": "Delta", "Delta": "Gamma"}
++    for sig in sigs:
++        hypothesis.parse_units(sig)
++    cached = dict(hypothesis._page_instances)
++    cached_instances = {(sig, root): ui for sig, page in cached.items() for root, ui in page.items()}
++    assert all(cached_instances[(ui.sig, ui.root)] is not ui for ui in hypothesis.units[template].instances)
++
++    hypothesis._build_entity_types()
++
++    derived, = set(hypothesis.ctx_split.values())
++    for selected, roots, rows in ((template, (4, 7), contexts[0][1]), (derived, (12, 15), contexts[1][1])):
++        unit = hypothesis.units[selected]
++        assert unit.key_slot == "listitem#0"  # selected by the real _choose_key in each scope
++        assert (selected, "combobox#0") in hypothesis.persistent_widgets
++        for sig in sigs:
++            fitted = {ui.root: ui for ui in unit.instances if ui.sig == sig}
++            for root, (name, old_key, value) in zip(roots, rows):
++                ui = fitted[root]
++                assert ui.slots["listitem#0"] == (swaps[name] if association != "none" else name)
++                assert ui.slots["text#0"] == old_key
++                assert ui.slots["combobox#0"] == value
++                if association != "none":
++                    assert hypothesis._page_instances[sig] is cached[sig]
++                    assert cached[sig][root] is cached_instances[(sig, root)]
++                    assert cached[sig][root].template == selected
++                    assert cached[sig][root].slots == ui.slots
++                    assert cached[sig][root].slot_nodes == ui.slot_nodes
++    for sig in sigs:
++        parsed = {ui.root: ui for ui in hypothesis.parse_units(sig)}
++        for selected in (template, derived):
++            fitted = {ui.root: ui for ui in hypothesis.units[selected].instances if ui.sig == sig}
++            assert {root: (ui.slots, ui.slot_nodes) for root, ui in parsed.items() if ui.template == selected} == {
++                root: (ui.slots, ui.slot_nodes) for root, ui in fitted.items()}
++    expected = [_widget_build_state(hypothesis, t) for t in (template, derived)]
++    hypothesis._build_entity_types()
++    assert [_widget_build_state(hypothesis, t) for t in (template, derived)] == expected
++
++
++def test_failed_context_key_materialization_remains_unbuildable():
++    hypothesis, template, sigs, _contexts = _context_key_change_hypothesis("alias")
++    # Publish the direct-unit interpretation before allowing the native context split.
++    hypothesis._split_done = True
++    hypothesis._build_entity_types()
++    hypothesis._split_done = False
++    hypothesis.frozen = True
++    assert hypothesis.entity_types and hypothesis.tid_of_template
++    hypothesis.parse_units(sigs[0])
++    cached = hypothesis._page_instances[sigs[0]][4]
++    assert cached is not hypothesis.units[template].instances[0]
++    assert cached.slot_nodes["text#0"] != 0
++    cached.slot_nodes["text#0"] = 0  # an existing node with the wrong former-key binding
++
++    for _ in range(2):
++        with pytest.raises(ValueError, match="materializ"):
++            hypothesis._build_entity_types()
++        assert hypothesis.entity_types == hypothesis.tid_of_template == {}
++        assert not hypothesis.frozen
++        assert all(unit.key_slot == "listitem#0" for unit in hypothesis.units.values())
+ 
+ 
+ @pytest.mark.parametrize("association", ["AFTER_BIJECTION", "CONTROL", "BOTH_BIJECTION"])
+@@ -568,7 +670,9 @@
+     elif missing_evidence == "widget_node":
+         unit.instances[0].slot_nodes["combobox#0"] = 999
+     elif missing_evidence == "owner":
+-        unit.instances[0].parent_root = 999
++        assert unit.instances[0].parent_root != 0
++        assert hypothesis.G.obs[unit.instances[0].sig].node(0).i == 0
++        unit.instances[0].parent_root = 0
+     else:
+         # A selected composite's node is its first component. The later component's
+         # binding still needs validation even when three other rows match perfectly.

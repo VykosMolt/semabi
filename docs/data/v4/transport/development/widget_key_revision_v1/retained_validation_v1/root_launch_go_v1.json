@@ -1,0 +1,74 @@
+{
+  "comparison": "Deferred until all six jobs are reaped, artifacts preserved and required corpus custody verified; separate root GO required.",
+  "created_utc": "2026-09-08T09:40:57.493687+00:00",
+  "decision": "GO_ONCE_SIX_NATIVE_VALIDATION_JOBS",
+  "freeze_and_command_hashes": {
+    "commands_v2.json": "13053e60aa5105e9780d4a7459ff7589f2ca561d067b08ef3593a5bf61cf16eb",
+    "corpus_freeze_v1.json": "e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+    "full_suite_source_freeze_v1.json": "e34af04a2fe44fdef0d1e541c3f4592b994b534efd9aa1710be0314cf838671b",
+    "source_freeze_v1.json": "49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac"
+  },
+  "independent_review": "/root/baseline_verification/post_controls_review accepted exact rendered files, freezes and concrete argv with disclosed inherited boundary limits; root read complete source and final protocol.",
+  "jobs": {
+    "corpus_allocation_positive": {
+      "cmd": "taskset -c 10 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_gate_corpus_allocation_positive_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/jobs/corpus_allocation_positive -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/run_corpus.py allocation_positive docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/allocation_positive docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpus_freeze_v1.json --source-freeze-sha256 49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac --corpus-freeze-sha256 e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+      "justification": "Run the independently reviewed W3 corpus_allocation_positive validation job from its frozen source, inputs and command.",
+      "login": false,
+      "max_output_tokens": 4500,
+      "sandbox_permissions": "require_escalated",
+      "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+      "yield_time_ms": 1000
+    },
+    "corpus_allocation_refusals": {
+      "cmd": "taskset -c 11 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_gate_corpus_allocation_refusals_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/jobs/corpus_allocation_refusals -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/run_corpus.py allocation_refusals docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/allocation_refusals docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpus_freeze_v1.json --source-freeze-sha256 49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac --corpus-freeze-sha256 e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+      "justification": "Run the independently reviewed W3 corpus_allocation_refusals validation job from its frozen source, inputs and command.",
+      "login": false,
+      "max_output_tokens": 4500,
+      "sandbox_permissions": "require_escalated",
+      "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+      "yield_time_ms": 1000
+    },
+    "corpus_pilot": {
+      "cmd": "taskset -c 12 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_gate_corpus_pilot_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/jobs/corpus_pilot -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/run_corpus.py pilot docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/pilot docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpus_freeze_v1.json --source-freeze-sha256 49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac --corpus-freeze-sha256 e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+      "justification": "Run the independently reviewed W3 corpus_pilot validation job from its frozen source, inputs and command.",
+      "login": false,
+      "max_output_tokens": 4500,
+      "sandbox_permissions": "require_escalated",
+      "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+      "yield_time_ms": 1000
+    },
+    "corpus_separating": {
+      "cmd": "taskset -c 13 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_gate_corpus_separating_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/jobs/corpus_separating -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/run_corpus.py separating docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/separating docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpus_freeze_v1.json --source-freeze-sha256 49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac --corpus-freeze-sha256 e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+      "justification": "Run the independently reviewed W3 corpus_separating validation job from its frozen source, inputs and command.",
+      "login": false,
+      "max_output_tokens": 4500,
+      "sandbox_permissions": "require_escalated",
+      "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+      "yield_time_ms": 1000
+    },
+    "corpus_separating_extended": {
+      "cmd": "taskset -c 14 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_gate_corpus_separating_extended_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/jobs/corpus_separating_extended -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/run_corpus.py separating_extended docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/separating_extended docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpus_freeze_v1.json --source-freeze-sha256 49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac --corpus-freeze-sha256 e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+      "justification": "Run the independently reviewed W3 corpus_separating_extended validation job from its frozen source, inputs and command.",
+      "login": false,
+      "max_output_tokens": 4500,
+      "sandbox_permissions": "require_escalated",
+      "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+      "yield_time_ms": 1000
+    },
+    "full_pytest_v1": {
+      "cmd": "taskset -c 6 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_gate_full_pytest_v1_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/jobs/full_pytest_v1 -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/run_full_suite_v1.py --source-freeze-sha256 e34af04a2fe44fdef0d1e541c3f4592b994b534efd9aa1710be0314cf838671b",
+      "justification": "Run the independently reviewed W3 full_pytest_v1 validation job from its frozen source, inputs and command.",
+      "login": false,
+      "max_output_tokens": 4500,
+      "sandbox_permissions": "require_escalated",
+      "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+      "yield_time_ms": 1000
+    }
+  },
+  "requirements": "Keep W3 source, tests, HEAD, instruments and all frozen dependencies unchanged. Serialize authentication-sensitive work; only these five disjoint corpus fits overlap the one full suite. Preserve all outcomes and actual receipts before semantic analysis. No adoption authorization.",
+  "root_host_before_sha256": "6207ce983d1a3d57241fddb1b1f9334325e7d4440f51f88e168bd4cb0958a212",
+  "root_metadata_review_correction": "Initial root read-only check rehashed all files then wrongly required all67 runtime hashes unchanged; runtime includes the two intended native changes. Corrected check permits exactly those two, with identical memberships, unchanged6dependencies and18suiteinputs. No frozen artifact changed.",
+  "schema": "semabi.transport.w3_root_launch_go.v1",
+  "source_head": "aaa9b5df915464754341794179b5297cf22f6140",
+  "unique_files_rehashed": 3124
+}

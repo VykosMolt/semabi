@@ -1,0 +1,68 @@
+--- accepted_w3/run_focused_v1.py
++++ w2/run_focused_v1.py
+@@ -1,4 +1,4 @@
+-"""Run the two W3 development test files with a frozen native source boundary."""
++"""Run the W2 objective development test file with a frozen native source boundary."""
+ import argparse
+ from datetime import datetime, timezone
+ import hashlib
+@@ -86,19 +86,19 @@
+     freeze_path = Path(args.freeze)
+     require(sha(freeze_path) == args.sha256, 'Source-freeze digest changed')
+     freeze = json.loads(freeze_path.read_text())
+-    require(freeze['schema'] == 'semabi.widget_key_revision.focused_freeze.v1', 'Wrong focused schema')
++    require(freeze['schema'] == 'semabi.widget_observation.focused_freeze.v1', 'Wrong focused schema')
+     require(freeze['external_files'].get(str(Path(__file__).resolve())) == sha(Path(__file__)),
+             'Focused entrypoint changed')
+     preflight = verify(freeze)
+     require(not any(n == 'semabi' or n.startswith('semabi.') for n in sys.modules),
+             'SemABI imported before source authentication')
+     require(freeze['pytest_args'] == ['-q', '-c', 'pytest.ini', '--noconftest',
+-            'tests/test_v2_collection_variation.py', 'tests/test_v2_refinement.py',
++            'tests/test_v4_objective.py',
+             '--junitxml=' + freeze['junit'], '--basetemp=' + freeze['basetemp']], 'Focused pytest selection changed')
+     for name in ('result', 'junit', 'basetemp'):
+         path = Path(freeze[name])
+         require(not path.exists() and not path.is_symlink(), 'Focused output identity already exists: ' + name)
+-    record = {'schema': 'semabi.widget_key_revision.focused_execution.v1',
++    record = {'schema': 'semabi.widget_observation.focused_execution.v1',
+               'created_utc': datetime.now(timezone.utc).isoformat(), 'pid': os.getpid(),
+               'source_head': freeze['source_head'], 'source_freeze_sha256': args.sha256,
+               'working_directory': str(Path.cwd()), 'argv': sys.orig_argv,
+--- accepted_w3/preserve_focused_v3.py
++++ w2/preserve_focused_v1.py
+@@ -1,4 +1,4 @@
+-"""Seal one finished W3 focused attempt before inspecting test outcomes."""
++"""Seal one finished W2 focused attempt before inspecting test outcomes."""
+ import argparse
+ from datetime import datetime, timezone
+ import hashlib
+@@ -16,8 +16,8 @@
+     parser.add_argument('directory', type=Path)
+     args = parser.parse_args()
+     directory = args.directory.resolve(strict=True)
+-    manifest = directory / 'artifact_manifest_v3.json'
+-    completion = directory / 'root_completion_checks_v3.json'
++    manifest = directory / 'artifact_manifest_v1.json'
++    completion = directory / 'root_completion_checks_v1.json'
+     if manifest.exists() or completion.exists():
+         raise ValueError('This attempt already has preservation outputs')
+     checks = []
+@@ -96,7 +96,7 @@
+                   path.resolve(strict=True) == path and relative in freeze['native_files']
+                   and sha(path) == freeze['native_files'][relative] and row['spec_origin'] == str(path)
+                   and row['package_paths'] == row['spec_package_paths'] == paths)
+-    record = {'schema': 'semabi.widget_key_revision.focused_preservation.v3',
++    record = {'schema': 'semabi.widget_observation.focused_preservation.v1',
+               'created_utc': datetime.now(timezone.utc).isoformat(),
+               'preserver_path': str(Path(__file__).resolve()), 'preserver_sha256': sha(Path(__file__)),
+               'scope': 'Custody checks only. Exit continuity does not require test success. Host evidence is post-exit. '
+@@ -114,7 +114,7 @@
+             continue
+         if path.is_file():
+             files[path.relative_to(directory).as_posix()] = {'sha256': sha(path), 'bytes': path.stat().st_size}
+-    seal = {'schema': 'semabi.widget_key_revision.focused_artifacts.v3',
++    seal = {'schema': 'semabi.widget_observation.focused_artifacts.v1',
+             'created_utc': datetime.now(timezone.utc).isoformat(), 'condition': freeze['condition'],
+             'files': files, 'scratch_symlinks': symlinks, 'custody_findings': record['findings'],
+             'scope': 'Sealed before semantic inspection of JUnit/log. Native assertions may fail. '

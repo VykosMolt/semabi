@@ -1,0 +1,18 @@
+{
+  "args": {
+    "cmd": "python3 - <<'PY'\nfrom pathlib import Path\nimport datetime,json,os\np=Path('/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1')\noriginal=json.loads((p/'root_runtime_samples_v1.jsonl').read_text().splitlines()[0]); rows={}\nfor name,old in original['jobs'].items():\n r={}\n for role,pid in [('runner',old['runner_pid']),('child',old['child_pid'])]:\n  proc=Path('/proc')/str(pid)\n  try:\n   raw=(proc/'cmdline').read_bytes().split(b'\\0'); raw=raw[:-1] if raw and raw[-1]==b'' else raw\n   argv=[x.decode(errors='replace') for x in raw]\n   st=(proc/'stat').read_text(); vals=st[st.rfind(')')+2:].split(); status=(proc/'status').read_text().splitlines()\n   r[role]={'pid':pid,'present':True,'argv_matches_initial':argv==old['processes'][role]['argv'],'state':vals[0],'cpu_seconds':(int(vals[11])+int(vals[12]))/os.sysconf('SC_CLK_TCK'),'affinity':sorted(os.sched_getaffinity(pid)),'rss':next((x for x in status if x.startswith('VmRSS:')),None)}\n  except FileNotFoundError:r[role]={'pid':pid,'present':False}\n rows[name]=r\nrecord={'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sampler_pid':os.getpid(),'sampler_pid_namespace':os.readlink('/proc/self/ns/pid'),'jobs':rows,'memory_available':next(x for x in Path('/proc/meminfo').read_text().splitlines() if x.startswith('MemAvailable:'))}\nassert record['sampler_pid_namespace']==json.loads((p/'root_host_before_v1.json').read_text())['sampler_pid_namespace']\nwith (p/'root_progress_samples_v1.jsonl').open('a') as f:f.write(json.dumps(record,sort_keys=True)+'\\n')\nprint(json.dumps(record))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Read host process metadata for the six owned W3 validation jobs to identify completed jobs and available memory.",
+    "login": false,
+    "max_output_tokens": 3000,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "e9715a",
+    "wall_time_seconds": 0.000002886,
+    "exit_code": 0,
+    "original_token_count": 335,
+    "output": "{\"created_utc\": \"2026-09-08T10:01:13.734620+00:00\", \"sampler_pid\": 1532514, \"sampler_pid_namespace\": \"pid:[4026531836]\", \"jobs\": {\"corpus_allocation_positive\": {\"runner\": {\"pid\": 1514759, \"present\": false}, \"child\": {\"pid\": 1514761, \"present\": false}}, \"corpus_allocation_refusals\": {\"runner\": {\"pid\": 1514944, \"present\": false}, \"child\": {\"pid\": 1514958, \"present\": false}}, \"corpus_pilot\": {\"runner\": {\"pid\": 1515168, \"present\": false}, \"child\": {\"pid\": 1515170, \"present\": false}}, \"corpus_separating\": {\"runner\": {\"pid\": 1515341, \"present\": false}, \"child\": {\"pid\": 1515343, \"present\": false}}, \"corpus_separating_extended\": {\"runner\": {\"pid\": 1515495, \"present\": true, \"argv_matches_initial\": true, \"state\": \"S\", \"cpu_seconds\": 0.12, \"affinity\": [14], \"rss\": \"VmRSS:\\t   23704 kB\"}, \"child\": {\"pid\": 1515498, \"present\": true, \"argv_matches_initial\": true, \"state\": \"R\", \"cpu_seconds\": 1154.43, \"affinity\": [14], \"rss\": \"VmRSS:\\t  437164 kB\"}}, \"full_pytest_v1\": {\"runner\": {\"pid\": 1514502, \"present\": true, \"argv_matches_initial\": true, \"state\": \"S\", \"cpu_seconds\": 0.09, \"affinity\": [6], \"rss\": \"VmRSS:\\t   23136 kB\"}, \"child\": {\"pid\": 1514504, \"present\": true, \"argv_matches_initial\": true, \"state\": \"R\", \"cpu_seconds\": 1145.89, \"affinity\": [6], \"rss\": \"VmRSS:\\t  364372 kB\"}}}, \"memory_available\": \"MemAvailable:   21141636 kB\"}\n"
+  }
+}

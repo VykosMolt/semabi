@@ -1,0 +1,1202 @@
+{
+  "provenance": {
+    "case": "allocation_positive",
+    "owner": "/root/baseline_verification",
+    "pid": 1514761,
+    "started_utc": "2026-09-08T09:41:39.678389+00:00",
+    "state": "running",
+    "dev": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+    "hold": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold",
+    "control": "button:Allocate berth",
+    "command": [
+      "/home/moloch/semabi/.venv/bin/python",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+      "allocation_positive"
+    ],
+    "working_directory": "/home/moloch/semabi/runs/.w3_repair_worktree",
+    "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+    "source_snapshot_sha256": "e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+    "scope": "disclosed retained development regression; no fresh-generalization claim",
+    "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+    "input_files": {
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+    }
+  },
+  "reading": {
+    "version": 1,
+    "name": "link-probe",
+    "families": {
+      "button[_]": {
+        "family": "button[_]",
+        "key_slot": "button#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+        "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+        "key_slot": "table/rowgroup/row/cell@Vessel#0",
+        "status": "UNSUPPORTED",
+        "discrimination": null
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+        "key_slot": "cell@Berth#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+        "key_slot": "cell@Pilot#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+        "key_slot": "cell@Vessel#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
+        "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+        "key_slot": null,
+        "status": "NO_IDENTITY",
+        "discrimination": 0.0
+      }
+    },
+    "promoted_families": [],
+    "refuted": {
+      "button[_]": [
+        null
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": [
+        "cell@Takes up to#0"
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": [
+        "cell@Ticket to#0"
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+        null,
+        "cell@Cargo#0",
+        "cell@Length overall#0"
+      ],
+      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
+        "cell@Status#0"
+      ]
+    },
+    "provenance": {
+      "source_run": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+      "role": "SOURCE"
+    }
+  },
+  "fit": {
+    "roles": {
+      "relation['forward', 'rel:0']:0<owner": {
+        "name": "relation['forward', 'rel:0']:0<owner",
+        "kind": "relation",
+        "form": [
+          "forward",
+          "rel:0"
+        ],
+        "tid": 0,
+        "anchor": "owner"
+      },
+      "owner": {
+        "name": "owner",
+        "kind": "action",
+        "form": [],
+        "tid": 3,
+        "anchor": null
+      },
+      "selection['combobox#0']:1": {
+        "name": "selection['combobox#0']:1",
+        "kind": "selection",
+        "form": [
+          "combobox#0"
+        ],
+        "tid": 1,
+        "anchor": null
+      },
+      "relation['forward', 'rel:0']:0<selection['combobox#0']:1": {
+        "name": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+        "kind": "relation",
+        "form": [
+          "forward",
+          "rel:0"
+        ],
+        "tid": 0,
+        "anchor": "selection['combobox#0']:1"
+      }
+    },
+    "rules": [
+      "('unnamed', \"selection['combobox#0']:1\")  ->  Nothing chosen in the berth list .   [4]",
+      "attr:Takes up to#0(selection['combobox#0']:1) == '140'  ->  <> <> allocated to call <> .   [2]",
+      "attr:Status#0(owner) == 'alongside'  ->  Call <> is already <> ; her berth cannot be changed .   [2]"
+    ],
+    "ordered": {},
+    "pairs": "frozenset()",
+    "events": {
+      "Nothing chosen in the berth list .": 4,
+      "<> <> allocated to call <> .": 3,
+      "Call <> is already <> ; her berth cannot be changed .": 2,
+      "<> <> is <> .": 1,
+      "<> is <> overall ; berth <> <> .": 1,
+      "<> <> is held by call <> .": 1
+    },
+    "default": "\u0000UNDETERMINED",
+    "arg_roles": {
+      "<> <> is <> .": {
+        "1": "selection['combobox#0']:1"
+      },
+      "<> is <> overall ; berth <> <> .": {
+        "0": "owner",
+        "2": "selection['combobox#0']:1"
+      },
+      "Call <> is already <> ; her berth cannot be changed .": {
+        "0": "relation['forward', 'rel:0']:0<owner"
+      },
+      "<> <> allocated to call <> .": {
+        "1": "selection['combobox#0']:1",
+        "2": "relation['forward', 'rel:0']:0<owner"
+      },
+      "<> <> is held by call <> .": {
+        "1": "selection['combobox#0']:1",
+        "2": "relation['forward', 'rel:0']:0<selection['combobox#0']:1"
+      }
+    },
+    "fitted": 12
+  },
+  "dev_steps": 389,
+  "outcome_cut": 388,
+  "development": {
+    "target_clicks": 13,
+    "failed_attempts": 0,
+    "recognition_mismatches": 0,
+    "visible_check_ledger": {
+      "match": 39
+    },
+    "visible_check_scope": {
+      "bound vessel length survives representation": {
+        "match": 13
+      },
+      "selected object retained": {
+        "match": 13
+      },
+      "sheet vessel available in action binding": {
+        "match": 13
+      }
+    },
+    "version_space_ledger": {},
+    "decision_list_ledger": {},
+    "rows": [
+      {
+        "step": 15,
+        "episode": 2,
+        "ok": true,
+        "error": null,
+        "before": "38d4917adc5dc808",
+        "after": "f97acb77b9f081c1",
+        "raw_target": 67,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Ardent Rose",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "containers",
+              "attr:Flag#0": "Panama",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "96",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "2"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#0']:1": {
+            "key": "S1",
+            "tid": 1,
+            "attrs": {
+              "attr:Certified for hazardous cargo#0": "yes",
+              "attr:Condition#0": "closed",
+              "attr:Quay#0": "South Quay",
+              "attr:Takes up to#0": "160"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 49,
+        "episode": 2,
+        "ok": true,
+        "error": null,
+        "before": "615fe1c5243f5465",
+        "after": "a50271b7d5a3a3a6",
+        "raw_target": 67,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Nordkapp",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "bagged fertiliser",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "132",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "4"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#0']:1": {
+            "key": "N2",
+            "tid": 1,
+            "attrs": {
+              "attr:Certified for hazardous cargo#0": "no",
+              "attr:Condition#0": "open",
+              "attr:Quay#0": "North Quay",
+              "attr:Takes up to#0": "90"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 66,
+        "episode": 3,
+        "ok": true,
+        "error": null,
+        "before": "008433cd861d9121",
+        "after": "e669d6346510121c",
+        "raw_target": 59,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Ardent Rose",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "containers",
+              "attr:Flag#0": "Panama",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "96",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "alongside",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 58,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 34,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 40,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 76,
+        "episode": 3,
+        "ok": true,
+        "error": null,
+        "before": "06d15b31a039846a",
+        "after": "6b577ab75b3b25ce",
+        "raw_target": 67,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Ardent Rose",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "containers",
+              "attr:Flag#0": "Panama",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "96",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "alongside",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#0']:1": {
+            "key": "S1",
+            "tid": 1,
+            "attrs": {
+              "attr:Certified for hazardous cargo#0": "yes",
+              "attr:Condition#0": "closed",
+              "attr:Quay#0": "South Quay",
+              "attr:Takes up to#0": "160"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 97,
+        "episode": 3,
+        "ok": true,
+        "error": null,
+        "before": "a0ccd08ce1032a3e",
+        "after": "436cc93119b1ccda",
+        "raw_target": 75,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Nordkapp",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "bagged fertiliser",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "132",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 98,
+        "episode": 3,
+        "ok": true,
+        "error": null,
+        "before": "436cc93119b1ccda",
+        "after": "436cc93119b1ccda",
+        "raw_target": 75,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Nordkapp",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "bagged fertiliser",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "132",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "3"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 106,
+        "episode": 3,
+        "ok": true,
+        "error": null,
+        "before": "b6822f18675ed3da",
+        "after": "06ffde9d4cd9bfb3",
+        "raw_target": 75,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Ardent Rose",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "containers",
+              "attr:Flag#0": "Panama",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "96",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "alongside",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#0']:1": {
+            "key": "S1",
+            "tid": 1,
+            "attrs": {
+              "attr:Certified for hazardous cargo#0": "yes",
+              "attr:Condition#0": "closed",
+              "attr:Quay#0": "South Quay",
+              "attr:Takes up to#0": "160"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 160,
+        "episode": 4,
+        "ok": true,
+        "error": null,
+        "before": "ba9504cfdaaf41fc",
+        "after": "f10fec25ad1c3c89",
+        "raw_target": 67,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Hafnarfjord",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "frozen fish",
+              "attr:Flag#0": "Iceland",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "112",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 365,
+        "episode": 7,
+        "ok": true,
+        "error": null,
+        "before": "95d92148ca365537",
+        "after": "b78e2d5fe5350ffc",
+        "raw_target": 75,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "unnamed",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Petrel Star",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "naphtha",
+              "attr:Flag#0": "Malta",
+              "attr:Hazardous cargo#0": "yes",
+              "attr:Length overall#0": "148",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "0"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 375,
+        "episode": 8,
+        "ok": true,
+        "error": null,
+        "before": "c81433fd108eb2ca",
+        "after": "f8c6be6c681d2dfd",
+        "raw_target": 67,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Kittiwake",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "sawn timber",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "78",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "4"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#0']:1": {
+            "key": "W1",
+            "tid": 1,
+            "attrs": {
+              "attr:Certified for hazardous cargo#0": "yes",
+              "attr:Condition#0": "open",
+              "attr:Quay#0": "West Basin",
+              "attr:Takes up to#0": "140"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "W1 - West Basin - takes 140 m - certified for hazardous cargo - open",
+            "expected_key": "W1",
+            "bound_selection_keys": [
+              "W1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Kittiwake",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "78 m",
+            "expected_scalar": "78",
+            "bound_scalars": {
+              "owner": "78"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 379,
+        "episode": 9,
+        "ok": true,
+        "error": null,
+        "before": "c81433fd108eb2ca",
+        "after": "f8c6be6c681d2dfd",
+        "raw_target": 67,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Kittiwake",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "sawn timber",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "78",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "4"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#0']:1": {
+            "key": "W1",
+            "tid": 1,
+            "attrs": {
+              "attr:Certified for hazardous cargo#0": "yes",
+              "attr:Condition#0": "open",
+              "attr:Quay#0": "West Basin",
+              "attr:Takes up to#0": "140"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "W1 - West Basin - takes 140 m - certified for hazardous cargo - open",
+            "expected_key": "W1",
+            "bound_selection_keys": [
+              "W1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Kittiwake",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "78 m",
+            "expected_scalar": "78",
+            "bound_scalars": {
+              "owner": "78"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 383,
+        "episode": 9,
+        "ok": true,
+        "error": null,
+        "before": "36e34d3cf5e08c9a",
+        "after": "a2de5bf6c791315d",
+        "raw_target": 75,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "unnamed"
+        },
+        "bound": {
+          "owner": {
+            "key": "Ardent Rose",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "containers",
+              "attr:Flag#0": "Panama",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "96",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "1"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-103",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#0']:1": {
+            "key": "N1",
+            "tid": 1,
+            "attrs": {
+              "attr:Certified for hazardous cargo#0": "no",
+              "attr:Condition#0": "open",
+              "attr:Quay#0": "North Quay",
+              "attr:Takes up to#0": "120"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "N1 - North Quay - takes 120 m - no hazardous cargo - open",
+            "expected_key": "N1",
+            "bound_selection_keys": [
+              "N1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 387,
+        "episode": 9,
+        "ok": true,
+        "error": null,
+        "before": "96e84d041150d9d8",
+        "after": "9d22acea44e46507",
+        "raw_target": 83,
+        "recognized_control": "button:Allocate berth",
+        "roles": {
+          "owner": "named",
+          "relation['forward', 'rel:0']:0<owner": "named",
+          "selection['combobox#0']:1": "named",
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": "named"
+        },
+        "bound": {
+          "owner": {
+            "key": "Kittiwake",
+            "tid": 3,
+            "attrs": {
+              "attr:Cargo#0": "sawn timber",
+              "attr:Flag#0": "Norway",
+              "attr:Hazardous cargo#0": "no",
+              "attr:Length overall#0": "78",
+              "attr:Length overall#1": "m",
+              "attr:Status#0": "expected",
+              "attr:Bring#0": "alongside",
+              "attr:Calls logged#0": "4"
+            }
+          },
+          "relation['forward', 'rel:0']:0<owner": {
+            "key": "C-102",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          },
+          "selection['combobox#0']:1": {
+            "key": "S2",
+            "tid": 1,
+            "attrs": {
+              "attr:Certified for hazardous cargo#0": "no",
+              "attr:Condition#0": "open",
+              "attr:Quay#0": "South Quay",
+              "attr:Takes up to#0": "70"
+            }
+          },
+          "relation['forward', 'rel:0']:0<selection['combobox#0']:1": {
+            "key": "C-101",
+            "tid": 0,
+            "attrs": {
+              "attr:Call#col": "Call"
+            }
+          }
+        },
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Kittiwake",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "78 m",
+            "expected_scalar": "78",
+            "bound_scalars": {
+              "owner": "78"
+            },
+            "status": "match"
+          }
+        ]
+      }
+    ]
+  }
+}

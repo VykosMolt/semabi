@@ -1,0 +1,14 @@
+{
+  "args": {
+    "cmd": "python -I -B - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,subprocess,datetime\nr=Path('/home/moloch/semabi'); w=r/'runs/.w3_repair_worktree'; p=r/'docs/data/v4/transport/development/widget_key_revision_v1'\nf=json.loads((p/'retained_validation_v1/full_suite_source_freeze_v1.json').read_text());s=json.loads((p/'retained_validation_v1/source_freeze_v1.json').read_text())\nexpected=['semabi/compiler/v2/hypotheses.py','semabi/compiler/v2/refinement.py','tests/test_v2_collection_variation.py','tests/test_v2_refinement.py']\nassert sorted(subprocess.check_output(['git','diff','--cached','--name-only'],cwd=r,text=True).splitlines())==expected\nassert not subprocess.check_output(['git','diff','--name-only','--','semabi','tests'],cwd=r,text=True).strip()\ncounts={}\nfor group,mapping in [('native',f['native_files']),('tests',f['test_files']),('runtime',f['runtime_files']),('dependencies',f['dependency_files']),('suite_inputs',f['suite_retained_run_files']),('corpus_inputs',s['corpora']['files'])]:\n for name,h in mapping.items():\n  assert hashlib.sha256((r/name).read_bytes()).hexdigest()==h,(group,name)\n counts[group]=len(mapping)\nassert sorted(str(x.relative_to(r)) for x in (r/'semabi').rglob('*.py'))==sorted(f['native_files'])\nassert sorted(str(x.relative_to(r)) for x in (r/'tests').rglob('*.py'))==sorted(f['test_files'])\nfor name in expected:assert (r/name).read_bytes()==(w/name).read_bytes()\nsubprocess.run(['git','diff','--cached','--check'],cwd=r,check=True)\nout={'schema':'semabi.transport.w3_exact_source_adoption_check.v1','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'tested_source_head':'aaa9b5df915464754341794179b5297cf22f6140','precommit_main_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=r,text=True).strip(),'checked_counts':counts,'exact_staged_paths':expected,'complete_native_and_test_membership_equal':True,'all_checked_hashes_equal':True,'staged_whitespace_check':'PASS','scope':'Exact tested native, test, runtime, dependency and input transfer. No new native execution.'}\nq=p/'root_exact_adoption_check_v1.json';assert not q.exists();q.write_text(json.dumps(out,indent=2,sort_keys=True)+'\\n');print(json.dumps({'sha256':hashlib.sha256(q.read_bytes()).hexdigest(),**counts}))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "max_output_tokens": 3000
+  },
+  "result": {
+    "chunk_id": "202a5c",
+    "wall_time_seconds": 0.000003052,
+    "exit_code": 0,
+    "original_token_count": 46,
+    "output": "{\"sha256\": \"26365dfdfbf1a2d0aff12b5d4af2531b14192e66486485923d0cb89c105deff8\", \"native\": 156, \"tests\": 70, \"runtime\": 67, \"dependencies\": 6, \"suite_inputs\": 18, \"corpus_inputs\": 45}\n"
+  }
+}

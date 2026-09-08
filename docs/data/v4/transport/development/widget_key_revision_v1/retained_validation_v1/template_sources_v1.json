@@ -1,0 +1,100 @@
+{
+  "retained_sources": {
+    "check_corpora.py": {
+      "bytes": 11211,
+      "origin": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+      "retained_copy": "retained_instruments/check_corpora.py.txt",
+      "sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d"
+    },
+    "compare_corpora.py": {
+      "bytes": 19928,
+      "origin": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/compare_corpora.py",
+      "retained_copy": "retained_instruments/compare_corpora.py.txt",
+      "sha256": "64da152c71531e29bb8b6dc866643be52d016efa142abb553bc215257ea69236"
+    },
+    "freeze_validation_v1.py": {
+      "bytes": 8910,
+      "origin": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/freeze_validation_v1.py",
+      "retained_copy": "retained_instruments/freeze_validation_v1.py.txt",
+      "sha256": "f4b620482a36b6bd0e124211fd5db1948e3a7bc8d13eaa5e9e1c58fb972db2f9"
+    },
+    "link_probe.py": {
+      "bytes": 4618,
+      "origin": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/prequential/instruments/link_probe.py",
+      "retained_copy": "retained_instruments/link_probe.py.txt",
+      "sha256": "b3dc46628f60956a6d3967114cb1a6fd00a376acbdd25ccef08bedf923864dae"
+    },
+    "preserve_validation_v1.py": {
+      "bytes": 11002,
+      "origin": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/preserve_validation_v1.py",
+      "retained_copy": "retained_instruments/preserve_validation_v1.py.txt",
+      "sha256": "ddb6b61cf5eec5582031a72c70d5342f6e2e7d2f9a263f7ea2b5bc0142230852"
+    },
+    "run_corpus.py": {
+      "bytes": 6815,
+      "origin": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/run_corpus.py",
+      "retained_copy": "retained_instruments/run_corpus.py.txt",
+      "sha256": "7cdb82945897f591f46c3085d58539f3b34c2f2d9bc141f9fe05e377e2081221"
+    },
+    "run_focused_v1.py": {
+      "bytes": 11524,
+      "origin": "/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/run_focused_v1.py",
+      "retained_copy": "retained_instruments/run_focused_v1.py.txt",
+      "sha256": "ae25cc9f8fc63ec61fa412ef15cdd26bdbf77c89b2cea9a5c6f080276a000284"
+    },
+    "run_full_suite_v2.py": {
+      "bytes": 9815,
+      "origin": "/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/run_full_suite_v2.py",
+      "retained_copy": "retained_instruments/run_full_suite_v2.py.txt",
+      "sha256": "b01258b1b05bbcdfe24c41c098ea5de96b5995bc182656ae834cf30a94e338bd"
+    },
+    "run_job.py": {
+      "bytes": 3276,
+      "origin": "/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/run_job.py",
+      "retained_copy": "retained_instruments/run_job.py.txt",
+      "sha256": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7"
+    },
+    "validation_guard.py": {
+      "bytes": 8516,
+      "origin": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_guard.py",
+      "retained_copy": "retained_instruments/validation_guard.py.txt",
+      "sha256": "5aeb711a5b1cf98acfb8ad25072e50de37b6b5f0381c2bf36a013462ddb67c41"
+    }
+  },
+  "schema": "semabi.transport.w3_validation_template_sources.v1",
+  "scope": "Only new validation gate preparation files. Root reviews the final checkpoint, rendered instruments, freeze, exact commands and launch allocation.",
+  "static_validation": "Every Python template parsed with ast.parse; no template or native module was executed.",
+  "status": "PREPARATION_ONLY_NOT_A_SOURCE_FREEZE_OR_GO",
+  "templates": {
+    "compare_corpora.py.template": {
+      "bytes": 20757,
+      "derived_from": "compare_corpora.py",
+      "rendered_name": "compare_corpora.py",
+      "sha256": "e7d349251d95a93276e001cb7ab22c317247ba77cce2501bb53b012f391c1539"
+    },
+    "retained_full_suite_helpers.py.template": {
+      "bytes": 11524,
+      "derived_from": "run_focused_v1.py",
+      "rendered_name": "retained_full_suite_helpers.py",
+      "sha256": "ae25cc9f8fc63ec61fa412ef15cdd26bdbf77c89b2cea9a5c6f080276a000284"
+    },
+    "run_corpus.py.template": {
+      "bytes": 6793,
+      "derived_from": "run_corpus.py",
+      "rendered_name": "run_corpus.py",
+      "sha256": "10d5d1e7b870cd14dcba4fc0864be15b25661ac55bc0a033f1860584b1c42f46"
+    },
+    "run_full_suite_v1.py.template": {
+      "bytes": 9821,
+      "derived_from": "run_full_suite_v2.py",
+      "rendered_name": "run_full_suite_v1.py",
+      "sha256": "171733d097829eabe41ddeb352578b80265867082b63fb02e7ed437fd28c8240"
+    },
+    "validation_guard.py.template": {
+      "bytes": 9100,
+      "derived_from": "validation_guard.py",
+      "rendered_name": "validation_guard.py",
+      "sha256": "c38876bc2153cae2969ef8048cac152ede07059cd80a241d38c373b1104c45d3"
+    }
+  }
+}

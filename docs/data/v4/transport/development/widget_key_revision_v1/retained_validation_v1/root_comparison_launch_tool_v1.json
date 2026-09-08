@@ -1,0 +1,18 @@
+{
+  "args": {
+    "cmd": "taskset -c 15 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_gate_corpus_comparison_v1_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/jobs/corpus_comparison_v1 -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/compare_corpora.py --w1-manifest-sha 47518651d62874ed1d52536bacbdb4fc088e16e848a5462be07bde7780cfc851 --source-freeze-sha256 49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac --corpus-freeze-sha256 e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+    "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+    "login": false,
+    "sandbox_permissions": "require_escalated",
+    "justification": "Run the frozen W3 corpus comparator after all six native runs were reaped and preserved.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3500
+  },
+  "result": {
+    "chunk_id": "85efa9",
+    "wall_time_seconds": 0.538087008,
+    "exit_code": 0,
+    "original_token_count": 34,
+    "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1563563, \"child_terminated\": true, \"end_utc\": \"2026-09-08T10:32:46.989997+00:00\"}\n"
+  }
+}

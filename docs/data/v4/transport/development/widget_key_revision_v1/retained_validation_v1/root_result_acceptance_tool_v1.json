@@ -1,0 +1,16 @@
+{
+  "args": {
+    "cmd": "python3 - <<'PY'\nfrom pathlib import Path\nimport datetime,hashlib,json\np=Path('/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1')\ndef sha(f):return hashlib.sha256(f.read_bytes()).hexdigest()\ns=json.loads((p/'full_suite_summary_v1.json').read_text());c=json.loads((p/'root_corpus_review_v1.json').read_text())\nassert s['W3']['counts']=={'passed':659,'xfail':1,'skipped':3} and s['W3']['testcases']==663 and not s['removed_predecessor_cases'] and len(s['added_cases'])==28\nassert c['all_six_components_equal'] and c['comparison_sha256']==sha(p/'corpus_comparison_v1.json')\nrecord={'schema':'semabi.transport.w3_root_result_acceptance.v1','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'decision':'ACCEPT_W3_BROAD_RESULTS','source_head':'aaa9b5df915464754341794179b5297cf22f6140','native_manifest_sha256':sha(p/'native_artifact_manifest_v1.json'),'full_suite_summary_sha256':sha(p/'full_suite_summary_v1.json'),'corpus_comparison_sha256':sha(p/'corpus_comparison_v1.json'),'root_corpus_review_sha256':sha(p/'root_corpus_review_v1.json'),'independent_review_sha256':sha(p/'independent_broad_review_v1.md'),'full_suite':{'passed':659,'skipped':3,'xfail':1,'failed':0,'errors':0,'testcases':663,'retained_predecessor_cases':635,'added_passing_cases':28},'corpora':{'cases':5,'components_per_case':6,'differences':0,'known_residuals':'RETAINED'},'final_custody':'PENDING_ADDITIVE_SEAL','main_adoption':'NOT_YET; requires successful final custody and exact source/test transfer','scope':'Accept the reviewed W3 source checkpoint on focused and retained regression evidence. No fresh transport, identity-truth or JOIN claim.'}\nout=p/'root_result_acceptance_v1.json'\nwith out.open('x') as f:f.write(json.dumps(record,indent=2,sort_keys=True)+'\\n')\nprint(json.dumps({'path':str(out),'sha256':sha(out)}))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "login": false,
+    "max_output_tokens": 1500,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "86cb0a",
+    "wall_time_seconds": 0.00000321,
+    "exit_code": 0,
+    "original_token_count": 63,
+    "output": "{\"path\": \"/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/root_result_acceptance_v1.json\", \"sha256\": \"ba9d10d396ef611bcf49cc756006ddd8853b1571f01484387ec56f63ea11696e\"}\n"
+  }
+}

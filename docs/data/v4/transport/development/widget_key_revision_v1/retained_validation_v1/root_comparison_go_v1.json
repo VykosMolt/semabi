@@ -1,0 +1,18 @@
+{
+  "commands_sha256": "13053e60aa5105e9780d4a7459ff7589f2ca561d067b08ef3593a5bf61cf16eb",
+  "created_utc": "2026-09-08T10:32:41.697715+00:00",
+  "decision": "GO_ONCE_COMPARISON_ONLY",
+  "launch_args": {
+    "cmd": "taskset -c 15 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_gate_corpus_comparison_v1_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/jobs/corpus_comparison_v1 -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/compare_corpora.py --w1-manifest-sha 47518651d62874ed1d52536bacbdb4fc088e16e848a5462be07bde7780cfc851 --source-freeze-sha256 49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac --corpus-freeze-sha256 e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+    "justification": "Run the frozen W3 corpus comparator after all six native runs were reaped and preserved.",
+    "login": false,
+    "max_output_tokens": 3500,
+    "sandbox_permissions": "require_escalated",
+    "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+    "yield_time_ms": 1000
+  },
+  "native_manifest_sha256": "b59eb2b89f45889242484ba342aa44b1f1dedfec4e52ef43e85ec4ef5304f8db",
+  "schema": "semabi.transport.w3_comparison_go.v1",
+  "scope": "Frozen six-component comparison after complete native custody; no semantic acceptance or adoption claim.",
+  "source_head": "aaa9b5df915464754341794179b5297cf22f6140"
+}

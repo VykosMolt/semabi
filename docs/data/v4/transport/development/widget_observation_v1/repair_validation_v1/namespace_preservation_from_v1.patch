@@ -1,0 +1,77 @@
+--- preserve_focused_v1.py
++++ preserve_focused_v2.py
+@@ -16,8 +16,8 @@
+     parser.add_argument('directory', type=Path)
+     args = parser.parse_args()
+     directory = args.directory.resolve(strict=True)
+-    manifest = directory / 'artifact_manifest_v1.json'
+-    completion = directory / 'root_completion_checks_v1.json'
++    manifest = directory / 'artifact_manifest_v2.json'
++    completion = directory / 'root_completion_checks_v2.json'
+     if manifest.exists() or completion.exists():
+         raise ValueError('This attempt already has preservation outputs')
+     checks = []
+@@ -33,7 +33,8 @@
+     go = read('root_go_v1.json')
+     launch = read('root_launch_tool_v1.json')
+     reap = read('root_reap_tool_v1.json')
+-    host = read('root_host_termination_v1.json')
++    host = read('root_host_termination_v2.json')
++    host_tool = read('root_host_tool_v2.json')
+     process = read('job_v1/process.json')
+     execution = read('execution_v1.json')
+     root = Path(freeze['working_directory'])
+@@ -64,12 +65,27 @@
+     check('exit continuity', reap['result']['exit_code'] == terminal['returncode']
+           == process['returncode'] == execution['pytest_returncode'])
+     check('process continuity', execution['pid'] == terminal['child_pid'] == process['child_pid']
+-          == process['owned_process_group'] == host['child_pid'])
++          == process['owned_process_group'] == host['namespace_local_pids']['child_pid'])
+     check('termination continuity', terminal['child_terminated'] and process['child_terminated']
+           and terminal['end_utc'] == process['end_utc'])
+-    check('host post-exit sample', host['created_utc'] >= process['end_utc']
+-          and host['runner_pid'] == process['runner_pid'] and not host['runner_present']
+-          and not host['child_present'] and host['child_process_group_members'] == [])
++    runner_start = command['argv'].index(freeze['python_executable'])
++    check('namespace-local process scope', host['schema'] == 'semabi.widget_observation.namespace_completion_sample.v2'
++          and host['condition'] == freeze['condition'] and host['host_pid_mapping'] == 'NOT_CAPTURED'
++          and host['namespace_local_pids'] == {name: process[name] for name in
++              ('runner_pid', 'child_pid', 'owned_process_group')})
++    check('exact host command post-exit sample', host['created_utc'] >= process['end_utc']
++          and host['expected_runner_argv'] == command['argv'][runner_start:]
++          and host['expected_child_argv'] == process['command']
++          and host['exact_command_matches'] == {'runner': [], 'child': []}
++          and host['inaccessible_entries'] == [])
++    host_rows = [json.loads(line) for line in host_tool['result']['output'].splitlines()]
++    selected_host_rows = [row for row in host_rows if row['condition'] == freeze['condition']]
++    check('actual host tool continuity', host_tool['args']['sandbox_permissions'] == 'require_escalated'
++          and host_tool['result']['exit_code'] == 0 and len(selected_host_rows) == 1
++          and selected_host_rows[0] == {'condition': freeze['condition'],
++              'record_sha256': sha(directory / 'root_host_termination_v2.json'),
++              'exact_command_matches': host['exact_command_matches'], 'inaccessible_entries': [],
++              'host_sampler_pid': host['sampler_pid']})
+     check('log binding', sha(directory / 'job_v1/output.log') == process['log_sha256'])
+     check('child command', command['argv'][command['argv'].index('--') + 1:]
+           == process['command'] == execution['argv'])
+@@ -96,10 +112,10 @@
+                   path.resolve(strict=True) == path and relative in freeze['native_files']
+                   and sha(path) == freeze['native_files'][relative] and row['spec_origin'] == str(path)
+                   and row['package_paths'] == row['spec_package_paths'] == paths)
+-    record = {'schema': 'semabi.widget_observation.focused_preservation.v1',
++    record = {'schema': 'semabi.widget_observation.focused_preservation.v2',
+               'created_utc': datetime.now(timezone.utc).isoformat(),
+               'preserver_path': str(Path(__file__).resolve()), 'preserver_sha256': sha(Path(__file__)),
+-              'scope': 'Custody checks only. Exit continuity does not require test success. Host evidence is post-exit. '
++              'scope': 'Custody checks only. Exit continuity does not require test success. Namespace-local IDs are bound to owned reaping receipts; host corroboration is a post-exit exact-argv scan only, with no host-PID mapping or process-group absence claim. '
+                        'All regular attempt files and the targets of pytest scratch symlinks are recorded; no native execution.',
+               'checks': checks, 'findings': [c['name'] for c in checks if not c['pass']]}
+     with completion.open('x') as stream:
+@@ -114,7 +130,7 @@
+             continue
+         if path.is_file():
+             files[path.relative_to(directory).as_posix()] = {'sha256': sha(path), 'bytes': path.stat().st_size}
+-    seal = {'schema': 'semabi.widget_observation.focused_artifacts.v1',
++    seal = {'schema': 'semabi.widget_observation.focused_artifacts.v2',
+             'created_utc': datetime.now(timezone.utc).isoformat(), 'condition': freeze['condition'],
+             'files': files, 'scratch_symlinks': symlinks, 'custody_findings': record['findings'],
+             'scope': 'Sealed before semantic inspection of JUnit/log. Native assertions may fail. '

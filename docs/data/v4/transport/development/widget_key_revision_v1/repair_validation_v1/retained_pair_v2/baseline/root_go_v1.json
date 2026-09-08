@@ -1,0 +1,17 @@
+{
+  "command_sha256": "6d2666f702b18b4cacaa95681ff9f4a8f42ecd8e4976257044aab0b4047d247c",
+  "created_utc": "2026-09-08T08:48:16.653769+00:00",
+  "decision": "GO_ONCE_BASELINE",
+  "exec_command_args": {
+    "cmd": "taskset -c 9 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_repair_baseline_v2_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v2/job_v1 -- /home/moloch/semabi/.venv/bin/python -P -B /home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/repair_validation_v1/run_focused_v1.py --freeze /home/moloch/semabi/runs/.w3_baseline_v4_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v2/source_freeze_v1.json --sha256 93d9a036a439d555a8a41871200507830bc169b6affe799b57a96220bc4bc6ba",
+    "justification": "Execute the frozen W3 version-4 baseline development regressions once on the authorized local CPU, retaining all outcomes.",
+    "max_output_tokens": 4500,
+    "sandbox_permissions": "require_escalated",
+    "workdir": "/home/moloch/semabi/runs/.w3_baseline_v4_worktree",
+    "yield_time_ms": 1000
+  },
+  "independent_review_scope": "Prior core source/runner/baseline preparation reviews accepted with a v3 context gap; root reviewed the bounded v4 correction. Full independent v4 source/result acceptance remains required before checkpoint/adoption. Focused execution only.",
+  "root_review": "Complete v3-to-v4 native and test delta read, with final held hashes verified. Raw context materialization, scoped persistent build failure and corrected existing-parent negative are within the frozen repair contract. Both test modules remain identical between arms.",
+  "schema": "semabi.widget_key_revision.root_focused_go.v1",
+  "source_freeze_sha256": "93d9a036a439d555a8a41871200507830bc169b6affe799b57a96220bc4bc6ba"
+}

@@ -1,0 +1,122 @@
+--- a/tests/test_v2_collection_variation.py
++++ b/tests/test_v2_collection_variation.py
+@@ -504,6 +504,108 @@
+     expected = [_widget_build_state(hypothesis, t) for t in (template, derived)]
+     hypothesis._build_entity_types()
+     assert [_widget_build_state(hypothesis, t) for t in (template, derived)] == expected
++
++
++def _context_key_change_hypothesis(association):
++    contexts = [
++        ("article", [("Alpha", "Amber", "Red"), ("Beta", "Bronze", "Blue")]),
++        ("section", [("Gamma", "Copper", "Green"), ("Delta", "Denim", "Gold")]),
++    ]
++    pages = []
++    for status in ("Before", "After"):
++        nodes = [("group", "", -1), ("status", status, 0)]
++        for role, rows in contexts:
++            parent = len(nodes)
++            nodes += [(role, "", 0), ("list", "", parent)]
++            for name, old_key, value in rows:
++                root = len(nodes)
++                nodes += [("listitem", name, parent + 1), ("text", old_key, root),
++                          ("combobox", "", root, value)]
++        pages.append(build(*nodes))
++    hypothesis, templates, sigs = _parsed_widget_units(pages, [4, 12], [2, 10])
++    template = templates[0]
++    assert templates == [template, template]
++    hypothesis.units[template].key_slot = "text#0"
++    hypothesis._promote_persistent_widgets()
++    assert (template, "combobox#0") in hypothesis.persistent_widgets
++    swaps = {"Alpha": "Beta", "Beta": "Alpha", "Gamma": "Delta", "Delta": "Gamma",
++             "Amber": "Bronze", "Bronze": "Amber", "Copper": "Denim", "Denim": "Copper"}
++    for rendered, canonical in swaps.items():
++        if association == "alias":
++            hypothesis.alias_map[(template, rendered)] = canonical
++        elif association == "override":
++            for sig in sigs:
++                hypothesis.key_overrides[(sig, template, rendered)] = canonical
++    hypothesis._apply_key_associations()
++    assert hypothesis.units[template].key_slot == "text#0"
++    if association != "none":
++        assert [ui.slots["text#0"] for ui in hypothesis.units[template].instances] == [
++            "Bronze", "Amber", "Denim", "Copper", "Bronze", "Amber", "Denim", "Copper"]
++    return hypothesis, template, sigs, contexts
++
++
++@pytest.mark.parametrize("association", ["none", "alias", "override"])
++def test_context_key_changes_materialize_associations_from_raw_fields(association):
++    """Native key choice changes both split scopes from a later field to the earlier name."""
++    hypothesis, template, sigs, contexts = _context_key_change_hypothesis(association)
++    swaps = {"Alpha": "Beta", "Beta": "Alpha", "Gamma": "Delta", "Delta": "Gamma"}
++    for sig in sigs:
++        hypothesis.parse_units(sig)
++    cached = dict(hypothesis._page_instances)
++    cached_instances = {(sig, root): ui for sig, page in cached.items() for root, ui in page.items()}
++    assert all(cached_instances[(ui.sig, ui.root)] is not ui for ui in hypothesis.units[template].instances)
++
++    hypothesis._build_entity_types()
++
++    derived, = set(hypothesis.ctx_split.values())
++    for selected, roots, rows in ((template, (4, 7), contexts[0][1]), (derived, (12, 15), contexts[1][1])):
++        unit = hypothesis.units[selected]
++        assert unit.key_slot == "listitem#0"  # selected by the real _choose_key in each scope
++        assert (selected, "combobox#0") in hypothesis.persistent_widgets
++        for sig in sigs:
++            fitted = {ui.root: ui for ui in unit.instances if ui.sig == sig}
++            for root, (name, old_key, value) in zip(roots, rows):
++                ui = fitted[root]
++                assert ui.slots["listitem#0"] == (swaps[name] if association != "none" else name)
++                assert ui.slots["text#0"] == old_key
++                assert ui.slots["combobox#0"] == value
++                if association != "none":
++                    assert hypothesis._page_instances[sig] is cached[sig]
++                    assert cached[sig][root] is cached_instances[(sig, root)]
++                    assert cached[sig][root].template == selected
++                    assert cached[sig][root].slots == ui.slots
++                    assert cached[sig][root].slot_nodes == ui.slot_nodes
++    for sig in sigs:
++        parsed = {ui.root: ui for ui in hypothesis.parse_units(sig)}
++        for selected in (template, derived):
++            fitted = {ui.root: ui for ui in hypothesis.units[selected].instances if ui.sig == sig}
++            assert {root: (ui.slots, ui.slot_nodes) for root, ui in parsed.items() if ui.template == selected} == {
++                root: (ui.slots, ui.slot_nodes) for root, ui in fitted.items()}
++    expected = [_widget_build_state(hypothesis, t) for t in (template, derived)]
++    hypothesis._build_entity_types()
++    assert [_widget_build_state(hypothesis, t) for t in (template, derived)] == expected
++
++
++def test_failed_context_key_materialization_remains_unbuildable():
++    hypothesis, template, sigs, _contexts = _context_key_change_hypothesis("alias")
++    # Publish the direct-unit interpretation before allowing the native context split.
++    hypothesis._split_done = True
++    hypothesis._build_entity_types()
++    hypothesis._split_done = False
++    hypothesis.frozen = True
++    assert hypothesis.entity_types and hypothesis.tid_of_template
++    hypothesis.parse_units(sigs[0])
++    cached = hypothesis._page_instances[sigs[0]][4]
++    assert cached is not hypothesis.units[template].instances[0]
++    assert cached.slot_nodes["text#0"] != 0
++    cached.slot_nodes["text#0"] = 0  # an existing node with the wrong former-key binding
++
++    for _ in range(2):
++        with pytest.raises(ValueError, match="materializ"):
++            hypothesis._build_entity_types()
++        assert hypothesis.entity_types == hypothesis.tid_of_template == {}
++        assert not hypothesis.frozen
++        assert all(unit.key_slot == "listitem#0" for unit in hypothesis.units.values())
+ 
+ 
+ @pytest.mark.parametrize("association", ["AFTER_BIJECTION", "CONTROL", "BOTH_BIJECTION"])
+@@ -568,7 +670,9 @@
+     elif missing_evidence == "widget_node":
+         unit.instances[0].slot_nodes["combobox#0"] = 999
+     elif missing_evidence == "owner":
+-        unit.instances[0].parent_root = 999
++        assert unit.instances[0].parent_root != 0
++        assert hypothesis.G.obs[unit.instances[0].sig].node(0).i == 0
++        unit.instances[0].parent_root = 0
+     else:
+         # A selected composite's node is its first component. The later component's
+         # binding still needs validation even when three other rows match perfectly.

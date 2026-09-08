@@ -1,0 +1,20 @@
+{
+  "args": {
+    "cmd": "git commit -m \"Revalidate reload-owned widget persistence after key revision\" -m \"Track automatically promoted claims separately from configured support, rebuild key associations from raw parser values, and revoke unsupported claims after key or context changes. Reject selected-key dependencies that cannot be preserved, and refresh affected cached units when context splitting selects another key.\" -m \"Paired focused validation: identical 57 cases; baseline 37 passed and 20 failed, candidate 57 passed. Existing test assertions are preserved. Independent source and result review accepted the bounded checkpoint. Full suite and five dedicated corpus runs are required before adoption.\"",
+    "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+    "sandbox_permissions": "require_escalated",
+    "justification": "May I commit the independently reviewed W3 source checkpoint locally before its required broad validation?",
+    "prefix_rule": [
+      "git",
+      "commit"
+    ],
+    "max_output_tokens": 2500
+  },
+  "result": {
+    "chunk_id": "a3f4e4",
+    "wall_time_seconds": 0.000003252,
+    "exit_code": 0,
+    "original_token_count": 40,
+    "output": "[w3-revocable-widget-persistence aaa9b5d] Revalidate reload-owned widget persistence after key revision\n 4 files changed, 759 insertions(+), 21 deletions(-)\n"
+  }
+}

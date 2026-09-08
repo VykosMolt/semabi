@@ -1,0 +1,15 @@
+--- candidate_source_v2/objective.py
++++ candidate_source_v3/objective.py
+@@ -121,8 +121,10 @@
+                 # The parser moved the frame's transient field onto its sole
+                 # child. Its DOM node can remain a sibling of that child.
+                 frame = raw_by_root.get(ui.parent_root)
+-                owns_node = (frame is not None and frame.nested == [ui.root] and not frame.slots
+-                             and frame.slot_nodes.get(sid[1:] + "~") == node)
++                source_sid = sid[1:] + "~"
++                owns_node = (frame is not None and frame.nested == [ui.root]
++                             and source_sid not in frame.slots
++                             and frame.slot_nodes.get(source_sid) == node)
+             if (obs.node(node).role not in ("combobox", "textbox")
+                     or not owns_node
+                     or not name.startswith("attr:")

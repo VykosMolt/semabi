@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "taskset -c 9 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_repair_baseline_v2_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v2/job_v1 -- /home/moloch/semabi/.venv/bin/python -P -B /home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/repair_validation_v1/run_focused_v1.py --freeze /home/moloch/semabi/runs/.w3_baseline_v4_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v2/source_freeze_v1.json --sha256 93d9a036a439d555a8a41871200507830bc169b6affe799b57a96220bc4bc6ba",
+    "max_output_tokens": 4500,
+    "workdir": "/home/moloch/semabi/runs/.w3_baseline_v4_worktree",
+    "yield_time_ms": 1000,
+    "sandbox_permissions": "require_escalated",
+    "justification": "Execute the frozen W3 version-4 baseline development regressions once on the authorized local CPU, retaining all outcomes."
+  },
+  "result": {
+    "chunk_id": "61de45",
+    "wall_time_seconds": 1.001961549,
+    "session_id": 45550,
+    "original_token_count": 0,
+    "output": ""
+  }
+}

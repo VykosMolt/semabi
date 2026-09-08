@@ -1,0 +1,18 @@
+{
+  "args": {
+    "cmd": "/home/moloch/semabi/.venv/bin/python -I -B docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/preservation_v1/preserve_native_v2.py --commands-sha256 13053e60aa5105e9780d4a7459ff7589f2ca561d067b08ef3593a5bf61cf16eb --source-freeze-sha256 49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac --corpus-freeze-sha256 e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae --full-suite-freeze-sha256 e34af04a2fe44fdef0d1e541c3f4592b994b534efd9aa1710be0314cf838671b --self-sha256 5ac0b3e71d917510f26ed2332dcfa3dcd72af5b6e9c3914551b5c68aa2d56150",
+    "workdir": "/home/moloch/semabi/runs/.w3_repair_worktree",
+    "login": false,
+    "sandbox_permissions": "require_escalated",
+    "justification": "Preserve all six completed and reaped W3 validation runs using the independently reviewed raw-artifact preserver before reading semantic results.",
+    "max_output_tokens": 3500,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "056029",
+    "wall_time_seconds": 0.172115247,
+    "exit_code": 0,
+    "original_token_count": 71,
+    "output": "{\"path\": \"/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/native_artifact_manifest_v1.json\", \"bytes\": 30341, \"sha256\": \"b59eb2b89f45889242484ba342aa44b1f1dedfec4e52ef43e85ec4ef5304f8db\", \"findings\": 0}\n"
+  }
+}

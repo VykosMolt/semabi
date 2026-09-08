@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "env PYTHONPATH= PYTHONOPTIMIZE=0 /home/moloch/semabi/.venv/bin/python -B -P docs/data/v4/transport/development/widget_observation_v1/repair_validation_v1/sample_host_v2.py",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "May I read host process metadata to corroborate termination of the two completed scoring jobs by their exact command identities?",
+    "max_output_tokens": 3000,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "75359e",
+    "wall_time_seconds": 0.000002797,
+    "exit_code": 0,
+    "original_token_count": 112,
+    "output": "{\"condition\": \"BASELINE\", \"exact_command_matches\": {\"child\": [], \"runner\": []}, \"host_sampler_pid\": 1499648, \"inaccessible_entries\": [], \"record_sha256\": \"0a9d59d999f7ec65ea56881a75d002b2830978b5a38db84447f2844322202969\"}\n{\"condition\": \"CANDIDATE\", \"exact_command_matches\": {\"child\": [], \"runner\": []}, \"host_sampler_pid\": 1499648, \"inaccessible_entries\": [], \"record_sha256\": \"f8c2fe2cecb6583538e3fe3ae9f7aa1879dd048c4b77bcb399e2b5fcca9d000c\"}\n"
+  }
+}

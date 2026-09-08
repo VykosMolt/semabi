@@ -1,0 +1,72 @@
+{
+  "checked_counts": {
+    "corpus_inputs": 45,
+    "dependencies": 6,
+    "native": 156,
+    "runtime": 67,
+    "suite_inputs": 18,
+    "tests": 70
+  },
+  "corpora": {
+    "cases": 5,
+    "components_per_case": 6,
+    "differences": 0,
+    "known_residuals": "RETAINED"
+  },
+  "created_utc": "2026-09-08T11:10:17.472467+00:00",
+  "decision": "ADOPTED_REVIEWED_W3_SOURCE",
+  "evidence": {
+    "independent_final_custody_review_v1.md": {
+      "bytes": 2449,
+      "sha256": "7085ab8d2d0dabf5d1b8b22a38bb7f2a633c9375a7afbe6474b32859f39efae6"
+    },
+    "retained_validation_v1/copy_manifest_v1.json": {
+      "bytes": 62561,
+      "sha256": "b2e8d452c43a1be66b6b7551ed8e9cb43af91babb9d74aa33b4d1e504a8095d4"
+    },
+    "retained_validation_v1/corpus_comparison_v1.json": {
+      "bytes": 109834,
+      "sha256": "0a2198f6a43d80207a67cf4f5ad9a5b7c816040899121624213d05e894192288"
+    },
+    "retained_validation_v1/full_suite_summary_v1.json": {
+      "bytes": 238193,
+      "sha256": "abcc166f5e0185575ec09a6c63ee54df65e9385ab56eaf480bca56953e747246"
+    },
+    "retained_validation_v1/results_manifest_v1.json": {
+      "bytes": 38806,
+      "sha256": "bbad2bf15946f0101281dff2ce2ff7469334ae596359d9b722341fc887b229b7"
+    },
+    "retained_validation_v1/root_result_acceptance_v1.json": {
+      "bytes": 1323,
+      "sha256": "ba9d10d396ef611bcf49cc756006ddd8853b1571f01484387ec56f63ea11696e"
+    },
+    "root_exact_adoption_check_v1.json": {
+      "bytes": 834,
+      "sha256": "26365dfdfbf1a2d0aff12b5d4af2531b14192e66486485923d0cb89c105deff8"
+    },
+    "root_main_commit_tool_v1.json": {
+      "bytes": 677,
+      "sha256": "ccea756adb3a4ca88700595146c0975fb5b583601400d609561e98a6f025f567"
+    }
+  },
+  "exact_changed_paths": [
+    "semabi/compiler/v2/hypotheses.py",
+    "semabi/compiler/v2/refinement.py",
+    "tests/test_v2_collection_variation.py",
+    "tests/test_v2_refinement.py"
+  ],
+  "full_suite": {
+    "errors": 0,
+    "failed": 0,
+    "passed": 659,
+    "skipped": 3,
+    "xfail": 1
+  },
+  "main_source_commit": "47c0d5c3d214900fe97747fd9842c7c83fdafe3f",
+  "parent_main_commit": "9847e9ff3ef93e90fb1e67ee03c008979e7acda3",
+  "schema": "semabi.transport.w3_main_adoption.v1",
+  "scope": "Exact four-file source/test adoption, with canonical full suite and dedicated corpus evidence inherited from identical verified bytes. No unchanged passing native jobs rerun, fresh transfer, identity-truth or JOIN claim.",
+  "source_adoption_main_index_clean": true,
+  "source_bytes_equal_after_commit": true,
+  "tested_source_commit": "aaa9b5df915464754341794179b5297cf22f6140"
+}

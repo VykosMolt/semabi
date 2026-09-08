@@ -1,0 +1,752 @@
+{
+  "candidate_working_directory": "/home/moloch/semabi/runs/.w3_repair_worktree",
+  "cases": {
+    "allocation_positive": {
+      "button_label": "Allocate berth",
+      "candidate_output": "docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/allocation_positive",
+      "development": "harbour_join_dev",
+      "holdout": "harbour_join_hold",
+      "retained_w1_output": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive"
+    },
+    "allocation_refusals": {
+      "button_label": "Allocate berth",
+      "candidate_output": "docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/allocation_refusals",
+      "development": "harbour_ref_dev",
+      "holdout": "harbour_ref_hold",
+      "retained_w1_output": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals"
+    },
+    "pilot": {
+      "button_label": "Book pilot",
+      "candidate_output": "docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/pilot",
+      "development": "harbour_pil_dev",
+      "holdout": "harbour_pil_hold",
+      "retained_w1_output": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot"
+    },
+    "separating": {
+      "button_label": "Book pilot",
+      "candidate_output": "docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/separating",
+      "development": "harbour_sep_dev",
+      "holdout": "harbour_sep_hold",
+      "retained_w1_output": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating"
+    },
+    "separating_extended": {
+      "button_label": "Book pilot",
+      "candidate_output": "docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/separating_extended",
+      "development": "harbour_sep2_dev",
+      "holdout": "harbour_sep_hold",
+      "retained_w1_output": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended"
+    }
+  },
+  "corpus_copy_status": "W3 corpus directory absent at preparation; root performs and verifies the exact later copy before freeze.",
+  "corpus_file_count": 45,
+  "corpus_files": {
+    "runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json": {
+      "bytes": 5716,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json",
+      "sha256": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json": {
+      "bytes": 262,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json",
+      "sha256": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl": {
+      "bytes": 5279565,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl",
+      "sha256": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl": {
+      "bytes": 98085,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl",
+      "sha256": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json": {
+      "bytes": 330,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json",
+      "sha256": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl": {
+      "bytes": 6474619,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl",
+      "sha256": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl": {
+      "bytes": 24556,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl",
+      "sha256": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl": {
+      "bytes": 118810,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl",
+      "sha256": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json": {
+      "bytes": 5716,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json",
+      "sha256": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json": {
+      "bytes": 334,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json",
+      "sha256": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl": {
+      "bytes": 6132981,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl",
+      "sha256": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl": {
+      "bytes": 114363,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl",
+      "sha256": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json": {
+      "bytes": 335,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json",
+      "sha256": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl": {
+      "bytes": 6663257,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl",
+      "sha256": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl": {
+      "bytes": 24556,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl",
+      "sha256": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl": {
+      "bytes": 126336,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl",
+      "sha256": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/identity_refutations_v4.json": {
+      "bytes": 5716,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/identity_refutations_v4.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/identity_refutations_v4.json",
+      "sha256": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/join_merge.json": {
+      "bytes": 334,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/join_merge.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/join_merge.json",
+      "sha256": "fe105c196b2e499c15f7a5ddfab3821ccc4e61e007900683cd9c62f9c5cf2447"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/observations.jsonl": {
+      "bytes": 6337662,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/observations.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/observations.jsonl",
+      "sha256": "aaeae065bd32dab494f3168624683c376bf586a4c44aa3c49f4283b448128082"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/probes.acquired.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_dev/steps.jsonl": {
+      "bytes": 119501,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/steps.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/steps.jsonl",
+      "sha256": "517f0b2fabeec9a707f9066013c950f6e1a4e4fa5886616116eeb8c5586ff573"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/join_merge.json": {
+      "bytes": 335,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/join_merge.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/join_merge.json",
+      "sha256": "6ea308426a965a645e165741410c1d2f16ffa20ad52384c81f9a70fe30931acd"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/observations.jsonl": {
+      "bytes": 7051134,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/observations.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/observations.jsonl",
+      "sha256": "ab75c3ac61a176a319ef4ff80069bdffc85dc944e12c758f0923439ce491aea7"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.acquired.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.jsonl": {
+      "bytes": 24556,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/probes.jsonl",
+      "sha256": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_ref_hold/steps.jsonl": {
+      "bytes": 134664,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/steps.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/steps.jsonl",
+      "sha256": "e8993d7047d19ee266d2383f37b8baae031d69a8463c5064ddab86066a380b0c"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/identity_refutations_v4.json": {
+      "bytes": 5716,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/identity_refutations_v4.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/identity_refutations_v4.json",
+      "sha256": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/join_merge.json": {
+      "bytes": 621,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/join_merge.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/join_merge.json",
+      "sha256": "62c23d397b620e092e05984fcc4b044e1adb809a65cdca7b4dfce39aeea16e12"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/observations.jsonl": {
+      "bytes": 8584596,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/observations.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/observations.jsonl",
+      "sha256": "16ae0575207a4cdb3b2fcabea4d9262b98097cd1d8b40e819599aedc630a7a31"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/probes.acquired.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/steps.jsonl": {
+      "bytes": 150249,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/steps.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/steps.jsonl",
+      "sha256": "dcca0caa8dcaefe3631250c7c29957d481779eb3c3e7b3966301394a3d7170c9"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/identity_refutations_v4.json": {
+      "bytes": 5716,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/identity_refutations_v4.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/identity_refutations_v4.json",
+      "sha256": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/join_merge.json": {
+      "bytes": 356,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/join_merge.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/join_merge.json",
+      "sha256": "7d96a0c35d96f5bf9164651df88b1b160ad02629d05d722cbcd3dd56f0d48ed9"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl": {
+      "bytes": 6644829,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl",
+      "sha256": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/probes.acquired.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_dev/steps.jsonl": {
+      "bytes": 120196,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/steps.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/steps.jsonl",
+      "sha256": "bcdae2015f91cb080c3ba87b9d0ee23a6d8f5f2934ded4ebaea59f7e26c3d9d5"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": {
+      "bytes": 296,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json",
+      "sha256": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": {
+      "bytes": 7391743,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl",
+      "sha256": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": {
+      "bytes": 24556,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl",
+      "sha256": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199"
+    },
+    "runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": {
+      "bytes": 133309,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl",
+      "copy_from": "/home/moloch/semabi/runs/.w1_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl",
+      "sha256": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+    }
+  },
+  "corpus_input_bytes": 61808102,
+  "manifest_candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/development/g1/rebuild_v1/input_manifest.json",
+  "manifest_root": "runs/v4/transport_g1_corpora_v1",
+  "persistent_manifest": {
+    "bytes": 5916,
+    "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/g1/rebuild_v1/input_manifest.json",
+    "sha256": "0a2fc2a9833f290fb23d9300e0547b53b83af2ec93ab3a92cde63b1f0ddc1dc1"
+  },
+  "retained_authority": {
+    "accepted_canonical_full_suite_freeze": {
+      "bytes": 935387,
+      "path": "/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/full_suite_source_freeze_v2.json",
+      "sha256": "a1b4242f0cf11a885822e693e0412d6e3c451543ed8417eefe1aed4890f2afc1"
+    },
+    "accepted_canonical_full_suite_results": {
+      "bytes": 22765,
+      "path": "/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/full_suite_results_manifest_v2.json",
+      "sha256": "3a3a3a2e9e1ca406c83b848f92e5ca3827f7aa38f68e04f29060369d69031823"
+    },
+    "w1_comparison": {
+      "bytes": 100948,
+      "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpus_comparison_v1.json",
+      "sha256": "7b21fd66b2c9871016993ccb31cb22b4509244dbbb6fbbe1f25520567ff76dbb"
+    },
+    "w1_corpus_freeze": {
+      "bytes": 19814,
+      "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpus_freeze_v1.json",
+      "sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e"
+    },
+    "w1_full_gate_and_corpus_acceptance": {
+      "bytes": 1664,
+      "path": "/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/root_full_gate_acceptance_v2.json",
+      "sha256": "46ec930bebbb7bc3eb212ef61ff3d14dbb7ef4cb43127a3b3765dfdc7a1d57ca"
+    },
+    "w1_results_manifest": {
+      "bytes": 37305,
+      "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/results_manifest_v1.json",
+      "sha256": "47518651d62874ed1d52536bacbdb4fc088e16e848a5462be07bde7780cfc851"
+    },
+    "w1_source_freeze": {
+      "bytes": 461592,
+      "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/source_freeze_v1.json",
+      "sha256": "583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62"
+    }
+  },
+  "retained_w1_case_artifacts": {
+    "allocation_positive": {
+      "corpora/allocation_positive/adapter.json": {
+        "bytes": 2400,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/adapter.json",
+        "sha256": "4c09f81f6d7b0f5e3042d48dd0b49f2270e350540977c2111fd74e428d598faf"
+      },
+      "corpora/allocation_positive/adapter_postflight.json": {
+        "bytes": 413,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/adapter_postflight.json",
+        "sha256": "6dd304273e695c1773ca01a21deaab962e27c09badb528ec28a9b7d47487dc20"
+      },
+      "corpora/allocation_positive/allocation_positive.json": {
+        "bytes": 91885,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/allocation_positive.json",
+        "sha256": "9bbcbfa7616c20d4e878cfbae0ef15fbda38c912f59752bf7c5060c4b558bd46"
+      },
+      "corpora/allocation_positive/allocation_positive_fit.json": {
+        "bytes": 8695,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/allocation_positive_fit.json",
+        "sha256": "78f7380da46340c6f1c61159d0733f70af279d6f3ccd9708a2ea30820d06ca90"
+      },
+      "corpora/allocation_positive/allocation_positive_partial.json": {
+        "bytes": 39734,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/allocation_positive_partial.json",
+        "sha256": "ccd0c1b812342a2abb8988e0db71dc92a94bb6bd06df4218ddce2c605fc8f392"
+      },
+      "corpora/allocation_positive/allocation_positive_process.json": {
+        "bytes": 3063,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/allocation_positive_process.json",
+        "sha256": "ab4532315b5ef5e85c988a99066430731e43845060102e30c07ad98ba36df351"
+      },
+      "corpora/allocation_positive/import_origins_v1.json": {
+        "bytes": 27174,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/import_origins_v1.json",
+        "sha256": "f4616fa1c756876b49c4b6985e366386aea950b9824ec88d0728ddf068ff3f43"
+      },
+      "corpora/allocation_positive/source_snapshot.json": {
+        "bytes": 19814,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_positive/source_snapshot.json",
+        "sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e"
+      },
+      "jobs/corpus_allocation_positive/output.log": {
+        "bytes": 1466,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_positive/output.log",
+        "sha256": "93807ee15bfa3183c47233d505c3100c0bdd083b30fd44449f9cdf9ce81e2bd2"
+      },
+      "jobs/corpus_allocation_positive/process.json": {
+        "bytes": 17900,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_positive/process.json",
+        "sha256": "e50896ccf64fa886b1b424378a6bb087f36f5181dc9c519ab72cda78d2735e83"
+      }
+    },
+    "allocation_refusals": {
+      "corpora/allocation_refusals/adapter.json": {
+        "bytes": 2400,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/adapter.json",
+        "sha256": "bffd2a3c13bd8a7459afaa776b35327a9b2bcf8b55aad6799fe7b13653802d62"
+      },
+      "corpora/allocation_refusals/adapter_postflight.json": {
+        "bytes": 413,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/adapter_postflight.json",
+        "sha256": "3a82de04a6fe099dac7c2e49258c324635311c6043ace52e512f6487b8203be2"
+      },
+      "corpora/allocation_refusals/allocation_refusals.json": {
+        "bytes": 219655,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/allocation_refusals.json",
+        "sha256": "c4d49d8f43258408d8618656d7610c48334f41dfe7ed8f2425f6073b069b34cf"
+      },
+      "corpora/allocation_refusals/allocation_refusals_fit.json": {
+        "bytes": 9534,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/allocation_refusals_fit.json",
+        "sha256": "2cc7c2216ce91219de741fc22c8a868232347867a6471760cba5a4810aaccb2f"
+      },
+      "corpora/allocation_refusals/allocation_refusals_partial.json": {
+        "bytes": 89062,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/allocation_refusals_partial.json",
+        "sha256": "c6583dd20e7fcbe0b6ae36136773ed2e2b1b5f7705c239c60c8373a63d58c8a3"
+      },
+      "corpora/allocation_refusals/allocation_refusals_process.json": {
+        "bytes": 3052,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/allocation_refusals_process.json",
+        "sha256": "a5c22232a8ec3f750be697208c2ba419f6af63544853f294d1099a4638b6b9df"
+      },
+      "corpora/allocation_refusals/import_origins_v1.json": {
+        "bytes": 27174,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/import_origins_v1.json",
+        "sha256": "cee6fd93cd9b04d3b3622663e130310735a2476f7ab81514aabc1ad5ab701410"
+      },
+      "corpora/allocation_refusals/source_snapshot.json": {
+        "bytes": 19814,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/allocation_refusals/source_snapshot.json",
+        "sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e"
+      },
+      "jobs/corpus_allocation_refusals/output.log": {
+        "bytes": 1430,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_refusals/output.log",
+        "sha256": "cb8f821371894f1ea62ae17fd88e0730bf7bef1d50cd13f0494a16f3517f5594"
+      },
+      "jobs/corpus_allocation_refusals/process.json": {
+        "bytes": 17900,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_allocation_refusals/process.json",
+        "sha256": "f771fe6e0bafe62b67acac5f39fcfa2967940a33d807b4dd81a6f8a094020fca"
+      }
+    },
+    "pilot": {
+      "corpora/pilot/adapter.json": {
+        "bytes": 2358,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/adapter.json",
+        "sha256": "4a4b1843f81ade49b41871a8179f71bd7ca520419229c740c69eba6d1d234a18"
+      },
+      "corpora/pilot/adapter_postflight.json": {
+        "bytes": 413,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/adapter_postflight.json",
+        "sha256": "9af45fc1e73bc91ea675767a3a3fd7e73dff48b3e6bc4cc08974c0127294e2c7"
+      },
+      "corpora/pilot/import_origins_v1.json": {
+        "bytes": 27132,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/import_origins_v1.json",
+        "sha256": "f7534a0cdbcb23098b9eb9972017d3069c8295c6f3461b36e658ef55b2ac4546"
+      },
+      "corpora/pilot/pilot.json": {
+        "bytes": 189333,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/pilot.json",
+        "sha256": "ca0992ec70b89c556cd36308a3e6d3cadb7bc0bd25b778d1ceb308766efcf731"
+      },
+      "corpora/pilot/pilot_fit.json": {
+        "bytes": 9425,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/pilot_fit.json",
+        "sha256": "191029abd2de362879aba0326ff7948f8e7a9a4dc19a0aee16919d808f86e588"
+      },
+      "corpora/pilot/pilot_partial.json": {
+        "bytes": 80525,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/pilot_partial.json",
+        "sha256": "f1a85338af494e4fcc44db82fc23601195c89e31a2167b96d738ac3461efbeaf"
+      },
+      "corpora/pilot/pilot_process.json": {
+        "bytes": 3018,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/pilot_process.json",
+        "sha256": "76379fd74342a8ef309d5790584591328f55fbb7b22e50b0a006d794a76184ba"
+      },
+      "corpora/pilot/source_snapshot.json": {
+        "bytes": 19814,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/pilot/source_snapshot.json",
+        "sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e"
+      },
+      "jobs/corpus_pilot/output.log": {
+        "bytes": 1387,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_pilot/output.log",
+        "sha256": "1b3b94f9b9b7de73b9883636ac243933c38a4166ba43bbd8f18d547cfe30d4ac"
+      },
+      "jobs/corpus_pilot/process.json": {
+        "bytes": 17872,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_pilot/process.json",
+        "sha256": "bb44b3eacb0078c99a8762498d4a6e68c00c2158a69cb21c6cbbbea49c7a4bc7"
+      }
+    },
+    "separating": {
+      "corpora/separating/adapter.json": {
+        "bytes": 2373,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/adapter.json",
+        "sha256": "cb456148984b12113ded4ae482f9818c11df37b666167931b0b97c55b3911052"
+      },
+      "corpora/separating/adapter_postflight.json": {
+        "bytes": 413,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/adapter_postflight.json",
+        "sha256": "714d4fd3520d051f7bb9e42900613e00263434130776dd72102dbc81cb921f09"
+      },
+      "corpora/separating/import_origins_v1.json": {
+        "bytes": 27147,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/import_origins_v1.json",
+        "sha256": "1408d578cb93774bad15eb8a0aa0ed69b90e15ca2465b85435ee968098cee969"
+      },
+      "corpora/separating/separating.json": {
+        "bytes": 245559,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/separating.json",
+        "sha256": "0953f522b48c486aaeacc210a971bbd7d216be26450a3adfbced231c61eb95e9"
+      },
+      "corpora/separating/separating_fit.json": {
+        "bytes": 9364,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/separating_fit.json",
+        "sha256": "1a6338cab62200cdc3f251d3dcb086300cca29ad4f3a0a58f69484f0cdba1042"
+      },
+      "corpora/separating/separating_partial.json": {
+        "bytes": 97973,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/separating_partial.json",
+        "sha256": "bfaf1b30bcc945b3add5a0e46ff24c15c0e273b79541c4ce40e09a0c07c5a012"
+      },
+      "corpora/separating/separating_process.json": {
+        "bytes": 3029,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/separating_process.json",
+        "sha256": "2d3b7a70ccae0fb27f71813b2ad955a0119ef344e85e308303f033d890157c1a"
+      },
+      "corpora/separating/source_snapshot.json": {
+        "bytes": 19814,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating/source_snapshot.json",
+        "sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e"
+      },
+      "jobs/corpus_separating/output.log": {
+        "bytes": 1438,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating/output.log",
+        "sha256": "1de506877a1b1b22d04711f6df0be41c51cece21ed5886de69629fcc87547114"
+      },
+      "jobs/corpus_separating/process.json": {
+        "bytes": 17882,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating/process.json",
+        "sha256": "fb12e102d20a98d4aecd5c96abc54f3e98c094baa230c619693db9deed19b1b4"
+      }
+    },
+    "separating_extended": {
+      "corpora/separating_extended/adapter.json": {
+        "bytes": 2400,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/adapter.json",
+        "sha256": "88ab98f257ea1340fe7b8de9b37954f472ff0bdb05a56ec76aef5182e1d626c7"
+      },
+      "corpora/separating_extended/adapter_postflight.json": {
+        "bytes": 413,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/adapter_postflight.json",
+        "sha256": "42f9bc5e0e805bd971dc096847f28f0efdd9572881137d03a9bb20acd5a06022"
+      },
+      "corpora/separating_extended/import_origins_v1.json": {
+        "bytes": 27174,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/import_origins_v1.json",
+        "sha256": "0108c7778a442336b8eed1655eaa893b3771c437a21fae2ca51e45aedadcab51"
+      },
+      "corpora/separating_extended/separating_extended.json": {
+        "bytes": 345892,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/separating_extended.json",
+        "sha256": "2f949136b491a6b61cb66cfc7e4b631b92a130878b06080f0aff1eeaf97817ef"
+      },
+      "corpora/separating_extended/separating_extended_fit.json": {
+        "bytes": 10084,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/separating_extended_fit.json",
+        "sha256": "d8f255895d3a2cedc560ff2ade97f75816de922af744bc53947b84988b2f5391"
+      },
+      "corpora/separating_extended/separating_extended_partial.json": {
+        "bytes": 187163,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/separating_extended_partial.json",
+        "sha256": "786986380355c88b15eb8393abf1881c0c69422060d1b33bbdc249e6b8dbaa77"
+      },
+      "corpora/separating_extended/separating_extended_process.json": {
+        "bytes": 3054,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/separating_extended_process.json",
+        "sha256": "6aab4dbb14194eb7ffadf6fae36c3d223f5331a720863702839861bc90de4738"
+      },
+      "corpora/separating_extended/source_snapshot.json": {
+        "bytes": 19814,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/corpora/separating_extended/source_snapshot.json",
+        "sha256": "b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e"
+      },
+      "jobs/corpus_separating_extended/output.log": {
+        "bytes": 1465,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating_extended/output.log",
+        "sha256": "42ae1c8219021e637ae7d0776932e121e77e0f65fedfc732171e9ca3899f6624"
+      },
+      "jobs/corpus_separating_extended/process.json": {
+        "bytes": 17900,
+        "path": "/home/moloch/semabi/runs/.w1_worktree/docs/data/v4/transport/development/widget_persistence_v1/jobs/corpus_separating_extended/process.json",
+        "sha256": "278faf25a15b3f3a555316ac321ac5508c6d7245af443fc7fd456bebb8a10b7c"
+      }
+    }
+  },
+  "schema": "semabi.transport.w3_validation_expected_inputs.v1",
+  "status": "EXPECTED_RETAINED_INPUT_IDENTITIES_ONLY_NOT_A_CANDIDATE_SOURCE_FREEZE",
+  "suite_file_count": 18,
+  "suite_files": {
+    "runs/v4/blend_book_transfer/field_theories_v4.json": {
+      "bytes": 1303,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/blend_book_transfer/field_theories_v4.json",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/blend_book_transfer/field_theories_v4.json",
+      "sha256": "408cf3034e1346ccfbf309ec196c882c5236e3cbdda88100e14ea49ae8ec2097"
+    },
+    "runs/v4/blend_book_transfer/hidden_domain.json": {
+      "bytes": 3353,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/blend_book_transfer/hidden_domain.json",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/blend_book_transfer/hidden_domain.json",
+      "sha256": "642c99bb8a9fd130be004c0a3346531880a8f77a9227533d5651a2837eafd0e7"
+    },
+    "runs/v4/blend_book_transfer/observations.jsonl": {
+      "bytes": 5733510,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/blend_book_transfer/observations.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/blend_book_transfer/observations.jsonl",
+      "sha256": "a8819b9013a00627046a1066b33dbf79ef6be3b6b265d7f7bbbf867865f164e5"
+    },
+    "runs/v4/blend_book_transfer/oracle.jsonl": {
+      "bytes": 5258150,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/blend_book_transfer/oracle.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/blend_book_transfer/oracle.jsonl",
+      "sha256": "ace8989d80c4ebddbb4c74215da189e51c59901b2ecf78df8a1fe76bc954a257"
+    },
+    "runs/v4/blend_book_transfer/probes.jsonl": {
+      "bytes": 45837,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/blend_book_transfer/probes.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/blend_book_transfer/probes.jsonl",
+      "sha256": "5c18fff0e2394914364aecd100b442eb95bd2a8fd9256d711ade2986d009d9fb"
+    },
+    "runs/v4/blend_book_transfer/steps.jsonl": {
+      "bytes": 203634,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/blend_book_transfer/steps.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/blend_book_transfer/steps.jsonl",
+      "sha256": "22e7be1d2a809d081218f9daa1828a753be3857b08eff1848aba7d864dd29dbe"
+    },
+    "runs/v4/harbour_dev/hidden_domain.json": {
+      "bytes": 5984,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_dev/hidden_domain.json",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_dev/hidden_domain.json",
+      "sha256": "37a2958c71673000e876e79109af4b78c099f934c973e42db2d4dc804578af12"
+    },
+    "runs/v4/harbour_dev/identity_refutations_v4.json": {
+      "bytes": 5716,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_dev/identity_refutations_v4.json",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_dev/identity_refutations_v4.json",
+      "sha256": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb"
+    },
+    "runs/v4/harbour_dev/observations.jsonl": {
+      "bytes": 5018721,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_dev/observations.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_dev/observations.jsonl",
+      "sha256": "c1018d5dcf2605cedc6408d32205e7799753729dc4e2a6d29cda7dc08fcc9b3c"
+    },
+    "runs/v4/harbour_dev/oracle.jsonl": {
+      "bytes": 1886559,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_dev/oracle.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_dev/oracle.jsonl",
+      "sha256": "77a5799ccc91280e594d917551c0ab78e0f6af7679aa0fdb265c36caa7655a34"
+    },
+    "runs/v4/harbour_dev/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_dev/probes.acquired.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_dev/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/harbour_dev/steps.jsonl": {
+      "bytes": 93914,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_dev/steps.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_dev/steps.jsonl",
+      "sha256": "37465c9e493fcb3a861222958f4dba697d81d4b4844eaf937d0f152db3e69d13"
+    },
+    "runs/v4/harbour_transfer/hidden_domain.json": {
+      "bytes": 5984,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_transfer/hidden_domain.json",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_transfer/hidden_domain.json",
+      "sha256": "37a2958c71673000e876e79109af4b78c099f934c973e42db2d4dc804578af12"
+    },
+    "runs/v4/harbour_transfer/observations.jsonl": {
+      "bytes": 5868393,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_transfer/observations.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_transfer/observations.jsonl",
+      "sha256": "0b8164158f9deea849bc11cb90f0e4b908bfc5b91f9fc406676465add6f23b27"
+    },
+    "runs/v4/harbour_transfer/oracle.jsonl": {
+      "bytes": 2432588,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_transfer/oracle.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_transfer/oracle.jsonl",
+      "sha256": "dbe7dfbc00c6fc3cdeb06f3f477993c10497ba560c24f62cd67f67452472e17a"
+    },
+    "runs/v4/harbour_transfer/probes.acquired.jsonl": {
+      "bytes": 244,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_transfer/probes.acquired.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_transfer/probes.acquired.jsonl",
+      "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da"
+    },
+    "runs/v4/harbour_transfer/probes.jsonl": {
+      "bytes": 24556,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_transfer/probes.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_transfer/probes.jsonl",
+      "sha256": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199"
+    },
+    "runs/v4/harbour_transfer/steps.jsonl": {
+      "bytes": 110151,
+      "candidate_present_and_matching_at_preparation": true,
+      "candidate_target": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/harbour_transfer/steps.jsonl",
+      "retained_source": "/home/moloch/semabi/runs/.w1_validation_worktree/runs/v4/harbour_transfer/steps.jsonl",
+      "sha256": "45f9645ab9b4a5ebc3d1827f30cf9289abae8f01744e4de3537154371857ad83"
+    }
+  }
+}

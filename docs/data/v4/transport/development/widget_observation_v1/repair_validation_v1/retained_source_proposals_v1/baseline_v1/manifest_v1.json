@@ -1,0 +1,105 @@
+{
+  "base_commit": "2025ee5b8d3c6b4e0ae376a7426e6c2a3ced7399",
+  "baseline_native_source_bindings": {
+    "semabi/compiler/abstract.py": {
+      "bytes": 27682,
+      "sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056"
+    },
+    "semabi/compiler/evidence.py": {
+      "bytes": 7215,
+      "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+    },
+    "semabi/compiler/observation.py": {
+      "bytes": 3966,
+      "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+    },
+    "semabi/compiler/parse.py": {
+      "bytes": 15863,
+      "sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9"
+    },
+    "semabi/compiler/v2/abstractor.py": {
+      "bytes": 52053,
+      "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5"
+    },
+    "semabi/compiler/v2/graph.py": {
+      "bytes": 34943,
+      "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a"
+    },
+    "semabi/compiler/v2/hypotheses.py": {
+      "bytes": 60626,
+      "sha256": "637347222e7212fd04a9ce367c9972ed9cdbc96c5768d021793c8a9774eda344"
+    },
+    "semabi/compiler/v2/score.py": {
+      "bytes": 9700,
+      "sha256": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b"
+    },
+    "semabi/compiler/v2/units.py": {
+      "bytes": 4462,
+      "sha256": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f"
+    },
+    "semabi/compiler/v4/abstractor.py": {
+      "bytes": 7634,
+      "sha256": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1"
+    },
+    "semabi/compiler/v4/objective.py": {
+      "bytes": 17768,
+      "sha256": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef"
+    }
+  },
+  "baseline_objective_source": "The unchanged objective at base_commit; the root-owned candidate file is outside this test-only patch.",
+  "disclosed_development_inputs": {
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/report_v1.md": {
+      "bytes": 5732,
+      "sha256": "2c62f863e60e9e49dc10a3d15fb61a72ebd1839f2f2dcf386bc378359f7ad9a3"
+    },
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_observation_v1/diagnostic.py": {
+      "bytes": 28898,
+      "sha256": "7440426fac24c9ed75defb8f37a03c57639346d87690e1a6e1145ae2867dc2b3"
+    },
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_observation_v1/invented_inputs_v1.json": {
+      "bytes": 9154,
+      "sha256": "6a78e73ec7459cc88217c2a1a3f3fb894b077347e59d0ad0042c9afbafd34fb6"
+    },
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_observation_v1/repair_contract_v3.md": {
+      "bytes": 7216,
+      "sha256": "c7e782167ee2062e2c589f9ef259e7201d85a0ef7fe277611aa56d6b09a91e2a"
+    },
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_observation_v1/report_v1.md": {
+      "bytes": 5424,
+      "sha256": "fb1c30da82135748512a0805769a80bdca248423de84636001324530809fd937"
+    }
+  },
+  "files": {
+    "assumptions_coverage_v1.md": {
+      "bytes": 5392,
+      "sha256": "06e4aafcbb7ee269ea83e594f58dce9695a46fa18e3125250154aa0acc39df7a"
+    },
+    "base_test_v4_objective.py.txt": {
+      "bytes": 4509,
+      "sha256": "432fbdce10bb95051144695f7353d3248208301ddb1777641446e5386f2842a6"
+    },
+    "static_checks_v1.json": {
+      "bytes": 4876,
+      "sha256": "f1606570226a5a610058b6b22e5f42570de7ef8fd4a0a6b8ff306caf45823c18"
+    },
+    "test_changes.patch": {
+      "bytes": 30133,
+      "sha256": "e3080909cf341632e4c7ea2719a0b9ec8d7a66c510220ee31fed7ebdb4606571"
+    },
+    "test_v4_objective.py.txt": {
+      "bytes": 33137,
+      "sha256": "27ab58d446ee3cf8770655cc1414e018e402634ee673811996bd1ca018a3d764"
+    }
+  },
+  "native_executed": false,
+  "predicted_baseline": {
+    "failures": 9,
+    "passes": 35,
+    "total_cases": 44
+  },
+  "schema": "semabi.widget_observation_regression_proposal.v1",
+  "status": "FROZEN_UNEXECUTED_PROPOSAL",
+  "test_collection_executed": false,
+  "test_path": "tests/test_v4_objective.py",
+  "worktree": "/home/moloch/semabi/runs/.w2_scoring_worktree"
+}

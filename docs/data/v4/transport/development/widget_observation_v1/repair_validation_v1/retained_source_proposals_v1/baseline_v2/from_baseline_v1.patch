@@ -1,0 +1,139 @@
+--- baseline_v1/test_v4_objective.py.txt
++++ baseline_v2/test_v4_objective.py.txt
+@@ -375,26 +375,42 @@
+     A = _widget_abstractor(H)
+     assert diff(A.abstract(before), A.abstract(after)).attr_changes == [
+         ((0, "1"), "attr:combobox#0", "red", "blue")]
+-    native_parse = H.parse_units
+-
+-    def missing_source(sig):
+-        units = native_parse(sig)
+-        if sig == after.structural_signature():
++    cached_parses = {page.structural_signature(): A.parsed(page) for page in (before, after)}
++    cached_delta = diff(A.abstract(before), A.abstract(after))
++    after_sig = after.structural_signature()
++    native_parse = H._parse_units
++    mutations = []
++
++    def missing_source(sig, *, raw_keys=False, cache=True):
++        units = native_parse(sig, raw_keys=raw_keys, cache=cache)
++        if sig == after_sig and raw_keys:
+             unit, = units
+             if missing == "slots":
+-                # Frame transfer clears slots while retaining old node bindings.
+-                unit.slots.clear()
++                del unit.slots["combobox#0"]
+                 assert "combobox#0" in unit.slot_nodes
+             else:
+                 del unit.slot_nodes["combobox#0"]
+                 assert "combobox#0" in unit.slots
++            mutations.append((sig, raw_keys, cache))
+         return units
+ 
+     # Direct diagnostic control: an already emitted field cannot substitute for its
+-    # currently active parser source. The observations and cached instances stay native.
+-    monkeypatch.setattr(H, "parse_units", missing_source)
++    # active raw parser source. Exercise only that boundary and retain the owner's key.
++    monkeypatch.setattr(H, "_parse_units", missing_source)
++    raw, = H._parse_units(after_sig, raw_keys=True, cache=False)
++    assert mutations == [(after_sig, True, False)]
++    assert raw.slots == ({"heading#0": "1"} if missing == "slots" else
++                         {"heading#0": "1", "combobox#0": "blue"})
++    assert raw.slot_nodes == ({"heading#0": 3, "combobox#0": 4} if missing == "slots" else
++                              {"heading#0": 3})
++    assert all(A.parsed(page) is cached_parses[page.structural_signature()] for page in (before, after))
++    assert diff(A.abstract(before), A.abstract(after)) == cached_delta
++    mutations.clear()
+     result = _assert_widget_verdict(A, before, after, "SPURIOUS")
+     assert result.errors == 1
++    # The unchanged objective can make no raw calls; the shared positive control
++    # separately requires that represented widget changes receive added credit.
++    assert all(sig == after_sig and raw_keys for sig, raw_keys, _cache in mutations)
+ 
+ 
+ def test_an_inherited_frame_widget_with_own_persistence_is_eligible():
+@@ -411,6 +427,84 @@
+     A = _widget_abstractor(H)
+     assert diff(A.abstract(before), A.abstract(after)).attr_changes == [
+         ((0, "1"), "attr:^combobox#0", "red", "blue")]
++    result = _assert_widget_verdict(A, before, after, "EXPLAINED")
++    assert (result.errors, result.delta_atoms) == (0, 1)
++
++
++def test_an_inherited_frame_widget_survives_later_column_context():
++    def page(value):
++        return Observation([Node(0, -1, "document", ""), Node(1, 0, "table", ""),
++                            Node(2, 1, "row", ""), Node(3, 2, "cell", "Field"),
++                            Node(4, 1, "row", ""), Node(5, 4, "cell", ""),
++                            Node(6, 5, "button", "1"), Node(7, 5, "combobox", "Value", value=value)])
++    before, after = page("red"), page("blue")
++    H = _widget_hypotheses(before, after, keys={"cell": None, "button": "button#0"}, persistent=())
++    child_template = H.template(before.structural_signature(), 6)
++    H.persistent_widgets = {(child_template, "^combobox#0")}
++    _widget_reparse(H)
++    A = _widget_abstractor(H)
++    for observed, value in ((before, "red"), (after, "blue")):
++        frame, child = H._parse_units(observed.structural_signature(), raw_keys=True, cache=False)
++        assert (frame.root, child.root, child.parent_root) == (5, 6, 5)
++        assert frame.nested == [child.root]
++        # Native frame transfer precedes column context: only the transferred
++        # source field is absent, while its original node binding remains.
++        assert frame.slots == {"col": "Field"}
++        assert frame.slot_nodes == {"combobox#0~": 7, "col": 5}
++        assert child.slots == {"button#0": "1", "^combobox#0": value}
++        assert child.slot_nodes == {"button#0": 6, "^combobox#0": 7}
++        assert H.persistent_widgets == {(child.template, "^combobox#0")}
++        parsed = A.parsed(observed)
++        index, owner = next((i, inst) for i, inst in enumerate(parsed.instances) if inst.root == child.root)
++        assert [inst for inst in parsed.instances if inst.root == child.root] == [owner]
++        assert parsed.node_instance[child.root] == index
++        assert owner.tid == A.tid_map[H.tid_of_template[child.template]]
++        assert owner.slots["id"][1] == "1"
++        assert owner.slots["attr:^combobox#0"][1] == value
++    delta = diff(A.abstract(before), A.abstract(after))
++    assert delta.attr_changes == [((0, "1"), "attr:^combobox#0", "red", "blue")]
++    assert not delta.added and not delta.removed and not delta.rel_changes
++    result = _assert_widget_verdict(A, before, after, "EXPLAINED")
++    assert (result.errors, result.delta_atoms) == (0, 1)
++
++
++def test_an_inherited_frame_widget_survives_an_unrelated_later_attachment():
++    def page(value):
++        return Observation([Node(0, -1, "document", ""), Node(1, 0, "section", ""),
++                            Node(2, 1, "heading", "8"), Node(3, 1, "group", ""),
++                            Node(4, 3, "button", "1"), Node(5, 3, "combobox", "Value", value=value),
++                            Node(6, 1, "textbox", "Other", value="9")])
++    before, after = page("red"), page("blue")
++    H = _widget_hypotheses(before, after, keys={"section": None, "group": None, "button": "button#0"},
++                           persistent=())
++    source_template, frame_template, child_template = [
++        H.template(before.structural_signature(), root) for root in (1, 3, 4)]
++    H.persistent_widgets = {(child_template, "^combobox#0")}
++    H.slot_attachments[(source_template, "textbox#0")] = frame_template
++    _widget_reparse(H)
++    A = _widget_abstractor(H)
++    for observed, value in ((before, "red"), (after, "blue")):
++        source, frame, child = H._parse_units(observed.structural_signature(), raw_keys=True, cache=False)
++        assert (source.root, frame.root, child.root, child.parent_root) == (1, 3, 4, 3)
++        assert frame.nested == [child.root]
++        assert source.slots == {"heading#0": "8"} and source.slot_nodes == {"heading#0": 2}
++        # The separate source's textbox arrives after the frame has transferred
++        # its combobox to the child; it does not restore that original field.
++        assert frame.slots == {"attached:textbox#0": "9"}
++        assert frame.slot_nodes == {"combobox#0~": 5, "attached:textbox#0": 6}
++        assert child.slots == {"button#0": "1", "^combobox#0": value}
++        assert child.slot_nodes == {"button#0": 4, "^combobox#0": 5}
++        assert H.persistent_widgets == {(child.template, "^combobox#0")}
++        parsed = A.parsed(observed)
++        index, owner = next((i, inst) for i, inst in enumerate(parsed.instances) if inst.root == child.root)
++        assert [inst for inst in parsed.instances if inst.root == child.root] == [owner]
++        assert parsed.node_instance[child.root] == index
++        assert owner.tid == A.tid_map[H.tid_of_template[child.template]]
++        assert owner.slots["id"][1] == "1"
++        assert owner.slots["attr:^combobox#0"][1] == value
++    delta = diff(A.abstract(before), A.abstract(after))
++    assert delta.attr_changes == [((0, "1"), "attr:^combobox#0", "red", "blue")]
++    assert not delta.added and not delta.removed and not delta.rel_changes
+     result = _assert_widget_verdict(A, before, after, "EXPLAINED")
+     assert (result.errors, result.delta_atoms) == (0, 1)
+ 

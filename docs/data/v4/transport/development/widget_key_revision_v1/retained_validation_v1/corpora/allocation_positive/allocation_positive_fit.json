@@ -1,0 +1,179 @@
+{
+  "provenance": {
+    "case": "allocation_positive",
+    "owner": "/root/baseline_verification",
+    "pid": 1514761,
+    "started_utc": "2026-09-08T09:41:39.678389+00:00",
+    "state": "running",
+    "dev": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+    "hold": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold",
+    "control": "button:Allocate berth",
+    "command": [
+      "/home/moloch/semabi/.venv/bin/python",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+      "allocation_positive"
+    ],
+    "working_directory": "/home/moloch/semabi/runs/.w3_repair_worktree",
+    "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+    "source_snapshot_sha256": "e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+    "scope": "disclosed retained development regression; no fresh-generalization claim",
+    "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+    "input_files": {
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+      "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+    }
+  },
+  "reading": {
+    "version": 1,
+    "name": "link-probe",
+    "families": {
+      "button[_]": {
+        "family": "button[_]",
+        "key_slot": "button#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+        "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+        "key_slot": "table/rowgroup/row/cell@Vessel#0",
+        "status": "UNSUPPORTED",
+        "discrimination": null
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+        "key_slot": "cell@Berth#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+        "key_slot": "cell@Pilot#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+        "key_slot": "cell@Vessel#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
+        "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+        "key_slot": null,
+        "status": "NO_IDENTITY",
+        "discrimination": 0.0
+      }
+    },
+    "promoted_families": [],
+    "refuted": {
+      "button[_]": [
+        null
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": [
+        "cell@Takes up to#0"
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": [
+        "cell@Ticket to#0"
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+        null,
+        "cell@Cargo#0",
+        "cell@Length overall#0"
+      ],
+      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
+        "cell@Status#0"
+      ]
+    },
+    "provenance": {
+      "source_run": "/home/moloch/semabi/runs/.w3_repair_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+      "role": "SOURCE"
+    }
+  },
+  "fit": {
+    "roles": {
+      "relation['forward', 'rel:0']:0<owner": {
+        "name": "relation['forward', 'rel:0']:0<owner",
+        "kind": "relation",
+        "form": [
+          "forward",
+          "rel:0"
+        ],
+        "tid": 0,
+        "anchor": "owner"
+      },
+      "owner": {
+        "name": "owner",
+        "kind": "action",
+        "form": [],
+        "tid": 3,
+        "anchor": null
+      },
+      "selection['combobox#0']:1": {
+        "name": "selection['combobox#0']:1",
+        "kind": "selection",
+        "form": [
+          "combobox#0"
+        ],
+        "tid": 1,
+        "anchor": null
+      },
+      "relation['forward', 'rel:0']:0<selection['combobox#0']:1": {
+        "name": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+        "kind": "relation",
+        "form": [
+          "forward",
+          "rel:0"
+        ],
+        "tid": 0,
+        "anchor": "selection['combobox#0']:1"
+      }
+    },
+    "rules": [
+      "('unnamed', \"selection['combobox#0']:1\")  ->  Nothing chosen in the berth list .   [4]",
+      "attr:Takes up to#0(selection['combobox#0']:1) == '140'  ->  <> <> allocated to call <> .   [2]",
+      "attr:Status#0(owner) == 'alongside'  ->  Call <> is already <> ; her berth cannot be changed .   [2]"
+    ],
+    "ordered": {},
+    "pairs": "frozenset()",
+    "events": {
+      "Nothing chosen in the berth list .": 4,
+      "<> <> allocated to call <> .": 3,
+      "Call <> is already <> ; her berth cannot be changed .": 2,
+      "<> <> is <> .": 1,
+      "<> is <> overall ; berth <> <> .": 1,
+      "<> <> is held by call <> .": 1
+    },
+    "default": "\u0000UNDETERMINED",
+    "arg_roles": {
+      "<> <> is <> .": {
+        "1": "selection['combobox#0']:1"
+      },
+      "<> is <> overall ; berth <> <> .": {
+        "0": "owner",
+        "2": "selection['combobox#0']:1"
+      },
+      "Call <> is already <> ; her berth cannot be changed .": {
+        "0": "relation['forward', 'rel:0']:0<owner"
+      },
+      "<> <> allocated to call <> .": {
+        "1": "selection['combobox#0']:1",
+        "2": "relation['forward', 'rel:0']:0<owner"
+      },
+      "<> <> is held by call <> .": {
+        "1": "selection['combobox#0']:1",
+        "2": "relation['forward', 'rel:0']:0<selection['combobox#0']:1"
+      }
+    },
+    "fitted": 12
+  },
+  "dev_steps": 389,
+  "outcome_cut": 388
+}

@@ -1,0 +1,38 @@
+--- preserve_native_v1.py
++++ preserve_native_v2.py
+@@ -18,6 +18,7 @@
+     'full_suite_source_freeze_v1.json': 'e34af04a2fe44fdef0d1e541c3f4592b994b534efd9aa1710be0314cf838671b',
+ }
+ CHECKS, FINDINGS = [], []
++TERMINATION_SCOPE = 'Recorded runners, primary children and owned groups only; escaped descendants are not traced.'
+ 
+ 
+ def require(condition, message):
+@@ -105,6 +106,7 @@
+         except Exception as error:
+             sample['unknown'].append({'pid': int(path.name), 'error': f'{type(error).__name__}: {error}'})
+     sample['live_owned'] = live
++    check('recorded processes and groups fully reaped', not sample['present'], sample['present'])
+     check('host scan complete without unknown entries', not sample['unknown'], sample['unknown'])
+     require(not live, 'Live recorded process or owned group blocks sealing: ' + json.dumps(live))
+     return sample
+@@ -217,7 +219,8 @@
+     record = {'schema': 'semabi.transport.w3_raw_completion_checks.v1', 'created_utc': datetime.now(timezone.utc).isoformat(),
+               'bindings': BINDINGS, 'preserver': {'path': str(SELF), **fingerprint(SELF)}, 'host_after': host_after,
+               'checks': CHECKS, 'findings': FINDINGS, 'jobs': jobs,
+-              'all_owned_jobs_terminated': all(row['terminated'] for row in jobs.values()) and not host_after['unknown'],
++              'all_owned_jobs_terminated': all(row['terminated'] for row in jobs.values()) and not host_after['unknown'] and not host_after['present'],
++              'termination_scope': TERMINATION_SCOPE,
+               'scope': 'Raw custody only; no JUnit, fit, partial, scored corpus or comparator payload was parsed.'}
+     write(checks_path, record)
+     original[checks_path.relative_to(ROOT).as_posix()] = fingerprint(checks_path)
+@@ -226,7 +229,8 @@
+               'source_freeze_sha256': supplied[1], 'corpus_freeze_sha256': supplied[2],
+               'full_suite_source_freeze_sha256': supplied[3], 'owned_job_names': sorted(jobs),
+               'excluded_runtime_scratch': str(HERE / 'full_pytest_tmp_v1'), 'semantic_acceptance': 'NOT_ASSESSED',
+-              'all_owned_jobs_terminated': record['all_owned_jobs_terminated'], 'custody_findings': FINDINGS}
++              'all_owned_jobs_terminated': record['all_owned_jobs_terminated'], 'custody_findings': FINDINGS,
++              'termination_scope': TERMINATION_SCOPE}
+     write(proposal, {'schema': 'semabi.transport.w3_native_artifact_proposal.v1', **common, 'files': original})
+     original[proposal.relative_to(ROOT).as_posix()] = fingerprint(proposal)
+     require(inventory() == original, 'Raw inventory changed after exclusive proposal')

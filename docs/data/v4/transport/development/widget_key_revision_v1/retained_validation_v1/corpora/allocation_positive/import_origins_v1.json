@@ -1,0 +1,500 @@
+{
+  "actual_command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/run_corpus.py",
+    "allocation_positive",
+    "docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpora/allocation_positive",
+    "docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+    "--source-freeze-sha256",
+    "49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac",
+    "--corpus-freeze-sha256",
+    "e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae"
+  ],
+  "affinity": [
+    10
+  ],
+  "bytecode_prefix": "/tmp/semabi_w3_gate_corpus_allocation_positive_v1_no_pyc",
+  "corpus_freeze_sha256": "e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+  "cwd": "/home/moloch/semabi/runs/.w3_repair_worktree",
+  "dont_write_bytecode": true,
+  "limitation": "Snapshots cover SemABI entries present in this interpreter at each boundary. They do not observe child module tables or modules removed between snapshots.",
+  "measurement_helper_origin": {
+    "path": "/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/prequential/instruments/link_probe.py",
+    "sha256": "b3dc46628f60956a6d3967114cb1a6fd00a376acbdd25ccef08bedf923864dae"
+  },
+  "measurement_returned": true,
+  "optimize": 0,
+  "pid": 1514761,
+  "postflight_status": "VERIFIED",
+  "required_environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONOPTIMIZE": "0",
+    "PYTHONPATH": "",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "safe_path": true,
+  "schema": "semabi.transport.w3_import_origins.v1",
+  "scope": "PRIMARY_CORPUS_INTERPRETER",
+  "snapshots": [
+    {
+      "modules": {
+        "semabi": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_repair_worktree/semabi"
+          ],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/__init__.py",
+          "relative_path": "semabi/__init__.py",
+          "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/__init__.py"
+        }
+      },
+      "phase": "candidate_package_anchor",
+      "recorded_utc": "2026-09-08T09:41:39.388334+00:00",
+      "violations": []
+    },
+    {
+      "modules": {
+        "semabi": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_repair_worktree/semabi"
+          ],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/__init__.py",
+          "relative_path": "semabi/__init__.py",
+          "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/__init__.py"
+        },
+        "semabi.compiler": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler"
+          ],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/__init__.py",
+          "relative_path": "semabi/compiler/__init__.py",
+          "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/__init__.py"
+        },
+        "semabi.compiler.abstract": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/abstract.py",
+          "relative_path": "semabi/compiler/abstract.py",
+          "sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/abstract.py"
+        },
+        "semabi.compiler.belief": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/belief.py",
+          "relative_path": "semabi/compiler/belief.py",
+          "sha256": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/belief.py"
+        },
+        "semabi.compiler.browser": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/browser.py",
+          "relative_path": "semabi/compiler/browser.py",
+          "sha256": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/browser.py"
+        },
+        "semabi.compiler.evidence": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/evidence.py",
+          "relative_path": "semabi/compiler/evidence.py",
+          "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/evidence.py"
+        },
+        "semabi.compiler.induce": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/induce.py",
+          "relative_path": "semabi/compiler/induce.py",
+          "sha256": "c726cb2f40c78cc946d8a998e94e056f300e0591fc4d74f73cd8504222954fb8",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/induce.py"
+        },
+        "semabi.compiler.observation": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/observation.py",
+          "relative_path": "semabi/compiler/observation.py",
+          "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/observation.py"
+        },
+        "semabi.compiler.parse": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/parse.py",
+          "relative_path": "semabi/compiler/parse.py",
+          "sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/parse.py"
+        },
+        "semabi.compiler.v2": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2"
+          ],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/__init__.py",
+          "relative_path": "semabi/compiler/v2/__init__.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/__init__.py"
+        },
+        "semabi.compiler.v2.graph": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/graph.py",
+          "relative_path": "semabi/compiler/v2/graph.py",
+          "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/graph.py"
+        },
+        "semabi.compiler.v4": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4"
+          ],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/__init__.py",
+          "relative_path": "semabi/compiler/v4/__init__.py",
+          "sha256": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/__init__.py"
+        },
+        "semabi.compiler.v4.binding": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/binding.py",
+          "relative_path": "semabi/compiler/v4/binding.py",
+          "sha256": "0f905cae535aa975dffe517f1107884f37524fdc3cbcc781ec7f645cd0f9b0dc",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/binding.py"
+        },
+        "semabi.compiler.v4.consequence": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/consequence.py",
+          "relative_path": "semabi/compiler/v4/consequence.py",
+          "sha256": "c95bd040c8b066aaaac5bb5653b2ff20824ed3f2b59aba81c42b8a579ca8445e",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/consequence.py"
+        },
+        "semabi.compiler.v4.correspondence": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/correspondence.py",
+          "relative_path": "semabi/compiler/v4/correspondence.py",
+          "sha256": "dd4659f74a4eb1ca8d3656ad278cd15290de2c08318b964e1a85c127fdd1be8c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/correspondence.py"
+        },
+        "semabi.compiler.v4.emission": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/emission.py",
+          "relative_path": "semabi/compiler/v4/emission.py",
+          "sha256": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/emission.py"
+        },
+        "semabi.compiler.v4.outcome": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/outcome.py",
+          "relative_path": "semabi/compiler/v4/outcome.py",
+          "sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/outcome.py"
+        },
+        "semabi.compiler.v4.prospective": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/prospective.py",
+          "relative_path": "semabi/compiler/v4/prospective.py",
+          "sha256": "591deb563820612e1f138660b2b2d83f9da51fcdb386b12c88ce19d0e074511b",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/prospective.py"
+        },
+        "semabi.compiler.v4.referring": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/referring.py",
+          "relative_path": "semabi/compiler/v4/referring.py",
+          "sha256": "c0e2abbee5dd724f193bc61a5264268e853837c4282cbe2d372b2ec2489e5b1f",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/referring.py"
+        }
+      },
+      "phase": "before_measurement",
+      "recorded_utc": "2026-09-08T09:41:39.678374+00:00",
+      "violations": []
+    },
+    {
+      "modules": {
+        "semabi": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_repair_worktree/semabi"
+          ],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/__init__.py",
+          "relative_path": "semabi/__init__.py",
+          "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/__init__.py"
+        },
+        "semabi.compiler": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler"
+          ],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/__init__.py",
+          "relative_path": "semabi/compiler/__init__.py",
+          "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/__init__.py"
+        },
+        "semabi.compiler.abstract": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/abstract.py",
+          "relative_path": "semabi/compiler/abstract.py",
+          "sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/abstract.py"
+        },
+        "semabi.compiler.belief": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/belief.py",
+          "relative_path": "semabi/compiler/belief.py",
+          "sha256": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/belief.py"
+        },
+        "semabi.compiler.browser": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/browser.py",
+          "relative_path": "semabi/compiler/browser.py",
+          "sha256": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/browser.py"
+        },
+        "semabi.compiler.compile": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/compile.py",
+          "relative_path": "semabi/compiler/compile.py",
+          "sha256": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/compile.py"
+        },
+        "semabi.compiler.compile_v4": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/compile_v4.py",
+          "relative_path": "semabi/compiler/compile_v4.py",
+          "sha256": "8ac23e907a19b790e78fadf6d7d0c22f8176620dd93844b7f21f32551e5193ad",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/compile_v4.py"
+        },
+        "semabi.compiler.evidence": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/evidence.py",
+          "relative_path": "semabi/compiler/evidence.py",
+          "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/evidence.py"
+        },
+        "semabi.compiler.explorer": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/explorer.py",
+          "relative_path": "semabi/compiler/explorer.py",
+          "sha256": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/explorer.py"
+        },
+        "semabi.compiler.grounder": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/grounder.py",
+          "relative_path": "semabi/compiler/grounder.py",
+          "sha256": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/grounder.py"
+        },
+        "semabi.compiler.induce": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/induce.py",
+          "relative_path": "semabi/compiler/induce.py",
+          "sha256": "c726cb2f40c78cc946d8a998e94e056f300e0591fc4d74f73cd8504222954fb8",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/induce.py"
+        },
+        "semabi.compiler.mentions": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/mentions.py",
+          "relative_path": "semabi/compiler/mentions.py",
+          "sha256": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/mentions.py"
+        },
+        "semabi.compiler.model": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/model.py",
+          "relative_path": "semabi/compiler/model.py",
+          "sha256": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/model.py"
+        },
+        "semabi.compiler.observation": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/observation.py",
+          "relative_path": "semabi/compiler/observation.py",
+          "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/observation.py"
+        },
+        "semabi.compiler.parse": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/parse.py",
+          "relative_path": "semabi/compiler/parse.py",
+          "sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/parse.py"
+        },
+        "semabi.compiler.v2": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2"
+          ],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/__init__.py",
+          "relative_path": "semabi/compiler/v2/__init__.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/__init__.py"
+        },
+        "semabi.compiler.v2.abstractor": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/abstractor.py",
+          "relative_path": "semabi/compiler/v2/abstractor.py",
+          "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/abstractor.py"
+        },
+        "semabi.compiler.v2.controls": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/controls.py",
+          "relative_path": "semabi/compiler/v2/controls.py",
+          "sha256": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/controls.py"
+        },
+        "semabi.compiler.v2.graph": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/graph.py",
+          "relative_path": "semabi/compiler/v2/graph.py",
+          "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/graph.py"
+        },
+        "semabi.compiler.v2.hypotheses": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/hypotheses.py",
+          "relative_path": "semabi/compiler/v2/hypotheses.py",
+          "sha256": "8dab56a4b4d7a56424e5e91648b49f60f9ba576502ad0d9832ccce57ba50d235",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/hypotheses.py"
+        },
+        "semabi.compiler.v2.score": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/score.py",
+          "relative_path": "semabi/compiler/v2/score.py",
+          "sha256": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/score.py"
+        },
+        "semabi.compiler.v2.sections": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/sections.py",
+          "relative_path": "semabi/compiler/v2/sections.py",
+          "sha256": "4bd39bf7e067a94ec19f6ad6c23c098d13ac01efdabafe2f6e15eb213003ba02",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/sections.py"
+        },
+        "semabi.compiler.v2.units": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/units.py",
+          "relative_path": "semabi/compiler/v2/units.py",
+          "sha256": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v2/units.py"
+        },
+        "semabi.compiler.v4": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4"
+          ],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/__init__.py",
+          "relative_path": "semabi/compiler/v4/__init__.py",
+          "sha256": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/__init__.py"
+        },
+        "semabi.compiler.v4.abstractor": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/abstractor.py",
+          "relative_path": "semabi/compiler/v4/abstractor.py",
+          "sha256": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/abstractor.py"
+        },
+        "semabi.compiler.v4.binding": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/binding.py",
+          "relative_path": "semabi/compiler/v4/binding.py",
+          "sha256": "0f905cae535aa975dffe517f1107884f37524fdc3cbcc781ec7f645cd0f9b0dc",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/binding.py"
+        },
+        "semabi.compiler.v4.consequence": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/consequence.py",
+          "relative_path": "semabi/compiler/v4/consequence.py",
+          "sha256": "c95bd040c8b066aaaac5bb5653b2ff20824ed3f2b59aba81c42b8a579ca8445e",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/consequence.py"
+        },
+        "semabi.compiler.v4.correspondence": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/correspondence.py",
+          "relative_path": "semabi/compiler/v4/correspondence.py",
+          "sha256": "dd4659f74a4eb1ca8d3656ad278cd15290de2c08318b964e1a85c127fdd1be8c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/correspondence.py"
+        },
+        "semabi.compiler.v4.emission": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/emission.py",
+          "relative_path": "semabi/compiler/v4/emission.py",
+          "sha256": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/emission.py"
+        },
+        "semabi.compiler.v4.fields": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/fields.py",
+          "relative_path": "semabi/compiler/v4/fields.py",
+          "sha256": "b5b794432a504b7d30f6574dc1e0d3ff34b44536967ab50ae9a5a0c04ffc9967",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/fields.py"
+        },
+        "semabi.compiler.v4.identity": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/identity.py",
+          "relative_path": "semabi/compiler/v4/identity.py",
+          "sha256": "06792b4a7ebd478fb46edeb7a37c5dce3b7eec02d561994f3560fad2ef01d6a7",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/identity.py"
+        },
+        "semabi.compiler.v4.objective": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/objective.py",
+          "relative_path": "semabi/compiler/v4/objective.py",
+          "sha256": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/objective.py"
+        },
+        "semabi.compiler.v4.outcome": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/outcome.py",
+          "relative_path": "semabi/compiler/v4/outcome.py",
+          "sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/outcome.py"
+        },
+        "semabi.compiler.v4.pinned": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/pinned.py",
+          "relative_path": "semabi/compiler/v4/pinned.py",
+          "sha256": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/pinned.py"
+        },
+        "semabi.compiler.v4.promote": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/promote.py",
+          "relative_path": "semabi/compiler/v4/promote.py",
+          "sha256": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/promote.py"
+        },
+        "semabi.compiler.v4.prospective": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/prospective.py",
+          "relative_path": "semabi/compiler/v4/prospective.py",
+          "sha256": "591deb563820612e1f138660b2b2d83f9da51fcdb386b12c88ce19d0e074511b",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/prospective.py"
+        },
+        "semabi.compiler.v4.referring": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/referring.py",
+          "relative_path": "semabi/compiler/v4/referring.py",
+          "sha256": "c0e2abbee5dd724f193bc61a5264268e853837c4282cbe2d372b2ec2489e5b1f",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/referring.py"
+        },
+        "semabi.compiler.v4.search": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/search.py",
+          "relative_path": "semabi/compiler/v4/search.py",
+          "sha256": "c87e3633207dfaa1483574cad2335b23222bec6fa51fe35526adf8dd9576f72c",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/compiler/v4/search.py"
+        },
+        "semabi.relmodel": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/relmodel.py",
+          "relative_path": "semabi/relmodel.py",
+          "sha256": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827",
+          "spec_origin": "/home/moloch/semabi/runs/.w3_repair_worktree/semabi/relmodel.py"
+        }
+      },
+      "phase": "after_measurement_or_failure",
+      "recorded_utc": "2026-09-08T09:53:25.013322+00:00",
+      "violations": []
+    }
+  ],
+  "source_freeze_sha256": "49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac",
+  "source_head": "aaa9b5df915464754341794179b5297cf22f6140"
+}

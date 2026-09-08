@@ -1,0 +1,16 @@
+{
+  "args": {
+    "cmd": "env PYTHONPATH= python3 -P -B - <<'PY'\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nimport json,subprocess\nroot=Path('/home/moloch/semabi');rel=Path('docs/data/v4/transport/development/widget_key_revision_repair_v1')\nrows=[]\nfor wt,name in [('runs/.w3_baseline_v4_worktree','root_focused_baseline_v2'),('runs/.w3_repair_worktree','root_focused_candidate_v2')]:\n    p=root/wt/rel/name;job=json.loads((p/'job_v1/process.json').read_text())\n    members=[]\n    for line in subprocess.check_output(['ps','-e','-o','pid=,ppid=,pgid=,stat=,args='],text=True).splitlines():\n        fields=line.split(None,4)\n        if int(fields[2])==job['owned_process_group']:members.append(line.strip())\n    record={'schema':'semabi.widget_key_revision.focused_host_termination.v1','created_utc':datetime.now(timezone.utc).isoformat(),'runner_pid':job['runner_pid'],'child_pid':job['child_pid'],'runner_present':(Path('/proc')/str(job['runner_pid'])).exists(),'child_present':(Path('/proc')/str(job['child_pid'])).exists(),'child_process_group_members':members,'scope':'Actual post-exit host process sample, not a live environment measurement. Candidate completed directly in exec_command; baseline used its owned session.'}\n    assert not record['runner_present'] and not record['child_present'] and not members\n    with (p/'root_host_termination_v1.json').open('x') as out:json.dump(record,out,indent=2,sort_keys=True);out.write('\\n')\n    rows.append(record)\nprint(json.dumps(rows,indent=2))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Record actual host termination of the two completed owned W3 regression processes before preserving their first results.",
+    "max_output_tokens": 2300
+  },
+  "result": {
+    "chunk_id": "272012",
+    "wall_time_seconds": 0.000002398,
+    "exit_code": 0,
+    "original_token_count": 228,
+    "output": "[\n  {\n    \"schema\": \"semabi.widget_key_revision.focused_host_termination.v1\",\n    \"created_utc\": \"2026-09-08T08:50:23.187874+00:00\",\n    \"runner_pid\": 1452771,\n    \"child_pid\": 1452782,\n    \"runner_present\": false,\n    \"child_present\": false,\n    \"child_process_group_members\": [],\n    \"scope\": \"Actual post-exit host process sample, not a live environment measurement. Candidate completed directly in exec_command; baseline used its owned session.\"\n  },\n  {\n    \"schema\": \"semabi.widget_key_revision.focused_host_termination.v1\",\n    \"created_utc\": \"2026-09-08T08:50:23.195653+00:00\",\n    \"runner_pid\": 1453219,\n    \"child_pid\": 1453230,\n    \"runner_present\": false,\n    \"child_present\": false,\n    \"child_process_group_members\": [],\n    \"scope\": \"Actual post-exit host process sample, not a live environment measurement. Candidate completed directly in exec_command; baseline used its owned session.\"\n  }\n]\n"
+  }
+}
