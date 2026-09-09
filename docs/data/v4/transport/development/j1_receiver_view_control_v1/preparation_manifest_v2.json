@@ -1,0 +1,145 @@
+{
+  "changes": [
+    "Versioned driver classifies unexpected failures as CONTROL_INCOMPLETE and retains terminal write failures.",
+    "Rejected live states and complete available Copier snapshot dependencies are kept in partial setup output.",
+    "Finalized versioned input audit explicitly includes field_theories_v4.json; the exact two-file input boundary is unchanged.",
+    "Concrete command and protocol propose one fit on CPU 1 under the 12-CPU aggregate cap."
+  ],
+  "committed": false,
+  "created_utc": "2026-09-09T15:33:57.406382+00:00",
+  "files": {
+    "check_preparation_v2.py": {
+      "bytes": 6985,
+      "sha256": "bd15cdf7726cba62a82ef204fbe86a719c96f5a6790faf15cb40c8bd6ec33924"
+    },
+    "command_proposal_v2.json": {
+      "bytes": 7665,
+      "sha256": "328f57910098a376dd6d027f6678f23381f4d53aa82c3fbfa80638453a680093"
+    },
+    "input_read_audit_v2.json": {
+      "bytes": 10318,
+      "sha256": "892874483233c3cb74729634dc7e3a6f5b5b458c76ed8d3a0704f09200b77c73"
+    },
+    "preparation_checks_v2.json": {
+      "bytes": 62220,
+      "sha256": "c2dec108109918cbe0a014fca11d0862dfdfaf75ab8a05827cc4c70a5a6fe910"
+    },
+    "protocol_v2.md": {
+      "bytes": 9728,
+      "sha256": "974cff09ecc6c54dc4e611d8bb27f0ae59d7761848371c42d1d7840a8c6865d2"
+    },
+    "run_control_v2.py.template": {
+      "bytes": 21707,
+      "sha256": "5686a43d6b42a89be52c3b42251f164016207ece12b1fff13992154537e29e80"
+    },
+    "run_control_v2_from_v1.patch": {
+      "bytes": 6130,
+      "sha256": "d4cdb49dd84bb1ccfd172d4bfa9556f4b9ddc58774dfb0a43035d8c6f2c61b93"
+    },
+    "static_checks_v2.json": {
+      "bytes": 3616,
+      "sha256": "fc720f9b343a2dfd58599eafdbe7e19e97ce244551b5f9abbd700e14e11c3c04"
+    }
+  },
+  "held_commit": "c8dd81b1330e1e54f568508eedfb95f34a08ae08",
+  "held_files": {
+    "addendum_v2.md": {
+      "bytes": 1481,
+      "sha256": "721c6ca774a3b6b56b6eee19b5fa7a1e4274b5176d9ccb35bbfdba8b54432bba"
+    },
+    "contract_v1.md": {
+      "bytes": 10173,
+      "sha256": "f15057690e8cde2c9e0ba1f2929a7a62ec1d123622e9aa1db9e6c86f376c0a8a"
+    },
+    "control_v1.py": {
+      "bytes": 14713,
+      "sha256": "998a995bf555bb03f425d5e3f038aa3a651a0dd8cf31f264aa7e5fdd23718e42"
+    },
+    "control_v2.py": {
+      "bytes": 14791,
+      "sha256": "b698ab8f55e9511c507d8ad187825176cfaff2b985f34db942c858735df6a177"
+    },
+    "control_v2_from_v1.patch": {
+      "bytes": 508,
+      "sha256": "0987f5d4543b8b04dccc56a9053d69f0e2b2cb1eb7ccdb63e6cf5ad4e0874283"
+    },
+    "exposure_log_v1.md": {
+      "bytes": 3467,
+      "sha256": "9c3f2dc31044af2124ff9f10d383385800b6d33a94602ff024cf4a0edf696a51"
+    },
+    "handoff_inventory_v1.json": {
+      "bytes": 2608,
+      "sha256": "c58be27be789932f0a3dd67135fff1b0ef7381909b06fa13877ae351cec8cd45"
+    },
+    "handoff_status_v1.md": {
+      "bytes": 2386,
+      "sha256": "843b24520ba8ed0bf24ffc04dedc0b7e845818130b146c3daf6ba28ab055991f"
+    },
+    "input_read_audit_v1.json": {
+      "bytes": 9127,
+      "sha256": "48f7ee59f91005a18f88ace7c293cd6c0144c4b0fa5b133086d10ad57819da32"
+    },
+    "preparation_manifest_v1.json": {
+      "bytes": 948,
+      "sha256": "53fbe5a2df0620acec957d0ca81f695bfd861e3587b6cc51f9d631007f4123a5"
+    },
+    "run_control_v1.py.template": {
+      "bytes": 21097,
+      "sha256": "e3ac812b4b7fe06c23d4317378d8e71bd3e7b37f24a9c2d907418db242241cb0"
+    },
+    "source_evidence_amendment_v2.json": {
+      "bytes": 1296,
+      "sha256": "a35bcbe4328d9e6b6c4e1934fd1f9a8e2422f7881961d43db8f5e5d7ded11d9e"
+    },
+    "source_evidence_v1.json": {
+      "bytes": 8791,
+      "sha256": "d29a61bd741c107317246cf18f9049b219481a1f61aff90d3244fdfbeef30b42"
+    },
+    "static_checks_v1.json": {
+      "bytes": 935,
+      "sha256": "a17aa8cce2459fa47439e704eb5a91210208be50a9aede28d072d751fd97c9ef"
+    },
+    "training_copy_receipt_v1.json": {
+      "bytes": 1704,
+      "sha256": "27e632d2472368013fb93c70b8dc7f51eea43afb97844ccc95bd359da18aedf0"
+    },
+    "training_copy_v1/observations.jsonl": {
+      "bytes": 501696,
+      "sha256": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9"
+    },
+    "training_copy_v1/steps.jsonl": {
+      "bytes": 81025,
+      "sha256": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452"
+    }
+  },
+  "native_execution": false,
+  "native_source_head": "b15e6b0a4c2736fabfcb48fbab19981d82b575e8",
+  "preparation_note": "The first manifest assembly stopped before writing because its whitespace assertion treated a valid blank unified-diff context line as trailing whitespace. The check now permits that patch marker; no driver or test source changed.",
+  "rendered_driver_created": false,
+  "resources": {
+    "aggregate_logical_cpu_cap": 12,
+    "numerical_threads_each": 1,
+    "priority": 0,
+    "root_coordinates_other_work": true,
+    "this_process_affinity": [
+      1
+    ]
+  },
+  "root_execution_freeze_created": false,
+  "root_remaining": [
+    "Review the exact driver, protocol, input audit and command proposal.",
+    "Render the driver byte-for-byte and bind the actual interpreter and complete native inventory in one root freeze.",
+    "Launch once, retain actual process/tool completion and reaping, preserve raw outputs, then assess the five-page A/B result."
+  ],
+  "schema": "semabi.j1.receiver_view_preparation.v2",
+  "scope": "Additive diagnostic preparation only. Existing c8dd81b artifacts and W2/W3 gates are immutable; no learned HTTP/JOIN result is claimed.",
+  "status": "READY_FOR_ROOT_REVIEW_UNEXECUTED",
+  "verification": {
+    "held_control_and_Copier_unchanged": true,
+    "held_files_unchanged": 17,
+    "native_fit_call_ast_unchanged": true,
+    "native_tests_or_broad_gates_run": false,
+    "status_check_scope": "Synthetic driver handlers/finalizer only",
+    "status_checks_per_version": 12
+  }
+}

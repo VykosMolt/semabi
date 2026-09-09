@@ -1,0 +1,142 @@
+{
+  "child_argv": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "-P",
+    "-B",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/run_control_v2.py",
+    "--freeze",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/execution_freeze_v2.json",
+    "--freeze-sha256",
+    "<ROOT_EXECUTION_FREEZE_SHA256>",
+    "--output-identity",
+    "j1_receiver_view_v2_attempt1"
+  ],
+  "cpu_policy": {
+    "aggregate_logical_cpu_cap": 12,
+    "numerical_threads_each": 1,
+    "priority": 0,
+    "root_coordinates_other_work": true,
+    "this_process_affinity": [
+      1
+    ]
+  },
+  "driver_template": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/run_control_v2.py.template",
+  "driver_template_sha256": "5686a43d6b42a89be52c3b42251f164016207ece12b1fff13992154537e29e80",
+  "freeze_assembly": "Root authenticates and fills the actual interpreter version/binary and complete 156-file W2 native inventory, reviews the resulting freeze, then supplies its real SHA-256 in argv.",
+  "job_directory": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/job_v2_attempt1",
+  "login": false,
+  "native_execution": false,
+  "one_run_policy": "One invocation and one native Fit. Retain actual completion/reaping and all partial outputs; no automatic retry.",
+  "outer_argv": [
+    "taskset",
+    "-c",
+    "1",
+    "env",
+    "BLIS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONHASHSEED=0",
+    "PYTHONOPTIMIZE=0",
+    "PYTHONPATH=",
+    "PYTHONPYCACHEPREFIX=/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/.bytecode_absent_v2_attempt1",
+    "VECLIB_MAXIMUM_THREADS=1",
+    "/home/moloch/semabi/.venv/bin/python",
+    "-P",
+    "-B",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/run_job.py",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/job_v2_attempt1",
+    "--",
+    "/home/moloch/semabi/.venv/bin/python",
+    "-P",
+    "-B",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/run_control_v2.py",
+    "--freeze",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/execution_freeze_v2.json",
+    "--freeze-sha256",
+    "<ROOT_EXECUTION_FREEZE_SHA256>",
+    "--output-identity",
+    "j1_receiver_view_v2_attempt1"
+  ],
+  "output_directory": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/run_v2_attempt1",
+  "output_identity": "j1_receiver_view_v2_attempt1",
+  "preparation_only_absent_before_render": [
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/run_control_v2.py",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/execution_freeze_v2.json"
+  ],
+  "rendering": "Exclusive byte-for-byte copy to the rendered driver path; no source substitutions.",
+  "required_absent_before_launch": [
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/run_v2_attempt1",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/job_v2_attempt1",
+    "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/.bytecode_absent_v2_attempt1"
+  ],
+  "root_execution_freeze_fields_to_bind": {
+    "bytecode_prefix": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/.bytecode_absent_v2_attempt1",
+    "cpu_affinity": [
+      1
+    ],
+    "driver": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/run_control_v2.py",
+    "environment": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONHASHSEED": "0",
+      "PYTHONOPTIMIZE": "0",
+      "PYTHONPATH": "",
+      "PYTHONPYCACHEPREFIX": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/.bytecode_absent_v2_attempt1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "fit_settings": {
+      "at": 312,
+      "min_support": 2,
+      "permute_outcomes": null,
+      "read_outputs": true,
+      "regime": "FROZEN_PREFIX",
+      "subject_restricted": false
+    },
+    "input_files": {
+      "observations.jsonl": {
+        "bytes": 501696,
+        "sha256": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9"
+      },
+      "steps.jsonl": {
+        "bytes": 81025,
+        "sha256": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452"
+      }
+    },
+    "instrument_files": {
+      "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/control_v2.py": "b698ab8f55e9511c507d8ad187825176cfaff2b985f34db942c858735df6a177",
+      "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/run_control_v2.py": "5686a43d6b42a89be52c3b42251f164016207ece12b1fff13992154537e29e80",
+      "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/j1/trace.py": "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249",
+      "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/run_job.py": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7",
+      "/home/moloch/semabi/runs/.w2_scoring_worktree/scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+      "/home/moloch/semabi/runs/.w2_scoring_worktree/scripts/transport_score.py": "9a4cd7cadc8646e031e54368de6a32b4f9628698de3b8c321a39219b19dee7cc"
+    },
+    "native_files": "<ROOT_W2_NATIVE_FILE_SHA256_MAPPING>",
+    "native_root": "/home/moloch/semabi/runs/.w2_scoring_worktree",
+    "output_directory": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/run_v2_attempt1",
+    "output_identity": "j1_receiver_view_v2_attempt1",
+    "python_executable": "/home/moloch/semabi/.venv/bin/python",
+    "python_executable_sha256": "<ROOT_RESOLVED_INTERPRETER_SHA256>",
+    "python_version": "<ROOT_PYTHON_SYS_VERSION>",
+    "schema": "semabi.j1.receiver_view_execution_freeze.v1",
+    "source_head": "b15e6b0a4c2736fabfcb48fbab19981d82b575e8",
+    "status": "ROOT_FROZEN_FOR_ONE_CONTROL",
+    "supporting_files": {
+      "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/input_read_audit_v2.json": "892874483233c3cb74729634dc7e3a6f5b5b458c76ed8d3a0704f09200b77c73",
+      "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/source_evidence_amendment_v2.json": "a35bcbe4328d9e6b6c4e1934fd1f9a8e2422f7881961d43db8f5e5d7ded11d9e",
+      "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/training_copy_receipt_v1.json": "27e632d2472368013fb93c70b8dc7f51eea43afb97844ccc95bd359da18aedf0"
+    },
+    "training_directory": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/training_copy_v1"
+  },
+  "root_execution_freeze_path": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/execution_freeze_v2.json",
+  "schema": "semabi.j1.receiver_view_command_proposal.v2",
+  "scope": "One disclosed identity-assisted receiver-view diagnostic; no application/browser/HTTP action or held-out scoring.",
+  "status": "READY_FOR_ROOT_REVIEW_NOT_EXECUTED",
+  "workdir": "/home/moloch/semabi/runs/.w2_scoring_worktree"
+}

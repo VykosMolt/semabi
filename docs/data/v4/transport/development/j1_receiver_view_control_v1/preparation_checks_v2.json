@@ -1,0 +1,1791 @@
+{
+  "case_count_per_version": 12,
+  "cases": [
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.427223+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 217,
+              "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "SetupLimit",
+              "expected_admission_failure": true,
+              "message": "declared admission",
+              "stage_fit_returned": false
+            }
+          ],
+          "fit_calls": 0,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.427223+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 217,
+                "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "SetupLimit",
+                "expected_admission_failure": true,
+                "message": "declared admission",
+                "stage_fit_returned": false
+              }
+            ],
+            "fit_calls": 0,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            },
+            "typed_copy_errors": [],
+            "typed_snapshots": {
+              "retained_snapshot": {
+                "synthetic": "stored rejected state"
+              }
+            }
+          }
+        },
+        "status": "SETUP_LIMIT"
+      },
+      "case": "driver_admission",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.418132+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 86,
+              "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "SetupLimit",
+              "message": "declared admission",
+              "stage_fit_returned": false
+            }
+          ],
+          "fit_calls": 0,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.418132+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 86,
+                "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "SetupLimit",
+                "message": "declared admission",
+                "stage_fit_returned": false
+              }
+            ],
+            "fit_calls": 0,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            }
+          }
+        },
+        "status": "SETUP_LIMIT"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.443974+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 217,
+              "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "ControlSetupLimit",
+              "expected_admission_failure": true,
+              "message": "owner unavailable",
+              "stage_fit_returned": true
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.443974+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 217,
+                "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "ControlSetupLimit",
+                "expected_admission_failure": true,
+                "message": "owner unavailable",
+                "stage_fit_returned": true
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            },
+            "typed_copy_errors": [],
+            "typed_snapshots": {
+              "retained_snapshot": {
+                "synthetic": "stored rejected state"
+              }
+            }
+          }
+        },
+        "status": "SETUP_LIMIT"
+      },
+      "case": "owner_admission",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.435378+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 86,
+              "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "ControlSetupLimit",
+              "message": "owner unavailable",
+              "stage_fit_returned": true
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.435378+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 86,
+                "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "ControlSetupLimit",
+                "message": "owner unavailable",
+                "stage_fit_returned": true
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            }
+          }
+        },
+        "status": "SETUP_LIMIT"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.460848+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 217,
+              "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "OSError",
+              "expected_admission_failure": false,
+              "message": "invented read failure",
+              "stage_fit_returned": false
+            }
+          ],
+          "fit_calls": 0,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.460848+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 217,
+                "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "OSError",
+                "expected_admission_failure": false,
+                "message": "invented read failure",
+                "stage_fit_returned": false
+              }
+            ],
+            "fit_calls": 0,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_INCOMPLETE"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            },
+            "typed_copy_errors": [],
+            "typed_snapshots": {
+              "retained_snapshot": {
+                "synthetic": "stored rejected state"
+              }
+            }
+          }
+        },
+        "status": "CONTROL_INCOMPLETE"
+      },
+      "case": "unexpected_before_fit",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.452227+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 86,
+              "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "OSError",
+              "message": "invented read failure",
+              "stage_fit_returned": false
+            }
+          ],
+          "fit_calls": 0,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.452227+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 86,
+                "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "OSError",
+                "message": "invented read failure",
+                "stage_fit_returned": false
+              }
+            ],
+            "fit_calls": 0,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            }
+          }
+        },
+        "status": "SETUP_LIMIT"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.477613+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 217,
+              "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "TypeError",
+              "expected_admission_failure": false,
+              "message": "invented runtime failure",
+              "stage_fit_returned": false
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.477613+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 217,
+                "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "TypeError",
+                "expected_admission_failure": false,
+                "message": "invented runtime failure",
+                "stage_fit_returned": false
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_INCOMPLETE"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            },
+            "typed_copy_errors": [],
+            "typed_snapshots": {
+              "retained_snapshot": {
+                "synthetic": "stored rejected state"
+              }
+            }
+          }
+        },
+        "status": "CONTROL_INCOMPLETE"
+      },
+      "case": "unexpected_during_fit",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.469066+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 86,
+              "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "TypeError",
+              "message": "invented runtime failure",
+              "stage_fit_returned": false
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "FIT_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.469066+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 86,
+                "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "TypeError",
+                "message": "invented runtime failure",
+                "stage_fit_returned": false
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "FIT_INCOMPLETE"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            }
+          }
+        },
+        "status": "FIT_INCOMPLETE"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.495678+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 217,
+              "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "TypeError",
+              "expected_admission_failure": false,
+              "message": "invented runtime failure",
+              "stage_fit_returned": true
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.495678+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 217,
+                "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "TypeError",
+                "expected_admission_failure": false,
+                "message": "invented runtime failure",
+                "stage_fit_returned": true
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_INCOMPLETE"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            },
+            "typed_copy_errors": [],
+            "typed_snapshots": {
+              "retained_snapshot": {
+                "synthetic": "stored rejected state"
+              }
+            }
+          }
+        },
+        "status": "CONTROL_INCOMPLETE"
+      },
+      "case": "unexpected_after_fit",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.487052+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 86,
+              "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "TypeError",
+              "message": "invented runtime failure",
+              "stage_fit_returned": true
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.487052+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 86,
+                "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "TypeError",
+                "message": "invented runtime failure",
+                "stage_fit_returned": true
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            }
+          }
+        },
+        "status": "SETUP_LIMIT"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.512341+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 217,
+              "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "KeyboardInterrupt",
+              "expected_admission_failure": false,
+              "message": "invented interruption",
+              "stage_fit_returned": false
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.512341+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 217,
+                "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "KeyboardInterrupt",
+                "expected_admission_failure": false,
+                "message": "invented interruption",
+                "stage_fit_returned": false
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_INCOMPLETE"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            },
+            "typed_copy_errors": [],
+            "typed_snapshots": {
+              "retained_snapshot": {
+                "synthetic": "stored rejected state"
+              }
+            }
+          }
+        },
+        "status": "CONTROL_INCOMPLETE"
+      },
+      "case": "interrupt_before_control",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.503820+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 86,
+              "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "KeyboardInterrupt",
+              "message": "invented interruption",
+              "stage_fit_returned": false
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "FIT_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.503820+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 86,
+                "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "KeyboardInterrupt",
+                "message": "invented interruption",
+                "stage_fit_returned": false
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "FIT_INCOMPLETE"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            }
+          }
+        },
+        "status": "FIT_INCOMPLETE"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": true,
+          "ended_utc": "2026-09-09T15:27:59.529047+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 217,
+              "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+            }
+          },
+          "findings": [
+            {
+              "control_called": true,
+              "exception_type": "ControlSetupLimit",
+              "expected_admission_failure": true,
+              "message": "owner unavailable",
+              "stage_fit_returned": true
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": true,
+            "ended_utc": "2026-09-09T15:27:59.529047+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 217,
+                "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+              }
+            },
+            "findings": [
+              {
+                "control_called": true,
+                "exception_type": "ControlSetupLimit",
+                "expected_admission_failure": true,
+                "message": "owner unavailable",
+                "stage_fit_returned": true
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_INCOMPLETE"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            },
+            "typed_copy_errors": [],
+            "typed_snapshots": {
+              "retained_snapshot": {
+                "synthetic": "stored rejected state"
+              }
+            }
+          }
+        },
+        "status": "CONTROL_INCOMPLETE"
+      },
+      "case": "exception_after_control_call",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": true,
+          "ended_utc": "2026-09-09T15:27:59.520471+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            },
+            "setup_partial_v1.json": {
+              "bytes": 86,
+              "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+            }
+          },
+          "findings": [
+            {
+              "control_called": true,
+              "exception_type": "ControlSetupLimit",
+              "message": "owner unavailable",
+              "stage_fit_returned": true
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": true,
+            "ended_utc": "2026-09-09T15:27:59.520471+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              },
+              "setup_partial_v1.json": {
+                "bytes": 86,
+                "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+              }
+            },
+            "findings": [
+              {
+                "control_called": true,
+                "exception_type": "ControlSetupLimit",
+                "message": "owner unavailable",
+                "stage_fit_returned": true
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_INCOMPLETE"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            }
+          }
+        },
+        "status": "CONTROL_INCOMPLETE"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.545674+00:00",
+          "files": {
+            "setup_partial_v1.json": {
+              "bytes": 217,
+              "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "SetupLimit",
+              "expected_admission_failure": true,
+              "message": "declared admission",
+              "stage_fit_returned": false
+            },
+            {
+              "message": "invented postflight read failure",
+              "postflight_exception": "OSError"
+            }
+          ],
+          "fit_calls": 0,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": false,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.545674+00:00",
+            "files": {
+              "setup_partial_v1.json": {
+                "bytes": 217,
+                "sha256": "9e7b3a56883a2247f72abbea36e2761efe5e4b2992e9b754cf1526e64b90e86c"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "SetupLimit",
+                "expected_admission_failure": true,
+                "message": "declared admission",
+                "stage_fit_returned": false
+              },
+              {
+                "message": "invented postflight read failure",
+                "postflight_exception": "OSError"
+              }
+            ],
+            "fit_calls": 0,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": false,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_INCOMPLETE"
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            },
+            "typed_copy_errors": [],
+            "typed_snapshots": {
+              "retained_snapshot": {
+                "synthetic": "stored rejected state"
+              }
+            }
+          }
+        },
+        "status": "CONTROL_INCOMPLETE"
+      },
+      "case": "postflight_failure",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.537172+00:00",
+          "files": {
+            "setup_partial_v1.json": {
+              "bytes": 86,
+              "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "SetupLimit",
+              "message": "declared admission",
+              "stage_fit_returned": false
+            },
+            {
+              "message": "invented postflight read failure",
+              "postflight_exception": "OSError"
+            }
+          ],
+          "fit_calls": 0,
+          "fit_returned": false,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": false,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.537172+00:00",
+            "files": {
+              "setup_partial_v1.json": {
+                "bytes": 86,
+                "sha256": "ded8e5045f01aebf2659000ee0a506086406c8a63442e833ed081ec718283bd8"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "SetupLimit",
+                "message": "declared admission",
+                "stage_fit_returned": false
+              },
+              {
+                "message": "invented postflight read failure",
+                "postflight_exception": "OSError"
+              }
+            ],
+            "fit_calls": 0,
+            "fit_returned": false,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": false,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "setup_partial_v1.json": {
+            "states": {
+              "synthetic": {
+                "$snapshot": "retained_snapshot"
+              }
+            }
+          }
+        },
+        "status": "SETUP_LIMIT"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.562261+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "ControlSetupLimit",
+              "expected_admission_failure": true,
+              "message": "owner unavailable",
+              "stage_fit_returned": true
+            },
+            {
+              "message": "invented exclusive write failure",
+              "partial_setup_write_error": "OSError"
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.562261+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "ControlSetupLimit",
+                "expected_admission_failure": true,
+                "message": "owner unavailable",
+                "stage_fit_returned": true
+              },
+              {
+                "message": "invented exclusive write failure",
+                "partial_setup_write_error": "OSError"
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_INCOMPLETE"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          }
+        },
+        "status": "CONTROL_INCOMPLETE"
+      },
+      "case": "partial_write_failure",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": false,
+          "ended_utc": "2026-09-09T15:27:59.553784+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            }
+          },
+          "findings": [
+            {
+              "control_called": false,
+              "exception_type": "ControlSetupLimit",
+              "message": "owner unavailable",
+              "stage_fit_returned": true
+            },
+            {
+              "message": "invented exclusive write failure",
+              "partial_setup_write_error": "OSError"
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": false,
+            "ended_utc": "2026-09-09T15:27:59.553784+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              }
+            },
+            "findings": [
+              {
+                "control_called": false,
+                "exception_type": "ControlSetupLimit",
+                "message": "owner unavailable",
+                "stage_fit_returned": true
+              },
+              {
+                "message": "invented exclusive write failure",
+                "partial_setup_write_error": "OSError"
+              }
+            ],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          }
+        },
+        "status": "SETUP_LIMIT"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": true,
+          "ended_utc": "2026-09-09T15:27:59.578679+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            }
+          },
+          "findings": [
+            {
+              "execution_receipt_write_error": "OSError",
+              "message": "invented exclusive write failure"
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_INCOMPLETE"
+        },
+        "retained_outputs": {
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          }
+        },
+        "status": "CONTROL_INCOMPLETE"
+      },
+      "case": "receipt_write_failure",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": true,
+          "ended_utc": "2026-09-09T15:27:59.570275+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            }
+          },
+          "findings": [
+            {
+              "execution_receipt_write_error": "OSError",
+              "message": "invented exclusive write failure"
+            }
+          ],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_CAPTURED"
+        },
+        "retained_outputs": {
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          }
+        },
+        "status": "CONTROL_CAPTURED"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 2,
+        "final": {
+          "control_called": true,
+          "ended_utc": "2026-09-09T15:27:59.595242+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            }
+          },
+          "findings": [],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": true,
+            "ended_utc": "2026-09-09T15:27:59.595242+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              }
+            },
+            "findings": [],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          }
+        },
+        "status": "SETUP_LIMIT"
+      },
+      "case": "returned_setup_limit",
+      "held_v1": {
+        "exit_code": 2,
+        "final": {
+          "control_called": true,
+          "ended_utc": "2026-09-09T15:27:59.586742+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            }
+          },
+          "findings": [],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "SETUP_LIMIT"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": true,
+            "ended_utc": "2026-09-09T15:27:59.586742+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              }
+            },
+            "findings": [],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "SETUP_LIMIT"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          }
+        },
+        "status": "SETUP_LIMIT"
+      }
+    },
+    {
+      "candidate_v2": {
+        "exit_code": 0,
+        "final": {
+          "control_called": true,
+          "ended_utc": "2026-09-09T15:27:59.611826+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            }
+          },
+          "findings": [],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v2",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_CAPTURED"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": true,
+            "ended_utc": "2026-09-09T15:27:59.611826+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              }
+            },
+            "findings": [],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v2",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_CAPTURED"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          }
+        },
+        "status": "CONTROL_CAPTURED"
+      },
+      "case": "captured_control",
+      "held_v1": {
+        "exit_code": 0,
+        "final": {
+          "control_called": true,
+          "ended_utc": "2026-09-09T15:27:59.603294+00:00",
+          "files": {
+            "postflight_v1.json": {
+              "bytes": 87,
+              "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+            }
+          },
+          "findings": [],
+          "fit_calls": 1,
+          "fit_returned": true,
+          "freeze_sha256": "synthetic",
+          "output_identity": "synthetic-status-unit",
+          "postflight_verified": true,
+          "schema": "semabi.j1.receiver_view_execution.v1",
+          "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+          "status": "CONTROL_CAPTURED"
+        },
+        "retained_outputs": {
+          "execution_receipt_v1.json": {
+            "control_called": true,
+            "ended_utc": "2026-09-09T15:27:59.603294+00:00",
+            "files": {
+              "postflight_v1.json": {
+                "bytes": 87,
+                "sha256": "c22736fdb0a476c01b94873b4b5a7353763161135673545d57731c59c6d96a3f"
+              }
+            },
+            "findings": [],
+            "fit_calls": 1,
+            "fit_returned": true,
+            "freeze_sha256": "synthetic",
+            "output_identity": "synthetic-status-unit",
+            "postflight_verified": true,
+            "schema": "semabi.j1.receiver_view_execution.v1",
+            "scientific_assessment": "PENDING_ROOT_PRESERVATION_AND_REVIEW",
+            "status": "CONTROL_CAPTURED"
+          },
+          "postflight_v1.json": {
+            "origins": {
+              "synthetic_origins": true
+            },
+            "synthetic_verification": true
+          }
+        },
+        "status": "CONTROL_CAPTURED"
+      }
+    }
+  ],
+  "native_execution": false,
+  "not_tested": [
+    "source/runtime freeze admission",
+    "native fit",
+    "native mappings",
+    "A/B queries"
+  ],
+  "schema": "semabi.j1.receiver_view_preparation_status_checks.v2",
+  "scope": "Bounded driver error-path checks with no native imports or fit calls.\n\nOnly the actual main exception handlers, partial writer, finalizer and return\nexpression execute. The main try body, verify and origins are explicit synthetic\nseams; these checks make no claim about native setup or the control's science.\n",
+  "seams": [
+    "main try body",
+    "verify",
+    "origins",
+    "selected Path.open failures"
+  ],
+  "status": "PASS"
+}

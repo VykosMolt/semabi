@@ -1,0 +1,95 @@
+--- run_control_v1.py.template
++++ run_control_v2.py.template
+@@ -1,4 +1,4 @@
+-"""Held driver proposal: root must render, freeze, review and authorize one run.
++"""Version 2 driver proposal: root must render, freeze and review one run.
+ 
+ Uses one normal native fit, then the held two-arm callable. No profiler,
+ JSON-to-native reconstruction, native patching, forecast or outcome scoring.
+@@ -79,7 +79,7 @@
+                 ROOT / "scripts/transport_collect.py", ROOT / "scripts/transport_score.py")}
+     need(set(freeze["instrument_files"]) == required, "instrument_inventory_changed")
+     support = {str(HERE / name) for name in ("source_evidence_amendment_v2.json",
+-                "input_read_audit_v1.json", "training_copy_receipt_v1.json")}
++                "input_read_audit_v2.json", "training_copy_receipt_v1.json")}
+     need(set(freeze["supporting_files"]) == support and required.isdisjoint(support), "supporting_inventory_changed")
+     for name, digest in {**freeze["instrument_files"], **freeze["supporting_files"]}.items():
+         path = Path(name)
+@@ -149,6 +149,8 @@
+     files, setup, findings = {}, {}, []
+     fit_calls, fit_returned, control_called = 0, False, False
+     status, freeze, post_ok = "SETUP_LIMIT", None, False
++    control = None
++    copier = None
+ 
+     def save(name, value):
+         path = out / name
+@@ -165,7 +167,7 @@
+              freeze["status"] == "ROOT_FROZEN_FOR_ONE_CONTROL" and freeze["source_head"] == HEAD and
+              freeze["native_root"] == str(ROOT) and freeze["fit_settings"] == SETTINGS,
+              "unadmitted_source_or_fit_contract")
+-        need(Path(__file__).name == "run_control_v1.py" and freeze["driver"] == str(Path(__file__).resolve()),
++        need(Path(__file__).name == "run_control_v2.py" and freeze["driver"] == str(Path(__file__).resolve()),
+              "unrendered_or_different_driver")
+         need(args.output_identity == freeze["output_identity"] and bool(args.output_identity), "output_identity_changed")
+         need(freeze["environment"] == {**ENVIRONMENT, "PYTHONPYCACHEPREFIX": freeze["bytecode_prefix"]}
+@@ -270,13 +272,13 @@
+         for sig, step in control.COHORT:
+             need(associations.get(sig) == [sig] and step in native["_tracked_before"], "missing_cohort_state_or_mapping:" + sig)
+             state = native["_tracked_before"][step]
++            setup["states"][sig] = copier.copy(state, "setup." + sig)
+             need(type(state) is bindings.types["state"] and
+                  type(state.parsed) is classes["semabi.compiler.parse.ParsedObs"] and
+                  all(type(obj) is classes["semabi.compiler.abstract.AbsObj"] for obj in state.objs.values()) and
+                  all(type(instance) is classes["semabi.compiler.parse.Instance"] for instance in state.parsed.instances),
+                  "unadmitted_native_state_types:" + sig)
+             family, owner, actor, radios = control.admit_state(state, raw_pages[sig], op)
+-            setup["states"][sig] = copier.copy(state, "setup." + sig)
+             setup["owner_admission"][sig] = {"step": step, "family": family, "radios": radios,
+                     "checked_owner": copier.copy(owner, "owner." + sig), "actor": copier.copy(actor, "actor." + sig)}
+         need(not copier.errors, "typed_setup_copy_incomplete")
+@@ -293,14 +295,23 @@
+                                      setup_receipt=receipt, training_bytes=training_bytes)
+         save("control_result_v1.json", result)
+         status = result["status"]
++        if status not in {"CONTROL_CAPTURED", "SETUP_LIMIT", "CONTROL_INCOMPLETE"}:
++            raise ValueError("Unexpected held control status: " + repr(status))
+     except BaseException as error:
++        expected = (isinstance(error, SetupLimit) or
++                    (control is not None and isinstance(error, control.SetupLimit)))
++        status = "SETUP_LIMIT" if expected and not control_called else "CONTROL_INCOMPLETE"
+         findings.append({"stage_fit_returned": fit_returned, "control_called": control_called,
++                         "expected_admission_failure": expected,
+                          "exception_type": type(error).__name__, "message": str(error)})
+-        status = "CONTROL_INCOMPLETE" if control_called else "FIT_INCOMPLETE" if fit_calls and not fit_returned else "SETUP_LIMIT"
+         if out is not None and setup:
+             try:
++                if copier is not None:
++                    setup["typed_snapshots"] = copier.snapshots.copy()
++                    setup["typed_copy_errors"] = copier.errors.copy()
+                 save("setup_partial_v1.json", setup)
+             except BaseException as write_error:
++                status = "CONTROL_INCOMPLETE"
+                 findings.append({"partial_setup_write_error": type(write_error).__name__, "message": str(write_error)})
+     finally:
+         if out is not None and freeze is not None:
+@@ -311,9 +322,8 @@
+                 post_ok = True
+             except BaseException as error:
+                 findings.append({"postflight_exception": type(error).__name__, "message": str(error)})
+-                if control_called:
+-                    status = "CONTROL_INCOMPLETE"
+-        final = {"schema": "semabi.j1.receiver_view_execution.v1", "status": status,
++                status = "CONTROL_INCOMPLETE"
++        final = {"schema": "semabi.j1.receiver_view_execution.v2", "status": status,
+                  "ended_utc": now(), "fit_calls": fit_calls, "fit_returned": fit_returned,
+                  "control_called": control_called, "postflight_verified": post_ok,
+                  "output_identity": args.output_identity, "freeze_sha256": args.freeze_sha256,
+@@ -322,6 +332,7 @@
+             try:
+                 save("execution_receipt_v1.json", final)
+             except BaseException as error:
++                status = final["status"] = "CONTROL_INCOMPLETE"
+                 findings.append({"execution_receipt_write_error": type(error).__name__, "message": str(error)})
+         print(canonical(final), flush=True)
+     return 0 if status == "CONTROL_CAPTURED" and post_ok and not findings else 2

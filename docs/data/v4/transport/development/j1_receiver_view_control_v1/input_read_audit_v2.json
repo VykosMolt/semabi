@@ -1,0 +1,291 @@
+{
+  "closed_training_inventory": {
+    "explicit_absence": {
+      "collector_verification.json": true,
+      "config.json": true,
+      "counterexamples_v2.jsonl": true,
+      "decisions.jsonl": true,
+      "field_theories_v4.json": true,
+      "hypotheses_v2.json": true,
+      "identity_readings_v4.json": true,
+      "identity_refutations_v4.json": true,
+      "interventions_v2.jsonl": true,
+      "meta.json": true,
+      "model_v4.json": true,
+      "model_v4.txt": true,
+      "probes.acquired.jsonl": true,
+      "probes.jsonl": true,
+      "refinements_v2.json": true,
+      "run.json": true,
+      "search_v4.log": true
+    },
+    "files": {
+      "observations.jsonl": {
+        "bytes": 501696,
+        "sha256": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9"
+      },
+      "steps.jsonl": {
+        "bytes": 81025,
+        "sha256": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452"
+      }
+    },
+    "members": [
+      "observations.jsonl",
+      "steps.jsonl"
+    ],
+    "path": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/training_copy_v1"
+  },
+  "excluded_paths": [
+    {
+      "name": "identity_refutations_v4.json",
+      "reason": "consequence.fit supplies evidence_log; compile_v4 sets search_run_dir=None, and read_refutation_records(None) returns before filesystem lookup"
+    },
+    {
+      "name": "refinements_v2.json",
+      "reason": "load_decisions belongs to separate compile_v2/configure_hypotheses path; normal compile_v4 builds H directly"
+    },
+    {
+      "names": [
+        "hypotheses_v2.json",
+        "counterexamples_v2.jsonl",
+        "interventions_v2.jsonl"
+      ],
+      "reason": "Named by unused V2 refinement subsystem; absent as are all files other than the exact two inputs"
+    },
+    {
+      "names": [
+        "run.json",
+        "decisions.jsonl",
+        "collector_verification.json",
+        "config.json",
+        "meta.json"
+      ],
+      "reason": "No configuration/metadata loader is called on this normal fit path; EvidenceLog.save_meta is not called"
+    },
+    {
+      "names": [
+        "identity_readings_v4.json",
+        "model_v4.json",
+        "model_v4.txt",
+        "search_v4.log"
+      ],
+      "reason": "Not read as a pinned reading/model; None selects normal fitting, supplied evidence_log disables diagnostics"
+    }
+  ],
+  "native_sources": {
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/compile_v2.py": {
+      "bytes": 4205,
+      "read_source_symbols": {
+        "compile_v2": {
+          "first_line": 15,
+          "last_line": 78
+        }
+      },
+      "sha256": "4c548ab43776c854da23c0a9b85ede95fb18e43d8bfffa4e0ada800b2a0d2d87"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/compile_v4.py": {
+      "bytes": 11046,
+      "read_source_symbols": {
+        "_normalise_sections": {
+          "first_line": 26,
+          "last_line": 64
+        },
+        "build_hypotheses": {
+          "first_line": 67,
+          "last_line": 82
+        },
+        "compile_v4": {
+          "first_line": 85,
+          "last_line": 204
+        }
+      },
+      "sha256": "8ac23e907a19b790e78fadf6d7d0c22f8176620dd93844b7f21f32551e5193ad"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/evidence.py": {
+      "bytes": 7215,
+      "read_source_symbols": {
+        "EvidenceLog.__init__": {
+          "first_line": 41,
+          "last_line": 57
+        },
+        "EvidenceLog.save_meta": {
+          "first_line": 146,
+          "last_line": 151
+        },
+        "EvidenceLog.through": {
+          "first_line": 79,
+          "last_line": 102
+        }
+      },
+      "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/model.py": {
+      "bytes": 12637,
+      "read_source_symbols": {
+        "LearnedModel.load": {
+          "first_line": 65,
+          "last_line": 69
+        }
+      },
+      "sha256": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/v2/abstractor.py": {
+      "bytes": 52053,
+      "read_source_symbols": {
+        "V2Abstractor.abstract": {
+          "first_line": 598,
+          "last_line": 669
+        },
+        "V2Abstractor.fit_view_controls": {
+          "first_line": 702,
+          "last_line": 839
+        },
+        "_instance_widgets": {
+          "first_line": 847,
+          "last_line": 856
+        }
+      },
+      "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/v2/hypotheses.py": {
+      "bytes": 73796,
+      "read_source_symbols": {
+        "Hypotheses.fit": {
+          "first_line": 353,
+          "last_line": 377
+        }
+      },
+      "sha256": "8dab56a4b4d7a56424e5e91648b49f60f9ba576502ad0d9832ccce57ba50d235"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/v2/refinement.py": {
+      "bytes": 58136,
+      "read_source_symbols": {
+        "load_decisions": {
+          "first_line": 1114,
+          "last_line": 1124
+        },
+        "read_decisions": {
+          "first_line": 1107,
+          "last_line": 1111
+        }
+      },
+      "sha256": "592029f46ed70f37198386535e5a45c7330cb98189bbda3b20663df28afa335a"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/v4/abstractor.py": {
+      "bytes": 7634,
+      "read_source_symbols": {
+        "V4Abstractor.fit_view_controls": {
+          "first_line": 19,
+          "last_line": 152
+        }
+      },
+      "sha256": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/v4/consequence.py": {
+      "bytes": 79608,
+      "read_source_symbols": {
+        "fit": {
+          "first_line": 690,
+          "last_line": 750
+        }
+      },
+      "sha256": "c95bd040c8b066aaaac5bb5653b2ff20824ed3f2b59aba81c42b8a579ca8445e"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/v4/fields.py": {
+      "bytes": 13661,
+      "read_source_symbols": {
+        "corroborated": {
+          "first_line": 152,
+          "last_line": 170
+        }
+      },
+      "sha256": "b5b794432a504b7d30f6574dc1e0d3ff34b44536967ab50ae9a5a0c04ffc9967"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/v4/outcome.py": {
+      "bytes": 89513,
+      "read_source_symbols": {
+        "learn": {
+          "first_line": 1166,
+          "last_line": 1239
+        }
+      },
+      "sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736"
+    },
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/v4/search.py": {
+      "bytes": 26937,
+      "read_source_symbols": {
+        "read_refutation_records": {
+          "first_line": 95,
+          "last_line": 102
+        },
+        "read_refutations": {
+          "first_line": 76,
+          "last_line": 92
+        },
+        "search": {
+          "first_line": 263,
+          "last_line": 499
+        }
+      },
+      "sha256": "c87e3633207dfaa1483574cad2335b23222bec6fa51fe35526adf8dd9576f72c"
+    }
+  },
+  "normal_call": "consequence.fit(exclusive_training_copy, None, at=312, min_support=2, regime=FROZEN_PREFIX, read_outputs=True, permute_outcomes=None, subject_restricted=False)",
+  "primary_reads": [
+    {
+      "name": "observations.jsonl",
+      "reader": "EvidenceLog.__init__",
+      "usage": "Visible disclosed training observations"
+    },
+    {
+      "name": "steps.jsonl",
+      "reader": "EvidenceLog.__init__",
+      "usage": "Disclosed training actions, before/after signatures and recorded outputs used by normal fitting"
+    }
+  ],
+  "reachable_optional_reads": [
+    {
+      "admission": "Both absent in the exact two-entry training copy",
+      "condition": "Each Path(log.dir)/name exists; V4 ordinary EvidenceLog branch delegates to V2",
+      "names": [
+        "probes.jsonl",
+        "probes.acquired.jsonl"
+      ],
+      "reader": "V2Abstractor.fit_view_controls"
+    },
+    {
+      "admission": "Absent in exact two-entry training copy; identified during independent preparation review and included before freeze",
+      "condition": "Numeric field candidates exist, then Path(log.dir)/field_theories_v4.json is_file",
+      "names": [
+        "field_theories_v4.json"
+      ],
+      "reader": "outcome.learn -> fields.corroborated"
+    }
+  ],
+  "read_outputs_scope": "True is normal fitting on disclosed observed training outputs; driver performs no subsequent native outcome scoring.",
+  "revision_v2": {
+    "admission": "The complete two-entry training inventory excludes that file and both optional probe files; the v2 driver also names each explicitly in ABSENT.",
+    "checks": {
+      "exact_training_files": 2,
+      "explicit_absence_names": 17,
+      "held_native_source_bindings": 12
+    },
+    "confirmed_source_path": [
+      "consequence.fit(read_outputs=True) calls outcome.learn on the normal fitted training log",
+      "outcome.learn:1215 conditionally calls fields.corroborated(log.dir, proposed)",
+      "fields.py:149,165-168 checks and may read log.dir/field_theories_v4.json"
+    ],
+    "created_utc": "2026-09-09T15:25:19.368363+00:00",
+    "held_predecessor": {
+      "bytes": 9127,
+      "path": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/input_read_audit_v1.json",
+      "sha256": "48f7ee59f91005a18f88ace7c293cd6c0144c4b0fa5b133086d10ad57819da32"
+    },
+    "reason": "Finalize the previously unaccepted field-theory sidecar correction without changing the held v1 audit.",
+    "scope": "Bounded source and file-metadata checks only. No native imports, fit, query, outcome scoring or syscall tracing."
+  },
+  "runtime_read_scope": "Source-derived data-read audit plus exact directory inventory. This is not an OS syscall trace. Python/native/instrument source files are separately hashed/imported; no application, oracle, held-out input or browser execution is authorized.",
+  "schema": "semabi.j1.receiver_view_input_read_audit.v2",
+  "source_head": "b15e6b0a4c2736fabfcb48fbab19981d82b575e8",
+  "status": "READY_FOR_ROOT_REVIEW_NO_NATIVE_EXECUTION"
+}
