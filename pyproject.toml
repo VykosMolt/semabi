@@ -9,6 +9,9 @@ dependencies = [
     "pytest>=8",
 ]
 
+[project.scripts]
+semabi-service = "semabi.service:main"
+
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"

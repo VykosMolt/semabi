@@ -1,0 +1,311 @@
+{
+  "argument_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "value": {
+        "description": "Visible editor value",
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "value"
+    ],
+    "type": "object"
+  },
+  "effect_checks": [
+    "All supplied values together in one unique local record",
+    "Values occupy the relative field slots learned across both trials",
+    "Same record values remain visible after reload"
+  ],
+  "evidence_sha256": "cba9496f5bde957ff162df7f5eb85140b154245800b9169d0103f1dc6567cd38",
+  "id": "op_da6cd313fd7951e26d2c",
+  "kind": "create_visible_record",
+  "name": "save_record",
+  "output_schema": {
+    "description": "Outcome, visible effect witness, and execution metrics",
+    "type": "object"
+  },
+  "prerequisites": [
+    "Authenticated session",
+    "Unchanged visible form contract",
+    "Empty argument controls and unchanged other control defaults",
+    "Anchor absent from the current read-back view"
+  ],
+  "procedure": {
+    "anchor": "value",
+    "defaults": {},
+    "effect_slots": {
+      "value": [
+        [
+          [
+            "group",
+            1
+          ],
+          [
+            "group",
+            0
+          ],
+          [
+            "group",
+            0
+          ],
+          [
+            "group",
+            0
+          ],
+          [
+            "group",
+            0
+          ],
+          [
+            "text",
+            0
+          ]
+        ]
+      ]
+    },
+    "entry_url": "http://127.0.0.1:8852/",
+    "form": {
+      "context_controls": [
+        {
+          "input_type": "",
+          "label": "Private",
+          "role": "button"
+        },
+        {
+          "input_type": "",
+          "label": "",
+          "role": "button"
+        }
+      ],
+      "fields": [
+        {
+          "argument": "value",
+          "descriptor": {
+            "input_type": "contenteditable",
+            "label": "",
+            "role": "textbox"
+          },
+          "input_type": "contenteditable",
+          "max": null,
+          "max_length": null,
+          "min": null,
+          "required": false,
+          "role": "textbox"
+        }
+      ],
+      "submit": {
+        "input_type": "",
+        "label": "Save",
+        "role": "button"
+      }
+    },
+    "navigation": [],
+    "readback_url": "http://127.0.0.1:8852/"
+  },
+  "scope": {
+    "operation_family": "local form creation",
+    "origin": "http://127.0.0.1:8852",
+    "prior": "General English action vocabulary proposes exploration",
+    "runtime_model": null,
+    "unsupported": [
+      "global record uniqueness",
+      "rollback",
+      "exactly-once delivery",
+      "relational selection",
+      "unobserved side effects"
+    ]
+  },
+  "status": "ACTIVE",
+  "support": {
+    "argument_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "Visible editor value",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    },
+    "policy_version": "local-form-v2",
+    "procedure": {
+      "anchor": "value",
+      "defaults": {},
+      "effect_slots": {
+        "value": [
+          [
+            [
+              "group",
+              1
+            ],
+            [
+              "group",
+              0
+            ],
+            [
+              "group",
+              0
+            ],
+            [
+              "group",
+              0
+            ],
+            [
+              "group",
+              0
+            ],
+            [
+              "text",
+              0
+            ]
+          ]
+        ]
+      },
+      "entry_url": "http://127.0.0.1:8852/",
+      "form": {
+        "context_controls": [
+          {
+            "input_type": "",
+            "label": "Private",
+            "role": "button"
+          },
+          {
+            "input_type": "",
+            "label": "",
+            "role": "button"
+          }
+        ],
+        "fields": [
+          {
+            "argument": "value",
+            "descriptor": {
+              "input_type": "contenteditable",
+              "label": "",
+              "role": "textbox"
+            },
+            "input_type": "contenteditable",
+            "max": null,
+            "max_length": null,
+            "min": null,
+            "required": false,
+            "role": "textbox"
+          }
+        ],
+        "submit": {
+          "input_type": "",
+          "label": "Save",
+          "role": "button"
+        }
+      },
+      "navigation": [],
+      "readback_url": "http://127.0.0.1:8852/"
+    },
+    "source_sha256": {
+      "browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+      "browser_session.py": "f0208fadb70e885b28eba9d4f632f1b08c48fe4a919a750839de7575e0894451",
+      "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+      "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "runtime.py": "45a247528efa57b684813375c0d738c25645f538824ffe4d161b6a4c65409d92",
+      "surface.py": "bbc187a8fa9c91d1b55bdb6d4769f7c6861e28e958e86020207de413990341e3"
+    },
+    "trials": [
+      {
+        "arguments": {
+          "value": "semabi_4a99823847_0"
+        },
+        "witness": {
+          "basis": "visible_local_record",
+          "field_slots": {
+            "value": [
+              [
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ]
+              ]
+            ]
+          },
+          "observation": "125098e662922b66",
+          "role": "article",
+          "root": 162,
+          "texts": [
+            "semabi_4a99823847_0"
+          ],
+          "value_node": 178
+        }
+      },
+      {
+        "arguments": {
+          "value": "semabi_d57e3d0ce7_1"
+        },
+        "witness": {
+          "basis": "visible_local_record",
+          "field_slots": {
+            "value": [
+              [
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ]
+              ]
+            ]
+          },
+          "observation": "f7db4f78224d7f70",
+          "role": "article",
+          "root": 162,
+          "texts": [
+            "semabi_d57e3d0ce7_1"
+          ],
+          "value_node": 178
+        }
+      }
+    ]
+  },
+  "version": 2
+}

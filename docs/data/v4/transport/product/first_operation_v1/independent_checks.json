@@ -1,0 +1,254 @@
+{
+  "scope": "Two separately authenticated fresh browsers; current visible Memos view and reload",
+  "matcher": "Visible DOM article/leaf-text matching; no runtime record_witness or effect_slots calls",
+  "checks": [
+    {
+      "application": "memos",
+      "classification": "retrospective_disclosed_development_http_effect_check",
+      "visible_poll_limit_seconds": 6,
+      "business_write_actions": 0,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "source_before": {
+        "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+        "semabi/compiler/browser_session.py": "f0208fadb70e885b28eba9d4f632f1b08c48fe4a919a750839de7575e0894451",
+        "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+        "semabi/compiler/surface.py": "bbc187a8fa9c91d1b55bdb6d4769f7c6861e28e958e86020207de413990341e3",
+        "runs/product_evaluator_v1/inspect_ui_v1.py": "06fe751f81b1ac53419607396ff6c0d8924847cf4f96df9b461316dff4f43857"
+      },
+      "script_sha256": "de4b0ab83ad2d3f5fde199ceceed28d2d97939abd35aac51723ce21eb0e9b7a0",
+      "started_at": "2026-09-09T16:20:43.021483+00:00",
+      "status": "VISIBLE_SAVED_CONTENT_CONFIRMED",
+      "cpu_affinity": [
+        6
+      ],
+      "session_id": "evaluator_e6c3b8b0862841fdbb45f9beafef7219",
+      "actions": [
+        {
+          "kind": "navigation",
+          "purpose": "fresh connection"
+        },
+        {
+          "kind": "reload",
+          "purpose": "independent saved-content readback"
+        }
+      ],
+      "snapshots": [
+        {
+          "id": "eval_obs_a56397da884640499833cba4b02f5908",
+          "label": "fresh_authenticated_view",
+          "path": "eval_obs_a56397da884640499833cba4b02f5908.json",
+          "sha256": "e56fe9c82a329d7b7909d6bf48e54c6186e369a22b1b3d71b127e5230c4a3c49",
+          "settled": true,
+          "snapshot_reads": 1,
+          "exact_saved_article_count": 1,
+          "retained_capture": "runs/product_evaluator_v2/reviewed_policy_v2/eval_obs_a56397da884640499833cba4b02f5908.json",
+          "captured_at": "2026-09-09T16:20:46.220315+00:00",
+          "independent_visible_matches": [
+            {
+              "article_ordinal": 1,
+              "exact_blocks": 1,
+              "exact_block_tags": [
+                "p"
+              ],
+              "text": "Reviewed HTTP operation 20260909 1611"
+            }
+          ]
+        },
+        {
+          "id": "eval_obs_703f50577c0845199f506d189b670b1e",
+          "label": "after_reload",
+          "path": "eval_obs_703f50577c0845199f506d189b670b1e.json",
+          "sha256": "6aa46942cc6ebaa6ab2c4f5d9f31961556aa57a393c658c9e8cfe6c3c0211e1a",
+          "settled": true,
+          "snapshot_reads": 1,
+          "exact_saved_article_count": 1,
+          "retained_capture": "runs/product_evaluator_v2/reviewed_policy_v2/eval_obs_703f50577c0845199f506d189b670b1e.json",
+          "captured_at": "2026-09-09T16:20:47.268143+00:00",
+          "independent_visible_matches": [
+            {
+              "article_ordinal": 1,
+              "exact_blocks": 1,
+              "exact_block_tags": [
+                "p"
+              ],
+              "text": "Reviewed HTTP operation 20260909 1611"
+            }
+          ]
+        }
+      ],
+      "client_result": {
+        "path": "runs/product_service_acceptance_v1/client_reviewed_policy_v2.log",
+        "sha256": "6c55e1b8623f04f7b1e5c455d0e56726307870b71b148510807c91c90994d2f4",
+        "job_id": "job_ffbb6ef7694c43c694d3c28dc0850ea0",
+        "operation_id": "op_da6cd313fd7951e26d2c",
+        "operation_version": 2,
+        "runtime_outcome": "CONFIRMED",
+        "arguments": {
+          "value": "Reviewed HTTP operation 20260909 1611"
+        }
+      },
+      "limitations": [
+        "Current visible view only; no global uniqueness claim.",
+        "Browser access shares generic reader code; effect matching is separate visible-DOM logic.",
+        "Other development activity is not excluded; this is not a controlled comparison."
+      ],
+      "authentication": {
+        "status": "CONNECTED",
+        "authentication_actions": 3
+      },
+      "exact_saved_article_counts": [
+        1,
+        1
+      ],
+      "browser_closed": true,
+      "source_after": {
+        "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+        "semabi/compiler/browser_session.py": "f0208fadb70e885b28eba9d4f632f1b08c48fe4a919a750839de7575e0894451",
+        "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+        "semabi/compiler/surface.py": "bbc187a8fa9c91d1b55bdb6d4769f7c6861e28e958e86020207de413990341e3",
+        "runs/product_evaluator_v1/inspect_ui_v1.py": "06fe751f81b1ac53419607396ff6c0d8924847cf4f96df9b461316dff4f43857"
+      },
+      "source_changed_during_check": false,
+      "elapsed_seconds": 4.297,
+      "resources": {
+        "cpu_seconds_self": 0.321759,
+        "cpu_seconds_children": 1.115727,
+        "max_rss_self_kib": 49948,
+        "max_rss_child_kib": 184908,
+        "rss_note": "Per-process maxima, not aggregate process-tree peak"
+      },
+      "action_counts": {
+        "navigation_reload_attempts": 2,
+        "authentication_primitives": 3,
+        "saved_business_mutations": 0,
+        "snapshot_reads": 2
+      },
+      "finished_at": "2026-09-09T16:20:47.318606+00:00"
+    },
+    {
+      "application": "memos",
+      "classification": "retrospective_disclosed_development_http_effect_check",
+      "visible_poll_limit_seconds": 6,
+      "business_write_actions": 0,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "source_before": {
+        "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+        "semabi/compiler/browser_session.py": "f0208fadb70e885b28eba9d4f632f1b08c48fe4a919a750839de7575e0894451",
+        "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+        "semabi/compiler/surface.py": "bbc187a8fa9c91d1b55bdb6d4769f7c6861e28e958e86020207de413990341e3",
+        "runs/product_evaluator_v1/inspect_ui_v1.py": "06fe751f81b1ac53419607396ff6c0d8924847cf4f96df9b461316dff4f43857"
+      },
+      "script_sha256": "de4b0ab83ad2d3f5fde199ceceed28d2d97939abd35aac51723ce21eb0e9b7a0",
+      "started_at": "2026-09-09T16:20:43.021357+00:00",
+      "status": "VISIBLE_SAVED_CONTENT_CONFIRMED",
+      "cpu_affinity": [
+        7
+      ],
+      "session_id": "evaluator_5aec8acd31a44bee9d69ed2f88e25a0e",
+      "actions": [
+        {
+          "kind": "navigation",
+          "purpose": "fresh connection"
+        },
+        {
+          "kind": "reload",
+          "purpose": "independent saved-content readback"
+        }
+      ],
+      "snapshots": [
+        {
+          "id": "eval_obs_8877f18ab9a241e0a28cdb73b225250d",
+          "label": "fresh_authenticated_view",
+          "path": "eval_obs_8877f18ab9a241e0a28cdb73b225250d.json",
+          "sha256": "e7f21654d9c5a8e77ed5d884974fc4038cde574c972b06eaf106cce5e2315e84",
+          "settled": true,
+          "snapshot_reads": 1,
+          "exact_saved_article_count": 1,
+          "retained_capture": "runs/product_evaluator_v2/process_restart_v2/eval_obs_8877f18ab9a241e0a28cdb73b225250d.json",
+          "captured_at": "2026-09-09T16:20:46.463604+00:00",
+          "independent_visible_matches": [
+            {
+              "article_ordinal": 0,
+              "exact_blocks": 1,
+              "exact_block_tags": [
+                "p"
+              ],
+              "text": "Persisted operation after service restart 20260909 1615"
+            }
+          ]
+        },
+        {
+          "id": "eval_obs_7610c54a7f504a3182f620dd882e4636",
+          "label": "after_reload",
+          "path": "eval_obs_7610c54a7f504a3182f620dd882e4636.json",
+          "sha256": "d758a923c9ac32708a089abd44b24417785ac1fc06a938de93606df91e8988c5",
+          "settled": true,
+          "snapshot_reads": 1,
+          "exact_saved_article_count": 1,
+          "retained_capture": "runs/product_evaluator_v2/process_restart_v2/eval_obs_7610c54a7f504a3182f620dd882e4636.json",
+          "captured_at": "2026-09-09T16:20:47.554662+00:00",
+          "independent_visible_matches": [
+            {
+              "article_ordinal": 0,
+              "exact_blocks": 1,
+              "exact_block_tags": [
+                "p"
+              ],
+              "text": "Persisted operation after service restart 20260909 1615"
+            }
+          ]
+        }
+      ],
+      "client_result": {
+        "path": "runs/product_service_acceptance_v1/client_process_restart_v2.log",
+        "sha256": "0f5ea3e8abc44fca920f27f5d47d8b3098c85423100a7f995888361d12c373d5",
+        "job_id": "job_a28051864fe34c62b32721d618a4c255",
+        "operation_id": "op_da6cd313fd7951e26d2c",
+        "operation_version": 2,
+        "runtime_outcome": "CONFIRMED",
+        "arguments": {
+          "value": "Persisted operation after service restart 20260909 1615"
+        }
+      },
+      "limitations": [
+        "Current visible view only; no global uniqueness claim.",
+        "Browser access shares generic reader code; effect matching is separate visible-DOM logic.",
+        "Other development activity is not excluded; this is not a controlled comparison."
+      ],
+      "authentication": {
+        "status": "CONNECTED",
+        "authentication_actions": 3
+      },
+      "exact_saved_article_counts": [
+        1,
+        1
+      ],
+      "browser_closed": true,
+      "source_after": {
+        "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+        "semabi/compiler/browser_session.py": "f0208fadb70e885b28eba9d4f632f1b08c48fe4a919a750839de7575e0894451",
+        "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+        "semabi/compiler/surface.py": "bbc187a8fa9c91d1b55bdb6d4769f7c6861e28e958e86020207de413990341e3",
+        "runs/product_evaluator_v1/inspect_ui_v1.py": "06fe751f81b1ac53419607396ff6c0d8924847cf4f96df9b461316dff4f43857"
+      },
+      "source_changed_during_check": false,
+      "elapsed_seconds": 4.585,
+      "resources": {
+        "cpu_seconds_self": 0.365183,
+        "cpu_seconds_children": 1.158911,
+        "max_rss_self_kib": 56056,
+        "max_rss_child_kib": 188768,
+        "rss_note": "Per-process maxima, not aggregate process-tree peak"
+      },
+      "action_counts": {
+        "navigation_reload_attempts": 2,
+        "authentication_primitives": 3,
+        "saved_business_mutations": 0,
+        "snapshot_reads": 2
+      },
+      "finished_at": "2026-09-09T16:20:47.606368+00:00"
+    }
+  ]
+}

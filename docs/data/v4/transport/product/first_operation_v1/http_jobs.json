@@ -1,0 +1,1215 @@
+{
+  "source_collection": "runs/product_evaluator_v2/public_http_v1/artifacts.json",
+  "source_sha256": "c85d15933de30ae048e5517fde3da6e02b66fcd8cd651994fd641fd3088451a6",
+  "collected_at": "2026-09-09T16:22:59.400582+00:00",
+  "requests": {
+    "GET": 17,
+    "POST": 0
+  },
+  "jobs": [
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T15:52:01.734266+00:00",
+      "id": "job_00c441d02266486c843b032d18efcb9a",
+      "job_id": "job_00c441d02266486c843b032d18efcb9a",
+      "kind": "connect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 1.721,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T15:52:03.828659+00:00",
+      "write_intent": false,
+      "event_counts": {
+        "job_started": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "dce81309f7b919671e577d3dfd6a80801cf6dc9033a9ef6f7b5be6b18f0a8a8e"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T15:52:04.011734+00:00",
+      "id": "job_2712695cd8c8486b91978c7f6285395b",
+      "job_id": "job_2712695cd8c8486b91978c7f6285395b",
+      "kind": "learn",
+      "request": {
+        "settings": {
+          "max_actions": 60,
+          "max_writes": 30
+        }
+      },
+      "result": {
+        "attempts": [
+          {
+            "candidate": "1e16672558fadec52d990bc6560cc81f81efa7bdbc745fd51058dc5c2de02ec1",
+            "confirmed_trials": 0,
+            "reason": "The current form contains an existing value or draft"
+          }
+        ],
+        "metrics": {
+          "actions": 3,
+          "elapsed_seconds": 2.873,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 0
+        },
+        "operations": [],
+        "status": "UNESTABLISHED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T15:52:06.897068+00:00",
+      "write_intent": false,
+      "event_counts": {
+        "job_started": 1,
+        "navigation": 3,
+        "observation": 3,
+        "candidate": 1,
+        "candidate_unestablished": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "c046da437b3b108c0062ad8a723c754e08081dfbf032d07a94113faff1cccdae"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T15:54:19.046963+00:00",
+      "id": "job_6cf8b2365f0649ffa37ca2f11ee432d1",
+      "job_id": "job_6cf8b2365f0649ffa37ca2f11ee432d1",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 1.728,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T15:54:21.153025+00:00",
+      "write_intent": false,
+      "event_counts": {
+        "job_started": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "ed352b7a750d354449d730c88bb3a44ff3f7cbff721e68e615746b1ed6376068"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T15:54:21.323010+00:00",
+      "id": "job_3e1a1f79b3a141c2b8306b32d8e4a884",
+      "job_id": "job_3e1a1f79b3a141c2b8306b32d8e4a884",
+      "kind": "learn",
+      "request": {
+        "settings": {
+          "max_actions": 60,
+          "max_writes": 30
+        }
+      },
+      "result": {
+        "attempts": [
+          {
+            "candidate": "1e16672558fadec52d990bc6560cc81f81efa7bdbc745fd51058dc5c2de02ec1",
+            "confirmed_trials": 0,
+            "reason": "Probe record did not persist through reload"
+          }
+        ],
+        "metrics": {
+          "actions": 6,
+          "elapsed_seconds": 4.084,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 2
+        },
+        "operations": [],
+        "status": "UNESTABLISHED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T15:54:25.417883+00:00",
+      "write_intent": true,
+      "event_counts": {
+        "job_started": 1,
+        "navigation": 3,
+        "observation": 6,
+        "candidate": 1,
+        "write_intent": 2,
+        "action_result": 2,
+        "reload": 1,
+        "candidate_unestablished": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "af1c96a90bf49d9a410a9e6e5d3a9c0c439a016a96a5fbee63c7be845e828ea6"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T15:58:21.851424+00:00",
+      "id": "job_74c710d7ec2a4da0bdb177743b900463",
+      "job_id": "job_74c710d7ec2a4da0bdb177743b900463",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 1.71,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T15:58:23.939582+00:00",
+      "write_intent": false,
+      "event_counts": {
+        "job_started": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "f7d4d29edeb3a04dc30e981bb988166a9781b3d3d73ea1863f7fe505f1ff1f0d"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T15:58:24.129686+00:00",
+      "id": "job_b96a0bbcc7d74ba1b25f5176dcf5759e",
+      "job_id": "job_b96a0bbcc7d74ba1b25f5176dcf5759e",
+      "kind": "learn",
+      "request": {
+        "settings": {
+          "max_actions": 60,
+          "max_writes": 30
+        }
+      },
+      "result": {
+        "attempts": [],
+        "metrics": {
+          "actions": 9,
+          "elapsed_seconds": 5.966,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 4
+        },
+        "operations": [
+          {
+            "id": "op_da6cd313fd7951e26d2c",
+            "version": 1,
+            "name": "save_record",
+            "status": "ACTIVE",
+            "evidence_sha256": "1e608b1a3f2e1d0eaf6408b3140063d79a130902d7b5033f7982e3e4cb2871e2"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T15:58:30.107702+00:00",
+      "write_intent": true,
+      "event_counts": {
+        "job_started": 1,
+        "navigation": 3,
+        "observation": 9,
+        "candidate": 1,
+        "write_intent": 4,
+        "action_result": 4,
+        "reload": 2,
+        "operation_learned": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "2e06ec2da0ba38e27795e70728b85d9341031d27bffdd3c490d489c207208480"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T15:58:30.201286+00:00",
+      "id": "job_21c6753709de4715a163551a79c638ed",
+      "job_id": "job_21c6753709de4715a163551a79c638ed",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "value": "HTTP client demonstration 20260909 1555"
+        },
+        "operation_id": "op_da6cd313fd7951e26d2c",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "value": "HTTP client demonstration 20260909 1555"
+          },
+          "kind": "visible_record_created",
+          "scope": "Unique local record in the current rendered view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "observation": "66c1c180a4f340be",
+            "role": "article",
+            "root": 162,
+            "texts": [
+              "HTTP client demonstration 20260909 1555"
+            ],
+            "value_node": 178
+          }
+        },
+        "metrics": {
+          "actions": 5,
+          "elapsed_seconds": 3.424,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 2
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T15:58:33.630691+00:00",
+      "write_intent": true,
+      "event_counts": {
+        "job_started": 1,
+        "navigation": 2,
+        "observation": 5,
+        "write_intent": 2,
+        "action_result": 2,
+        "reload": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "e95577c8fc594a6f14b23ff392d1a6c9cc4f8b78fdc1aa5f367a16050487c90d"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T16:10:20.825753+00:00",
+      "id": "job_082ac149089244c3b39af0e083777758",
+      "job_id": "job_082ac149089244c3b39af0e083777758",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 1.855,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T16:10:23.066456+00:00",
+      "write_intent": false,
+      "event_counts": {
+        "job_started": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "c3415b112f7052dfc9f73fff3f3a3b289668b31687cdf0f4213e4def53a513d2"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T16:10:23.108396+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T16:10:23.111947+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T16:10:23.113321+00:00",
+          "outcome": "FAILED_BEFORE_EFFECT",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_8463280b694345ee9cf1a16fe622a79b",
+      "job_id": "job_8463280b694345ee9cf1a16fe622a79b",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "value": "Stale compatibility attempt 20260909 1610"
+        },
+        "operation_id": "op_da6cd313fd7951e26d2c",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "reason": "Operation evidence or runtime compatibility changed; relearn its contract"
+        },
+        "metrics": {
+          "actions": 0,
+          "elapsed_seconds": 0.0,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 0
+        },
+        "operation_status": "STALE",
+        "outcome": "FAILED_BEFORE_EFFECT"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T16:10:23.113361+00:00",
+      "write_intent": false,
+      "event_counts": {
+        "job_started": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "728ce25d84a917f245fd464335b385fae2302335cc4cb4bfcf652e66429bfae4"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T16:11:01.708969+00:00",
+      "id": "job_4715318338464fe5b500c76893d6c375",
+      "job_id": "job_4715318338464fe5b500c76893d6c375",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 1.842,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T16:11:03.954731+00:00",
+      "write_intent": false,
+      "event_counts": {
+        "job_started": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "e24c700abf74f2aa7333fce50d3badcac475803353701caefed920e02ecc4ca3"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T16:11:03.985115+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T16:11:03.988148+00:00",
+          "kind": "learn",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T16:11:04.290661+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "f091dc877d1f6af7",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:11:04.304719+00:00",
+          "sequence": 3,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T16:11:05.270704+00:00",
+          "sequence": 4,
+          "settled": true,
+          "signature": "66c1c180a4f340be",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:11:05.281703+00:00",
+          "prior": "General English form action words; not observed support",
+          "proposal_basis": "local_control_group",
+          "sequence": 5,
+          "signature": "1e16672558fadec52d990bc6560cc81f81efa7bdbc745fd51058dc5c2de02ec1",
+          "type": "candidate"
+        },
+        {
+          "created_at": "2026-09-09T16:11:05.282903+00:00",
+          "sequence": 6,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T16:11:06.262989+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "66c1c180a4f340be",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 140,
+            "text": "semabi_4a99823847_0"
+          },
+          "created_at": "2026-09-09T16:11:06.282257+00:00",
+          "sequence": 8,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T16:11:06.603550+00:00",
+          "sequence": 9,
+          "settled": true,
+          "signature": "dcf24f80cff03581",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T16:11:06.612327+00:00",
+          "ok": true,
+          "sequence": 10,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 158
+          },
+          "created_at": "2026-09-09T16:11:06.616648+00:00",
+          "sequence": 11,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T16:11:07.211901+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "0b1f9ddc2ac01abd",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T16:11:07.219933+00:00",
+          "ok": true,
+          "sequence": 13,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T16:11:07.227322+00:00",
+          "sequence": 14,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T16:11:07.926278+00:00",
+          "sequence": 15,
+          "settled": true,
+          "signature": "125098e662922b66",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:11:07.940509+00:00",
+          "sequence": 16,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T16:11:08.757913+00:00",
+          "sequence": 17,
+          "settled": true,
+          "signature": "125098e662922b66",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 140,
+            "text": "semabi_d57e3d0ce7_1"
+          },
+          "created_at": "2026-09-09T16:11:08.777373+00:00",
+          "sequence": 18,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T16:11:09.101870+00:00",
+          "sequence": 19,
+          "settled": true,
+          "signature": "286e26196d2660ff",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T16:11:09.110429+00:00",
+          "ok": true,
+          "sequence": 20,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 158
+          },
+          "created_at": "2026-09-09T16:11:09.114540+00:00",
+          "sequence": 21,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T16:11:09.674438+00:00",
+          "sequence": 22,
+          "settled": true,
+          "signature": "0491f3597295bcea",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T16:11:09.682997+00:00",
+          "ok": true,
+          "sequence": 23,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T16:11:09.690229+00:00",
+          "sequence": 24,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T16:11:10.409446+00:00",
+          "sequence": 25,
+          "settled": true,
+          "signature": "f7db4f78224d7f70",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:11:10.424001+00:00",
+          "id": "op_da6cd313fd7951e26d2c",
+          "sequence": 26,
+          "type": "operation_learned",
+          "version": 2
+        },
+        {
+          "created_at": "2026-09-09T16:11:10.426408+00:00",
+          "sequence": 27,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_aa9ac8fe3b2d4ea4b2d32c3d4b72aec7",
+      "job_id": "job_aa9ac8fe3b2d4ea4b2d32c3d4b72aec7",
+      "kind": "learn",
+      "request": {
+        "settings": {
+          "max_actions": 60,
+          "max_writes": 30
+        }
+      },
+      "result": {
+        "attempts": [],
+        "metrics": {
+          "actions": 9,
+          "elapsed_seconds": 6.436,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 4
+        },
+        "operations": [
+          {
+            "id": "op_da6cd313fd7951e26d2c",
+            "version": 2,
+            "name": "save_record",
+            "status": "ACTIVE",
+            "evidence_sha256": "cba9496f5bde957ff162df7f5eb85140b154245800b9169d0103f1dc6567cd38"
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T16:11:10.426475+00:00",
+      "write_intent": true,
+      "event_counts": {
+        "job_started": 1,
+        "observation": 10,
+        "navigation": 3,
+        "candidate": 1,
+        "write_intent": 4,
+        "action_result": 4,
+        "reload": 2,
+        "operation_learned": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "2f296993e7caabac7316f44537f04bbf539fc71b8c89090bf047c59e8c394889"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T16:11:10.545245+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T16:11:10.556073+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T16:11:10.840594+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "f7db4f78224d7f70",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:11:10.854440+00:00",
+          "sequence": 3,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T16:11:11.681588+00:00",
+          "sequence": 4,
+          "settled": true,
+          "signature": "f7db4f78224d7f70",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:11:11.695680+00:00",
+          "sequence": 5,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T16:11:12.497079+00:00",
+          "sequence": 6,
+          "settled": true,
+          "signature": "f7db4f78224d7f70",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 140,
+            "text": "Reviewed HTTP operation 20260909 1611"
+          },
+          "created_at": "2026-09-09T16:11:12.511234+00:00",
+          "sequence": 7,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T16:11:12.833066+00:00",
+          "sequence": 8,
+          "settled": true,
+          "signature": "ea5b865a37170e5c",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T16:11:12.841933+00:00",
+          "ok": true,
+          "sequence": 9,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 158
+          },
+          "created_at": "2026-09-09T16:11:12.846120+00:00",
+          "sequence": 10,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T16:11:13.439320+00:00",
+          "sequence": 11,
+          "settled": true,
+          "signature": "379be8a2dae67727",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T16:11:13.447951+00:00",
+          "ok": true,
+          "sequence": 12,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T16:11:13.455211+00:00",
+          "sequence": 13,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T16:11:13.747365+00:00",
+          "sequence": 14,
+          "settled": true,
+          "signature": "12cc67b6a14ce771",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:11:14.262326+00:00",
+          "sequence": 15,
+          "settled": true,
+          "signature": "ab9f4a9d2ddbb818",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:11:14.277107+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 16,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_ffbb6ef7694c43c694d3c28dc0850ea0",
+      "job_id": "job_ffbb6ef7694c43c694d3c28dc0850ea0",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "value": "Reviewed HTTP operation 20260909 1611"
+        },
+        "operation_id": "op_da6cd313fd7951e26d2c",
+        "version": 2
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "value": "Reviewed HTTP operation 20260909 1611"
+          },
+          "kind": "visible_record_created",
+          "scope": "Unique local record in the current rendered view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "field_slots": {
+              "value": [
+                [
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              ]
+            },
+            "observation": "ab9f4a9d2ddbb818",
+            "role": "article",
+            "root": 162,
+            "texts": [
+              "Reviewed HTTP operation 20260909 1611"
+            ],
+            "value_node": 178
+          }
+        },
+        "metrics": {
+          "actions": 5,
+          "elapsed_seconds": 3.719,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 2
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T16:11:14.277151+00:00",
+      "write_intent": true,
+      "event_counts": {
+        "job_started": 1,
+        "observation": 7,
+        "navigation": 2,
+        "write_intent": 2,
+        "action_result": 2,
+        "reload": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "08f739b9e7a833cb85f10dab55ba005aa543702e6579cb43f31910905f19d768"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T16:14:31.342048+00:00",
+      "id": "job_f74675b15f9d47f5b35e06a0924c045d",
+      "job_id": "job_f74675b15f9d47f5b35e06a0924c045d",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 2.021,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T16:14:33.742392+00:00",
+      "write_intent": false,
+      "event_counts": {
+        "job_started": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "e6b67c0531cbd205c67aa409b7d8791b60d62c2af516a1495fba174a705c8f17"
+    },
+    {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T16:14:33.870357+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T16:14:33.880414+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T16:14:34.171432+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "5991c5248ba1eb73",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:14:34.185917+00:00",
+          "sequence": 3,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T16:14:35.196018+00:00",
+          "sequence": 4,
+          "settled": true,
+          "signature": "ab9f4a9d2ddbb818",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:14:35.209990+00:00",
+          "sequence": 5,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T16:14:36.223886+00:00",
+          "sequence": 6,
+          "settled": true,
+          "signature": "ab9f4a9d2ddbb818",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 140,
+            "text": "Persisted operation after service restart 20260909 1615"
+          },
+          "created_at": "2026-09-09T16:14:36.237940+00:00",
+          "sequence": 7,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T16:14:36.573610+00:00",
+          "sequence": 8,
+          "settled": true,
+          "signature": "66c5345b068f8099",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T16:14:36.582319+00:00",
+          "ok": true,
+          "sequence": 9,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 158
+          },
+          "created_at": "2026-09-09T16:14:36.585940+00:00",
+          "sequence": 10,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T16:14:37.182823+00:00",
+          "sequence": 11,
+          "settled": true,
+          "signature": "644621cc2d09386a",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T16:14:37.191425+00:00",
+          "ok": true,
+          "sequence": 12,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T16:14:37.198924+00:00",
+          "sequence": 13,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T16:14:37.911560+00:00",
+          "sequence": 14,
+          "settled": true,
+          "signature": "53a89f586537e667",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T16:14:37.926382+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 15,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_a28051864fe34c62b32721d618a4c255",
+      "job_id": "job_a28051864fe34c62b32721d618a4c255",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "value": "Persisted operation after service restart 20260909 1615"
+        },
+        "operation_id": "op_da6cd313fd7951e26d2c",
+        "version": 2
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "value": "Persisted operation after service restart 20260909 1615"
+          },
+          "kind": "visible_record_created",
+          "scope": "Unique local record in the current rendered view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "field_slots": {
+              "value": [
+                [
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              ]
+            },
+            "observation": "53a89f586537e667",
+            "role": "article",
+            "root": 162,
+            "texts": [
+              "Persisted operation after service restart 20260909 1615"
+            ],
+            "value_node": 178
+          }
+        },
+        "metrics": {
+          "actions": 5,
+          "elapsed_seconds": 4.044,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 2
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T16:14:37.926427+00:00",
+      "write_intent": true,
+      "event_counts": {
+        "job_started": 1,
+        "observation": 6,
+        "navigation": 2,
+        "write_intent": 2,
+        "action_result": 2,
+        "reload": 1,
+        "job_finished": 1
+      },
+      "public_job_body_sha256": "65b71de191c9ffac920a1af53ac25a72c200dac6fc7761b8e19a1c341d0ab67b"
+    }
+  ],
+  "client_logs": [
+    {
+      "path": "runs/product_service_acceptance_v1/client_first.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "json_record_count": 0,
+      "parse_error": null,
+      "job_ids": [],
+      "discovered_operations": []
+    },
+    {
+      "path": "runs/product_service_acceptance_v1/client_first_retry.log",
+      "sha256": "808954998063e6cd82c4c7c5a7b17b6e863718595dc4f8c44115c07df9138bb9",
+      "bytes": 767,
+      "json_record_count": 10,
+      "parse_error": null,
+      "job_ids": [
+        "job_00c441d02266486c843b032d18efcb9a",
+        "job_2712695cd8c8486b91978c7f6285395b"
+      ],
+      "discovered_operations": [
+        []
+      ]
+    },
+    {
+      "path": "runs/product_service_acceptance_v1/client_after_placeholder_fix.log",
+      "sha256": "743551642a6d630f65a0b1ef63500e0ef3f5da1deeabcb1ef487a340d8ac6626",
+      "bytes": 881,
+      "json_record_count": 11,
+      "parse_error": null,
+      "job_ids": [
+        "job_6cf8b2365f0649ffa37ca2f11ee432d1",
+        "job_3e1a1f79b3a141c2b8306b32d8e4a884"
+      ],
+      "discovered_operations": [
+        []
+      ]
+    },
+    {
+      "path": "runs/product_service_acceptance_v1/client_after_readback_wait.log",
+      "sha256": "b25c0900c23b657d13c22af4a89a86ff5c41eca9daddcf4b3c51b0ba00ff6606",
+      "bytes": 6174,
+      "json_record_count": 26,
+      "parse_error": null,
+      "job_ids": [
+        "job_74c710d7ec2a4da0bdb177743b900463",
+        "job_b96a0bbcc7d74ba1b25f5176dcf5759e",
+        "job_21c6753709de4715a163551a79c638ed"
+      ],
+      "discovered_operations": [
+        [
+          {
+            "id": "op_da6cd313fd7951e26d2c",
+            "version": 1,
+            "name": "save_record",
+            "argument_schema": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "description": "Visible editor value",
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "path": "runs/product_service_acceptance_v1/client_stale_policy.log",
+      "sha256": "aee1cd0905bb27ca74ade25dcd21cd67386f4ac0f985396cbc2a74a7093c8055",
+      "bytes": 2196,
+      "json_record_count": 8,
+      "parse_error": null,
+      "job_ids": [
+        "job_082ac149089244c3b39af0e083777758",
+        "job_8463280b694345ee9cf1a16fe622a79b"
+      ],
+      "discovered_operations": [
+        [
+          {
+            "id": "op_da6cd313fd7951e26d2c",
+            "version": 1,
+            "name": "save_record",
+            "argument_schema": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "description": "Visible editor value",
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "path": "runs/product_service_acceptance_v1/client_reviewed_policy_v2.log",
+      "sha256": "6c55e1b8623f04f7b1e5c455d0e56726307870b71b148510807c91c90994d2f4",
+      "bytes": 7169,
+      "json_record_count": 27,
+      "parse_error": null,
+      "job_ids": [
+        "job_4715318338464fe5b500c76893d6c375",
+        "job_aa9ac8fe3b2d4ea4b2d32c3d4b72aec7",
+        "job_ffbb6ef7694c43c694d3c28dc0850ea0"
+      ],
+      "discovered_operations": [
+        [
+          {
+            "id": "op_da6cd313fd7951e26d2c",
+            "version": 2,
+            "name": "save_record",
+            "argument_schema": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "description": "Visible editor value",
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "path": "runs/product_service_acceptance_v1/client_process_restart_v2.log",
+      "sha256": "0f5ea3e8abc44fca920f27f5d47d8b3098c85423100a7f995888361d12c373d5",
+      "bytes": 5945,
+      "json_record_count": 14,
+      "parse_error": null,
+      "job_ids": [
+        "job_f74675b15f9d47f5b35e06a0924c045d",
+        "job_a28051864fe34c62b32721d618a4c255"
+      ],
+      "discovered_operations": [
+        [
+          {
+            "id": "op_da6cd313fd7951e26d2c",
+            "version": 2,
+            "name": "save_record",
+            "argument_schema": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "description": "Visible editor value",
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          }
+        ]
+      ]
+    }
+  ],
+  "idempotency": {
+    "path": "runs/product_service_acceptance_v1/idempotency_v2.json",
+    "sha256": "2aa967c3632cd6b99259709242947cfcfba92ccbb3ba93b2bcfdc8d5f4feff39",
+    "record": {
+      "same_request_status": 202,
+      "same_request_response": {
+        "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+        "deduplicated": true,
+        "execution_id": "job_a28051864fe34c62b32721d618a4c255",
+        "id": "job_a28051864fe34c62b32721d618a4c255",
+        "job_id": "job_a28051864fe34c62b32721d618a4c255"
+      },
+      "changed_request_status": 409,
+      "changed_request_response": {
+        "error": {
+          "message": "Idempotency-Key was already used for a different request"
+        }
+      },
+      "original_execution": "job_a28051864fe34c62b32721d618a4c255",
+      "original_job_unchanged": true,
+      "passed": true
+    }
+  }
+}

@@ -1,5 +1,13 @@
 # SemABI — semantic interface induction from black-box interaction
 
+The developing product exposes operations learned through a browser as a local
+HTTP API. See the [developer quickstart](docs/product_quickstart.md) for connection,
+bounded learning, schema discovery, invocation, and persisted reuse. Its initial
+coverage is visible form creation with verified record read-back; broader workflow
+and application transfer remain under development.
+
+The research pipeline below investigates a more general relational model:
+
 Can an agent recover a typed relational action model of an unfamiliar application
 purely by interacting with its UI? No source, API, demonstrations, entity types,
 predicates, or action vocabulary are given; only rendered DOM/accessibility trees,
@@ -154,4 +162,3 @@ happening, and until that run the action model had nowhere to put it. Blend's ou
 predicts which of six events `Record draw` returns, with the objects it names, on a held-out
 suffix and on a second interaction history. Where any two of these documents disagree about a
 number, the later one is later; `scripts/v4_outcome_batch.sh` regenerates the outcome ones.
-

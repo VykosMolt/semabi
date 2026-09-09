@@ -1,5 +1,115 @@
 # Fresh-interface campaign execution record
 
+## Product development resumed (2026-09-09)
+
+The user resumed development from reviewed handoff `c8dd81b` and set the product
+objective: authorized browser onboarding of an unfamiliar application, followed
+by useful learned HTTP operations without an authored integration. The checkout
+is exactly that handoff, initially clean. The pause below is historical. The
+current resource cap is **12 aggregate heavy-job CPUs**, superseding the previous
+24-CPU allowance. No paid runtime models, external accounts, public deployment
+or push are authorized.
+
+Active milestone P1 is a complete local operation: connect, observe/learn,
+publish a parameterized schema, invoke unseen arguments, verify a visible effect,
+and repeat after a fresh browser session and service restart. Reuse Playwright,
+restricted observations, primitive/evidence records and native learning utilities.
+The HTTP layer owns request handling and durable job/artifact storage; the runtime
+owns learning, browser access, argument resolution and effect verification.
+
+The representation hypothesis is that local controls, fields, rows and containment
+must remain usable before global entity identity is settled. First explore local
+operation contracts grounded in visible control structure and repeated observed
+effects. Explicitly label their supported scope and heuristic proposals. Existing
+V4 identity and relational models remain available; a whole fitted ontology is
+not a prerequisite for a supported local operation. No application labels,
+selectors, schemas or semantic mappings may be authored as integration answers.
+
+P1 acceptance: the same generic entry point learns at least one useful write
+operation from varying probe arguments; an external HTTP client invokes fresh
+arguments and obtains a separately corroborated effect; artifacts survive process
+restart; fresh-session invocation resolves current controls; ambiguous/stale
+bindings refuse execution; uncertain writes are not blindly retried. Persist
+connection/account isolation, private credentials and redacted public evidence.
+Development smokes use 60 actions and 30 possible writes per learning request.
+They do not have a prospective task denominator. The next assessment's workflow
+denominator and budgets are in `product/evaluation_protocol_v1.md`; it has not
+run. Browser observations alone enter learning and runtime verification.
+
+Rolling queue:
+
+1. Implement the thin service and observation-grounded learning/runtime together.
+   Complete the pending receiver-view control only to resolve its bounded naming
+   question; it is an identity-assisted diagnostic, not the product learning path.
+2. Deliver a local quickstart and real fresh-argument/session/restart demonstration
+   on the first disclosed independently developed application. Measure onboarding
+   actions/time, assistance, invocation outcomes and repeat cost.
+3. Freeze a predefined read/write workflow set and the common onboarding policy;
+   validate on at least three independently developed applications, reserving one
+   until code/protocol freeze. Compare a bounded generic automation baseline.
+4. Preserve failures, make general repairs and use new reserved evidence for new
+   transfer claims. Continue against the highest-value demonstrated limitation.
+
+Application setup is separate from learner implementation. Proposed disclosed
+development applications are linkding and Memos; Vikunja is reserved, subject to
+access feasibility. The setup agent may read installation implementation and
+create local test accounts, but supplies no integration selectors or mappings.
+Root and the evaluator have now observed the disclosed Memos/linkding UIs and
+development outcomes, but no application source, databases, hidden API payloads,
+or private client stores enter learning. Vikunja remains unopened.
+Setup ports are loopback 8851/8852/8853, checked before use. Access substitutions
+and actual exposure are recorded by the setup agent under `product/`.
+
+At 16:35 UTC P1 has passed its real HTTP path: two varied training submissions,
+fresh arguments, independent browser readback, persisted artifacts and invocation
+after an unchanged-source service restart. The compact evidence and exact source
+hashes are in [first operation](product/first_operation_v1/README.md). Both
+independent checks found one matching article before and after reload. A stale
+policy was rejected before writes; exact idempotent repetition reused the job,
+and changed arguments with the same key returned HTTP 409. Earlier failed
+learning attempts are retained. This is disclosed development evidence for one
+creation operation in Memos, without a prospective completion denominator.
+
+The current runtime protects drafts before navigation, excludes custom form
+previews, checks current argument/default values before submit and verifies
+learned local field positions. Focused diagnostics passed 48 runtime tests and
+20 HTTP/storage tests. The shared-acquisition cached-form baseline passed 31
+synthetic tests and has not yet been assessed against real application tasks.
+The initial broad command discovered archived duplicate test names; pytest.ini
+now uses the existing pyproject convention, testpaths=tests. The replacement
+full regression is still running in exec 24896 (PID 1009812, CPU0); source at
+its launch is the pre-shared-driver P1 snapshot. Do not report it as passed
+before reaping the actual exit. The native 697-pass checkpoint and five corpus
+results remain retained; fresh transport and ordinary learned JOIN are still
+unestablished.
+
+The receiver-view diagnostic completed once with actual exit zero and 19 raw
+files preserved before interpretation in
+`development/j1_receiver_view_control_v1/raw_preservation_v2.json`. Independent
+review accepts its bounded result: B's existing family query names each checked
+represented owner and denotes nothing on the unchecked page; A has no candidate.
+Guards and non-view state remain unchanged. This is supplied-identity naming
+evidence, separate from patch representation, endpoint relations and learned
+JOIN. The next native change is a conservative V4-only projection using ordinary
+represented owners; no further control fit is required.
+
+Active milestone P2: support multiple application connections, complete disclosed
+linkding onboarding and broaden useful read/update operations before freezing
+the three-application assessment. The first HTTP attempt to connect linkding
+while Memos remained open failed before business interaction because each
+connection started another Playwright synchronous driver in the same worker.
+A two-empty-session reproducer confirms the lifetime error. The repair shares
+one driver per Runtime while retaining separate browsers per connection.
+Vikunja remains unopened and reserved; current policy/protocol are not frozen.
+
+Root owns product runtime/integration and service exec 59047 (CPUs2–5).
+`widget_revision_implementation` is finishing the compact P1 evidence only;
+`widget_scoring_regressions` is preparing the bounded V4 owner-view patch outside
+active source while the full suite runs. App servers remain setup-helper-owned.
+The 12-CPU aggregate cap applies. Next executable actions: commit the coherent
+P1 snapshot, repair and test driver lifetime, reconnect both disclosed apps,
+then diagnose linkding's ordinary form/readback limitation from visible UI.
+
 ## Paused for user review (2026-09-08 11:53 UTC)
 
 The user requested a handoff. Both widget repairs and their reviewed evidence

@@ -1,0 +1,411 @@
+"""HTTP/storage contract tests with a labeled fake Runtime, never browser acceptance."""
+from __future__ import annotations
+
+import json
+import sqlite3
+import stat
+import threading
+import time
+import urllib.error
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor
+
+import pytest
+
+from semabi.compiler.artifacts import ArtifactStore, StoreError
+from semabi.service import Service, connection_request, make_server
+
+
+def operation(version=1):
+    return {"id": "create", "version": version, "name": "FAKE create item", "kind": "create_record", "status": "ACTIVE",
+            "argument_schema": {"type": "object", "properties": {"title": {"type": "string"}}, "required": ["title"]},
+            "output_schema": {"type": "object"}, "prerequisites": [], "procedure": [{"fake": True}],
+            "effect_checks": [{"fake": True}], "support": {"source": "FAKE_RUNTIME_HTTP_CONTRACT_ONLY"},
+            "scope": {}, "evidence_sha256": "f" * 64, "supported_scope": "fake contract only"}
+
+
+class FakeRuntime:
+    """Supplies synthetic results solely to exercise the service contract."""
+
+    def __init__(self, directory):
+        self.directory = directory
+        self.owner = threading.get_ident()
+        self.calls = []
+        self.sessions = {}
+        self.settings = []
+        self.invocations = []
+        self.mode = "confirm"
+        self.empty_learning = False
+        self.invalidations = []
+        self.entered = threading.Event()
+        self.release = threading.Event()
+        self.release.set()
+        self.intent_was_committed = False
+
+    def _record(self, name, connection=None):
+        self.calls.append((name, connection, threading.get_ident()))
+        assert threading.get_ident() == self.owner
+
+    def connect(self, connection, credentials):
+        self._record("connect", connection["id"])
+        self.sessions[connection["id"]] = credentials
+        return {"status": "CONNECTED", "credentials": credentials}
+
+    def learn(self, connection, settings, emit):
+        self._record("learn", connection["id"])
+        self.settings.append(settings)
+        credentials = self.sessions[connection["id"]]
+        emit({"type": "progress", "message": " ".join(credentials.values()), "credentials": credentials})
+        return {"status": "COMPLETE", "metrics": {"fake": True},
+                "operations": [] if self.empty_learning else [operation(settings["_operation_versions"].get("create", 0) + 1)],
+                "invalidations": self.invalidations}
+
+    def invoke(self, connection, artifact, arguments, emit):
+        self._record("invoke", connection["id"])
+        self.invocations.append((connection["id"], artifact, arguments))
+        self.entered.set()
+        assert self.release.wait(5), "test did not release fake invocation"
+        if self.mode == "stale":
+            return {"outcome": "FAILED_BEFORE_EFFECT", "operation_status": "STALE",
+                    "reason": "fake learned locator assumption failed"}
+        if self.mode == "raise_before":
+            raise RuntimeError("private-onboarding-password before write")
+        emit("write_intent", target="fake-only")
+        # A second SQLite connection must see the intent before the fake dispatch proceeds.
+        with sqlite3.connect(self.directory.parent / "artifacts.sqlite3") as db:
+            self.intent_was_committed = db.execute(
+                "SELECT COUNT(*) FROM jobs WHERE kind='invoke' AND status='RUNNING' AND write_intent=1").fetchone()[0] == 1
+        if self.mode == "raise_after":
+            raise RuntimeError("private-onboarding-password after write")
+        emit({"type": "effect_observed", "fake": True})
+        return {"outcome": "APPLICATION_REFUSAL" if self.mode == "refuse" else "CONFIRMED",
+                "effect": {"title": arguments.get("title"), "fake": True}, "metrics": {"writes": 1}}
+
+    def inspect(self, connection):
+        self._record("inspect", connection["id"])
+        return {"status": "CONNECTED"}
+
+    def close(self, connection_id=None):
+        self._record("close", connection_id)
+        if connection_id is None:
+            self.sessions.clear()
+        else:
+            self.sessions.pop(connection_id, None)
+
+
+class HTTPHarness:
+    def __init__(self, directory):
+        self.fake = None
+
+        def factory(path):
+            self.fake = FakeRuntime(path)
+            return self.fake
+        self.service = Service(directory, runtime_factory=factory)
+        try:
+            self.server = make_server(self.service, port=0)
+        except BaseException:
+            self.service.close(timeout=5)
+            raise
+        self.base = "http://127.0.0.1:" + str(self.server.server_port)
+        self.thread = threading.Thread(target=self.server.serve_forever, kwargs={"poll_interval": 0.01}, daemon=True)
+        self.thread.start()
+
+    def close(self):
+        self.fake.release.set()
+        self.server.shutdown()
+        self.server.server_close()
+        self.thread.join(3)
+        assert not self.thread.is_alive()
+        assert self.service.close(timeout=5)
+
+    def request(self, method, path, body=None, *, headers=None, authorized=True, raw=None):
+        request_headers = {"Content-Type": "application/json"}
+        if authorized:
+            request_headers["Authorization"] = "Bearer " + self.service.token
+        request_headers.update(headers or {})
+        data = raw if raw is not None else None if body is None else json.dumps(body).encode()
+        request = urllib.request.Request(self.base + path, data=data, headers=request_headers, method=method)
+        try:
+            response = urllib.request.urlopen(request, timeout=5)
+        except urllib.error.HTTPError as error:
+            response = error
+        with response:
+            return response.code, json.load(response)
+
+    def completed(self, accepted):
+        deadline = time.monotonic() + 5
+        while time.monotonic() < deadline:
+            status, job = self.request("GET", "/v1/jobs/" + accepted["job_id"])
+            assert status == 200
+            if job["status"] not in ("QUEUED", "RUNNING"):
+                return job
+            time.sleep(0.005)
+        pytest.fail("fake Runtime job did not complete")
+
+    def connect(self, *, credentials=None, exploration=True):
+        status, accepted = self.request("POST", "/v1/connections", {
+            "url": "http://example.test/work", "credentials": credentials or {},
+            "scope": {"exploration_enabled": exploration, "max_actions": 12, "max_writes": 3}})
+        assert status == 202
+        assert self.completed(accepted)["status"] == "COMPLETED"
+        return accepted["id"]
+
+    def learn(self, connection_id):
+        status, accepted = self.request("POST", f"/v1/connections/{connection_id}/learn", {"settings": {"max_actions": 10, "max_writes": 2}})
+        assert status == 202
+        job = self.completed(accepted)
+        assert job["status"] == "COMPLETED", job
+        return job
+
+    def invoke(self, connection_id, title="fresh", *, version=1, key=None):
+        return self.request("POST", f"/v1/connections/{connection_id}/operations/create/invoke",
+                            {"version": version, "arguments": {"title": title}},
+                            headers={"Idempotency-Key": key} if key else None)
+
+
+@pytest.fixture
+def api(tmp_path):
+    harness = HTTPHarness(tmp_path / "service")
+    try:
+        yield harness
+    finally:
+        harness.close()
+
+
+def test_http_connect_learn_schema_invoke_reconnect_and_private_storage(api, capsys):
+    credentials = {"username": "onboard-user", "password": "private-onboarding-password"}
+    connection_id = api.connect(credentials=credentials)
+    learned = api.learn(connection_id)
+    status, listing = api.request("GET", f"/v1/connections/{connection_id}/operations")
+    assert status == 200 and listing["operations"][0]["id"] == "create"
+    assert listing["operations"][0]["argument_schema"]["required"] == ["title"]
+    status, accepted = api.invoke(connection_id, "unseen argument", key="first-call")
+    assert status == 202
+    job = api.completed(accepted)
+    assert job["status"] == "COMPLETED" and job["result"]["outcome"] == "CONFIRMED"
+    assert job["result"]["effect"]["title"] == "unseen argument"
+    assert api.fake.intent_was_committed and job["write_intent"]
+    assert [event["sequence"] for event in job["events"]] == list(range(1, len(job["events"]) + 1))
+    assert [event["type"] for event in job["events"]] == ["job_started", "write_intent", "effect_observed", "job_finished"]
+    status, execution = api.request("GET", "/v1/executions/" + accepted["execution_id"])
+    assert status == 200 and execution == job
+    status, reconnected = api.request("POST", f"/v1/connections/{connection_id}/reconnect", {})
+    assert status == 202 and api.completed(reconnected)["status"] == "COMPLETED"
+    calls = api.fake.calls
+    assert [call[0] for call in calls][-2:] == ["close", "connect"]
+    assert len({call[2] for call in calls}) == 1 and calls[0][2] != threading.get_ident()
+    status, connections = api.request("GET", "/v1/connections")
+    assert status == 200 and connections["connections"][0]["allowed_origin"] == "http://example.test"
+    public = json.dumps([learned, listing, execution, connections]) + capsys.readouterr().out + capsys.readouterr().err
+    for secret in [*credentials.values(), api.service.token]:
+        assert secret not in public
+    assert api.service.store.credentials(connection_id) == credentials
+    assert learned["request"] == {"settings": {"max_actions": 10, "max_writes": 2}}
+    directory = api.service.store.directory
+    for path in (directory, directory / "connections", directory / "connections" / connection_id):
+        assert stat.S_IMODE(path.stat().st_mode) == 0o700
+    for path in (directory / "token", directory / "artifacts.sqlite3", directory / "artifacts.sqlite3-wal", directory / "artifacts.sqlite3-shm"):
+        assert stat.S_IMODE(path.stat().st_mode) == 0o600
+
+
+@pytest.mark.parametrize("url", ["file:///tmp/app", "http://user:secret@example.test/", "http://user@example.test/",
+                                  "http://example.test:99999/", "not a URL", "http://example.test\\evil/"])
+def test_connection_validation_rejects_invalid_or_credential_bearing_urls(api, url):
+    status, _ = api.request("POST", "/v1/connections", {"url": url})
+    assert status == 400
+    assert api.service.store.connections() == [] and api.fake.calls == []
+
+
+def test_url_origin_normalization_and_budgets():
+    connection, _ = connection_request({"url": "HTTPS://Example.Test:443/work?q=1#tab"})
+    assert connection["allowed_origin"] == "https://example.test"
+    assert connection["url"] == "https://example.test/work?q=1#tab"
+    assert connection["scope"]["exploration_enabled"] is False
+    connection, _ = connection_request({"url": "http://[::1]:9000/"})
+    assert connection["allowed_origin"] == "http://[::1]:9000"
+    with pytest.raises(StoreError):
+        connection_request({"url": "http://example.test/", "scope": {"max_actions": True}})
+
+
+def test_authentication_openapi_and_body_validation(api):
+    assert api.request("GET", "/openapi.json", authorized=False)[0] == 401
+    assert api.request("POST", "/v1/connections", {"url": "http://example.test/"}, authorized=False)[0] == 401
+    status, description = api.request("GET", "/openapi.json")
+    assert status == 200 and description["security"] == [{"localBearer": []}]
+    assert description["components"]["schemas"]["Invocation"]["required"] == ["arguments", "version"]
+    assert set(description["components"]["schemas"]["InvocationResult"]["properties"]["outcome"]["enum"]) == {
+        "CONFIRMED", "APPLICATION_REFUSAL", "FAILED_BEFORE_EFFECT", "UNCERTAIN"}
+    assert "/v1/executions/{execution_id}" in description["paths"]
+    assert "/v1/connections/{connection_id}/operations/{operation_id}/invoke" in description["paths"]
+    assert api.service.token not in json.dumps(description)
+    for raw in (b'{"url":"http://example.test/","url":"http://other.test/"}', b'{"url":NaN}', b'{"url":1e999}', b'[]'):
+        assert api.request("POST", "/v1/connections", raw=raw)[0] == 400
+    assert api.service.store.connections() == []
+
+
+def test_learning_requires_scope_and_cannot_inject_versions_or_expand_budgets(api):
+    disabled = api.connect(exploration=False)
+    assert api.request("POST", f"/v1/connections/{disabled}/learn", {})[0] == 409
+    connection_id = api.connect()
+    for settings in ({"_operation_versions": {"create": 100}}, {"max_actions": 13}, {"max_writes": 4}, {"credentials": {}}):
+        assert api.request("POST", f"/v1/connections/{connection_id}/learn", {"settings": settings})[0] == 400
+    assert api.fake.settings == []
+
+
+def test_invocations_bind_connection_and_require_explicit_active_version(api):
+    first, second = api.connect(), api.connect()
+    api.learn(first)
+    assert api.invoke(second)[0] == 404
+    assert api.request("GET", f"/v1/connections/{second}/operations/create")[0] == 404
+    for body in ({"arguments": {}}, {"arguments": {}, "version": True}, {"arguments": [], "version": 1}):
+        assert api.request("POST", f"/v1/connections/{first}/operations/create/invoke", body)[0] == 400
+    assert api.invoke(first, version=2)[0] == 404
+    assert api.fake.invocations == []
+
+
+def test_concurrent_idempotency_returns_one_job_and_changed_request_conflicts(api):
+    connection_id = api.connect()
+    api.learn(connection_id)
+    api.fake.release.clear()
+    path = f"/v1/connections/{connection_id}/operations/create/invoke"
+    requests = [{"arguments": {"title": "fresh", "tag": "value"}, "version": 1},
+                {"version": 1, "arguments": {"tag": "value", "title": "fresh"}}]
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        responses = list(pool.map(lambda body: api.request("POST", path, body, headers={"Idempotency-Key": "once"}), requests))
+    assert all(status == 202 for status, _ in responses)
+    assert len({body["job_id"] for _, body in responses}) == 1
+    assert sorted(body["deduplicated"] for _, body in responses) == [False, True]
+    assert api.invoke(connection_id, "different", key="once")[0] == 409
+    assert api.fake.entered.wait(3)
+    api.fake.release.set()
+    job = api.completed(responses[0][1])
+    assert job["result"]["outcome"] == "CONFIRMED" and len(api.fake.invocations) == 1
+
+
+def test_missing_rediscovery_preserves_operations_and_new_support_versions_them(api):
+    connection_id = api.connect()
+    api.learn(connection_id)
+    api.fake.empty_learning = True
+    api.learn(connection_id)
+    assert api.service.store.operation(connection_id, "create")["status"] == "ACTIVE"
+    assert api.service.store.operation(connection_id, "create")["version"] == 1
+    api.fake.empty_learning = False
+    api.learn(connection_id)
+    assert api.fake.settings[-1]["_operation_versions"] == {"create": 1}
+    status, active = api.request("GET", f"/v1/connections/{connection_id}/operations")
+    assert status == 200 and [item["version"] for item in active["operations"]] == [2]
+    status, history = api.request("GET", f"/v1/connections/{connection_id}/operations?include_history=true")
+    assert status == 200 and [(item["version"], item["status"]) for item in history["operations"]] == [(2, "ACTIVE"), (1, "SUPERSEDED")]
+    assert api.request("GET", f"/v1/connections/{connection_id}/operations/create?version=1")[1]["status"] == "SUPERSEDED"
+    assert api.invoke(connection_id, version=1)[0] == 409
+
+
+def test_explicit_invalidation_preserves_failed_assumption(api):
+    connection_id = api.connect()
+    api.learn(connection_id)
+    api.fake.empty_learning = True
+    api.fake.invalidations = [{"id": "create", "version": 1, "status": "WITHDRAWN", "reason": "fake supported assumption was refuted"}]
+    api.learn(connection_id)
+    retained = api.service.store.operation(connection_id, "create", 1)
+    assert retained["status"] == "WITHDRAWN"
+    assert retained["status_reason"] == "fake supported assumption was refuted"
+    assert api.invoke(connection_id)[0] == 409
+
+
+def test_stale_result_atomically_blocks_already_queued_invocation(api):
+    connection_id = api.connect()
+    api.learn(connection_id)
+    api.fake.mode = "stale"
+    api.fake.release.clear()
+    status, first = api.invoke(connection_id, key="stale-first")
+    assert status == 202 and api.fake.entered.wait(3)
+    status, second = api.invoke(connection_id, "second", key="stale-second")
+    assert status == 202
+    api.fake.release.set()
+    first_job, second_job = api.completed(first), api.completed(second)
+    assert first_job["status"] == "COMPLETED" and first_job["result"]["operation_status"] == "STALE"
+    assert second_job["status"] == "FAILED" and second_job["result"]["outcome"] == "FAILED_BEFORE_EFFECT"
+    assert not second_job["write_intent"] and len(api.fake.invocations) == 1
+    assert api.service.store.operation(connection_id, "create", 1)["status"] == "STALE"
+    status, retried = api.invoke(connection_id, key="stale-first")
+    assert status == 202 and retried["job_id"] == first["job_id"] and retried["deduplicated"]
+    assert api.invoke(connection_id, key="new-call")[0] == 409
+
+
+@pytest.mark.parametrize("mode,outcome,status", [("refuse", "APPLICATION_REFUSAL", "COMPLETED"),
+                                               ("raise_before", "FAILED_BEFORE_EFFECT", "FAILED"),
+                                               ("raise_after", "UNCERTAIN", "FAILED")])
+def test_job_completion_never_invents_confirmed_effect(api, mode, outcome, status):
+    connection_id = api.connect(credentials={"username": "onboard-user", "password": "private-onboarding-password"})
+    api.learn(connection_id)
+    api.fake.mode = mode
+    code, accepted = api.invoke(connection_id)
+    assert code == 202
+    job = api.completed(accepted)
+    assert (job["status"], job["result"]["outcome"]) == (status, outcome)
+    assert "private-onboarding-password" not in json.dumps(job)
+
+
+def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_replay(tmp_path):
+    directory = tmp_path / "service"
+    store = ArtifactStore(directory)
+    configuration, credentials = connection_request({"url": "http://example.test/", "credentials": {"username": "private-user", "password": "private-password"}})
+    connection, connect_job = store.create_connection(configuration, credentials)
+    store.start_job(connect_job)
+    store.finish_job(connect_job, {"status": "CONNECTED"})
+    learn_job = store.queue_job(connection["id"], "learn", {"settings": {}})
+    store.start_job(learn_job)
+    store.finish_job(learn_job, {"status": "COMPLETE"}, operations=[operation()])
+    jobs = {}
+    for label in ("queued", "running_no_write", "running_write"):
+        job_id, _ = store.queue_invocation(connection["id"], "create", 1, {"title": label}, label)
+        jobs[label] = job_id
+        if label != "queued":
+            store.start_job(job_id)
+        if label == "running_write":
+            store.add_event(job_id, {"type": "write_intent"})
+    store.close()
+    api = HTTPHarness(directory)
+    try:
+        for label, job_id in jobs.items():
+            code, job = api.request("GET", "/v1/executions/" + job_id)
+            assert code == 200 and job["status"] == "FAILED"
+            assert job["result"]["outcome"] == ("UNCERTAIN" if label == "running_write" else "FAILED_BEFORE_EFFECT")
+        assert api.fake.calls == []
+        assert api.service.store.connection(connection["id"])["status"] == "DISCONNECTED"
+        code, old = api.invoke(connection["id"], "running_write", key="running_write")
+        assert code == 202 and old["job_id"] == jobs["running_write"] and old["deduplicated"]
+        assert api.fake.invocations == []
+        assert api.service.store.operation(connection["id"], "create")["status"] == "ACTIVE"
+        code, fresh = api.request("POST", f"/v1/connections/{connection['id']}/reconnect", {})
+        assert code == 202 and api.completed(fresh)["status"] == "COMPLETED"
+        assert api.fake.sessions[connection["id"]] == credentials
+    finally:
+        api.close()
+
+
+def test_store_has_one_owner_and_operation_publication_is_transactional(tmp_path):
+    store = ArtifactStore(tmp_path / "service")
+    try:
+        with pytest.raises(StoreError, match="already has a service owner"):
+            ArtifactStore(tmp_path / "service")
+        configuration, credentials = connection_request({"url": "http://example.test/"})
+        connection, connect_job = store.create_connection(configuration, credentials)
+        store.start_job(connect_job)
+        store.finish_job(connect_job, {"status": "CONNECTED"})
+        job_id = store.queue_job(connection["id"], "learn", {})
+        store.start_job(job_id)
+        with pytest.raises(StoreError, match="invalidation"):
+            store.finish_job(job_id, {}, operations=[operation()],
+                             invalidations=[{"id": "missing", "version": 1, "status": "STALE", "reason": "failed assumption"}])
+        assert store.operations(connection["id"], True) == []
+        assert store.job(job_id)["status"] == "RUNNING"
+        store.finish_job(job_id, {}, operations=[operation()])
+        job_id = store.queue_job(connection["id"], "learn", {})
+        store.start_job(job_id)
+        changed = {**operation(), "name": "changed same version"}
+        with pytest.raises(StoreError, match="immutable"):
+            store.finish_job(job_id, {}, operations=[changed])
+        assert store.operation(connection["id"], "create")["name"] == "FAKE create item"
+    finally:
+        store.close()
