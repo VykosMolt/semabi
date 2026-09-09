@@ -1,0 +1,618 @@
+{
+  "format": "product_reserved_assessment_freeze.v1",
+  "status": "ROOT_ADOPTED_BEFORE_FIRST_RESERVED_UI",
+  "candidate_created_at": "2026-09-09T19:48:38.518Z",
+  "root_adopted_at": "2026-09-09T19:50:21.124958+00:00",
+  "scope": "Prospective source, policy, configuration, budgets, and generic task-construction freeze; no reserved application access or concrete task construction performed by this worker.",
+  "source_sha256": {
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c"
+  },
+  "source_provenance": {
+    "workspace": "/home/moloch/semabi",
+    "captured_at_start": "2026-09-09T19:42:36.110293+00:00",
+    "captured_at_end": "2026-09-09T19:42:36.203601+00:00",
+    "head_commit": "05a81d55110ebf310693ec6e4171519aeda8dea1",
+    "head_commit_metadata": [
+      "05a81d55110ebf310693ec6e4171519aeda8dea1",
+      "2026-09-09T21:30:48+02:00",
+      "Preserve matched-fixture preparation and current product assessment limits"
+    ],
+    "head_stable_during_capture": true,
+    "common_development_source_commit": "c0045346f4a231eea80bc05d170e50bd2192348e",
+    "ten_files_equal_common_development_source": true,
+    "ten_files_equal_current_head": true,
+    "ten_files_equal_development_freeze": true,
+    "file_bytes": {
+      "semabi/compiler/runtime.py": 71719,
+      "semabi/compiler/surface.py": 15491,
+      "semabi/compiler/browser_session.py": 14434,
+      "semabi/compiler/browser.py": 14847,
+      "semabi/compiler/observation.py": 3966,
+      "semabi/compiler/evidence.py": 7215,
+      "semabi/compiler/artifacts.py": 20288,
+      "semabi/service.py": 31428,
+      "examples/client.py": 7171,
+      "semabi/baselines/cached_form.py": 34620
+    },
+    "tracked_dirty_files": [],
+    "frozen_source_dirty_files": [],
+    "dirty_hash_rule": "No tracked dirty files were observed, so this capture has no additional dirty-file hashes. Every frozen source file is independently SHA-256-bound above.",
+    "cleanliness_scope": "Tracked repository status and the ten explicitly frozen source files. Untracked private run state was not enumerated; this is not an assertion that the entire workspace has no untracked files.",
+    "adoption_rule": "Root rechecks all ten source hashes and the bound policy/callers at adoption and execution. Later documentation commits do not change source identity; a relevant code or policy change requires a new prospective freeze and preserves the prior result."
+  },
+  "evidence_files": [
+    {
+      "path": "runs/product_assessment_development_v1/freeze_v1.json",
+      "bytes": 4277,
+      "sha256": "5463d259c031ce06c453a7e84640ad1970143cd5e4244e3fb5899fd82fb4a020"
+    },
+    {
+      "path": "runs/product_assessment_development_v1/source_sha256.json",
+      "bytes": 1006,
+      "sha256": "29be699dd9c017a7b020d646552c8313c1ab626e6727e9ad9db309921a1b03d2"
+    },
+    {
+      "path": "runs/product_assessment_development_v1/execution_harness_v1.json",
+      "bytes": 1169,
+      "sha256": "baf7f8211bd6c3dabb93f12c534c5c32d503218c3b64dc7b3719a916647fc0ee"
+    },
+    {
+      "path": "docs/data/v4/transport/product/evaluation_protocol_v1.md",
+      "bytes": 17125,
+      "sha256": "959eb6ac3cab7202fcf00762cc209c8b360efdde24664a7a4053e0090b5a0d2d"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 468,
+      "sha256": "7a97133d7721374c4cde5371da7f418aa059c21abfc8e2ccc55a7d54ea631efe"
+    }
+  ],
+  "dependencies": {
+    "python": "3.12.13 (main, Jun  2 2026, 22:27:15) [Clang 22.1.3 ]",
+    "python_executable": "/home/moloch/semabi/.venv/bin/python",
+    "platform": "Linux-7.2.3-1-cachyos-x86_64-with-glibc2.44",
+    "packages": [
+      {
+        "name": "greenlet",
+        "version": "3.5.5"
+      },
+      {
+        "name": "iniconfig",
+        "version": "2.3.0"
+      },
+      {
+        "name": "packaging",
+        "version": "26.3"
+      },
+      {
+        "name": "playwright",
+        "version": "1.62.0"
+      },
+      {
+        "name": "pluggy",
+        "version": "1.6.0"
+      },
+      {
+        "name": "pyee",
+        "version": "13.0.1"
+      },
+      {
+        "name": "Pygments",
+        "version": "2.21.0"
+      },
+      {
+        "name": "pytest",
+        "version": "9.1.1"
+      },
+      {
+        "name": "PyYAML",
+        "version": "6.0.3"
+      },
+      {
+        "name": "semabi",
+        "version": "0.1.0"
+      },
+      {
+        "name": "semabi",
+        "version": "0.1.0"
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.16.0"
+      }
+    ],
+    "playwright_browser_registry": {
+      "path": "/home/moloch/semabi/.venv/lib/python3.12/site-packages/playwright/driver/package/browsers.json",
+      "bytes": 1780,
+      "sha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99",
+      "registered_browsers": [
+        {
+          "name": "chromium",
+          "revision": "1234",
+          "installByDefault": true,
+          "browserVersion": "151.0.7922.34",
+          "title": "Chrome for Testing"
+        },
+        {
+          "name": "chromium-headless-shell",
+          "revision": "1234",
+          "installByDefault": true,
+          "browserVersion": "151.0.7922.34",
+          "title": "Chrome Headless Shell"
+        },
+        {
+          "name": "chromium-tip-of-tree",
+          "revision": "1433",
+          "installByDefault": false,
+          "browserVersion": "151.0.7893.0",
+          "title": "Chrome Canary for Testing"
+        },
+        {
+          "name": "chromium-tip-of-tree-headless-shell",
+          "revision": "1433",
+          "installByDefault": false,
+          "browserVersion": "151.0.7893.0",
+          "title": "Chrome Canary Headless Shell"
+        },
+        {
+          "name": "firefox",
+          "revision": "1538",
+          "installByDefault": true,
+          "browserVersion": "153.0",
+          "title": "Firefox"
+        },
+        {
+          "name": "firefox-beta",
+          "revision": "1526",
+          "installByDefault": false,
+          "browserVersion": "152.0b1",
+          "title": "Firefox Beta"
+        },
+        {
+          "name": "webkit",
+          "revision": "2336",
+          "installByDefault": true,
+          "revisionOverrides": {
+            "mac14": "2251",
+            "mac14-arm64": "2251",
+            "ubuntu20.04-x64": "2092",
+            "ubuntu20.04-arm64": "2092"
+          },
+          "browserVersion": "26.5",
+          "title": "WebKit"
+        },
+        {
+          "name": "ffmpeg",
+          "revision": "1011",
+          "installByDefault": true
+        },
+        {
+          "name": "winldd",
+          "revision": "1007",
+          "installByDefault": false
+        },
+        {
+          "name": "android",
+          "revision": "1001",
+          "installByDefault": false
+        }
+      ]
+    },
+    "registry_scope": "Package metadata only; no browser launched or reserved application inspected",
+    "note": "Installed distribution metadata is recorded as observed, including two semabi metadata entries. Browser registry versions are package declarations; actual browser startup/version is not established by this candidate."
+  },
+  "scheduling_amendment": {
+    "authority": "Root coordination instruction for this candidate, received before any reserved UI access by this worker.",
+    "scope": "Only the historical scheduling prerequisite is superseded prospectively.",
+    "superseded_protocol_sentence": "Only after the resulting general repairs and a new fixed-source checkpoint may the root schedule the reserved application's first opening under this protocol.",
+    "replacement": "After root adoption of this current common-source freeze, schedule the reserved application's first opening and assessment before repairing observed fixed-development limitations.",
+    "historical_protocol_is_unchanged": true,
+    "core_families_budgets_metrics_unchanged": true,
+    "development_results_preserved": true
+  },
+  "reserved_application": {
+    "name": "Vikunja",
+    "version_as_recorded_in_protocol": "2.6.0",
+    "selection_basis": "Previously designated reserved independently maintained application in the bound product protocol; no application source or installation files inspected for this candidate.",
+    "first_ui_access_at": null,
+    "application_calls_by_candidate_worker": 0,
+    "application_file_inspections_by_candidate_worker": 0,
+    "expected_result_file_reads_by_candidate_worker": 0,
+    "concrete_tasks_created": false,
+    "account_access_status": "NOT_ESTABLISHED_BY_THIS_CANDIDATE",
+    "first_access_gate": "Independent evaluator waits for root's accepted-freeze and owned-installer startup receipts.",
+    "authorized_origin": "To be taken from the owned installer's startup receipt before evaluator access; not inferred here.",
+    "access_replacement_rule": "A separately documented access failure may justify replacement before onboarding. Performance failure cannot remove an application or requested task."
+  },
+  "task_construction": {
+    "rules_file": {
+      "path": "runs/product_reserved_preparation_v1/task_construction_rules.md",
+      "sha256": "d007076e57899ea4d446c4e3f91d68d789018e190961c764c3f739579103401c",
+      "bytes": 16264
+    },
+    "construction_status": "GENERIC_RULES_ONLY_NOT_CONCRETE_TASKS",
+    "learning_status": "NOT_STARTED_BY_THIS_CANDIDATE",
+    "core_order": [
+      "R1",
+      "R2",
+      "C1",
+      "C2",
+      "U1",
+      "U2",
+      "D1",
+      "D2",
+      "M1",
+      "M2"
+    ],
+    "challenge_order": [
+      "CH1",
+      "CH2",
+      "CH3",
+      "CH4",
+      "CH5",
+      "CH6"
+    ],
+    "family_counts": {
+      "R": 2,
+      "C": 2,
+      "U": 2,
+      "D": 2,
+      "M": 2
+    },
+    "concrete_selection_basis": "Ordinary rendered UI opportunity and useful user workflows, fixed before either arm's learning/performance; never learned schema compatibility.",
+    "relationship_substitution": {
+      "decision_time": "After permitted ordinary UI inspection and before onboarding/concrete-task adoption.",
+      "required_basis": "Observed actual UI relationship, direction, and projected-answer meaning; co-occurrence, tags, or filtering alone are insufficient.",
+      "replaces": [
+        "M1",
+        "M2"
+      ],
+      "replacement_order": [
+        "REL0",
+        "REL1",
+        "RELM",
+        "RELA"
+      ],
+      "cases": [
+        "zero witnesses",
+        "one witness",
+        "multiple witnesses with distinct projected answers",
+        "multiple witnesses with one agreed projected answer"
+      ],
+      "status": "UNESTABLISHED_PENDING_PERMITTED_UI_INSPECTION"
+    },
+    "initial_denominator": {
+      "applications": 1,
+      "arms": 2,
+      "core_requests_per_application": 10,
+      "challenge_requests_per_application": 6,
+      "total_requests_per_application": 16,
+      "arm_result_slots": 32,
+      "executed_result_slots_by_this_candidate": 0
+    },
+    "relational_denominator_if_selected_before_onboarding": {
+      "applications": 1,
+      "arms": 2,
+      "core_requests_per_application": 12,
+      "challenge_requests_per_application": 6,
+      "total_requests_per_application": 18,
+      "arm_result_slots": 36
+    },
+    "missing_opportunities": "Retain unavailable, setup-failed, inaccessible, unsupported, refused, incomplete, failed, and unconfirmed requests in their denominators.",
+    "learner_inputs": [
+      "authorized origin",
+      "credentials through private authentication configuration",
+      "ordinary user goals and supplied literal arguments",
+      "generic exploration settings"
+    ],
+    "prohibited_assistance": [
+      "evaluator selectors",
+      "manual operation mappings",
+      "traversal instructions",
+      "hidden endpoints or native state",
+      "expected answers",
+      "manual demonstrations",
+      "implicit read/merge/update chains",
+      "dropping unmatched goal clauses"
+    ],
+    "evaluator_expected_results": "Concrete goals/fixtures/expected results are frozen separately before onboarding and are not read by learner, binder, or baseline."
+  },
+  "fixture_and_setup_policy": {
+    "account_initialization_is_setup_not_learning": true,
+    "cumulative_setup_charges": [
+      "account provisioning",
+      "authentication",
+      "failed attempts",
+      "navigations",
+      "reloads",
+      "base fixture creation",
+      "changed fixture creation",
+      "challenge preconditions"
+    ],
+    "allowance_renews_after_restart_reset_or_new_phase": false,
+    "opaque_installation_costs": "Record separately from ordinary UI primitive counts, retaining wall/CPU/RSS, reset, failure, and manual-assistance costs.",
+    "reset_mechanism_status": "Root/installer finalization pending; record exact implementation before concrete-task adoption and assessment.",
+    "reset_mechanism_constraint": "Opaque authorized data copy/restoration only; no record interpretation or learner inputs.",
+    "paired_equivalence": "Restore the same base/changed fixture and independently check relevant visible state before each arm.",
+    "task_values": "Fresh run-specific visible values; same arguments across a pair from equivalent restored state; distinct values between cases.",
+    "learning_side_effects": "Preserve learning evidence and keep artifacts outside application fixture restoration.",
+    "unsupported_pairing": "Label unestablished fixture equivalence unmatched; do not pool into paired comparison; retain request outcomes."
+  },
+  "shared_binding": {
+    "policy_path": "runs/product_assessment_development_v1/binding/policy.md",
+    "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+    "binder_path": "runs/product_assessment_development_v1/binding/binding.py",
+    "binder_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+    "identical_for_both_arms": true,
+    "input_scope": "Only complete ordinary goal, its supplied arguments, and current connection's automatically learned public operations.",
+    "rule": "Unique complete bijection under frozen limited creation/exact-sole-value-replacement grammar and flat closed required-string schema. No defaults, conversions, prose extraction, implicit read/merge/update, clause omission, manual rescue, or partial dispatch.",
+    "receipts": "Retain request/catalog/artifact/policy/source hashes and every rejection. ELIGIBLE is preflight only and supplies the exact same public artifact and literal mapped arguments to both arms.",
+    "general_goal_planning": "UNESTABLISHED",
+    "baseline_parameter_substitution": "Exact supplied mapped values replace cached required arguments; strict unique current visible descriptor/target resolution as frozen in semabi.baselines.cached_form. No semantic repair.",
+    "baseline_dispatched_is_independent_success": false
+  },
+  "caller_and_meter_source_bindings": [
+    {
+      "path": "runs/product_assessment_development_v1/binding/binding.py",
+      "bytes": 12362,
+      "sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+      "recorded_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+      "matches_recorded_receipt": true
+    },
+    {
+      "path": "runs/product_assessment_development_v1/binding/policy.md",
+      "bytes": 4003,
+      "sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+      "recorded_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+      "matches_recorded_receipt": true
+    },
+    {
+      "path": "runs/product_assessment_development_v1/invoke_http.py",
+      "bytes": 8552,
+      "sha256": "6aff55794029cd9dc70fa8d29815508af933dfa3751feb819c202c58a5047eaa",
+      "recorded_sha256": "6aff55794029cd9dc70fa8d29815508af933dfa3751feb819c202c58a5047eaa",
+      "matches_recorded_receipt": true
+    },
+    {
+      "path": "runs/product_assessment_development_v1/run_lifecycle.py",
+      "bytes": 2517,
+      "sha256": "acf87fc17170b2586c33ea95f15f0bc32dfb7ff3e75c2c0a24c3e2dddbe813b2",
+      "recorded_sha256": "acf87fc17170b2586c33ea95f15f0bc32dfb7ff3e75c2c0a24c3e2dddbe813b2",
+      "matches_recorded_receipt": true
+    },
+    {
+      "path": "runs/product_assessment_development_v1/run_service_call.py",
+      "bytes": 5387,
+      "sha256": "8bc5bfc01d4521379064eef521455f3618cb0c1fcc34055f87bbb3303c2a9710",
+      "recorded_sha256": "8bc5bfc01d4521379064eef521455f3618cb0c1fcc34055f87bbb3303c2a9710",
+      "matches_recorded_receipt": true
+    },
+    {
+      "path": "runs/product_assessment_development_v1/run_baseline_call.py",
+      "bytes": 1508,
+      "sha256": "4f8568f29a6123a429ec4ac4befbd0da6edc5013a213eb0e0b508f3d28b296f9",
+      "recorded_sha256": "4f8568f29a6123a429ec4ac4befbd0da6edc5013a213eb0e0b508f3d28b296f9",
+      "matches_recorded_receipt": true
+    },
+    {
+      "path": "runs/product_assessment_development_v1/meter/command_meter.py",
+      "bytes": 9283,
+      "sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+      "recorded_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+      "matches_recorded_receipt": true
+    },
+    {
+      "path": "runs/product_assessment_development_v1/meter/test_command_meter.py",
+      "bytes": 4046,
+      "sha256": "46493b3755a09f625d275ecb1acd64f89b43602bf1e6cc23cfd7b6a1fe5eb8fe",
+      "recorded_sha256": "46493b3755a09f625d275ecb1acd64f89b43602bf1e6cc23cfd7b6a1fe5eb8fe",
+      "matches_recorded_receipt": true
+    }
+  ],
+  "reserved_exact_copies": {
+    "target_directory": "runs/product_assessment_reserved_v1",
+    "ownership": "Root prepared these copies; candidate worker read only their explicitly authorized caller/source-map bytes.",
+    "files": [
+      {
+        "source_path": "runs/product_assessment_development_v1/invoke_http.py",
+        "target_path": "runs/product_assessment_reserved_v1/invoke_http.py",
+        "expected_sha256": "6aff55794029cd9dc70fa8d29815508af933dfa3751feb819c202c58a5047eaa",
+        "target_present": true,
+        "actual_sha256": "6aff55794029cd9dc70fa8d29815508af933dfa3751feb819c202c58a5047eaa",
+        "bytes": 8552,
+        "byte_identical_to_source": true
+      },
+      {
+        "source_path": "runs/product_assessment_development_v1/run_service_call.py",
+        "target_path": "runs/product_assessment_reserved_v1/run_service_call.py",
+        "expected_sha256": "8bc5bfc01d4521379064eef521455f3618cb0c1fcc34055f87bbb3303c2a9710",
+        "target_present": true,
+        "actual_sha256": "8bc5bfc01d4521379064eef521455f3618cb0c1fcc34055f87bbb3303c2a9710",
+        "bytes": 5387,
+        "byte_identical_to_source": true
+      },
+      {
+        "source_path": "runs/product_assessment_development_v1/run_baseline_call.py",
+        "target_path": "runs/product_assessment_reserved_v1/run_baseline_call.py",
+        "expected_sha256": "4f8568f29a6123a429ec4ac4befbd0da6edc5013a213eb0e0b508f3d28b296f9",
+        "target_present": true,
+        "actual_sha256": "4f8568f29a6123a429ec4ac4befbd0da6edc5013a213eb0e0b508f3d28b296f9",
+        "bytes": 1508,
+        "byte_identical_to_source": true
+      },
+      {
+        "source_path": "runs/product_assessment_development_v1/source_sha256.json",
+        "target_path": "runs/product_assessment_reserved_v1/source_sha256.json",
+        "expected_sha256": "29be699dd9c017a7b020d646552c8313c1ab626e6727e9ad9db309921a1b03d2",
+        "target_present": true,
+        "actual_sha256": "29be699dd9c017a7b020d646552c8313c1ab626e6727e9ad9db309921a1b03d2",
+        "bytes": 1006,
+        "byte_identical_to_source": true
+      }
+    ],
+    "all_four_observed_byte_identical": true,
+    "behavior": "Same directory depth preserves invoke_http ROOT; service-owner BASE resolves to reserved directory, including service data, token, caller and source map.",
+    "no_source_logic_change": true
+  },
+  "settings": {
+    "service": {
+      "module": "semabi.service",
+      "host": "127.0.0.1",
+      "port": 8860,
+      "server": "http://127.0.0.1:8860",
+      "data_dir": "runs/product_assessment_reserved_v1/service",
+      "token_file": "runs/product_assessment_reserved_v1/service/token",
+      "source_hashes_file": "runs/product_assessment_reserved_v1/source_sha256.json",
+      "http_caller": "runs/product_assessment_reserved_v1/invoke_http.py",
+      "owner_caller": "runs/product_assessment_reserved_v1/run_service_call.py",
+      "baseline_caller": "runs/product_assessment_reserved_v1/run_baseline_call.py",
+      "launch_rule": "Root serializes port use after all development service/jobs are finished; use .venv/bin/python and frozen source.",
+      "connection_and_learning": "Public POST /v1/connections and POST /v1/connections/{connection_id}/learn; no native/test entry point.",
+      "connection_scope": {
+        "exploration_enabled": true,
+        "max_actions": 120,
+        "max_writes": 40
+      },
+      "learning_settings": "Pass only remaining max_actions/max_writes after initial connection navigation and authentication; whole connection-plus-learning phase remains within 900 seconds.",
+      "learning_wall_limit": "External phase deadline; frozen learning API does not expose a native max_seconds setting. Retain late/unfinished jobs and reconcile before state reuse.",
+      "restart_rule": "Fresh service process and fresh browser reuse persisted artifacts for requested restart cases; owner caller uses this path for every executed eligible workflow."
+    },
+    "viewport": {
+      "evaluated": {
+        "width": 1400,
+        "height": 1000
+      },
+      "fixture": {
+        "width": 1280,
+        "height": 900
+      }
+    },
+    "browser": {
+      "engine": "Playwright Chromium",
+      "headless": true,
+      "actual_reserved_launch": "NOT_PERFORMED_BY_THIS_CANDIDATE"
+    },
+    "worker_cpu_affinity": [
+      2,
+      3
+    ],
+    "worker_max_cores": 2,
+    "aggregate_heavy_job_core_limit": 12,
+    "numerical_library_threads": 1,
+    "launch_thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    },
+    "worker_max_rss_bytes": 4294967296,
+    "rss_enforcement": "Frozen external command meter monitors the owned process tree; stop the evaluation worker when RSS exceeds limit.",
+    "arms_run_sequentially": true,
+    "arm_order": "Odd frozen case number: semabi then cached_form. Even: cached_form then semabi. Relational substitution is numbered in the frozen list before onboarding.",
+    "paid_resources": 0,
+    "runtime_model_calls": 0
+  },
+  "budgets": {
+    "evaluator_fixture_setup": {
+      "max_seconds": 900,
+      "max_actions": 60,
+      "max_possible_writes": 20,
+      "cumulative": true,
+      "includes_account_initialization_authentication_and_failures": true
+    },
+    "connection_and_onboarding": {
+      "max_seconds": 900,
+      "max_actions": 120,
+      "max_possible_writes": 40,
+      "includes_initial_navigation_and_authentication": true
+    },
+    "workflow": {
+      "max_seconds": 60,
+      "max_actions": 20,
+      "max_possible_writes": 12,
+      "includes_initial_navigation_and_authentication": true
+    },
+    "independent_verification_per_request": {
+      "max_seconds": 30,
+      "max_actions": 12,
+      "max_possible_writes": 8,
+      "write_scope": "Search/filter actions only; no saved business changes."
+    },
+    "interruption_recovery": {
+      "additional_max_seconds": 60,
+      "max_actions": 10,
+      "max_possible_writes": 2,
+      "precondition": "Justified independent read-back; CH6 intervention is unavailable in frozen harness."
+    }
+  },
+  "harness_limits": {
+    "unavailable_intervention_cases": [
+      "CH3",
+      "CH5",
+      "CH6"
+    ],
+    "reasons": {
+      "CH3": "No public evaluated-viewport intervention",
+      "CH5": "No public owned-session logout control",
+      "CH6": "No available after-write-intent browser interruption point"
+    },
+    "raw_internal_snapshot_count": "UNMEASURED_NOT_EXPOSED",
+    "public_observation_events": "Report separately; not equivalent to internal snapshot count.",
+    "timeout_policy": "External wall-clock limit governs completion. Timeout does not cancel accepted jobs; known terminal state required before restoration/another arm. Preserve idempotency identity and independently reconcile lost replies before retry.",
+    "cost_reporting": "Record caller budget result and external complete elapsed time, including separate startup/reconciliation/shutdown; never count a late completion as within the workflow limit.",
+    "command_meter_is_browser_intervention": false
+  },
+  "accounting_and_acceptance": {
+    "acquisition": "Same automatically learned artifact assistance to both arms; acquisition cost charged to each comparison arm, physical cost counted once. Recipe preparation and manual assistance reported separately.",
+    "task_completion": "Independently completed predefined workflows / all predefined requests, with core completion separately; report raw numerators and denominators by application, family, and arm.",
+    "invocation_correctness": "Independently correct observable outcomes / actual invocations, alongside invocation coverage. Undefined if no invocations.",
+    "confirmation_and_safety": "Report CONFIRMED precision, false confirmations, wrong side effects, and independent-check gaps; runtime confidence cannot override independent evidence.",
+    "abstention": "Accurate refusal/ambiguity may be correct behavior but does not complete a requested write.",
+    "ordinary_milestone": {
+      "minimum_core_successes": 8,
+      "core_requests": 10,
+      "success_in_every_core_family": true,
+      "fresh_session_reuse": true,
+      "service_restart_reuse": true,
+      "max_independently_detected_wrong_side_effects": 0,
+      "max_false_confirmations": 0
+    },
+    "relational_milestone": {
+      "minimum_core_successes": 9,
+      "core_requests": 12,
+      "correct_multiplicity_in_all_four_relationship_cases": true,
+      "other_requirements": "Same family/reuse/zero-side-effect/zero-false-confirmation conditions."
+    },
+    "scope": "Per-application bounded demonstration criterion, not a reliability estimate or competitive superiority claim."
+  },
+  "adoption_and_pending_work": {
+    "candidate_is_execution_authorization": false,
+    "required_root_record": "Accepted source/configuration freeze and installer startup receipt before independent UI access.",
+    "pending_before_onboarding": [
+      "actual account access/setup result",
+      "ordinary UI opportunities and concrete task/expected-result freeze",
+      "relationship substitution decision",
+      "exact opaque fixture lifecycle mechanism and equivalent fixture evidence"
+    ],
+    "fixed_source_rule": "Keep learner, baseline, binder, and policy unchanged through assessment. A repair after reserved access preserves the first result and moves the application into development.",
+    "no_app_or_expectation_inspection_in_candidate": true
+  },
+  "candidate_sha256": "6d032e4ada929b34a9541584d0bb28609c60132416bb605bd5857b3925d3047e",
+  "task_construction_rules_sha256": "d007076e57899ea4d446c4e3f91d68d789018e190961c764c3f739579103401c",
+  "root_source_recheck_passed": true,
+  "root_head_at_adoption": "05a81d55110ebf310693ec6e4171519aeda8dea1",
+  "root_dirty_files_at_adoption": [],
+  "authorized_application_origin": "http://127.0.0.1:8853/",
+  "actual_reserved_ui_calls_at_adoption": 0,
+  "learner_logic_changes": 0,
+  "root_decision": "Run reserved assessment on unchanged common learner and baseline before repairing development limitations. No concrete task constructed yet; installer start and ordinary UI setup follow."
+}

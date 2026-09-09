@@ -1,0 +1,208 @@
+"""Independent ordinary-UI setup controller with one cumulative phase ledger.
+
+Commands are JSON lines in a private file. Only rendered browser observations
+and ordinary primitives are available; no application store/API introspection.
+Run this controller only after the root's accepted freeze and startup receipt.
+"""
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import sys
+import time
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+sys.dont_write_bytecode = True
+
+from semabi.compiler.browser import Primitive
+from semabi.compiler.browser_session import BrowserSession
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+class ReadCountedBrowser(BrowserSession):
+    raw_reads = 0
+
+    def _raw_snapshot(self):
+        self.raw_reads += 1
+        return super()._raw_snapshot()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--origin', required=True)
+    parser.add_argument('--credentials-file', type=Path, required=True)
+    parser.add_argument('--commands', type=Path, required=True)
+    parser.add_argument('--output-dir', type=Path, required=True)
+    args = parser.parse_args()
+    os.umask(0o077)
+    args.output_dir.mkdir(parents=True, mode=0o700, exist_ok=False)
+    credentials = json.loads(args.credentials_file.read_text())
+    if not isinstance(credentials, dict):
+        raise ValueError('Credential configuration must be an object')
+    secrets = sorted({value for value in credentials.values()
+                      if isinstance(value, str) and value}, key=len, reverse=True)
+
+    def redact(value):
+        if isinstance(value, str):
+            for secret in secrets:
+                value = value.replace(secret, '[REDACTED]')
+            return value
+        if isinstance(value, dict):
+            return {key: redact(part) for key, part in value.items()}
+        if isinstance(value, list):
+            return [redact(part) for part in value]
+        return value
+
+    def save(path, value):
+        raw = json.dumps(redact(value), indent=2, ensure_ascii=False) + '\n'
+        temporary = path.with_name(path.name + '.new')
+        with temporary.open('w') as stream:
+            stream.write(raw)
+            stream.flush()
+            os.fsync(stream.fileno())
+        temporary.replace(path)
+
+    started = time.monotonic()
+    ledger = {'format': 'reserved_ordinary_ui_setup.v1', 'started_at': now(),
+              'source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              'origin': args.origin, 'viewport': {'width': 1280, 'height': 900},
+              'limits': {'max_seconds': 900, 'max_actions': 60, 'max_possible_writes': 20},
+              'actions': 0, 'possible_writes': 0, 'read_calls': 0,
+              'raw_browser_reads': 0, 'events': [], 'state': 'STARTING',
+              'credentials_field_names': sorted(credentials),
+              'scope': 'Evaluator account/fixture setup only; no learner invocation or private app-state access'}
+    browser = None
+    surface = None
+    serial = 0
+
+    def checkpoint():
+        ledger['elapsed_seconds'] = round(time.monotonic() - started, 6)
+        ledger['raw_browser_reads'] = browser.raw_reads if browser is not None else 0
+        ledger['within_limits'] = (ledger['elapsed_seconds'] <= 900
+                                   and ledger['actions'] <= 60
+                                   and ledger['possible_writes'] <= 20)
+        save(args.output_dir / 'ledger.json', ledger)
+
+    def reserve(kind):
+        write = kind not in {'navigate', 'reload'}
+        if (time.monotonic() - started >= 900 or ledger['actions'] >= 60
+                or write and ledger['possible_writes'] >= 20):
+            raise RuntimeError('Cumulative setup budget prevents this primitive')
+        ledger['actions'] += 1
+        ledger['possible_writes'] += int(write)
+
+    def observe(label):
+        nonlocal surface, serial
+        if time.monotonic() - started >= 900:
+            raise RuntimeError('Cumulative setup wall limit reached')
+        ledger['read_calls'] += 1
+        surface = browser.read()
+        serial += 1
+        record = {'format': 'independent_rendered_observation.v1', 'id': serial,
+                  'observed_at': now(), 'label': label, 'settled': surface.settled,
+                  'observation': surface.observation.to_json(),
+                  'controls': surface.controls, 'forms': surface.forms}
+        save(args.output_dir / f'observation_{serial:03d}.json', record)
+        return serial
+
+    def target_of(command):
+        if 'target' in command:
+            target = command['target']
+            if type(target) is not int or target < 0 or target >= len(surface.observation.nodes):
+                raise ValueError('Target is outside the latest visible observation')
+            return target
+        matches = [node.i for node in surface.observation.nodes
+                   if node.role == command.get('role') and node.name == command.get('name')]
+        if len(matches) != 1:
+            raise ValueError('Visible role/name selection is not unique')
+        return matches[0]
+
+    try:
+        checkpoint()
+        browser = ReadCountedBrowser(args.origin)
+        browser._page.set_viewport_size({'width': 1280, 'height': 900})
+        reserve('navigate')
+        ledger['events'].append({'kind': 'navigate', 'started_at': now(), 'url': args.origin})
+        checkpoint()
+        browser.goto()
+        ledger['events'][-1]['observation_id'] = observe('initial_ordinary_ui')
+        ledger['state'] = 'READY'
+        checkpoint()
+        with args.commands.open() as stream:
+            sequence = 0
+            while time.monotonic() - started < 900:
+                line = stream.readline()
+                if not line:
+                    time.sleep(0.05)
+                    continue
+                sequence += 1
+                response = {'sequence': sequence, 'started_at': now()}
+                try:
+                    command = json.loads(line)
+                    kind = command['kind']
+                    response['command'] = command
+                    if kind == 'close':
+                        response['status'] = 'CLOSED'
+                        ledger['state'] = 'CLOSED_BY_COORDINATOR'
+                        save(args.output_dir / f'response_{sequence:03d}.json', response)
+                        break
+                    if kind == 'snapshot':
+                        response['observation_id'] = observe(command.get('label', 'requested_read'))
+                    elif kind == 'reload':
+                        reserve('reload')
+                        ledger['events'].append({'kind': kind, 'started_at': now()})
+                        checkpoint()
+                        browser.reload()
+                        response['observation_id'] = observe(command.get('label', 'after_reload'))
+                    elif kind in {'click', 'type', 'select', 'press'}:
+                        target = None if kind == 'press' else target_of(command)
+                        value = command.get('text')
+                        if 'secret' in command:
+                            value = credentials[command['secret']]
+                            if not isinstance(value, str):
+                                raise ValueError('Selected credential must be a string')
+                        reserve(kind)
+                        event = {'kind': kind, 'started_at': now(), 'target': target,
+                                 'command': command, 'before_observation_id': serial}
+                        ledger['events'].append(event)
+                        checkpoint()
+                        result = browser.act(Primitive(kind, target, value))
+                        event['ok'] = result.ok
+                        event['error'] = result.error
+                        response['primitive_ok'] = result.ok
+                        response['observation_id'] = observe(command.get('label', 'after_primitive'))
+                        if not result.ok:
+                            response['error'] = result.error
+                    else:
+                        raise ValueError('Unsupported ordinary-UI command')
+                    response.setdefault('status', 'OBSERVED')
+                except Exception as error:
+                    response.update(status='ERROR', error_type=type(error).__name__, error=str(error))
+                response['completed_at'] = now()
+                checkpoint()
+                response['cumulative'] = {key: ledger[key] for key in
+                                          ['actions', 'possible_writes', 'elapsed_seconds', 'raw_browser_reads']}
+                save(args.output_dir / f'response_{sequence:03d}.json', response)
+            else:
+                ledger['state'] = 'SETUP_WALL_LIMIT_REACHED'
+    except Exception as error:
+        ledger.update(state='ERROR', error_type=type(error).__name__, error=str(error))
+    finally:
+        if browser is not None:
+            browser.close()
+        ledger['completed_at'] = now()
+        checkpoint()
+    print(json.dumps({key: ledger[key] for key in
+                      ['state', 'actions', 'possible_writes', 'elapsed_seconds', 'within_limits']}))
+    return 0 if ledger['state'] == 'CLOSED_BY_COORDINATOR' else 2
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

@@ -103,10 +103,15 @@ values look unchanged. A single-field replacement also requires the old value
 to be absent from the original readback view after saving and reloading.
 Separate editor drafts stop navigation or submission. The current selection
 scope is one exact, unique anchor in the rendered record view; search across
-pages and arbitrary filters are not established. The fixed development run also
-found that paragraphs split across inline markup can defeat exact target lookup,
-including memo content followed by a hashtag. The original failed calls are
-retained in the [workflow assessment](data/v4/transport/product/development_assessment_v1/README.md).
+pages and arbitrary filters are not established. The fixed development run found
+that inline markup defeated exact paragraph lookup. The
+[paragraph repair](data/v4/transport/product/paragraph_repair_v1/README.md) now
+retains complete inline values and rejects partial text witnesses. A new Memos
+call resolved the target but stopped when typing opened suggestions and changed
+the editor contract; the saved update remains unestablished. The original failed
+calls remain in the [workflow assessment](data/v4/transport/product/development_assessment_v1/README.md).
+The [first reserved assessment](data/v4/transport/product/reserved_assessment_v1/README.md)
+completed no workflows because authentication stopped before learning.
 
 Two successful read trials can establish one varying numeric label on an
 untouched dialog button. This declared prior preserves digit widths, separators,

@@ -54,17 +54,32 @@ Rolling queue:
    observed paragraph/inline-tag fragmentation explains the local mismatch.
    Linkding's 32 arm/request slots remain SETUP_UNESTABLISHED. The baseline C2
    startup failure is retained separately from actual invocation competence.
-5. Active: reserved Vikunja assessment on the unchanged ten-file c004534 learner
-   and baseline. Root adopted the prospective freeze at 19:50:21 UTC, before
-   first ordinary UI access; startup succeeded at 19:57:06 UTC. Keep code,
-   caller policy, task-construction rules and budgets fixed through this first
-   result. This scheduling decision supersedes the older instruction to repair
-   development limitations before opening the reserve. Concrete UI goals and
-   fixtures are being constructed before onboarding.
-6. Preserve the reserved result, then repair the demonstrated paragraph value
-   fragmentation and other highest-value blockers. An isolated source candidate
-   is under review; the live learner remains unchanged. Reassess transfer on
-   newly reserved evidence after subsequent repairs.
+5. First reserved Vikunja assessment sealed at 20:28:30 UTC on the unchanged
+   ten-file c004534 learner and baseline: 0/18 requests per arm, including 0/12
+   core, with no actual workflow invocation. The shared connection reported
+   ambiguous login controls before learning. Per arm, nine prepared requests
+   retain AUTHENTICATION_UNESTABLISHED, six SETUP_UNESTABLISHED and three
+   INTERVENTION_UNAVAILABLE. The initial freeze preceded ordinary UI access;
+   concrete goals and expectations preceded onboarding. Seal SHA-256:
+   `5695960a30df9ea4d338953405ca8e2d134ec1944700e9a1e30dcf5d32f398eb`.
+6. Paragraph completeness repair adopted only after that seal. It
+   preserves full rendered inline text and restricts all text-witness channels
+   to complete containing paragraph values. The exact candidate passed 323
+   focused tests; see [repair evidence](product/paragraph_repair_v1/README.md).
+   New-source Memos onboarding learned three operations, but four matched U1/U2
+   arm retests completed no requested update. Exact lookup now succeeds; a
+   popup appearing after fill changes the editor contract. Its withdrawal
+   persists across service restart. All checks/jobs are terminal under
+   `runs/product_paragraph_development_v1/phase_terminal_v1.json`; the retained
+   source snapshot binds that result as main advances.
+7. Active: reviewed isolated authentication repair adds advertised login-button
+   discovery and checks control continuity before credential actions. It passed
+   403 focused tests. Root will adopt it and run standard HTTP onboarding on
+   Vikunja in `runs/product_auth_development_v1`, using the restored prepared
+   base. Vikunja is now development evidence. A bounded Memos autocomplete
+   dismissal probe is next; keep the existing strict form checks. Reassess
+   transfer on newly reserved evidence after repairs. The first product
+   milestone remains unmet.
 
 Application setup is separate from learner implementation. Proposed disclosed
 development applications are linkding and Memos; Vikunja is reserved, subject to

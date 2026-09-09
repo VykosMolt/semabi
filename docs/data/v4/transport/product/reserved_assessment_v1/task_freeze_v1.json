@@ -1,0 +1,282 @@
+{
+  "format": "product_reserved_task_and_setup_freeze.v1",
+  "status": "READY_FOR_ROOT_ADOPTION_BEFORE_ONBOARDING",
+  "recorded_at": "2026-09-09T20:20:58.745767+00:00",
+  "source_freeze": {
+    "path": "runs/product_assessment_reserved_v1/freeze_v1.json",
+    "bytes": 28503,
+    "sha256": "c1169be7c3be026a2978b8c487df1b2ab11de0a2ad06b022c025a98154491372"
+  },
+  "task_plan": {
+    "path": "runs/product_assessment_reserved_v1/task_plan.json",
+    "bytes": 15658,
+    "sha256": "bb10e56f22fe6dbd29c4d0526f019c7332608c2652b285973c308878e1845f6b"
+  },
+  "evaluator_only_expected_results": {
+    "path": "runs/product_assessment_reserved_v1/expected_results.json",
+    "bytes": 7070,
+    "sha256": "21ddd987ebd2ec47a6456e8f2c149df1a4b9045dc5e16f2e0d17c33484c86e76"
+  },
+  "source_and_policy_boundary": "No learner, baseline, binder, application implementation, database or private client-store modifications/inspection; no performance observations used to select goals. Credential JSON used only for ordinary UI account provisioning/authentication.",
+  "setup": {
+    "started_at": "2026-09-09T19:58:16.447911+00:00",
+    "deadline": "2026-09-09T20:13:16.447911+00:00",
+    "ended_at": "2026-09-09T20:13:16.581088+00:00",
+    "elapsed_seconds_including_coordination_and_shutdown": 900.133186,
+    "phase_wall_result": "CUMULATIVE_SETUP_WALL_LIMIT_REACHED",
+    "timing_interpretation": "Interactive evaluator/operator/browser setup and coordination time, including the gap for opaque snapshot; not learner onboarding latency.",
+    "attempted_browser_interactions": 23,
+    "attempted_possible_write_primitives": 19,
+    "primitive_failures_observed": 0,
+    "undispatched_queued_commands": 5,
+    "undispatched_possible_write_intents": 1,
+    "conservative_possible_write_total_including_undispatched_intent": 20,
+    "queued_completion_was_not_executed": true,
+    "read_calls_across_phases": 25,
+    "raw_evaluator_browser_reads": 134,
+    "no_further_ui_calls_or_budget_renewal": true,
+    "base_fixture_status": "THREE_INTENDED_TASKS_VERIFIED_BEFORE_AND_AFTER_RELOAD_AND_OPAQUELY_SNAPSHOTTED",
+    "base_snapshot_name": "rvfpbrfgop-base",
+    "base_snapshot_manifest_sha256": "748712a0278247e25ee32a884458cbd964cf9d434c33e7a706e48a8fbebae25a",
+    "base_snapshot_root_receipt_time": "2026-09-09T20:11:22.571+00:00",
+    "changed_fixture_status": "SETUP_UNESTABLISHED_NOT_CREATED",
+    "last_B_state_evidence": {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v2/observation_005.json",
+      "bytes": 121232,
+      "sha256": "b68df21ecf2b01b0e44925c5a423da86d80826b7f4d166b4a51df9b94e38e515"
+    },
+    "last_B_state": "Exact B title and amber label with MARK TASK DONE! remained visible before deadline; no saved completion change observed or attempted by browser.",
+    "relationship_status": "Explicit Related Task UI and zero list observed; no nonzero/multiple relationship fixture created."
+  },
+  "resource_accounting": {
+    "physical_browser_worker_wall_seconds_sum": 673.88321,
+    "meter_reported_child_rusage_cpu_seconds_sum": 6.455334,
+    "maximum_sampled_aggregate_rss_bytes": 944406528,
+    "browser_worker_cpu_affinity": [
+      4
+    ],
+    "maximum_observed_affinity_count": 1,
+    "rss_limit_exceeded": false,
+    "owned_processes_terminal_and_absent": true,
+    "meter_scope": "Preserve original per-phase ownership/CPU measurement limitations.",
+    "opaque_installation_snapshot_costs": "Separate root/installer lifecycle receipts; not included in browser child CPU sum.",
+    "runtime_model_calls": 0,
+    "paid_runtime_resources": 0,
+    "evaluator_model_token_accounting": "Not measured by these browser/process ledgers."
+  },
+  "manual_assistance": {
+    "ordinary_ui_command_files": 2,
+    "queued_ui_commands": 29,
+    "generic_evaluator_controller_source_files": 2,
+    "application_specific_learner_baseline_or_binding_code_files": 0,
+    "application_specific_evaluator_procedure_files": [
+      "setup/commands_v1.jsonl",
+      "setup/commands_v2.jsonl"
+    ],
+    "additional_inline_evaluator_programs": [
+      "Visible base-frame checker (tool edd7d5)",
+      "Offline concrete task/expected-result construction (tool 562348)"
+    ],
+    "offline_construction_interval": {
+      "from": "2026-09-09T20:13:16.581088+00:00",
+      "to": "2026-09-09T20:18:31.853197+00:00",
+      "elapsed_seconds": 315.272109
+    },
+    "scope": "Evaluator preparation and task construction; ordinary goals only are passed to the shared binder. Recipes and expected answers stay evaluator-private."
+  },
+  "denominator": {
+    "applications": 1,
+    "arms": 2,
+    "core_requests": 12,
+    "challenge_requests": 6,
+    "requests": 18,
+    "arm_result_slots": 36
+  },
+  "case_status_counts": {
+    "PREPARED": 9,
+    "SETUP_UNESTABLISHED": 6,
+    "INTERVENTION_UNAVAILABLE": 3
+  },
+  "bound_setup_files": [
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/authorization_v1.json",
+      "bytes": 841,
+      "sha256": "3af5676d54a504071b4b2d970d26da6aa9f04088251b5129c09827db4abe3f6f"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/ui_session.py",
+      "bytes": 9432,
+      "sha256": "5028170806fb9f661854c85e348a27cb07789927d817220ef8f798e8b5459157"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/ui_session_v2.py",
+      "bytes": 11663,
+      "sha256": "3889ebb6009e1f582b3836dd3ec3b39d6a215d0b0ab2d217bfc906178a48553f"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/commands_v1.jsonl",
+      "bytes": 1782,
+      "sha256": "e294b54aa20d1442543d7397c1a8b1f06803143483f0eae2e9f10afc6f8abfb6"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/commands_v2.jsonl",
+      "bytes": 889,
+      "sha256": "8bc36e9e3163daf7ce62332aa5783a44fdc933525c28d12719b98b1a2a3517cd"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/fixture_values_v1.json",
+      "bytes": 351,
+      "sha256": "b923ede6d973353eb93d9d0df28ad3b2fc49246b8b7185accf69a4f81502bc73"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/base_visible_verification_v1.json",
+      "bytes": 2514,
+      "sha256": "a19b691fd8e387b4500c5cacd1247ba57a71288d3409e6a3ad4a318063404496"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/ledger.json",
+      "bytes": 6500,
+      "sha256": "6d9a63eca4fb361d7acbbea8693b1cf13e7ed924a8ac43421cd89b2d0487ed95"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v2/ledger.json",
+      "bytes": 2652,
+      "sha256": "81ac5f2d9f727c4045d3490d770fa60935aa5c67f8a88994d15681182acbcca4"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/meter_v1/result.json",
+      "bytes": 3384,
+      "sha256": "f7a2cbcb8224d154d61cb363cd5fab884afe5541a25c42d837d7a61950e8ae61"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/meter_v2/result.json",
+      "bytes": 3481,
+      "sha256": "737721fb95c2eaeea0b35dcf779c3604cc4ff3b04051e47ed98b8e0c59493d47"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_001.json",
+      "bytes": 14101,
+      "sha256": "1c433b4766ea8a2717b956aac52f7d397ff34ac81661c487fe47abeed5a055c7"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_002.json",
+      "bytes": 13689,
+      "sha256": "9cd769ac69d330be4ceb14937a895e9a526e241643a74bf729a6a2ced1e80153"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_003.json",
+      "bytes": 13699,
+      "sha256": "e2b1af71c465fd4b6168876e8586f0f5a809c5cea884f63d3d81f8c59f4bb616"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_004.json",
+      "bytes": 13709,
+      "sha256": "179d952e35ccebbee36e0e3dcd65de105daf672904a53a80ed3a48d69c3ef29b"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_005.json",
+      "bytes": 13710,
+      "sha256": "a17e714cd91dbc064c93bbae2145c9f6ae4c5f21f15a6d3cbab20b4b5a0103df"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_006.json",
+      "bytes": 13535,
+      "sha256": "a6336ea6c0defb72cac9fc0b99b9507b20adfc860514bf065b600c10b6bb415a"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_007.json",
+      "bytes": 33564,
+      "sha256": "7fb57ec1f0d7a2ff45ef299c8e1538d083a2caf4568dfbaa626630b65678d4a8"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_008.json",
+      "bytes": 45501,
+      "sha256": "2abdef454034214e89800f35569e389092c79098fe1161897442890089f8ef0c"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_009.json",
+      "bytes": 34948,
+      "sha256": "f0d440afbf70ac58c785a17ad20723ce3fc7774e975b351d62a6de3c66047cef"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_010.json",
+      "bytes": 33600,
+      "sha256": "0bed025c73a4bf2f52eb598fb0b4aa01354246f8ec94511b28281fac79bf75a5"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_011.json",
+      "bytes": 29418,
+      "sha256": "68db923bc5b6d3492e5b09b716e762ecdd1435c2957c2bbd847a77b19cefc480"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_012.json",
+      "bytes": 36056,
+      "sha256": "cdd5572e09232c535743e1b1e6a3398b682cb8b78c685f41e1a3e7196bc2b4fb"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_013.json",
+      "bytes": 36093,
+      "sha256": "408829bb98e71e36f6d180734b0bd45dca437518b3c79b8c6dae3dff7215d4fb"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_014.json",
+      "bytes": 41038,
+      "sha256": "c87ca236ddc0890d033f2cca9e509123c63422a60dd4e432e03bbfa326ce60be"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_015.json",
+      "bytes": 41073,
+      "sha256": "5785c689ceb2d6bf506083b6a06a5b8430158da11d2e8a3f276a4840f29473b6"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_016.json",
+      "bytes": 46006,
+      "sha256": "7c55d2436a905011c48e20a4c094595c9a5a9677885a278bd10f6a9c63dabfa5"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_017.json",
+      "bytes": 121842,
+      "sha256": "feeb134a46fb27dccc655d24e6918a1bfbc3ecbd6ec3f878400a872b3b12ffaf"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_018.json",
+      "bytes": 128506,
+      "sha256": "55ccbae430c786625d923dfc941522a741169cea557f1e3de1e1d6a45af0d77a"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_019.json",
+      "bytes": 44907,
+      "sha256": "26b5c7dae28e91d70682c6c349324d6df3ff8ef42d0bd8dd1f9b40773c2bc4c6"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v1/observation_020.json",
+      "bytes": 44920,
+      "sha256": "8be05c36cf5c88d9ee18d4fb70fae6e4cd726f46333423a1f7d8e520f7d8d6f7"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v2/observation_001.json",
+      "bytes": 14101,
+      "sha256": "1e0f12bf74ab86d92a84def53968c5a45630b4a82663ea4d9ee1b78c7aa84385"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v2/observation_002.json",
+      "bytes": 14107,
+      "sha256": "11430b63413f451ab5cba8adb994e98ec41d21fdacea9d803a203f6ba047d98b"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v2/observation_003.json",
+      "bytes": 14107,
+      "sha256": "26a0278105773be79641aa0d9821f28e766b75e49350ce5e67ed5d8a6169c293"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v2/observation_004.json",
+      "bytes": 44913,
+      "sha256": "909e3f40f1fc83e01fb2466fee9caf1a56ed9db7335ea63458de39c0c5af76e0"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/setup/session_v2/observation_005.json",
+      "bytes": 121232,
+      "sha256": "b68df21ecf2b01b0e44925c5a423da86d80826b7f4d166b4a51df9b94e38e515"
+    }
+  ]
+}

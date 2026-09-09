@@ -1,0 +1,455 @@
+{
+  "format": "product_reserved_concrete_task_plan.v1",
+  "status": "FROZEN_BEFORE_ONBOARDING",
+  "frozen_at": "2026-09-09T20:18:31.853197+00:00",
+  "application": "vikunja",
+  "source_freeze_path": "runs/product_assessment_reserved_v1/freeze_v1.json",
+  "source_freeze_sha256": "c1169be7c3be026a2978b8c487df1b2ab11de0a2ad06b022c025a98154491372",
+  "common_source_commit": "c0045346f4a231eea80bc05d170e50bd2192348e",
+  "ordinary_ui_selection_basis": "Prepared task titles/labels/Inbox/completion, editable Title and description, and the explicit Related Tasks UI; no learner artifacts or reserved performance used.",
+  "relationship_substitution": {
+    "selected_before_onboarding": true,
+    "root_adopted": true,
+    "replaced": [
+      "M1",
+      "M2"
+    ],
+    "replacement": [
+      "REL0",
+      "REL1",
+      "RELM",
+      "RELA"
+    ],
+    "ordinary_ui_evidence": "runs/product_assessment_reserved_v1/setup/session_v1/observation_018.json",
+    "observed_at": "2026-09-09T20:04:43.553499+00:00",
+    "relation_kind": "Related Task",
+    "direction": "From the selected task to tasks listed in its Related Tasks section under this kind",
+    "claim_limit": "Explicit UI relation opportunity and empty relation list were observed. No saved nonzero relation, learned JOIN or multiplicity competence is claimed."
+  },
+  "denominator": {
+    "applications": 1,
+    "arms": 2,
+    "core_requests": 12,
+    "challenge_requests": 6,
+    "requests": 18,
+    "arm_result_slots": 36
+  },
+  "fixture_inventory": {
+    "base": {
+      "status": "PREPARED",
+      "snapshot_name": "rvfpbrfgop-base",
+      "snapshot_manifest_sha256": "748712a0278247e25ee32a884458cbd964cf9d434c33e7a706e48a8fbebae25a",
+      "visible_verification": "runs/product_assessment_reserved_v1/setup/base_visible_verification_v1.json"
+    },
+    "b_changed": {
+      "status": "SETUP_UNESTABLISHED",
+      "reason": "No completion click executed before original setup wall deadline."
+    },
+    "relation_one": {
+      "status": "SETUP_UNESTABLISHED"
+    },
+    "relation_multiple": {
+      "status": "SETUP_UNESTABLISHED"
+    }
+  },
+  "input_boundary": "Only each request goal and arguments are ordinary caller inputs. Case IDs, fixture/status metadata, expected results, selectors and evaluator observations never enter binder/learner/baseline inputs.",
+  "shared_binding_policy": "runs/product_assessment_development_v1/binding/policy.md",
+  "shared_binding_policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+  "planning_cost_scope": "Offline concrete-goal and expected-result construction after the UI phase is manual evaluator assistance, separately timed; it does not renew UI setup allowance.",
+  "requests": [
+    {
+      "id": "vikunja-R1",
+      "application": "vikunja",
+      "case": "R1",
+      "family": "R",
+      "case_number": 1,
+      "goal": "In Inbox, find the task with exact title \"rvfpbrfgop release check alpha\" and return its title, labels and completion state.",
+      "arguments": {
+        "project": "Inbox",
+        "title": "rvfpbrfgop release check alpha",
+        "requested_fields": [
+          "title",
+          "labels",
+          "done"
+        ]
+      },
+      "fixture": "base",
+      "setup_status": "PREPARED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "semabi",
+        "cached_form"
+      ]
+    },
+    {
+      "id": "vikunja-R2",
+      "application": "vikunja",
+      "case": "R2",
+      "family": "R",
+      "case_number": 2,
+      "goal": "In Inbox, find the task with exact title \"rvfpbrfgop release check alpha\" and return its title, labels and completion state.",
+      "arguments": {
+        "project": "Inbox",
+        "title": "rvfpbrfgop release check alpha",
+        "requested_fields": [
+          "title",
+          "labels",
+          "done"
+        ]
+      },
+      "fixture": "b_changed",
+      "setup_status": "SETUP_UNESTABLISHED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "cached_form",
+        "semabi"
+      ],
+      "setup_reason": "Unrelated task B completion change did not execute before cumulative setup wall limit."
+    },
+    {
+      "id": "vikunja-C1",
+      "application": "vikunja",
+      "case": "C1",
+      "family": "C",
+      "case_number": 3,
+      "goal": "Create a task with this exact title: rvfpbrfgop review summary",
+      "arguments": {
+        "title": "rvfpbrfgop review summary"
+      },
+      "fixture": "base",
+      "setup_status": "PREPARED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "semabi",
+        "cached_form"
+      ]
+    },
+    {
+      "id": "vikunja-C2",
+      "application": "vikunja",
+      "case": "C2",
+      "family": "C",
+      "case_number": 4,
+      "goal": "Create a task in Inbox with exact title \"rvfpbrfgop release notes\" and label \"rvfpbrfgoppublish\".",
+      "arguments": {
+        "project": "Inbox",
+        "title": "rvfpbrfgop release notes",
+        "label": "rvfpbrfgoppublish"
+      },
+      "fixture": "base",
+      "setup_status": "PREPARED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "cached_form",
+        "semabi"
+      ],
+      "requires_service_restart": true,
+      "requires_fresh_browser": true
+    },
+    {
+      "id": "vikunja-U1",
+      "application": "vikunja",
+      "case": "U1",
+      "family": "U",
+      "case_number": 5,
+      "goal": "Replace the task whose exact title is \"rvfpbrfgop release check alpha\" with \"rvfpbrfgop release check alpha revised\".",
+      "arguments": {
+        "current_title": "rvfpbrfgop release check alpha",
+        "replacement_title": "rvfpbrfgop release check alpha revised"
+      },
+      "fixture": "base",
+      "setup_status": "PREPARED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "semabi",
+        "cached_form"
+      ]
+    },
+    {
+      "id": "vikunja-U2",
+      "application": "vikunja",
+      "case": "U2",
+      "family": "U",
+      "case_number": 6,
+      "goal": "Mark the task in Inbox with exact title \"rvfpbrfgop release check alpha\" as done. Keep its title, label and project unchanged.",
+      "arguments": {
+        "project": "Inbox",
+        "title": "rvfpbrfgop release check alpha",
+        "done": true
+      },
+      "fixture": "b_changed",
+      "setup_status": "SETUP_UNESTABLISHED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "cached_form",
+        "semabi"
+      ],
+      "setup_reason": "Required unrelated B completion change did not execute before cumulative setup wall limit."
+    },
+    {
+      "id": "vikunja-D1",
+      "application": "vikunja",
+      "case": "D1",
+      "family": "D",
+      "case_number": 7,
+      "goal": "In Inbox, find the task whose title contains \"rvfpbrfgop release check\" and whose label is \"rvfpbrfgopblue\". Return its exact title, labels and completion state.",
+      "arguments": {
+        "project": "Inbox",
+        "title_fragment": "rvfpbrfgop release check",
+        "label": "rvfpbrfgopblue",
+        "requested_fields": [
+          "title",
+          "labels",
+          "done"
+        ]
+      },
+      "fixture": "base",
+      "setup_status": "PREPARED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "semabi",
+        "cached_form"
+      ]
+    },
+    {
+      "id": "vikunja-D2",
+      "application": "vikunja",
+      "case": "D2",
+      "family": "D",
+      "case_number": 8,
+      "goal": "In Inbox, find the task whose title contains \"rvfpbrfgop release check\" and ends with \"beta\". Return its exact title, labels and completion state.",
+      "arguments": {
+        "project": "Inbox",
+        "title_fragment": "rvfpbrfgop release check",
+        "title_suffix": "beta",
+        "requested_fields": [
+          "title",
+          "labels",
+          "done"
+        ]
+      },
+      "fixture": "base",
+      "setup_status": "PREPARED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "cached_form",
+        "semabi"
+      ]
+    },
+    {
+      "id": "vikunja-REL0",
+      "application": "vikunja",
+      "case": "REL0",
+      "family": "REL",
+      "case_number": 9,
+      "goal": "For the task with exact title \"rvfpbrfgop release check alpha\", return the distinct titles listed through its Related Task relationship. Return an empty list if there are none.",
+      "arguments": {
+        "title": "rvfpbrfgop release check alpha",
+        "relation_kind": "Related Task",
+        "projection": "title"
+      },
+      "fixture": "base",
+      "setup_status": "PREPARED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "semabi",
+        "cached_form"
+      ],
+      "witness_case": "zero"
+    },
+    {
+      "id": "vikunja-REL1",
+      "application": "vikunja",
+      "case": "REL1",
+      "family": "REL",
+      "case_number": 10,
+      "goal": "For the task with exact title \"rvfpbrfgop release check alpha\", return the distinct titles listed through its Related Task relationship. Return an empty list if there are none.",
+      "arguments": {
+        "title": "rvfpbrfgop release check alpha",
+        "relation_kind": "Related Task",
+        "projection": "title"
+      },
+      "fixture": "relation_one",
+      "setup_status": "SETUP_UNESTABLISHED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "cached_form",
+        "semabi"
+      ],
+      "witness_case": "one",
+      "setup_reason": "A-to-B Related Task fixture was not created within the cumulative setup allowance."
+    },
+    {
+      "id": "vikunja-RELM",
+      "application": "vikunja",
+      "case": "RELM",
+      "family": "REL",
+      "case_number": 11,
+      "goal": "For the task with exact title \"rvfpbrfgop release check alpha\", return the distinct titles listed through its Related Task relationship. Return an empty list if there are none.",
+      "arguments": {
+        "title": "rvfpbrfgop release check alpha",
+        "relation_kind": "Related Task",
+        "projection": "title"
+      },
+      "fixture": "relation_multiple",
+      "setup_status": "SETUP_UNESTABLISHED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "semabi",
+        "cached_form"
+      ],
+      "witness_case": "multiple_distinct",
+      "setup_reason": "A-to-B and A-to-C Related Task fixture was not created within the cumulative setup allowance."
+    },
+    {
+      "id": "vikunja-RELA",
+      "application": "vikunja",
+      "case": "RELA",
+      "family": "REL",
+      "case_number": 12,
+      "goal": "For the task with exact title \"rvfpbrfgop release check alpha\", return the distinct project names of tasks listed through its Related Task relationship. Count repeated project names once.",
+      "arguments": {
+        "title": "rvfpbrfgop release check alpha",
+        "relation_kind": "Related Task",
+        "projection": "project",
+        "distinct": true
+      },
+      "fixture": "relation_multiple",
+      "setup_status": "SETUP_UNESTABLISHED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "cached_form",
+        "semabi"
+      ],
+      "witness_case": "multiple_agreeing",
+      "setup_reason": "A-to-B and A-to-C Related Task fixture with a shared projected Inbox value was not created."
+    },
+    {
+      "id": "vikunja-CH1",
+      "application": "vikunja",
+      "case": "CH1",
+      "family": "CH",
+      "case_number": 13,
+      "goal": "In the prepared open tasks in Inbox, find tasks with exact title \"rvfpbrfgop absent task\". Return their titles, or an empty list when none match.",
+      "arguments": {
+        "project": "Inbox",
+        "title": "rvfpbrfgop absent task",
+        "done": false,
+        "requested_fields": [
+          "title"
+        ]
+      },
+      "fixture": "base",
+      "setup_status": "PREPARED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "semabi",
+        "cached_form"
+      ]
+    },
+    {
+      "id": "vikunja-CH2",
+      "application": "vikunja",
+      "case": "CH2",
+      "family": "CH",
+      "case_number": 14,
+      "goal": "Mark the task in Inbox whose title contains \"rvfpbrfgop release check\" as done.",
+      "arguments": {
+        "project": "Inbox",
+        "title_fragment": "rvfpbrfgop release check",
+        "done": true
+      },
+      "fixture": "base",
+      "setup_status": "PREPARED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "cached_form",
+        "semabi"
+      ],
+      "challenge": "Ambiguous selection must not silently choose either colliding task."
+    },
+    {
+      "id": "vikunja-CH3",
+      "application": "vikunja",
+      "case": "CH3",
+      "family": "CH",
+      "case_number": 15,
+      "goal": "Create a task with this exact title: rvfpbrfgop viewport check",
+      "arguments": {
+        "title": "rvfpbrfgop viewport check"
+      },
+      "fixture": "base",
+      "setup_status": "INTERVENTION_UNAVAILABLE",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "semabi",
+        "cached_form"
+      ],
+      "challenge": "Repeat positive creation at a different evaluated viewport with same semantics and a fresh value.",
+      "setup_reason": "The prospectively frozen common HTTP harness has no evaluated-viewport intervention."
+    },
+    {
+      "id": "vikunja-CH4",
+      "application": "vikunja",
+      "case": "CH4",
+      "family": "CH",
+      "case_number": 16,
+      "goal": "Mark the open task in Inbox with exact title \"rvfpbrfgop release check beta\" as done.",
+      "arguments": {
+        "project": "Inbox",
+        "title": "rvfpbrfgop release check beta",
+        "current_done": false,
+        "done": true
+      },
+      "fixture": "b_changed",
+      "setup_status": "SETUP_UNESTABLISHED",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "cached_form",
+        "semabi"
+      ],
+      "challenge": "Invoke the saved operation after ordinary UI changes its required open-state precondition.",
+      "setup_reason": "B completion change was queued after the last read but never dispatched before setup deadline."
+    },
+    {
+      "id": "vikunja-CH5",
+      "application": "vikunja",
+      "case": "CH5",
+      "family": "CH",
+      "case_number": 17,
+      "goal": "Create a task with this exact title: rvfpbrfgop authentication check",
+      "arguments": {
+        "title": "rvfpbrfgop authentication check"
+      },
+      "fixture": "base",
+      "setup_status": "INTERVENTION_UNAVAILABLE",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "semabi",
+        "cached_form"
+      ],
+      "challenge": "Normal logout of evaluated session followed by positive request; charge reauthentication or explicit AUTH_REQUIRED.",
+      "setup_reason": "The frozen common harness has no evaluated-session logout control."
+    },
+    {
+      "id": "vikunja-CH6",
+      "application": "vikunja",
+      "case": "CH6",
+      "family": "CH",
+      "case_number": 18,
+      "goal": "Create a task with this exact title: rvfpbrfgop interruption check",
+      "arguments": {
+        "title": "rvfpbrfgop interruption check"
+      },
+      "fixture": "base",
+      "setup_status": "INTERVENTION_UNAVAILABLE",
+      "caller_preflight_status": "NOT_STARTED",
+      "arm_order": [
+        "cached_form",
+        "semabi"
+      ],
+      "challenge": "Interrupt owned browser after first write intent and before effect confirmation; independently read back before retry.",
+      "setup_reason": "The frozen common harness has no suitable owned-browser intervention point."
+    }
+  ]
+}

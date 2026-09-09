@@ -129,7 +129,6 @@ class Trace:
         with (self.log.dir / "surfaces.jsonl").open("a") as stream:
             stream.write(json.dumps({"observation": sig, "settled": surface.settled,
                                      "controls": surface.controls, "forms": surface.forms,
-                                     "text_boundaries": surface.text_boundaries,
                                      "local_regions": local_regions(surface.observation)}) + "\n")
         self.emit({"type": "observation", "signature": sig, "settled": surface.settled})
         if not surface.settled:

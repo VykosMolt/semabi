@@ -1,0 +1,301 @@
+{
+  "format": "product_reserved_expected_results.v1",
+  "status": "EVALUATOR_ONLY_FROZEN_BEFORE_ONBOARDING",
+  "frozen_at": "2026-09-09T20:18:31.853197+00:00",
+  "not_a_learner_or_baseline_input": true,
+  "base_records": {
+    "A": {
+      "title": "rvfpbrfgop release check alpha",
+      "labels": [
+        "rvfpbrfgopblue"
+      ],
+      "project": "Inbox",
+      "done": false
+    },
+    "B": {
+      "title": "rvfpbrfgop release check beta",
+      "labels": [
+        "rvfpbrfgopamber"
+      ],
+      "project": "Inbox",
+      "done": false
+    },
+    "C": {
+      "title": "rvfpbrfgop unrelated record",
+      "labels": [
+        "rvfpbrfgopneutral"
+      ],
+      "project": "Inbox",
+      "done": false
+    }
+  },
+  "base_relationships_observed": {
+    "A": []
+  },
+  "expectations": {
+    "R1": {
+      "selected_record": "A",
+      "returned": {
+        "title": "rvfpbrfgop release check alpha",
+        "labels": [
+          "rvfpbrfgopblue"
+        ],
+        "project": "Inbox",
+        "done": false
+      },
+      "sampled_non_targets": [
+        "B",
+        "C"
+      ]
+    },
+    "R2": {
+      "selected_record": "A",
+      "returned": {
+        "title": "rvfpbrfgop release check alpha",
+        "labels": [
+          "rvfpbrfgopblue"
+        ],
+        "project": "Inbox",
+        "done": false
+      },
+      "requires_fixture_change": {
+        "B": {
+          "done": true
+        }
+      },
+      "sampled_non_targets": [
+        "B",
+        "C"
+      ]
+    },
+    "C1": {
+      "created_count_in_checked_scope": 1,
+      "required_values": {
+        "title": "rvfpbrfgop review summary"
+      },
+      "requested_values_retained_after_reload": true,
+      "sampled_non_targets": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "C2": {
+      "created_count_in_checked_scope": 1,
+      "required_values": {
+        "title": "rvfpbrfgop release notes",
+        "labels": [
+          "rvfpbrfgoppublish"
+        ],
+        "project": "Inbox"
+      },
+      "requested_values_retained_after_reload": true,
+      "fresh_browser_and_service_restart_required": true,
+      "sampled_non_targets": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "U1": {
+      "selected_record": "A",
+      "after": {
+        "title": "rvfpbrfgop release check alpha revised",
+        "labels": [
+          "rvfpbrfgopblue"
+        ],
+        "project": "Inbox",
+        "done": false
+      },
+      "sampled_non_targets": [
+        "B",
+        "C"
+      ],
+      "retain_unspecified_fields": true
+    },
+    "U2": {
+      "selected_record": "A",
+      "after": {
+        "title": "rvfpbrfgop release check alpha",
+        "labels": [
+          "rvfpbrfgopblue"
+        ],
+        "project": "Inbox",
+        "done": true
+      },
+      "requires_fixture_change": {
+        "B": {
+          "done": true
+        }
+      },
+      "sampled_non_targets": [
+        "B",
+        "C"
+      ]
+    },
+    "D1": {
+      "selected_record": "A",
+      "returned": {
+        "title": "rvfpbrfgop release check alpha",
+        "labels": [
+          "rvfpbrfgopblue"
+        ],
+        "project": "Inbox",
+        "done": false
+      },
+      "colliding_records_checked": [
+        "A",
+        "B"
+      ],
+      "sampled_non_targets": [
+        "B",
+        "C"
+      ]
+    },
+    "D2": {
+      "selected_record": "B",
+      "returned": {
+        "title": "rvfpbrfgop release check beta",
+        "labels": [
+          "rvfpbrfgopamber"
+        ],
+        "project": "Inbox",
+        "done": false
+      },
+      "colliding_records_checked": [
+        "A",
+        "B"
+      ],
+      "sampled_non_targets": [
+        "A",
+        "C"
+      ]
+    },
+    "REL0": {
+      "selected_record": "A",
+      "required_relationships": [],
+      "projected_answers": [],
+      "witness_count": 0
+    },
+    "REL1": {
+      "selected_record": "A",
+      "required_relationships": [
+        [
+          "A",
+          "Related Task",
+          "B"
+        ]
+      ],
+      "projected_answers": [
+        "rvfpbrfgop release check beta"
+      ],
+      "witness_count": 1,
+      "fixture_not_constructed": true
+    },
+    "RELM": {
+      "selected_record": "A",
+      "required_relationships": [
+        [
+          "A",
+          "Related Task",
+          "B"
+        ],
+        [
+          "A",
+          "Related Task",
+          "C"
+        ]
+      ],
+      "projected_answers": [
+        "rvfpbrfgop release check beta",
+        "rvfpbrfgop unrelated record"
+      ],
+      "witness_count": 2,
+      "fixture_not_constructed": true
+    },
+    "RELA": {
+      "selected_record": "A",
+      "required_relationships": [
+        [
+          "A",
+          "Related Task",
+          "B"
+        ],
+        [
+          "A",
+          "Related Task",
+          "C"
+        ]
+      ],
+      "projected_answers": [
+        "Inbox"
+      ],
+      "witness_count": 2,
+      "fixture_not_constructed": true
+    },
+    "CH1": {
+      "search_scope": "Prepared open Inbox tasks in the rendered home view",
+      "projected_answers": [],
+      "match_count": 0
+    },
+    "CH2": {
+      "selection_matches": [
+        "A",
+        "B"
+      ],
+      "acceptable_observable_response": "Explicit ambiguity or justified safe abstention, leaving both colliding records unchanged",
+      "completed_requested_write": false,
+      "sampled_non_targets": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "CH3": {
+      "required_values": {
+        "title": "rvfpbrfgop viewport check"
+      },
+      "intervention_unavailable": true,
+      "presentation_change_not_established": true
+    },
+    "CH4": {
+      "selected_record": "B",
+      "required_pre_invocation_state": {
+        "title": "rvfpbrfgop release check beta",
+        "labels": [
+          "rvfpbrfgopamber"
+        ],
+        "project": "Inbox",
+        "done": true
+      },
+      "acceptable_observable_responses": [
+        "Explicit staleness or withdrawal",
+        "Reconciled already-done state without claiming a new write"
+      ],
+      "silent_retargeting_fails": true,
+      "fixture_not_constructed": true
+    },
+    "CH5": {
+      "required_values": {
+        "title": "rvfpbrfgop authentication check"
+      },
+      "intervention_unavailable": true,
+      "correct_auth_required_is_not_completed_creation": true
+    },
+    "CH6": {
+      "required_values": {
+        "title": "rvfpbrfgop interruption check"
+      },
+      "intervention_unavailable": true,
+      "read_back_before_retry": true,
+      "effect_categories": [
+        "zero",
+        "one",
+        "multiple",
+        "unestablished"
+      ]
+    }
+  },
+  "verification_scope": "Independent ordinary rendered UI. Exact local task identity and requested fields; own labels/project/completion; sampled non-targets; persistence after reload. No global uniqueness or hidden-state claim.",
+  "scoring": "Missing fixtures/interventions stay in denominators. Setup/binder/runtime/checker classifications stay distinct. Accurate refusal/abstention is not completed requested write. No invocation implies undefined invocation correctness."
+}

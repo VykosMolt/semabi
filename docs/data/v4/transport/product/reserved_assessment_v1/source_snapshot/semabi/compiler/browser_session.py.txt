@@ -15,7 +15,7 @@ from semabi.compiler.surface import Surface, digest
 
 
 SURFACE_JS = r"""() => {
-  const nodes = [], handles = [], controls = {}, forms = {}, text_boundaries = {};
+  const nodes = [], handles = [], controls = {}, forms = {};
   const text = s => (s || '').replace(/\s+/g, ' ').trim();
   const visible = e => {
     const s = getComputedStyle(e), r = e.getBoundingClientRect();
@@ -33,24 +33,6 @@ SURFACE_JS = r"""() => {
     };
     walk(e);
     return text(parts.join(' '));
-  };
-  const paragraphText = e => {
-    // A paragraph/preformatted block is one rendered text boundary. Preserve
-    // its inline text order without joining unrelated record fields. Decline
-    // aggregation when hidden content, widgets, or another block is present.
-    if (!['P', 'PRE'].includes(e.tagName) || e.isContentEditable) return null;
-    const inline = new Set(['SPAN', 'EM', 'STRONG', 'B', 'I', 'SMALL', 'CODE',
-      'S', 'DEL', 'INS', 'U', 'MARK', 'ABBR', 'SUB', 'SUP', 'A']);
-    for (const child of e.querySelectorAll('*')) {
-      if (!inline.has(child.tagName) || !visible(child) || child.isContentEditable
-          || !['inline', 'inline-block', 'inline-flex', 'inline-grid', 'contents']
-              .includes(getComputedStyle(child).display)
-          || child.getAttribute('aria-hidden') === 'true'
-          || child.getAttribute('aria-haspopup')
-          || (child.hasAttribute('role') && !['none', 'presentation', 'text', 'link']
-              .includes(child.getAttribute('role')))) return null;
-    }
-    return text(e.innerText);
   };
   const label = e => {
     if (e.getAttribute('aria-label')) return text(e.getAttribute('aria-label'));
@@ -109,14 +91,11 @@ SURFACE_JS = r"""() => {
     if (['script','style','option','title','head','noscript','template'].includes(tag) || !visible(e)) return;
     if (tag === 'input' && e.type === 'hidden') return;
     const role = roleOf(e), interactive = ['button','link','textbox','combobox','checkbox','radio','menu','menuitem'].includes(role);
-    const paragraph = ['p', 'pre'].includes(tag) && !e.isContentEditable;
-    const completeText = paragraph ? paragraphText(e) : null;
-    let name = interactive ? label(e) : completeText ?? ownText(e);
-    if (!name && !paragraph && ['button','link','menuitem','heading','text','cell','alert','status','listitem'].includes(role))
+    let name = interactive ? label(e) : ownText(e);
+    if (!name && ['button','link','menuitem','heading','text','cell','alert','status','listitem'].includes(role))
       name = text(e.innerText);
     if (!name && role === 'button' && tag === 'input') name = text(e.value);
     const i = nodes.length, r = e.getBoundingClientRect();
-    if (paragraph) text_boundaries[i] = completeText;
     const n = {i, parent, role, name, bbox:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]};
     const type = tag === 'input' ? (e.type || 'text') : role === 'textbox' && e.isContentEditable ? 'contenteditable' : tag === 'textarea' ? 'textarea' : '';
     if (role === 'textbox') {
@@ -148,7 +127,7 @@ SURFACE_JS = r"""() => {
     if (formIndex >= 0) control.form = formIndex;
   }
   window.__semabi_nodes = handles;
-  return {nodes, controls, forms, text_boundaries};
+  return {nodes, controls, forms};
 }"""
 
 
@@ -196,8 +175,7 @@ class BrowserSession(Browser):
         raw = self._page.evaluate(SURFACE_JS)
         obs = Observation([Node.from_json(node) for node in raw["nodes"]], self._page.url)
         self.surface = Surface(obs, {int(key): value for key, value in raw["controls"].items()},
-                               {int(key): value for key, value in raw["forms"].items()},
-                               text_boundaries={int(key): value for key, value in raw["text_boundaries"].items()})
+                               {int(key): value for key, value in raw["forms"].items()})
         return obs
 
     def read(self) -> Surface:
@@ -207,8 +185,7 @@ class BrowserSession(Browser):
         previous, agreements = None, 0
         while True:
             obs = self._snapshot(time.time() + self.navigation_ms / 1000)
-            signature = digest([obs.structural_signature(), self.surface.controls, self.surface.forms,
-                                self.surface.text_boundaries])
+            signature = digest([obs.structural_signature(), self.surface.controls, self.surface.forms])
             agreements = agreements + 1 if signature == previous else 0
             if agreements >= 2 or time.monotonic() >= deadline:
                 break

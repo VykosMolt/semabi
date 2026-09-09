@@ -1,0 +1,91 @@
+{
+  "format": "reserved_ordinary_ui_setup.v2",
+  "started_at": "2026-09-09T19:58:16.447911+00:00",
+  "phase_started_at": "2026-09-09T20:12:29.849936+00:00",
+  "previous_ledger_path": "runs/product_assessment_reserved_v1/setup/session_v1/ledger.json",
+  "previous_ledger_sha256": "6d9a63eca4fb361d7acbbea8693b1cf13e7ed924a8ac43421cd89b2d0487ed95",
+  "phase_start_actions": 18,
+  "phase_start_possible_writes": 16,
+  "source_sha256": "3889ebb6009e1f582b3836dd3ec3b39d6a215d0b0ab2d217bfc906178a48553f",
+  "origin": "http://127.0.0.1:8853",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "limits": {
+    "max_seconds": 900,
+    "max_actions": 60,
+    "max_possible_writes": 20
+  },
+  "actions": 23,
+  "possible_writes": 19,
+  "read_calls": 25,
+  "raw_browser_reads": 134,
+  "events": [
+    {
+      "kind": "navigate",
+      "started_at": "2026-09-09T20:12:30.449705+00:00",
+      "url": "http://127.0.0.1:8853",
+      "observation_id": 1
+    },
+    {
+      "kind": "type",
+      "started_at": "2026-09-09T20:12:31.866198+00:00",
+      "target": 34,
+      "command": {
+        "kind": "type",
+        "role": "textbox",
+        "name": "Username Or Email Address",
+        "secret": "username"
+      },
+      "before_observation_id": 1,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "type",
+      "started_at": "2026-09-09T20:12:32.231744+00:00",
+      "target": 40,
+      "command": {
+        "kind": "type",
+        "role": "textbox",
+        "name": "Password",
+        "secret": "password"
+      },
+      "before_observation_id": 2,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T20:12:32.516178+00:00",
+      "target": 47,
+      "command": {
+        "kind": "click",
+        "role": "button",
+        "name": "LOGIN",
+        "label": "changed_phase_authentication"
+      },
+      "before_observation_id": 3,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "navigate",
+      "started_at": "2026-09-09T20:12:59.126053+00:00",
+      "url": "http://127.0.0.1:8853/tasks/2",
+      "source_observation": "/home/moloch/semabi/runs/product_assessment_reserved_v1/setup/session_v1/observation_020.json",
+      "source_observation_sha256": "8be05c36cf5c88d9ee18d4fb70fae6e4cd726f46333423a1f7d8e520f7d8d6f7"
+    }
+  ],
+  "state": "SETUP_WALL_LIMIT_REACHED",
+  "credentials_field_names": [
+    "email",
+    "password",
+    "username"
+  ],
+  "scope": "Evaluator account/fixture setup only; no learner invocation or private app-state access",
+  "elapsed_seconds": 900.133186,
+  "within_limits": false,
+  "completed_at": "2026-09-09T20:13:16.581088+00:00"
+}

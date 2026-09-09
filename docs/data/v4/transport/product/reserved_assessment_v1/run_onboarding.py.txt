@@ -1,0 +1,312 @@
+"""Own a fresh service for bounded onboarding through its public HTTP API only."""
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import threading
+import time
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote, urlsplit
+from urllib.request import Request, urlopen
+
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE = Path(__file__).resolve().parent
+SERVER = "http://127.0.0.1:8860"
+SOURCE_PATHS = {"semabi/compiler/" + name + ".py" for name in
+                ("runtime", "surface", "browser_session", "browser", "observation", "evidence", "artifacts")}
+SOURCE_PATHS |= {"semabi/service.py", "examples/client.py", "semabi/baselines/cached_form.py"}
+TERMINAL = {"COMPLETED", "FAILED"}
+
+
+def source_hashes(expected):
+    if (not isinstance(expected, dict) or set(expected) != SOURCE_PATHS
+            or any(not isinstance(value, str) or len(value) != 64
+                   or set(value) - set("0123456789abcdef") for value in expected.values())):
+        raise ValueError("The freeze must contain the exact ten source hashes")
+    return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in sorted(expected)}
+
+
+def redact(value, secrets):
+    if isinstance(value, dict):
+        hidden = {"credentials", "authorization", "cookie", "cookies", "storage_state",
+                  "username", "password", "token", "access_token", "refresh_token"}
+        return {key: "[REDACTED]" if key.lower() in hidden else redact(item, secrets)
+                for key, item in value.items()}
+    if isinstance(value, list):
+        return [redact(item, secrets) for item in value]
+    if isinstance(value, str):
+        for secret in sorted((item for item in secrets if item), key=len, reverse=True):
+            value = value.replace(secret, "[REDACTED]")
+    return value
+
+
+def persist(path, value, secrets):
+    temporary = path.with_name(path.name + ".pending")
+    descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(descriptor, "w") as stream:
+        json.dump(redact(value, secrets), stream, indent=2, sort_keys=True)
+        stream.write("\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(temporary, path)
+
+
+def onboard(application_url, credentials, token, record, deadline, checkpoint,
+            opener=urlopen, clock=time.monotonic, sleep=time.sleep):
+    def remaining():
+        seconds = deadline - clock()
+        if seconds <= 0:
+            raise TimeoutError("Onboarding deadline reached; no POST retry is permitted")
+        return seconds
+
+    def request(method, path, body=None):
+        timeout = min(10, remaining())
+        record["http_requests"] += 1
+        if method == "POST":
+            record["pending_http_request"] = {"method": method, "path": path,
+                                               "body_retained": False, "dispatch_started_at": datetime.now(timezone.utc).isoformat()}
+            checkpoint(record)
+        headers = {"Authorization": "Bearer " + token}
+        if body is not None:
+            headers["Content-Type"] = "application/json"
+        req = Request(SERVER + path, method=method, headers=headers,
+                      data=None if body is None else json.dumps(body).encode())
+        with opener(req, timeout=min(timeout, remaining())) as response:
+            result = json.load(response)
+        if not isinstance(result, dict):
+            raise ValueError("Public HTTP response is not an object")
+        return result
+
+    def submit(kind, path, body):
+        accepted = request("POST", path, body)
+        if not isinstance(accepted.get("job_id"), str) or not accepted["job_id"]:
+            raise ValueError("Accepted response has no job identity")
+        record["accepted_jobs"].append({**accepted, "kind": kind})
+        record.pop("pending_http_request", None)
+        if kind == "connect":
+            record["connection_id"] = accepted.get("connection_id", accepted.get("id"))
+        checkpoint(record)  # Accepted IDs are durable before the first polling request.
+        return accepted
+
+    def wait(accepted, kind):
+        previous = None
+        while True:
+            try:
+                job = request("GET", "/v1/jobs/" + quote(accepted["job_id"], safe=""))
+            except HTTPError:
+                raise
+            except (URLError, TimeoutError):
+                record["get_poll_failures"] = record.get("get_poll_failures", 0) + 1
+                checkpoint(record)
+                sleep(min(0.1, remaining()))
+                continue
+            if job.get("status") not in TERMINAL | {"QUEUED", "RUNNING"}:
+                raise ValueError("Unknown public job state")
+            record["jobs"][accepted["job_id"]] = job
+            progress = (job["status"], len(job.get("events", [])))
+            if progress != previous:
+                if kind == "learn":
+                    record["learning_progress"].append({"job_id": accepted["job_id"],
+                                                       "status": progress[0], "events": progress[1]})
+                checkpoint(record)
+                previous = progress
+            if job["status"] in TERMINAL:
+                return job
+            sleep(min(0.1, remaining()))
+
+    try:
+        record["status"] = "CONNECTING"
+        accepted = submit("connect", "/v1/connections", {"url": application_url, "credentials": credentials,
+                          "scope": {"exploration_enabled": True, "max_actions": 120, "max_writes": 40}})
+        connection = wait(accepted, "connect")
+        authentication = connection.get("result") or {}
+        auth_actions = authentication.get("authentication_actions")
+        record["connection_navigation_actions"] = 1
+        record["authentication_actions"] = auth_actions
+        record["authentication_possible_writes"] = auth_actions if type(auth_actions) is int and auth_actions >= 0 else None
+        record["authentication_write_accounting"] = "Each reported frozen login action is charged as a possible write; the API exposes no separate authentication-write counter"
+        if type(auth_actions) is int and auth_actions >= 0:
+            record.update(interaction_total=1 + auth_actions, possible_write_total=auth_actions)
+        if (connection["status"] != "COMPLETED" or authentication.get("status") != "CONNECTED"
+                or type(auth_actions) is not int or auth_actions < 0):
+            record["status"] = "AUTHENTICATION_UNESTABLISHED"
+            return
+        settings = {"max_actions": 120 - 1 - auth_actions, "max_writes": 40 - auth_actions}
+        record["learning_settings"] = settings
+        if settings["max_actions"] < 1 or settings["max_writes"] < 0:
+            record["status"] = "BUDGET_EXHAUSTED_BEFORE_LEARNING"
+            return
+        remaining()
+        prefix = "/v1/connections/" + quote(record["connection_id"], safe="")
+        record["public_connection"] = request("GET", prefix)
+        record["status"] = "LEARNING"
+        record.update(interaction_total=None, possible_write_total=None)
+        learning = wait(submit("learn", prefix + "/learn", {"settings": settings}), "learn")
+        result = learning.get("result") or {}
+        record["learning_outcome"] = result.get("status")
+        metrics = result.get("metrics") or {}
+        record["learning_metrics"] = metrics
+        actions, writes = metrics.get("actions"), metrics.get("possible_write_actions")
+        record["interaction_total"] = 1 + auth_actions + actions if type(actions) is int and actions >= 0 else None
+        record["possible_write_total"] = auth_actions + writes if type(writes) is int and writes >= 0 else None
+        record["status"] = "ONBOARDING_FINISHED" if learning["status"] == "COMPLETED" else "LEARNING_FAILED"
+    except Exception as error:
+        record["status"] = "UNCERTAIN"
+        record["error_type"] = type(error).__name__
+        if isinstance(error, HTTPError):
+            record["http_error_status"] = error.code
+        record["reconciliation_required"] = "Inspect retained public jobs and visible state before any retry or reset; no POST was retried"
+    finally:
+        if isinstance(record.get("connection_id"), str) and clock() < deadline:
+            try:
+                prefix = "/v1/connections/" + quote(record["connection_id"], safe="")
+                record["public_connection"] = request("GET", prefix)
+                record["catalog"] = request("GET", prefix + "/operations")
+            except Exception as error:
+                record["snapshot_error_type"] = type(error).__name__
+        record["accepted_jobs_terminal_before_close"] = bool(record["accepted_jobs"]) and not record.get("pending_http_request") and all(
+            record["jobs"].get(item["job_id"], {}).get("status") in TERMINAL for item in record["accepted_jobs"])
+        if not record["accepted_jobs_terminal_before_close"]:
+            record["reconciliation_required"] = "An accepted or possibly accepted job lacks a terminal observation; reconcile before any reset or retry"
+        record["public_observation_events"] = sum(event.get("type") == "observation"
+            for job in record["jobs"].values() for event in job.get("events", []))
+        checkpoint(record)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--application-url", required=True)
+    parser.add_argument("--credentials-file", type=Path, required=True)
+    parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--source-hashes", type=Path, default=BASE / "source_sha256.json")
+    args = parser.parse_args()
+    started = time.monotonic()
+    deadline = started + 900
+    os.umask(0o077)
+    args.output_dir.mkdir(mode=0o700, parents=True, exist_ok=False)
+    record = {"format": "reserved_public_http_onboarding.v1", "status": "STARTING",
+              "started_at": datetime.now(timezone.utc).isoformat(), "limits": {"max_seconds": 900, "max_actions": 120, "max_possible_writes": 40},
+              "service_data_dir": str(BASE / "service"), "fresh_service_process": True, "accepted_jobs": [], "jobs": {},
+              "learning_progress": [], "http_requests": 0, "write_retries": 0, "invocations": 0,
+              "accepted_jobs_terminal_before_close": False, "raw_dom_snapshot_count": None,
+              "raw_dom_snapshot_count_status": "Not exposed by this service version",
+              "process_cpu_and_rss_accounting": "External frozen command meter wraps this owner and its descendants; persistent application cost excluded",
+              "deadline_scope": "Startup, connect, learning and public capture; HTTP timeout does not establish runtime cancellation",
+              "harness_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+    secrets, service, reader, expected, log = [], None, None, None, None
+
+    def checkpoint(current):
+        persist(args.output_dir / "onboarding.json", current, secrets)
+        snapshot = {"classification": "Reserved onboarding through public HTTP; no invocation",
+                    "source_sha256": current.get("source_before"), "status": current["status"],
+                    "connection": current.get("public_connection"), "operations": current.get("catalog", {}).get("operations", []),
+                    "jobs": current["jobs"], "accepted_jobs": current["accepted_jobs"], "learning_progress": current["learning_progress"]}
+        persist(args.output_dir / "service_snapshot.json", snapshot, secrets)
+
+    checkpoint(record)
+    try:
+        source_map = args.source_hashes.read_bytes()
+        record["source_map_sha256"] = hashlib.sha256(source_map).hexdigest()
+        expected = json.loads(source_map)
+        record["source_before"] = source_hashes(expected)
+        if record["source_before"] != expected:
+            raise ValueError("Source freeze does not match before service startup")
+        parsed = urlsplit(args.application_url)
+        if parsed.scheme not in {"http", "https"} or not parsed.hostname or parsed.username is not None or parsed.password is not None:
+            raise ValueError("Application URL must be HTTP(S) without embedded credentials")
+        supplied = json.loads(args.credentials_file.read_text())
+        credentials = {key: supplied[key] for key in ("username", "password")}
+        if any(not isinstance(value, str) or not value for value in credentials.values()):
+            raise ValueError("Credentials must contain nonempty username and password strings")
+        secrets.extend(credentials.values())
+        ready = threading.Event()
+        command = [str(ROOT / ".venv/bin/python"), "-B", "-m", "semabi.service", "--data-dir", str(BASE / "service"), "--port", "8860"]
+        environment = {**os.environ, **{key: "1" for key in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS")}}
+        if time.monotonic() >= deadline:
+            raise TimeoutError("Onboarding deadline reached before service startup")
+        log = (args.output_dir / "service.log").open("x")
+        service = subprocess.Popen(command, cwd=ROOT, env=environment, stdin=subprocess.DEVNULL,
+                                   stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        record["service_pid"] = service.pid
+
+        def drain():
+            try:
+                for line in iter(service.stdout.readline, b""):
+                    value = line.decode(errors="replace")
+                    try:
+                        private_token = (BASE / "service/token").read_text().strip()
+                        if private_token and private_token not in secrets:
+                            secrets.append(private_token)
+                    except FileNotFoundError:
+                        pass
+                    log.write(redact(value, secrets))
+                    log.flush()
+                    if "SemABI listening" in value:
+                        ready.set()
+            except Exception as error:
+                record["service_log_error_type"] = type(error).__name__
+
+        reader = threading.Thread(target=drain, daemon=True)
+        reader.start()
+        while not ready.is_set():
+            if service.poll() is not None:
+                raise RuntimeError("Owned service exited before readiness")
+            if time.monotonic() >= min(deadline, started + 15):
+                raise TimeoutError("Owned service readiness deadline reached")
+            time.sleep(0.05)
+        record["service_startup_seconds"] = time.monotonic() - started
+        token = (BASE / "service/token").read_text().strip()
+        if not token:
+            raise ValueError("Service token is empty")
+        secrets.append(token)
+        checkpoint(record)
+        onboard(args.application_url, credentials, token, record, deadline, checkpoint)
+        record["elapsed_seconds_startup_connect_learning"] = time.monotonic() - started
+    except BaseException as error:
+        record["status"], record["error_type"] = "UNCERTAIN", type(error).__name__
+        record["reconciliation_required"] = "Inspect retained accepted IDs and public state before any retry or reset"
+    finally:
+        record.setdefault("elapsed_seconds_startup_connect_learning", time.monotonic() - started)
+        if service is not None:
+            if service.poll() is None:
+                service.send_signal(signal.SIGINT)
+                try:
+                    service.wait(timeout=15)
+                except subprocess.TimeoutExpired:
+                    service.kill()
+                    record["forced_service_termination"] = True
+                    try:
+                        service.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        record["service_shutdown_unestablished"] = True
+            record["service_exit_code"] = service.poll()
+            if reader is not None:
+                reader.join(timeout=1)
+                record["service_log_drain_complete"] = not reader.is_alive()
+            if reader is None or not reader.is_alive():
+                service.stdout.close()
+        if log is not None:
+            log.close()
+        try:
+            record["source_after"] = source_hashes(expected)
+            record["source_unchanged"] = record["source_after"] == record.get("source_before") == expected
+        except Exception as error:
+            record["source_unchanged"], record["source_check_error_type"] = False, type(error).__name__
+        record["within_workflow_budget"] = (record["elapsed_seconds_startup_connect_learning"] <= 900
+            and type(record.get("interaction_total")) is int and record["interaction_total"] <= 120
+            and type(record.get("possible_write_total")) is int and record["possible_write_total"] <= 40)
+        record["elapsed_seconds_including_shutdown"] = time.monotonic() - started
+        record["completed_at"] = datetime.now(timezone.utc).isoformat()
+        checkpoint(record)
+    print(json.dumps(redact({key: record.get(key) for key in ("status", "connection_id", "learning_outcome", "interaction_total", "possible_write_total",
+                     "accepted_jobs_terminal_before_close", "source_unchanged", "within_workflow_budget", "service_exit_code", "error_type")}, secrets)))
+    return 0 if record["status"] == "ONBOARDING_FINISHED" and record["source_unchanged"] and record["within_workflow_budget"] and record["accepted_jobs_terminal_before_close"] and "catalog" in record and record.get("service_exit_code") == 0 else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

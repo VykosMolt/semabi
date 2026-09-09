@@ -1,0 +1,143 @@
+{
+  "format": "reserved_native_startup_plan.v1",
+  "status": "PLAN_ONLY_NOT_EXECUTED",
+  "prepared_at": "2026-09-09T19:34:58.101595+00:00",
+  "installation_role_only": true,
+  "learner_or_goal_input": false,
+  "deployment": {
+    "metadata_path": "/home/moloch/semabi/runs/product_apps_v1/reserved/deployment.json",
+    "metadata_sha256": "87864e2cc1e5f0c0d8156bdc365b2a8b75fe0f2e7f33e235c2289b7283d88bc5",
+    "application": "Vikunja",
+    "version": "2.6.0",
+    "role": "reserved",
+    "declared_status": "prepared_not_started",
+    "planned_url": "http://127.0.0.1:8853/",
+    "binary_path": "/home/moloch/semabi/runs/product_apps_v1/reserved/bin/vikunja-v2.6.0-linux-amd64",
+    "binary_sha256_from_metadata": "75740a96f76f3f6d8c4a907db8b04bccab8f940a4537f52b8e1b4c8a68d5bf80",
+    "archive_sha256_from_metadata": "44f55c5620cf90f9f125ee2d2fda31db1946230da6d1dbc0f7943aed68db4264",
+    "archive_signature_verified_by_installer_metadata": true,
+    "signing_key_fingerprint": "7D061A4AA61436B40713D42EFF054DACD908493A",
+    "private_configuration_path_from_metadata": "/home/moloch/semabi/runs/product_apps_v1/reserved/private/config.yml",
+    "actual_current_process_status": "NOT_CHECKED",
+    "actual_listener_status": "NOT_CHECKED"
+  },
+  "planned_command_unchanged": [
+    "taskset",
+    "-c",
+    "2,3",
+    "/home/moloch/semabi/runs/product_apps_v1/reserved/bin/vikunja-v2.6.0-linux-amd64",
+    "--config",
+    "/home/moloch/semabi/runs/product_apps_v1/reserved/private/config.yml"
+  ],
+  "start_environment": {
+    "GOMAXPROCS": "2",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "resources": {
+    "cpu_affinity": [
+      2,
+      3
+    ],
+    "maximum_affinity_cores": 2,
+    "library_threads": 1,
+    "gomaxprocs": 2,
+    "network_boundary": "127.0.0.1:8853 planned; actual socket boundary must be confirmed after launch"
+  },
+  "account_status": {
+    "status": "UNESTABLISHED",
+    "basis": "Metadata says prepared, never started, and no UI visit. A generated credentials filename is not evidence of a provisioned or usable account.",
+    "credentials_read": false
+  },
+  "account_baseline": {
+    "status": "UNESTABLISHED",
+    "basis": "No allowed metadata establishes a reserved initial-account snapshot or a prepared fixture snapshot. No database or backup contents were inspected."
+  },
+  "existing_lifecycle_helper": {
+    "path": "runs/product_apps_v1/manage_apps.py",
+    "reserved_supported": false,
+    "basis": "The application_setup_v1 README explicitly excludes the reserved application from the helper."
+  },
+  "private_receipts_directory": "/home/moloch/semabi/runs/product_reserved_preparation_v1",
+  "owner_receipt": "/home/moloch/semabi/runs/product_reserved_preparation_v1/owned_instance.json",
+  "commands": {
+    "start": {
+      "argv": [
+        "python3",
+        "-B",
+        "-c",
+        "PLAN_PATH='/home/moloch/semabi/runs/product_reserved_preparation_v1/startup_plan.json'\nimport ctypes,hashlib,json,os,signal,socket,subprocess,time\nfrom pathlib import Path\nfrom urllib.parse import urlsplit\nplan=json.loads(Path(PLAN_PATH).read_text())\ndeployment=Path(plan[\"deployment\"][\"metadata_path\"])\nassert hashlib.sha256(deployment.read_bytes()).hexdigest()==plan[\"deployment\"][\"metadata_sha256\"], \"Deployment metadata changed\"\nmeta=json.loads(deployment.read_text())\nroot=deployment.parent\nprivate=Path(plan[\"private_receipts_directory\"])\nowner_path=Path(plan[\"owner_receipt\"])\nexpected=meta[\"planned_command\"][3:]\ndef read_process(pid):\n    data=Path(f\"/proc/{pid}/stat\").read_text(); fields=data[data.rfind(\")\")+2:].split()\n    return {\"pid\":pid,\"start_ticks\":int(fields[19]),\"state\":fields[0]}\ndef state(owner):\n    try:\n        current=read_process(owner[\"pid\"])\n        if current[\"start_ticks\"]!=owner[\"start_ticks\"]: return \"pid_reused\"\n        if current[\"state\"]==\"Z\": return \"zombie_terminated\"\n        executable=os.readlink(f\"/proc/{owner['pid']}/exe\")\n        argv=[x.decode() for x in Path(f\"/proc/{owner['pid']}/cmdline\").read_bytes().split(b\"\\0\") if x]\n        return \"owned_running\" if executable==expected[0] and argv==expected else \"identity_unestablished\"\n    except (FileNotFoundError,ProcessLookupError): return \"absent\"\n    except OSError: return \"unknown\"\ndef save_new(path,value):\n    with path.open(\"x\") as stream: json.dump(value,stream,indent=2); stream.write(\"\\n\")\nos.umask(0o077)\nprivate.mkdir(parents=True,mode=0o700,exist_ok=True)\nassert not owner_path.exists(), \"Preserve or archive the preceding stopped instance receipt before another start\"\nassert hashlib.sha256(Path(expected[0]).read_bytes()).hexdigest()==meta[\"binary_sha256\"], \"Pinned binary changed\"\nparsed=urlsplit(meta[\"planned_url\"])\nassert parsed.hostname==\"127.0.0.1\" and len(meta[\"cpu_affinity\"])<=2\nwith socket.socket() as probe: probe.bind((parsed.hostname,parsed.port))\nenvironment={**os.environ,**plan[\"start_environment\"]}\nwith (private/\"native_stdout.log\").open(\"xb\") as stdout,(private/\"native_stderr.log\").open(\"xb\") as stderr:\n    child=subprocess.Popen(meta[\"planned_command\"],cwd=root,env=environment,stdin=subprocess.DEVNULL,\n                           stdout=stdout,stderr=stderr,shell=False,start_new_session=True)\n    try:\n        receipt={**read_process(child.pid),\"planned_argv\":meta[\"planned_command\"],\n                 \"binary_sha256\":meta[\"binary_sha256\"],\"metadata_sha256\":plan[\"deployment\"][\"metadata_sha256\"],\n                 \"launched_unix_ns\":time.time_ns(),\"stdout\":\"native_stdout.log\",\"stderr\":\"native_stderr.log\"}\n        save_new(owner_path,receipt)\n    except BaseException:\n        child.terminate()\n        try: child.wait(timeout=5)\n        except subprocess.TimeoutExpired: child.kill(); child.wait(timeout=5)\n        raise\nprint(json.dumps({\"status\":\"START_REQUESTED\",\"owner_receipt\":str(owner_path),\"pid\":child.pid,\n                  \"loopback_listener\":\"NOT_YET_VERIFIED\",\"account\":\"UNESTABLISHED\"}))\n"
+      ],
+      "executed": false
+    },
+    "status": {
+      "argv": [
+        "python3",
+        "-B",
+        "-c",
+        "PLAN_PATH='/home/moloch/semabi/runs/product_reserved_preparation_v1/startup_plan.json'\nimport ctypes,hashlib,json,os,signal,socket,subprocess,time\nfrom pathlib import Path\nfrom urllib.parse import urlsplit\nplan=json.loads(Path(PLAN_PATH).read_text())\ndeployment=Path(plan[\"deployment\"][\"metadata_path\"])\nassert hashlib.sha256(deployment.read_bytes()).hexdigest()==plan[\"deployment\"][\"metadata_sha256\"], \"Deployment metadata changed\"\nmeta=json.loads(deployment.read_text())\nroot=deployment.parent\nprivate=Path(plan[\"private_receipts_directory\"])\nowner_path=Path(plan[\"owner_receipt\"])\nexpected=meta[\"planned_command\"][3:]\ndef read_process(pid):\n    data=Path(f\"/proc/{pid}/stat\").read_text(); fields=data[data.rfind(\")\")+2:].split()\n    return {\"pid\":pid,\"start_ticks\":int(fields[19]),\"state\":fields[0]}\ndef state(owner):\n    try:\n        current=read_process(owner[\"pid\"])\n        if current[\"start_ticks\"]!=owner[\"start_ticks\"]: return \"pid_reused\"\n        if current[\"state\"]==\"Z\": return \"zombie_terminated\"\n        executable=os.readlink(f\"/proc/{owner['pid']}/exe\")\n        argv=[x.decode() for x in Path(f\"/proc/{owner['pid']}/cmdline\").read_bytes().split(b\"\\0\") if x]\n        return \"owned_running\" if executable==expected[0] and argv==expected else \"identity_unestablished\"\n    except (FileNotFoundError,ProcessLookupError): return \"absent\"\n    except OSError: return \"unknown\"\ndef save_new(path,value):\n    with path.open(\"x\") as stream: json.dump(value,stream,indent=2); stream.write(\"\\n\")\nowner=json.loads(owner_path.read_text())\nassert owner[\"metadata_sha256\"]==plan[\"deployment\"][\"metadata_sha256\"]\nobserved=state(owner)\nresult={\"status\":observed,\"pid\":owner[\"pid\"],\"start_ticks\":owner[\"start_ticks\"],\"http_called\":False}\nif observed==\"owned_running\":\n    result[\"cpu_affinity\"]=sorted(os.sched_getaffinity(owner[\"pid\"]))\n    result[\"affinity_within_plan\"]=set(result[\"cpu_affinity\"])<=set(meta[\"cpu_affinity\"])\n    inodes=set()\n    for fd in Path(f\"/proc/{owner['pid']}/fd\").iterdir():\n        try: target=os.readlink(fd)\n        except OSError: continue\n        if target.startswith(\"socket:[\"): inodes.add(target[8:-1])\n    listeners=[]\n    for family in (\"tcp\",\"tcp6\"):\n        for line in Path(\"/proc/net/\"+family).read_text().splitlines()[1:]:\n            fields=line.split()\n            if len(fields)>9 and fields[3]==\"0A\" and fields[9] in inodes:\n                address,port=fields[1].split(\":\")\n                listeners.append({\"family\":family,\"address_hex\":address,\"port\":int(port,16)})\n    result[\"owned_tcp_listeners\"]=listeners\n    loopbacks={\"tcp\":\"0100007F\",\"tcp6\":\"00000000000000000000000001000000\"}\n    expected_port=urlsplit(meta[\"planned_url\"]).port\n    result[\"planned_listener_confirmed\"]=any(x[\"family\"]==\"tcp\" and x[\"address_hex\"]==loopbacks[\"tcp\"] and x[\"port\"]==expected_port for x in listeners)\n    result[\"loopback_only\"]=bool(listeners) and all(x[\"address_hex\"]==loopbacks[x[\"family\"]] for x in listeners)\nprint(json.dumps(result))\n"
+      ],
+      "executed": false
+    },
+    "stop": {
+      "argv": [
+        "python3",
+        "-B",
+        "-c",
+        "PLAN_PATH='/home/moloch/semabi/runs/product_reserved_preparation_v1/startup_plan.json'\nimport ctypes,hashlib,json,os,signal,socket,subprocess,time\nfrom pathlib import Path\nfrom urllib.parse import urlsplit\nplan=json.loads(Path(PLAN_PATH).read_text())\ndeployment=Path(plan[\"deployment\"][\"metadata_path\"])\nassert hashlib.sha256(deployment.read_bytes()).hexdigest()==plan[\"deployment\"][\"metadata_sha256\"], \"Deployment metadata changed\"\nmeta=json.loads(deployment.read_text())\nroot=deployment.parent\nprivate=Path(plan[\"private_receipts_directory\"])\nowner_path=Path(plan[\"owner_receipt\"])\nexpected=meta[\"planned_command\"][3:]\ndef read_process(pid):\n    data=Path(f\"/proc/{pid}/stat\").read_text(); fields=data[data.rfind(\")\")+2:].split()\n    return {\"pid\":pid,\"start_ticks\":int(fields[19]),\"state\":fields[0]}\ndef state(owner):\n    try:\n        current=read_process(owner[\"pid\"])\n        if current[\"start_ticks\"]!=owner[\"start_ticks\"]: return \"pid_reused\"\n        if current[\"state\"]==\"Z\": return \"zombie_terminated\"\n        executable=os.readlink(f\"/proc/{owner['pid']}/exe\")\n        argv=[x.decode() for x in Path(f\"/proc/{owner['pid']}/cmdline\").read_bytes().split(b\"\\0\") if x]\n        return \"owned_running\" if executable==expected[0] and argv==expected else \"identity_unestablished\"\n    except (FileNotFoundError,ProcessLookupError): return \"absent\"\n    except OSError: return \"unknown\"\ndef save_new(path,value):\n    with path.open(\"x\") as stream: json.dump(value,stream,indent=2); stream.write(\"\\n\")\nos.umask(0o077)\nowner=json.loads(owner_path.read_text())\nassert owner[\"metadata_sha256\"]==plan[\"deployment\"][\"metadata_sha256\"]\nlibc=ctypes.CDLL(None,use_errno=True)\nevents=[]\nfor signum in (signal.SIGTERM,signal.SIGKILL):\n    observed=state(owner)\n    if observed!=\"owned_running\": break\n    descriptor=libc.pidfd_open(owner[\"pid\"],0)\n    if descriptor<0:\n        events.append({\"signal\":int(signum),\"status\":\"pidfd_open_failed\",\"errno\":ctypes.get_errno()}); break\n    try:\n        if state(owner)!=\"owned_running\": break\n        result=libc.pidfd_send_signal(descriptor,int(signum),None,0)\n        events.append({\"signal\":int(signum),\"status\":\"sent\" if result==0 else \"failed\",\"errno\":None if result==0 else ctypes.get_errno()})\n    finally: os.close(descriptor)\n    deadline=time.monotonic()+5\n    while time.monotonic()<deadline and state(owner)==\"owned_running\": time.sleep(0.05)\nresult={\"pid\":owner[\"pid\"],\"start_ticks\":owner[\"start_ticks\"],\"terminal_state\":state(owner),\"signals\":events,\n        \"exit_code\":None,\"exit_code_status\":\"Not the parent; no exit code invented\",\"http_called\":False}\nsave_new(private/(\"stop_\"+str(time.time_ns())+\".json\"),result)\nprint(json.dumps(result))\n"
+      ],
+      "executed": false
+    }
+  },
+  "execution_sequence": [
+    "Only after the root coordinates the reserved installation phase, execute commands.start.argv directly without a shell. It verifies the pinned binary digest and a free loopback port, uses the unchanged deployment argv and resource environment, and records a new PID/start-time receipt.",
+    "Execute commands.status.argv without HTTP. Require the PID/start identity, executable and argv to match, affinity to remain within CPUs 2 and 3, and the expected loopback listener with no non-loopback owned TCP listeners.",
+    "If startup exits, the listener boundary is unestablished, affinity is wrong, or later shutdown is requested, use commands.stop.argv. It sends bounded SIGTERM then SIGKILL only through a pidfd after matching the recorded identity and executable/argv.",
+    "Keep native logs, ownership receipts and stop receipts private. Before any subsequent start, archive the preceding stopped instance receipt and logs without overwriting them; the start command deliberately refuses existing files.",
+    "Do not run this background-start launcher inside a command meter that cleans its descendants when the launcher exits; use the installer-owned process receipt for lifecycle supervision.",
+    "Account provisioning, baseline preparation and assessment scheduling remain separate future installation/evaluation work. This plan authors no business goals, UI routes, selectors or operation schemas."
+  ],
+  "stop_scope": "The one recorded native process; no broad process-group, name-based, or container stop operation.",
+  "actual_exposure": {
+    "documents_read": [
+      {
+        "path": "/home/moloch/semabi/runs/product_apps_v1/reserved/deployment.json",
+        "sha256": "87864e2cc1e5f0c0d8156bdc365b2a8b75fe0f2e7f33e235c2289b7283d88bc5"
+      },
+      {
+        "path": "/home/moloch/semabi/docs/data/v4/transport/product/application_setup_v1/README.md",
+        "sha256": "5856d55102d15b5891919801e8dc2e9479123cde262f35d687911f71f5b5d7a8"
+      }
+    ],
+    "directory_listing_only": [
+      "reserved/bin/config.yml.sample",
+      "reserved/bin/LICENSE",
+      "reserved/bin/vikunja-v2.6.0-linux-amd64",
+      "reserved/bin/vikunja-v2.6.0-linux-amd64.sha256",
+      "reserved/vikunja-v2.6.0-linux-amd64-full.zip",
+      "reserved/vikunja-v2.6.0-linux-amd64-full.zip.sig",
+      "reserved/deployment.json",
+      "reserved/private/credentials.json",
+      "reserved/private/config.yml",
+      "reserved/private/gnupg/trustdb.gpg",
+      "reserved/private/gnupg/pubring.kbx",
+      "reserved/private/gnupg/pubring.kbx~",
+      "reserved/private/gnupg/crls.d/DIR.txt"
+    ],
+    "credentials_or_configuration_contents_read": false,
+    "binary_or_archive_contents_read": false,
+    "application_source_or_database_read": false,
+    "application_http_calls": 0,
+    "ui_visits": 0,
+    "process_or_container_mutations": 0,
+    "semantic_tasks_or_outcomes_authored": false
+  },
+  "validation": {
+    "embedded_command_syntax": "All three Python command bodies compiled without execution.",
+    "launch_argv_matches_deployment_metadata": true,
+    "resource_affinity_at_most_two": true,
+    "runtime_or_lifecycle_checks_performed": false
+  }
+}

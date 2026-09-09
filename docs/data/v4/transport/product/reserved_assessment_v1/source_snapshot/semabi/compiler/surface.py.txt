@@ -6,7 +6,7 @@ region or repeated value is never implicitly a semantic reference.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 import hashlib
 import json
 import re
@@ -32,18 +32,6 @@ class Surface:
     controls: dict[int, dict]
     forms: dict[int, dict]
     settled: bool = True
-    text_boundaries: dict[int, str | None] = field(default_factory=dict)
-
-    def text_is_complete(self, node: int) -> bool:
-        """A text witness must equal every containing paragraph's whole value.
-
-        Names remain ordinary observed UI evidence when a paragraph could not
-        establish a complete value. This restriction concerns text witnesses;
-        rendered link destinations keep their independent channel.
-        """
-        name = self.observation.node(node).name
-        return all(self.text_boundaries[root] is not None and name == self.text_boundaries[root]
-                   for root in [node, *self.observation.ancestors(node)] if root in self.text_boundaries)
 
     def descriptor(self, node: int) -> dict:
         control = self.controls[node]
@@ -248,8 +236,7 @@ def relative_value_slots(surface: Surface, root: int, value: str) -> list[dict]:
     """Local field paths with distinct text and link-destination channels."""
     obs = surface.observation
     members = obs.subtree(root)
-    exact = {node for node in members
-             if obs.node(node).name.strip() == value.strip() and surface.text_is_complete(node)}
+    exact = {node for node in members if obs.node(node).name.strip() == value.strip()}
     leaves = [(node, "text") for node in exact if not (set(obs.subtree(node)) - {node}) & exact]
     leaves.extend((node, "link_destination") for node in members
                   if surface.controls.get(node, {}).get("role") == "link"
@@ -282,8 +269,7 @@ def visible_record_matches(surface: Surface, value: str) -> list[dict]:
             continue
         destination_match = (node.role == "link"
                              and surface.controls.get(node.i, {}).get("destination") == value)
-        text_match = node.name.strip() == value.strip() and surface.text_is_complete(node.i)
-        if not text_match and not destination_match:
+        if node.name.strip() != value.strip() and not destination_match:
             continue
         if any(root in editors or
                (root in surface.controls and surface.controls[root]["role"] in
@@ -302,8 +288,7 @@ def visible_record_matches(surface: Surface, value: str) -> list[dict]:
             if any(control["role"] in {"textbox", "combobox"}
                    for control in controls):
                 break
-            texts = [obs.node(index).name for index in members
-                     if obs.node(index).name and surface.text_is_complete(index)]
+            texts = [obs.node(index).name for index in members if obs.node(index).name]
             destinations = [control["destination"] for control in controls
                             if control["role"] == "link" and control.get("destination")]
             explicit = parent.role in {"row", "listitem", "article"}
@@ -314,9 +299,6 @@ def visible_record_matches(surface: Surface, value: str) -> list[dict]:
                 used.add(root)
                 matches.append({"root": root, "value_node": node.i, "role": parent.role,
                                 "texts": texts, "link_destinations": destinations,
-                                "text_boundaries": {index: surface.text_boundaries[index]
-                                                    for index in sorted(members | set(obs.ancestors(root)))
-                                                    if index in surface.text_boundaries},
                                 "basis": "visible_local_record",
                                 "observation": obs.structural_signature()})
             break

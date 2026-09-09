@@ -1,0 +1,16 @@
+{
+  "format": "reserved_installer_startup.v1",
+  "started_at": "2026-09-09T19:54:33.426496+00:00",
+  "lifecycle_sha256": "2bc212900988d56da60d2787c641d56b6fae8dc3449355dbdbeb781aa40cd967",
+  "ordinary_ui_actions": 0,
+  "application_http_calls": 0,
+  "prior_failure": "startup_v1.json",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py\", line 300, in <module>\n    main()\n    ~~~~^^\n  File \"/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py\", line 296, in main\n    print(json.dumps(adapter.run(args.action, args.name), sort_keys=True))\n                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py\", line 285, in run\n    return getattr(self, action)()\n           ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py\", line 205, in start\n    if self.running():\n       ~~~~~~~~~~~~^^\n  File \"/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py\", line 142, in running\n    if self.matching_pids() != permitted:\n       ~~~~~~~~~~~~~~~~~~^^\n  File \"/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py\", line 132, in matching_pids\n    if os.readlink(entry / \"exe\") == self.expected[0]:\n       ~~~~~~~~~~~^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '/proc/959/exe'\n",
+  "elapsed_seconds": 0.0876014160021441,
+  "child_cpu_seconds": 0.086919,
+  "child_peak_rss_bytes": 29380608,
+  "cost_scope": "Launcher and waited children; persistent application costs excluded",
+  "completed_at": "2026-09-09T19:54:33.514130+00:00"
+}

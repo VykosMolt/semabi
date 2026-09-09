@@ -1,0 +1,19 @@
+{
+  "format": "reserved_installer_startup.v1",
+  "started_at": "2026-09-09T19:57:05.958517+00:00",
+  "lifecycle_sha256": "3b49de19d8ed85f9d447a164d1a5b1e2d8ce50bef786b63e197f80ef633691a0",
+  "ordinary_ui_actions": 0,
+  "application_http_calls": 0,
+  "prior_failures": [
+    "startup_v1.json",
+    "startup_v2.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"account_state\": \"NOT_ASSESSED_BY_LIFECYCLE_ADAPTER\", \"affinity_within_plan\": true, \"archived_instance\": null, \"cpu_affinity\": [2, 3], \"http_called\": false, \"loopback_only\": true, \"owned_tcp_listeners\": [{\"address_hex\": \"0100007F\", \"family\": \"tcp\", \"inode\": \"4772998\", \"port\": 8853}], \"pid\": 1225630, \"planned_listener_confirmed\": true, \"process_scope\": \"RECORDED_INSTANCE_ONLY\", \"running\": true, \"start_ticks\": 7275236, \"status\": \"owned_running\"}\n",
+  "stderr": "",
+  "elapsed_seconds": 0.5225764909991995,
+  "child_cpu_seconds": 0.15933,
+  "child_peak_rss_bytes": 90202112,
+  "cost_scope": "Launcher and waited children; persistent application costs excluded",
+  "completed_at": "2026-09-09T19:57:06.481128+00:00"
+}

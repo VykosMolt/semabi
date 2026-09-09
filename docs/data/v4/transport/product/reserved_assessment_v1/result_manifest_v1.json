@@ -1,0 +1,354 @@
+{
+  "format": "product_first_reserved_result_seal.v1",
+  "status": "SEALED_FIRST_RESERVED_RESULT",
+  "sealed_at": "2026-09-09T20:28:30.321241+00:00",
+  "read_only_result_build_started_at": "2026-09-09T20:28:30.309275+00:00",
+  "read_only_result_build_elapsed_seconds": 0.01196,
+  "source_head_at_seal": "707a39f233aebd0df39a4ce8d9008f0a773f02f6",
+  "common_source_commit": "c0045346f4a231eea80bc05d170e50bd2192348e",
+  "source_sha256": {
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c"
+  },
+  "all_ten_actual_source_files_match_original_freeze": true,
+  "input_files": [
+    {
+      "path": "runs/product_assessment_reserved_v1/freeze_v1.json",
+      "bytes": 28503,
+      "sha256": "c1169be7c3be026a2978b8c487df1b2ab11de0a2ad06b022c025a98154491372"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/source_sha256.json",
+      "bytes": 1006,
+      "sha256": "29be699dd9c017a7b020d646552c8313c1ab626e6727e9ad9db309921a1b03d2"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/task_plan.json",
+      "bytes": 15658,
+      "sha256": "bb10e56f22fe6dbd29c4d0526f019c7332608c2652b285973c308878e1845f6b"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/expected_results.json",
+      "bytes": 7070,
+      "sha256": "21ddd987ebd2ec47a6456e8f2c149df1a4b9045dc5e16f2e0d17c33484c86e76"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/task_freeze_v1.json",
+      "bytes": 12243,
+      "sha256": "9a001ffb8829237dca4358c37e2f9fdfd48c8718df73c1dc775107274066bcc6"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/onboarding_caller_freeze_v1.json",
+      "bytes": 2235,
+      "sha256": "8fd307f17079149662cab5b58d31bdba1407f7deb604885be28b9ec246aacb98"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/run_onboarding.py",
+      "bytes": 17661,
+      "sha256": "62ffd4358271d74511becb874756ce753217d37296210899df6e0c74e668feee"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/binding/binding.py",
+      "bytes": 12362,
+      "sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/binding/policy.md",
+      "bytes": 4003,
+      "sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/onboarding_v1/onboarding.json",
+      "bytes": 5703,
+      "sha256": "080d0e339009c62ebfd0dc74cbb22693b5663f25853f58b3e7c8f40632511405"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/meters/onboarding-v1/result.json",
+      "bytes": 3656,
+      "sha256": "8b0b10b05080f6eff035461204a0269b40c89d9d773dbcd0a50fd026fa012435"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/base_snapshot_v1.json",
+      "bytes": 1274,
+      "sha256": "fb10a7b60e644bef6f4ca14ee61fa5558154bc97e341fe75468b9be2ee12baff"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/restore_base_for_onboarding_v1.json",
+      "bytes": 1326,
+      "sha256": "ba159650fc90190614460052b8c3cb2836affafd0bd8a2564504f82c15dc6aa4"
+    },
+    {
+      "path": "docs/data/v4/transport/product/evaluation_protocol_v1.md",
+      "bytes": 17125,
+      "sha256": "959eb6ac3cab7202fcf00762cc209c8b360efdde24664a7a4053e0090b5a0d2d"
+    }
+  ],
+  "output_files": [
+    {
+      "path": "runs/product_assessment_reserved_v1/binding_receipts_v1.jsonl",
+      "bytes": 55515,
+      "sha256": "9d082c4a34cd35b05a4fa08fcd441190e78db39c8c9de4d0fa212151ef5e7b8c"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/results_v1.jsonl",
+      "bytes": 104911,
+      "sha256": "9bcc60499189e48230346b81b84972c8cc677eeb4de3ccd770609ca55e7e0a7d"
+    },
+    {
+      "path": "runs/product_assessment_reserved_v1/reserved_summary_v1.md",
+      "bytes": 3297,
+      "sha256": "81a9f9f5667b8e7cf5d842e995ed720fb5c093c2bfcf1f3fa0a1794208e3597a"
+    }
+  ],
+  "result_rows": 36,
+  "primary_status_counts": {
+    "AUTHENTICATION_UNESTABLISHED": 18,
+    "SETUP_UNESTABLISHED": 12,
+    "INTERVENTION_UNAVAILABLE": 6
+  },
+  "per_arm": {
+    "semabi": {
+      "task_completion": {
+        "completed": 0,
+        "requested": 18,
+        "rate": 0.0
+      },
+      "core_completion": {
+        "completed": 0,
+        "requested": 12,
+        "rate": 0.0
+      },
+      "invocation_coverage": {
+        "invoked": 0,
+        "requested": 18,
+        "rate": 0.0
+      },
+      "invocation_correctness": {
+        "correct": 0,
+        "invoked": 0,
+        "value": null,
+        "status": "UNDEFINED_ZERO_INVOCATIONS"
+      },
+      "confirmation_precision": {
+        "correct_confirmations": 0,
+        "confirmations": 0,
+        "value": null,
+        "status": "UNDEFINED_ZERO_CONFIRMATIONS"
+      },
+      "false_confirmations_among_confirmed": 0,
+      "post_onboarding_wrong_side_effect_count": null,
+      "primary_status_counts": {
+        "AUTHENTICATION_UNESTABLISHED": 9,
+        "SETUP_UNESTABLISHED": 6,
+        "INTERVENTION_UNAVAILABLE": 3
+      },
+      "preflight_status_counts": {
+        "UNSUPPORTED": 18
+      },
+      "family_results": {
+        "R": {
+          "completed": 0,
+          "requests": 2,
+          "invoked": 0
+        },
+        "C": {
+          "completed": 0,
+          "requests": 2,
+          "invoked": 0
+        },
+        "U": {
+          "completed": 0,
+          "requests": 2,
+          "invoked": 0
+        },
+        "D": {
+          "completed": 0,
+          "requests": 2,
+          "invoked": 0
+        },
+        "REL": {
+          "completed": 0,
+          "requests": 4,
+          "invoked": 0
+        },
+        "CH": {
+          "completed": 0,
+          "requests": 6,
+          "invoked": 0
+        }
+      },
+      "shared_acquisition_charge_id": "vikunja-shared-acquisition-v1"
+    },
+    "cached_form": {
+      "task_completion": {
+        "completed": 0,
+        "requested": 18,
+        "rate": 0.0
+      },
+      "core_completion": {
+        "completed": 0,
+        "requested": 12,
+        "rate": 0.0
+      },
+      "invocation_coverage": {
+        "invoked": 0,
+        "requested": 18,
+        "rate": 0.0
+      },
+      "invocation_correctness": {
+        "correct": 0,
+        "invoked": 0,
+        "value": null,
+        "status": "UNDEFINED_ZERO_INVOCATIONS"
+      },
+      "confirmation_precision": {
+        "correct_confirmations": 0,
+        "confirmations": 0,
+        "value": null,
+        "status": "UNDEFINED_ZERO_CONFIRMATIONS"
+      },
+      "false_confirmations_among_confirmed": 0,
+      "post_onboarding_wrong_side_effect_count": null,
+      "primary_status_counts": {
+        "AUTHENTICATION_UNESTABLISHED": 9,
+        "SETUP_UNESTABLISHED": 6,
+        "INTERVENTION_UNAVAILABLE": 3
+      },
+      "preflight_status_counts": {
+        "UNSUPPORTED": 18
+      },
+      "family_results": {
+        "R": {
+          "completed": 0,
+          "requests": 2,
+          "invoked": 0
+        },
+        "C": {
+          "completed": 0,
+          "requests": 2,
+          "invoked": 0
+        },
+        "U": {
+          "completed": 0,
+          "requests": 2,
+          "invoked": 0
+        },
+        "D": {
+          "completed": 0,
+          "requests": 2,
+          "invoked": 0
+        },
+        "REL": {
+          "completed": 0,
+          "requests": 4,
+          "invoked": 0
+        },
+        "CH": {
+          "completed": 0,
+          "requests": 6,
+          "invoked": 0
+        }
+      },
+      "shared_acquisition_charge_id": "vikunja-shared-acquisition-v1"
+    }
+  },
+  "shared_failed_acquisition": {
+    "charge_id": "vikunja-shared-acquisition-v1",
+    "physical_executions": 1,
+    "charge_once_to_each_arm": [
+      "semabi",
+      "cached_form"
+    ],
+    "status": "AUTHENTICATION_UNESTABLISHED",
+    "public_connect_job_id": "job_b77de40a4c774a78bdadc725167f8230",
+    "connection_id": "conn_07be52fcb608474a81f288d1f1a84c38",
+    "public_connect_job_terminal": true,
+    "authentication_result": {
+      "allowed_origin": "http://127.0.0.1:8853",
+      "authentication_actions": 0,
+      "elapsed_seconds": 1.034,
+      "reason": "Login controls are ambiguous",
+      "status": "AUTH_REQUIRED"
+    },
+    "learning_attempts": 0,
+    "learned_operations": 0,
+    "workflow_invocations": 0,
+    "interaction_total": 1,
+    "authentication_actions": 0,
+    "possible_write_total": 0,
+    "http_requests": 19,
+    "write_retries": 0,
+    "external_wall_seconds": 1.881231,
+    "measured_child_cpu_seconds": 0.973665,
+    "sampled_peak_aggregate_rss_bytes": 824987648,
+    "cpu_affinity": [
+      2,
+      3
+    ],
+    "service_exit_code": 0,
+    "external_owner_exit_code": 2,
+    "owned_processes_terminal": true,
+    "signals": [],
+    "public_observation_events": 0,
+    "raw_internal_snapshot_count": null,
+    "raw_internal_snapshot_count_status": "UNMEASURED_NOT_EXPOSED",
+    "metric_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command. Observed PID/start-matched descendants; unobserved detached descendants are not certified."
+  },
+  "setup_cost_reference": {
+    "path": "runs/product_assessment_reserved_v1/task_freeze_v1.json",
+    "sha256": "9a001ffb8829237dca4358c37e2f9fdfd48c8718df73c1dc775107274066bcc6",
+    "ui_setup_elapsed_seconds": 900.133186,
+    "attempted_interactions": 23,
+    "attempted_possible_write_primitives": 19,
+    "undispatched_write_intents": 1,
+    "interpretation": "Evaluator setup/operator coordination; no learner-onboarding timing inference.",
+    "resource_accounting": {
+      "physical_browser_worker_wall_seconds_sum": 673.88321,
+      "meter_reported_child_rusage_cpu_seconds_sum": 6.455334,
+      "maximum_sampled_aggregate_rss_bytes": 944406528,
+      "browser_worker_cpu_affinity": [
+        4
+      ],
+      "maximum_observed_affinity_count": 1,
+      "rss_limit_exceeded": false,
+      "owned_processes_terminal_and_absent": true,
+      "meter_scope": "Preserve original per-phase ownership/CPU measurement limitations.",
+      "opaque_installation_snapshot_costs": "Separate root/installer lifecycle receipts; not included in browser child CPU sum.",
+      "runtime_model_calls": 0,
+      "paid_runtime_resources": 0,
+      "evaluator_model_token_accounting": "Not measured by these browser/process ledgers."
+    },
+    "offline_task_construction": {
+      "from": "2026-09-09T20:13:16.581088+00:00",
+      "to": "2026-09-09T20:18:31.853197+00:00",
+      "elapsed_seconds": 315.272109
+    }
+  },
+  "binder_execution": {
+    "calls": 36,
+    "inputs": "Only ordinary goal, supplied arguments and empty public operations list.",
+    "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+    "source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+    "public_catalog_operations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "all_arm_pairs_have_identical_receipts": true,
+    "all_statuses": "UNSUPPORTED",
+    "calls_emitted": 0,
+    "mappings_emitted": 0,
+    "browser_calls": 0,
+    "observed_total_preflight_seconds": 0.009180352
+  },
+  "independent_post_onboarding_side_effect_check": "NOT_PERFORMED_NO_ZERO_SIDE_EFFECT_CLAIM",
+  "new_browser_or_application_calls_during_result_sealing": 0,
+  "source_logic_changes_during_result_sealing": 0,
+  "no_retry_or_mapping_rescue": true,
+  "product_milestone": "NOT_MET",
+  "claim_limit": "First reserved result on unchanged source; no completed-workflow, effectful-reuse, general-planning, reliability or superiority claim."
+}

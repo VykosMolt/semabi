@@ -1,0 +1,192 @@
+{
+  "status": "PASS",
+  "test_files": [
+    {
+      "path": "/tmp/semabi_rendered_value_candidate/tests/test_operation_runtime.py",
+      "sha256": "4e29b16b37182d60b1cb70887303e2866f2a43f5f1802b3c8a78daab273e83e4"
+    },
+    {
+      "path": "/tmp/semabi_rendered_value_candidate/tests/test_cached_form.py",
+      "sha256": "c9f4e9f42c6079972f65135db1baa293d744941300c0ba41fb23d58284b4109c"
+    }
+  ],
+  "coverage": [
+    "complete normalized mixed-inline and hashtag text order",
+    "direct and wrapped prefixes rejected after inline, block, widget, hidden, and aria-hidden content",
+    "unchanged names retained even when eligibility is declined",
+    "anchor, record texts, relative slots, and secondary argument paths reject incomplete text",
+    "strict deepest equal-leaf paths and containing boundary ancestors retained",
+    "independent link-destination channel",
+    "disabled-editor draft previews excluded",
+    "settling requires agreement in boundary eligibility when observation names match",
+    "runtime boundary serialization and baseline serialization with credential redaction"
+  ],
+  "runs": [
+    {
+      "directory": "/tmp/semabi_rendered_value_candidate/paragraph_boundary_fast_01",
+      "scope": "Both assigned test files, excluding slow Chromium tests",
+      "pytest_summary": "292 passed, 3 deselected, 3 warnings in 12.68s",
+      "meter_result": "/tmp/semabi_rendered_value_candidate/paragraph_boundary_fast_01/result.json",
+      "module_provenance": {
+        "cwd": "/tmp/semabi_rendered_value_candidate",
+        "python": "/home/moloch/semabi/.venv/bin/python",
+        "modules": [
+          {
+            "module": "semabi.compiler.browser_session",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/browser_session.py",
+            "sha256": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441"
+          },
+          {
+            "module": "semabi.compiler.surface",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/surface.py",
+            "sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          {
+            "module": "semabi.compiler.runtime",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/runtime.py",
+            "sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006"
+          },
+          {
+            "module": "semabi.compiler.observation",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/observation.py",
+            "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+          },
+          {
+            "module": "semabi.baselines.cached_form",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/baselines/cached_form.py",
+            "sha256": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971"
+          }
+        ]
+      },
+      "exit_code": 0,
+      "sampled_peak_aggregate_rss_bytes": 69996544,
+      "rss_limit_bytes": 4294967296,
+      "cpu_affinity": [
+        1
+      ],
+      "max_observed_affinity_count": 1,
+      "meter_wall_seconds": 12.951129,
+      "child_rusage_cpu_seconds": 2.889047,
+      "terminal_ownership_verified": true,
+      "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+      "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+      "argv": [
+        "/home/moloch/semabi/.venv/bin/python",
+        "-c",
+        "import hashlib, importlib, json, pathlib, pytest, sys\nroot = pathlib.Path(\"/tmp/semabi_rendered_value_candidate\")\nmodules = [\"semabi.compiler.browser_session\", \"semabi.compiler.surface\", \"semabi.compiler.runtime\", \"semabi.compiler.observation\", \"semabi.baselines.cached_form\"]\nprovenance = [{\"module\": name, \"path\": (path := pathlib.Path(importlib.import_module(name).__file__)).as_posix(), \"sha256\": hashlib.sha256(path.read_bytes()).hexdigest()} for name in modules]\nassert all(pathlib.Path(item[\"path\"]).is_relative_to(root) for item in provenance)\nprint(json.dumps({\"cwd\": pathlib.Path.cwd().as_posix(), \"python\": sys.executable, \"modules\": provenance}), flush=True)\nraise SystemExit(pytest.main([\"tests/test_operation_runtime.py\", \"tests/test_cached_form.py\", \"-m\", \"not slow\", \"-q\"]))\n"
+      ]
+    },
+    {
+      "directory": "/tmp/semabi_rendered_value_candidate/paragraph_boundary_chromium_01",
+      "scope": "All three Chromium tests in test_operation_runtime.py",
+      "pytest_summary": "3 passed, 209 deselected, 3 warnings in 8.36s",
+      "meter_result": "/tmp/semabi_rendered_value_candidate/paragraph_boundary_chromium_01/result.json",
+      "module_provenance": {
+        "cwd": "/tmp/semabi_rendered_value_candidate",
+        "python": "/home/moloch/semabi/.venv/bin/python",
+        "modules": [
+          {
+            "module": "semabi.compiler.browser_session",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/browser_session.py",
+            "sha256": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441"
+          },
+          {
+            "module": "semabi.compiler.surface",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/surface.py",
+            "sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          {
+            "module": "semabi.compiler.runtime",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/runtime.py",
+            "sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006"
+          },
+          {
+            "module": "semabi.compiler.observation",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/observation.py",
+            "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+          },
+          {
+            "module": "semabi.baselines.cached_form",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/baselines/cached_form.py",
+            "sha256": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971"
+          }
+        ]
+      },
+      "exit_code": 0,
+      "sampled_peak_aggregate_rss_bytes": 763478016,
+      "rss_limit_bytes": 4294967296,
+      "cpu_affinity": [
+        1
+      ],
+      "max_observed_affinity_count": 1,
+      "meter_wall_seconds": 8.690671,
+      "child_rusage_cpu_seconds": 2.099865,
+      "terminal_ownership_verified": true,
+      "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+      "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+      "argv": [
+        "/home/moloch/semabi/.venv/bin/python",
+        "-c",
+        "import hashlib, importlib, json, pathlib, pytest, sys\nroot = pathlib.Path(\"/tmp/semabi_rendered_value_candidate\")\nmodules = [\"semabi.compiler.browser_session\", \"semabi.compiler.surface\", \"semabi.compiler.runtime\", \"semabi.compiler.observation\", \"semabi.baselines.cached_form\"]\nprovenance = [{\"module\": name, \"path\": (path := pathlib.Path(importlib.import_module(name).__file__)).as_posix(), \"sha256\": hashlib.sha256(path.read_bytes()).hexdigest()} for name in modules]\nassert all(pathlib.Path(item[\"path\"]).is_relative_to(root) for item in provenance)\nprint(json.dumps({\"cwd\": pathlib.Path.cwd().as_posix(), \"python\": sys.executable, \"modules\": provenance}), flush=True)\nraise SystemExit(pytest.main([\"tests/test_operation_runtime.py\", \"-m\", \"slow\", \"-q\"]))\n"
+      ]
+    },
+    {
+      "directory": "/tmp/semabi_rendered_value_candidate/paragraph_boundary_chromium_02",
+      "scope": "New Chromium test after adding the explicit preserved-name assertion",
+      "pytest_summary": "1 passed, 3 warnings in 5.32s",
+      "meter_result": "/tmp/semabi_rendered_value_candidate/paragraph_boundary_chromium_02/result.json",
+      "module_provenance": {
+        "cwd": "/tmp/semabi_rendered_value_candidate",
+        "python": "/home/moloch/semabi/.venv/bin/python",
+        "modules": [
+          {
+            "module": "semabi.compiler.browser_session",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/browser_session.py",
+            "sha256": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441"
+          },
+          {
+            "module": "semabi.compiler.surface",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/surface.py",
+            "sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          {
+            "module": "semabi.compiler.runtime",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/runtime.py",
+            "sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006"
+          },
+          {
+            "module": "semabi.compiler.observation",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/compiler/observation.py",
+            "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+          },
+          {
+            "module": "semabi.baselines.cached_form",
+            "path": "/tmp/semabi_rendered_value_candidate/semabi/baselines/cached_form.py",
+            "sha256": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971"
+          }
+        ]
+      },
+      "exit_code": 0,
+      "sampled_peak_aggregate_rss_bytes": 759050240,
+      "rss_limit_bytes": 4294967296,
+      "cpu_affinity": [
+        1
+      ],
+      "max_observed_affinity_count": 1,
+      "meter_wall_seconds": 5.601359,
+      "child_rusage_cpu_seconds": 1.113589,
+      "terminal_ownership_verified": true,
+      "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+      "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+      "argv": [
+        "/home/moloch/semabi/.venv/bin/python",
+        "-c",
+        "import hashlib, importlib, json, pathlib, pytest, sys\nroot = pathlib.Path(\"/tmp/semabi_rendered_value_candidate\")\nmodules = [\"semabi.compiler.browser_session\", \"semabi.compiler.surface\", \"semabi.compiler.runtime\", \"semabi.compiler.observation\", \"semabi.baselines.cached_form\"]\nprovenance = [{\"module\": name, \"path\": (path := pathlib.Path(importlib.import_module(name).__file__)).as_posix(), \"sha256\": hashlib.sha256(path.read_bytes()).hexdigest()} for name in modules]\nassert all(pathlib.Path(item[\"path\"]).is_relative_to(root) for item in provenance)\nprint(json.dumps({\"cwd\": pathlib.Path.cwd().as_posix(), \"python\": sys.executable, \"modules\": provenance}), flush=True)\nraise SystemExit(pytest.main([\"tests/test_operation_runtime.py::test_rendered_paragraph_boundaries_require_complete_values_across_inline_variants\", \"-q\"]))\n"
+      ]
+    }
+  ],
+  "warnings": "Candidate pyproject does not register the preexisting slow marker: three PytestUnknownMarkWarning warnings per invocation. Tests still ran and passed.",
+  "scope": "Synthetic observations and in-memory HTML only; no application calls, reserved UI inspection, UI-evaluator messages, candidate source edits, or main edits by this worker.",
+  "execution": "Each command used taskset -c 1, PYTHONPATH=/tmp/semabi_rendered_value_candidate, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1, MKL_NUM_THREADS=1, the supplied command_meter.py, and /home/moloch/semabi/.venv/bin/python; Chromium executions were escalated. The new Chromium case aborts every request.",
+  "test_order_note": "After both assigned files passed, only a docstring and an explicit preserved-observation-name assertion in the new browser test changed; that browser test then passed again."
+}

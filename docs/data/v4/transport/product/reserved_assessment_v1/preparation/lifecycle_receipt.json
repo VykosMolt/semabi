@@ -1,0 +1,127 @@
+{
+  "exposure": {
+    "allowed_documents": [
+      "startup_plan.json",
+      "reserved/deployment.json",
+      "manage_apps.py"
+    ],
+    "application_data_snapshot_performed": false,
+    "application_database_or_private_client_store_read": false,
+    "application_process_mutations": 0,
+    "application_source_or_binary_implementation_read": false,
+    "credential_values_emitted": false,
+    "http_calls": 0,
+    "private_config": "Only allowlisted installation filesystem/listener fields displayed; subsequent reads only verify its SHA256",
+    "semantic_tasks_authored": false,
+    "ui_visits": 0
+  },
+  "files": {
+    "deployment": {
+      "path": "/home/moloch/semabi/runs/product_apps_v1/reserved/deployment.json",
+      "sha256": "87864e2cc1e5f0c0d8156bdc365b2a8b75fe0f2e7f33e235c2289b7283d88bc5"
+    },
+    "generic_core": {
+      "path": "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py",
+      "sha256": "806b213db7a71b734f889ce576394a3563ccfe7c7cdfec1cd9c500e1a4f872b7"
+    },
+    "lifecycle": {
+      "path": "/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py",
+      "sha256": "e3b605924b2feb63813fcbb04ffe24b4f48e585dff782e245de7342f95a1dde1"
+    },
+    "private_config": {
+      "path": "/home/moloch/semabi/runs/product_apps_v1/reserved/private/config.yml",
+      "sha256": "7a8d3e54fa1b88b9a3e5b928b9ce32dcb79e1f032b6bbe99e2d2a79ba8f561d2"
+    },
+    "startup_plan": {
+      "path": "/home/moloch/semabi/runs/product_reserved_preparation_v1/startup_plan.json",
+      "sha256": "521d41b31dc8263a371a4df76bccf0c9db913dcedd5e917b2c2f707d6e77f93a"
+    }
+  },
+  "format": "reserved_installer_lifecycle_adapter.v1",
+  "future_cli": {
+    "restore": [
+      "python3",
+      "-B",
+      "/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py",
+      "restore",
+      "PREPARED_NAME"
+    ],
+    "snapshot": [
+      "python3",
+      "-B",
+      "/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py",
+      "snapshot",
+      "PREPARED_NAME"
+    ],
+    "start": [
+      "python3",
+      "-B",
+      "/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py",
+      "start"
+    ],
+    "status": [
+      "python3",
+      "-B",
+      "/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py",
+      "status"
+    ],
+    "stop": [
+      "python3",
+      "-B",
+      "/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py",
+      "stop"
+    ]
+  },
+  "implementation_lines": 296,
+  "installer_config_projection": {
+    "database.path": "/home/moloch/semabi/runs/product_apps_v1/reserved/data/vikunja.db",
+    "database.type": "sqlite",
+    "files.basepath": "/home/moloch/semabi/runs/product_apps_v1/reserved/data/files",
+    "service.interface": "127.0.0.1:8853",
+    "service.rootpath": "/home/moloch/semabi/runs/product_apps_v1/reserved/data"
+  },
+  "prepared_at": "2026-09-09T19:50:56.391502+00:00",
+  "role": "installer_only",
+  "scope": {
+    "account_baseline": "UNESTABLISHED; no UI account provisioning or prepared account snapshot performed",
+    "data_access": "OPAQUE_BYTES_ONLY",
+    "generic_snapshot_core": "Exact verified manage_apps.py source imported into a private module namespace; running/start/stop hooks replaced only in that namespace",
+    "inventory_publication": "Private prepared fixture manifests only",
+    "listener_probe": "Reject all current TCP listeners at planned port before and after SO_REUSEADDR loopback bind; require owned listener and loopback-only sockets after launch",
+    "live_manage_apps_modified": false,
+    "ownership": "Only recorded PID/start ticks plus matching executable and argv; pidfd signals for existing owned process; no group or name-based stops",
+    "resource_boundary": {
+      "adapter_and_child_affinity": [
+        2,
+        3
+      ],
+      "child_gomaxprocs": 2,
+      "library_threads": 1
+    },
+    "restart_archives": "Stopped owner receipt and native stdout/stderr moved without replacement into private instances/<unique>; stop receipts retained",
+    "snapshots_restore_precondition": "Root coordinates idle browsers and learners before invoking; adapter does not infer UI idleness",
+    "ui_equivalence": "UNESTABLISHED"
+  },
+  "status": "READY_NOT_LAUNCHED",
+  "validation": {
+    "actual_exit_code": 0,
+    "checks": [
+      "exact generic core functions retained",
+      "running snapshot stop/start hooks",
+      "immutable name rejected before hooks",
+      "whole inventory restored",
+      "prior data archived intact",
+      "stopped state preserved",
+      "stopped ownership receipt and stdout/stderr archived without replacement"
+    ],
+    "cpu_affinity": [
+      1
+    ],
+    "earlier_harness_attempt": "Socket monkeypatch before the core imported ssl caused import-time TypeError; moved the test blocker after construction. No application operation occurred.",
+    "lifecycle_launch_stop_status_executed": false,
+    "syntax_compile": "PASS",
+    "temporary_adapter_check": "PASS",
+    "threads": 1,
+    "tool_chunk_id": "7affdd"
+  }
+}

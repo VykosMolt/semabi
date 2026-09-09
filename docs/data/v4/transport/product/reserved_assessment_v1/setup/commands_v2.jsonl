@@ -1,0 +1,9 @@
+{"kind": "type", "role": "textbox", "name": "Username Or Email Address", "secret": "username"}
+{"kind": "type", "role": "textbox", "name": "Password", "secret": "password"}
+{"kind": "click", "role": "button", "name": "LOGIN", "label": "changed_phase_authentication"}
+{"kind": "navigate", "url": "http://127.0.0.1:8853/tasks/2", "source_observation": "runs/product_assessment_reserved_v1/setup/session_v1/observation_020.json", "label": "B_before_changed_state"}
+{"kind": "click", "role": "button", "name": "MARK TASK DONE!", "label": "B_marked_done_setup"}
+{"kind": "reload", "label": "B_completion_after_reload"}
+{"kind": "navigate", "url": "http://127.0.0.1:8853/", "source_observation": "runs/product_assessment_reserved_v1/setup/session_v1/observation_020.json", "label": "non_targets_after_B_change"}
+{"kind": "reload", "label": "non_targets_after_B_change_reload"}
+{"kind": "close"}

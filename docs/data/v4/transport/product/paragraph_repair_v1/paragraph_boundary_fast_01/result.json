@@ -1,0 +1,45 @@
+{
+  "format": "owned_command_meter.v1",
+  "argv": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "-c",
+    "import hashlib, importlib, json, pathlib, pytest, sys\nroot = pathlib.Path(\"/tmp/semabi_rendered_value_candidate\")\nmodules = [\"semabi.compiler.browser_session\", \"semabi.compiler.surface\", \"semabi.compiler.runtime\", \"semabi.compiler.observation\", \"semabi.baselines.cached_form\"]\nprovenance = [{\"module\": name, \"path\": (path := pathlib.Path(importlib.import_module(name).__file__)).as_posix(), \"sha256\": hashlib.sha256(path.read_bytes()).hexdigest()} for name in modules]\nassert all(pathlib.Path(item[\"path\"]).is_relative_to(root) for item in provenance)\nprint(json.dumps({\"cwd\": pathlib.Path.cwd().as_posix(), \"python\": sys.executable, \"modules\": provenance}), flush=True)\nraise SystemExit(pytest.main([\"tests/test_operation_runtime.py\", \"tests/test_cached_form.py\", \"-m\", \"not slow\", \"-q\"]))\n"
+  ],
+  "exit_code": 0,
+  "source_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+  "started_at": "2026-09-09T20:17:49.531469+00:00",
+  "rss_limit_bytes": 4294967296,
+  "sample_interval_seconds": 0.05,
+  "sampled_peak_aggregate_rss_bytes": 69996544,
+  "samples": 260,
+  "inherited_cpu_affinity": [
+    1
+  ],
+  "max_observed_affinity_count": 1,
+  "signals": [],
+  "stop_reason": "command_exit",
+  "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+  "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "wall_seconds": 12.951129,
+  "rss_limit_exceeded": false,
+  "child_rusage_cpu_seconds": 2.889047,
+  "completed_at": "2026-09-09T20:18:02.482732+00:00",
+  "owned_processes": [
+    {
+      "pid": 12,
+      "ppid": 2,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7399581,
+      "rss_bytes": 5783552,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    }
+  ],
+  "terminal_ownership_verified": true,
+  "status": "TERMINAL"
+}

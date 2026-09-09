@@ -1,0 +1,282 @@
+#!/usr/bin/env python3
+"""Installer-only reserved lifecycle; snapshot data is handled as opaque bytes."""
+
+import argparse
+import ctypes
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import signal
+import socket
+import stat
+import subprocess
+import time
+from urllib.parse import urlsplit
+import uuid
+
+
+HERE = Path(__file__).resolve().parent
+PLAN = HERE / "startup_plan.json"
+CORE = HERE.parent / "product_apps_v1/manage_apps.py"
+PLAN_SHA256 = "521d41b31dc8263a371a4df76bccf0c9db913dcedd5e917b2c2f707d6e77f93a"
+CORE_SHA256 = "806b213db7a71b734f889ce576394a3563ccfe7c7cdfec1cd9c500e1a4f872b7"
+CONFIG_SHA256 = "7a8d3e54fa1b88b9a3e5b928b9ce32dcb79e1f032b6bbe99e2d2a79ba8f561d2"
+TERMINAL = {"absent", "pid_reused", "zombie_terminated"}
+
+
+def pinned_bytes(path, expected):
+    body = Path(path).read_bytes()
+    if hashlib.sha256(body).hexdigest() != expected:
+        raise RuntimeError(f"Pinned installer input changed: {path}")
+    return body
+
+
+def save_new(path, value):
+    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(descriptor, "w") as stream:
+        os.fchmod(stream.fileno(), 0o600)
+        json.dump(value, stream, indent=2, sort_keys=True)
+        stream.write("\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
+def process(pid):
+    body = Path(f"/proc/{pid}/stat").read_text()
+    fields = body[body.rfind(")") + 2:].split()
+    return {"pid": pid, "start_ticks": int(fields[19]), "state": fields[0]}
+
+
+def listeners():
+    result = []
+    for family in ("tcp", "tcp6"):
+        for line in Path("/proc/net/" + family).read_text().splitlines()[1:]:
+            fields = line.split()
+            if len(fields) > 9 and fields[3] == "0A":
+                address, port = fields[1].split(":")
+                result.append({"family": family, "address_hex": address,
+                               "port": int(port, 16), "inode": fields[9]})
+    return result
+
+
+class ReservedLifecycle:
+    def __init__(self):
+        self.plan = json.loads(pinned_bytes(PLAN, PLAN_SHA256))
+        metadata = Path(self.plan["deployment"]["metadata_path"])
+        self.meta = json.loads(pinned_bytes(metadata, self.plan["deployment"]["metadata_sha256"]))
+        self.app, self.receipts = metadata.parent, HERE
+        self.owner_path = HERE / "owned_instance.json"
+        self.argv = self.meta["planned_command"]
+        self.expected = self.argv[3:]
+        self.config = self.app / self.meta["private_configuration"]
+        pinned_bytes(self.config, CONFIG_SHA256)  # Digest only; no secret values emitted.
+        url = urlsplit(self.meta["planned_url"])
+        if (self.argv != self.plan["planned_command_unchanged"]
+                or self.argv[:3] != ["taskset", "-c", "2,3"]
+                or self.expected != [self.plan["deployment"]["binary_path"], "--config", str(self.config)]
+                or self.meta["cpu_affinity"] != [2, 3] or url.hostname != "127.0.0.1"
+                or url.port != 8853):
+            raise RuntimeError("Reserved deployment boundary changed")
+        self.port = url.port
+        spec = importlib.util.spec_from_file_location("_reserved_snapshot_core", CORE)
+        self.core = importlib.util.module_from_spec(spec)
+        # Import the exact verified source into this adapter's private module namespace.
+        exec(compile(pinned_bytes(CORE, CORE_SHA256), str(CORE), "exec"), self.core.__dict__)
+        self.core.running = lambda app, manifest: self.running()
+        self.core.stop = lambda app, manifest: self.stop()
+        self.core.start = lambda app, manifest: self.start()
+        self.manifest = {**self.meta, "installer_configuration_sha256": CONFIG_SHA256,
+                         "snapshot_core_sha256": CORE_SHA256}
+
+    def owner(self):
+        if not self.core._exists(self.owner_path):
+            return None
+        metadata = self.owner_path.lstat()
+        if not stat.S_ISREG(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) != 0o600:
+            raise RuntimeError("Invalid owner receipt file")
+        owner = json.loads(self.owner_path.read_text())
+        if (owner.get("metadata_sha256") != self.plan["deployment"]["metadata_sha256"]
+                or owner.get("planned_argv") != self.argv
+                or owner.get("binary_sha256") != self.meta["binary_sha256"]
+                or type(owner.get("pid")) is not int or owner["pid"] <= 1
+                or type(owner.get("start_ticks")) is not int or owner["start_ticks"] <= 0):
+            raise RuntimeError("Owner receipt does not match the reserved deployment")
+        return owner
+
+    def state(self, owner):
+        try:
+            observed = process(owner["pid"])
+            if observed["start_ticks"] != owner["start_ticks"]:
+                return "pid_reused"
+            if observed["state"] == "Z":
+                return "zombie_terminated"
+            executable = os.readlink(f"/proc/{owner['pid']}/exe")
+            argv = Path(f"/proc/{owner['pid']}/cmdline").read_bytes().split(b"\0")
+            return "owned_running" if executable == self.expected[0] and argv == [os.fsencode(x) for x in self.expected] + [b""] else "identity_unestablished"
+        except (FileNotFoundError, ProcessLookupError):
+            return "absent"
+        except OSError:
+            return "unknown"
+
+    def running(self):
+        owner = self.owner()
+        observed = self.state(owner) if owner else "unrecorded"
+        if observed not in TERMINAL | {"unrecorded", "owned_running"}:
+            raise RuntimeError("Recorded process ownership is unestablished")
+        return observed == "owned_running"
+
+    def status(self):
+        owner = self.owner()
+        result = {"status": self.state(owner) if owner else "unrecorded",
+                  "running": self.running(), "http_called": False,
+                  "process_scope": "RECORDED_INSTANCE_ONLY",
+                  "account_state": "NOT_ASSESSED_BY_LIFECYCLE_ADAPTER"}
+        if owner:
+            result.update(pid=owner["pid"], start_ticks=owner["start_ticks"])
+        if result["running"]:
+            inodes = set()
+            for descriptor in Path(f"/proc/{owner['pid']}/fd").iterdir():
+                try:
+                    target = os.readlink(descriptor)
+                except FileNotFoundError:
+                    continue
+                if target.startswith("socket:["):
+                    inodes.add(target[8:-1])
+            owned = [item for item in listeners() if item["inode"] in inodes]
+            affinity = sorted(os.sched_getaffinity(owner["pid"]))
+            loopback = {"tcp": "0100007F", "tcp6": "00000000000000000000000001000000"}
+            result.update(cpu_affinity=affinity, affinity_within_plan=bool(affinity) and set(affinity) <= {2, 3},
+                          owned_tcp_listeners=owned,
+                          planned_listener_confirmed=any(item["family"] == "tcp" and item["address_hex"] == loopback["tcp"] and item["port"] == self.port for item in owned),
+                          loopback_only=bool(owned) and all(item["address_hex"] == loopback[item["family"]] for item in owned))
+        return result
+
+    def archive_stopped(self):
+        owner = self.owner()
+        paths = [self.owner_path, self.receipts / "native_stdout.log", self.receipts / "native_stderr.log"]
+        if owner is None:
+            if any(self.core._exists(path) for path in paths[1:]):
+                raise RuntimeError("Unpaired native logs require installer review")
+            return None
+        if self.running() or self.state(owner) not in TERMINAL:
+            raise RuntimeError("Only a confirmed stopped instance can be archived")
+        if any(not stat.S_ISREG(path.lstat().st_mode) for path in paths):
+            raise RuntimeError("Native receipts or logs are not regular files")
+        parent = self.core._private_directory(self.receipts / "instances")
+        destination = parent / f"{time.time_ns()}-{uuid.uuid4().hex}"
+        destination.mkdir(mode=0o700)
+        moved = []
+        try:
+            for path in paths:
+                self.core._rename_no_replace(path, destination / path.name)
+                moved.append(path)
+            save_new(destination / "archive.json", {"owner": owner, "terminal_state": self.state(owner),
+                                                    "files": [path.name for path in paths]})
+        except BaseException as error:
+            for path in reversed(moved):
+                try:
+                    self.core._rename_no_replace(destination / path.name, path)
+                except BaseException as rollback:
+                    error.add_note(f"Archive rollback failed; preserved files at {destination}: {rollback}")
+            raise
+        return str(destination)
+
+    def start(self):
+        if self.running():
+            return self.status()
+        pinned_bytes(self.config, CONFIG_SHA256)
+        pinned_bytes(self.expected[0], self.meta["binary_sha256"])
+        if any(key.startswith("VIKUNJA_") for key in os.environ):
+            raise RuntimeError("Application environment overrides are outside the pinned configuration")
+        if any(item["port"] == self.port for item in listeners()):
+            raise RuntimeError("A live TCP listener occupies the reserved port")
+        with socket.socket() as probe:
+            probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            probe.bind(("127.0.0.1", self.port))
+            if any(item["port"] == self.port for item in listeners()):
+                raise RuntimeError("A live TCP listener appeared during the port probe")
+        archive = self.archive_stopped()
+        environment = {**os.environ, **self.plan["start_environment"]}
+        with (self.receipts / "native_stdout.log").open("xb") as stdout, (self.receipts / "native_stderr.log").open("xb") as stderr:
+            child = subprocess.Popen(self.argv, cwd=self.app, env=environment, stdin=subprocess.DEVNULL,
+                                     stdout=stdout, stderr=stderr, shell=False, start_new_session=True)
+            try:
+                owner = {**process(child.pid), "planned_argv": self.argv, "binary_sha256": self.meta["binary_sha256"],
+                         "metadata_sha256": self.plan["deployment"]["metadata_sha256"], "launched_unix_ns": time.time_ns(),
+                         "stdout": "native_stdout.log", "stderr": "native_stderr.log"}
+                save_new(self.owner_path, owner)
+                deadline = time.monotonic() + 15
+                while time.monotonic() < deadline and child.poll() is None:
+                    if self.state(owner) == "owned_running":
+                        observed = self.status()
+                        if all(observed.get(key) for key in ("affinity_within_plan", "planned_listener_confirmed", "loopback_only")):
+                            return {**observed, "archived_instance": archive}
+                        if not observed["affinity_within_plan"] or (observed["owned_tcp_listeners"] and not observed["loopback_only"]):
+                            raise RuntimeError("Owned process exceeded the configured boundary")
+                    time.sleep(0.05)
+                raise RuntimeError("Reserved startup did not establish its owned loopback listener")
+            except BaseException:
+                if child.poll() is None:
+                    child.terminate()  # Direct, unreaped Popen child; never a process group.
+                    try:
+                        child.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        child.kill()
+                        child.wait(timeout=5)
+                raise
+
+    def stop(self):
+        if not self.running():
+            return self.status()
+        owner, events = self.owner(), []
+        libc = ctypes.CDLL(None, use_errno=True)
+        for signum in (signal.SIGTERM, signal.SIGKILL):
+            if self.state(owner) != "owned_running":
+                break
+            descriptor = libc.pidfd_open(owner["pid"], 0)
+            if descriptor < 0:
+                raise OSError(ctypes.get_errno(), "Unable to open owned process pidfd")
+            try:
+                if self.state(owner) != "owned_running":
+                    break
+                if libc.pidfd_send_signal(descriptor, int(signum), None, 0) != 0:
+                    raise OSError(ctypes.get_errno(), "Unable to signal owned process pidfd")
+                events.append({"signal": int(signum), "status": "sent"})
+            finally:
+                os.close(descriptor)
+            deadline = time.monotonic() + 5
+            while time.monotonic() < deadline and self.state(owner) == "owned_running":
+                time.sleep(0.05)
+        result = {"pid": owner["pid"], "start_ticks": owner["start_ticks"], "terminal_state": self.state(owner),
+                  "signals": events, "exit_code": None, "exit_code_status": "Not the parent; no exit code inferred", "http_called": False}
+        save_new(self.receipts / f"stop_{time.time_ns()}-{uuid.uuid4().hex}.json", result)
+        if result["terminal_state"] not in TERMINAL or self.running():
+            raise RuntimeError("Reserved process shutdown was not established")
+        return result
+
+    def run(self, action, name=None):
+        with self.core._lifecycle_lock(self.app):
+            if action in {"snapshot", "restore"}:
+                return {**getattr(self.core, action)(self.app, self.manifest, name),
+                        "data_access": "OPAQUE_BYTES_ONLY", "ui_equivalence": "UNESTABLISHED",
+                        "account_state": "NOT_ASSESSED_BY_LIFECYCLE_ADAPTER", "http_called": False}
+            if name is not None or action not in {"start", "stop", "status"}:
+                raise ValueError("Invalid lifecycle action or snapshot name")
+            return getattr(self, action)()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("action", choices=("start", "stop", "status", "snapshot", "restore"))
+    parser.add_argument("name", nargs="?")
+    args = parser.parse_args()
+    os.umask(0o077)
+    os.sched_setaffinity(0, {2, 3})
+    adapter = ReservedLifecycle()
+    print(json.dumps(adapter.run(args.action, args.name), sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

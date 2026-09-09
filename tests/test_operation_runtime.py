@@ -1,11 +1,12 @@
 """Synthetic operation diagnostics; no application source, database or oracle.
 
 Most fixtures describe rendered observations and form metadata only. Settling
-uses an invented snapshot stream and clock; one browser test checks actual
-closed-disclosure rendering and menu/element continuity against in-memory HTML.
+uses an invented snapshot stream and clock; browser tests check disclosures,
+menu/element continuity, and paragraph boundaries against in-memory HTML.
 """
 from copy import deepcopy
 from itertools import count
+import json
 from types import SimpleNamespace
 
 import pytest
@@ -19,11 +20,12 @@ from semabi.compiler.surface import (
     form_candidates,
     local_regions,
     matching_forms,
+    relative_value_slots,
     visible_record_matches,
 )
 
 
-def _surface(nodes, properties=None, forms=()):
+def _surface(nodes, properties=None, forms=(), *, text_boundaries=None):
     properties = properties or {}
     observation = Observation(nodes, "https://synthetic.invalid/")
     controls = {}
@@ -38,7 +40,8 @@ def _surface(nodes, properties=None, forms=()):
             "options": list(node.options or ()), "submit": False, "form": None,
             **properties.get(node.i, {}),
         }
-    return Surface(observation, controls, {root: {"role": "form"} for root in forms})
+    return Surface(observation, controls, {root: {"role": "form"} for root in forms},
+                   text_boundaries={} if text_boundaries is None else text_boundaries)
 
 
 def _form_surface(order=("Label", "Count"), *, changes=None, outside_buttons=()):
@@ -218,6 +221,20 @@ def test_synthetic_browser_read_requires_repeated_snapshot_agreement(monkeypatch
 def test_synthetic_browser_read_does_not_settle_while_form_contract_changes(monkeypatch, changes):
     surfaces = [_form_surface(changes={"Count": change}) for change in changes]
     assert len({surface.observation.structural_signature() for surface in surfaces}) == 1
+    session, calls = _snapshot_session(monkeypatch, surfaces)
+
+    result = session.read()
+
+    assert len(calls) == 3
+    assert not result.settled
+
+
+def test_synthetic_browser_read_does_not_settle_while_paragraph_eligibility_changes(monkeypatch):
+    nodes = [Node(0, -1, "article", ""), Node(1, 0, "text", "Saved value")]
+    surfaces = [_surface(nodes, text_boundaries={1: boundary})
+                for boundary in ("Saved value", None, "Saved value")]
+    assert len({surface.observation.structural_signature() for surface in surfaces}) == 1
+    assert all(surface.controls == {} and surface.forms == {} for surface in surfaces)
     session, calls = _snapshot_session(monkeypatch, surfaces)
 
     result = session.read()
@@ -1021,6 +1038,177 @@ def test_wrong_link_target_or_form_preview_cannot_confirm_learned_fields(changed
     learned = record_witness(_linked_record_surface(), values, 'title')
     current = _linked_record_surface(**{changed: True})
     assert record_witness(current, values, 'title', learned['field_slots']) is None
+
+
+@pytest.mark.parametrize('wrapped', [False, True], ids=['paragraph_root', 'wrapped_child'])
+@pytest.mark.parametrize('boundary', [None, 'Saved paragraph extra'], ids=['declined', 'longer_value'])
+def test_paragraph_boundaries_reject_prefix_anchors_secondary_fields_and_local_slots(wrapped, boundary):
+    from semabi.compiler.runtime import record_witness
+    value = 'Saved paragraph'
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'article', ''),
+             Node(2, 1, 'heading', 'Stable anchor'), Node(3, 1, 'text', value)]
+    if wrapped:
+        nodes.append(Node(4, 3, 'text', value))
+    learned_surface = _surface(nodes, text_boundaries={3: value})
+    values = {'title': 'Stable anchor', 'body': value}
+    learned = record_witness(learned_surface, values, 'title')
+    assert learned is not None
+    current = _surface(nodes, text_boundaries={3: boundary})
+    assert current.observation.to_json() == learned_surface.observation.to_json()
+
+    assert visible_record_matches(current, value) == []
+    anchor_match, = visible_record_matches(current, 'Stable anchor')
+    assert value not in anchor_match['texts']
+    assert anchor_match['text_boundaries'] == {3: boundary}
+    assert relative_value_slots(current, 1, value) == []
+    assert relative_value_slots(current, 3, value) == []
+    assert record_witness(current, values, 'title') is None
+    assert record_witness(current, values, 'title', learned['field_slots']) is None
+
+
+def test_complete_paragraphs_keep_strict_deepest_leaf_paths_and_local_boundary_metadata():
+    from semabi.compiler.runtime import record_witness
+    value = 'Saved paragraph'
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'article', ''),
+             Node(2, 1, 'heading', 'Stable anchor'), Node(3, 1, 'text', value),
+             Node(4, 3, 'text', value), Node(5, 4, 'text', value),
+             Node(6, 0, 'article', ''), Node(7, 6, 'text', 'Other record')]
+    surface = _surface(nodes, text_boundaries={3: value, 7: 'Other record'})
+    arguments = {'title': 'Stable anchor', 'body': value}
+
+    learned = record_witness(surface, arguments, 'title')
+
+    assert learned['field_slots']['body'] == [
+        {'path': [['text', 0], ['text', 0], ['text', 0]], 'channel': 'text'}]
+    assert learned['text_boundaries'] == {3: value}
+    assert record_witness(surface, arguments, 'title', learned['field_slots']) is not None
+    flat_nodes = nodes[:4]
+    flat = _surface(flat_nodes, text_boundaries={3: value})
+    assert record_witness(flat, arguments, 'title') is not None
+    assert record_witness(flat, arguments, 'title', learned['field_slots']) is None
+
+
+def test_containing_boundary_outside_a_record_still_controls_its_text_witness():
+    value = 'Saved paragraph'
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'text', value),
+             Node(2, 1, 'article', ''), Node(3, 2, 'text', value),
+             Node(4, 3, 'text', value)]
+    complete = _surface(nodes, text_boundaries={1: value, 3: value})
+    match, = visible_record_matches(complete, value)
+    assert match['root'] == 2
+    assert match['text_boundaries'] == {1: value, 3: value}
+    for outer in (None, value + ' extra'):
+        changed = _surface(nodes, text_boundaries={1: outer, 3: value})
+        assert visible_record_matches(changed, value) == []
+        assert relative_value_slots(changed, 2, value) == []
+
+
+def test_declined_paragraph_preserves_link_destinations_without_reinstating_link_text():
+    from semabi.compiler.runtime import record_witness
+    destination = 'https://example.invalid/item'
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'article', ''),
+             Node(2, 1, 'heading', 'Stable anchor'), Node(3, 1, 'text', ''),
+             Node(4, 3, 'link', destination)]
+    surface = _surface(nodes, {4: {'destination': destination}}, text_boundaries={3: None})
+
+    match, = visible_record_matches(surface, destination)
+
+    assert destination not in match['texts']
+    assert match['link_destinations'] == [destination]
+    assert match['text_boundaries'] == {3: None}
+    slots = [{'path': [['text', 0], ['link', 0]], 'channel': 'link_destination'}]
+    assert relative_value_slots(surface, 1, destination) == slots
+    witness = record_witness(surface, {'title': 'Stable anchor', 'url': destination}, 'title')
+    assert witness['field_slots']['url'] == slots
+
+
+def test_runtime_surface_trace_preserves_complete_and_declined_paragraph_boundaries(tmp_path):
+    surface = _surface([Node(0, -1, 'article', ''), Node(1, 0, 'text', 'Saved value'),
+                        Node(2, 0, 'text', 'Untrusted prefix')],
+                       text_boundaries={1: 'Saved value', 2: None})
+    trace = runtime_module.Trace(tmp_path / 'trace', lambda _event: None, runtime_module.Budget(1, 0))
+
+    assert trace.observe(surface) is surface
+
+    saved, = [json.loads(line) for line in (trace.log.dir / 'surfaces.jsonl').read_text().splitlines()]
+    assert saved['text_boundaries'] == {'1': 'Saved value', '2': None}
+    assert saved['observation'] == surface.observation.structural_signature()
+
+
+@pytest.mark.slow
+def test_rendered_paragraph_boundaries_require_complete_values_across_inline_variants():
+    from semabi.compiler.runtime import record_witness
+    value = 'Order #alpha saved'
+    arguments = {'title': 'Stable anchor', 'body': value}
+    destination = 'https://example.invalid/item'
+    browser = BrowserSession('https://synthetic.invalid/')
+    try:
+        browser._page.context.unroute('**/*')
+        browser._page.context.route('**/*', lambda route: route.abort())
+
+        def render(paragraph, *, draft=False):
+            if draft:
+                html = f'<form><textarea disabled>{value}</textarea><article>{paragraph}</article><button>Save</button></form>'
+            else:
+                html = f'<article><h2>Stable anchor</h2>{paragraph}<button>Edit</button></article>'
+            browser._page.set_content(html)
+            surface = browser.read()
+            assert surface.settled
+            assert all(isinstance(node, int) for node in surface.text_boundaries)
+            return surface
+
+        plain = render(f'<p>{value}</p>')
+        learned = record_witness(plain, arguments, 'title')
+        assert learned is not None
+        for paragraph in ('<p>Order <a href="https://example.invalid/tag">#alpha</a> <em>saved</em></p>',
+                          '<p>Order <strong>#alpha</strong> saved</p>',
+                          '<pre>Order\t<strong>#alpha</strong>\n saved</pre>'):
+            surface = render(paragraph)
+            assert list(surface.text_boundaries.values()) == [value]
+            assert record_witness(surface, arguments, 'title', learned['field_slots']) is not None
+            assert visible_record_matches(surface, '#alpha') == []
+
+        wrapped = render(f'<p><span><em>{value}</em></span></p>')
+        wrapped_witness = record_witness(wrapped, arguments, 'title')
+        assert wrapped_witness['field_slots']['body'] == [
+            {'path': [['text', 0], ['text', 0], ['text', 0]], 'channel': 'text'}]
+        assert record_witness(wrapped, arguments, 'title', learned['field_slots']) is None
+        assert record_witness(render(f'<p><span><em>{value}</em></span></p>'), arguments,
+                              'title', wrapped_witness['field_slots']) is not None
+
+        suffixes = [('<span> extra</span>', value + ' extra'),
+                    ('<span style="display:block">extra</span>', None),
+                    ('<button>Extra</button>', None),
+                    ('<span hidden>extra</span>', None),
+                    ('<span aria-hidden="true">extra</span>', None)]
+        for prefix in (value, f'<span><em>{value}</em></span>'):
+            for suffix, complete in suffixes:
+                surface = render(f'<p>{prefix}{suffix}</p>')
+                assert list(surface.text_boundaries.values()) == [complete]
+                if complete is None or prefix != value:
+                    assert value in {node.name for node in surface.observation.nodes}
+                assert visible_record_matches(surface, value) == []
+                anchor_match, = visible_record_matches(surface, 'Stable anchor')
+                assert value not in anchor_match['texts']
+                assert relative_value_slots(surface, anchor_match['root'], value) == []
+                assert record_witness(surface, arguments, 'title') is None
+                assert record_witness(surface, arguments, 'title', learned['field_slots']) is None
+                assert record_witness(surface, arguments, 'title', wrapped_witness['field_slots']) is None
+
+        linked = render(f'<p><a href="{destination}">{value}</a><button>Extra</button></p>')
+        assert list(linked.text_boundaries.values()) == [None]
+        assert visible_record_matches(linked, value) == []
+        link_witness = record_witness(linked, {'title': 'Stable anchor', 'url': destination}, 'title')
+        assert link_witness['field_slots']['url'] == [
+            {'path': [['text', 0], ['link', 0]], 'channel': 'link_destination'}]
+
+        for paragraph in (f'<p>{value}</p>', f'<p><span>{value}</span></p>',
+                          '<p>Order <strong>#alpha</strong> saved</p>'):
+            preview = render(paragraph, draft=True)
+            assert list(preview.text_boundaries.values()) == [value]
+            assert visible_record_matches(preview, value) == []
+    finally:
+        browser.close()
 
 
 class _SyntheticElementContinuity:

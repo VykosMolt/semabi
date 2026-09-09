@@ -1,0 +1,263 @@
+{
+  "format": "reserved_ordinary_ui_setup.v1",
+  "started_at": "2026-09-09T19:58:16.447911+00:00",
+  "source_sha256": "5028170806fb9f661854c85e348a27cb07789927d817220ef8f798e8b5459157",
+  "origin": "http://127.0.0.1:8853",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "limits": {
+    "max_seconds": 900,
+    "max_actions": 60,
+    "max_possible_writes": 20
+  },
+  "actions": 18,
+  "possible_writes": 16,
+  "read_calls": 20,
+  "raw_browser_reads": 100,
+  "events": [
+    {
+      "kind": "navigate",
+      "started_at": "2026-09-09T19:58:17.086379+00:00",
+      "url": "http://127.0.0.1:8853",
+      "observation_id": 1
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T19:58:42.294673+00:00",
+      "target": 50,
+      "command": {
+        "kind": "click",
+        "role": "link",
+        "name": "Create account"
+      },
+      "before_observation_id": 1,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "type",
+      "started_at": "2026-09-09T19:59:06.872628+00:00",
+      "target": 34,
+      "command": {
+        "kind": "type",
+        "role": "textbox",
+        "name": "Username",
+        "secret": "username"
+      },
+      "before_observation_id": 2,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "type",
+      "started_at": "2026-09-09T19:59:07.181190+00:00",
+      "target": 38,
+      "command": {
+        "kind": "type",
+        "role": "textbox",
+        "name": "Email address",
+        "secret": "email"
+      },
+      "before_observation_id": 3,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "type",
+      "started_at": "2026-09-09T19:59:07.469908+00:00",
+      "target": 42,
+      "command": {
+        "kind": "type",
+        "role": "textbox",
+        "name": "Password",
+        "secret": "password"
+      },
+      "before_observation_id": 4,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T19:59:07.742428+00:00",
+      "target": 47,
+      "command": {
+        "kind": "click",
+        "role": "button",
+        "name": "CREATE ACCOUNT",
+        "label": "account_provisioning_result"
+      },
+      "before_observation_id": 5,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T20:00:01.584130+00:00",
+      "target": 99,
+      "command": {
+        "kind": "click",
+        "role": "button",
+        "name": "Use magic prefixes to define due dates, assignees and other task properties.",
+        "label": "advertised_task_property_help"
+      },
+      "before_observation_id": 7,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T20:01:10.208962+00:00",
+      "target": 138,
+      "command": {
+        "kind": "click",
+        "role": "button",
+        "name": "Close dialog"
+      },
+      "before_observation_id": 8,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "type",
+      "started_at": "2026-09-09T20:01:10.993118+00:00",
+      "target": 98,
+      "command": {
+        "kind": "type",
+        "role": "textbox",
+        "name": "Add a task…",
+        "text": "rvfpbrfgop release check alpha *rvfpbrfgopblue"
+      },
+      "before_observation_id": 9,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T20:01:11.605128+00:00",
+      "target": 103,
+      "command": {
+        "kind": "click",
+        "role": "button",
+        "name": "Add",
+        "label": "prepared_A_creation_attempt"
+      },
+      "before_observation_id": 10,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "type",
+      "started_at": "2026-09-09T20:02:00.678353+00:00",
+      "target": 98,
+      "command": {
+        "kind": "type",
+        "role": "textbox",
+        "name": "Add a task…",
+        "text": "rvfpbrfgop release check beta *rvfpbrfgopamber"
+      },
+      "before_observation_id": 12,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T20:02:01.008791+00:00",
+      "target": 103,
+      "command": {
+        "kind": "click",
+        "role": "button",
+        "name": "Add",
+        "label": "prepared_B_creation_attempt"
+      },
+      "before_observation_id": 13,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "type",
+      "started_at": "2026-09-09T20:03:04.878478+00:00",
+      "target": 98,
+      "command": {
+        "kind": "type",
+        "role": "textbox",
+        "name": "Add a task…",
+        "text": "rvfpbrfgop unrelated record *rvfpbrfgopneutral"
+      },
+      "before_observation_id": 14,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T20:03:05.248549+00:00",
+      "target": 103,
+      "command": {
+        "kind": "click",
+        "role": "button",
+        "name": "Add",
+        "label": "prepared_C_creation_attempt"
+      },
+      "before_observation_id": 15,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T20:03:44.150578+00:00",
+      "target": 170,
+      "command": {
+        "kind": "click",
+        "role": "link",
+        "name": "rvfpbrfgop release check alpha",
+        "label": "task_detail_opportunities"
+      },
+      "before_observation_id": 16,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T20:04:43.002514+00:00",
+      "target": 428,
+      "command": {
+        "kind": "click",
+        "role": "button",
+        "name": "ADD RELATION",
+        "label": "relationship_opportunity_before_learning"
+      },
+      "before_observation_id": 17,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "click",
+      "started_at": "2026-09-09T20:08:00.544118+00:00",
+      "target": 42,
+      "command": {
+        "kind": "click",
+        "role": "link",
+        "name": "Overview",
+        "label": "base_full_record_view"
+      },
+      "before_observation_id": 18,
+      "ok": true,
+      "error": null
+    },
+    {
+      "kind": "reload",
+      "started_at": "2026-09-09T20:08:01.314305+00:00"
+    }
+  ],
+  "state": "CLOSED_BY_COORDINATOR",
+  "credentials_field_names": [
+    "email",
+    "password",
+    "username"
+  ],
+  "scope": "Evaluator account/fixture setup only; no learner invocation or private app-state access",
+  "elapsed_seconds": 626.731135,
+  "within_limits": true,
+  "completed_at": "2026-09-09T20:08:43.179034+00:00"
+}

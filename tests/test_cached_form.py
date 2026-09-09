@@ -2,6 +2,7 @@
 from copy import deepcopy
 import json
 import os
+from types import SimpleNamespace
 
 import pytest
 
@@ -322,6 +323,22 @@ def test_synthetic_cli_outputs_private_redacted_post_authentication_evidence(tmp
     assert "private-user" not in contents and "private-password" not in contents
     assert "LOGIN_VIEW_MUST_NOT_BE_RECORDED" not in contents
     assert "[REDACTED_CREDENTIAL]" in (output / "observations.jsonl").read_text()
+
+
+def test_synthetic_cached_surface_trace_preserves_and_redacts_paragraph_boundaries(tmp_path):
+    value = 'private-user saved paragraph'
+    surface = Surface(Observation([Node(0, -1, 'article', ''), Node(1, 0, 'text', value),
+                                   Node(2, 0, 'text', 'Untrusted prefix')], URL), {}, {},
+                      text_boundaries={1: value, 2: None})
+    replay = cached_form._Replay(tmp_path / 'trace', {'username': 'private-user'},
+                                 cached_form._Budget(1, 0))
+    replay.browser = SimpleNamespace(read=lambda: surface)
+
+    assert replay.observe('https://synthetic.invalid') is surface
+
+    saved, = [json.loads(line) for line in (replay.directory / 'surfaces.jsonl').read_text().splitlines()]
+    assert saved['text_boundaries'] == {'1': '[REDACTED_CREDENTIAL] saved paragraph', '2': None}
+    assert 'private-user' not in ''.join(path.read_text() for path in replay.directory.iterdir())
 
 
 def test_synthetic_lost_final_evidence_after_dispatch_does_not_become_failed_before_action(tmp_path, monkeypatch):

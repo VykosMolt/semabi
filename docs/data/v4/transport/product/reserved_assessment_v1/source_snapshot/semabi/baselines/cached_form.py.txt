@@ -248,8 +248,7 @@ class _Replay:
         signature = self.log.add_observation(safe)
         with (self.directory / "surfaces.jsonl").open("a") as stream:
             stream.write(json.dumps(self.redact({"observation": signature, "settled": surface.settled,
-                                                "controls": surface.controls, "forms": surface.forms,
-                                                "text_boundaries": surface.text_boundaries})) + "\n")
+                                                "controls": surface.controls, "forms": surface.forms})) + "\n")
         self.event({"type": "observation", "signature": signature, "settled": surface.settled})
         if not surface.settled:
             raise _Stop("Rendered observation did not stabilize")

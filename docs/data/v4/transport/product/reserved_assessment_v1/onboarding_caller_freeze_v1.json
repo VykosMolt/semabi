@@ -1,0 +1,31 @@
+{
+  "format": "reserved_onboarding_caller_freeze.v1",
+  "frozen_at": "2026-09-09T20:13:22.140445+00:00",
+  "path": "runs/product_assessment_reserved_v1/run_onboarding.py",
+  "sha256": "62ffd4358271d74511becb874756ce753217d37296210899df6e0c74e668feee",
+  "source_sha256": {
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c"
+  },
+  "source_freeze_sha256": "c1169be7c3be026a2978b8c487df1b2ab11de0a2ad06b022c025a98154491372",
+  "root_review": "69d46d complete source review; no substantive finding",
+  "validation": "14 bounded offline checks, actual exit0 chunk1a5fa8; no application calls",
+  "entry_point": "Public HTTP connect and learn; generic settings and private credentials only",
+  "max_seconds_external": 900,
+  "max_actions_including_auth_navigation": 120,
+  "max_possible_writes_including_auth": 40,
+  "auth_count_basis": "API reports auth actions only; all are charged as possible writes",
+  "meter": "runs/product_assessment_reserved_v1/meter/command_meter.py",
+  "meter_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+  "late_result_policy": "External complete meter wall governs; retain shutdown separately and never count late completion as on-time",
+  "learner_or_baseline_logic_changes": 0,
+  "application_calls": 0
+}

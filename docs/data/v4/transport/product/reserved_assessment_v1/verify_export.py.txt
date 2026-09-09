@@ -1,0 +1,61 @@
+"""Verify the public bundle and replay its pure binder inputs offline."""
+from collections import Counter
+import hashlib
+import json
+from pathlib import Path
+import runpy
+
+base = Path(__file__).resolve().parent
+manifest = json.loads((base / "manifest.json").read_bytes())
+entries = manifest["files"]
+expected_paths = {entry["path"] for entry in entries} | {"manifest.json"}
+actual_paths = {str(p.relative_to(base)) for p in base.rglob("*") if p.is_file()}
+assert actual_paths == expected_paths, "Export file set differs from manifest"
+for entry in entries:
+    path = base / entry["path"]
+    assert not path.is_symlink(), "Unexpected symlink"
+    body = path.read_bytes()
+    assert len(body) == entry["bytes"], entry["path"]
+    assert hashlib.sha256(body).hexdigest() == entry["sha256"], entry["path"]
+for path, expected in json.loads((base / "source_sha256.json").read_bytes()).items():
+    assert hashlib.sha256((base / "source_snapshot" / (path + ".txt")).read_bytes()).hexdigest() == expected, path
+for path, expected in manifest["original_sealed_outputs"].items():
+    assert hashlib.sha256((base / path).read_bytes()).hexdigest() == expected, path
+rows = [json.loads(line) for line in (base / "results_v1.jsonl").read_text().splitlines()]
+receipts = [json.loads(line) for line in (base / "binding_receipts_v1.jsonl").read_text().splitlines()]
+requests = json.loads((base / "task_plan.json").read_bytes())["requests"]
+catalog = json.loads((base / "onboarding_v1/onboarding.json").read_bytes())["catalog"]["operations"]
+assert catalog == []
+assert len(rows) == len(receipts) == 36
+assert len(requests) == 18
+by_id = {row["id"]: row for row in rows}
+assert len(by_id) == 36
+by_case = {request["case"]: request for request in requests}
+assert len(by_case) == 18
+expected_slots = {(case, arm) for case in by_case for arm in ("semabi", "cached_form")}
+assert {(row["case"], row["arm"]) for row in rows} == expected_slots
+for row in rows:
+    request = by_case[row["case"]]
+    assert row["ordinary_goal"] == request["goal"] and row["arguments"] == request["arguments"]
+    assert all(row[key] == request[key] for key in ("family", "case_number", "fixture", "setup_status"))
+    assert row["planned_arm_position"] == request["arm_order"].index(row["arm"]) + 1
+assert Counter(row["arm"] for row in rows) == {"semabi": 18, "cached_form": 18}
+assert Counter(row["status"] for row in rows) == manifest["primary_status_counts"]
+assert not any(row["workflow_invoked"] or row["independently_completed_requested_workflow"] for row in rows)
+assert all(row["wrong_side_effects"] is None for row in rows)
+bind = runpy.run_path(str(base / "binding/binding.py.txt"), run_name="_offline_reserved_export")["bind_request"]
+for record in receipts:
+    row = by_id[record["id"]]
+    assert (row["ordinary_goal"], row["arguments"]) == (record["ordinary_goal"], record["arguments"])
+    assert record["public_catalog_operations"] == catalog
+    actual = bind(record["ordinary_goal"], record["arguments"], catalog)
+    assert actual == record["receipt"], record["id"]
+    assert actual["status"] == "UNSUPPORTED" and actual["call"] is None
+    assert actual["browser_started"] is False and actual["browser_actions"] == 0
+assert {record["id"] for record in receipts} == set(by_id)
+for case in {row["case"] for row in rows}:
+    pair = [record for record in receipts if record["case"] == case]
+    assert len(pair) == 2 and pair[0]["receipt"] == pair[1]["receipt"]
+assert len({row["case"] for row in rows}) == 18
+print(json.dumps({"status": "PASS", "files_verified": len(entries), "result_rows": 36,
+                  "binder_receipts_reproduced": 36, "application_calls": 0, "browser_calls": 0}, sort_keys=True))
