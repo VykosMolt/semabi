@@ -33,8 +33,8 @@ bindings refuse execution; uncertain writes are not blindly retried. Persist
 connection/account isolation, private credentials and redacted public evidence.
 Development smokes use 60 actions and 30 possible writes per learning request.
 They do not have a prospective task denominator. The next assessment's workflow
-denominator and budgets are in `product/evaluation_protocol_v1.md`; it has not
-run. Browser observations alone enter learning and runtime verification.
+denominator and budgets are in `product/evaluation_protocol_v1.md`; the first
+fixed development run is complete and preserved in `product/development_assessment_v1/`. Browser observations alone enter learning and runtime verification.
 
 Rolling queue:
 
@@ -48,16 +48,23 @@ Rolling queue:
    unlabeled observed fields and sole-value replacement use two trials and
    fresh form, DOM continuity and effect checks. Linkding reuse on the same
    source also passed independent checks.
-4. Active: execute the first fixed development workflow set with prepared Memos
-   fixtures and the implemented per-invocation limits. Linkding's independent
-   fixture checker failed before its first Save; retain that setup failure and
-   all requests. Ten Memos calls have complete bindings; other requests remain
-   unsupported or have unavailable challenge interventions.
-   Preserve every unsupported task. After general
-   repairs, freeze the common source/onboarding/baseline/protocol before opening
-   reserved Vikunja. Use equivalent reset fixtures for the paired comparison.
-5. Preserve failures and continue against the highest-value demonstrated
-   limitation, using newly reserved evidence for further transfer claims.
+4. Fixed development assessment complete: all 64 rows retained. Memos SemABI
+   completed 2/10 core tasks (2/16 overall), cached form 1/10 (1/16). Four
+   ordinary update invocations failed to resolve independently visible targets;
+   observed paragraph/inline-tag fragmentation explains the local mismatch.
+   Linkding's 32 arm/request slots remain SETUP_UNESTABLISHED. The baseline C2
+   startup failure is retained separately from actual invocation competence.
+5. Active: reserved Vikunja assessment on the unchanged ten-file c004534 learner
+   and baseline. Root adopted the prospective freeze at 19:50:21 UTC, before
+   first ordinary UI access; startup succeeded at 19:57:06 UTC. Keep code,
+   caller policy, task-construction rules and budgets fixed through this first
+   result. This scheduling decision supersedes the older instruction to repair
+   development limitations before opening the reserve. Concrete UI goals and
+   fixtures are being constructed before onboarding.
+6. Preserve the reserved result, then repair the demonstrated paragraph value
+   fragmentation and other highest-value blockers. An isolated source candidate
+   is under review; the live learner remains unchanged. Reassess transfer on
+   newly reserved evidence after subsequent repairs.
 
 Application setup is separate from learner implementation. Proposed disclosed
 development applications are linkding and Memos; Vikunja is reserved, subject to
@@ -65,7 +72,9 @@ access feasibility. The setup agent may read installation implementation and
 create local test accounts, but supplies no integration selectors or mappings.
 Root and the evaluator have now observed the disclosed Memos/linkding UIs and
 development outcomes, but no application source, databases, hidden API payloads,
-or private client stores enter learning. Vikunja remains unopened.
+or private client stores enter learning. Vikunja ordinary UI setup began only
+after the reserved source/configuration freeze; its implementation and data
+remain excluded from learner and evaluator operation inference.
 Setup ports are loopback 8851/8852/8853, checked before use. Access substitutions
 and actual exposure are recorded by the setup agent under `product/`.
 

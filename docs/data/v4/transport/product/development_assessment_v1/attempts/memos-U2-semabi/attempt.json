@@ -1,0 +1,488 @@
+{
+  "format": "product_assessment_http_attempt.v1",
+  "arm": "semabi",
+  "binding_sha256": "13eb3243f550d5dab2cd5d94f432c19d2b487bb5b6dda5973b789a363c2f94b6",
+  "call_sha256": "967fdec35eb65aa9a8aff943b7eb76aaf4af428ce4a40276040512900c50f090",
+  "operation_id": "op_d245e3cc03c44e6800cd",
+  "operation_version": 1,
+  "arguments": {
+    "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+    "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+  },
+  "source_before": {
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c"
+  },
+  "started_at": "2026-09-09T19:50:21.908470+00:00",
+  "limits": {
+    "max_seconds": 60,
+    "max_actions": 20,
+    "max_possible_writes": 12
+  },
+  "jobs": [
+    {
+      "connection_id": "conn_d85c1e04c17749f1a9e5b24cf08ddbe8",
+      "created_at": "2026-09-09T19:50:21.930448+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T19:50:21.933574+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T19:50:24.343431+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_aa43f8007b1842319d2585576072fe13",
+      "job_id": "job_aa43f8007b1842319d2585576072fe13",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 2.004,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T19:50:24.343474+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_d85c1e04c17749f1a9e5b24cf08ddbe8",
+      "created_at": "2026-09-09T19:50:24.356378+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T19:50:24.359093+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T19:50:24.629468+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:24.906358+00:00",
+          "sequence": 3,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:24.920496+00:00",
+          "sequence": 4,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T19:50:25.975331+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:26.353993+00:00",
+          "sequence": 6,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:26.733402+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:27.110089+00:00",
+          "sequence": 8,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:27.490622+00:00",
+          "sequence": 9,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:27.882468+00:00",
+          "sequence": 10,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:28.262374+00:00",
+          "sequence": 11,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:28.643582+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:29.024220+00:00",
+          "sequence": 13,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:29.424837+00:00",
+          "sequence": 14,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:29.801130+00:00",
+          "sequence": 15,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:30.181510+00:00",
+          "sequence": 16,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:30.561269+00:00",
+          "sequence": 17,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:30.940509+00:00",
+          "sequence": 18,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:31.334947+00:00",
+          "sequence": 19,
+          "settled": true,
+          "signature": "79bdba7c64605730",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:50:31.354425+00:00",
+          "outcome": "FAILED_BEFORE_EFFECT",
+          "sequence": 20,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_99a6b102228d41eaaa31a054079bf1a1",
+      "job_id": "job_99a6b102228d41eaaa31a054079bf1a1",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+          "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 57.45453373599448,
+          "max_writes": 9
+        },
+        "operation_id": "op_d245e3cc03c44e6800cd",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "reason": "Target anchor record is absent or ambiguous in the current rendered view"
+        },
+        "metrics": {
+          "actions": 1,
+          "elapsed_seconds": 6.994,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 0
+        },
+        "outcome": "FAILED_BEFORE_EFFECT"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T19:50:31.354481+00:00",
+      "write_intent": false
+    }
+  ],
+  "accepted_jobs": [
+    {
+      "connection_id": "conn_d85c1e04c17749f1a9e5b24cf08ddbe8",
+      "id": "job_aa43f8007b1842319d2585576072fe13",
+      "job_id": "job_aa43f8007b1842319d2585576072fe13"
+    },
+    {
+      "connection_id": "conn_d85c1e04c17749f1a9e5b24cf08ddbe8",
+      "deduplicated": false,
+      "execution_id": "job_99a6b102228d41eaaa31a054079bf1a1",
+      "id": "job_99a6b102228d41eaaa31a054079bf1a1",
+      "job_id": "job_99a6b102228d41eaaa31a054079bf1a1"
+    }
+  ],
+  "http_requests": 185,
+  "write_retries": 0,
+  "browser_started": true,
+  "status": "RUNTIME_FINISHED",
+  "effect_verification": "INDEPENDENT_CHECK_PENDING",
+  "pending_http_request": {
+    "method": "POST",
+    "path": "/v1/connections/conn_d85c1e04c17749f1a9e5b24cf08ddbe8/operations/op_d245e3cc03c44e6800cd/invoke",
+    "body": {
+      "version": 1,
+      "arguments": {
+        "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "limits": {
+        "max_actions": 16,
+        "max_writes": 9,
+        "max_seconds": 57.45453373599448
+      }
+    },
+    "idempotency_key": "assessment-830a16d437bc21b5f58e198457a19156268e9b9b"
+  },
+  "last_observed_job": {
+    "connection_id": "conn_d85c1e04c17749f1a9e5b24cf08ddbe8",
+    "created_at": "2026-09-09T19:50:24.356378+00:00",
+    "events": [
+      {
+        "created_at": "2026-09-09T19:50:24.359093+00:00",
+        "kind": "invoke",
+        "sequence": 1,
+        "type": "job_started"
+      },
+      {
+        "created_at": "2026-09-09T19:50:24.629468+00:00",
+        "sequence": 2,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:24.906358+00:00",
+        "sequence": 3,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:24.920496+00:00",
+        "sequence": 4,
+        "type": "navigation",
+        "url": "http://127.0.0.1:8852/"
+      },
+      {
+        "created_at": "2026-09-09T19:50:25.975331+00:00",
+        "sequence": 5,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:26.353993+00:00",
+        "sequence": 6,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:26.733402+00:00",
+        "sequence": 7,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:27.110089+00:00",
+        "sequence": 8,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:27.490622+00:00",
+        "sequence": 9,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:27.882468+00:00",
+        "sequence": 10,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:28.262374+00:00",
+        "sequence": 11,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:28.643582+00:00",
+        "sequence": 12,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:29.024220+00:00",
+        "sequence": 13,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:29.424837+00:00",
+        "sequence": 14,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:29.801130+00:00",
+        "sequence": 15,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:30.181510+00:00",
+        "sequence": 16,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:30.561269+00:00",
+        "sequence": 17,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:30.940509+00:00",
+        "sequence": 18,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:31.334947+00:00",
+        "sequence": 19,
+        "settled": true,
+        "signature": "79bdba7c64605730",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T19:50:31.354425+00:00",
+        "outcome": "FAILED_BEFORE_EFFECT",
+        "sequence": 20,
+        "status": "COMPLETED",
+        "type": "job_finished"
+      }
+    ],
+    "id": "job_99a6b102228d41eaaa31a054079bf1a1",
+    "job_id": "job_99a6b102228d41eaaa31a054079bf1a1",
+    "kind": "invoke",
+    "request": {
+      "arguments": {
+        "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "limits": {
+        "max_actions": 16,
+        "max_seconds": 57.45453373599448,
+        "max_writes": 9
+      },
+      "operation_id": "op_d245e3cc03c44e6800cd",
+      "version": 1
+    },
+    "result": {
+      "effect": {
+        "reason": "Target anchor record is absent or ambiguous in the current rendered view"
+      },
+      "metrics": {
+        "actions": 1,
+        "elapsed_seconds": 6.994,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "possible_write_actions": 0
+      },
+      "outcome": "FAILED_BEFORE_EFFECT"
+    },
+    "status": "COMPLETED",
+    "updated_at": "2026-09-09T19:50:31.354481+00:00",
+    "write_intent": false
+  },
+  "connection_navigation_actions": 1,
+  "authentication_actions": 3,
+  "invocation_request": {
+    "version": 1,
+    "arguments": {
+      "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+      "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+    },
+    "limits": {
+      "max_actions": 16,
+      "max_writes": 9,
+      "max_seconds": 57.45453373599448
+    }
+  },
+  "idempotency_key": "assessment-830a16d437bc21b5f58e198457a19156268e9b9b",
+  "runtime_outcome": "FAILED_BEFORE_EFFECT",
+  "interaction_total": 5,
+  "possible_write_total": 3,
+  "public_observation_events": 17,
+  "raw_dom_snapshot_count": null,
+  "raw_dom_snapshot_count_status": "Not exposed by this service version",
+  "elapsed_seconds_including_auth_http_polling": 9.44809,
+  "source_after": {
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c"
+  },
+  "source_unchanged": true,
+  "within_workflow_budget": true,
+  "completed_at": "2026-09-09T19:50:31.356876+00:00"
+}

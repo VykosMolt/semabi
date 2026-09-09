@@ -103,7 +103,10 @@ values look unchanged. A single-field replacement also requires the old value
 to be absent from the original readback view after saving and reloading.
 Separate editor drafts stop navigation or submission. The current selection
 scope is one exact, unique anchor in the rendered record view; search across
-pages and arbitrary filters are not established.
+pages and arbitrary filters are not established. The fixed development run also
+found that paragraphs split across inline markup can defeat exact target lookup,
+including memo content followed by a hashtag. The original failed calls are
+retained in the [workflow assessment](data/v4/transport/product/development_assessment_v1/README.md).
 
 Two successful read trials can establish one varying numeric label on an
 untouched dialog button. This declared prior preserves digit widths, separators,
@@ -186,4 +189,9 @@ independently developed applications are tracked in the
 [record-operation demonstration](data/v4/transport/product/record_operations_v1/README.md)
 retains the HTTP calls, independent before/after checks and service-restart read.
 The [baseline smoke](data/v4/transport/product/cached_form_smoke_v1/README.md)
-is an unmatched development check; a prospective comparison remains pending.
+is an unmatched development check. The subsequent
+[fixed workflow comparison](data/v4/transport/product/development_assessment_v1/README.md)
+retains every requested case: SemABI completed 2/10 Memos core tasks; the
+baseline completed 1/10. A separate coordinator-caused startup failure is
+retained in the request denominator. Linkding fixture setup was unestablished. The product criterion has
+not been met, and general goal planning remains unsupported.

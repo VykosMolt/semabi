@@ -1,0 +1,26 @@
+{
+  "format": "product_assessment_lifecycle.v1",
+  "command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py",
+    "restore",
+    "memos",
+    "pa260909af9b86d0-b-changed"
+  ],
+  "helper_sha256": "806b213db7a71b734f889ce576394a3563ccfe7c7cdfec1cd9c500e1a4f872b7",
+  "started_at": "2026-09-09T19:49:55.820257+00:00",
+  "cpu_affinity": [
+    2
+  ],
+  "ordinary_ui_actions": 0,
+  "business_write_actions": 0,
+  "data_access": "Opaque installer directory copy; no record interpretation",
+  "exit_code": 0,
+  "stdout": "{\"application\": \"Memos\", \"http_status\": null, \"prepared_fixture\": {\"action\": \"restore\", \"archive\": \"/home/moloch/semabi/runs/product_apps_v1/memos/private/resets/1788983395970990965-a09bdb3b705d4be8a53b22b06720efc1\", \"inventory_entries\": 2, \"manifest_sha256\": \"735670c9bfd1f7dc749bbc75de051130d2211c5decef2f33d10dce430b2d4e1f\", \"name\": \"pa260909af9b86d0-b-changed\", \"path\": \"/home/moloch/semabi/runs/product_apps_v1/memos/private/prepared/pa260909af9b86d0-b-changed\", \"was_running\": true}, \"running\": true}\n",
+  "stderr": "",
+  "elapsed_seconds": 0.168242,
+  "child_cpu_seconds": 0.066972,
+  "child_peak_rss_bytes": 29552640,
+  "metric_scope": "Lifecycle helper and waited subprocesses; persistent application process costs excluded",
+  "completed_at": "2026-09-09T19:49:55.988532+00:00"
+}

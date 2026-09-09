@@ -1,0 +1,242 @@
+"""Independent read-only Memos slot evidence, with one cumulative 30s/12a/8w budget.
+
+Only ordinary authentication, navigation, reload and rendered DOM reads occur.
+Expected values select records only after DOM extraction. Task selection, search,
+chain, restart, logout and interruption semantics require separate evidence.
+"""
+from __future__ import annotations
+import argparse
+from collections import Counter
+import importlib.util
+import json
+import os
+from pathlib import Path
+import threading
+import time
+import uuid
+
+ROOT=Path(__file__).resolve().parents[2]
+OUT=Path(__file__).resolve().parent
+SETUP=OUT/'setup_fixtures.py'
+spec=importlib.util.spec_from_file_location('fixture_dom_reader',SETUP)
+fixture=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixture)
+reader=fixture.reader
+
+
+def inventory(snapshot):
+    result=[]
+    for root in snapshot['nodes']:
+        if root['tag']!='article' and root['role']!='article':continue
+        local=fixture.descendants(snapshot,root)
+        bodies=[n for n in local if n['tag'] in ('p','pre')]
+        result.append({'root':root,'body_nodes':bodies,'body_texts':[n['text'] for n in bodies]})
+    return result
+
+
+def counts(records):return Counter(tuple(record['body_texts']) for record in records)
+
+def expected_inventory_delta(expectation, base):
+    kind=expectation['requested_result']
+    if kind in ('one_created_record_retained_after_reload','create_one_record_with_interruption_and_independent_recovery_accounting'):
+        fields=expectation.get('expected_visible_values',expectation.get('intended_visible_values'))
+        return Counter({(fields['content'],):1}),Counter()
+    if kind=='one_intended_record_updated_and_read_back':
+        return Counter({(expectation['expected_visible_values']['content'],):1}),Counter({(base[expectation['target_fixture_record']]['content'],):1})
+    return Counter(),Counter()
+
+
+def assess_snapshot(snapshot, expectation, base, phase, before_inventory=None):
+    kind=expectation['requested_result']
+    wanted={name:dict(fields) for name,fields in base.items()}
+    desired=expectation.get('expected_visible_values',expectation.get('intended_visible_values'))
+    if phase=='after' and kind=='one_intended_record_updated_and_read_back':
+        wanted[expectation['target_fixture_record']]=desired
+    checks=fixture.fixture_records('memos',snapshot,wanted)
+    fixture_fields_match=all(r['exact_matching_record_count']==1 and r['selected_records'][0]['all_expected_tags_visible'] for r in checks.values())
+    inv=inventory(snapshot)
+    result={'fixture_records':checks,'visible_inventory':inv,'fixture_fields_match':fixture_fields_match,'visible_record_count':len(inv),
+        'requested_result':kind,'selection_chain_and_challenge_semantics':'Not established by this DOM-only state check'}
+    current=counts(inv)
+    if phase=='before':
+        result['prepared_fixture_matches']=fixture_fields_match and current==Counter((fields['content'],) for fields in base.values())
+        if desired and kind in ('one_created_record_retained_after_reload','create_one_record_with_interruption_and_independent_recovery_accounting'):
+            created=fixture.fixture_records('memos',snapshot,{'intended':desired})['intended']
+            result['intended_record']=created
+            result['prepared_fixture_matches'] &= created['exact_matching_record_count']==0
+        result['effect_goal_met']=None
+        return result
+    added,removed=expected_inventory_delta(expectation,base)
+    prior=counts(before_inventory) if before_inventory is not None else None
+    observed_added=current-prior if prior is not None else None
+    observed_removed=prior-current if prior is not None else None
+    result['inventory_comparison']={'before_available':prior is not None,
+        'added':[{'body_texts':list(k),'count':v} for k,v in (observed_added or {}).items()],
+        'removed':[{'body_texts':list(k),'count':v} for k,v in (observed_removed or {}).items()],
+        'expected_transition_matches':prior is not None and observed_added==added and observed_removed==removed}
+    if desired:
+        result['intended_record']=fixture.fixture_records('memos',snapshot,{'intended':desired})['intended']
+    if kind in ('one_created_record_retained_after_reload','create_one_record_with_interruption_and_independent_recovery_accounting'):
+        target=result['intended_record']
+        result['effect_goal_met']=fixture_fields_match and target['exact_matching_record_count']==1 and target['selected_records'][0]['all_expected_tags_visible'] and result['inventory_comparison']['expected_transition_matches']
+        result['effect_count_category']='zero' if target['exact_matching_record_count']==0 else 'one' if target['exact_matching_record_count']==1 else 'multiple'
+    elif kind=='one_intended_record_updated_and_read_back':
+        old=base[expectation['target_fixture_record']]
+        result['old_target_absence']=fixture.fixture_records('memos',snapshot,{'old':old})['old']
+        result['effect_goal_met']=fixture_fields_match and result['old_target_absence']['exact_matching_record_count']==0 and result['inventory_comparison']['expected_transition_matches']
+    else:
+        result['unchanged_visible_inventory']=prior is not None and current==prior
+        result['effect_goal_met']=None
+    return result
+
+
+class Check:
+    def __init__(self,args):
+        self.args=args;self.started=time.monotonic();self.cpu_started=reader.cpu_seconds()
+        for name in ('source_hashes','before_receipt','restore_receipt','attempt'):
+            value=getattr(args,name)
+            if value is not None:setattr(args,name,value.resolve())
+        plan_path=OUT/'request_plan.json';expected_path=OUT/'expected_results.json'
+        self.plan=json.loads(plan_path.read_text());expected=json.loads(expected_path.read_text())
+        selected=[s for s in self.plan['result_slots'] if s['slot_id']==args.slot_id]
+        assert len(selected)==1 and selected[0]['application']=='memos'
+        self.slot=selected[0];self.expectation=next(e for e in expected['requests'] if e['request_id']==self.slot['request_id'])
+        self.base=expected['proposed_visible_fixtures']['memos'][self.slot['fixture_variant']]
+        self.hashes=json.loads(args.source_hashes.read_text())
+        self.root=OUT/'request_checks'/args.slot_id
+        self.root.mkdir(parents=True,exist_ok=True,mode=0o700)
+        assert not [p for p in self.root.glob('*/started.json') if not (p.parent/'result.json').exists()], 'Reconcile prior interrupted checker before another session'
+        previous=[json.loads(p.read_text()) for p in self.root.glob('*/result.json')]
+        self.previous={key:sum(p['metrics'][key] for p in previous) for key in ('actions','possible_writes','elapsed_seconds')}
+        self.limit=self.plan['budgets']['independent_verification']
+        self.path=self.root/(args.phase+'_'+uuid.uuid4().hex);self.path.mkdir(mode=0o700)
+        self.before=None
+        if args.phase=='after':
+            assert args.before_receipt is not None
+            self.before=json.loads(args.before_receipt.read_text())
+            assert self.before['slot_id']==args.slot_id and self.before['phase']=='before' and self.before['verdict']=='PREPARED_FIXTURE_MATCH'
+            assert self.before['source_before']==self.hashes and self.before['source_unchanged']
+            for c in self.before['accepted_captures']:
+                raw=args.before_receipt.parent/(c['snapshot_id']+'.json')
+                assert reader.sha(raw)==c['snapshot_sha256']
+            assert self.before['accepted_captures'][0]['check']['visible_inventory'] and counts(self.before['accepted_captures'][0]['check']['visible_inventory'])==counts(self.before['accepted_captures'][1]['check']['visible_inventory'])
+        else:
+            assert args.restore_receipt is not None, 'A coordinated opaque restore receipt is required for matched pre-state checking'
+            restore=json.loads(args.restore_receipt.read_text())
+            name=self.plan['run_token']+'-'+self.slot['fixture_variant'].replace('_','-')
+            assert restore['exit_code']==0 and restore['command'][-3:]==['restore','memos',name], 'Opaque restore must match this requested fixture variant'
+        self.events=[];self.captures=[];self.accepted=[];self.session=None;self.peak=[0];self.stop=threading.Event()
+        inputs=[plan_path,expected_path,args.source_hashes]+[p for p in (args.before_receipt,args.restore_receipt,args.attempt) if p is not None]
+        self.result={'slot_id':args.slot_id,'request_id':self.slot['request_id'],'arm':self.slot['arm'],'phase':args.phase,
+            'started_at':reader.now(),'classification':'Independent rendered-state verification, separate from evaluated request execution',
+            'fixture_variant':self.slot['fixture_variant'],'expected_request':self.expectation,
+            'inputs':{str(p.relative_to(ROOT)):reader.sha(p) for p in inputs},'source_before':self.source_hashes(),
+            'checker_sha256':reader.sha(__file__),'fixture_reader_sha256':reader.sha(SETUP),'ordinary_dom_reader_sha256':reader.sha(reader.__file__),
+            'limits':self.limit,'cumulative_previous':self.previous,'business_writes':0,'attempt_result_used_as_expected_truth':False,
+            'verdict':'INCOMPLETE','limitations':['Rendered local view; no persistent identity, global uniqueness or unseen side-effect claim.','Search/filter selection, return values, ambiguity handling, chains and challenge prerequisites are not established by state snapshots alone.']}
+        assert self.result['source_before']==self.hashes
+        (self.path/'checker_source.py').write_bytes(Path(__file__).read_bytes())
+        (self.path/'fixture_reader_source.py').write_bytes(SETUP.read_bytes())
+        reader.save(self.path/'started.json',self.result)
+        self.thread=threading.Thread(target=self.monitor,daemon=True);self.thread.start()
+
+    def source_hashes(self):return {name:reader.sha(ROOT/name) for name in self.hashes}
+    def remaining(self):return self.limit['max_seconds']-self.previous['elapsed_seconds']-(time.monotonic()-self.started)
+    def monitor(self):
+        while not self.stop.is_set():
+            table=reader.process_table();owned=reader.descendants(table,os.getpid())
+            self.peak[0]=max(self.peak[0],sum(table[p]['rss_bytes'] for p in owned if p in table));self.stop.wait(0.05)
+    def meter(self,kind,write=False):
+        assert self.previous['actions']+len(self.events)+1<=self.limit['max_actions']
+        assert self.previous['possible_writes']+sum(e['possible_write'] for e in self.events)+int(write)<=self.limit['max_possible_writes']
+        assert self.remaining()>0,'Cumulative independent verification time exhausted'
+        self.events.append({'at':reader.now(),'kind':kind,'possible_write':int(write)})
+        reader.save(self.path/'events.json',self.events)
+    def capture(self,stage):
+        assert self.remaining()>0
+        self.session.phase=stage;self.session.read()
+        snapshot=self.session._page.evaluate(fixture.DOM_JS)
+        snapshot.update(id='request_dom_'+uuid.uuid4().hex,captured_at=reader.now())
+        path=self.path/(snapshot['id']+'.json');reader.save(path,snapshot)
+        item={'stage':stage,'snapshot_id':snapshot['id'],'snapshot_sha256':reader.sha(path),'captured_at':snapshot['captured_at'],'url':snapshot['url']}
+        self.captures.append(item)
+        return snapshot,item
+    def settled_capture(self,stage):
+        # Fixed bounded read-only settling rule: two successive equal, nonempty
+        # native-article inventories. Every intermediate snapshot is retained.
+        previous=None
+        for number in range(4):
+            snapshot,item=self.capture(stage+f'_read_{number+1}')
+            current=counts(inventory(snapshot))
+            if current and current==previous:
+                before_inventory=self.before['accepted_captures'][0]['check']['visible_inventory'] if self.before else None
+                item['check']=assess_snapshot(snapshot,self.expectation,self.base,self.args.phase,before_inventory)
+                item['accepted_stage']=stage
+                self.accepted.append(item)
+                return
+            previous=current
+        raise AssertionError('Rendered record inventory did not settle within four ordinary-DOM reads')
+    def run(self):
+        own=self
+        class Session(reader.MeteredSession):
+            def act(self,primitive):
+                own.meter('authentication_'+primitive.kind,True)
+                return super().act(primitive)
+        try:
+            self.session=Session('http://127.0.0.1:8852/')
+            self.session._page.set_default_timeout(5000)
+            self.meter('set_viewport');self.session._page.set_viewport_size({'width':1280,'height':900})
+            self.meter('navigation');self.session._page.goto('http://127.0.0.1:8852/')
+            self.session.phase='authentication'
+            credentials=json.loads((ROOT/'runs/product_apps_v1/memos/private/credentials.json').read_text())
+            self.result['authentication']=self.session.authenticate({k:credentials[k] for k in ('username','password')});credentials.clear()
+            assert self.result['authentication']=={'status':'CONNECTED','authentication_actions':3}
+            self.settled_capture('before_reload')
+            self.meter('reload');self.session._page.reload()
+            self.settled_capture('after_reload')
+            equal=counts(self.accepted[0]['check']['visible_inventory'])==counts(self.accepted[1]['check']['visible_inventory'])
+            self.result['accepted_inventories_agree']=equal
+            if self.args.phase=='before':
+                self.result['verdict']='PREPARED_FIXTURE_MATCH' if equal and all(c['check']['prepared_fixture_matches'] for c in self.accepted) else 'PREPARED_FIXTURE_MISMATCH'
+            else:
+                goals=[c['check']['effect_goal_met'] for c in self.accepted]
+                self.result['verdict']='EFFECT_OBSERVED' if equal and goals==[True,True] else 'EFFECT_NOT_OBSERVED' if equal and all(v is False for v in goals) else 'STATE_OBSERVED_REQUIRES_TASK_ADJUDICATION'
+        except Exception as exc:
+            self.result.update(verdict='CHECK_UNESTABLISHED',error_type=type(exc).__name__)
+            if isinstance(exc,AssertionError):self.result['error']=str(exc)
+        finally:self.finish()
+        return self.result
+    def finish(self):
+        if self.session is not None:
+            table=reader.process_table();owned=[table[p] for p in sorted(reader.descendants(table,os.getpid())-{os.getpid()})]
+            self.result['session_counts']={'auth_primitives':self.session.primitives,'read_calls':self.session.read_calls,'raw_snapshot_reads':self.session.raw_snapshot_calls,'main_frame_navigation_events':self.session.main_frame_navigations}
+            self.session.close();deadline=time.monotonic()+5
+            while True:
+                after=reader.process_table();live=[p for p in owned if p['pid'] in after and p['start_ticks']==after[p['pid']]['start_ticks'] and after[p['pid']]['state']!='Z']
+                if not live or time.monotonic()>=deadline:break
+                time.sleep(.05)
+            receipts=[]
+            for p in owned:
+                current=after.get(p['pid']);state='absent' if current is None else 'pid_reused' if current['start_ticks']!=p['start_ticks'] else 'zombie_terminated' if current['state']=='Z' else 'still_live'
+                receipts.append({**{k:p[k] for k in ('pid','ppid','name','start_ticks')},'after_close':state})
+            self.result['termination']={'close_returned':True,'checked_at':reader.now(),'owned_processes':receipts,'live_owned_process_count':len(live)}
+            if live:self.result['verdict']='CHECK_UNESTABLISHED_BROWSER_STILL_LIVE'
+        self.stop.set();self.thread.join()
+        metrics={'actions':len(self.events),'possible_writes':sum(e['possible_write'] for e in self.events),'elapsed_seconds':round(time.monotonic()-self.started,3),'cpu_seconds':round(reader.cpu_seconds()-self.cpu_started,3),'peak_aggregate_rss_bytes':self.peak[0],'cpu_affinity':sorted(os.sched_getaffinity(0)),'independent_dom_reads':len(self.captures),'fresh_browser_sessions':1,'business_writes':0,'model_calls':0,'paid_cost':0,'retries':0}
+        cumulative={k:self.previous[k]+metrics[k] for k in self.previous}
+        self.result.update(metrics=metrics,cumulative_after=cumulative,events=self.events,captures=self.captures,accepted_captures=self.accepted,source_after=self.source_hashes(),completed_at=reader.now())
+        self.result['source_unchanged']=self.result['source_before']==self.result['source_after']
+        if not self.result['source_unchanged']:self.result['verdict']='CHECK_UNESTABLISHED_SOURCE_CHANGED'
+        if cumulative['actions']>self.limit['max_actions'] or cumulative['possible_writes']>self.limit['max_possible_writes'] or cumulative['elapsed_seconds']>self.limit['max_seconds']:self.result['verdict']='CHECK_UNESTABLISHED_BUDGET_EXCEEDED'
+        reader.save(self.path/'result.json',self.result)
+        print(json.dumps({'slot_id':self.args.slot_id,'phase':self.args.phase,'verdict':self.result['verdict'],'result_path':str((self.path/'result.json').relative_to(ROOT)),'cumulative_after':cumulative,'live_owned_processes':self.result.get('termination',{}).get('live_owned_process_count')}))
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--slot-id',required=True)
+    parser.add_argument('--phase',choices=('before','after'),required=True)
+    parser.add_argument('--source-hashes',type=Path,required=True)
+    parser.add_argument('--restore-receipt',type=Path)
+    parser.add_argument('--before-receipt',type=Path)
+    parser.add_argument('--attempt',type=Path)
+    args=parser.parse_args();Check(args).run()

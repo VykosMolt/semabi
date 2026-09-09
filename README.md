@@ -3,8 +3,10 @@
 The developing product exposes operations learned through a browser as a local
 HTTP API. See the [developer quickstart](docs/product_quickstart.md) for connection,
 bounded learning, schema discovery, invocation, and persisted reuse. Its initial
-coverage is visible form creation with verified record read-back; broader workflow
-and application transfer remain under development.
+coverage includes visible form creation, exact local reads, and text updates
+with read-back checks. The [fixed workflow assessment](docs/data/v4/transport/product/development_assessment_v1/README.md)
+records the current failures and limited task coverage; broader workflows and
+application transfer remain under development.
 
 The research pipeline below investigates a more general relational model:
 

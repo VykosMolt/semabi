@@ -1,0 +1,47 @@
+{
+  "baseline": "cached-form-v3",
+  "comparison_mode": "shared_acquisition",
+  "assistance": "SemABI learned operation artifact; charge acquisition to both arms",
+  "independent_onboarding": false,
+  "effect_verification": "NOT_PERFORMED",
+  "source_sha256": {
+    "baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+  },
+  "outcome": "DISPATCHED",
+  "limits": {
+    "max_actions": 20,
+    "max_writes": 12,
+    "max_seconds": 60.0
+  },
+  "allowed_origin": "http://127.0.0.1:8852",
+  "operation_id": "op_562fcb42c95d9c59eba3",
+  "operation_version": 1,
+  "arguments": {
+    "value": "pa260909af9b86d0 create-one: The orchard schedule has a fresh entry."
+  },
+  "operation_sha256": "1cebe526129a1a84342e3a075342a05b764e2de09d740a7bd0254f52b3b736e0",
+  "browser_backend": "semabi.compiler.browser_session.BrowserSession",
+  "authentication_status": "CONNECTED",
+  "reason": "Cached submit action completed; business effect is unverified",
+  "browser_closed": true,
+  "stage": "submit",
+  "authenticated": true,
+  "possible_replay_action": true,
+  "submit_attempted": true,
+  "submit_returned_ok": true,
+  "failure_phase": null,
+  "metrics": {
+    "actions": 7,
+    "possible_write_actions": 5,
+    "authentication_actions": 3,
+    "surface_reads": 10,
+    "elapsed_seconds": 5.17,
+    "model_calls": 0,
+    "paid_cost": 0
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "format": "owned_command_meter.v1",
+  "argv": [
+    ".venv/bin/python",
+    "runs/product_assessment_development_v1/run_service_call.py",
+    "--binding-file",
+    "runs/product_assessment_development_v1/preflight/memos-U1-semabi.json",
+    "--connection",
+    "conn_d85c1e04c17749f1a9e5b24cf08ddbe8",
+    "--output-dir",
+    "runs/product_assessment_development_v1/attempts/memos-U1-semabi"
+  ],
+  "exit_code": 0,
+  "source_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+  "started_at": "2026-09-09T19:46:00.003973+00:00",
+  "rss_limit_bytes": 4294967296,
+  "sample_interval_seconds": 0.05,
+  "sampled_peak_aggregate_rss_bytes": 953438208,
+  "samples": 196,
+  "inherited_cpu_affinity": [
+    2,
+    3
+  ],
+  "max_observed_affinity_count": 2,
+  "signals": [],
+  "stop_reason": "command_exit",
+  "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+  "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "wall_seconds": 9.756301,
+  "rss_limit_exceeded": false,
+  "child_rusage_cpu_seconds": 2.605174,
+  "completed_at": "2026-09-09T19:46:09.760414+00:00",
+  "owned_processes": [
+    {
+      "pid": 1212388,
+      "ppid": 1212387,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7208629,
+      "rss_bytes": 466944,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1212393,
+      "ppid": 1212388,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7208633,
+      "rss_bytes": 14876672,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1212395,
+      "ppid": 1212388,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7208648,
+      "rss_bytes": 14295040,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1212399,
+      "ppid": 1212393,
+      "name": "MainThread",
+      "state": "R",
+      "start_ticks": 7208655,
+      "rss_bytes": 85975040,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1212429,
+      "ppid": 1212399,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7208684,
+      "rss_bytes": 93184000,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1212431,
+      "ppid": 1212429,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7208686,
+      "rss_bytes": 54996992,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1212432,
+      "ppid": 1212429,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7208686,
+      "rss_bytes": 54706176,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1212449,
+      "ppid": 1212431,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 7208688,
+      "rss_bytes": 119246848,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1212464,
+      "ppid": 1212429,
+      "name": "exe",
+      "state": "R",
+      "start_ticks": 7208689,
+      "rss_bytes": 22904832,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1212474,
+      "ppid": 1212432,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7208692,
+      "rss_bytes": 75862016,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    }
+  ],
+  "terminal_ownership_verified": true,
+  "status": "TERMINAL"
+}

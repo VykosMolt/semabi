@@ -1,0 +1,61 @@
+{
+  "format": "product_assessment_onboarding.v1",
+  "connection_id": "conn_d85c1e04c17749f1a9e5b24cf08ddbe8",
+  "public_snapshot": "service_snapshot.json",
+  "shared_acquisition": true,
+  "charge_to_arms": [
+    "semabi",
+    "cached_form"
+  ],
+  "physical_executions": 1,
+  "jobs": [
+    "job_5aca378fa15a4e58b4e08295c007c097",
+    "job_d3d19fdae2a84aed9d06347bca0b2d6c"
+  ],
+  "source_freeze": "freeze_v1.json",
+  "actions_including_initial_navigation_and_authentication": 33,
+  "possible_writes_including_authentication": 19,
+  "public_job_interval_seconds": 27.974783,
+  "connect_runtime_seconds": 1.987,
+  "learn_runtime_seconds": 25.44,
+  "client_wall_seconds": "UNMEASURED",
+  "cpu_seconds": "UNMEASURED",
+  "peak_aggregate_rss_bytes": "UNMEASURED",
+  "runtime_model_calls": 0,
+  "paid_cost": 0,
+  "client": {
+    "launch_chunk": "a0de4c",
+    "session_id": 34927,
+    "terminal_chunk": "f687eb",
+    "exit_code": 0
+  },
+  "service": {
+    "launch_chunk": "2f2d6f",
+    "session_id": 10324,
+    "terminal_chunk": "619522",
+    "exit_code": 0,
+    "cpu_affinity": [
+      2,
+      3
+    ],
+    "state": "stopped and reaped"
+  },
+  "attempts": [],
+  "operations": [
+    {
+      "id": "op_562fcb42c95d9c59eba3",
+      "version": 1,
+      "kind": "create_visible_record"
+    },
+    {
+      "id": "op_7f641de8dbf9e29226fb",
+      "version": 1,
+      "kind": "read_visible_record"
+    },
+    {
+      "id": "op_d245e3cc03c44e6800cd",
+      "version": 1,
+      "kind": "update_visible_record"
+    }
+  ]
+}

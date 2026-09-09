@@ -1,0 +1,314 @@
+{
+  "applications": {
+    "linkding": {
+      "affected_slots": 32,
+      "business_fixture_saved": false,
+      "cumulative_setup_limits": {
+        "max_actions": 60,
+        "max_possible_writes": 20,
+        "max_seconds": 900
+      },
+      "fixture_status": "SETUP_UNESTABLISHED",
+      "full_elapsed_total_status": "Incomplete because legacy lifecycle costs are not in-file",
+      "known_measured_elapsed_seconds": 5.324288,
+      "legacy_lifecycle_receipts": [
+        {
+          "cpu_seconds": null,
+          "elapsed_seconds": null,
+          "measurement_status": "Unavailable in this retained legacy log; do not count as zero",
+          "path": "runs/product_assessment_development_v1/linkding_pre_setup_snapshot.log",
+          "peak_rss_bytes": null,
+          "sha256": "5a18c79212f799710e1875a21852dd90caea420d3522fcd3ab595628fd3af8c8"
+        },
+        {
+          "cpu_seconds": null,
+          "elapsed_seconds": null,
+          "measurement_status": "Unavailable in this retained legacy log; do not count as zero",
+          "path": "runs/product_assessment_development_v1/linkding_snapshot_restart_recovery.log",
+          "peak_rss_bytes": null,
+          "sha256": "41a6e786b484f35cc438239c92a1be2317dda4145fff37e679d149b7bc36d4ce"
+        }
+      ],
+      "metered_lifecycle_receipts": [
+        {
+          "child_cpu_seconds": 0.16923,
+          "child_peak_rss_bytes": 31969280,
+          "command": [
+            "/usr/bin/python",
+            "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py",
+            "reset",
+            "linkding"
+          ],
+          "elapsed_seconds": 1.317288,
+          "exit_code": 0,
+          "helper_sha256": "806b213db7a71b734f889ce576394a3563ccfe7c7cdfec1cd9c500e1a4f872b7",
+          "path": "runs/product_assessment_development_v1/linkding_initial_reset_v1.json",
+          "sha256": "b867117aa4d3965d66a38bdd24ba0872de63f648e9b3433a604e3c1b34febbc2"
+        }
+      ],
+      "metered_lifecycle_totals": {
+        "child_cpu_seconds": 0.16923,
+        "child_peak_rss_bytes": 31969280,
+        "elapsed_seconds": 1.317288
+      },
+      "notes": [
+        "Failed before first Save after authentication and four A field fills; zero business Save clicks.",
+        "Current visible form fields matched A. Uniquely visible native checkbox control was inspected by Playwright, while strict DOM visible extraction omitted the native input and retained its visible Mark as unread label and 16x16 icon. Its rendered checked-state evidence was therefore not established; no unread fixture goal was weakened.",
+        "A transparent styled native input is a possible explanation; opacity/computed style was not recorded in raw snapshots, so exact cause remains inferred.",
+        "Seven possible writes consumed. A fresh full planned base+variant sequence needs twenty more, exceeding the remaining thirteen; no app retry or budget reset performed.",
+        "This is an evaluator fixture failure, not a measured learner failure. Preserve all sixteen requests per arm, with separate schema-preflight results and no invented invocations or matched-pair claim."
+      ],
+      "primary_slot_status": "SETUP_UNESTABLISHED",
+      "ui_attempts": [
+        {
+          "all_owned_processes_absent": true,
+          "metrics": {
+            "actions": 10,
+            "business_save_clicks": 0,
+            "cpu_affinity": [
+              4
+            ],
+            "cpu_seconds": 1.494,
+            "elapsed_seconds": 4.007,
+            "fresh_browser_sessions": 1,
+            "independent_dom_reads": 5,
+            "model_calls": 0,
+            "paid_cost": 0,
+            "peak_aggregate_rss_bytes": 768139264,
+            "possible_writes": 7,
+            "retries": 0,
+            "setup_resets": 0,
+            "viewport": {
+              "height": 900,
+              "width": 1280
+            }
+          },
+          "original_verdict": "ERROR",
+          "path": "runs/product_assessment_development_v1/fixture_setup/linkding/base_2cf9a39a247a43bcb1b81c9a74db78ef/result.json",
+          "phase": "base",
+          "sha256": "64d3720b9300c172e5eb7d4169944a8e7af3ca7258bf304f8a21f6d2df4f507a",
+          "source_sha256": {
+            "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+            "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+            "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+            "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+            "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+            "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+            "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+            "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+            "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+            "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+          }
+        }
+      ],
+      "ui_metrics": {
+        "actions": 10,
+        "business_save_clicks": 0,
+        "cpu_seconds": 1.494,
+        "elapsed_seconds": 4.007,
+        "independent_dom_reads": 5,
+        "peak_aggregate_rss_bytes": 768139264,
+        "possible_writes": 7
+      }
+    },
+    "memos": {
+      "b_changed_snapshot": "pa260909af9b86d0-b-changed",
+      "base_snapshot": "pa260909af9b86d0-base",
+      "cumulative_setup_limits": {
+        "max_actions": 60,
+        "max_possible_writes": 20,
+        "max_seconds": 900
+      },
+      "fixture_status": "BASE_AND_B_CHANGED_OBSERVED_AND_OPAQUELY_SNAPSHOTTED",
+      "full_elapsed_total_status": "Incomplete because legacy lifecycle costs are not in-file",
+      "known_measured_elapsed_seconds": 14.313143,
+      "legacy_lifecycle_receipts": [
+        {
+          "cpu_seconds": null,
+          "elapsed_seconds": null,
+          "measurement_status": "Unavailable in this retained legacy log; do not count as zero",
+          "path": "runs/product_assessment_development_v1/memos_initial_reset.log",
+          "peak_rss_bytes": null,
+          "sha256": "10c55add0f69442a3f756fb0cd09747c4cf5b19d4bdbc1d22feed425ed313c77"
+        },
+        {
+          "cpu_seconds": null,
+          "elapsed_seconds": null,
+          "measurement_status": "Unavailable in this retained legacy log; do not count as zero",
+          "path": "runs/product_assessment_development_v1/memos_pre_setup_snapshot.log",
+          "peak_rss_bytes": null,
+          "sha256": "8391fd654a97c0a2518287b207c266858a6b734b5fb20e9c73ed8f387b3deb50"
+        }
+      ],
+      "metered_lifecycle_receipts": [
+        {
+          "child_cpu_seconds": 0.090401,
+          "child_peak_rss_bytes": 32100352,
+          "command": [
+            "/usr/bin/python",
+            "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py",
+            "snapshot",
+            "memos",
+            "pa260909af9b86d0-b-changed"
+          ],
+          "elapsed_seconds": 0.193386,
+          "exit_code": 0,
+          "helper_sha256": "806b213db7a71b734f889ce576394a3563ccfe7c7cdfec1cd9c500e1a4f872b7",
+          "path": "runs/product_assessment_development_v1/memos_b_changed_snapshot_v1.json",
+          "sha256": "e52f3a44a08c8356a7ab1767c059f6f5dd543edd735ec4757d897ae16eba570c"
+        },
+        {
+          "child_cpu_seconds": 0.090966,
+          "child_peak_rss_bytes": 32026624,
+          "command": [
+            "/usr/bin/python",
+            "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py",
+            "snapshot",
+            "memos",
+            "pa260909af9b86d0-base"
+          ],
+          "elapsed_seconds": 0.194026,
+          "exit_code": 0,
+          "helper_sha256": "f8d0900b66c8bb713f2c2cf664d95eef7a71ae579a22687897999049069ace2c",
+          "path": "runs/product_assessment_development_v1/memos_base_snapshot_v1.json",
+          "sha256": "25fa283232ef0ec95afebf16660fa62a9f9b7f4d326fca5ea65c3f53e039f0d5"
+        },
+        {
+          "child_cpu_seconds": 0.089159,
+          "child_peak_rss_bytes": 31977472,
+          "command": [
+            "/usr/bin/python",
+            "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py",
+            "reset",
+            "memos"
+          ],
+          "elapsed_seconds": 0.190731,
+          "exit_code": 0,
+          "helper_sha256": "f8d0900b66c8bb713f2c2cf664d95eef7a71ae579a22687897999049069ace2c",
+          "path": "runs/product_assessment_development_v1/memos_initial_reset_v2.json",
+          "sha256": "c1c8c7938b8279cc7018fe125e147a35f409efa02f37440237f21b5ad7f7baae"
+        }
+      ],
+      "metered_lifecycle_totals": {
+        "child_cpu_seconds": 0.270526,
+        "child_peak_rss_bytes": 32100352,
+        "elapsed_seconds": 0.578143
+      },
+      "notes": [
+        "A/B exact rendered paragraphs and visible hashtag spans match before and after reload.",
+        "B-only edit saved once; A unchanged, revised B once, old B and token absent.",
+        "Original variant checker ERROR is retained: early post-reload view had zero articles. Already captured diagnostic 0.619s later supplied the actual late post-reload witness, adjudicated offline with no additional app calls.",
+        "Exact old/new populated editor and its local Save are retained separately from the blank creator."
+      ],
+      "ui_attempts": [
+        {
+          "adjudication": {
+            "path": "runs/product_assessment_development_v1/fixture_setup/memos/b_changed_7ce717963dc840feb22ab7a0e3cf9eaf/adjudication.json",
+            "sha256": "ef081bb5dfb7848a83179beb48c0beb04795ca14142b730c1ec675dd9585c80b",
+            "verdict": "PASS_WITH_PRESERVED_TRANSIENT_CHECKER_FAILURE"
+          },
+          "all_owned_processes_absent": true,
+          "editor_state_check": {
+            "path": "runs/product_assessment_development_v1/fixture_setup/memos/b_changed_7ce717963dc840feb22ab7a0e3cf9eaf/editor_state_check.json",
+            "sha256": "2cc79a030bdec6ff907e15bdc8fbde1e326ec68ce2859f35e4be13bda1a0d01a",
+            "verdict": "PASS"
+          },
+          "metrics": {
+            "actions": 10,
+            "business_save_clicks": 1,
+            "cpu_affinity": [
+              4
+            ],
+            "cpu_seconds": 2.626,
+            "elapsed_seconds": 6.61,
+            "fresh_browser_sessions": 1,
+            "independent_dom_reads": 8,
+            "model_calls": 0,
+            "paid_cost": 0,
+            "peak_aggregate_rss_bytes": 930779136,
+            "possible_writes": 7,
+            "retries": 0,
+            "setup_resets": 0,
+            "viewport": {
+              "height": 900,
+              "width": 1280
+            }
+          },
+          "original_verdict": "ERROR",
+          "path": "runs/product_assessment_development_v1/fixture_setup/memos/b_changed_7ce717963dc840feb22ab7a0e3cf9eaf/result.json",
+          "phase": "b_changed",
+          "sha256": "c3eaad076dc325c6617123566faa09b2b3ac556800eabc562a2914e6a8684e1a",
+          "source_sha256": {
+            "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+            "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+            "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+            "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+            "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+            "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+            "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+            "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+            "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+            "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+          }
+        },
+        {
+          "all_owned_processes_absent": true,
+          "metrics": {
+            "actions": 10,
+            "business_save_clicks": 2,
+            "cpu_affinity": [
+              4
+            ],
+            "cpu_seconds": 2.771,
+            "elapsed_seconds": 7.125,
+            "fresh_browser_sessions": 1,
+            "independent_dom_reads": 9,
+            "model_calls": 0,
+            "paid_cost": 0,
+            "peak_aggregate_rss_bytes": 915456000,
+            "possible_writes": 7,
+            "retries": 0,
+            "setup_resets": 0,
+            "viewport": {
+              "height": 900,
+              "width": 1280
+            }
+          },
+          "original_verdict": "PASS",
+          "path": "runs/product_assessment_development_v1/fixture_setup/memos/base_a2c3c346157b4639bd7d03f740d78199/result.json",
+          "phase": "base",
+          "sha256": "dd988f7e7b347685d487cf07630bf3469fb4b9d54630f1b2a79e0e38d2127388",
+          "source_sha256": {
+            "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+            "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+            "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+            "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+            "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+            "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+            "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+            "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+            "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+            "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+          }
+        }
+      ],
+      "ui_metrics": {
+        "actions": 20,
+        "business_save_clicks": 3,
+        "cpu_seconds": 5.397,
+        "elapsed_seconds": 13.735,
+        "independent_dom_reads": 17,
+        "peak_aggregate_rss_bytes": 930779136,
+        "possible_writes": 14
+      }
+    }
+  },
+  "classification": "Evaluator fixture preparation, not learner performance",
+  "fixed_denominator": {
+    "arms": 2,
+    "requests_per_app_per_arm": 16,
+    "total_slots": 64
+  },
+  "format": "product_assessment_fixture_setup_summary.v1",
+  "lifecycle_metric_scope": "Helper and waited subprocess costs; persistent app server cost excluded. Missing legacy measurements are unavailable, not zero."
+}

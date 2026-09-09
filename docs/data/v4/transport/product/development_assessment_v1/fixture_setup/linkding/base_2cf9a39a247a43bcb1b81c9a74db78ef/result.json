@@ -1,0 +1,312 @@
+{
+  "application": "linkding",
+  "authentication": {
+    "authentication_actions": 3,
+    "status": "CONNECTED"
+  },
+  "authorization": "Execute only after root explicitly coordinates this exact app/phase and idle opaque lifecycle state.",
+  "captures": [
+    {
+      "captured_at": "2026-09-09T19:09:44.880750+00:00",
+      "snapshot_id": "fixture_dom_135032660d3a4feeb9bd9ce62b93cfc4",
+      "snapshot_sha256": "8989eb090e398089e2b104bfa1f8747c48b6aa94fe84cbb50f9fb899bb00eb5b",
+      "stage": "initial",
+      "url": "http://127.0.0.1:8851/bookmarks"
+    },
+    {
+      "captured_at": "2026-09-09T19:09:45.118686+00:00",
+      "snapshot_id": "fixture_dom_efc320f182a44928bd048c2cd7ee00c2",
+      "snapshot_sha256": "e7583bf093df0b8f421e2fbd4a7b4ec3d4cb1d99f793cd2cd5c7288ee7bdf306",
+      "stage": "before_create_A",
+      "url": "http://127.0.0.1:8851/bookmarks"
+    },
+    {
+      "captured_at": "2026-09-09T19:09:45.470085+00:00",
+      "snapshot_id": "fixture_dom_7856a967a295437681f7420bd6ac585a",
+      "snapshot_sha256": "9c8affcd79b7355901030e7967471bbff2c522477f041b2bdaaf3c56fe6d0e23",
+      "stage": "new_form_A",
+      "url": "http://127.0.0.1:8851/bookmarks/new"
+    },
+    {
+      "captured_at": "2026-09-09T19:09:45.850921+00:00",
+      "snapshot_id": "fixture_dom_eb87774bc5264a0fbbe3dc1c892f4d36",
+      "snapshot_sha256": "864420380e65dba7dcdae6552ebb26c435dfa788dfb66f54dfa4e1231637d131",
+      "stage": "populated_form_A",
+      "url": "http://127.0.0.1:8851/bookmarks/new"
+    },
+    {
+      "captured_at": "2026-09-09T19:09:46.309322+00:00",
+      "snapshot_id": "fixture_dom_b1a5587b25b94712835faff3e02e5a9e",
+      "snapshot_sha256": "d454d82d629e09568271fb7d0ea86cd308bc2147120248732ba4a085fb8b5f57",
+      "stage": "error_diagnostic",
+      "url": "http://127.0.0.1:8851/bookmarks/new"
+    }
+  ],
+  "classification": "Evaluator-only fixture setup, outside evaluated arms",
+  "completed_at": "2026-09-09T19:09:46.376940+00:00",
+  "cumulative_after": {
+    "actions": 10,
+    "elapsed_seconds": 4.007,
+    "possible_writes": 7
+  },
+  "cumulative_previous": {
+    "actions": 0,
+    "elapsed_seconds": 0,
+    "possible_writes": 0
+  },
+  "error": "Expected unread state unavailable",
+  "error_type": "AssertionError",
+  "events": [
+    {
+      "at": "2026-09-09T19:09:42.977265+00:00",
+      "height": 900,
+      "kind": "set_viewport",
+      "possible_write": 0,
+      "sequence": 1,
+      "width": 1280
+    },
+    {
+      "at": "2026-09-09T19:09:42.983003+00:00",
+      "kind": "navigation",
+      "observed_link": null,
+      "possible_write": 0,
+      "sequence": 2,
+      "url": "http://127.0.0.1:8851/"
+    },
+    {
+      "at": "2026-09-09T19:09:43.878960+00:00",
+      "kind": "authentication_type",
+      "possible_write": 1,
+      "sequence": 3
+    },
+    {
+      "at": "2026-09-09T19:09:43.924379+00:00",
+      "kind": "authentication_type",
+      "possible_write": 1,
+      "sequence": 4
+    },
+    {
+      "at": "2026-09-09T19:09:43.936973+00:00",
+      "kind": "authentication_click",
+      "possible_write": 1,
+      "sequence": 5
+    },
+    {
+      "at": "2026-09-09T19:09:45.122154+00:00",
+      "kind": "navigation",
+      "observed_link": {
+        "node": {
+          "bbox": [
+            750,
+            20,
+            115,
+            32
+          ],
+          "destination": "http://127.0.0.1:8851/bookmarks/new",
+          "index": 8,
+          "own_text": "Add bookmark",
+          "parent": 7,
+          "role": "",
+          "tag": "a",
+          "text": "Add bookmark"
+        },
+        "snapshot_id": "fixture_dom_efc320f182a44928bd048c2cd7ee00c2"
+      },
+      "possible_write": 0,
+      "sequence": 6,
+      "url": "http://127.0.0.1:8851/bookmarks/new"
+    },
+    {
+      "at": "2026-09-09T19:09:45.508989+00:00",
+      "field": "URL",
+      "kind": "fill",
+      "possible_write": 1,
+      "sequence": 7
+    },
+    {
+      "at": "2026-09-09T19:09:45.525221+00:00",
+      "field": "Title",
+      "kind": "fill",
+      "possible_write": 1,
+      "sequence": 8
+    },
+    {
+      "at": "2026-09-09T19:09:45.539702+00:00",
+      "field": "Description",
+      "kind": "fill",
+      "possible_write": 1,
+      "sequence": 9
+    },
+    {
+      "at": "2026-09-09T19:09:45.558530+00:00",
+      "field": "Tags",
+      "kind": "fill",
+      "possible_write": 1,
+      "sequence": 10
+    }
+  ],
+  "fixture_status": "PROPOSED_NOT_YET_OBSERVED",
+  "form_checks": [],
+  "inputs": {
+    "runs/product_assessment_development_v1/expected_results.json": "111911b84c4d1afce346714860ff30710a7a6c253cff8e8181ee30ac25c4d1dc",
+    "runs/product_assessment_development_v1/request_plan.json": "17471453e288d885baf1a206885877436d7af85ba04d663996d8461dfc62d8ce"
+  },
+  "limits": {
+    "max_actions": 60,
+    "max_possible_writes": 20,
+    "max_seconds": 900
+  },
+  "manual_assistance": "App-specific ordinary UI fixture runner prepared by evaluator; no model calls inside runner.",
+  "metrics": {
+    "actions": 10,
+    "business_save_clicks": 0,
+    "cpu_affinity": [
+      4
+    ],
+    "cpu_seconds": 1.494,
+    "elapsed_seconds": 4.007,
+    "fresh_browser_sessions": 1,
+    "independent_dom_reads": 5,
+    "model_calls": 0,
+    "paid_cost": 0,
+    "peak_aggregate_rss_bytes": 768139264,
+    "possible_writes": 7,
+    "retries": 0,
+    "setup_resets": 0,
+    "viewport": {
+      "height": 900,
+      "width": 1280
+    }
+  },
+  "phase": "base",
+  "reader_sha256": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38",
+  "session_counts": {
+    "authentication_primitives": [
+      {
+        "kind": "type",
+        "phase": "authentication"
+      },
+      {
+        "kind": "type",
+        "phase": "authentication"
+      },
+      {
+        "kind": "click",
+        "phase": "authentication"
+      }
+    ],
+    "main_frame_navigation_events": 5,
+    "raw_snapshot_reads": {
+      "authentication": 11,
+      "before_create_A": 3,
+      "error_diagnostic": 5,
+      "initial": 3,
+      "new_form_A": 3,
+      "populated_form_A": 3
+    },
+    "read_calls": {
+      "authentication": 3,
+      "before_create_A": 1,
+      "error_diagnostic": 1,
+      "initial": 1,
+      "new_form_A": 1,
+      "populated_form_A": 1
+    }
+  },
+  "setup_script_sha256": "a791c0446ba0b9f91fdfb18059097d29fe401b2b713f417b695eb6e32f950491",
+  "source_after": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_before": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_hashes_required": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-09-09T19:09:42.370385+00:00",
+  "termination": {
+    "checked_at": "2026-09-09T19:09:46.376506+00:00",
+    "close_returned": true,
+    "live_owned_process_count": 0,
+    "owned_processes": [
+      {
+        "after_close": "absent",
+        "name": "MainThread",
+        "pid": 1179747,
+        "ppid": 1179745,
+        "start_ticks": 6990865
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1179764,
+        "ppid": 1179747,
+        "start_ticks": 6990904
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1179766,
+        "ppid": 1179764,
+        "start_ticks": 6990906
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1179767,
+        "ppid": 1179764,
+        "start_ticks": 6990906
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1179784,
+        "ppid": 1179766,
+        "start_ticks": 6990909
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1179798,
+        "ppid": 1179764,
+        "start_ticks": 6990911
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1179865,
+        "ppid": 1179767,
+        "start_ticks": 6990983
+      }
+    ]
+  },
+  "verdict": "ERROR"
+}

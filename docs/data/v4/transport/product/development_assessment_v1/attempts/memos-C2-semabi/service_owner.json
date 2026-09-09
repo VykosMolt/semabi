@@ -1,0 +1,252 @@
+{
+  "format": "product_assessment_service_owner.v1",
+  "started_at": "2026-09-09T19:44:11.708415+00:00",
+  "service_data_dir": "/home/moloch/semabi/runs/product_assessment_development_v1/service",
+  "fresh_service_process": true,
+  "service_restart_reuses_persisted_artifacts": true,
+  "new_learning": false,
+  "accepted_jobs_terminal_before_close": true,
+  "service_pid": 1210325,
+  "service_startup_seconds": 0.1513938300049631,
+  "client_exit_code": 0,
+  "terminal_jobs": [
+    {
+      "connection_id": "conn_d85c1e04c17749f1a9e5b24cf08ddbe8",
+      "created_at": "2026-09-09T19:44:11.925617+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T19:44:11.928823+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T19:44:14.357508+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_b90719debe504de78e4993d82100cb60",
+      "job_id": "job_b90719debe504de78e4993d82100cb60",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 2.024,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T19:44:14.357542+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_d85c1e04c17749f1a9e5b24cf08ddbe8",
+      "created_at": "2026-09-09T19:44:14.381018+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T19:44:14.383575+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T19:44:14.652491+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "14a7f2e8db16ca55",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:44:14.666455+00:00",
+          "sequence": 3,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T19:44:15.664914+00:00",
+          "sequence": 4,
+          "settled": true,
+          "signature": "14a7f2e8db16ca55",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:44:15.960078+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "14a7f2e8db16ca55",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:44:15.974169+00:00",
+          "sequence": 6,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T19:44:16.989310+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "14a7f2e8db16ca55",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 156,
+            "text": "pa260909af9b86d0 create-two: The orchard schedule has a fresh entry."
+          },
+          "created_at": "2026-09-09T19:44:17.003769+00:00",
+          "sequence": 8,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T19:44:17.323473+00:00",
+          "sequence": 9,
+          "settled": true,
+          "signature": "14b525b0f29769a8",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T19:44:17.332164+00:00",
+          "ok": true,
+          "sequence": 10,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 174
+          },
+          "created_at": "2026-09-09T19:44:17.336665+00:00",
+          "sequence": 11,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T19:44:17.911650+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "b319b866c3a7cd37",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T19:44:17.920064+00:00",
+          "ok": true,
+          "sequence": 13,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T19:44:18.190907+00:00",
+          "sequence": 14,
+          "settled": true,
+          "signature": "b319b866c3a7cd37",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:44:18.204745+00:00",
+          "sequence": 15,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T19:44:18.939969+00:00",
+          "sequence": 16,
+          "settled": true,
+          "signature": "5f4fc17a1334598e",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T19:44:18.955001+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 17,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_890bdf1b28b542f6b6838047408b8fb0",
+      "job_id": "job_890bdf1b28b542f6b6838047408b8fb0",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "value": "pa260909af9b86d0 create-two: The orchard schedule has a fresh entry."
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 57.42480265400663,
+          "max_writes": 9
+        },
+        "operation_id": "op_562fcb42c95d9c59eba3",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "value": "pa260909af9b86d0 create-two: The orchard schedule has a fresh entry."
+          },
+          "kind": "visible_record_created",
+          "scope": "Unique local record in the current rendered view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "field_slots": {
+              "value": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      1
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "link_destinations": [],
+            "observation": "5f4fc17a1334598e",
+            "role": "article",
+            "root": 178,
+            "texts": [
+              "pa260909af9b86d0 create-two: The orchard schedule has a fresh entry."
+            ],
+            "value_node": 194
+          }
+        },
+        "metrics": {
+          "actions": 5,
+          "elapsed_seconds": 4.569,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 2
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T19:44:18.955061+00:00",
+      "write_intent": true
+    }
+  ],
+  "service_exit_code": 0,
+  "elapsed_seconds_including_startup_client_reconciliation_and_shutdown": 7.432383890991332,
+  "completed_at": "2026-09-09T19:44:19.140826+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "format": "product_assessment_execution_harness.v1",
+  "frozen_at": "2026-09-09T19:26:18.795223+00:00",
+  "source_sha256": {
+    "invoke_http.py": "6aff55794029cd9dc70fa8d29815508af933dfa3751feb819c202c58a5047eaa",
+    "run_service_call.py": "8bc5bfc01d4521379064eef521455f3618cb0c1fcc34055f87bbb3303c2a9710",
+    "run_baseline_call.py": "4f8568f29a6123a429ec4ac4befbd0da6edc5013a213eb0e0b508f3d28b296f9",
+    "meter/command_meter.py": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+    "meter/test_command_meter.py": "46493b3755a09f625d275ecb1acd64f89b43602bf1e6cc23cfd7b6a1fe5eb8fe"
+  },
+  "meter_validation": {
+    "tests_passed": 7,
+    "elapsed_seconds": 1.83,
+    "terminal_chunk": "19a8b1",
+    "exit_code": 0,
+    "cpu_affinity": [
+      1
+    ]
+  },
+  "http_caller_validation": {
+    "inline_budget_and_changed_artifact_checks": "991470",
+    "exit_code": 0,
+    "later_change": "Durably record idempotency key before POST; syntax check0ea748"
+  },
+  "scope": "External source-identical CLI callers, service lifecycle and process metrics; no browser interventions or new learner inputs",
+  "source_baseline_freeze": "freeze_v1.json"
+}

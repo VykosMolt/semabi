@@ -1,0 +1,48 @@
+{
+  "baseline": "cached-form-v3",
+  "comparison_mode": "shared_acquisition",
+  "assistance": "SemABI learned operation artifact; charge acquisition to both arms",
+  "independent_onboarding": false,
+  "effect_verification": "NOT_PERFORMED",
+  "source_sha256": {
+    "baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+  },
+  "outcome": "FAILED",
+  "limits": {
+    "max_actions": 20,
+    "max_writes": 12,
+    "max_seconds": 60.0
+  },
+  "allowed_origin": "http://127.0.0.1:8852",
+  "operation_id": "op_d245e3cc03c44e6800cd",
+  "operation_version": 1,
+  "arguments": {
+    "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+    "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+  },
+  "operation_sha256": "e913798e29eede49ea464f3903772ee3c09a6bc3c290afb8d1551016e2c25728",
+  "browser_backend": "semabi.compiler.browser_session.BrowserSession",
+  "authentication_status": "CONNECTED",
+  "reason": "Cached target record is missing or ambiguous",
+  "browser_closed": true,
+  "stage": "navigation",
+  "authenticated": true,
+  "possible_replay_action": false,
+  "submit_attempted": false,
+  "submit_returned_ok": null,
+  "failure_phase": "BEFORE_REPLAY_ACTION",
+  "metrics": {
+    "actions": 5,
+    "possible_write_actions": 3,
+    "authentication_actions": 3,
+    "surface_reads": 6,
+    "elapsed_seconds": 3.748,
+    "model_calls": 0,
+    "paid_cost": 0
+  }
+}
