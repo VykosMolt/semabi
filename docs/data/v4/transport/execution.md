@@ -98,9 +98,12 @@ HTTP/storage and conservative radio projection. The V4 projection uses ordinary
 represented owners only, preserves existing view entries and rejects ambiguous,
 provisional, positional or prefix-colliding groups. All five retained native
 corpora contain zero raw radios (nine unique files, 3,598 observations), so their
-unchanged results do not exercise the new positive branch. One ordinary J1 fit
-is being prepared in isolation to validate that branch without control bindings
-or view insertion. The completed naming control remains supplied-binding
+unchanged results do not exercise the new positive branch. One ordinary J1 fit completed once in isolation (455.6 s native fit, actual
+exit zero): four selected states projected their native owner, the unchecked
+state remained absent, and all five non-view comparisons matched V2. All 39
+loaded SemABI modules match main. The actual ten learned queries still use
+combobox slots; none adopts the radio slot. See
+[ordinary projection evidence](development/radio_owner_projection_v1/README.md). The completed naming control remains supplied-binding
 evidence; ordinary learned JOIN and fresh transport remain unestablished.
 
 Active P3: derive useful READ and UPDATE calls from two successful creation
@@ -111,12 +114,11 @@ is unsupported. This extension is being implemented in an isolated candidate;
 the running P2 source remains fixed for independent evaluation.
 
 Root owns integration and service exec 79582 (CPUs2–5). The implementation agent
-owns only `/tmp/semabi_record_candidate`; the evaluator completed and closed all independent P2 browsers; the native worker owns one copied-source J1 fit on CPU10 with
-a 45-minute bound. No other owned heavy jobs are active. Vikunja remains unopened
+owns only `/tmp/semabi_record_candidate`; the evaluator completed and closed all independent P2 browsers; the native worker completed and reaped its single copied-source J1 fit. No other owned heavy jobs are active. Vikunja remains unopened
 and reserved. The learner/protocol are not yet frozen for the three-application
 assessment. Next: commit this coherent P2 product source, then validate the isolated
-read/update candidate against the disclosed applications. The native projection
-remains a separate pending commit while its ordinary fit runs.
+read/update candidate against the disclosed applications. The native projection is ready for its separate commit with its ordinary
+fit result. The P2 product checkpoint is committed at `36174c5`.
 
 ## Paused for user review (2026-09-08 11:53 UTC)
 

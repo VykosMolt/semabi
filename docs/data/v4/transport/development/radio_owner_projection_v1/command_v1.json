@@ -1,0 +1,28 @@
+{
+  "status": "AUTHORIZED_NOT_YET_LAUNCHED",
+  "outer_argv": [
+    "taskset",
+    "-c",
+    "10",
+    "env",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "BLIS_NUM_THREADS=1",
+    "VECLIB_MAXIMUM_THREADS=1",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONHASHSEED=0",
+    "PYTHONOPTIMIZE=0",
+    "PYTHONPATH=",
+    "PYTHONPYCACHEPREFIX=/home/moloch/semabi/runs/product_native_radio_v1/absent_bytecode",
+    "/home/moloch/semabi/.venv/bin/python",
+    "-P",
+    "-B",
+    "/home/moloch/semabi/runs/product_native_radio_v1/watchdog.py"
+  ],
+  "cwd": "/home/moloch/semabi/runs/product_native_radio_v1",
+  "one_fit_only": true,
+  "timeout_seconds": 2700,
+  "scope": "Ordinary native projection validation; no learned JOIN or held-out accuracy claim."
+}

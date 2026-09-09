@@ -288,3 +288,195 @@ def test_survival_is_not_decided_by_shape_alone():
     assert c.correspond(pre, post, 2, {}).status == c.UNIQUE          # the full ladder
     assert c.correspond(pre, post, 2, {}, ladder=(c.DEEP, c.LOCAL)).status == c.NONE
     assert _existence(pre, post, 2, "Bramble").verdict == csq.SUPPORTED
+
+
+# ------------------------------------------------------------------ radio view evidence
+
+
+RADIO_SLOT = "radio@Pick#0"
+
+
+def _radio_reading(checked=(True, False), keys=("Aster", "Birch"), *, collection=False,
+                   self_owned=False):
+    from semabi.compiler.abstract import TypeInfo
+    from semabi.compiler.parse import Instance, ParsedObs
+    from semabi.compiler.v4.abstractor import V4Abstractor
+
+    nodes = [Node(0, -1, "list" if collection else "group", "")]
+    instances, node_instance, node_key = [], {}, {}
+    for index, (key, chosen) in enumerate(zip(keys, checked)):
+        root = len(nodes)
+        if not self_owned:
+            nodes.append(Node(root, 0, "group", ""))
+        radio = len(nodes)
+        nodes.append(Node(radio, 0 if self_owned else root, "radio", "Pick",
+                          value=f"widget-value-{index}", checked=chosen))
+        instances.append(Instance(root, 1, None,
+                                  {"id": ("", key), "attr:state": ("", "ready")}, {}, ""))
+        node_instance[radio] = index
+        node_key[radio] = RADIO_SLOT
+    obs = Observation(nodes)
+    po = ParsedObs(obs, instances, {"text#0": ("", "ordinary view")}, node_instance, node_key)
+    adapter = V4Abstractor.__new__(V4Abstractor)
+    adapter.types = {1: TypeInfo(1, key_slot="id")}
+    adapter.merge_mentions = False
+    adapter.parsed = lambda _: po
+    return adapter, obs, po
+
+
+@pytest.mark.parametrize("self_owned", [False, True])
+def test_radio_view_names_the_current_owner_without_changing_v2_or_domain_state(self_owned):
+    from dataclasses import replace
+    from semabi.compiler.v2.abstractor import V2Abstractor
+    from semabi.compiler.v4 import referring
+
+    evidence = []
+    op = SimpleNamespace(params={"?owner": 1})
+    for checked, key in [((True, False), "Aster"), ((False, True), "Birch")]:
+        adapter, obs, _ = _radio_reading(checked, self_owned=self_owned)
+        original = V2Abstractor.abstract(adapter, obs)
+        projected = adapter.abstract(obs)
+        assert RADIO_SLOT not in original.view
+        assert projected.view == {**original.view, RADIO_SLOT: key}
+        assert replace(projected, view=original.view) == original
+        evidence.append((projected, {"?owner": projected.objs[1, key]}))
+
+    assert referring._selection_queries(op, "?owner", evidence) == [RADIO_SLOT]
+    query = referring.Query(referring.SELECTION, "?owner", "selected owner", form=(RADIO_SLOT,))
+    adapter, obs, _ = _radio_reading((False, True), ("Juniper", "Willow"),
+                                    self_owned=self_owned)
+    later = adapter.abstract(obs)
+    assert [owner.key for owner in query.denotation(op, later, {})] == ["Willow"]
+    assert referring._selection_queries(op, "?owner", [(later, {"?owner": later.objs[1, "Juniper"]})]) == []
+
+
+@pytest.mark.parametrize("existing", [None, False, "already supplied"])
+def test_radio_projection_preserves_an_existing_view_slot(existing):
+    adapter, obs, po = _radio_reading()
+    po.statics[RADIO_SLOT] = ("", existing)
+    assert adapter.abstract(obs).view[RADIO_SLOT] == existing
+
+
+def test_radio_projection_does_not_remove_the_collection_member_query_guard():
+    from semabi.compiler.v4 import referring
+
+    adapter, obs, _ = _radio_reading(collection=True)
+    projected = adapter.abstract(obs)
+    assert projected.view[RADIO_SLOT] == "Aster"
+    assert referring._member_positioned(projected, RADIO_SLOT)
+    assert referring._selection_queries(SimpleNamespace(params={"?owner": 1}), "?owner",
+                                        [(projected, {"?owner": projected.objs[1, "Aster"]})]) == []
+
+
+@pytest.mark.parametrize("checked", [
+    (True,), (False, False), (True, True), (True, None), (True, 0), (True, 1),
+    (True, "false"), (True, False, None),
+])
+def test_radio_projection_requires_a_complete_exclusive_boolean_group(checked):
+    adapter, obs, _ = _radio_reading(checked, ("Aster", "Birch", "Cedar"))
+    assert RADIO_SLOT not in adapter.abstract(obs).view
+
+
+@pytest.mark.parametrize("fault", [
+    "missing_key", "empty_key", "different_key", "missing_binding", "bool_binding",
+    "negative_binding", "past_end_binding", "unrelated_owner", "unidentified_owner",
+    "duplicate_identity", "positional_owner", "non_instance_owner",
+])
+def test_an_unchecked_member_with_no_unambiguous_owner_blocks_the_whole_group(fault):
+    adapter, obs, po = _radio_reading()
+    radio = obs.nodes[-1].i
+    if fault == "missing_key":
+        del po.node_key[radio]
+    elif fault == "empty_key":
+        po.node_key[radio] = ""
+    elif fault == "different_key":
+        po.node_key[radio] += "other"
+    elif fault == "missing_binding":
+        del po.node_instance[radio]
+    elif fault.endswith("_binding"):
+        po.node_instance[radio] = {"bool_binding": True, "negative_binding": -1,
+                                   "past_end_binding": len(po.instances)}[fault]
+    elif fault == "unrelated_owner":
+        po.node_instance[radio] = 0
+    elif fault == "unidentified_owner":
+        po.instances[1].slots["id"] = ("", "")
+    elif fault == "duplicate_identity":
+        po.instances[1].slots["id"] = po.instances[0].slots["id"]
+    elif fault == "positional_owner":
+        po.instances[1].positional = True
+    elif fault == "non_instance_owner":
+        po.instances[1] = SimpleNamespace(**vars(po.instances[1]))
+    assert RADIO_SLOT not in adapter.abstract(obs).view
+
+
+@pytest.mark.parametrize("fault", [
+    "ambiguous_root", "mismatched_identity", "missing_identity", "non_string_identity",
+    "positional_object", "provisional_object", "unidentified_root", "noncanonical_object",
+])
+def test_radio_projection_refuses_uncertain_abstract_owners(monkeypatch, fault):
+    from semabi.compiler.abstract import AbsObj
+    from semabi.compiler.v2.abstractor import V2Abstractor
+
+    adapter, obs, po = _radio_reading()
+    original = V2Abstractor.abstract
+
+    def uncertain_state(self, observation):
+        result = original(self, observation)
+        owner = result.objs[1, "Birch"]
+        if fault == "ambiguous_root":
+            other = AbsObj(1, "Willow", {}, node=owner.node)
+            result.objs[other.id] = other
+        elif fault == "mismatched_identity":
+            po.instances[1].slots["id"] = ("", "Willow")
+        elif fault == "missing_identity":
+            del po.instances[1].slots["id"]
+        elif fault == "non_string_identity":
+            po.instances[1].slots["id"] = ("", 7)
+        elif fault == "positional_object":
+            owner.positional = True
+        elif fault == "provisional_object":
+            result.provisional.add(owner.id)
+        elif fault == "unidentified_root":
+            result.unidentified.append((owner.tid, owner.node, 0, None))
+        elif fault == "noncanonical_object":
+            del result.objs[owner.id]
+            result.objs[1, "alias"] = owner
+        return result
+
+    monkeypatch.setattr(V2Abstractor, "abstract", uncertain_state)
+    assert RADIO_SLOT not in adapter.abstract(obs).view
+
+
+@pytest.mark.parametrize("key", ["Ast", "Aster extended", "Bir", "Birch extended"])
+def test_radio_projection_checks_prefix_collisions_outside_the_group(monkeypatch, key):
+    from semabi.compiler.abstract import AbsObj
+    from semabi.compiler.v2.abstractor import V2Abstractor
+
+    adapter, obs, _ = _radio_reading()
+    original = V2Abstractor.abstract
+
+    def with_nonmember(self, observation):
+        result = original(self, observation)
+        other = AbsObj(1, key, {}, node=-1)
+        result.objs[other.id] = other
+        return result
+
+    monkeypatch.setattr(V2Abstractor, "abstract", with_nonmember)
+    assert RADIO_SLOT not in adapter.abstract(obs).view
+
+
+def test_radio_prefix_checks_are_scoped_to_the_owners_type(monkeypatch):
+    from semabi.compiler.abstract import AbsObj
+    from semabi.compiler.v2.abstractor import V2Abstractor
+
+    adapter, obs, _ = _radio_reading()
+    original = V2Abstractor.abstract
+
+    def with_other_type(self, observation):
+        result = original(self, observation)
+        other = AbsObj(2, "Aster", {}, node=-1)
+        result.objs[other.id] = other
+        return result
+
+    monkeypatch.setattr(V2Abstractor, "abstract", with_other_type)
+    assert adapter.abstract(obs).view[RADIO_SLOT] == "Aster"

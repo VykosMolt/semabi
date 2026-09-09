@@ -8,13 +8,70 @@ from __future__ import annotations
 
 from collections import Counter, defaultdict
 
+from semabi.compiler.abstract import AbstractState
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.explorer import affordance_key
+from semabi.compiler.observation import Observation
+from semabi.compiler.parse import Instance
 from semabi.compiler.v2.abstractor import V2Abstractor
 
 
 class V4Abstractor(V2Abstractor):
-    """V2 semantics with an in-memory probe input for retained logs."""
+    """V2 domain semantics with V4 view evidence and retained probe inputs."""
+
+    def abstract(self, obs: Observation) -> AbstractState:
+        state = super().abstract(obs)
+        po = state.parsed
+        groups: dict[str, list] = defaultdict(list)
+        for node in obs.nodes:
+            key = po.node_key.get(node.i)
+            if node.role == "radio" and isinstance(key, str) and key:
+                groups[key].append(node)
+        by_root: dict[tuple[int, int], list] = defaultdict(list)
+        for obj in state.objs.values():
+            by_root[obj.tid, obj.node].append(obj)
+        unidentified = {(tid, root) for tid, root, *_ in state.unidentified}
+        for key, members in groups.items():
+            if (key in state.view or len(members) < 2
+                    or any(type(node.checked) is not bool for node in members)
+                    or sum(node.checked for node in members) != 1):
+                continue
+            owners = []
+            for node in members:
+                index = po.node_instance.get(node.i)
+                if type(index) is not int or not 0 <= index < len(po.instances):
+                    break
+                inst = po.instances[index]
+                if (not isinstance(inst, Instance) or type(inst.root) is not int
+                        or not 0 <= inst.root < len(obs.nodes)
+                        or inst.root not in [node.i, *obs.ancestors(node.i)]
+                        or inst.positional or (inst.tid, inst.root) in unidentified):
+                    break
+                matches = by_root.get((inst.tid, inst.root), [])
+                if len(matches) != 1:
+                    break
+                owner = matches[0]
+                identity = inst.slots.get("id")
+                if (not isinstance(identity, tuple) or len(identity) != 2
+                        or not isinstance(identity[1], str) or not identity[1]
+                        or identity[1] != owner.key or owner.positional
+                        or owner.id in state.provisional
+                        or state.objs.get(owner.id) is not owner):
+                    break
+                # Selection queries match by key prefix.  Validate every owner against
+                # all objects of its type, including objects outside this radio group.
+                if any(other is not owner and other.tid == owner.tid
+                       and (owner.key.startswith(other.key)
+                            or other.key.startswith(owner.key))
+                       for other in state.objs.values()):
+                    break
+                owners.append(owner)
+            if (len(owners) != len(members)
+                    or len({owner.id for owner in owners}) != len(owners)):
+                continue
+            state.view[key] = next(owner.key for node, owner in zip(members, owners)
+                                   if node.checked)
+        return state
 
     def fit_view_controls(self, log: EvidenceLog) -> None:
         # Live/development logs have no retained record graph and keep the exact V2 path.

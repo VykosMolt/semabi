@@ -1,0 +1,249 @@
+{
+  "scope": "Read-only inventory of the accepted retained W2 corpus observation bytes. No native imports, parses, fits, scoring or app access.",
+  "input_manifest": "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/input_identities_v1.json",
+  "input_manifest_sha256": "6229e6bf7e4b7060f65f87d68fcf7284a7eb837effe7643e9e21ff6ddb55221b",
+  "cases": {
+    "allocation_positive": {
+      "development": "harbour_join_dev",
+      "holdout": "harbour_join_hold",
+      "raw_radio_node_occurrences": 0,
+      "observation_records": 711
+    },
+    "allocation_refusals": {
+      "development": "harbour_ref_dev",
+      "holdout": "harbour_ref_hold",
+      "raw_radio_node_occurrences": 0,
+      "observation_records": 799
+    },
+    "pilot": {
+      "development": "harbour_pil_dev",
+      "holdout": "harbour_pil_hold",
+      "raw_radio_node_occurrences": 0,
+      "observation_records": 766
+    },
+    "separating": {
+      "development": "harbour_sep_dev",
+      "holdout": "harbour_sep_hold",
+      "raw_radio_node_occurrences": 0,
+      "observation_records": 829
+    },
+    "separating_extended": {
+      "development": "harbour_sep2_dev",
+      "holdout": "harbour_sep_hold",
+      "raw_radio_node_occurrences": 0,
+      "observation_records": 931
+    }
+  },
+  "runs": {
+    "harbour_join_dev": {
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl",
+      "sha256": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+      "bytes": 5279565,
+      "observation_records": 318,
+      "unique_signatures": 318,
+      "node_occurrences": 58796,
+      "role_counts": {
+        "button": 6134,
+        "cell": 35769,
+        "combobox": 380,
+        "group": 2226,
+        "heading": 1908,
+        "row": 6597,
+        "rowgroup": 2924,
+        "status": 318,
+        "table": 1462,
+        "text": 1078
+      },
+      "raw_radio_node_occurrences": 0,
+      "radio_observations": 0,
+      "radio_records": []
+    },
+    "harbour_join_hold": {
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl",
+      "sha256": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+      "bytes": 6474619,
+      "observation_records": 393,
+      "unique_signatures": 393,
+      "node_occurrences": 72349,
+      "role_counts": {
+        "button": 7564,
+        "cell": 44490,
+        "combobox": 386,
+        "group": 2751,
+        "heading": 2358,
+        "row": 7947,
+        "rowgroup": 3530,
+        "status": 393,
+        "table": 1765,
+        "text": 1165
+      },
+      "raw_radio_node_occurrences": 0,
+      "radio_observations": 0,
+      "radio_records": []
+    },
+    "harbour_pil_dev": {
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl",
+      "sha256": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+      "bytes": 6132981,
+      "observation_records": 363,
+      "unique_signatures": 363,
+      "node_occurrences": 68269,
+      "role_counts": {
+        "button": 7156,
+        "cell": 41569,
+        "combobox": 452,
+        "group": 2541,
+        "heading": 2178,
+        "row": 7709,
+        "rowgroup": 3356,
+        "status": 363,
+        "table": 1678,
+        "text": 1267
+      },
+      "raw_radio_node_occurrences": 0,
+      "radio_observations": 0,
+      "radio_records": []
+    },
+    "harbour_pil_hold": {
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl",
+      "sha256": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+      "bytes": 6663257,
+      "observation_records": 403,
+      "unique_signatures": 403,
+      "node_occurrences": 74453,
+      "role_counts": {
+        "button": 7786,
+        "cell": 45809,
+        "combobox": 398,
+        "group": 2821,
+        "heading": 2418,
+        "row": 8186,
+        "rowgroup": 3622,
+        "status": 403,
+        "table": 1811,
+        "text": 1199
+      },
+      "raw_radio_node_occurrences": 0,
+      "radio_observations": 0,
+      "radio_records": []
+    },
+    "harbour_ref_dev": {
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_dev/observations.jsonl",
+      "sha256": "aaeae065bd32dab494f3168624683c376bf586a4c44aa3c49f4283b448128082",
+      "bytes": 6337662,
+      "observation_records": 376,
+      "unique_signatures": 376,
+      "node_occurrences": 70520,
+      "role_counts": {
+        "button": 7344,
+        "cell": 42904,
+        "combobox": 476,
+        "group": 2632,
+        "heading": 2256,
+        "row": 7978,
+        "rowgroup": 3484,
+        "status": 376,
+        "table": 1742,
+        "text": 1328
+      },
+      "raw_radio_node_occurrences": 0,
+      "radio_observations": 0,
+      "radio_records": []
+    },
+    "harbour_ref_hold": {
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_ref_hold/observations.jsonl",
+      "sha256": "ab75c3ac61a176a319ef4ff80069bdffc85dc944e12c758f0923439ce491aea7",
+      "bytes": 7051134,
+      "observation_records": 423,
+      "unique_signatures": 423,
+      "node_occurrences": 78731,
+      "role_counts": {
+        "button": 8230,
+        "cell": 48419,
+        "combobox": 436,
+        "group": 2961,
+        "heading": 2538,
+        "row": 8699,
+        "rowgroup": 3820,
+        "status": 423,
+        "table": 1910,
+        "text": 1295
+      },
+      "raw_radio_node_occurrences": 0,
+      "radio_observations": 0,
+      "radio_records": []
+    },
+    "harbour_sep2_dev": {
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep2_dev/observations.jsonl",
+      "sha256": "16ae0575207a4cdb3b2fcabea4d9262b98097cd1d8b40e819599aedc630a7a31",
+      "bytes": 8584596,
+      "observation_records": 493,
+      "unique_signatures": 493,
+      "node_occurrences": 95447,
+      "role_counts": {
+        "button": 10051,
+        "cell": 58264,
+        "combobox": 654,
+        "group": 3451,
+        "heading": 2958,
+        "row": 10878,
+        "rowgroup": 4598,
+        "status": 493,
+        "table": 2299,
+        "text": 1801
+      },
+      "raw_radio_node_occurrences": 0,
+      "radio_observations": 0,
+      "radio_records": []
+    },
+    "harbour_sep_dev": {
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl",
+      "sha256": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da",
+      "bytes": 6644829,
+      "observation_records": 391,
+      "unique_signatures": 391,
+      "node_occurrences": 73933,
+      "role_counts": {
+        "button": 7751,
+        "cell": 45036,
+        "combobox": 494,
+        "group": 2737,
+        "heading": 2346,
+        "row": 8366,
+        "rowgroup": 3622,
+        "status": 391,
+        "table": 1811,
+        "text": 1379
+      },
+      "raw_radio_node_occurrences": 0,
+      "radio_observations": 0,
+      "radio_records": []
+    },
+    "harbour_sep_hold": {
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl",
+      "sha256": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+      "bytes": 7391743,
+      "observation_records": 438,
+      "unique_signatures": 438,
+      "node_occurrences": 82506,
+      "role_counts": {
+        "button": 8685,
+        "cell": 50769,
+        "combobox": 462,
+        "group": 3066,
+        "heading": 2628,
+        "row": 9147,
+        "rowgroup": 3966,
+        "status": 438,
+        "table": 1983,
+        "text": 1362
+      },
+      "raw_radio_node_occurrences": 0,
+      "radio_observations": 0,
+      "radio_records": []
+    }
+  },
+  "unique_run_count": 9,
+  "unique_input_observation_records": 3598,
+  "raw_radio_node_occurrences": 0
+}
