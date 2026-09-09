@@ -1,0 +1,231 @@
+{
+  "accepted_captures": [
+    {
+      "accepted_stage": "before_reload",
+      "captured_at": "2026-09-09T20:37:42.130048+00:00",
+      "effect_goal_met": false,
+      "fixture_fields_match": false,
+      "fixture_match_counts": {
+        "A": 0,
+        "B": 1
+      },
+      "intended_record_count": 0,
+      "inventory_comparison": {
+        "added": [],
+        "before_available": true,
+        "expected_transition_matches": false,
+        "removed": []
+      },
+      "old_target_count": 1,
+      "snapshot_id": "request_dom_fd551b91d65c45dd95b33ad249889d71",
+      "snapshot_sha256": "17ccea14b73a12d8fa7b79f73820ca7af4f3a16b32b5e39c0ffde7068a54be48",
+      "url": "http://127.0.0.1:8852/",
+      "visible_record_count": 2,
+      "visible_saved_record_bodies": [
+        [
+          "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+        ],
+        [
+          "pa260909af9b86d0 orchard notebook: Beta basket contains plums; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta"
+        ]
+      ]
+    },
+    {
+      "accepted_stage": "after_reload",
+      "captured_at": "2026-09-09T20:37:43.531702+00:00",
+      "effect_goal_met": false,
+      "fixture_fields_match": false,
+      "fixture_match_counts": {
+        "A": 0,
+        "B": 1
+      },
+      "intended_record_count": 0,
+      "inventory_comparison": {
+        "added": [],
+        "before_available": true,
+        "expected_transition_matches": false,
+        "removed": []
+      },
+      "old_target_count": 1,
+      "snapshot_id": "request_dom_194515827be64bd1a2e4e58d0667adb2",
+      "snapshot_sha256": "d5880e10674561f619c110a45c333d1a689d9e42ba38a57807ee9e64eb6249ce",
+      "url": "http://127.0.0.1:8852/",
+      "visible_record_count": 2,
+      "visible_saved_record_bodies": [
+        [
+          "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+        ],
+        [
+          "pa260909af9b86d0 orchard notebook: Beta basket contains plums; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta"
+        ]
+      ]
+    }
+  ],
+  "accepted_inventories_agree": true,
+  "arm": "cached_form",
+  "attempt_result_used_as_expected_truth": false,
+  "checker_sha256": "7a0f4a8a05ecd6ca1e02f18ae796605b51c7c5db8cdb59c347c588ca8f239006",
+  "classification": "Independent rendered-state verification, separate from evaluated request execution",
+  "completed_at": "2026-09-09T20:37:43.612101+00:00",
+  "cumulative_after": {
+    "actions": 12,
+    "elapsed_seconds": 10.174,
+    "possible_writes": 6
+  },
+  "cumulative_previous": {
+    "actions": 6,
+    "elapsed_seconds": 5.12,
+    "possible_writes": 3
+  },
+  "fixture_reader_sha256": "a791c0446ba0b9f91fdfb18059097d29fe401b2b713f417b695eb6e32f950491",
+  "fixture_variant": "base",
+  "limitations": [
+    "Rendered local view; no persistent identity, global uniqueness or unseen side-effect claim.",
+    "Search/filter selection, return values, ambiguity handling, chains and challenge prerequisites are not established by state snapshots alone."
+  ],
+  "limits": {
+    "max_actions": 12,
+    "max_possible_writes": 8,
+    "max_seconds": 30,
+    "writes_restricted_to": "Search/filter actions only; no saved business changes."
+  },
+  "metrics": {
+    "actions": 6,
+    "business_writes": 0,
+    "cpu_affinity": [
+      4
+    ],
+    "cpu_seconds": 2.103,
+    "elapsed_seconds": 5.054,
+    "fresh_browser_sessions": 1,
+    "independent_dom_reads": 4,
+    "model_calls": 0,
+    "paid_cost": 0,
+    "peak_aggregate_rss_bytes": 903311360,
+    "possible_writes": 3,
+    "retries": 0
+  },
+  "ordinary_dom_reader_sha256": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38",
+  "phase": "after",
+  "request_id": "memos-U1",
+  "session_counts": {
+    "auth_primitives": [
+      {
+        "kind": "type",
+        "phase": "authentication"
+      },
+      {
+        "kind": "type",
+        "phase": "authentication"
+      },
+      {
+        "kind": "click",
+        "phase": "authentication"
+      }
+    ],
+    "main_frame_navigation_events": 6,
+    "raw_snapshot_reads": {
+      "after_reload_read_1": 6,
+      "after_reload_read_2": 3,
+      "authentication": 14,
+      "before_reload_read_1": 3,
+      "before_reload_read_2": 3
+    },
+    "read_calls": {
+      "after_reload_read_1": 1,
+      "after_reload_read_2": 1,
+      "authentication": 2,
+      "before_reload_read_1": 1,
+      "before_reload_read_2": 1
+    }
+  },
+  "slot_id": "memos-U1-cached_form",
+  "source_after": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_before": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_receipt": {
+    "origin_bytes": 39159,
+    "origin_path": "runs/product_paragraph_development_v1/request_checks/memos-U1-cached_form/after_308ff3e18cb54046ad5c87c1ca8d6ad0/result.json",
+    "origin_sha256": "32627ff7b27f6b14ee8451bc8c7a068b49502dc30b1d24bf9161460502f8f1cb"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-09-09T20:37:38.559582+00:00",
+  "termination": {
+    "checked_at": "2026-09-09T20:37:43.611686+00:00",
+    "close_returned": true,
+    "live_owned_process_count": 0,
+    "owned_processes": [
+      {
+        "after_close": "absent",
+        "name": "MainThread",
+        "pid": 1264811,
+        "ppid": 1264809,
+        "start_ticks": 7518484
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1264824,
+        "ppid": 1264811,
+        "start_ticks": 7518523
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1264826,
+        "ppid": 1264824,
+        "start_ticks": 7518525
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1264827,
+        "ppid": 1264824,
+        "start_ticks": 7518525
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1264844,
+        "ppid": 1264826,
+        "start_ticks": 7518529
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1264858,
+        "ppid": 1264824,
+        "start_ticks": 7518530
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1264867,
+        "ppid": 1264827,
+        "start_ticks": 7518535
+      }
+    ]
+  },
+  "verdict": "EFFECT_NOT_OBSERVED"
+}

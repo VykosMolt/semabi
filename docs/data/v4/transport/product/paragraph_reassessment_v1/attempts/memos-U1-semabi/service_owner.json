@@ -1,0 +1,211 @@
+{
+  "format": "product_assessment_service_owner.v1",
+  "started_at": "2026-09-09T20:32:10.905478+00:00",
+  "service_data_dir": "/home/moloch/semabi/runs/product_paragraph_development_v1/service",
+  "fresh_service_process": true,
+  "service_restart_reuses_persisted_artifacts": true,
+  "new_learning": false,
+  "accepted_jobs_terminal_before_close": true,
+  "service_pid": 1259249,
+  "service_startup_seconds": 0.15117340099823195,
+  "client_exit_code": 0,
+  "terminal_jobs": [
+    {
+      "connection_id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+      "created_at": "2026-09-09T20:32:11.115790+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T20:32:11.118200+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T20:32:13.522823+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_25135055c91e40a9a8e065367218d51a",
+      "job_id": "job_25135055c91e40a9a8e065367218d51a",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 1.993,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T20:32:13.522858+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+      "created_at": "2026-09-09T20:32:13.560910+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T20:32:13.564739+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T20:32:13.834025+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "fb25104d4146c0cd",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T20:32:14.111242+00:00",
+          "sequence": 3,
+          "settled": true,
+          "signature": "fb25104d4146c0cd",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T20:32:14.125273+00:00",
+          "sequence": 4,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T20:32:15.166625+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "fb25104d4146c0cd",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 202
+          },
+          "created_at": "2026-09-09T20:32:15.196579+00:00",
+          "sequence": 6,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T20:32:15.666681+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "ad6d7d6e30a7977b",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T20:32:15.675104+00:00",
+          "ok": true,
+          "sequence": 8,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 237
+          },
+          "created_at": "2026-09-09T20:32:15.681796+00:00",
+          "sequence": 9,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T20:32:16.119140+00:00",
+          "sequence": 10,
+          "settled": true,
+          "signature": "85c78ce78970f77a",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T20:32:16.127854+00:00",
+          "ok": true,
+          "sequence": 11,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T20:32:16.410591+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "85c78ce78970f77a",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 204,
+            "text": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+          },
+          "created_at": "2026-09-09T20:32:16.442597+00:00",
+          "sequence": 13,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T20:32:16.867804+00:00",
+          "sequence": 14,
+          "settled": true,
+          "signature": "d495a3d36da75c41",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T20:32:16.876436+00:00",
+          "ok": true,
+          "sequence": 15,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T20:32:17.144592+00:00",
+          "sequence": 16,
+          "settled": true,
+          "signature": "d495a3d36da75c41",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T20:32:17.158534+00:00",
+          "outcome": "UNCERTAIN",
+          "sequence": 17,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_046edcd1d23d4f0da05d369878def6ba",
+      "job_id": "job_046edcd1d23d4f0da05d369878def6ba",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+          "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 57.44244366700004,
+          "max_writes": 9
+        },
+        "operation_id": "op_d245e3cc03c44e6800cd",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "reason": "Learned record editor form contract has changed"
+        },
+        "metrics": {
+          "actions": 4,
+          "elapsed_seconds": 3.592,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 3
+        },
+        "operation_status": "STALE",
+        "outcome": "UNCERTAIN"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T20:32:17.158574+00:00",
+      "write_intent": true
+    }
+  ],
+  "service_exit_code": 0,
+  "elapsed_seconds_including_startup_client_reconciliation_and_shutdown": 6.406171310998616,
+  "completed_at": "2026-09-09T20:32:17.311676+00:00"
+}

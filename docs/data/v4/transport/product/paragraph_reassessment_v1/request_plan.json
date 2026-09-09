@@ -1,0 +1,1234 @@
+{
+  "format": "product_assessment_request_plan.v1",
+  "status": "PROPOSED_BLOCKED_ON_PREPARED_FIXTURE_CAPABILITY_AND_BUDGET_PROVENANCE",
+  "created_at": "2026-09-09T18:34:11.631781+00:00",
+  "run_token": "pa260909af9b86d0",
+  "protocol": {
+    "path": "docs/data/v4/transport/product/evaluation_protocol_v1.md",
+    "sha256_at_preparation": "c2e04d734345877755fe724f8228cbe3d1821659dfeb722fe37f5ee7804b7c6c"
+  },
+  "source_pending": true,
+  "source_pending_meaning": "Fixed assessment source, artifact assistance, ordinary-UI opportunities, and equivalent prepared fixtures are not established by this plan.",
+  "counts": {
+    "applications": 2,
+    "ordinary_requests_per_application": 16,
+    "core_requests_per_application": 10,
+    "challenge_requests_per_application": 6,
+    "distinct_ordinary_requests": 32,
+    "arms": 2,
+    "result_slots": 64,
+    "executed_result_slots": 0
+  },
+  "relational_substitution": {
+    "selected": false,
+    "coverage": "UNESTABLISHED",
+    "reason": "No actual UI relationship evidence establishes the required four-case relational opportunity. Retain the two multiple-step requests."
+  },
+  "fixture_variants": {
+    "base": "PROPOSED: two distinct ordinary visible seed records per application.",
+    "b_changed": "PROPOSED: B changed through ordinary UI while A remains unchanged; used for R2, U2, and CH4."
+  },
+  "learner_input_boundary": "Only the ordinary goal and arguments for the selected request, plus equally authorized access and automatically learned assistance, enter the two arms. Fixture expectations, scheduling controls, and expected_results.json remain evaluator/coordinator material. Do not provide selectors, action recipes, operation schemas, or expected answers.",
+  "unsupported_policy": "Preserve every goal and argument, including search/filter semantics, unread choices, duplicate qualifiers, tag chains, and absent-result scope. Unsupported, unavailable, refused, or unestablished cases remain in the fixed denominator.",
+  "budgets": {
+    "scope": "Per application and arm, including failed attempts; fixture setup is cumulative, not renewed silently for each case.",
+    "fixture_setup": {
+      "max_seconds": 900,
+      "max_actions": 60,
+      "max_possible_writes": 20
+    },
+    "connection_and_onboarding": {
+      "max_seconds": 900,
+      "max_actions": 120,
+      "max_possible_writes": 40
+    },
+    "requested_workflow": {
+      "max_seconds": 60,
+      "max_actions": 20,
+      "max_possible_writes": 12,
+      "includes_authentication": true
+    },
+    "independent_verification": {
+      "max_seconds": 30,
+      "max_actions": 12,
+      "max_possible_writes": 8,
+      "writes_restricted_to": "Search/filter actions only; no saved business changes."
+    },
+    "interruption_recovery": {
+      "additional_max_seconds": 60,
+      "additional_max_actions": 10,
+      "additional_max_possible_writes": 2,
+      "prerequisite": "Justified independent read-back before any retry."
+    },
+    "resources": {
+      "aggregate_heavy_job_cores": 12,
+      "per_evaluated_browser_max_cores": 2,
+      "numerical_library_threads": 1,
+      "evaluation_worker_max_rss_gib": 4,
+      "paid_resources": 0,
+      "runtime_model_calls": 0,
+      "arms_run_sequentially": true
+    },
+    "accounting": "Count every attempted primitive, navigation, reload, failed authentication, possible write, snapshot read, and polling time. Retain CPU, peak RSS, model/token use, retries, browser restarts, resets, manual assistance, and application-specific code separately. Shared acquisition is charged to both arms with physical cost recorded once; recipe preparation is separate."
+  },
+  "proposed_schedule": {
+    "status": "PROPOSED_BLOCKED_ON_PREPARED_FIXTURE_CAPABILITY_AND_BUDGET_PROVENANCE",
+    "application_order": [
+      "memos",
+      "linkding"
+    ],
+    "case_order": [
+      "R1",
+      "R2",
+      "C1",
+      "C2",
+      "U1",
+      "U2",
+      "D1",
+      "D2",
+      "M1",
+      "M2",
+      "CH1",
+      "CH2",
+      "CH3",
+      "CH4",
+      "CH5",
+      "CH6"
+    ],
+    "arm_order": "Odd case numbers: SemABI then cached-form; even case numbers: cached-form then SemABI. Run arms sequentially.",
+    "opaque_reset_command_template": [
+      "python3",
+      "runs/product_apps_v1/manage_apps.py",
+      "reset",
+      "<application>"
+    ],
+    "reset_preconditions": "Root first coordinates idle evaluated and checker sessions and preserves all preceding evidence. Treat reset storage as opaque; do not inspect installation data, databases, or private state.",
+    "existing_wrapper_capability": "The existing reset command restores its existing initial-account baseline. It has no command to capture the proposed prepared fixtures.",
+    "pairing_requirement": "Each paired arm must start from equivalent independently confirmed ordinary visible fixtures. Record actual reset identity/cost and ordinary-UI fixture evidence. Otherwise label the pair unmatched and retain every request.",
+    "setup_budget_constraint": "Equivalent prepared-fixture restoration is pending. Rebuilding two seeds through UI before every arm must not be assumed to fit the cumulative setup budget. An initial-account reset is not evidence that these proposed records exist.",
+    "fixture_sequence": "Prepare two base records through ordinary UI. For R2, U2, and CH4, change B through ordinary UI to the b_changed variant while preserving A; for CH4, make this change after acquisition of the saved base meaning. Every other case starts from base.",
+    "restart_case": "Before C2, coordinate a service restart and a fresh evaluated browser for each arm. The baseline retains the same shared artifact; retain restart evidence.",
+    "viewport_case": "Use 1280 by 900 as the proposed standard viewport and 800 by 900 for CH3. Record the actual rendered difference before making a presentation claim.",
+    "session_cases": "CH5 requires actual logout in the evaluated session. CH6 requires an available intervention point in the evaluated owned browser and independent read-back before any retry. Unavailable opportunities remain explicit.",
+    "freeze_requirement": "Freeze the concrete requests, source, dependencies, policy, baseline, and settings before onboarding. No task replacement based on performance; a general code repair ends a fixed-source assessment."
+  },
+  "result_slots": [
+    {
+      "request_id": "memos-R1",
+      "application": "memos",
+      "case_number": 1,
+      "case_id": "R1",
+      "family": "R",
+      "ordinary_goal": "Find the memo containing the content token pa260909af9b86d0alphafind and return its content and visible tags.",
+      "arguments": {
+        "content_token": "pa260909af9b86d0alphafind",
+        "search_scope": "all memos available in this account"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-R1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-R1",
+      "application": "memos",
+      "case_number": 1,
+      "case_id": "R1",
+      "family": "R",
+      "ordinary_goal": "Find the memo containing the content token pa260909af9b86d0alphafind and return its content and visible tags.",
+      "arguments": {
+        "content_token": "pa260909af9b86d0alphafind",
+        "search_scope": "all memos available in this account"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-R1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-R2",
+      "application": "memos",
+      "case_number": 2,
+      "case_id": "R2",
+      "family": "R",
+      "ordinary_goal": "Find the memo containing the content token pa260909af9b86d0betarevised and return its content and visible tags.",
+      "arguments": {
+        "content_token": "pa260909af9b86d0betarevised",
+        "search_scope": "all memos available in this account"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "memos-R2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-R2",
+      "application": "memos",
+      "case_number": 2,
+      "case_id": "R2",
+      "family": "R",
+      "ordinary_goal": "Find the memo containing the content token pa260909af9b86d0betarevised and return its content and visible tags.",
+      "arguments": {
+        "content_token": "pa260909af9b86d0betarevised",
+        "search_scope": "all memos available in this account"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "memos-R2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-C1",
+      "application": "memos",
+      "case_number": 3,
+      "case_id": "C1",
+      "family": "C",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 create-one: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 create-one: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-C1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-C1",
+      "application": "memos",
+      "case_number": 3,
+      "case_id": "C1",
+      "family": "C",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 create-one: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 create-one: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-C1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-C2",
+      "application": "memos",
+      "case_number": 4,
+      "case_id": "C2",
+      "family": "C",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 create-two: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 create-two: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-C2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-C2",
+      "application": "memos",
+      "case_number": 4,
+      "case_id": "C2",
+      "family": "C",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 create-two: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 create-two: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-C2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-U1",
+      "application": "memos",
+      "case_number": 5,
+      "case_id": "U1",
+      "family": "U",
+      "ordinary_goal": "Replace the memo whose full content is \"pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\" with \"pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\".",
+      "arguments": {
+        "existing_content": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "replacement_content": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-U1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-U1",
+      "application": "memos",
+      "case_number": 5,
+      "case_id": "U1",
+      "family": "U",
+      "ordinary_goal": "Replace the memo whose full content is \"pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\" with \"pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\".",
+      "arguments": {
+        "existing_content": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "replacement_content": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-U1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-U2",
+      "application": "memos",
+      "case_number": 6,
+      "case_id": "U2",
+      "family": "U",
+      "ordinary_goal": "Replace the memo whose full content is \"pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\" with \"pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\".",
+      "arguments": {
+        "existing_content": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "replacement_content": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "memos-U2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-U2",
+      "application": "memos",
+      "case_number": 6,
+      "case_id": "U2",
+      "family": "U",
+      "ordinary_goal": "Replace the memo whose full content is \"pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\" with \"pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\".",
+      "arguments": {
+        "existing_content": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "replacement_content": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "memos-U2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-D1",
+      "application": "memos",
+      "case_number": 7,
+      "case_id": "D1",
+      "family": "D",
+      "ordinary_goal": "Find the memo containing \"pa260909af9b86d0 orchard notebook\" whose additional visible content says \"keeper Mira\". Return its content and tags.",
+      "arguments": {
+        "shared_content_fragment": "pa260909af9b86d0 orchard notebook",
+        "additional_visible_content": "keeper Mira"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-D1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-D1",
+      "application": "memos",
+      "case_number": 7,
+      "case_id": "D1",
+      "family": "D",
+      "ordinary_goal": "Find the memo containing \"pa260909af9b86d0 orchard notebook\" whose additional visible content says \"keeper Mira\". Return its content and tags.",
+      "arguments": {
+        "shared_content_fragment": "pa260909af9b86d0 orchard notebook",
+        "additional_visible_content": "keeper Mira"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-D1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-D2",
+      "application": "memos",
+      "case_number": 8,
+      "case_id": "D2",
+      "family": "D",
+      "ordinary_goal": "Find the memo containing \"pa260909af9b86d0 orchard notebook\" that is tagged pa260909af9b86d0beta. Return its content and tags.",
+      "arguments": {
+        "shared_content_fragment": "pa260909af9b86d0 orchard notebook",
+        "tag": "pa260909af9b86d0beta"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-D2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-D2",
+      "application": "memos",
+      "case_number": 8,
+      "case_id": "D2",
+      "family": "D",
+      "ordinary_goal": "Find the memo containing \"pa260909af9b86d0 orchard notebook\" that is tagged pa260909af9b86d0beta. Return its content and tags.",
+      "arguments": {
+        "shared_content_fragment": "pa260909af9b86d0 orchard notebook",
+        "tag": "pa260909af9b86d0beta"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-D2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-M1",
+      "application": "memos",
+      "case_number": 9,
+      "case_id": "M1",
+      "family": "M",
+      "ordinary_goal": "Create a memo with content \"pa260909af9b86d0 tagged-create: The orchard schedule has a fresh entry. #pa260909af9b86d0chain\", then find it through the tag pa260909af9b86d0chain and return its content and tags.",
+      "arguments": {
+        "content": "pa260909af9b86d0 tagged-create: The orchard schedule has a fresh entry. #pa260909af9b86d0chain",
+        "tag": "pa260909af9b86d0chain"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-M1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-M1",
+      "application": "memos",
+      "case_number": 9,
+      "case_id": "M1",
+      "family": "M",
+      "ordinary_goal": "Create a memo with content \"pa260909af9b86d0 tagged-create: The orchard schedule has a fresh entry. #pa260909af9b86d0chain\", then find it through the tag pa260909af9b86d0chain and return its content and tags.",
+      "arguments": {
+        "content": "pa260909af9b86d0 tagged-create: The orchard schedule has a fresh entry. #pa260909af9b86d0chain",
+        "tag": "pa260909af9b86d0chain"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-M1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-M2",
+      "application": "memos",
+      "case_number": 10,
+      "case_id": "M2",
+      "family": "M",
+      "ordinary_goal": "Find the memo tagged pa260909af9b86d0alpha, replace its content with \"pa260909af9b86d0 orchard notebook: Alpha basket is packed for Friday; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\", and read back its content and tags.",
+      "arguments": {
+        "tag": "pa260909af9b86d0alpha",
+        "replacement_content": "pa260909af9b86d0 orchard notebook: Alpha basket is packed for Friday; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-M2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-M2",
+      "application": "memos",
+      "case_number": 10,
+      "case_id": "M2",
+      "family": "M",
+      "ordinary_goal": "Find the memo tagged pa260909af9b86d0alpha, replace its content with \"pa260909af9b86d0 orchard notebook: Alpha basket is packed for Friday; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha\", and read back its content and tags.",
+      "arguments": {
+        "tag": "pa260909af9b86d0alpha",
+        "replacement_content": "pa260909af9b86d0 orchard notebook: Alpha basket is packed for Friday; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-M2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-CH1",
+      "application": "memos",
+      "case_number": 11,
+      "case_id": "CH1",
+      "family": "challenge",
+      "ordinary_goal": "Search all memos available in this account for the content token pa260909af9b86d0missingmemo. Return matching memo content and tags, or an empty result if there are none.",
+      "arguments": {
+        "content_token": "pa260909af9b86d0missingmemo",
+        "search_scope": "all memos available in this account"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-CH1",
+      "application": "memos",
+      "case_number": 11,
+      "case_id": "CH1",
+      "family": "challenge",
+      "ordinary_goal": "Search all memos available in this account for the content token pa260909af9b86d0missingmemo. Return matching memo content and tags, or an empty result if there are none.",
+      "arguments": {
+        "content_token": "pa260909af9b86d0missingmemo",
+        "search_scope": "all memos available in this account"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-CH2",
+      "application": "memos",
+      "case_number": 12,
+      "case_id": "CH2",
+      "family": "challenge",
+      "ordinary_goal": "Replace the memo containing \"pa260909af9b86d0 orchard notebook\" with \"pa260909af9b86d0 ambiguous replacement request\".",
+      "arguments": {
+        "content_fragment": "pa260909af9b86d0 orchard notebook",
+        "replacement_content": "pa260909af9b86d0 ambiguous replacement request"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-CH2",
+      "application": "memos",
+      "case_number": 12,
+      "case_id": "CH2",
+      "family": "challenge",
+      "ordinary_goal": "Replace the memo containing \"pa260909af9b86d0 orchard notebook\" with \"pa260909af9b86d0 ambiguous replacement request\".",
+      "arguments": {
+        "content_fragment": "pa260909af9b86d0 orchard notebook",
+        "replacement_content": "pa260909af9b86d0 ambiguous replacement request"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-CH3",
+      "application": "memos",
+      "case_number": 13,
+      "case_id": "CH3",
+      "family": "challenge",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 viewport-create: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 viewport-create: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH3-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-CH3",
+      "application": "memos",
+      "case_number": 13,
+      "case_id": "CH3",
+      "family": "challenge",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 viewport-create: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 viewport-create: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH3-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-CH4",
+      "application": "memos",
+      "case_number": 14,
+      "case_id": "CH4",
+      "family": "challenge",
+      "ordinary_goal": "Replace the memo whose full content is \"pa260909af9b86d0 orchard notebook: Beta basket contains plums; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta\" with \"pa260909af9b86d0 orchard notebook: Beta basket is packed for Saturday; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta\".",
+      "arguments": {
+        "existing_content": "pa260909af9b86d0 orchard notebook: Beta basket contains plums; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta",
+        "replacement_content": "pa260909af9b86d0 orchard notebook: Beta basket is packed for Saturday; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "memos-CH4-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-CH4",
+      "application": "memos",
+      "case_number": 14,
+      "case_id": "CH4",
+      "family": "challenge",
+      "ordinary_goal": "Replace the memo whose full content is \"pa260909af9b86d0 orchard notebook: Beta basket contains plums; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta\" with \"pa260909af9b86d0 orchard notebook: Beta basket is packed for Saturday; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta\".",
+      "arguments": {
+        "existing_content": "pa260909af9b86d0 orchard notebook: Beta basket contains plums; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta",
+        "replacement_content": "pa260909af9b86d0 orchard notebook: Beta basket is packed for Saturday; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "memos-CH4-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-CH5",
+      "application": "memos",
+      "case_number": 15,
+      "case_id": "CH5",
+      "family": "challenge",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 logout-create: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 logout-create: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH5-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-CH5",
+      "application": "memos",
+      "case_number": 15,
+      "case_id": "CH5",
+      "family": "challenge",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 logout-create: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 logout-create: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH5-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "memos-CH6",
+      "application": "memos",
+      "case_number": 16,
+      "case_id": "CH6",
+      "family": "challenge",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 interrupt-create: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 interrupt-create: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH6-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "memos-CH6",
+      "application": "memos",
+      "case_number": 16,
+      "case_id": "CH6",
+      "family": "challenge",
+      "ordinary_goal": "Save a new memo with this exact content: pa260909af9b86d0 interrupt-create: The orchard schedule has a fresh entry.",
+      "arguments": {
+        "content": "pa260909af9b86d0 interrupt-create: The orchard schedule has a fresh entry."
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "memos-CH6-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-R1",
+      "application": "linkding",
+      "case_number": 1,
+      "case_id": "R1",
+      "family": "R",
+      "ordinary_goal": "Find the bookmark whose description contains pa260909af9b86d0alphafind. Return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "description_text": "pa260909af9b86d0alphafind",
+        "search_scope": "all bookmarks in this account, including read and unread"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-R1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-R1",
+      "application": "linkding",
+      "case_number": 1,
+      "case_id": "R1",
+      "family": "R",
+      "ordinary_goal": "Find the bookmark whose description contains pa260909af9b86d0alphafind. Return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "description_text": "pa260909af9b86d0alphafind",
+        "search_scope": "all bookmarks in this account, including read and unread"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-R1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-R2",
+      "application": "linkding",
+      "case_number": 2,
+      "case_id": "R2",
+      "family": "R",
+      "ordinary_goal": "Find the bookmark whose description contains pa260909af9b86d0betarevised. Return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "description_text": "pa260909af9b86d0betarevised",
+        "search_scope": "all bookmarks in this account, including read and unread"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "linkding-R2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-R2",
+      "application": "linkding",
+      "case_number": 2,
+      "case_id": "R2",
+      "family": "R",
+      "ordinary_goal": "Find the bookmark whose description contains pa260909af9b86d0betarevised. Return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "description_text": "pa260909af9b86d0betarevised",
+        "search_scope": "all bookmarks in this account, including read and unread"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "linkding-R2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-C1",
+      "application": "linkding",
+      "case_number": 3,
+      "case_id": "C1",
+      "family": "C",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/create-one with title \"pa260909af9b86d0 create-one orchard reading\" and description \"Fresh orchard reading for create-one. pa260909af9b86d0\". Mark it read.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/create-one",
+        "title": "pa260909af9b86d0 create-one orchard reading",
+        "description": "Fresh orchard reading for create-one. pa260909af9b86d0",
+        "unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-C1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-C1",
+      "application": "linkding",
+      "case_number": 3,
+      "case_id": "C1",
+      "family": "C",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/create-one with title \"pa260909af9b86d0 create-one orchard reading\" and description \"Fresh orchard reading for create-one. pa260909af9b86d0\". Mark it read.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/create-one",
+        "title": "pa260909af9b86d0 create-one orchard reading",
+        "description": "Fresh orchard reading for create-one. pa260909af9b86d0",
+        "unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-C1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-C2",
+      "application": "linkding",
+      "case_number": 4,
+      "case_id": "C2",
+      "family": "C",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/create-two with title \"pa260909af9b86d0 create-two orchard reading\" and description \"Fresh orchard reading for create-two. pa260909af9b86d0\". Mark it unread.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/create-two",
+        "title": "pa260909af9b86d0 create-two orchard reading",
+        "description": "Fresh orchard reading for create-two. pa260909af9b86d0",
+        "unread": true
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-C2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-C2",
+      "application": "linkding",
+      "case_number": 4,
+      "case_id": "C2",
+      "family": "C",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/create-two with title \"pa260909af9b86d0 create-two orchard reading\" and description \"Fresh orchard reading for create-two. pa260909af9b86d0\". Mark it unread.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/create-two",
+        "title": "pa260909af9b86d0 create-two orchard reading",
+        "description": "Fresh orchard reading for create-two. pa260909af9b86d0",
+        "unread": true
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-C2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-U1",
+      "application": "linkding",
+      "case_number": 5,
+      "case_id": "U1",
+      "family": "U",
+      "ordinary_goal": "For the bookmark at https://example.org/semabi-assessment/pa260909af9b86d0/alpha, change the title to \"Updated alpha reading pa260909af9b86d0\" and description to \"Alpha orchard notes updated for Friday. pa260909af9b86d0alphafind\". Keep its URL, tags, and unread state.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+        "new_title": "Updated alpha reading pa260909af9b86d0",
+        "new_description": "Alpha orchard notes updated for Friday. pa260909af9b86d0alphafind"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-U1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-U1",
+      "application": "linkding",
+      "case_number": 5,
+      "case_id": "U1",
+      "family": "U",
+      "ordinary_goal": "For the bookmark at https://example.org/semabi-assessment/pa260909af9b86d0/alpha, change the title to \"Updated alpha reading pa260909af9b86d0\" and description to \"Alpha orchard notes updated for Friday. pa260909af9b86d0alphafind\". Keep its URL, tags, and unread state.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+        "new_title": "Updated alpha reading pa260909af9b86d0",
+        "new_description": "Alpha orchard notes updated for Friday. pa260909af9b86d0alphafind"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-U1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-U2",
+      "application": "linkding",
+      "case_number": 6,
+      "case_id": "U2",
+      "family": "U",
+      "ordinary_goal": "For the bookmark at https://example.org/semabi-assessment/pa260909af9b86d0/alpha, mark it unread. Keep its URL, title, description, and tags.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+        "unread": true
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "linkding-U2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-U2",
+      "application": "linkding",
+      "case_number": 6,
+      "case_id": "U2",
+      "family": "U",
+      "ordinary_goal": "For the bookmark at https://example.org/semabi-assessment/pa260909af9b86d0/alpha, mark it unread. Keep its URL, title, description, and tags.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+        "unread": true
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "linkding-U2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-D1",
+      "application": "linkding",
+      "case_number": 7,
+      "case_id": "D1",
+      "family": "D",
+      "ordinary_goal": "Find the bookmark titled \"Orchard reading pa260909af9b86d0\" whose URL is https://example.org/semabi-assessment/pa260909af9b86d0/alpha. Return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "shared_title": "Orchard reading pa260909af9b86d0",
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-D1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-D1",
+      "application": "linkding",
+      "case_number": 7,
+      "case_id": "D1",
+      "family": "D",
+      "ordinary_goal": "Find the bookmark titled \"Orchard reading pa260909af9b86d0\" whose URL is https://example.org/semabi-assessment/pa260909af9b86d0/alpha. Return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "shared_title": "Orchard reading pa260909af9b86d0",
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-D1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-D2",
+      "application": "linkding",
+      "case_number": 8,
+      "case_id": "D2",
+      "family": "D",
+      "ordinary_goal": "Find the bookmark titled \"Orchard reading pa260909af9b86d0\" tagged pa260909af9b86d0beta. Return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "shared_title": "Orchard reading pa260909af9b86d0",
+        "tag": "pa260909af9b86d0beta"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-D2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-D2",
+      "application": "linkding",
+      "case_number": 8,
+      "case_id": "D2",
+      "family": "D",
+      "ordinary_goal": "Find the bookmark titled \"Orchard reading pa260909af9b86d0\" tagged pa260909af9b86d0beta. Return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "shared_title": "Orchard reading pa260909af9b86d0",
+        "tag": "pa260909af9b86d0beta"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-D2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-M1",
+      "application": "linkding",
+      "case_number": 9,
+      "case_id": "M1",
+      "family": "M",
+      "ordinary_goal": "Create a read bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/tagged-create with title \"pa260909af9b86d0 tagged-create orchard reading\", description \"Fresh orchard reading for tagged-create. pa260909af9b86d0\", and tag pa260909af9b86d0chain. Then retrieve it through that tag and return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/tagged-create",
+        "title": "pa260909af9b86d0 tagged-create orchard reading",
+        "description": "Fresh orchard reading for tagged-create. pa260909af9b86d0",
+        "unread": false,
+        "tags": [
+          "pa260909af9b86d0chain"
+        ]
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-M1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-M1",
+      "application": "linkding",
+      "case_number": 9,
+      "case_id": "M1",
+      "family": "M",
+      "ordinary_goal": "Create a read bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/tagged-create with title \"pa260909af9b86d0 tagged-create orchard reading\", description \"Fresh orchard reading for tagged-create. pa260909af9b86d0\", and tag pa260909af9b86d0chain. Then retrieve it through that tag and return its URL, title, description, tags, and unread state.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/tagged-create",
+        "title": "pa260909af9b86d0 tagged-create orchard reading",
+        "description": "Fresh orchard reading for tagged-create. pa260909af9b86d0",
+        "unread": false,
+        "tags": [
+          "pa260909af9b86d0chain"
+        ]
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-M1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-M2",
+      "application": "linkding",
+      "case_number": 10,
+      "case_id": "M2",
+      "family": "M",
+      "ordinary_goal": "Find the unread bookmark tagged pa260909af9b86d0beta, mark it read, and show its URL, title, description, tags, and resulting unread state.",
+      "arguments": {
+        "tag": "pa260909af9b86d0beta",
+        "currently_unread": true,
+        "requested_unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-M2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-M2",
+      "application": "linkding",
+      "case_number": 10,
+      "case_id": "M2",
+      "family": "M",
+      "ordinary_goal": "Find the unread bookmark tagged pa260909af9b86d0beta, mark it read, and show its URL, title, description, tags, and resulting unread state.",
+      "arguments": {
+        "tag": "pa260909af9b86d0beta",
+        "currently_unread": true,
+        "requested_unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-M2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-CH1",
+      "application": "linkding",
+      "case_number": 11,
+      "case_id": "CH1",
+      "family": "challenge",
+      "ordinary_goal": "Search all bookmarks in this account, including read and unread, for the text pa260909af9b86d0missingbookmark. Return matching bookmark fields, or an empty result if there are none.",
+      "arguments": {
+        "text": "pa260909af9b86d0missingbookmark",
+        "search_scope": "all bookmarks in this account, including read and unread"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH1-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-CH1",
+      "application": "linkding",
+      "case_number": 11,
+      "case_id": "CH1",
+      "family": "challenge",
+      "ordinary_goal": "Search all bookmarks in this account, including read and unread, for the text pa260909af9b86d0missingbookmark. Return matching bookmark fields, or an empty result if there are none.",
+      "arguments": {
+        "text": "pa260909af9b86d0missingbookmark",
+        "search_scope": "all bookmarks in this account, including read and unread"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH1-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-CH2",
+      "application": "linkding",
+      "case_number": 12,
+      "case_id": "CH2",
+      "family": "challenge",
+      "ordinary_goal": "Change the description of the bookmark titled \"Orchard reading pa260909af9b86d0\" to \"pa260909af9b86d0 ambiguous description request\".",
+      "arguments": {
+        "title": "Orchard reading pa260909af9b86d0",
+        "new_description": "pa260909af9b86d0 ambiguous description request"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH2-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-CH2",
+      "application": "linkding",
+      "case_number": 12,
+      "case_id": "CH2",
+      "family": "challenge",
+      "ordinary_goal": "Change the description of the bookmark titled \"Orchard reading pa260909af9b86d0\" to \"pa260909af9b86d0 ambiguous description request\".",
+      "arguments": {
+        "title": "Orchard reading pa260909af9b86d0",
+        "new_description": "pa260909af9b86d0 ambiguous description request"
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH2-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-CH3",
+      "application": "linkding",
+      "case_number": 13,
+      "case_id": "CH3",
+      "family": "challenge",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/viewport-create with title \"pa260909af9b86d0 viewport-create orchard reading\" and description \"Fresh orchard reading for viewport-create. pa260909af9b86d0\". Mark it read.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/viewport-create",
+        "title": "pa260909af9b86d0 viewport-create orchard reading",
+        "description": "Fresh orchard reading for viewport-create. pa260909af9b86d0",
+        "unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH3-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-CH3",
+      "application": "linkding",
+      "case_number": 13,
+      "case_id": "CH3",
+      "family": "challenge",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/viewport-create with title \"pa260909af9b86d0 viewport-create orchard reading\" and description \"Fresh orchard reading for viewport-create. pa260909af9b86d0\". Mark it read.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/viewport-create",
+        "title": "pa260909af9b86d0 viewport-create orchard reading",
+        "description": "Fresh orchard reading for viewport-create. pa260909af9b86d0",
+        "unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH3-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-CH4",
+      "application": "linkding",
+      "case_number": 14,
+      "case_id": "CH4",
+      "family": "challenge",
+      "ordinary_goal": "For the bookmark at https://example.org/semabi-assessment/pa260909af9b86d0/beta, change its description to \"Beta reading packed for Saturday. pa260909af9b86d0\". Keep its URL, title, tags, and unread state.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta",
+        "new_description": "Beta reading packed for Saturday. pa260909af9b86d0"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "linkding-CH4-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-CH4",
+      "application": "linkding",
+      "case_number": 14,
+      "case_id": "CH4",
+      "family": "challenge",
+      "ordinary_goal": "For the bookmark at https://example.org/semabi-assessment/pa260909af9b86d0/beta, change its description to \"Beta reading packed for Saturday. pa260909af9b86d0\". Keep its URL, title, tags, and unread state.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta",
+        "new_description": "Beta reading packed for Saturday. pa260909af9b86d0"
+      },
+      "fixture_variant": "b_changed",
+      "source_pending": true,
+      "slot_id": "linkding-CH4-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-CH5",
+      "application": "linkding",
+      "case_number": 15,
+      "case_id": "CH5",
+      "family": "challenge",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/logout-create with title \"pa260909af9b86d0 logout-create orchard reading\" and description \"Fresh orchard reading for logout-create. pa260909af9b86d0\". Mark it read.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/logout-create",
+        "title": "pa260909af9b86d0 logout-create orchard reading",
+        "description": "Fresh orchard reading for logout-create. pa260909af9b86d0",
+        "unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH5-semabi",
+      "arm": "semabi",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-CH5",
+      "application": "linkding",
+      "case_number": 15,
+      "case_id": "CH5",
+      "family": "challenge",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/logout-create with title \"pa260909af9b86d0 logout-create orchard reading\" and description \"Fresh orchard reading for logout-create. pa260909af9b86d0\". Mark it read.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/logout-create",
+        "title": "pa260909af9b86d0 logout-create orchard reading",
+        "description": "Fresh orchard reading for logout-create. pa260909af9b86d0",
+        "unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH5-cached_form",
+      "arm": "cached_form",
+      "pair_position": 2
+    },
+    {
+      "request_id": "linkding-CH6",
+      "application": "linkding",
+      "case_number": 16,
+      "case_id": "CH6",
+      "family": "challenge",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/interrupt-create with title \"pa260909af9b86d0 interrupt-create orchard reading\" and description \"Fresh orchard reading for interrupt-create. pa260909af9b86d0\". Mark it read.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/interrupt-create",
+        "title": "pa260909af9b86d0 interrupt-create orchard reading",
+        "description": "Fresh orchard reading for interrupt-create. pa260909af9b86d0",
+        "unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH6-cached_form",
+      "arm": "cached_form",
+      "pair_position": 1
+    },
+    {
+      "request_id": "linkding-CH6",
+      "application": "linkding",
+      "case_number": 16,
+      "case_id": "CH6",
+      "family": "challenge",
+      "ordinary_goal": "Create a bookmark for https://example.org/semabi-assessment/pa260909af9b86d0/interrupt-create with title \"pa260909af9b86d0 interrupt-create orchard reading\" and description \"Fresh orchard reading for interrupt-create. pa260909af9b86d0\". Mark it read.",
+      "arguments": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/interrupt-create",
+        "title": "pa260909af9b86d0 interrupt-create orchard reading",
+        "description": "Fresh orchard reading for interrupt-create. pa260909af9b86d0",
+        "unread": false
+      },
+      "fixture_variant": "base",
+      "source_pending": true,
+      "slot_id": "linkding-CH6-semabi",
+      "arm": "semabi",
+      "pair_position": 2
+    }
+  ],
+  "execution_blockers": [
+    "The existing opaque reset helper restores only its initial-account baseline; restoration of these proposed prepared fixtures is not implemented or established.",
+    "Ordinary-UI setup and prepared-fixture restoration must have attributable costs within the cumulative 15-minute, 60-action, 20-possible-write setup budget per application and arm.",
+    "Source freeze and ordinary-UI prerequisite confirmation remain pending. No reset or application call is authorized by this planning file."
+  ]
+}

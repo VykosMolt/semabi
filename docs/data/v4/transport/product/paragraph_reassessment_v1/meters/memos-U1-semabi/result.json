@@ -1,0 +1,170 @@
+{
+  "format": "owned_command_meter.v1",
+  "argv": [
+    ".venv/bin/python",
+    "-B",
+    "runs/product_paragraph_development_v1/run_service_call.py",
+    "--binding-file",
+    "runs/product_paragraph_development_v1/preflight/memos-U1-semabi.json",
+    "--connection",
+    "conn_9da9a769b8274740af2fdcfec90cb8d8",
+    "--output-dir",
+    "runs/product_paragraph_development_v1/attempts/memos-U1-semabi"
+  ],
+  "exit_code": 0,
+  "source_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+  "started_at": "2026-09-09T20:32:10.860596+00:00",
+  "rss_limit_bytes": 4294967296,
+  "sample_interval_seconds": 0.05,
+  "sampled_peak_aggregate_rss_bytes": 975347712,
+  "samples": 131,
+  "inherited_cpu_affinity": [
+    2,
+    3
+  ],
+  "max_observed_affinity_count": 2,
+  "signals": [],
+  "stop_reason": "command_exit",
+  "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+  "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "wall_seconds": 6.507908,
+  "rss_limit_exceeded": false,
+  "child_rusage_cpu_seconds": 2.210196,
+  "completed_at": "2026-09-09T20:32:17.368652+00:00",
+  "owned_processes": [
+    {
+      "pid": 1259248,
+      "ppid": 1259247,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7485714,
+      "rss_bytes": 462848,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1259249,
+      "ppid": 1259248,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7485719,
+      "rss_bytes": 14241792,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1259264,
+      "ppid": 1259248,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7485734,
+      "rss_bytes": 14028800,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1259268,
+      "ppid": 1259249,
+      "name": "MainThread",
+      "state": "R",
+      "start_ticks": 7485740,
+      "rss_bytes": 87343104,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1259286,
+      "ppid": 1259268,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7485768,
+      "rss_bytes": 54403072,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1259288,
+      "ppid": 1259286,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7485770,
+      "rss_bytes": 57229312,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1259289,
+      "ppid": 1259286,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7485770,
+      "rss_bytes": 55693312,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1259305,
+      "ppid": 1259288,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 7485772,
+      "rss_bytes": 129818624,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1259321,
+      "ppid": 1259286,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 7485774,
+      "rss_bytes": 52408320,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1259323,
+      "ppid": 1259289,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7485777,
+      "rss_bytes": 75882496,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    }
+  ],
+  "terminal_ownership_verified": true,
+  "status": "TERMINAL"
+}

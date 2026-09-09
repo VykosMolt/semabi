@@ -1,0 +1,34 @@
+{
+  "format": "owned_command_meter.v1",
+  "argv": [
+    ".venv/bin/python",
+    "-B",
+    "runs/product_paragraph_development_v1/run_baseline_call.py",
+    "--binding-file",
+    "runs/product_paragraph_development_v1/preflight/memos-U1-cached_form.json",
+    "--application-url",
+    "http://127.0.0.1:8852/",
+    "--credentials-file",
+    "runs/product_apps_v1/memos/private/credentials.json",
+    "--output-dir",
+    "runs/product_paragraph_development_v1/attempts/memos-U1-cached_form"
+  ],
+  "exit_code": null,
+  "source_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+  "started_at": "2026-09-09T20:36:41.646847+00:00",
+  "rss_limit_bytes": 4294967296,
+  "sample_interval_seconds": 0.05,
+  "sampled_peak_aggregate_rss_bytes": 0,
+  "samples": 0,
+  "inherited_cpu_affinity": [
+    2,
+    3
+  ],
+  "max_observed_affinity_count": 0,
+  "signals": [],
+  "stop_reason": "command_exit",
+  "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+  "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log"
+}

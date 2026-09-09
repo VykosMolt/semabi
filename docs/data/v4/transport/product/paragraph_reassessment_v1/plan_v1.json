@@ -1,0 +1,38 @@
+{
+  "format": "product_development_repair.v1",
+  "status": "PREPARED_BEFORE_CODE_ADOPTION",
+  "purpose": "Retest the demonstrated complete-paragraph Memos update failure after a general rendered-value repair",
+  "classification": "Development reassessment, not untouched generalization; fixed v1 results remain unchanged",
+  "source_freeze": "Written after paragraph candidate adoption and before onboarding",
+  "requests": [
+    "U1",
+    "U2"
+  ],
+  "arms": [
+    "semabi",
+    "cached_form"
+  ],
+  "request_and_expected_source": "runs/product_assessment_development_v1/request_plan.json and expected_results.json, unchanged per-case values",
+  "onboarding": {
+    "actions": 120,
+    "possible_writes": 40,
+    "wall_seconds": 900,
+    "shared_across_arms": true
+  },
+  "workflow": {
+    "actions": 20,
+    "possible_writes": 12,
+    "wall_seconds": 60
+  },
+  "independent_verifier": {
+    "actions": 12,
+    "possible_writes": 8,
+    "wall_seconds": 30
+  },
+  "setup": "Reuse previously prepared opaque base/changed snapshots; restore base for acquisition, restore required fixture before each arm; no new task hints or hand-mapped operation IDs",
+  "baseline": "Identical shared frozen literal binding and cached replay; observed operations fitted from new-source onboarding",
+  "public_api": "Each invocation starts a fresh service reusing its persisted learned artifacts",
+  "model_calls": 0,
+  "reserved_result_gate": "Do not adopt source or onboard until initial reserved result is sealed",
+  "next_action": "Root adjudicate and adopt paragraph candidate, freeze source and restore Memos base"
+}

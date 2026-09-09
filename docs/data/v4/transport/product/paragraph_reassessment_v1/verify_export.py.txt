@@ -1,0 +1,51 @@
+"""Offline validation of the selected public reassessment evidence."""
+from collections import Counter
+import hashlib
+import json
+from pathlib import Path
+import runpy
+
+base = Path(__file__).resolve().parent
+read = lambda path: json.loads((base / path).read_bytes())
+manifest = read("manifest.json")
+entries = manifest["files"]
+assert {str(p.relative_to(base)) for p in base.rglob("*") if p.is_file()} == {e["path"] for e in entries} | {"manifest.json"}
+for entry in entries:
+    body = (base / entry["path"]).read_bytes()
+    assert len(body) == entry["bytes"] and hashlib.sha256(body).hexdigest() == entry["sha256"], entry["path"]
+source = read("source_sha256.json")
+for path, expected in source.items():
+    assert hashlib.sha256((base / "source_snapshot" / (path + ".txt")).read_bytes()).hexdigest() == expected
+assert read("source_adoption_v1.json")["source_sha256"] == source
+assert read("phase_terminal_v1.json")["source_sha256"] == source
+for path, expected in manifest["original_sealed_outputs"].items():
+    assert hashlib.sha256((base / path).read_bytes()).hexdigest() == expected
+rows = [json.loads(line) for line in (base / "results_v1.jsonl").read_text().splitlines()]
+slots = {s["slot_id"]: s for s in read("request_plan.json")["result_slots"] if s["application"] == "memos" and s["case_id"] in ["U1", "U2"]}
+assert len(rows) == len(slots) == 4 and {row["id"] for row in rows} == set(slots)
+catalog = read("onboarding_v1/onboarding_public.json")["catalog"]["operations"]
+bind = runpy.run_path(str(base / "binding/binding.py.txt"), run_name="_offline_paragraph_binder")["bind_request"]
+for row in rows:
+    slot = slots[row["id"]]
+    assert row["ordinary_goal"] == slot["ordinary_goal"] and row["arguments"] == slot["arguments"]
+    assert row["planned_arm_position"] == slot["pair_position"] and row["fixture"] == slot["fixture_variant"]
+    receipt = read("preflight/" + row["id"] + ".json")
+    assert bind(row["ordinary_goal"], row["arguments"], catalog) == receipt
+    before = read("checks/" + row["id"] + "/before.json")
+    after = read("checks/" + row["id"] + "/after.json")
+    assert before["verdict"] == "PREPARED_FIXTURE_MATCH" and after["verdict"] == "EFFECT_NOT_OBSERVED"
+    inventory = before["accepted_captures"][-1]["visible_saved_record_bodies"]
+    for phase in [before, after]:
+        assert phase["source_before"] == phase["source_after"] == source
+        assert phase["termination"]["live_owned_process_count"] == 0
+        for capture in phase["accepted_captures"]:
+            assert capture["visible_saved_record_bodies"] == inventory and capture["visible_record_count"] == 2
+    for capture in after["accepted_captures"]:
+        assert capture["effect_goal_met"] is False and capture["old_target_count"] == 1 and capture["intended_record_count"] == 0
+    assert not row["independently_completed_requested_workflow"] and not row["confirmed"]
+    assert row["wrong_side_effects"] is None
+assert Counter(row["arm"] for row in rows if row["workflow_invoked"]) == {"semabi": 1, "cached_form": 2}
+assert all(row["status"] == "EFFECT_NOT_OBSERVED" for row in rows)
+print(json.dumps({"status": "PASS", "files_verified": len(entries), "result_rows": 4,
+                  "binder_receipts_reproduced": 4, "checker_phases": 8,
+                  "application_calls": 0, "browser_calls": 0}, sort_keys=True))

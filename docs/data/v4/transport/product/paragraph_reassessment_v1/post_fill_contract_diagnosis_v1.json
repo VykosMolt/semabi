@@ -1,0 +1,56 @@
+{
+  "classification": "Offline comparison of actual rendered invocation evidence; no app calls or application implementation reads",
+  "evidence": "runs/product_paragraph_development_v1/service/connections/conn_9da9a769b8274740af2fdcfec90cb8d8/evidence/eebf6aca8a8148b4ad018fa689b7b49a",
+  "observations": [
+    {
+      "observation": "85c78ce78970f77a",
+      "root": 196,
+      "submit": 224,
+      "changed_parts": {}
+    },
+    {
+      "observation": "d495a3d36da75c41",
+      "root": 196,
+      "submit": 229,
+      "changed_parts": {
+        "fields": {
+          "expected": [
+            {
+              "argument": "value",
+              "descriptor": {
+                "input_type": "contenteditable",
+                "label": "",
+                "role": "textbox"
+              },
+              "input_type": "contenteditable",
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "options": [],
+              "required": false,
+              "role": "textbox"
+            }
+          ],
+          "observed": [
+            {
+              "argument": "value",
+              "descriptor": {
+                "role": "textbox",
+                "label": "",
+                "input_type": "contenteditable",
+                "has_popup": "listbox"
+              },
+              "required": false,
+              "role": "textbox",
+              "input_type": "contenteditable",
+              "min": null,
+              "max": null,
+              "max_length": null,
+              "options": []
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

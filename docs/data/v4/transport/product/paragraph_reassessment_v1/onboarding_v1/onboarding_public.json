@@ -1,0 +1,5017 @@
+{
+  "accepted_jobs": [
+    {
+      "connection_id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+      "id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+      "job_id": "job_0f70e3ac8d384155864129709bccbf6f",
+      "kind": "connect"
+    },
+    {
+      "connection_id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+      "id": "job_9ce649588cfa451e9a95cd40051d09f5",
+      "job_id": "job_9ce649588cfa451e9a95cd40051d09f5",
+      "kind": "learn"
+    }
+  ],
+  "accepted_jobs_terminal_before_close": true,
+  "authentication_actions": 3,
+  "authentication_possible_writes": 3,
+  "authentication_write_accounting": "Each reported frozen login action is charged as a possible write; the API exposes no separate authentication-write counter",
+  "catalog": {
+    "connection_id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+    "operations": [
+      {
+        "argument_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "description": "Visible editor value",
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "effect_checks": [
+          "All supplied values together in one unique local record",
+          "Values occupy the relative field slots learned across both trials",
+          "Same record values remain visible after reload"
+        ],
+        "evidence_sha256": "7ccb4aeb173c2a8c29276abfe0268ec766a4b698bff5b9b9306bde96a458b590",
+        "id": "op_562fcb42c95d9c59eba3",
+        "kind": "create_visible_record",
+        "name": "save_record",
+        "output_schema": {
+          "description": "Outcome, visible effect witness, and execution metrics",
+          "type": "object"
+        },
+        "prerequisites": [
+          "Authenticated session",
+          "Unchanged visible form contract",
+          "Empty argument controls and unchanged other control defaults",
+          "Anchor absent from the current read-back view"
+        ],
+        "procedure": {
+          "anchor": "value",
+          "defaults": {},
+          "effect_slots": {
+            "value": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "entry_url": "http://127.0.0.1:8852/",
+          "form": {
+            "context_controls": [
+              {
+                "has_popup": "menu",
+                "input_type": "",
+                "label": "",
+                "role": "button"
+              },
+              {
+                "has_popup": "menu",
+                "input_type": "",
+                "label": "Private",
+                "role": "button"
+              }
+            ],
+            "fields": [
+              {
+                "argument": "value",
+                "descriptor": {
+                  "input_type": "contenteditable",
+                  "label": "",
+                  "role": "textbox"
+                },
+                "input_type": "contenteditable",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "required": false,
+                "role": "textbox"
+              }
+            ],
+            "submit": {
+              "input_type": "",
+              "label": "Save",
+              "role": "button"
+            }
+          },
+          "navigation": [],
+          "readback_url": "http://127.0.0.1:8852/"
+        },
+        "scope": {
+          "operation_family": "local form creation",
+          "origin": "http://127.0.0.1:8852",
+          "prior": "General English action vocabulary proposes exploration",
+          "runtime_model": null,
+          "unsupported": [
+            "global record uniqueness",
+            "rollback",
+            "exactly-once delivery",
+            "relational selection",
+            "unobserved side effects"
+          ]
+        },
+        "status": "ACTIVE",
+        "support": {
+          "argument_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "description": "Visible editor value",
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "effect_checks": [
+            "All supplied values together in one unique local record",
+            "Values occupy the relative field slots learned across both trials",
+            "Same record values remain visible after reload"
+          ],
+          "kind": "create_visible_record",
+          "output_schema": {
+            "description": "Outcome, visible effect witness, and execution metrics",
+            "type": "object"
+          },
+          "policy_version": "local-record-v6",
+          "prerequisites": [
+            "Authenticated session",
+            "Unchanged visible form contract",
+            "Empty argument controls and unchanged other control defaults",
+            "Anchor absent from the current read-back view"
+          ],
+          "procedure": {
+            "anchor": "value",
+            "defaults": {},
+            "effect_slots": {
+              "value": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      1
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "entry_url": "http://127.0.0.1:8852/",
+            "form": {
+              "context_controls": [
+                {
+                  "has_popup": "menu",
+                  "input_type": "",
+                  "label": "",
+                  "role": "button"
+                },
+                {
+                  "has_popup": "menu",
+                  "input_type": "",
+                  "label": "Private",
+                  "role": "button"
+                }
+              ],
+              "fields": [
+                {
+                  "argument": "value",
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "",
+                    "role": "textbox"
+                  },
+                  "input_type": "contenteditable",
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "required": false,
+                  "role": "textbox"
+                }
+              ],
+              "submit": {
+                "input_type": "",
+                "label": "Save",
+                "role": "button"
+              }
+            },
+            "navigation": [],
+            "readback_url": "http://127.0.0.1:8852/"
+          },
+          "scope": {
+            "operation_family": "local form creation",
+            "origin": "http://127.0.0.1:8852",
+            "prior": "General English action vocabulary proposes exploration",
+            "runtime_model": null,
+            "unsupported": [
+              "global record uniqueness",
+              "rollback",
+              "exactly-once delivery",
+              "relational selection",
+              "unobserved side effects"
+            ]
+          },
+          "source_sha256": {
+            "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+            "browser_session.py": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+            "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+            "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+            "runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+            "surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          "trials": [
+            {
+              "arguments": {
+                "value": "semabi_709e774b09_0"
+              },
+              "witness": {
+                "basis": "visible_local_record",
+                "field_slots": {
+                  "value": [
+                    {
+                      "channel": "text",
+                      "path": [
+                        [
+                          "group",
+                          1
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "text",
+                          0
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                "link_destinations": [],
+                "observation": "a5c985363cb8b28d",
+                "role": "article",
+                "root": 178,
+                "text_boundaries": {
+                  "194": "semabi_709e774b09_0"
+                },
+                "texts": [
+                  "semabi_709e774b09_0"
+                ],
+                "value_node": 194
+              }
+            },
+            {
+              "arguments": {
+                "value": "semabi_1445565ab7_1"
+              },
+              "witness": {
+                "basis": "visible_local_record",
+                "field_slots": {
+                  "value": [
+                    {
+                      "channel": "text",
+                      "path": [
+                        [
+                          "group",
+                          1
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "text",
+                          0
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                "link_destinations": [],
+                "observation": "3f1cdb21a25aebd1",
+                "role": "article",
+                "root": 178,
+                "text_boundaries": {
+                  "194": "semabi_1445565ab7_1"
+                },
+                "texts": [
+                  "semabi_1445565ab7_1"
+                ],
+                "value_node": 194
+              }
+            }
+          ]
+        },
+        "version": 1
+      },
+      {
+        "argument_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "target": {
+              "description": "Exact current local anchor: Visible editor value",
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "target"
+          ],
+          "type": "object"
+        },
+        "effect_checks": [
+          "Values read from original field descriptors uniquely bound in two distinct creation trials",
+          "Complete editor state rechecked before leaving"
+        ],
+        "evidence_sha256": "c234d7ed64aa38a7f88bd32bffdd94bfd0eae3df56954f73ada81698e88e07de",
+        "id": "op_7f641de8dbf9e29226fb",
+        "kind": "read_visible_record",
+        "name": "read_record",
+        "output_schema": {
+          "properties": {
+            "effect": {
+              "properties": {
+                "values": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "value": {
+                      "binding_basis": "unique_original_descriptor_and_two_distinct_creation_trials",
+                      "description": "Visible editor value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "metrics": {
+              "type": "object"
+            },
+            "outcome": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "outcome",
+            "effect",
+            "metrics"
+          ],
+          "type": "object"
+        },
+        "prerequisites": [
+          "Authenticated session and no current editor draft before navigation",
+          "One rendered local record with the exact learned anchor slots and channel",
+          "Unique unchanged record-local edit route and descriptor-bound edit form contract",
+          "Loaded editor retains the selected anchor",
+          "Selected editor owner, learned fields and submit retain observed DOM-element continuity",
+          "All captured field values and defaults remain unchanged except requested fills",
+          "One bound numeric dialog context control retains its label, state, placement and DOM element during the call"
+        ],
+        "procedure": {
+          "anchor": "value",
+          "anchor_mode": "replace_value",
+          "context_label_binding": {
+            "completed_read_trials": 2,
+            "descriptor": {
+              "has_popup": "dialog",
+              "input_type": "",
+              "role": "button"
+            },
+            "path": [
+              [
+                "group",
+                0
+              ],
+              [
+                "button",
+                0
+              ]
+            ],
+            "prior": "One unexecuted dialog-advertising context button may vary between records: ASCII digit runs retain their widths and all punctuation/whitespace stays literal; two distinct labels require two completed selected-record read trials",
+            "read_evidence": [
+              {
+                "editor_state": {
+                  "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": "semabi_709e774b09_0"
+                  },
+                  "context_controls": [
+                    {
+                      "descriptor": {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:24",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "path": [
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "button",
+                          0
+                        ]
+                      ],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    }
+                  ],
+                  "other_editors": [
+                    [
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "textbox",
+                        "value": ""
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      },
+                      {
+                        "checked": null,
+                        "disabled": true,
+                        "input_type": "",
+                        "label": "Save",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      }
+                    ],
+                    [
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "input_type": "text",
+                        "label": "Search memos...",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "textbox",
+                        "value": ""
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      }
+                    ]
+                  ],
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:24",
+                        "role": "button"
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "argument": "value",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "submit": {
+                      "input_type": "",
+                      "label": "Save",
+                      "role": "button"
+                    }
+                  }
+                },
+                "label": "2026-09-09 22:30:24",
+                "observation": "cb65ffb13631751f",
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:24",
+                      "role": "button"
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "argument": "value",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "submit": {
+                    "input_type": "",
+                    "label": "Save",
+                    "role": "button"
+                  }
+                }
+              },
+              {
+                "editor_state": {
+                  "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": "semabi_1445565ab7_1"
+                  },
+                  "context_controls": [
+                    {
+                      "descriptor": {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:27",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "path": [
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "button",
+                          0
+                        ]
+                      ],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    }
+                  ],
+                  "other_editors": [
+                    [
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "textbox",
+                        "value": ""
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      },
+                      {
+                        "checked": null,
+                        "disabled": true,
+                        "input_type": "",
+                        "label": "Save",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      }
+                    ],
+                    [
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "input_type": "text",
+                        "label": "Search memos...",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "textbox",
+                        "value": ""
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      }
+                    ]
+                  ],
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:27",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "argument": "value",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "submit": {
+                      "input_type": "",
+                      "label": "Save",
+                      "role": "button"
+                    }
+                  }
+                },
+                "label": "2026-09-09 22:30:27",
+                "observation": "ac82240120cd1a67",
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:27",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "argument": "value",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "submit": {
+                    "input_type": "",
+                    "label": "Save",
+                    "role": "button"
+                  }
+                }
+              }
+            ],
+            "shape": [
+              {
+                "digits": 4
+              },
+              {
+                "literal": "-"
+              },
+              {
+                "digits": 2
+              },
+              {
+                "literal": "-"
+              },
+              {
+                "digits": 2
+              },
+              {
+                "literal": " "
+              },
+              {
+                "digits": 2
+              },
+              {
+                "literal": ":"
+              },
+              {
+                "digits": 2
+              },
+              {
+                "literal": ":"
+              },
+              {
+                "digits": 2
+              }
+            ],
+            "state": {
+              "disabled": false,
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "options": [],
+              "readonly": false,
+              "required": false
+            }
+          },
+          "edit": {
+            "input_type": "",
+            "label": "Edit",
+            "role": "menuitem"
+          },
+          "effect_slots": {
+            "value": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "form": {
+            "context_controls": [
+              {
+                "has_popup": "menu",
+                "input_type": "",
+                "label": "",
+                "role": "button"
+              },
+              {
+                "has_popup": "menu",
+                "input_type": "",
+                "label": "Private",
+                "role": "button"
+              },
+              {
+                "input_type": "",
+                "label": "Cancel",
+                "role": "button"
+              },
+              {
+                "has_popup": "dialog",
+                "input_type": "",
+                "label": "2026-09-09 22:30:24",
+                "role": "button"
+              }
+            ],
+            "fields": [
+              {
+                "argument": "value",
+                "descriptor": {
+                  "input_type": "contenteditable",
+                  "label": "",
+                  "role": "textbox"
+                },
+                "input_type": "contenteditable",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "required": false,
+                "role": "textbox"
+              }
+            ],
+            "submit": {
+              "input_type": "",
+              "label": "Save",
+              "role": "button"
+            }
+          },
+          "menu": {
+            "input_type": "",
+            "label": "",
+            "role": "menu"
+          },
+          "menu_trigger": {
+            "has_popup": "menu",
+            "input_type": "",
+            "label": "",
+            "role": "button"
+          },
+          "read_fields": {
+            "value": {
+              "input_type": "contenteditable",
+              "label": "",
+              "role": "textbox"
+            }
+          },
+          "readback_url": "http://127.0.0.1:8852/",
+          "selector_argument": "target",
+          "update_arguments": [
+            "value"
+          ]
+        },
+        "scope": {
+          "numeric_context_labels": "The declared numeric-label shape generalizes between two selected records; current-call labels stay frozen. Outcomes check observed record fields, without establishing that numeric context values are semantically irrelevant.",
+          "operation_family": "local record read",
+          "origin": "http://127.0.0.1:8852",
+          "prior": "General English action vocabulary proposes exploration",
+          "runtime_model": null,
+          "unsupported": [
+            "global record uniqueness",
+            "rollback",
+            "exactly-once delivery",
+            "relational selection",
+            "unobserved side effects"
+          ]
+        },
+        "status": "ACTIVE",
+        "support": {
+          "argument_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "target": {
+                "description": "Exact current local anchor: Visible editor value",
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "target"
+            ],
+            "type": "object"
+          },
+          "effect_checks": [
+            "Values read from original field descriptors uniquely bound in two distinct creation trials",
+            "Complete editor state rechecked before leaving"
+          ],
+          "kind": "read_visible_record",
+          "output_schema": {
+            "properties": {
+              "effect": {
+                "properties": {
+                  "values": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "value": {
+                        "binding_basis": "unique_original_descriptor_and_two_distinct_creation_trials",
+                        "description": "Visible editor value",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "value"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "metrics": {
+                "type": "object"
+              },
+              "outcome": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "outcome",
+              "effect",
+              "metrics"
+            ],
+            "type": "object"
+          },
+          "parent_create_evidence_sha256": "7ccb4aeb173c2a8c29276abfe0268ec766a4b698bff5b9b9306bde96a458b590",
+          "parent_create_id": "op_562fcb42c95d9c59eba3",
+          "parent_create_version": 1,
+          "policy_version": "local-record-v6",
+          "prerequisites": [
+            "Authenticated session and no current editor draft before navigation",
+            "One rendered local record with the exact learned anchor slots and channel",
+            "Unique unchanged record-local edit route and descriptor-bound edit form contract",
+            "Loaded editor retains the selected anchor",
+            "Selected editor owner, learned fields and submit retain observed DOM-element continuity",
+            "All captured field values and defaults remain unchanged except requested fills",
+            "One bound numeric dialog context control retains its label, state, placement and DOM element during the call"
+          ],
+          "procedure": {
+            "anchor": "value",
+            "anchor_mode": "replace_value",
+            "context_label_binding": {
+              "completed_read_trials": 2,
+              "descriptor": {
+                "has_popup": "dialog",
+                "input_type": "",
+                "role": "button"
+              },
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "button",
+                  0
+                ]
+              ],
+              "prior": "One unexecuted dialog-advertising context button may vary between records: ASCII digit runs retain their widths and all punctuation/whitespace stays literal; two distinct labels require two completed selected-record read trials",
+              "read_evidence": [
+                {
+                  "editor_state": {
+                    "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                      "checked": null,
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "value": "semabi_709e774b09_0"
+                    },
+                    "context_controls": [
+                      {
+                        "descriptor": {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "2026-09-09 22:30:24",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "path": [
+                          [
+                            "group",
+                            0
+                          ],
+                          [
+                            "button",
+                            0
+                          ]
+                        ],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "input_type": "",
+                          "label": "Cancel",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      }
+                    ],
+                    "other_editors": [
+                      [
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "textbox",
+                          "value": ""
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        },
+                        {
+                          "checked": null,
+                          "disabled": true,
+                          "input_type": "",
+                          "label": "Save",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        }
+                      ],
+                      [
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "input_type": "text",
+                          "label": "Search memos...",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "textbox",
+                          "value": ""
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        }
+                      ]
+                    ],
+                    "raw_form": {
+                      "context_controls": [
+                        {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "role": "button"
+                        },
+                        {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "role": "button"
+                        },
+                        {
+                          "input_type": "",
+                          "label": "Cancel",
+                          "role": "button"
+                        },
+                        {
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "2026-09-09 22:30:24",
+                          "role": "button"
+                        }
+                      ],
+                      "fields": [
+                        {
+                          "argument": "value",
+                          "descriptor": {
+                            "input_type": "contenteditable",
+                            "label": "",
+                            "role": "textbox"
+                          },
+                          "input_type": "contenteditable",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "required": false,
+                          "role": "textbox"
+                        }
+                      ],
+                      "submit": {
+                        "input_type": "",
+                        "label": "Save",
+                        "role": "button"
+                      }
+                    }
+                  },
+                  "label": "2026-09-09 22:30:24",
+                  "observation": "cb65ffb13631751f",
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:24",
+                        "role": "button"
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "argument": "value",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "submit": {
+                      "input_type": "",
+                      "label": "Save",
+                      "role": "button"
+                    }
+                  }
+                },
+                {
+                  "editor_state": {
+                    "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                      "checked": null,
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "value": "semabi_1445565ab7_1"
+                    },
+                    "context_controls": [
+                      {
+                        "descriptor": {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "2026-09-09 22:30:27",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "path": [
+                          [
+                            "group",
+                            0
+                          ],
+                          [
+                            "button",
+                            0
+                          ]
+                        ],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "input_type": "",
+                          "label": "Cancel",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      }
+                    ],
+                    "other_editors": [
+                      [
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "textbox",
+                          "value": ""
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        },
+                        {
+                          "checked": null,
+                          "disabled": true,
+                          "input_type": "",
+                          "label": "Save",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        }
+                      ],
+                      [
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "input_type": "text",
+                          "label": "Search memos...",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "textbox",
+                          "value": ""
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        }
+                      ]
+                    ],
+                    "raw_form": {
+                      "context_controls": [
+                        {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "role": "button"
+                        },
+                        {
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "2026-09-09 22:30:27",
+                          "role": "button"
+                        },
+                        {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "role": "button"
+                        },
+                        {
+                          "input_type": "",
+                          "label": "Cancel",
+                          "role": "button"
+                        }
+                      ],
+                      "fields": [
+                        {
+                          "argument": "value",
+                          "descriptor": {
+                            "input_type": "contenteditable",
+                            "label": "",
+                            "role": "textbox"
+                          },
+                          "input_type": "contenteditable",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "required": false,
+                          "role": "textbox"
+                        }
+                      ],
+                      "submit": {
+                        "input_type": "",
+                        "label": "Save",
+                        "role": "button"
+                      }
+                    }
+                  },
+                  "label": "2026-09-09 22:30:27",
+                  "observation": "ac82240120cd1a67",
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:27",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "argument": "value",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "submit": {
+                      "input_type": "",
+                      "label": "Save",
+                      "role": "button"
+                    }
+                  }
+                }
+              ],
+              "shape": [
+                {
+                  "digits": 4
+                },
+                {
+                  "literal": "-"
+                },
+                {
+                  "digits": 2
+                },
+                {
+                  "literal": "-"
+                },
+                {
+                  "digits": 2
+                },
+                {
+                  "literal": " "
+                },
+                {
+                  "digits": 2
+                },
+                {
+                  "literal": ":"
+                },
+                {
+                  "digits": 2
+                },
+                {
+                  "literal": ":"
+                },
+                {
+                  "digits": 2
+                }
+              ],
+              "state": {
+                "disabled": false,
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "readonly": false,
+                "required": false
+              }
+            },
+            "edit": {
+              "input_type": "",
+              "label": "Edit",
+              "role": "menuitem"
+            },
+            "effect_slots": {
+              "value": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      1
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "form": {
+              "context_controls": [
+                {
+                  "has_popup": "menu",
+                  "input_type": "",
+                  "label": "",
+                  "role": "button"
+                },
+                {
+                  "has_popup": "menu",
+                  "input_type": "",
+                  "label": "Private",
+                  "role": "button"
+                },
+                {
+                  "input_type": "",
+                  "label": "Cancel",
+                  "role": "button"
+                },
+                {
+                  "has_popup": "dialog",
+                  "input_type": "",
+                  "label": "2026-09-09 22:30:24",
+                  "role": "button"
+                }
+              ],
+              "fields": [
+                {
+                  "argument": "value",
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "",
+                    "role": "textbox"
+                  },
+                  "input_type": "contenteditable",
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "required": false,
+                  "role": "textbox"
+                }
+              ],
+              "submit": {
+                "input_type": "",
+                "label": "Save",
+                "role": "button"
+              }
+            },
+            "menu": {
+              "input_type": "",
+              "label": "",
+              "role": "menu"
+            },
+            "menu_trigger": {
+              "has_popup": "menu",
+              "input_type": "",
+              "label": "",
+              "role": "button"
+            },
+            "read_fields": {
+              "value": {
+                "input_type": "contenteditable",
+                "label": "",
+                "role": "textbox"
+              }
+            },
+            "readback_url": "http://127.0.0.1:8852/",
+            "selector_argument": "target",
+            "update_arguments": [
+              "value"
+            ]
+          },
+          "scope": {
+            "numeric_context_labels": "The declared numeric-label shape generalizes between two selected records; current-call labels stay frozen. Outcomes check observed record fields, without establishing that numeric context values are semantically irrelevant.",
+            "operation_family": "local record read",
+            "origin": "http://127.0.0.1:8852",
+            "prior": "General English action vocabulary proposes exploration",
+            "runtime_model": null,
+            "unsupported": [
+              "global record uniqueness",
+              "rollback",
+              "exactly-once delivery",
+              "relational selection",
+              "unobserved side effects"
+            ]
+          },
+          "source_sha256": {
+            "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+            "browser_session.py": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+            "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+            "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+            "runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+            "surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          "trials": [
+            {
+              "arguments": {
+                "target": "semabi_709e774b09_0"
+              },
+              "before": {
+                "value": "semabi_709e774b09_0"
+              },
+              "editor_observation": "cb65ffb13631751f",
+              "editor_state": {
+                "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": "semabi_709e774b09_0"
+                },
+                "context_controls": [
+                  {
+                    "descriptor": {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:24",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "button",
+                        0
+                      ]
+                    ],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  }
+                ],
+                "other_editors": [
+                  [
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "input_type": "contenteditable",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "textbox",
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    },
+                    {
+                      "checked": null,
+                      "disabled": true,
+                      "input_type": "",
+                      "label": "Save",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    }
+                  ],
+                  [
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "input_type": "text",
+                      "label": "Search memos...",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "textbox",
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    }
+                  ]
+                ],
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:24",
+                      "role": "button"
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "argument": "value",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "submit": {
+                    "input_type": "",
+                    "label": "Save",
+                    "role": "button"
+                  }
+                }
+              },
+              "values": {
+                "value": "semabi_709e774b09_0"
+              },
+              "witness": {
+                "basis": "visible_local_record",
+                "link_destinations": [],
+                "observation": "3f1cdb21a25aebd1",
+                "role": "article",
+                "root": 195,
+                "text_boundaries": {
+                  "211": "semabi_709e774b09_0"
+                },
+                "texts": [
+                  "semabi_709e774b09_0"
+                ],
+                "value_node": 211
+              }
+            },
+            {
+              "arguments": {
+                "target": "semabi_1445565ab7_1"
+              },
+              "before": {
+                "value": "semabi_1445565ab7_1"
+              },
+              "editor_observation": "ac82240120cd1a67",
+              "editor_state": {
+                "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": "semabi_1445565ab7_1"
+                },
+                "context_controls": [
+                  {
+                    "descriptor": {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:27",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "button",
+                        0
+                      ]
+                    ],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  }
+                ],
+                "other_editors": [
+                  [
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "input_type": "contenteditable",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "textbox",
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    },
+                    {
+                      "checked": null,
+                      "disabled": true,
+                      "input_type": "",
+                      "label": "Save",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    }
+                  ],
+                  [
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "input_type": "text",
+                      "label": "Search memos...",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "textbox",
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    }
+                  ]
+                ],
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:27",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "argument": "value",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "submit": {
+                    "input_type": "",
+                    "label": "Save",
+                    "role": "button"
+                  }
+                }
+              },
+              "values": {
+                "value": "semabi_1445565ab7_1"
+              },
+              "witness": {
+                "basis": "visible_local_record",
+                "link_destinations": [],
+                "observation": "3f1cdb21a25aebd1",
+                "role": "article",
+                "root": 178,
+                "text_boundaries": {
+                  "194": "semabi_1445565ab7_1"
+                },
+                "texts": [
+                  "semabi_1445565ab7_1"
+                ],
+                "value_node": 194
+              }
+            }
+          ]
+        },
+        "version": 1
+      },
+      {
+        "argument_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "target": {
+              "description": "Exact current local anchor: Visible editor value",
+              "minLength": 1,
+              "type": "string"
+            },
+            "value": {
+              "description": "Visible editor value",
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "target",
+            "value"
+          ],
+          "type": "object"
+        },
+        "effect_checks": [
+          "Old target absent and new value in original slots after submission and reload",
+          "Full evolving editor state and DOM-element continuity checked before every fill and submission",
+          "All expected values occupy learned local record slots after submission and reload"
+        ],
+        "evidence_sha256": "5095988b0409361433dcfc02760d73a238cefad019e971610f4a502daff37ad2",
+        "id": "op_d245e3cc03c44e6800cd",
+        "kind": "update_visible_record",
+        "name": "update_record",
+        "output_schema": {
+          "properties": {
+            "effect": {
+              "properties": {
+                "arguments": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "value": {
+                      "binding_basis": "unique_original_descriptor_and_two_distinct_creation_trials",
+                      "description": "Visible editor value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "metrics": {
+              "type": "object"
+            },
+            "outcome": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "outcome",
+            "effect",
+            "metrics"
+          ],
+          "type": "object"
+        },
+        "prerequisites": [
+          "Authenticated session and no current editor draft before navigation",
+          "One rendered local record with the exact learned anchor slots and channel",
+          "Unique unchanged record-local edit route and descriptor-bound edit form contract",
+          "Loaded editor retains the selected anchor",
+          "Selected editor owner, learned fields and submit retain observed DOM-element continuity",
+          "All captured field values and defaults remain unchanged except requested fills",
+          "One bound numeric dialog context control retains its label, state, placement and DOM element during the call"
+        ],
+        "procedure": {
+          "anchor": "value",
+          "anchor_mode": "replace_value",
+          "context_label_binding": {
+            "completed_read_trials": 2,
+            "descriptor": {
+              "has_popup": "dialog",
+              "input_type": "",
+              "role": "button"
+            },
+            "path": [
+              [
+                "group",
+                0
+              ],
+              [
+                "button",
+                0
+              ]
+            ],
+            "prior": "One unexecuted dialog-advertising context button may vary between records: ASCII digit runs retain their widths and all punctuation/whitespace stays literal; two distinct labels require two completed selected-record read trials",
+            "read_evidence": [
+              {
+                "editor_state": {
+                  "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": "semabi_709e774b09_0"
+                  },
+                  "context_controls": [
+                    {
+                      "descriptor": {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:24",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "path": [
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "button",
+                          0
+                        ]
+                      ],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    }
+                  ],
+                  "other_editors": [
+                    [
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "textbox",
+                        "value": ""
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      },
+                      {
+                        "checked": null,
+                        "disabled": true,
+                        "input_type": "",
+                        "label": "Save",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      }
+                    ],
+                    [
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "input_type": "text",
+                        "label": "Search memos...",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "textbox",
+                        "value": ""
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      }
+                    ]
+                  ],
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:24",
+                        "role": "button"
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "argument": "value",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "submit": {
+                      "input_type": "",
+                      "label": "Save",
+                      "role": "button"
+                    }
+                  }
+                },
+                "label": "2026-09-09 22:30:24",
+                "observation": "cb65ffb13631751f",
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:24",
+                      "role": "button"
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "argument": "value",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "submit": {
+                    "input_type": "",
+                    "label": "Save",
+                    "role": "button"
+                  }
+                }
+              },
+              {
+                "editor_state": {
+                  "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": "semabi_1445565ab7_1"
+                  },
+                  "context_controls": [
+                    {
+                      "descriptor": {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:27",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "path": [
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "button",
+                          0
+                        ]
+                      ],
+                      "readonly": false,
+                      "required": false
+                    },
+                    {
+                      "descriptor": {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false
+                    }
+                  ],
+                  "other_editors": [
+                    [
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "textbox",
+                        "value": ""
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      },
+                      {
+                        "checked": null,
+                        "disabled": true,
+                        "input_type": "",
+                        "label": "Save",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      }
+                    ],
+                    [
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "input_type": "text",
+                        "label": "Search memos...",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "textbox",
+                        "value": ""
+                      },
+                      {
+                        "checked": null,
+                        "disabled": false,
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false,
+                        "role": "button",
+                        "value": null
+                      }
+                    ]
+                  ],
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:27",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "argument": "value",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "submit": {
+                      "input_type": "",
+                      "label": "Save",
+                      "role": "button"
+                    }
+                  }
+                },
+                "label": "2026-09-09 22:30:27",
+                "observation": "ac82240120cd1a67",
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:27",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "argument": "value",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "submit": {
+                    "input_type": "",
+                    "label": "Save",
+                    "role": "button"
+                  }
+                }
+              }
+            ],
+            "shape": [
+              {
+                "digits": 4
+              },
+              {
+                "literal": "-"
+              },
+              {
+                "digits": 2
+              },
+              {
+                "literal": "-"
+              },
+              {
+                "digits": 2
+              },
+              {
+                "literal": " "
+              },
+              {
+                "digits": 2
+              },
+              {
+                "literal": ":"
+              },
+              {
+                "digits": 2
+              },
+              {
+                "literal": ":"
+              },
+              {
+                "digits": 2
+              }
+            ],
+            "state": {
+              "disabled": false,
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "options": [],
+              "readonly": false,
+              "required": false
+            }
+          },
+          "edit": {
+            "input_type": "",
+            "label": "Edit",
+            "role": "menuitem"
+          },
+          "effect_slots": {
+            "value": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "form": {
+            "context_controls": [
+              {
+                "has_popup": "menu",
+                "input_type": "",
+                "label": "",
+                "role": "button"
+              },
+              {
+                "has_popup": "menu",
+                "input_type": "",
+                "label": "Private",
+                "role": "button"
+              },
+              {
+                "input_type": "",
+                "label": "Cancel",
+                "role": "button"
+              },
+              {
+                "has_popup": "dialog",
+                "input_type": "",
+                "label": "2026-09-09 22:30:24",
+                "role": "button"
+              }
+            ],
+            "fields": [
+              {
+                "argument": "value",
+                "descriptor": {
+                  "input_type": "contenteditable",
+                  "label": "",
+                  "role": "textbox"
+                },
+                "input_type": "contenteditable",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "required": false,
+                "role": "textbox"
+              }
+            ],
+            "submit": {
+              "input_type": "",
+              "label": "Save",
+              "role": "button"
+            }
+          },
+          "menu": {
+            "input_type": "",
+            "label": "",
+            "role": "menu"
+          },
+          "menu_trigger": {
+            "has_popup": "menu",
+            "input_type": "",
+            "label": "",
+            "role": "button"
+          },
+          "read_fields": {
+            "value": {
+              "input_type": "contenteditable",
+              "label": "",
+              "role": "textbox"
+            }
+          },
+          "readback_url": "http://127.0.0.1:8852/",
+          "selector_argument": "target",
+          "update_arguments": [
+            "value"
+          ]
+        },
+        "scope": {
+          "identity": "UNESTABLISHED",
+          "numeric_context_labels": "The declared numeric-label shape generalizes between two selected records; current-call labels stay frozen. Outcomes check observed record fields, without establishing that numeric context values are semantically irrelevant.",
+          "operation_family": "local exact-value replacement",
+          "origin": "http://127.0.0.1:8852",
+          "prior": "General English action vocabulary proposes exploration",
+          "replacement": "New value retained and old value absent after submission and reload",
+          "runtime_model": null,
+          "selection": "Exact old value in the inspected record view",
+          "unsupported": [
+            "global record uniqueness",
+            "rollback",
+            "exactly-once delivery",
+            "relational selection",
+            "unobserved side effects"
+          ]
+        },
+        "status": "ACTIVE",
+        "support": {
+          "argument_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "target": {
+                "description": "Exact current local anchor: Visible editor value",
+                "minLength": 1,
+                "type": "string"
+              },
+              "value": {
+                "description": "Visible editor value",
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "target",
+              "value"
+            ],
+            "type": "object"
+          },
+          "effect_checks": [
+            "Old target absent and new value in original slots after submission and reload",
+            "Full evolving editor state and DOM-element continuity checked before every fill and submission",
+            "All expected values occupy learned local record slots after submission and reload"
+          ],
+          "kind": "update_visible_record",
+          "output_schema": {
+            "properties": {
+              "effect": {
+                "properties": {
+                  "arguments": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "value": {
+                        "binding_basis": "unique_original_descriptor_and_two_distinct_creation_trials",
+                        "description": "Visible editor value",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "value"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "metrics": {
+                "type": "object"
+              },
+              "outcome": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "outcome",
+              "effect",
+              "metrics"
+            ],
+            "type": "object"
+          },
+          "parent_create_evidence_sha256": "7ccb4aeb173c2a8c29276abfe0268ec766a4b698bff5b9b9306bde96a458b590",
+          "parent_create_id": "op_562fcb42c95d9c59eba3",
+          "parent_create_version": 1,
+          "policy_version": "local-record-v6",
+          "prerequisites": [
+            "Authenticated session and no current editor draft before navigation",
+            "One rendered local record with the exact learned anchor slots and channel",
+            "Unique unchanged record-local edit route and descriptor-bound edit form contract",
+            "Loaded editor retains the selected anchor",
+            "Selected editor owner, learned fields and submit retain observed DOM-element continuity",
+            "All captured field values and defaults remain unchanged except requested fills",
+            "One bound numeric dialog context control retains its label, state, placement and DOM element during the call"
+          ],
+          "procedure": {
+            "anchor": "value",
+            "anchor_mode": "replace_value",
+            "context_label_binding": {
+              "completed_read_trials": 2,
+              "descriptor": {
+                "has_popup": "dialog",
+                "input_type": "",
+                "role": "button"
+              },
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "button",
+                  0
+                ]
+              ],
+              "prior": "One unexecuted dialog-advertising context button may vary between records: ASCII digit runs retain their widths and all punctuation/whitespace stays literal; two distinct labels require two completed selected-record read trials",
+              "read_evidence": [
+                {
+                  "editor_state": {
+                    "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                      "checked": null,
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "value": "semabi_709e774b09_0"
+                    },
+                    "context_controls": [
+                      {
+                        "descriptor": {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "2026-09-09 22:30:24",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "path": [
+                          [
+                            "group",
+                            0
+                          ],
+                          [
+                            "button",
+                            0
+                          ]
+                        ],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "input_type": "",
+                          "label": "Cancel",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      }
+                    ],
+                    "other_editors": [
+                      [
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "textbox",
+                          "value": ""
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        },
+                        {
+                          "checked": null,
+                          "disabled": true,
+                          "input_type": "",
+                          "label": "Save",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        }
+                      ],
+                      [
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "input_type": "text",
+                          "label": "Search memos...",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "textbox",
+                          "value": ""
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        }
+                      ]
+                    ],
+                    "raw_form": {
+                      "context_controls": [
+                        {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "role": "button"
+                        },
+                        {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "role": "button"
+                        },
+                        {
+                          "input_type": "",
+                          "label": "Cancel",
+                          "role": "button"
+                        },
+                        {
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "2026-09-09 22:30:24",
+                          "role": "button"
+                        }
+                      ],
+                      "fields": [
+                        {
+                          "argument": "value",
+                          "descriptor": {
+                            "input_type": "contenteditable",
+                            "label": "",
+                            "role": "textbox"
+                          },
+                          "input_type": "contenteditable",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "required": false,
+                          "role": "textbox"
+                        }
+                      ],
+                      "submit": {
+                        "input_type": "",
+                        "label": "Save",
+                        "role": "button"
+                      }
+                    }
+                  },
+                  "label": "2026-09-09 22:30:24",
+                  "observation": "cb65ffb13631751f",
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:24",
+                        "role": "button"
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "argument": "value",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "submit": {
+                      "input_type": "",
+                      "label": "Save",
+                      "role": "button"
+                    }
+                  }
+                },
+                {
+                  "editor_state": {
+                    "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                      "checked": null,
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "value": "semabi_1445565ab7_1"
+                    },
+                    "context_controls": [
+                      {
+                        "descriptor": {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "2026-09-09 22:30:27",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "path": [
+                          [
+                            "group",
+                            0
+                          ],
+                          [
+                            "button",
+                            0
+                          ]
+                        ],
+                        "readonly": false,
+                        "required": false
+                      },
+                      {
+                        "descriptor": {
+                          "input_type": "",
+                          "label": "Cancel",
+                          "role": "button"
+                        },
+                        "disabled": false,
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "readonly": false,
+                        "required": false
+                      }
+                    ],
+                    "other_editors": [
+                      [
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "textbox",
+                          "value": ""
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        },
+                        {
+                          "checked": null,
+                          "disabled": true,
+                          "input_type": "",
+                          "label": "Save",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        }
+                      ],
+                      [
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "input_type": "text",
+                          "label": "Search memos...",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "textbox",
+                          "value": ""
+                        },
+                        {
+                          "checked": null,
+                          "disabled": false,
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "readonly": false,
+                          "required": false,
+                          "role": "button",
+                          "value": null
+                        }
+                      ]
+                    ],
+                    "raw_form": {
+                      "context_controls": [
+                        {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "",
+                          "role": "button"
+                        },
+                        {
+                          "has_popup": "dialog",
+                          "input_type": "",
+                          "label": "2026-09-09 22:30:27",
+                          "role": "button"
+                        },
+                        {
+                          "has_popup": "menu",
+                          "input_type": "",
+                          "label": "Private",
+                          "role": "button"
+                        },
+                        {
+                          "input_type": "",
+                          "label": "Cancel",
+                          "role": "button"
+                        }
+                      ],
+                      "fields": [
+                        {
+                          "argument": "value",
+                          "descriptor": {
+                            "input_type": "contenteditable",
+                            "label": "",
+                            "role": "textbox"
+                          },
+                          "input_type": "contenteditable",
+                          "max": null,
+                          "max_length": null,
+                          "min": null,
+                          "options": [],
+                          "required": false,
+                          "role": "textbox"
+                        }
+                      ],
+                      "submit": {
+                        "input_type": "",
+                        "label": "Save",
+                        "role": "button"
+                      }
+                    }
+                  },
+                  "label": "2026-09-09 22:30:27",
+                  "observation": "ac82240120cd1a67",
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "dialog",
+                        "input_type": "",
+                        "label": "2026-09-09 22:30:27",
+                        "role": "button"
+                      },
+                      {
+                        "has_popup": "menu",
+                        "input_type": "",
+                        "label": "Private",
+                        "role": "button"
+                      },
+                      {
+                        "input_type": "",
+                        "label": "Cancel",
+                        "role": "button"
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "argument": "value",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "submit": {
+                      "input_type": "",
+                      "label": "Save",
+                      "role": "button"
+                    }
+                  }
+                }
+              ],
+              "shape": [
+                {
+                  "digits": 4
+                },
+                {
+                  "literal": "-"
+                },
+                {
+                  "digits": 2
+                },
+                {
+                  "literal": "-"
+                },
+                {
+                  "digits": 2
+                },
+                {
+                  "literal": " "
+                },
+                {
+                  "digits": 2
+                },
+                {
+                  "literal": ":"
+                },
+                {
+                  "digits": 2
+                },
+                {
+                  "literal": ":"
+                },
+                {
+                  "digits": 2
+                }
+              ],
+              "state": {
+                "disabled": false,
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "readonly": false,
+                "required": false
+              }
+            },
+            "edit": {
+              "input_type": "",
+              "label": "Edit",
+              "role": "menuitem"
+            },
+            "effect_slots": {
+              "value": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      1
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "form": {
+              "context_controls": [
+                {
+                  "has_popup": "menu",
+                  "input_type": "",
+                  "label": "",
+                  "role": "button"
+                },
+                {
+                  "has_popup": "menu",
+                  "input_type": "",
+                  "label": "Private",
+                  "role": "button"
+                },
+                {
+                  "input_type": "",
+                  "label": "Cancel",
+                  "role": "button"
+                },
+                {
+                  "has_popup": "dialog",
+                  "input_type": "",
+                  "label": "2026-09-09 22:30:24",
+                  "role": "button"
+                }
+              ],
+              "fields": [
+                {
+                  "argument": "value",
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "",
+                    "role": "textbox"
+                  },
+                  "input_type": "contenteditable",
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "required": false,
+                  "role": "textbox"
+                }
+              ],
+              "submit": {
+                "input_type": "",
+                "label": "Save",
+                "role": "button"
+              }
+            },
+            "menu": {
+              "input_type": "",
+              "label": "",
+              "role": "menu"
+            },
+            "menu_trigger": {
+              "has_popup": "menu",
+              "input_type": "",
+              "label": "",
+              "role": "button"
+            },
+            "read_fields": {
+              "value": {
+                "input_type": "contenteditable",
+                "label": "",
+                "role": "textbox"
+              }
+            },
+            "readback_url": "http://127.0.0.1:8852/",
+            "selector_argument": "target",
+            "update_arguments": [
+              "value"
+            ]
+          },
+          "scope": {
+            "identity": "UNESTABLISHED",
+            "numeric_context_labels": "The declared numeric-label shape generalizes between two selected records; current-call labels stay frozen. Outcomes check observed record fields, without establishing that numeric context values are semantically irrelevant.",
+            "operation_family": "local exact-value replacement",
+            "origin": "http://127.0.0.1:8852",
+            "prior": "General English action vocabulary proposes exploration",
+            "replacement": "New value retained and old value absent after submission and reload",
+            "runtime_model": null,
+            "selection": "Exact old value in the inspected record view",
+            "unsupported": [
+              "global record uniqueness",
+              "rollback",
+              "exactly-once delivery",
+              "relational selection",
+              "unobserved side effects"
+            ]
+          },
+          "source_sha256": {
+            "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+            "browser_session.py": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+            "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+            "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+            "runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+            "surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          "trials": [
+            {
+              "arguments": {
+                "target": "semabi_709e774b09_0",
+                "value": "semabi_16d7558d05_2"
+              },
+              "before": {
+                "value": "semabi_709e774b09_0"
+              },
+              "before_witness": {
+                "basis": "visible_local_record",
+                "link_destinations": [],
+                "observation": "3f1cdb21a25aebd1",
+                "role": "article",
+                "root": 195,
+                "text_boundaries": {
+                  "211": "semabi_709e774b09_0"
+                },
+                "texts": [
+                  "semabi_709e774b09_0"
+                ],
+                "value_node": 211
+              },
+              "editor_observation": "cb65ffb13631751f",
+              "editor_state": {
+                "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": "semabi_709e774b09_0"
+                },
+                "context_controls": [
+                  {
+                    "descriptor": {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:24",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "button",
+                        0
+                      ]
+                    ],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  }
+                ],
+                "other_editors": [
+                  [
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "input_type": "contenteditable",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "textbox",
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    },
+                    {
+                      "checked": null,
+                      "disabled": true,
+                      "input_type": "",
+                      "label": "Save",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    }
+                  ],
+                  [
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "input_type": "text",
+                      "label": "Search memos...",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "textbox",
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    }
+                  ]
+                ],
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:24",
+                      "role": "button"
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "argument": "value",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "submit": {
+                    "input_type": "",
+                    "label": "Save",
+                    "role": "button"
+                  }
+                }
+              },
+              "values": {
+                "value": "semabi_16d7558d05_2"
+              },
+              "witness": {
+                "basis": "visible_local_record",
+                "field_slots": {
+                  "value": [
+                    {
+                      "channel": "text",
+                      "path": [
+                        [
+                          "group",
+                          1
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "text",
+                          0
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                "link_destinations": [],
+                "observation": "fe928e5d9b9ed7ad",
+                "old_anchor_absence": {
+                  "after_reload_observation": "fe928e5d9b9ed7ad",
+                  "after_submit_observation": "e32002a869bfe1ac",
+                  "value": "semabi_709e774b09_0"
+                },
+                "role": "article",
+                "root": 195,
+                "text_boundaries": {
+                  "211": "semabi_16d7558d05_2"
+                },
+                "texts": [
+                  "semabi_16d7558d05_2"
+                ],
+                "value_node": 211
+              }
+            },
+            {
+              "arguments": {
+                "target": "semabi_1445565ab7_1",
+                "value": "semabi_752777ffb2_3"
+              },
+              "before": {
+                "value": "semabi_1445565ab7_1"
+              },
+              "before_witness": {
+                "basis": "visible_local_record",
+                "link_destinations": [],
+                "observation": "fe928e5d9b9ed7ad",
+                "role": "article",
+                "root": 178,
+                "text_boundaries": {
+                  "194": "semabi_1445565ab7_1"
+                },
+                "texts": [
+                  "semabi_1445565ab7_1"
+                ],
+                "value_node": 194
+              },
+              "editor_observation": "fc6b57122407d195",
+              "editor_state": {
+                "0851acafe61e2d2ff83306d5e9132d8ea393367b8bce6682ee42c039b89bbe68": {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": "semabi_1445565ab7_1"
+                },
+                "context_controls": [
+                  {
+                    "descriptor": {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:27",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "button",
+                        0
+                      ]
+                    ],
+                    "readonly": false,
+                    "required": false
+                  },
+                  {
+                    "descriptor": {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false
+                  }
+                ],
+                "other_editors": [
+                  [
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "input_type": "contenteditable",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "textbox",
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    },
+                    {
+                      "checked": null,
+                      "disabled": true,
+                      "input_type": "",
+                      "label": "Save",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    }
+                  ],
+                  [
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "input_type": "text",
+                      "label": "Search memos...",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "textbox",
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "disabled": false,
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "role": "button",
+                      "value": null
+                    }
+                  ]
+                ],
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "dialog",
+                      "input_type": "",
+                      "label": "2026-09-09 22:30:27",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    },
+                    {
+                      "input_type": "",
+                      "label": "Cancel",
+                      "role": "button"
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "argument": "value",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "submit": {
+                    "input_type": "",
+                    "label": "Save",
+                    "role": "button"
+                  }
+                }
+              },
+              "values": {
+                "value": "semabi_752777ffb2_3"
+              },
+              "witness": {
+                "basis": "visible_local_record",
+                "field_slots": {
+                  "value": [
+                    {
+                      "channel": "text",
+                      "path": [
+                        [
+                          "group",
+                          1
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "text",
+                          0
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                "link_destinations": [],
+                "observation": "187ede77b5046588",
+                "old_anchor_absence": {
+                  "after_reload_observation": "187ede77b5046588",
+                  "after_submit_observation": "96aebf407a3d26dd",
+                  "value": "semabi_1445565ab7_1"
+                },
+                "role": "article",
+                "root": 178,
+                "text_boundaries": {
+                  "194": "semabi_752777ffb2_3"
+                },
+                "texts": [
+                  "semabi_752777ffb2_3"
+                ],
+                "value_node": 194
+              }
+            }
+          ]
+        },
+        "version": 1
+      }
+    ]
+  },
+  "completed_at": "2026-09-09T20:30:47.105728+00:00",
+  "connection_id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+  "connection_navigation_actions": 1,
+  "deadline_scope": "Startup, connect, learning and public capture; HTTP timeout does not establish runtime cancellation",
+  "elapsed_seconds_including_shutdown": 28.714754636996076,
+  "elapsed_seconds_startup_connect_learning": 28.59942296599911,
+  "export_projection": {
+    "catalog": "COMPLETE_UNCHANGED_PUBLIC_OPERATIONS",
+    "omitted": [
+      "job event/request repetitions",
+      "detailed learning progress",
+      "duplicate learned-operation results"
+    ],
+    "origin_bytes": 394492,
+    "origin_path": "runs/product_paragraph_development_v1/onboarding_v1/onboarding.json",
+    "origin_sha256": "7cb3fd4f0628b97303ba5b9e0f620d8d536f7f7b051c5ea834713aef3889cc03"
+  },
+  "format": "development_public_http_onboarding.v1",
+  "fresh_service_process": true,
+  "harness_sha256": "9efafbac8487a02eadf98a909dc066dbe0fa002bef642a9aa0eb7b41b72e1941",
+  "http_requests": 279,
+  "interaction_total": 33,
+  "invocations": 0,
+  "jobs": {
+    "job_0f70e3ac8d384155864129709bccbf6f": {
+      "connection_id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+      "created_at": "2026-09-09T20:30:18.565933+00:00",
+      "id": "job_0f70e3ac8d384155864129709bccbf6f",
+      "job_id": "job_0f70e3ac8d384155864129709bccbf6f",
+      "kind": "connect",
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 2.019,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T20:30:20.973660+00:00",
+      "write_intent": false
+    },
+    "job_9ce649588cfa451e9a95cd40051d09f5": {
+      "connection_id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+      "created_at": "2026-09-09T20:30:21.027728+00:00",
+      "id": "job_9ce649588cfa451e9a95cd40051d09f5",
+      "job_id": "job_9ce649588cfa451e9a95cd40051d09f5",
+      "kind": "learn",
+      "result": {
+        "metrics": {
+          "actions": 29,
+          "elapsed_seconds": 25.867,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 16
+        },
+        "status": "COMPLETED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T20:30:46.901784+00:00",
+      "write_intent": true
+    }
+  },
+  "learning_metrics": {
+    "actions": 29,
+    "elapsed_seconds": 25.867,
+    "model_calls": 0,
+    "paid_cost": 0,
+    "possible_write_actions": 16
+  },
+  "learning_outcome": "COMPLETED",
+  "learning_settings": {
+    "max_actions": 116,
+    "max_writes": 37
+  },
+  "limits": {
+    "max_actions": 120,
+    "max_possible_writes": 40,
+    "max_seconds": 900
+  },
+  "possible_write_total": 19,
+  "process_cpu_and_rss_accounting": "External frozen command meter wraps this owner and its descendants; persistent application cost excluded",
+  "public_connection": {
+    "allowed_origin": "http://127.0.0.1:8852",
+    "created_at": "2026-09-09T20:30:18.565748+00:00",
+    "id": "conn_9da9a769b8274740af2fdcfec90cb8d8",
+    "scope": {
+      "exploration_enabled": true,
+      "max_actions": 120,
+      "max_writes": 40
+    },
+    "status": "CONNECTED",
+    "url": "http://127.0.0.1:8852/"
+  },
+  "public_observation_events": 49,
+  "raw_dom_snapshot_count": null,
+  "raw_dom_snapshot_count_status": "Not exposed by this service version",
+  "service_data_dir": "/home/moloch/semabi/runs/product_paragraph_development_v1/service",
+  "service_exit_code": 0,
+  "service_log_drain_complete": true,
+  "service_pid": 1256904,
+  "service_startup_seconds": 0.16188879299443215,
+  "source_after": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_before": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_map_sha256": "151349cb957dd00d22f60ec8d7b567e6104dc5bee1fb32e214428b4c9c5d6152",
+  "source_unchanged": true,
+  "started_at": "2026-09-09T20:30:18.391043+00:00",
+  "status": "ONBOARDING_FINISHED",
+  "within_workflow_budget": true,
+  "write_retries": 0
+}

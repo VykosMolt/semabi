@@ -1,0 +1,850 @@
+{
+  "format": "product_assessment_expected_results.v1",
+  "status": "PROPOSED_EVALUATOR_ONLY_NOT_OBSERVED",
+  "created_at": "2026-09-09T18:34:11.631781+00:00",
+  "run_token": "pa260909af9b86d0",
+  "protocol": {
+    "path": "docs/data/v4/transport/product/evaluation_protocol_v1.md",
+    "sha256_at_preparation": "c2e04d734345877755fe724f8228cbe3d1821659dfeb722fe37f5ee7804b7c6c"
+  },
+  "source_pending": true,
+  "learner_input_permitted": false,
+  "expectation_count": 32,
+  "paired_result_slot_count": 64,
+  "fixture_status": "PROPOSED until normal UI setup independently confirms the opportunity and visible values within the stated setup budget.",
+  "fixture_record_names": "A and B are evaluator-only names, not native object identifiers and not learner inputs.",
+  "proposed_visible_fixtures": {
+    "memos": {
+      "base": {
+        "A": {
+          "content": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+          "tags": [
+            "pa260909af9b86d0alpha"
+          ]
+        },
+        "B": {
+          "content": "pa260909af9b86d0 orchard notebook: Beta basket contains plums; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta",
+          "tags": [
+            "pa260909af9b86d0beta"
+          ]
+        }
+      },
+      "b_changed": {
+        "A": {
+          "content": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+          "tags": [
+            "pa260909af9b86d0alpha"
+          ]
+        },
+        "B": {
+          "content": "pa260909af9b86d0 orchard notebook: Beta basket now contains apricots; keeper Niko. pa260909af9b86d0betarevised #pa260909af9b86d0beta",
+          "tags": [
+            "pa260909af9b86d0beta"
+          ]
+        }
+      }
+    },
+    "linkding": {
+      "base": {
+        "A": {
+          "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+          "title": "Orchard reading pa260909af9b86d0",
+          "description": "Alpha orchard notes, keeper Mira. pa260909af9b86d0alphafind",
+          "tags": [
+            "pa260909af9b86d0alpha"
+          ],
+          "unread": false
+        },
+        "B": {
+          "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta",
+          "title": "Orchard reading pa260909af9b86d0",
+          "description": "Beta orchard notes, keeper Niko. pa260909af9b86d0betafind",
+          "tags": [
+            "pa260909af9b86d0beta"
+          ],
+          "unread": true
+        }
+      },
+      "b_changed": {
+        "A": {
+          "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+          "title": "Orchard reading pa260909af9b86d0",
+          "description": "Alpha orchard notes, keeper Mira. pa260909af9b86d0alphafind",
+          "tags": [
+            "pa260909af9b86d0alpha"
+          ],
+          "unread": false
+        },
+        "B": {
+          "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta-revised",
+          "title": "Orchard reading pa260909af9b86d0",
+          "description": "Revised beta orchard notes, keeper Niko. pa260909af9b86d0betarevised",
+          "tags": [
+            "pa260909af9b86d0beta"
+          ],
+          "unread": true
+        }
+      }
+    }
+  },
+  "fixture_construction_requirements": [
+    "Create both distinct seed records through ordinary UI and capture their visible contents before onboarding.",
+    "The Memos records share the same content fragment and have distinct full content, unique content tokens, and alpha/beta tags.",
+    "The Linkding records share a title and have different URLs/descriptions, alpha/beta tags, and unread false/true respectively.",
+    "For b_changed, change B through ordinary UI rather than asserting the final state; preserve A. Remove the original B search token, and for Linkding change its URL as specified.",
+    "Verify the relevant search, tags, unread state, local editing, alternate viewport, logout, and interruption opportunities through ordinary UI. Missing or uncertain opportunities remain explicit without substituting easier goals.",
+    "Confirm proposed new and absent tokens are absent within the stated prepared-account UI scope before their requests.",
+    "Retain before/after/reload snapshots and sampled non-target records separately from learner input. No repeated snapshot is an additional task."
+  ],
+  "expected_result_use": "These are prospective evaluator expectations, never observed results. Each request expectation applies to both paired arms only after equivalent fixtures are established. Runtime or baseline status does not override independent evidence.",
+  "comparison_and_reporting": "Retain 16 requests per application and arm and all 64 slots. Report task completion, actual invocation correctness and coverage, false confirmations, correct abstentions, wrong side effects, and unavailable/unestablished challenges separately; never infer invocation correctness from zero invocations.",
+  "requests": [
+    {
+      "request_id": "memos-R1",
+      "application": "memos",
+      "case_id": "R1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "structured_selected_record",
+      "target_fixture_record": "A",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "tags": [
+          "pa260909af9b86d0alpha"
+        ]
+      },
+      "selected_record_count": 1,
+      "saved_business_changes_permitted": 0,
+      "selection_requirement": "Find by the supplied content token; do not replace this with an exact full-content anchor.",
+      "sampled_non_targets_expected_unchanged": true,
+      "verification_scope": "Prepared account through ordinary rendered UI; no global identity or hidden-state claim."
+    },
+    {
+      "request_id": "memos-R2",
+      "application": "memos",
+      "case_id": "R2",
+      "fixture_variant": "b_changed",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "structured_selected_record",
+      "target_fixture_record": "B",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 orchard notebook: Beta basket now contains apricots; keeper Niko. pa260909af9b86d0betarevised #pa260909af9b86d0beta",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ]
+      },
+      "selected_record_count": 1,
+      "saved_business_changes_permitted": 0,
+      "selection_requirement": "Find the revised content token after record B changed through ordinary UI.",
+      "sampled_non_targets_expected_unchanged": true,
+      "verification_scope": "Prepared account through ordinary rendered UI; no global identity or hidden-state claim."
+    },
+    {
+      "request_id": "memos-C1",
+      "application": "memos",
+      "case_id": "C1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 create-one: The orchard schedule has a fresh entry.",
+        "tags": []
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": null
+    },
+    {
+      "request_id": "memos-C2",
+      "application": "memos",
+      "case_id": "C2",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 create-two: The orchard schedule has a fresh entry.",
+        "tags": []
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": null,
+      "restart_requirement": "Restart the service and use a fresh evaluated browser before this second creation request; record both."
+    },
+    {
+      "request_id": "memos-U1",
+      "application": "memos",
+      "case_id": "U1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_intended_record_updated_and_read_back",
+      "target_fixture_record": "A",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "tags": [
+          "pa260909af9b86d0alpha"
+        ]
+      },
+      "updated_target_count": 1,
+      "sampled_non_target_record": "B",
+      "sampled_non_target_expected_unchanged": true,
+      "identifying_context_requirement": "Retain the requested record context and all fields not requested to change.",
+      "chain_requirement": null
+    },
+    {
+      "request_id": "memos-U2",
+      "application": "memos",
+      "case_id": "U2",
+      "fixture_variant": "b_changed",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_intended_record_updated_and_read_back",
+      "target_fixture_record": "A",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "tags": [
+          "pa260909af9b86d0alpha"
+        ]
+      },
+      "updated_target_count": 1,
+      "sampled_non_target_record": "B",
+      "sampled_non_target_expected_unchanged": true,
+      "identifying_context_requirement": "Retain the requested record context and all fields not requested to change.",
+      "chain_requirement": null
+    },
+    {
+      "request_id": "memos-D1",
+      "application": "memos",
+      "case_id": "D1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "structured_selected_record",
+      "target_fixture_record": "A",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "tags": [
+          "pa260909af9b86d0alpha"
+        ]
+      },
+      "selected_record_count": 1,
+      "saved_business_changes_permitted": 0,
+      "selection_requirement": "Disambiguate the shared text fragment using additional visible content.",
+      "sampled_non_targets_expected_unchanged": true,
+      "verification_scope": "Prepared account through ordinary rendered UI; no global identity or hidden-state claim."
+    },
+    {
+      "request_id": "memos-D2",
+      "application": "memos",
+      "case_id": "D2",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "structured_selected_record",
+      "target_fixture_record": "B",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 orchard notebook: Beta basket contains plums; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ]
+      },
+      "selected_record_count": 1,
+      "saved_business_changes_permitted": 0,
+      "selection_requirement": "Disambiguate the shared text fragment using the requested visible tag.",
+      "sampled_non_targets_expected_unchanged": true,
+      "verification_scope": "Prepared account through ordinary rendered UI; no global identity or hidden-state claim."
+    },
+    {
+      "request_id": "memos-M1",
+      "application": "memos",
+      "case_id": "M1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 tagged-create: The orchard schedule has a fresh entry. #pa260909af9b86d0chain",
+        "tags": [
+          "pa260909af9b86d0chain"
+        ]
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": "Create the tagged memo, retrieve it through the specified tag, and return the retrieved content and tags. A direct exact-content lookup alone does not complete the chain."
+    },
+    {
+      "request_id": "memos-M2",
+      "application": "memos",
+      "case_id": "M2",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_intended_record_updated_and_read_back",
+      "target_fixture_record": "A",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 orchard notebook: Alpha basket is packed for Friday; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "tags": [
+          "pa260909af9b86d0alpha"
+        ]
+      },
+      "updated_target_count": 1,
+      "sampled_non_target_record": "B",
+      "sampled_non_target_expected_unchanged": true,
+      "identifying_context_requirement": "Retain the requested record context and all fields not requested to change.",
+      "chain_requirement": "Select by the requested tag, update the selected memo, and read back the resulting content and tags."
+    },
+    {
+      "request_id": "memos-CH1",
+      "application": "memos",
+      "case_id": "CH1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "accurate_empty_search_result",
+      "expected_selected_records": [],
+      "saved_business_changes_permitted": 0,
+      "scope_requirement": "Establish the stated ordinary-UI search scope; a timeout, unsupported search, or missing current local match is not proof of an empty scoped result."
+    },
+    {
+      "request_id": "memos-CH2",
+      "application": "memos",
+      "case_id": "CH2",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "expose_ambiguity_without_changing_either_candidate",
+      "candidate_fixture_records": [
+        "A",
+        "B"
+      ],
+      "secondary_qualifier_supplied": false,
+      "saved_business_changes_permitted": 0,
+      "correct_safety_response_is_completed_state_changing_work": false
+    },
+    {
+      "request_id": "memos-CH3",
+      "application": "memos",
+      "case_id": "CH3",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 viewport-create: The orchard schedule has a fresh entry.",
+        "tags": []
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": null,
+      "presentation_requirement": {
+        "repeat_semantics_of": "C1",
+        "default_viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "challenge_viewport": {
+          "width": 800,
+          "height": 900
+        },
+        "actual_presentation_difference": "PENDING_ORDINARY_UI_OBSERVATION",
+        "no_form_reordering_claim": true
+      }
+    },
+    {
+      "request_id": "memos-CH4",
+      "application": "memos",
+      "case_id": "CH4",
+      "fixture_variant": "b_changed",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "reconciliation_or_explicit_staleness_or_justified_still_valid_success",
+      "original_target_fixture_record": "B",
+      "target_before_ui_change": {
+        "content": "pa260909af9b86d0 orchard notebook: Beta basket contains plums; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ]
+      },
+      "target_after_ui_change": {
+        "content": "pa260909af9b86d0 orchard notebook: Beta basket now contains apricots; keeper Niko. pa260909af9b86d0betarevised #pa260909af9b86d0beta",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ]
+      },
+      "requested_values_if_success_is_justified": {
+        "content": "pa260909af9b86d0 orchard notebook: Beta basket is packed for Saturday; keeper Niko. pa260909af9b86d0betafind #pa260909af9b86d0beta",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ]
+      },
+      "ordinary_ui_change_timing": "After shared acquisition from base and before this saved request is invoked.",
+      "silent_retargeting_permitted": false,
+      "sampled_non_target_expected_unchanged": [
+        "A"
+      ],
+      "success_requirement": "The original exact content no longer exists in the proposed changed fixture. Any claimed write success must independently justify the still-valid requested meaning and target; otherwise reconcile explicitly or withdraw without changing records.",
+      "abstention_is_completed_state_changing_work": false
+    },
+    {
+      "request_id": "memos-CH5",
+      "application": "memos",
+      "case_id": "CH5",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "content": "pa260909af9b86d0 logout-create: The orchard schedule has a fresh entry.",
+        "tags": []
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": null,
+      "session_challenge": {
+        "requirement": "End the evaluated session through normal logout before this request.",
+        "opportunity": "PENDING_ORDINARY_UI_CONFIRMATION",
+        "allowed_noncompletion": "Explicit AUTH_REQUIRED",
+        "accounting": "Include logout and reauthentication primitives and wall time in the workflow budget.",
+        "private_store_simulation_permitted": false
+      }
+    },
+    {
+      "request_id": "memos-CH6",
+      "application": "memos",
+      "case_id": "CH6",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "create_one_record_with_interruption_and_independent_recovery_accounting",
+      "intended_visible_values": {
+        "content": "pa260909af9b86d0 interrupt-create: The orchard schedule has a fresh entry.",
+        "tags": []
+      },
+      "intended_record_count_before_request": 0,
+      "final_business_goal_record_count": 1,
+      "intervention": "Interrupt only the evaluated owned browser after its first recorded write intent and before effect confirmation.",
+      "intervention_opportunity": "PENDING_CONFIRMATION; record unavailable if no usable point exists.",
+      "post_interruption_effect_count_categories": [
+        "zero",
+        "one",
+        "multiple",
+        "unestablished"
+      ],
+      "required_order": "Independent ordinary-UI read-back before any retry; recovery only when justified by that evidence.",
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "multiple_effects_are_a_wrong_side_effect": true,
+      "no_effect_count_is_asserted_by_this_plan": true
+    },
+    {
+      "request_id": "linkding-R1",
+      "application": "linkding",
+      "case_id": "R1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "structured_selected_record",
+      "target_fixture_record": "A",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+        "title": "Orchard reading pa260909af9b86d0",
+        "description": "Alpha orchard notes, keeper Mira. pa260909af9b86d0alphafind",
+        "tags": [
+          "pa260909af9b86d0alpha"
+        ],
+        "unread": false
+      },
+      "selected_record_count": 1,
+      "saved_business_changes_permitted": 0,
+      "selection_requirement": "Find by the supplied description text; do not substitute an exact URL anchor for the search.",
+      "sampled_non_targets_expected_unchanged": true,
+      "verification_scope": "Prepared account through ordinary rendered UI; no global identity or hidden-state claim."
+    },
+    {
+      "request_id": "linkding-R2",
+      "application": "linkding",
+      "case_id": "R2",
+      "fixture_variant": "b_changed",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "structured_selected_record",
+      "target_fixture_record": "B",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta-revised",
+        "title": "Orchard reading pa260909af9b86d0",
+        "description": "Revised beta orchard notes, keeper Niko. pa260909af9b86d0betarevised",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ],
+        "unread": true
+      },
+      "selected_record_count": 1,
+      "saved_business_changes_permitted": 0,
+      "selection_requirement": "Find by revised description text after record B changed through ordinary UI.",
+      "sampled_non_targets_expected_unchanged": true,
+      "verification_scope": "Prepared account through ordinary rendered UI; no global identity or hidden-state claim."
+    },
+    {
+      "request_id": "linkding-C1",
+      "application": "linkding",
+      "case_id": "C1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/create-one",
+        "title": "pa260909af9b86d0 create-one orchard reading",
+        "description": "Fresh orchard reading for create-one. pa260909af9b86d0",
+        "unread": false
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": null
+    },
+    {
+      "request_id": "linkding-C2",
+      "application": "linkding",
+      "case_id": "C2",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/create-two",
+        "title": "pa260909af9b86d0 create-two orchard reading",
+        "description": "Fresh orchard reading for create-two. pa260909af9b86d0",
+        "unread": true
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": null,
+      "restart_requirement": "Restart the service and use a fresh evaluated browser before this second creation request; record both."
+    },
+    {
+      "request_id": "linkding-U1",
+      "application": "linkding",
+      "case_id": "U1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_intended_record_updated_and_read_back",
+      "target_fixture_record": "A",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+        "title": "Updated alpha reading pa260909af9b86d0",
+        "description": "Alpha orchard notes updated for Friday. pa260909af9b86d0alphafind",
+        "tags": [
+          "pa260909af9b86d0alpha"
+        ],
+        "unread": false
+      },
+      "updated_target_count": 1,
+      "sampled_non_target_record": "B",
+      "sampled_non_target_expected_unchanged": true,
+      "identifying_context_requirement": "Retain the requested record context and all fields not requested to change.",
+      "chain_requirement": null
+    },
+    {
+      "request_id": "linkding-U2",
+      "application": "linkding",
+      "case_id": "U2",
+      "fixture_variant": "b_changed",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_intended_record_updated_and_read_back",
+      "target_fixture_record": "A",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+        "title": "Orchard reading pa260909af9b86d0",
+        "description": "Alpha orchard notes, keeper Mira. pa260909af9b86d0alphafind",
+        "tags": [
+          "pa260909af9b86d0alpha"
+        ],
+        "unread": true
+      },
+      "updated_target_count": 1,
+      "sampled_non_target_record": "B",
+      "sampled_non_target_expected_unchanged": true,
+      "identifying_context_requirement": "Retain the requested record context and all fields not requested to change.",
+      "chain_requirement": null
+    },
+    {
+      "request_id": "linkding-D1",
+      "application": "linkding",
+      "case_id": "D1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "structured_selected_record",
+      "target_fixture_record": "A",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/alpha",
+        "title": "Orchard reading pa260909af9b86d0",
+        "description": "Alpha orchard notes, keeper Mira. pa260909af9b86d0alphafind",
+        "tags": [
+          "pa260909af9b86d0alpha"
+        ],
+        "unread": false
+      },
+      "selected_record_count": 1,
+      "saved_business_changes_permitted": 0,
+      "selection_requirement": "Disambiguate the shared title using its URL.",
+      "sampled_non_targets_expected_unchanged": true,
+      "verification_scope": "Prepared account through ordinary rendered UI; no global identity or hidden-state claim."
+    },
+    {
+      "request_id": "linkding-D2",
+      "application": "linkding",
+      "case_id": "D2",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "structured_selected_record",
+      "target_fixture_record": "B",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta",
+        "title": "Orchard reading pa260909af9b86d0",
+        "description": "Beta orchard notes, keeper Niko. pa260909af9b86d0betafind",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ],
+        "unread": true
+      },
+      "selected_record_count": 1,
+      "saved_business_changes_permitted": 0,
+      "selection_requirement": "Disambiguate the shared title using the requested visible tag.",
+      "sampled_non_targets_expected_unchanged": true,
+      "verification_scope": "Prepared account through ordinary rendered UI; no global identity or hidden-state claim."
+    },
+    {
+      "request_id": "linkding-M1",
+      "application": "linkding",
+      "case_id": "M1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/tagged-create",
+        "title": "pa260909af9b86d0 tagged-create orchard reading",
+        "description": "Fresh orchard reading for tagged-create. pa260909af9b86d0",
+        "unread": false,
+        "tags": [
+          "pa260909af9b86d0chain"
+        ]
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": "Create the tagged bookmark, retrieve it through the specified tag, and return its fields. Direct URL lookup alone does not complete the requested chain."
+    },
+    {
+      "request_id": "linkding-M2",
+      "application": "linkding",
+      "case_id": "M2",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_intended_record_updated_and_read_back",
+      "target_fixture_record": "B",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta",
+        "title": "Orchard reading pa260909af9b86d0",
+        "description": "Beta orchard notes, keeper Niko. pa260909af9b86d0betafind",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ],
+        "unread": false
+      },
+      "updated_target_count": 1,
+      "sampled_non_target_record": "A",
+      "sampled_non_target_expected_unchanged": true,
+      "identifying_context_requirement": "Retain the requested record context and all fields not requested to change.",
+      "chain_requirement": "Select using both the unread requirement and tag, mark the selected bookmark read, and verify its resulting fields."
+    },
+    {
+      "request_id": "linkding-CH1",
+      "application": "linkding",
+      "case_id": "CH1",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "accurate_empty_search_result",
+      "expected_selected_records": [],
+      "saved_business_changes_permitted": 0,
+      "scope_requirement": "Establish the stated ordinary-UI search scope; a timeout, unsupported search, or missing current local match is not proof of an empty scoped result."
+    },
+    {
+      "request_id": "linkding-CH2",
+      "application": "linkding",
+      "case_id": "CH2",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "expose_ambiguity_without_changing_either_candidate",
+      "candidate_fixture_records": [
+        "A",
+        "B"
+      ],
+      "secondary_qualifier_supplied": false,
+      "saved_business_changes_permitted": 0,
+      "correct_safety_response_is_completed_state_changing_work": false
+    },
+    {
+      "request_id": "linkding-CH3",
+      "application": "linkding",
+      "case_id": "CH3",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/viewport-create",
+        "title": "pa260909af9b86d0 viewport-create orchard reading",
+        "description": "Fresh orchard reading for viewport-create. pa260909af9b86d0",
+        "unread": false
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": null,
+      "presentation_requirement": {
+        "repeat_semantics_of": "C1",
+        "default_viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "challenge_viewport": {
+          "width": 800,
+          "height": 900
+        },
+        "actual_presentation_difference": "PENDING_ORDINARY_UI_OBSERVATION",
+        "no_form_reordering_claim": true
+      }
+    },
+    {
+      "request_id": "linkding-CH4",
+      "application": "linkding",
+      "case_id": "CH4",
+      "fixture_variant": "b_changed",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "reconciliation_or_explicit_staleness_or_justified_still_valid_success",
+      "original_target_fixture_record": "B",
+      "target_before_ui_change": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta",
+        "title": "Orchard reading pa260909af9b86d0",
+        "description": "Beta orchard notes, keeper Niko. pa260909af9b86d0betafind",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ],
+        "unread": true
+      },
+      "target_after_ui_change": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta-revised",
+        "title": "Orchard reading pa260909af9b86d0",
+        "description": "Revised beta orchard notes, keeper Niko. pa260909af9b86d0betarevised",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ],
+        "unread": true
+      },
+      "requested_values_if_success_is_justified": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/beta",
+        "title": "Orchard reading pa260909af9b86d0",
+        "description": "Beta reading packed for Saturday. pa260909af9b86d0",
+        "tags": [
+          "pa260909af9b86d0beta"
+        ],
+        "unread": true
+      },
+      "ordinary_ui_change_timing": "After shared acquisition from base and before this saved request is invoked.",
+      "silent_retargeting_permitted": false,
+      "sampled_non_target_expected_unchanged": [
+        "A"
+      ],
+      "success_requirement": "The original requested URL no longer exists in the proposed changed fixture. Any claimed write success must independently justify the still-valid requested meaning and target; otherwise reconcile explicitly or withdraw without changing records.",
+      "abstention_is_completed_state_changing_work": false
+    },
+    {
+      "request_id": "linkding-CH5",
+      "application": "linkding",
+      "case_id": "CH5",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "one_created_record_retained_after_reload",
+      "expected_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/logout-create",
+        "title": "pa260909af9b86d0 logout-create orchard reading",
+        "description": "Fresh orchard reading for logout-create. pa260909af9b86d0",
+        "unread": false
+      },
+      "intended_record_count_before_request": 0,
+      "intended_record_count_after_request": 1,
+      "intended_record_count_after_reload": 1,
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "chain_requirement": null,
+      "session_challenge": {
+        "requirement": "End the evaluated session through normal logout before this request.",
+        "opportunity": "PENDING_ORDINARY_UI_CONFIRMATION",
+        "allowed_noncompletion": "Explicit AUTH_REQUIRED",
+        "accounting": "Include logout and reauthentication primitives and wall time in the workflow budget.",
+        "private_store_simulation_permitted": false
+      }
+    },
+    {
+      "request_id": "linkding-CH6",
+      "application": "linkding",
+      "case_id": "CH6",
+      "fixture_variant": "base",
+      "status": "PROPOSED_EXPECTATION_NOT_AN_OBSERVATION",
+      "requested_result": "create_one_record_with_interruption_and_independent_recovery_accounting",
+      "intended_visible_values": {
+        "url": "https://example.org/semabi-assessment/pa260909af9b86d0/interrupt-create",
+        "title": "pa260909af9b86d0 interrupt-create orchard reading",
+        "description": "Fresh orchard reading for interrupt-create. pa260909af9b86d0",
+        "unread": false
+      },
+      "intended_record_count_before_request": 0,
+      "final_business_goal_record_count": 1,
+      "intervention": "Interrupt only the evaluated owned browser after its first recorded write intent and before effect confirmation.",
+      "intervention_opportunity": "PENDING_CONFIRMATION; record unavailable if no usable point exists.",
+      "post_interruption_effect_count_categories": [
+        "zero",
+        "one",
+        "multiple",
+        "unestablished"
+      ],
+      "required_order": "Independent ordinary-UI read-back before any retry; recovery only when justified by that evidence.",
+      "sampled_fixture_records_expected_unchanged": [
+        "A",
+        "B"
+      ],
+      "multiple_effects_are_a_wrong_side_effect": true,
+      "no_effect_count_is_asserted_by_this_plan": true
+    }
+  ]
+}

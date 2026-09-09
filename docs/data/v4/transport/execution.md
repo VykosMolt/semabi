@@ -67,7 +67,9 @@ Rolling queue:
    to complete containing paragraph values. The exact candidate passed 323
    focused tests; see [repair evidence](product/paragraph_repair_v1/README.md).
    New-source Memos onboarding learned three operations, but four matched U1/U2
-   arm retests completed no requested update. Exact lookup now succeeds; a
+   arm retests completed no requested update; the
+   [reassessment](product/paragraph_reassessment_v1/README.md) preserves all
+   four outcomes. Exact lookup now succeeds; a
    popup appearing after fill changes the editor contract. Its withdrawal
    persists across service restart. All checks/jobs are terminal under
    `runs/product_paragraph_development_v1/phase_terminal_v1.json`; the retained
