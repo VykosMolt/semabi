@@ -20,6 +20,7 @@ SURFACE_JS = r"""() => {
   const visible = e => {
     const s = getComputedStyle(e), r = e.getBoundingClientRect();
     return s.display !== 'none' && s.visibility !== 'hidden' && s.visibility !== 'collapse'
+      && e.checkVisibility({checkOpacity:true, checkVisibilityCSS:true})
       && (r.width > 0 || r.height > 0);
   };
   const ownText = e => text(Array.from(e.childNodes).filter(c => c.nodeType === 3).map(c => c.textContent).join(' '));
@@ -69,6 +70,7 @@ SURFACE_JS = r"""() => {
     const tag = e.tagName.toLowerCase();
     if (e.isContentEditable && !e.parentElement?.isContentEditable) return 'textbox';
     if (tag === 'button') return 'button';
+    if (tag === 'summary') return 'button';
     if (tag === 'a') return 'link';
     if (tag === 'input') {
       const type = (e.type || 'text').toLowerCase();
@@ -111,6 +113,9 @@ SURFACE_JS = r"""() => {
       disabled:!!e.disabled || e.getAttribute('aria-disabled') === 'true', readonly:!!e.readOnly,
       min:e.min || null, max:e.max || null, max_length:e.maxLength >= 0 ? e.maxLength : null,
       options:n.options || [], submit:role === 'button' && e.type === 'submit', form:null};
+    // The destination a user can inspect/copy from a rendered link. Reading
+    // this affordance never follows it or retrieves an endpoint response.
+    if (role === 'link' && tag === 'a' && e.hasAttribute('href')) controls[i].destination = e.href;
     if (tag === 'form') forms[i] = {role:'form'};
     for (const child of e.children) walk(child, i);
   };
@@ -136,14 +141,22 @@ def origin_of(url: str) -> str:
 
 
 class BrowserSession(Browser):
-    def __init__(self, url: str, *, headless: bool = True):
+    def __init__(self, url: str, *, headless: bool = True, playwright=None):
         self.allowed_origin = origin_of(url)
         self.surface: Surface | None = None
         self.blocked_requests = 0
         super().__init__(url, reset_url="", headless=headless, settle_ms=100,
-                         max_settle_ms=2000, navigation_ms=3000, max_navigations=2)
-        self._page.context.route("**/*", self._route)
-        self._page.context.on("page", lambda page: page.close() if page is not self._page else None)
+                         max_settle_ms=2000, navigation_ms=3000, max_navigations=2,
+                         playwright=playwright)
+        try:
+            self._page.context.route("**/*", self._route)
+            self._page.context.on("page", lambda page: page.close() if page is not self._page else None)
+        except BaseException:
+            try:
+                self.close()
+            except BaseException:
+                pass
+            raise
 
     def _route(self, route) -> None:
         url = route.request.url

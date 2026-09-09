@@ -1,0 +1,44 @@
+{
+  "created_at": "2026-09-09T17:02:44.189802+00:00",
+  "evaluator_script": "runs/product_evaluator_v3/check_reuse_effects.py",
+  "evaluator_script_sha256": "2420f01720148dedd71b4ad384bf895f9e386773191d8c3c066dc2edaff2fb36",
+  "independent_dom_js_sha256": "0797330fa609cccd2928f1421037ee0edce9cfe22f3046db53ee31de10b6baf3",
+  "input_log_sha256": {
+    "runs/product_development_v3/linkding_reuse_v3.log": "20c3810a670548adac3c987465b2cd39b5eca315dcafec5d0dd6402b57cda1dc",
+    "runs/product_development_v3/memos_still_open_v3.log": "62a5df1f9e440ec6d1f9a5b10a61a112ed7f1c5ae2b92a1c0546873448df3682"
+  },
+  "integrity_checks": {
+    "all_owned_processes_absent": true,
+    "all_snapshot_hashes_verified": true,
+    "known_credentials_absent_from_shareable_files_and_private_captures": true,
+    "selected_fields_descend_from_same_record": true,
+    "selected_nodes_equal_private_captures": true
+  },
+  "matching_logic_unchanged_from_original_checker": true,
+  "privacy": "Credentials were read only for ordinary UI authentication and never persisted or printed; full DOM captures remain under runs.",
+  "readme_sha256": "683cdc3e9651681b1dd2166c324ab49b83edf1fef531839661f7ce1e16d5a0d3",
+  "results_sha256": "bc7f61ebe63aeee19230d600d2794b28b1a52df58ec639e8164e7e5e93aa5cfc",
+  "schema": "two_creation_applications_reuse_sources.v1",
+  "service_snapshot_sha256": "0d87514cefc121f19f733a96f7998474789b07484bfcd5a13ed676d033e20d16",
+  "source_hashes_after": {
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+    "semabi/compiler/surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13",
+    "semabi/service.py": "13350367b8039b3233f6104ef4cadff4fbec0c5c4f72bf86fb3e69a6a8e87241"
+  },
+  "source_hashes_before": {
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+    "semabi/compiler/surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13",
+    "semabi/service.py": "13350367b8039b3233f6104ef4cadff4fbec0c5c4f72bf86fb3e69a6a8e87241"
+  },
+  "source_hashes_same_as_original_pair": true,
+  "source_hashes_unchanged": true,
+  "source_identity_note": "Hashes are the reader and current product source observed at evaluator execution; no service-process import identity is inferred from them."
+}

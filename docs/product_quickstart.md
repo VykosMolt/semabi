@@ -4,8 +4,10 @@ SemABI connects to a browser application, learns a parameterized operation from
 authorized UI experiments, and exposes its schema and invocation through HTTP.
 The current product path supports local form creation with visible record
 read-back. It uses no runtime model or paid API. A general English action-word
-prior proposes exploration; repeated observed effects establish an operation's
-limited support. This path is separate from the relational research pipeline.
+prior proposes exploration; visible URL labels can also propose URL arguments
+when the interface omits an HTML input type. Repeated observed effects establish
+an operation's limited support. This path is separate from the relational
+research pipeline.
 
 ## Start
 
@@ -21,8 +23,9 @@ uv pip install -e .
 The service listens on `127.0.0.1:8860`. Its bearer token is in
 `runs/service/token`; keep the service directory private. Credentials and
 connection artifacts are stored locally in that directory. Each connection
-has a separate browser session and evidence directory. The service uses one
-browser worker, so jobs are serialized.
+has a separate browser, context and evidence directory. One worker owns a shared
+Playwright driver and serializes jobs. Several application connections can stay
+open; reconnecting one preserves the others.
 
 Create a private JSON file containing the test account's `username` and
 `password`. Use an application and account where you have authorized exploratory
@@ -61,6 +64,7 @@ schema contains a `value` argument**:
 ```
 
 The client reconnects a fresh browser session and uses the persisted operation.
+Add `--reuse-session` to use the connection's current browser for repeated calls.
 The service can also be stopped and restarted with the same `--data-dir`; no
 relearning is needed for an unchanged supported contract.
 
@@ -83,7 +87,9 @@ Writes return `202` and a durable job ID. HTTP acceptance and job completion do
 not mean the requested effect was confirmed.
 
 `CONFIRMED` requires all argument values together in one unique visible local
-record and again after reload. `FAILED_BEFORE_EFFECT` means execution stopped
+record and again after reload. Text and inspectable link destinations have
+separate learned field bindings; displaying a URL as text cannot substitute for
+the saved destination of a link. `FAILED_BEFORE_EFFECT` means execution stopped
 before a potentially writing interaction. `UNCERTAIN` includes lost replies,
 partial actions, and missing or ambiguous read-back after a possible write.
 The API also distinguishes `APPLICATION_REFUSAL`; its use requires a concrete
@@ -105,7 +111,10 @@ Changed form contracts mark the affected operation version stale. Relearning
 can publish a new supported version while preserving the old evidence.
 
 The initial mechanism requires forms with discoverable text controls and
-record values that can be read back as complete visible text. It does not yet
+record values that can be read back as complete visible text or rendered link
+destinations. It excludes hidden fields, including closed disclosure panels,
+and tolerates field-local controls such as a Clear button appearing during
+typing. It does not yet
 establish arbitrary workflows, global record identity, relational queries,
 unobserved side effects, rollback, or universal application support. Results on
 independently developed applications are tracked in the

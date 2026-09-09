@@ -129,16 +129,18 @@ class Browser:
     step boundaries; the compiler never reads from them."""
 
     def __init__(self, url: str, reset_url: str, headless: bool = True, settle_ms: int = 150,
-                 max_settle_ms: int = 3000, navigation_ms: int = 5000, max_navigations: int = 4):
+                 max_settle_ms: int = 3000, navigation_ms: int = 5000, max_navigations: int = 4,
+                 *, playwright=None):
         self.url = url
         self.reset_url = reset_url
         self.settle_ms = settle_ms
         self.max_settle_ms = max_settle_ms
         self.navigation_ms = navigation_ms
         self.max_navigations = max_navigations
-        self._pw = sync_playwright().start()
-        self._browser = self._pw.chromium.launch(headless=headless)
-        self._page = self._browser.new_page(viewport={"width": 1400, "height": 1000})
+        self._owns_playwright = playwright is None
+        self._pw = playwright
+        self._browser = None
+        self._closed = False
         self.n_primitives = 0
         self.n_resets = 0
         self.episode = 0
@@ -149,9 +151,20 @@ class Browser:
         self.n_navigation_waits = 0     # snapshot attempts lost to a destroyed context
         self.n_settle_timeouts = 0      # observations that hit their budget unsettled
         self._inflight = 0              # requests the page has outstanding (count only)
-        self._page.on("request", self._on_request)
-        self._page.on("requestfinished", self._on_request_done)
-        self._page.on("requestfailed", self._on_request_done)
+        try:
+            if self._pw is None:
+                self._pw = sync_playwright().start()
+            self._browser = self._pw.chromium.launch(headless=headless)
+            self._page = self._browser.new_page(viewport={"width": 1400, "height": 1000})
+            self._page.on("request", self._on_request)
+            self._page.on("requestfinished", self._on_request_done)
+            self._page.on("requestfailed", self._on_request_done)
+        except BaseException:
+            try:
+                self.close()
+            except BaseException:
+                pass  # Preserve the startup failure after attempting resource cleanup.
+            raise
 
     # ------------------------------------------------------- settling signals
     def _on_request(self, _request) -> None:
@@ -166,10 +179,15 @@ class Browser:
         return self._inflight == 0
 
     def close(self):
+        if self._closed:
+            return
+        self._closed = True
         try:
-            self._browser.close()
+            if self._browser is not None:
+                self._browser.close()
         finally:
-            self._pw.stop()
+            if self._owns_playwright and self._pw is not None:
+                self._pw.stop()
 
     # -------------------------------------------------------------- observe
     def _raw_snapshot(self) -> Observation:

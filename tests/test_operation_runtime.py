@@ -1,7 +1,8 @@
 """Synthetic operation diagnostics; no application source, database or oracle.
 
-The fixtures describe rendered observations and form metadata only. Browser
-settling uses an invented snapshot stream and clock, without starting a browser.
+Most fixtures describe rendered observations and form metadata only. Settling
+uses an invented snapshot stream and clock; one browser test checks actual
+closed-disclosure rendering and its effect on form discovery.
 """
 from copy import deepcopy
 from itertools import count
@@ -229,6 +230,129 @@ from semabi.compiler import runtime as runtime_module
 from semabi.compiler.runtime import Runtime, argument_schema
 
 
+def _runtime_lifecycle_fixture(monkeypatch, tmp_path):
+    drivers, browsers = [], []
+    configuration = SimpleNamespace(failure=None)
+
+    class Driver:
+        stop_calls = 0
+        stop_error = False
+
+        def stop(self):
+            self.stop_calls += 1
+            if self.stop_error:
+                raise RuntimeError('synthetic driver close failure')
+
+    class Session:
+        def __init__(self, url, *, playwright):
+            self.driver = playwright
+            self.allowed_origin = url.rstrip('/')
+            self.failure = configuration.failure
+            self.close_calls = 0
+            self.close_error = False
+            browsers.append(self)
+
+        def goto(self):
+            if self.failure == 'goto':
+                raise RuntimeError('synthetic goto failure')
+
+        def authenticate(self, credentials):
+            if self.failure == 'authenticate':
+                raise RuntimeError('synthetic authentication failure')
+            return {'status': 'AUTH_REQUIRED' if self.failure == 'auth_required' else 'CONNECTED'}
+
+        def read(self):
+            if self.close_calls or self.driver.stop_calls:
+                raise RuntimeError('synthetic session was closed')
+            return _form_surface()
+
+        def close(self):
+            self.close_calls += 1
+            if self.close_error:
+                raise RuntimeError('synthetic browser close failure')
+
+    def start():
+        driver = Driver()
+        drivers.append(driver)
+        return driver
+
+    monkeypatch.setattr(runtime_module, 'sync_playwright', lambda: SimpleNamespace(start=start))
+    monkeypatch.setattr(runtime_module, 'BrowserSession', Session)
+    return Runtime(tmp_path), drivers, browsers, configuration
+
+
+def test_runtime_connection_reuse_keeps_other_sessions_and_stops_the_driver_once(monkeypatch, tmp_path):
+    runtime, drivers, browsers, _ = _runtime_lifecycle_fixture(monkeypatch, tmp_path)
+    first = {'id': 'first', 'url': 'https://first.invalid/'}
+    second = {'id': 'second', 'url': 'https://second.invalid/'}
+    assert drivers == []  # Construction alone does not bind a worker's event loop.
+    runtime.connect(first, {})
+    runtime.connect(second, {})
+    original_first, original_second = browsers
+    assert len(drivers) == 1
+    assert original_first.driver is original_second.driver is drivers[0]
+
+    runtime.connect(first, {})
+    assert original_first.close_calls == 1
+    assert runtime.sessions['second'] is original_second
+    assert runtime.inspect(second)['settled']
+    runtime.close('first')
+    assert runtime.inspect(second)['settled']
+    assert drivers[0].stop_calls == 0
+    runtime.close()
+    runtime.close()
+    assert runtime.sessions == {} and runtime._playwright is None
+    assert [browser.close_calls for browser in browsers] == [1, 1, 1]
+    assert drivers[0].stop_calls == 1
+
+    runtime.connect(first, {})
+    assert len(drivers) == 2
+    assert runtime.sessions['first'].driver is drivers[1]
+    runtime.close()
+    assert [driver.stop_calls for driver in drivers] == [1, 1]
+
+
+@pytest.mark.parametrize('failure', ['browser', 'driver', 'browser_and_driver'])
+def test_runtime_full_close_attempts_every_resource_and_resets_after_failure(monkeypatch, tmp_path, failure):
+    runtime, drivers, browsers, _ = _runtime_lifecycle_fixture(monkeypatch, tmp_path)
+    runtime.connect({'id': 'first', 'url': 'https://first.invalid/'}, {})
+    runtime.connect({'id': 'second', 'url': 'https://second.invalid/'}, {})
+    browsers[0].close_error = failure != 'driver'
+    drivers[0].stop_error = failure != 'browser'
+    primary = 'driver' if failure == 'driver' else 'browser'
+
+    with pytest.raises(RuntimeError, match=f'synthetic {primary} close failure'):
+        runtime.close()
+
+    assert [browser.close_calls for browser in browsers] == [1, 1]
+    assert drivers[0].stop_calls == 1
+    assert runtime.sessions == {} and runtime._playwright is None
+    runtime.close()
+    assert drivers[0].stop_calls == 1
+
+
+@pytest.mark.parametrize('failure', ['goto', 'authenticate', 'auth_required'])
+def test_runtime_failed_connection_is_removed_without_closing_another_session(monkeypatch, tmp_path, failure):
+    runtime, drivers, browsers, configuration = _runtime_lifecycle_fixture(monkeypatch, tmp_path)
+    other = {'id': 'other', 'url': 'https://other.invalid/'}
+    runtime.connect(other, {})
+    configuration.failure = failure
+    failed = {'id': 'failed', 'url': 'https://failed.invalid/'}
+    if failure == 'auth_required':
+        assert runtime.connect(failed, {})['status'] == 'AUTH_REQUIRED'
+    else:
+        with pytest.raises(RuntimeError, match='synthetic .* failure'):
+            runtime.connect(failed, {})
+
+    assert set(runtime.sessions) == {'other'}
+    assert browsers[1].close_calls == 1
+    assert drivers[0].stop_calls == 0
+    assert runtime.inspect(other)['settled']
+    runtime.close()
+    assert [browser.close_calls for browser in browsers] == [1, 1]
+    assert drivers[0].stop_calls == 1
+
+
 class _RecordBrowser:
     allowed_origin = 'https://synthetic.invalid'
 
@@ -376,7 +500,8 @@ def _runtime_with_operation(tmp_path, browser):
                  'procedure': {'entry_url': connection['url'], 'navigation': [],
                                'readback_url': connection['url'], 'form': candidate['descriptor'],
                                'anchor': 'first', 'defaults': defaults,
-                               'effect_slots': {'first': [[['text', 0]]], 'second': [[['text', 1]]]}}}
+                               'effect_slots': {'first': [{'path': [['text', 0]], 'channel': 'text'}],
+                                                'second': [{'path': [['text', 1]], 'channel': 'text'}]}}}
     operation['support'] = {'policy_version': runtime_module.POLICY_VERSION,
                             'source_sha256': runtime.source_sha256.copy(),
                             'procedure': deepcopy(operation['procedure']),
@@ -563,3 +688,99 @@ def test_synthetic_learning_keeps_failed_effect_in_overall_accounting(tmp_path):
     assert learned['operations'] == []
     assert learned['attempts'][0]['confirmed_trials'] == 0
     assert learned['metrics']['possible_write_actions'] == 3
+
+
+def test_field_local_button_appearance_preserves_form_contract_but_page_actions_do_not():
+    def form(clear=False, second_field=False, outside=False):
+        nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'group', ''),
+                 Node(2, 1, 'group', ''), Node(3, 2, 'textbox', 'Caption', value=''),
+                 Node(4, 1, 'button', 'Save')]
+        properties = {3: {'form': 1}, 4: {'form': 1, 'submit': True}}
+        if clear:
+            nodes.append(Node(5, 2, 'button', 'Clear'))
+            properties[5] = {'form': 1}
+        if second_field:
+            node = len(nodes)
+            nodes.append(Node(node, 2, 'textbox', 'Another field', value=''))
+            properties[node] = {'form': 1}
+        if outside:
+            node = len(nodes)
+            nodes.append(Node(node, 1, 'button', 'Approve'))
+            properties[node] = {'form': 1}
+        return form_candidates(_surface(nodes, properties, forms=(1,)))[0]
+
+    assert form()['descriptor'] == form(clear=True)['descriptor']
+    assert form()['descriptor'] != form(clear=True, outside=True)['descriptor']
+    assert form()['descriptor'] != form(clear=True, second_field=True)['descriptor']
+
+
+@pytest.mark.parametrize(('label', 'expected'), [('URL', 'uri'), ('Web address', 'uri'),
+                                               ('Website', 'uri'), ('Caption', None)])
+def test_visible_url_label_proposals_have_an_explicit_schema_prior(label, expected):
+    from semabi.compiler.runtime import argument_schema, probe_arguments
+    candidate = form_candidates(_form_surface(order=(label,)))[0]
+    values = probe_arguments(candidate, 0)
+    prop = argument_schema(candidate, list(values))['properties'][next(iter(values))]
+    assert prop.get('format') == expected
+    if expected:
+        assert next(iter(values.values())).startswith('https://example.invalid/')
+        assert prop['format_basis'] == 'visible_label_prior_validated_by_trials'
+
+
+@pytest.mark.slow
+def test_rendered_closed_disclosure_fields_are_absent_until_opened():
+    from semabi.compiler.browser import Primitive
+    browser = BrowserSession('https://synthetic.invalid/')
+    try:
+        browser._page.set_content('''<form><label>Caption <input></label>
+          <details><summary>More fields</summary><label>Detail <textarea></textarea></label></details>
+          <label style="opacity:0">Invisible <input></label><button type="submit">Save</button></form>''')
+        before = browser.read()
+        assert [field['descriptor']['label'] for field in form_candidates(before)[0]['fields']] == ['Caption']
+        toggle = next(node for node, control in before.controls.items() if control['label'] == 'More fields')
+        assert before.controls[toggle]['role'] == 'button'
+        assert browser.act(Primitive('click', toggle)).ok
+        after = browser.read()
+        assert {field['descriptor']['label'] for field in form_candidates(after)[0]['fields']} == {'Caption', 'Detail'}
+    finally:
+        browser.close()
+
+
+def _linked_record_surface(*, swapped=False, text_echo=False, editor=False):
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'group', ''),
+             Node(2, 1, 'list', ''), Node(3, 2, 'listitem', ''),
+             Node(4, 3, 'group', ''), Node(5, 4, 'link', 'Alpha'),
+             Node(6, 5, 'text', 'Alpha'), Node(7, 3, 'text', 'First description'),
+             Node(8, 3, 'checkbox', 'Select record', checked=False),
+             Node(9, 2, 'listitem', ''), Node(10, 9, 'link', 'Beta'),
+             Node(11, 9, 'text', 'Second description')]
+    properties = {5: {'form': 1, 'destination': 'https://example.invalid/' + ('beta' if swapped else 'alpha')},
+                  8: {'form': 1},
+                  10: {'form': 1, 'destination': 'https://example.invalid/' + ('alpha' if swapped else 'beta')}}
+    if text_echo:
+        properties[5]['destination'] = 'https://example.invalid/different'
+        nodes.append(Node(len(nodes), 3, 'text', 'https://example.invalid/alpha'))
+    if editor:
+        nodes.append(Node(len(nodes), 1, 'textbox', 'Editor', value='Alpha'))
+        properties[len(nodes)-1] = {'form': 1, 'disabled': True}
+    return _surface(nodes, properties, forms=(1,))
+
+
+def test_bulk_selection_form_retains_whole_explicit_records_and_link_destination_evidence():
+    from semabi.compiler.runtime import record_witness
+    values = {'title': 'Alpha', 'url': 'https://example.invalid/alpha', 'description': 'First description'}
+    for anchor in ['title', 'url']:
+        witness = record_witness(_linked_record_surface(), values, anchor)
+        assert witness['root'] == 3
+        assert witness['field_slots']['url'] == [{'path': [['group', 0], ['link', 0]],
+                                                'channel': 'link_destination'}]
+        assert len(visible_record_matches(_linked_record_surface(), values[anchor])) == 1
+
+
+@pytest.mark.parametrize('changed', ['swapped', 'text_echo', 'editor'])
+def test_wrong_link_target_or_form_preview_cannot_confirm_learned_fields(changed):
+    from semabi.compiler.runtime import record_witness
+    values = {'title': 'Alpha', 'url': 'https://example.invalid/alpha', 'description': 'First description'}
+    learned = record_witness(_linked_record_surface(), values, 'title')
+    current = _linked_record_surface(**{changed: True})
+    assert record_witness(current, values, 'title', learned['field_slots']) is None

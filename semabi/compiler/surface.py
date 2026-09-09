@@ -134,9 +134,26 @@ def form_candidates(surface: Surface) -> list[dict]:
                                "value": obs.node(node).value,
                                "checked": obs.node(node).checked})
             if fields:
+                # A field may reveal its own controls as its value changes (for
+                # example, an ordinary clear button). Their containing scope
+                # owns exactly one field and excludes the submitter. Keep them
+                # out of the form-level action context, while still checking
+                # every field descriptor and value before submission.
+                field_nodes = {node for node, _ in editable}
+                auxiliary_buttons = set()
+                for index in buttons:
+                    if index == submit:
+                        continue
+                    for owner in obs.ancestors(index):
+                        if owner == root:
+                            break
+                        owned = set(obs.subtree(owner))
+                        if submit not in owned and len(owned & field_nodes) == 1:
+                            auxiliary_buttons.add(index)
+                            break
                 semantic = {"submit": surface.descriptor(submit),
                             "context_controls": sorted([surface.descriptor(index) for index in buttons
-                                                        if index != submit], key=digest),
+                                                        if index != submit and index not in auxiliary_buttons], key=digest),
                             "fields": sorted([{key: field[key] for key in
                                                ("argument", "descriptor", "required", "role", "input_type",
                                                 "min", "max", "max_length")}
@@ -162,13 +179,19 @@ def editor_scopes(surface: Surface) -> set[int]:
     Preview exclusion must not depend on whether a form is learnable at this
     moment: submission can disable its inputs without making its preview a record.
     """
-    scopes = set(surface.forms)
     obs = surface.observation
+    # A form can wrap a list solely for bulk checkbox actions. It is an
+    # editor/preview scope only when it contains a rendered value editor.
+    native_editors = {root for root in surface.forms if any(
+        control["role"] in {"textbox", "combobox"} and control.get("input_type") != "search"
+        for index, control in surface.controls.items() if index in obs.subtree(root))}
+    scopes = set(native_editors)
     for index, button in surface.controls.items():
         if button["role"] != "button":
             continue
         if button.get("form") is not None:
-            scopes.add(button["form"])
+            if button["form"] in native_editors:
+                scopes.add(button["form"])
             continue
         for root in obs.ancestors(index):
             members = set(obs.subtree(root))
@@ -177,20 +200,23 @@ def editor_scopes(surface: Surface) -> set[int]:
                 if sum(control["role"] == "button" for control in controls) <= 5:
                     scopes.add(root)
                 break
-    submit_scopes = set(surface.forms) | {candidate["root"] for candidate in form_candidates(surface)
+    submit_scopes = native_editors | {candidate["root"] for candidate in form_candidates(surface)
                                           if SUBMIT_WORDS.search(candidate["descriptor"]["submit"]["label"])}
     return {root for root in scopes if root in submit_scopes or not any(
             narrower != root and narrower in obs.subtree(root) for narrower in scopes)}
 
 
-def relative_value_slots(surface: Surface, root: int, value: str) -> list[list[list]]:
-    """Learned local locators for complete field text, never business identities."""
+def relative_value_slots(surface: Surface, root: int, value: str) -> list[dict]:
+    """Local field paths with distinct text and link-destination channels."""
     obs = surface.observation
     members = obs.subtree(root)
     exact = {node for node in members if obs.node(node).name.strip() == value.strip()}
-    leaves = [node for node in exact if not (set(obs.subtree(node)) - {node}) & exact]
+    leaves = [(node, "text") for node in exact if not (set(obs.subtree(node)) - {node}) & exact]
+    leaves.extend((node, "link_destination") for node in members
+                  if surface.controls.get(node, {}).get("role") == "link"
+                  and surface.controls[node].get("destination") == value)
     paths = []
-    for node in leaves:
+    for node, channel in leaves:
         path = []
         while node != root:
             field = obs.node(node)
@@ -198,7 +224,7 @@ def relative_value_slots(surface: Surface, root: int, value: str) -> list[list[l
                         if obs.node(sibling).role == field.role]
             path.append([field.role, siblings.index(node)])
             node = field.parent
-        paths.append(list(reversed(path)))
+        paths.append({"path": list(reversed(path)), "channel": channel})
     return sorted(paths, key=digest)
 
 
@@ -215,30 +241,39 @@ def visible_record_matches(surface: Surface, value: str) -> list[dict]:
     for node in obs.nodes:
         if node.role in {"textbox", "combobox", "checkbox", "radio", "button"}:
             continue
-        if node.name.strip() != value.strip():
+        destination_match = (node.role == "link"
+                             and surface.controls.get(node.i, {}).get("destination") == value)
+        if node.name.strip() != value.strip() and not destination_match:
             continue
         if any(root in editors or
                (root in surface.controls and surface.controls[root]["role"] in
                 {"textbox", "combobox"}) for root in [node.i, *obs.ancestors(node.i)]):
             continue
-        for root in [node.i, *obs.ancestors(node.i)]:
+        ancestors = [node.i, *obs.ancestors(node.i)]
+        explicit_roots = [root for root in ancestors
+                          if obs.node(root).role in {"row", "listitem", "article"}]
+        # Prefer the nearest explicit record over an inner link/text wrapper.
+        for root in explicit_roots[:1] or ancestors:
             parent = obs.node(root)
             if parent.role not in {"row", "listitem", "article", "group"}:
                 continue
             members = set(obs.subtree(root))
             controls = [control for index, control in surface.controls.items() if index in members]
-            if any(control["role"] in {"textbox", "combobox", "checkbox", "radio"}
+            if any(control["role"] in {"textbox", "combobox"}
                    for control in controls):
                 break
             texts = [obs.node(index).name for index in members if obs.node(index).name]
+            destinations = [control["destination"] for control in controls
+                            if control["role"] == "link" and control.get("destination")]
             explicit = parent.role in {"row", "listitem", "article"}
             local_action = any(control["role"] in {"button", "link"} for control in controls)
-            if not explicit and not (local_action and len(texts) >= 2):
+            if not explicit and not (local_action and len(set(texts)) >= 2):
                 continue
             if root not in used:
                 used.add(root)
                 matches.append({"root": root, "value_node": node.i, "role": parent.role,
-                                "texts": texts, "basis": "visible_local_record",
+                                "texts": texts, "link_destinations": destinations,
+                                "basis": "visible_local_record",
                                 "observation": obs.structural_signature()})
             break
     return matches

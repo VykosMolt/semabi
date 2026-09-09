@@ -15,6 +15,8 @@ import re
 import time
 import uuid
 
+from playwright.sync_api import sync_playwright
+
 from semabi.compiler.browser import Primitive
 from semabi.compiler.browser_session import BrowserSession, origin_of
 from semabi.compiler.evidence import EvidenceLog
@@ -23,10 +25,23 @@ from semabi.compiler.surface import (SUBMIT_WORDS, Surface, argument_name, diges
                                      visible_record_matches)
 
 
-POLICY_VERSION = "local-form-v2"
+POLICY_VERSION = "local-form-v3"
 OPEN_WORDS = re.compile(r"\b(add|new|create|compose)\b", re.I)
 EXCLUDED_WORDS = re.compile(r"\b(delete|remove|logout|log out|sign out|reset|purchase|pay|invite)\b", re.I)
 TEXT_TYPES = {"", "text", "textarea", "contenteditable", "url", "email", "search"}
+URL_LABEL = re.compile(r"^(url|uri|web\s*(address|link)|website(\s+address)?)$", re.I)
+
+
+def field_format(field: dict) -> str | None:
+    if field["input_type"] == "url":
+        return "uri"
+    if field["input_type"] == "email":
+        return "email"
+    # Visible labels supplement HTML types as a disclosed proposal prior.
+    # Trial submissions and readback still have to establish the operation.
+    if field["input_type"] == "text" and URL_LABEL.fullmatch(field["descriptor"]["label"].strip()):
+        return "uri"
+    return None
 
 
 def source_hashes() -> dict:
@@ -120,9 +135,9 @@ def probe_arguments(candidate: dict, trial: int) -> dict:
                 raise StopOperation("A required control has no supported argument generator")
             continue
         token = f"semabi_{uuid.uuid4().hex[:10]}_{trial}"
-        if field["input_type"] == "url":
+        if field_format(field) == "uri":
             token = "https://example.invalid/" + token
-        elif field["input_type"] == "email":
+        elif field_format(field) == "email":
             token += "@example.invalid"
         if field["max_length"] is not None and len(token) > field["max_length"]:
             raise StopOperation("Visible input limit is too short for a distinct probe")
@@ -141,8 +156,10 @@ def argument_schema(candidate: dict, names: list[str]) -> dict:
                 "description": field["descriptor"]["label"] or "Visible editor value"}
         if field["max_length"] is not None:
             prop["maxLength"] = field["max_length"]
-        if field["input_type"] in {"url", "email"}:
-            prop["format"] = "uri" if field["input_type"] == "url" else "email"
+        if field_format(field):
+            prop["format"] = field_format(field)
+            prop["format_basis"] = ("html_input_type" if field["input_type"] in {"url", "email"}
+                                    else "visible_label_prior_validated_by_trials")
         properties[name] = prop
     return {"type": "object", "properties": properties, "required": names,
             "additionalProperties": False}
@@ -175,7 +192,7 @@ def record_witness(surface: Surface, arguments: dict, anchor: str,
         return None
     match = matches[0]
     # All variable fields must appear together, as complete values in one local record.
-    if not all(value in match["texts"] for value in arguments.values()):
+    if not all(value in match["texts"] or value in match["link_destinations"] for value in arguments.values()):
         return None
     slots = {name: relative_value_slots(surface, match["root"], value)
              for name, value in arguments.items()}
@@ -190,21 +207,50 @@ class Runtime:
         self.data_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
         self.sessions: dict[str, BrowserSession] = {}
         self.source_sha256 = LOADED_SOURCE_SHA256.copy()
+        self._playwright = None
 
     def close(self, connection_id: str | None = None) -> None:
+        first_error = None
         for key in list(self.sessions):
             if connection_id is None or key == connection_id:
-                self.sessions.pop(key).close()
+                try:
+                    self.sessions.pop(key).close()
+                except BaseException as error:
+                    if first_error is None:
+                        first_error = error
+        if connection_id is None:
+            driver, self._playwright = self._playwright, None
+            if driver is not None:
+                try:
+                    driver.stop()
+                except BaseException as error:
+                    if first_error is None:
+                        first_error = error
+        if first_error is not None:
+            raise first_error
 
     def connect(self, connection: dict, credentials: dict) -> dict:
         self.close(connection["id"])
-        browser = BrowserSession(connection["url"])
-        self.sessions[connection["id"]] = browser
+        if self._playwright is None:
+            self._playwright = sync_playwright().start()
+        browser = BrowserSession(connection["url"], playwright=self._playwright)
         started = time.monotonic()
-        browser.goto()
-        auth = browser.authenticate(credentials)
-        return {**auth, "allowed_origin": browser.allowed_origin,
-                "elapsed_seconds": round(time.monotonic() - started, 3)}
+        try:
+            browser.goto()
+            auth = browser.authenticate(credentials)
+            result = {**auth, "allowed_origin": browser.allowed_origin,
+                      "elapsed_seconds": round(time.monotonic() - started, 3)}
+        except BaseException:
+            try:
+                browser.close()
+            except BaseException:
+                pass  # A cleanup failure must not replace the connection failure.
+            raise
+        if auth.get("status") == "CONNECTED":
+            self.sessions[connection["id"]] = browser
+        else:
+            browser.close()
+        return result
 
     def inspect(self, connection: dict) -> dict:
         surface = self._browser(connection).read()

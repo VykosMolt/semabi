@@ -25,6 +25,8 @@ def main():
     target = parser.add_mutually_exclusive_group(required=True)
     target.add_argument("--application-url")
     target.add_argument("--connection")
+    parser.add_argument("--reuse-session", action="store_true",
+                        help="With --connection, use its current session instead of reconnecting")
     parser.add_argument("--credentials-file", type=Path, help="Private JSON containing username and password")
     parser.add_argument("--learn", action="store_true")
     parser.add_argument("--max-actions", type=int, default=40)
@@ -34,6 +36,8 @@ def main():
     parser.add_argument("--idempotency-key", default=None)
     parser.add_argument("--timeout", type=float, default=300)
     args = parser.parse_args()
+    if args.reuse_session and not args.connection:
+        parser.error("--reuse-session requires --connection")
     arguments = json.loads(args.arguments) if args.arguments is not None else None
     if args.arguments is not None and not isinstance(arguments, dict):
         parser.error("--arguments must be a JSON object")
@@ -83,7 +87,8 @@ def main():
         print(json.dumps({"connection_id": connection_id}), flush=True)
     else:
         connection_id = args.connection
-        wait(request("POST", f"/v1/connections/{connection_id}/reconnect", {}))
+        if not args.reuse_session:
+            wait(request("POST", f"/v1/connections/{connection_id}/reconnect", {}))
     prefix = f"/v1/connections/{connection_id}"
     if args.learn:
         wait(request("POST", prefix + "/learn", {"settings": {"max_actions": args.max_actions, "max_writes": args.max_writes}}))

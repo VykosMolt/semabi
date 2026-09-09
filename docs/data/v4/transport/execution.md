@@ -60,55 +60,63 @@ or private client stores enter learning. Vikunja remains unopened.
 Setup ports are loopback 8851/8852/8853, checked before use. Access substitutions
 and actual exposure are recorded by the setup agent under `product/`.
 
-At 16:35 UTC P1 has passed its real HTTP path: two varied training submissions,
-fresh arguments, independent browser readback, persisted artifacts and invocation
-after an unchanged-source service restart. The compact evidence and exact source
-hashes are in [first operation](product/first_operation_v1/README.md). Both
-independent checks found one matching article before and after reload. A stale
-policy was rejected before writes; exact idempotent repetition reused the job,
-and changed arguments with the same key returned HTTP 409. Earlier failed
-learning attempts are retained. This is disclosed development evidence for one
-creation operation in Memos, without a prospective completion denominator.
+At 16:55 UTC the first HTTP product path is committed at `7303878` and the
+completed receiver-view diagnostic at `82da129`. The exact pre-driver P1 source
+passed its broad run: **765 passed, three skipped, one xfailed**, 2221.43 s;
+exec 24896 was reaped with actual exit zero. The separately tested baseline
+has 31 passes. Retained P1 evidence is in
+[first operation](product/first_operation_v1/README.md).
 
-The current runtime protects drafts before navigation, excludes custom form
-previews, checks current argument/default values before submit and verifies
-learned local field positions. Focused diagnostics passed 48 runtime tests and
-20 HTTP/storage tests. The shared-acquisition cached-form baseline passed 31
-synthetic tests and has not yet been assessed against real application tasks.
-The initial broad command discovered archived duplicate test names; pytest.ini
-now uses the existing pyproject convention, testpaths=tests. The replacement
-full regression is still running in exec 24896 (PID 1009812, CPU0); source at
-its launch is the pre-shared-driver P1 snapshot. Do not report it as passed
-before reaping the actual exit. The native 697-pass checkpoint and five corpus
-results remain retained; fresh transport and ordinary learned JOIN are still
-unestablished.
+P2 now has real external-client creation calls on **both Memos and linkding**
+through the same restarted service with both connections open. Memos version 3
+returned CONFIRMED (5 actions, 2 possible writes, 3.929 s). Linkding automatically
+exposed URL, tags, title and description; its HTTP call returned CONFIRMED
+(9 actions, 6 possible writes, 3.657 s). All four initial/reuse calls now have independent fresh-browser checks: each
+matching record appeared once before and after reload. Linkding reused its
+persisted operation in a fresh session (3.685 s), then Memos successfully used
+its still-open browser (4.030 s). These are development calls, not a prospective
+denominator; see [two-application evidence](product/two_applications_v1/README.md).
+Raw jobs/client outputs are in `runs/product_development_v3`.
 
-The receiver-view diagnostic completed once with actual exit zero and 19 raw
-files preserved before interpretation in
-`development/j1_receiver_view_control_v1/raw_preservation_v2.json`. Independent
-review accepts its bounded result: B's existing family query names each checked
-represented owner and denotes nothing on the unchecked page; A has no candidate.
-Guards and non-view state remain unchanged. This is supplied-identity naming
-evidence, separate from patch representation, endpoint relations and learned
-JOIN. The next native change is a conservative V4-only projection using ordinary
-represented owners; no further control fit is required.
+The adopted driver uses one Playwright instance per Runtime and separate
+browsers/contexts per connection. The real two-browser test verifies that
+reconnecting or closing one preserves the other. General observation repairs
+exclude closed-disclosure descendants, separate field-local Clear buttons from
+form-level actions, and retain inspectable link destinations as an explicit
+value channel. A general visible URL-label prior supplies URI probes when HTML
+typing is absent. Verification now uses the nearest explicit local record,
+including lists wrapped in checkbox bulk-action forms. Text cannot substitute
+for a learned link destination. Original failed linkding attempts (changed
+field controls, hidden editor fill, and a saved record lacking the old verifier's
+text-only witness) remain recorded with source snapshots. No application source,
+private client store, hidden endpoint or authored integration was used.
 
-Active milestone P2: support multiple application connections, complete disclosed
-linkding onboarding and broaden useful read/update operations before freezing
-the three-application assessment. The first HTTP attempt to connect linkding
-while Memos remained open failed before business interaction because each
-connection started another Playwright synchronous driver in the same worker.
-A two-empty-session reproducer confirms the lifetime error. The repair shares
-one driver per Runtime while retaining separate browsers per connection.
-Vikunja remains unopened and reserved; current policy/protocol are not frozen.
+The adopted product and V4 changes passed **185 focused tests** on the main
+checkout in 19.25 s (exec 9136, actual exit zero). This includes real browser
+rendering/connection tests, runtime ambiguity/draft/effect checks, the baseline,
+HTTP/storage and conservative radio projection. The V4 projection uses ordinary
+represented owners only, preserves existing view entries and rejects ambiguous,
+provisional, positional or prefix-colliding groups. All five retained native
+corpora contain zero raw radios (nine unique files, 3,598 observations), so their
+unchanged results do not exercise the new positive branch. One ordinary J1 fit
+is being prepared in isolation to validate that branch without control bindings
+or view insertion. The completed naming control remains supplied-binding
+evidence; ordinary learned JOIN and fresh transport remain unestablished.
 
-Root owns product runtime/integration and service exec 59047 (CPUs2–5).
-`widget_revision_implementation` is finishing the compact P1 evidence only;
-`widget_scoring_regressions` is preparing the bounded V4 owner-view patch outside
-active source while the full suite runs. App servers remain setup-helper-owned.
-The 12-CPU aggregate cap applies. Next executable actions: commit the coherent
-P1 snapshot, repair and test driver lifetime, reconnect both disclosed apps,
-then diagnose linkding's ordinary form/readback limitation from visible UI.
+Active P3: derive useful READ and UPDATE calls from two successful creation
+trials and a uniquely resolved local edit action. Reads must use labeled form
+values; updates preserve the anchor and guard the evolving full editor state
+before each fill. Preserve established creation/read artifacts if a later stage
+is unsupported. This extension is being implemented in an isolated candidate;
+the running P2 source remains fixed for independent evaluation.
+
+Root owns integration and service exec 79582 (CPUs2–5). The implementation agent
+owns only `/tmp/semabi_record_candidate`; the evaluator completed and closed all independent P2 browsers; the native worker owns one copied-source J1 fit on CPU10 with
+a 45-minute bound. No other owned heavy jobs are active. Vikunja remains unopened
+and reserved. The learner/protocol are not yet frozen for the three-application
+assessment. Next: commit this coherent P2 product source, then validate the isolated
+read/update candidate against the disclosed applications. The native projection
+remains a separate pending commit while its ordinary fit runs.
 
 ## Paused for user review (2026-09-08 11:53 UTC)
 
