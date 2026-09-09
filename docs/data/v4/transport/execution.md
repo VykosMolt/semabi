@@ -72,14 +72,21 @@ Rolling queue:
    persists across service restart. All checks/jobs are terminal under
    `runs/product_paragraph_development_v1/phase_terminal_v1.json`; the retained
    source snapshot binds that result as main advances.
-7. Active: reviewed isolated authentication repair adds advertised login-button
-   discovery and checks control continuity before credential actions. It passed
-   403 focused tests. Root will adopt it and run standard HTTP onboarding on
-   Vikunja in `runs/product_auth_development_v1`, using the restored prepared
-   base. Vikunja is now development evidence. A bounded Memos autocomplete
-   dismissal probe is next; keep the existing strict form checks. Reassess
-   transfer on newly reserved evidence after repairs. The first product
-   milestone remains unmet.
+7. Authentication repair adopted after 403 focused passes and independent
+   review: advertised login-button discovery, control ownership/continuity,
+   same-origin settled views and attempted-action accounting. Standard HTTP
+   onboarding on Vikunja now authenticated and learned one creation operation
+   in about 14 seconds, with 14 actions and seven possible writes. Evidence is
+   in `runs/product_auth_development_v1` and
+   [the repair package](product/authentication_repair_v1/README.md).
+   The unchanged ordinary-goal binder still rejects all 18 original requests.
+8. Active: separate direct-schema creation/reuse demonstration on Vikunja,
+   with identical mechanically selected one-string calls for both arms,
+   restored post-learning state and independent saved-task checks. Root owns
+   service/lifecycle; the evaluator prepares ordinary UI checks. A bounded
+   Memos autocomplete dismissal probe is being prepared independently; keep
+   normal strict form checks. Reassess transfer on newly reserved evidence
+   after repairs. The first product milestone remains unmet.
 
 Application setup is separate from learner implementation. Proposed disclosed
 development applications are linkding and Memos; Vikunja is reserved, subject to

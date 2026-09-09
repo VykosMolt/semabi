@@ -1,0 +1,326 @@
+{
+  "status": "READY_FOR_ROOT_REVIEW_NOT_ADOPTED",
+  "scope": "Only auth candidate browser_session.py and the existing test_operation_runtime.py changed; local review evidence added. No live application calls, credentials/private state access, task/expected reads, or UI-evaluator messages.",
+  "candidate_base": "/tmp/semabi_rendered_value_candidate",
+  "initial_reference": {
+    "path": "/tmp/semabi_auth_candidate/auth_reference_sha256.json",
+    "sha256": "795b8f47892194b5b542bb55cc5d59f7d846344679d8105dae0bf985f4837baa"
+  },
+  "source_rows": [
+    {
+      "path": "examples/client.py",
+      "paragraph_sha256": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+      "auth_sha256": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+      "current_main_sha256": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+      "auth_equals_paragraph": true,
+      "current_main_equals_paragraph": true
+    },
+    {
+      "path": "semabi/baselines/cached_form.py",
+      "paragraph_sha256": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+      "auth_sha256": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+      "current_main_sha256": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+      "auth_equals_paragraph": true,
+      "current_main_equals_paragraph": true
+    },
+    {
+      "path": "semabi/compiler/artifacts.py",
+      "paragraph_sha256": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+      "auth_sha256": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+      "current_main_sha256": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+      "auth_equals_paragraph": true,
+      "current_main_equals_paragraph": true
+    },
+    {
+      "path": "semabi/compiler/browser.py",
+      "paragraph_sha256": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+      "auth_sha256": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+      "current_main_sha256": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+      "auth_equals_paragraph": true,
+      "current_main_equals_paragraph": true
+    },
+    {
+      "path": "semabi/compiler/browser_session.py",
+      "paragraph_sha256": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+      "auth_sha256": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+      "current_main_sha256": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+      "auth_equals_paragraph": false,
+      "current_main_equals_paragraph": true
+    },
+    {
+      "path": "semabi/compiler/evidence.py",
+      "paragraph_sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+      "auth_sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+      "current_main_sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+      "auth_equals_paragraph": true,
+      "current_main_equals_paragraph": true
+    },
+    {
+      "path": "semabi/compiler/observation.py",
+      "paragraph_sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "auth_sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "current_main_sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "auth_equals_paragraph": true,
+      "current_main_equals_paragraph": true
+    },
+    {
+      "path": "semabi/compiler/runtime.py",
+      "paragraph_sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+      "auth_sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+      "current_main_sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+      "auth_equals_paragraph": true,
+      "current_main_equals_paragraph": true
+    },
+    {
+      "path": "semabi/compiler/surface.py",
+      "paragraph_sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+      "auth_sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+      "current_main_sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+      "auth_equals_paragraph": true,
+      "current_main_equals_paragraph": true
+    },
+    {
+      "path": "semabi/service.py",
+      "paragraph_sha256": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+      "auth_sha256": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+      "current_main_sha256": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+      "auth_equals_paragraph": true,
+      "current_main_equals_paragraph": true
+    }
+  ],
+  "changed_files": [
+    {
+      "path": "semabi/compiler/browser_session.py",
+      "auth_sha256": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+      "paragraph_sha256": "6fa9069e6b42dd1ed435d8dd1d94933a9555b459a9e0b2ecfeabb7e183b34441",
+      "diff_check_exit": 1,
+      "whitespace_diagnostics": []
+    },
+    {
+      "path": "tests/test_operation_runtime.py",
+      "auth_sha256": "78372cb982adb4636c65f24722962bf624f5801a333b8cda70025a460cedac42",
+      "paragraph_sha256": "4e29b16b37182d60b1cb70887303e2866f2a43f5f1802b3c8a78daab273e83e4",
+      "diff_check_exit": 1,
+      "whitespace_diagnostics": []
+    }
+  ],
+  "review_patch": {
+    "path": "/tmp/semabi_auth_candidate/auth_candidate.patch",
+    "sha256": "8d04a09ddbc0f70f0307258c7b53517492eaf238eafdd7113745a77f129c05d5"
+  },
+  "configuration": {
+    "pytest_ini_source": "/home/moloch/semabi/pytest.ini",
+    "pytest_ini_sha256": "0e3c6ce026b946109e03cc12381366f1b5e63a634267cd70438421bc1195cb34",
+    "pyproject_sha256": "7a97133d7721374c4cde5371da7f418aa059c21abfc8e2ccc55a7d54ea631efe"
+  },
+  "mechanism": [
+    "Native submit priority, counting all same-form ownership before restricting descendant scope; unsupported external owned credentials/actions refuse selection.",
+    "Exact normalized English Login/Log in/Sign in fallback only when no native submit exists; unique form-less structure retained.",
+    "Every fill/click requires a fresh settled allowed-origin surface, matching selected descriptors and selection basis, and retained root/user/password/button identities.",
+    "Attempted dispatches counted before calls; generic credential-free failures, no write retries, retained handles released in finally.",
+    "Additive disclosed selection prior and same-origin settled rendered-password-form-absence readback evidence; no stronger authentication claim."
+  ],
+  "unique_tests_passed": 403,
+  "focused_auth_tests_passed": 82,
+  "browser_auth_test_passed": 1,
+  "browser_auth_scenes": 6,
+  "runs": [
+    {
+      "directory": "/tmp/semabi_auth_candidate/auth_fast_01",
+      "result_sha256": "f68b0af43444e8654911adba3fd05c93aa171c84f6479455333d6c1047253a10",
+      "stdout_sha256": "d880788187bf56a80e2ae2ff443f62d6993aedd79803caffe31fc2af4c01ff41",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pytest_summary": "80 passed, 213 deselected in 0.27s",
+      "module_provenance": {
+        "cwd": "/tmp/semabi_auth_candidate",
+        "python": "/home/moloch/semabi/.venv/bin/python",
+        "modules": [
+          {
+            "module": "semabi.compiler.browser_session",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/browser_session.py",
+            "sha256": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048"
+          },
+          {
+            "module": "semabi.compiler.surface",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/surface.py",
+            "sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          {
+            "module": "semabi.compiler.runtime",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/runtime.py",
+            "sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006"
+          },
+          {
+            "module": "semabi.compiler.observation",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/observation.py",
+            "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+          }
+        ]
+      },
+      "test_source_sha256": "c9592eaa1e733ea6f9d5adc62b7ff74fade0ff8db86c22bc9bfce17bb35111f1",
+      "wall_seconds": 0.504941,
+      "child_rusage_cpu_seconds": 0.498372,
+      "sampled_peak_aggregate_rss_bytes": 70938624,
+      "rss_limit_bytes": 4294967296,
+      "inherited_cpu_affinity": [
+        1
+      ],
+      "terminal_ownership_verified": true,
+      "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+      "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command."
+    },
+    {
+      "directory": "/tmp/semabi_auth_candidate/auth_chromium_01",
+      "result_sha256": "7315611c232f51b75df41745ccc344d12026e7c5c18c322a86d3aaea65fd83f3",
+      "stdout_sha256": "1a29eb07e8f80009f38d635647451ba76391d90f2575a2df900d7e1f1aa54bcb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pytest_summary": "1 passed in 7.70s",
+      "module_provenance": {
+        "cwd": "/tmp/semabi_auth_candidate",
+        "python": "/home/moloch/semabi/.venv/bin/python",
+        "modules": [
+          {
+            "module": "semabi.compiler.browser_session",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/browser_session.py",
+            "sha256": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048"
+          },
+          {
+            "module": "semabi.compiler.surface",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/surface.py",
+            "sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          {
+            "module": "semabi.compiler.runtime",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/runtime.py",
+            "sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006"
+          },
+          {
+            "module": "semabi.compiler.observation",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/observation.py",
+            "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+          }
+        ]
+      },
+      "test_source_sha256": "c9592eaa1e733ea6f9d5adc62b7ff74fade0ff8db86c22bc9bfce17bb35111f1",
+      "wall_seconds": 8.012842,
+      "child_rusage_cpu_seconds": 1.427141,
+      "sampled_peak_aggregate_rss_bytes": 787255296,
+      "rss_limit_bytes": 4294967296,
+      "inherited_cpu_affinity": [
+        1
+      ],
+      "terminal_ownership_verified": true,
+      "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+      "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command."
+    },
+    {
+      "directory": "/tmp/semabi_auth_candidate/auth_regression_01",
+      "result_sha256": "6594a70b9b598a27172ba7e7e38676fca2418bf1745c3321431e17f75f47fbfe",
+      "stdout_sha256": "6d2108498299b65ccefc93cbea2fb576e7e023229ee6af14a5ac9e8068076242",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pytest_summary": "400 passed, 4 deselected in 13.83s",
+      "module_provenance": {
+        "cwd": "/tmp/semabi_auth_candidate",
+        "python": "/home/moloch/semabi/.venv/bin/python",
+        "modules": [
+          {
+            "module": "semabi.compiler.browser_session",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/browser_session.py",
+            "sha256": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048"
+          },
+          {
+            "module": "semabi.compiler.surface",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/surface.py",
+            "sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          {
+            "module": "semabi.compiler.runtime",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/runtime.py",
+            "sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006"
+          },
+          {
+            "module": "semabi.compiler.observation",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/observation.py",
+            "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+          },
+          {
+            "module": "semabi.baselines.cached_form",
+            "path": "/tmp/semabi_auth_candidate/semabi/baselines/cached_form.py",
+            "sha256": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971"
+          },
+          {
+            "module": "semabi.service",
+            "path": "/tmp/semabi_auth_candidate/semabi/service.py",
+            "sha256": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+          }
+        ]
+      },
+      "test_source_sha256": "c9592eaa1e733ea6f9d5adc62b7ff74fade0ff8db86c22bc9bfce17bb35111f1",
+      "wall_seconds": 14.186826,
+      "child_rusage_cpu_seconds": 3.301153,
+      "sampled_peak_aggregate_rss_bytes": 78213120,
+      "rss_limit_bytes": 4294967296,
+      "inherited_cpu_affinity": [
+        1
+      ],
+      "terminal_ownership_verified": true,
+      "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+      "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command."
+    },
+    {
+      "directory": "/tmp/semabi_auth_candidate/auth_priority_01",
+      "result_sha256": "e86ef26b7ffbc3c1df65d6b2948ec4bd22fa0db1b1454a17c726710e9674f7de",
+      "stdout_sha256": "dd3243f430e26a3e1e5f1c2f2a6d606698ad7d3922c99f5e13056fbf5042a0c0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pytest_summary": "2 passed, 293 deselected in 0.23s",
+      "module_provenance": {
+        "cwd": "/tmp/semabi_auth_candidate",
+        "python": "/home/moloch/semabi/.venv/bin/python",
+        "modules": [
+          {
+            "module": "semabi.compiler.browser_session",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/browser_session.py",
+            "sha256": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048"
+          },
+          {
+            "module": "semabi.compiler.surface",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/surface.py",
+            "sha256": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+          },
+          {
+            "module": "semabi.compiler.runtime",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/runtime.py",
+            "sha256": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006"
+          },
+          {
+            "module": "semabi.compiler.observation",
+            "path": "/tmp/semabi_auth_candidate/semabi/compiler/observation.py",
+            "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+          }
+        ],
+        "test_sha256": "78372cb982adb4636c65f24722962bf624f5801a333b8cda70025a460cedac42"
+      },
+      "test_source_sha256": "78372cb982adb4636c65f24722962bf624f5801a333b8cda70025a460cedac42",
+      "wall_seconds": 0.505322,
+      "child_rusage_cpu_seconds": 0.46554,
+      "sampled_peak_aggregate_rss_bytes": 71266304,
+      "rss_limit_bytes": 4294967296,
+      "inherited_cpu_affinity": [
+        1
+      ],
+      "terminal_ownership_verified": true,
+      "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+      "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command."
+    }
+  ],
+  "test_order": "The first 80 auth cases, the 400-test existing/new fast suite, and the six-scene Chromium test passed before two final priority regressions were added. Only those two new cases were then run, and both passed. The implementation source was unchanged throughout all four runs.",
+  "test_resource_totals": {
+    "meter_wall_seconds_sum": 23.209931,
+    "child_rusage_cpu_seconds_sum": 5.692206,
+    "max_sampled_aggregate_rss_bytes": 787255296
+  },
+  "warnings": [],
+  "independent_review": "auth_discovery_review supplied the initial rendered-control diagnosis and independently reviewed the source. Its external-owner counterexample was incorporated before these test runs; subsequent independent selector/continuity probes reported no blocker.",
+  "earlier_trees": "Paragraph candidate remains at its initial source/test hashes. Root independently adopted the paragraph candidate into main while auth implementation was isolated; all ten current main source hashes match paragraph, and no auth changes have been adopted.",
+  "ownership_returned_to": "/root"
+}

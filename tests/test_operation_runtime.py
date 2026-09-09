@@ -249,6 +249,321 @@ from semabi.compiler import runtime as runtime_module
 from semabi.compiler.runtime import Runtime, argument_schema
 
 
+_AUTH_CREDENTIALS = {'username': 'synthetic-private-user', 'password': 'synthetic-private-password'}
+
+
+def _login_surface(*, native=True, submit=True, label='Continue', toggle=False):
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'group', ''),
+             Node(2, 1, 'textbox', 'Username', value=''),
+             Node(3, 1, 'textbox', 'Password', value='[REDACTED]'),
+             Node(4, 1, 'button', label)]
+    owner = 1 if native else None
+    properties = {2: {'form': owner}, 3: {'form': owner, 'input_type': 'password'},
+                  4: {'form': owner, 'submit': submit}}
+    if toggle:
+        nodes.append(Node(5, 1, 'button', 'Show the password'))
+        properties[5] = {'form': owner}
+    return _surface(nodes, properties, forms=(1,) if native else ())
+
+
+def _extra_login_control(surface, *, role='button', label='Sign in', parent=1, **properties):
+    index = len(surface.observation.nodes)
+    control = {'form': surface.controls[3]['form'], **properties}
+    extra = Node(index, parent, role, label, value='' if role == 'textbox' else None)
+    return _surface([*surface.observation.nodes, extra], {**surface.controls, index: control},
+                    forms=surface.forms)
+
+
+class _AuthenticationSession(BrowserSession):
+    """Synthetic rendered reads with separate live-element identity tokens."""
+
+    def __init__(self, surface=None, *, change_at=None, change=None, failure_at=None,
+                 raises=False, finish=True, release_error=False):
+        self.surface = surface or _login_surface()
+        self.allowed_origin = 'https://synthetic.invalid'
+        self.max_settle_ms = 0
+        self.read_count, self.actions, self.retention_checks, self.releases = 0, [], [], []
+        self.elements = {node.i: object() for node in self.surface.observation.nodes}
+        self.change_at, self.change = change_at, change
+        self.failure_at, self.raises, self.finish = failure_at, raises, finish
+        self.release_error = release_error
+
+    def read(self):
+        self.read_count += 1
+        if self.read_count == self.change_at:
+            self.change(self)
+        return self.surface
+
+    def retain_nodes(self, nodes):
+        self.retained_indices = tuple(nodes)
+        return tuple(self.elements[node] for node in nodes)
+
+    def nodes_retained(self, retained, nodes):
+        self.retention_checks.append(tuple(nodes))
+        return (retained == tuple(self.elements.get(node) for node in nodes)
+                and set(nodes) <= set(self.surface.observation.subtree(nodes[0])))
+
+    def release_nodes(self, retained):
+        self.releases.append(retained)
+        if self.release_error:
+            raise RuntimeError(_AUTH_CREDENTIALS['password'])
+
+    def act(self, primitive):
+        self.actions.append(primitive)
+        if len(self.actions) - 1 == self.failure_at:
+            if self.raises:
+                raise RuntimeError(_AUTH_CREDENTIALS['password'])
+            return ActionResult(False, _AUTH_CREDENTIALS['password'])
+        if primitive.kind == 'type':
+            control = self.surface.controls[primitive.target]
+            self.surface.observation.node(primitive.target).value = (
+                '[REDACTED]' if control['input_type'] == 'password' else primitive.text)
+        elif self.finish:
+            self.surface = _surface([Node(0, -1, 'group', 'Welcome')])
+        return ActionResult(True)
+
+
+def _reindex_login(session):
+    old = session.surface
+    nodes = [Node(0, -1, 'group', '')] + [Node.from_json({**node.to_json(), 'i': node.i + 1,
+                                                       'parent': node.parent + 1 if node.parent >= 0 else 0})
+                                               for node in old.observation.nodes]
+    controls = {node + 1: {**control, 'form': control['form'] + 1 if control['form'] is not None else None}
+                for node, control in old.controls.items()}
+    session.surface = _surface(nodes, controls, forms=[node + 1 for node in old.forms])
+    session.elements = {0: object(), **{node + 1: element for node, element in session.elements.items()}}
+
+
+@pytest.mark.parametrize(('native', 'submit', 'label', 'toggle'), [
+    (True, True, 'Continue', False), (True, False, 'LOGIN', True),
+    (True, False, ' Log \t in ', True), (True, False, 'sIgN in', True),
+    (False, False, 'Login', False), (False, True, 'Continue', False),
+])
+def test_authentication_uses_supported_native_or_disclosed_login_selection(native, submit, label, toggle):
+    session = _AuthenticationSession(_login_surface(native=native, submit=submit, label=label, toggle=toggle))
+
+    result = session.authenticate(_AUTH_CREDENTIALS)
+
+    assert result['status'] == 'CONNECTED'
+    assert result['authentication_actions'] == 3
+    assert result['authentication_evidence'] == 'same_origin_settled_password_form_absence'
+    assert result['login_selection_basis'] == ('unique_native_submit' if submit else 'exact_english_login_label_prior')
+    assert ('authentication_prior' in result) is not submit
+    assert [(action.kind, action.target) for action in session.actions] == [('type', 2), ('type', 3), ('click', 4)]
+    assert session.read_count == 5
+    assert session.retained_indices == (1, 2, 3, 4)
+    assert session.retention_checks == [(1, 2, 3, 4)] * 3
+    assert len(session.releases) == 1
+    assert all(value not in json.dumps(result) for value in _AUTH_CREDENTIALS.values())
+
+
+def test_authentication_prefers_the_native_submit_over_a_login_label_fallback():
+    session = _AuthenticationSession(_extra_login_control(_login_surface(), label='Login'))
+    result = session.authenticate(_AUTH_CREDENTIALS)
+    assert result['status'] == 'CONNECTED' and result['authentication_actions'] == 3
+    assert result['login_selection_basis'] == 'unique_native_submit'
+    assert session.actions[-1].target == 4
+
+
+@pytest.mark.parametrize('case', [
+    'cancel', 'toggle', 'substring', 'two_native', 'two_fallback', 'disabled_native',
+    'duplicate_user', 'duplicate_password', 'wrong_user_owner', 'wrong_button_owner',
+    'external_native', 'external_second_native', 'external_disabled_native', 'external_fallback', 'external_user',
+    'outside_unowned_login', 'formless_competing', 'native_cancel', 'native_toggle',
+])
+def test_authentication_refuses_unsupported_or_competing_credential_actions(case):
+    labels = {'cancel': 'Cancel', 'toggle': 'Show the password', 'substring': 'Login help',
+              'outside_unowned_login': 'Cancel', 'native_cancel': 'Cancel',
+              'native_toggle': 'Show the password'}
+    fallback = case in {'cancel', 'toggle', 'substring', 'two_fallback', 'external_native', 'external_disabled_native',
+                        'external_fallback', 'outside_unowned_login', 'formless_competing'}
+    surface = _login_surface(native=case != 'formless_competing', submit=not fallback,
+                             label=labels.get(case, 'Login' if fallback else 'Continue'))
+    if case in {'two_native', 'external_second_native', 'external_native', 'external_disabled_native'}:
+        surface = _extra_login_control(surface, label='Submit', submit=True,
+                                       parent=0 if case.startswith('external') else 1,
+                                       disabled=case in {'two_native', 'external_disabled_native'})
+    elif case in {'two_fallback', 'external_fallback', 'outside_unowned_login', 'formless_competing'}:
+        properties = {'form': None} if case in {'outside_unowned_login', 'formless_competing'} else {}
+        surface = _extra_login_control(surface, parent=0 if case != 'two_fallback' else 1, **properties)
+    elif case in {'duplicate_user', 'external_user', 'duplicate_password'}:
+        surface = _extra_login_control(surface, role='textbox', label='Another field',
+                                       input_type='password' if case == 'duplicate_password' else 'text',
+                                       parent=0 if case == 'external_user' else 1)
+    elif case == 'disabled_native':
+        surface.controls[4]['disabled'] = True
+        surface = _extra_login_control(surface, label='Login')
+    elif case.startswith('wrong_'):
+        surface.controls[2 if case == 'wrong_user_owner' else 4]['form'] = None
+    session = _AuthenticationSession(surface)
+
+    result = session.authenticate(_AUTH_CREDENTIALS)
+
+    assert result['status'] == 'AUTH_REQUIRED'
+    assert result['authentication_actions'] == 0
+    assert session.actions == session.releases == []
+
+
+@pytest.mark.parametrize('node', [2, 3], ids=['username', 'password'])
+@pytest.mark.parametrize('state', ['disabled', 'readonly'])
+def test_authentication_never_treats_unusable_password_fields_as_connected(node, state):
+    surface = _login_surface()
+    surface.controls[node][state] = True
+    session = _AuthenticationSession(surface)
+    result = session.authenticate(_AUTH_CREDENTIALS)
+    assert result['status'] == 'AUTH_REQUIRED'
+    assert result['authentication_actions'] == 0
+    assert session.actions == []
+
+
+@pytest.mark.parametrize('before_action', [0, 1, 2])
+@pytest.mark.parametrize('change', ['unsettled', 'origin', 'user_type', 'password_type', 'form',
+                                   'competing_native', 'competing_fallback', 'root_replaced',
+                                   'user_replaced', 'password_replaced', 'button_replaced', 'read_error'])
+def test_authentication_revalidates_scope_contract_and_live_elements_before_every_action(before_action, change):
+    def mutate(session):
+        if change == 'unsettled':
+            session.surface.settled = False
+        elif change == 'origin':
+            session.surface.observation.url = 'https://other.invalid/'
+        elif change in {'user_type', 'password_type'}:
+            session.surface.controls[2 if change == 'user_type' else 3]['input_type'] = (
+                'email' if change == 'user_type' else 'text')
+        elif change == 'form':
+            session.surface.controls[3]['form'] = None
+        elif change.startswith('competing_'):
+            session.surface = _extra_login_control(session.surface, submit=change == 'competing_native')
+        elif change.endswith('_replaced'):
+            node = {'root_replaced': 1, 'user_replaced': 2, 'password_replaced': 3, 'button_replaced': 4}[change]
+            session.elements[node] = object()
+        elif change == 'read_error':
+            raise RuntimeError(_AUTH_CREDENTIALS['password'])
+
+    surface = _login_surface(submit=change != 'competing_fallback',
+                             label='Login' if change == 'competing_fallback' else 'Continue')
+    session = _AuthenticationSession(surface, change_at=before_action + 2, change=mutate)
+
+    result = session.authenticate(_AUTH_CREDENTIALS)
+
+    assert result['status'] == 'AUTH_REQUIRED'
+    assert result['authentication_actions'] == before_action == len(session.actions)
+    assert len(session.releases) == 1
+    assert all(value not in json.dumps(result) for value in _AUTH_CREDENTIALS.values())
+
+
+@pytest.mark.parametrize('before_action', [0, 1, 2])
+def test_authentication_accepts_fresh_indices_for_the_same_retained_controls(before_action):
+    session = _AuthenticationSession(change_at=before_action + 2, change=_reindex_login)
+    result = session.authenticate(_AUTH_CREDENTIALS)
+    assert result['status'] == 'CONNECTED'
+    assert result['authentication_actions'] == 3
+    assert [action.target for action in session.actions] == [node + (index >= before_action)
+                                                           for index, node in enumerate((2, 3, 4))]
+    assert len(session.releases) == 1
+
+
+@pytest.mark.parametrize('failure_at', [0, 1, 2])
+@pytest.mark.parametrize('raises', [False, True], ids=['failed_result', 'dispatch_exception'])
+def test_authentication_counts_failed_dispatches_and_never_returns_secret_errors(failure_at, raises):
+    session = _AuthenticationSession(failure_at=failure_at, raises=raises)
+    result = session.authenticate(_AUTH_CREDENTIALS)
+    assert result['status'] == 'AUTH_REQUIRED'
+    assert result['authentication_actions'] == len(session.actions) == failure_at + 1
+    assert len(session.releases) == 1
+    assert all(value not in json.dumps(result) for value in _AUTH_CREDENTIALS.values())
+
+
+@pytest.mark.parametrize('stage', ['initial', 'readback'])
+@pytest.mark.parametrize('change', ['unsettled', 'origin', 'invalid_url'])
+def test_authentication_requires_a_supported_view_even_when_passwords_are_absent(stage, change):
+    def mutate(session):
+        if change == 'unsettled':
+            session.surface.settled = False
+        else:
+            session.surface.observation.url = 'about:blank' if change == 'invalid_url' else 'https://other.invalid/'
+    session = _AuthenticationSession(
+        _surface([Node(0, -1, 'group', 'Welcome')]) if stage == 'initial' else None,
+        change_at=1 if stage == 'initial' else 5, change=mutate)
+    result = session.authenticate(_AUTH_CREDENTIALS)
+    assert result['status'] == 'AUTH_REQUIRED'
+    assert result['authentication_actions'] == (0 if stage == 'initial' else 3)
+
+
+def test_authentication_preserves_limited_readback_missing_credentials_and_finally_cleanup():
+    absent = _AuthenticationSession(_surface([Node(0, -1, 'group', 'Welcome')]))
+    assert absent.authenticate({}) == {'status': 'CONNECTED', 'authentication_actions': 0,
+                                       'authentication_evidence': 'same_origin_settled_password_form_absence'}
+    missing = _AuthenticationSession()
+    assert missing.authenticate({'username': 'only-user'})['authentication_actions'] == 0
+    assert missing.actions == []
+    persistent = _AuthenticationSession(finish=False)
+    result = persistent.authenticate(_AUTH_CREDENTIALS)
+    assert result['status'] == 'AUTH_REQUIRED' and result['authentication_actions'] == 3
+    assert persistent.read_count == 5 and len(persistent.releases) == 1
+    cleanup = _AuthenticationSession(release_error=True)
+    result = cleanup.authenticate(_AUTH_CREDENTIALS)
+    assert result['status'] == 'CONNECTED' and len(cleanup.releases) == 1
+    assert all(value not in json.dumps(result) for value in _AUTH_CREDENTIALS.values())
+
+
+@pytest.mark.slow
+def test_rendered_authentication_fallback_retains_elements_while_indices_change():
+    url = 'https://synthetic.invalid/login'
+    document = {'html': ''}
+    browser = BrowserSession(url)
+    try:
+        browser._page.context.unroute('**/*')
+        browser._page.context.route('**/*', lambda route: route.fulfill(
+            status=200, content_type='text/html', body=document['html'])
+            if route.request.url == url else route.abort())
+        original_act = browser.act
+        actions = []
+
+        def dispatch(primitive):
+            actions.append((primitive.kind, primitive.target, browser.surface.controls[primitive.target]['label']))
+            return original_act(primitive)
+
+        browser.act = dispatch
+        scenes = [
+            ('fallback', '', '', False, '', 'CONNECTED', 3),
+            ('native', '', '', True, '', 'CONNECTED', 3),
+            ('reindex', "this.closest('form').before(Object.assign(document.createElement('p'), {textContent:'Notice'}))",
+             '', False, '', 'CONNECTED', 3),
+            ('replace_password', "const old=document.getElementById('password'); old.replaceWith(old.cloneNode(true))",
+             '', False, '', 'AUTH_REQUIRED', 1),
+            ('replace_form', '', "const form=this.closest('form'); form.replaceWith(form.cloneNode(true))",
+             False, '', 'AUTH_REQUIRED', 2),
+            ('external_submit', '', '', False, '<button form="login" type="submit">Other submit</button>',
+             'AUTH_REQUIRED', 0),
+        ]
+        for name, user_change, password_change, native, extra, status, attempted in scenes:
+            label = 'Continue' if native else 'LOGIN'
+            document['html'] = f'''<form id="login">
+              <label>Username<input id="user" oninput="{user_change}"></label>
+              <label>Password<input id="password" type="password" oninput="{password_change}"></label>
+              <button type="button">Show the password</button>
+              <button type="{'submit' if native else 'button'}" onclick="event.preventDefault();
+                this.closest('form').remove(); document.body.append('Welcome')">{label}</button>
+            </form>{extra}'''
+            browser._page.goto(url, wait_until='domcontentloaded')
+            before = browser.read()
+            selected = BrowserSession._login_controls(before)
+            actions.clear()
+
+            result = browser.authenticate(_AUTH_CREDENTIALS)
+
+            assert result['status'] == status, name
+            assert result['authentication_actions'] == len(actions) == attempted, name
+            assert all(secret not in json.dumps(result) for secret in _AUTH_CREDENTIALS.values())
+            assert not any(action[2] == 'Show the password' for action in actions)
+            if status == 'CONNECTED':
+                assert result['authentication_evidence'] == 'same_origin_settled_password_form_absence'
+            if name == 'reindex':
+                assert actions[1][1] != selected['password'] and actions[2][1] != selected['button']
+    finally:
+        browser.close()
+
+
 def _runtime_lifecycle_fixture(monkeypatch, tmp_path):
     drivers, browsers = [], []
     configuration = SimpleNamespace(failure=None)

@@ -249,47 +249,158 @@ class BrowserSession(Browser):
             raise ValueError("A product connection has no implicit reset endpoint")
         return super().act(primitive)
 
-    def authenticate(self, credentials: dict) -> dict:
-        """Use ordinary password-form UI. No credential values enter evidence."""
-        surface = self.read()
+    @staticmethod
+    def _login_controls(surface: Surface) -> dict | None:
+        """Select one supported login scope from rendered controls only.
+
+        Native submits take priority, including disabled competitors. The
+        fallback is an explicit English authentication-label prior, not a
+        general inference that a nearby button submits a password form.
+        """
         passwords = [node for node, control in surface.controls.items()
-                     if control["input_type"] == "password" and not control["disabled"]]
-        if not passwords:
-            return {"status": "CONNECTED", "authentication_actions": 0}
-        if len(passwords) != 1 or not credentials.get("username") or not credentials.get("password"):
-            return {"status": "AUTH_REQUIRED", "reason": "A unique supported login form and credentials are required",
-                    "authentication_actions": 0}
+                     if control["input_type"] == "password"]
+        if len(passwords) != 1:
+            return None
+
+        def normalized_label(control: dict) -> str:
+            return " ".join(control["label"].split()).casefold()
+
+        auth_labels = {"login", "log in", "sign in"}
         password = passwords[0]
         root = surface.controls[password].get("form")
-        members = set(surface.observation.subtree(root)) if root is not None else set(surface.controls)
-        users = [node for node, control in surface.controls.items()
-                 if node in members and control["role"] == "textbox" and node != password
-                 and control["input_type"] in {"text", "email", ""} and not control["disabled"]]
-        buttons = [node for node, control in surface.controls.items()
-                   if node in members and control["role"] == "button"
-                   and (control.get("submit") or root is None)]
-        if len(users) != 1 or len(buttons) != 1:
-            return {"status": "AUTH_REQUIRED", "reason": "Login controls are ambiguous",
-                    "authentication_actions": 0}
+        native = root is not None
+        if native:
+            if root not in surface.forms:
+                return None
+            members = set(surface.observation.subtree(root))
+            if password not in members:
+                return None
+            owned = {node: control for node, control in surface.controls.items()
+                     if control.get("form") == root}
+            # Native form ownership may reach outside the form subtree. Such
+            # competing credentials/actions cannot disappear from selection,
+            # but this supported scope does not authorize acting outside it.
+            if any(node not in members and (
+                    control["role"] == "textbox" and control["input_type"] in {"text", "email", "", "password"}
+                    or control["role"] == "button" and (
+                        control.get("submit") or normalized_label(control) in auth_labels))
+                   for node, control in owned.items()):
+                return None
+            controls = {node: control for node, control in owned.items() if node in members}
+        else:
+            # Preserve the existing form-less requirement of globally unique
+            # username and button controls. Do not discover a new smaller form.
+            controls = surface.controls
+        users = [node for node, control in controls.items()
+                 if control["role"] == "textbox" and node != password
+                 and control["input_type"] in {"text", "email", ""}]
+        buttons = [node for node, control in controls.items() if control["role"] == "button"]
+        if len(users) != 1:
+            return None
+        user = users[0]
+        if any(surface.controls[node]["role"] != "textbox" or surface.controls[node]["disabled"]
+               or surface.controls[node]["readonly"] for node in (user, password)):
+            return None
+        if native:
+            submits = [node for node in buttons if controls[node].get("submit")]
+            if submits:
+                if len(submits) != 1:
+                    return None
+                button, basis = submits[0], "unique_native_submit"
+            else:
+                candidates = [node for node in buttons if not controls[node]["disabled"]
+                              and normalized_label(controls[node]) in auth_labels]
+                if len(candidates) != 1:
+                    return None
+                button, basis = candidates[0], "exact_english_login_label_prior"
+        else:
+            if len(buttons) != 1 or surface.controls[user].get("form") is not None:
+                return None
+            button = buttons[0]
+            if controls[button].get("form") is not None:
+                return None
+            basis = "unique_native_submit" if controls[button].get("submit") else "exact_english_login_label_prior"
+            if not controls[button].get("submit") and normalized_label(controls[button]) not in auth_labels:
+                return None
+            root = next((ancestor for ancestor in surface.observation.ancestors(password)
+                         if {user, password, button} <= set(surface.observation.subtree(ancestor))), None)
+            if root is None:
+                return None
+        # These English labels advertise cancellation or password visibility,
+        # even if a page marks that button as its only native submit.
+        if controls[button]["disabled"] or normalized_label(controls[button]) in {
+                "cancel", "show password", "hide password", "show the password", "hide the password"}:
+            return None
+        return {"root": root, "user": user, "password": password, "button": button,
+                "contract": {"native_form": native, "root_role": surface.observation.node(root).role,
+                             "selection_basis": basis,
+                             "descriptors": {name: surface.descriptor(node) for name, node in
+                                             (("user", user), ("password", password), ("button", button))}}}
+
+    def authenticate(self, credentials: dict) -> dict:
+        """Use ordinary password-form UI. No credential values enter evidence."""
         actions = 0
+        retained, selection_basis = None, None
+
+        def outcome(status: str, reason: str | None = None) -> dict:
+            result = {"status": status, "authentication_actions": actions}
+            if reason:
+                result["reason"] = reason
+            if selection_basis is not None:
+                result["login_selection_basis"] = selection_basis
+            if selection_basis == "exact_english_login_label_prior":
+                result["authentication_prior"] = "Whole normalized English label: Login, Log in, Sign in"
+            if status == "CONNECTED":
+                result["authentication_evidence"] = "same_origin_settled_password_form_absence"
+            return result
+
+        def supported_view(surface: Surface) -> bool:
+            return surface.settled and origin_of(surface.observation.url) == self.allowed_origin
+
         try:
-            for kind, node, value in [("type", users[0], credentials["username"]),
-                                      ("type", password, credentials["password"]),
-                                      ("click", buttons[0], None)]:
+            surface = self.read()
+            if not supported_view(surface):
+                return outcome("AUTH_REQUIRED", "Authentication requires a settled same-origin view")
+            if not any(control["input_type"] == "password" for control in surface.controls.values()):
+                return outcome("CONNECTED")
+            if not all(isinstance(credentials.get(name), str) and credentials[name]
+                       for name in ("username", "password")):
+                return outcome("AUTH_REQUIRED", "A unique supported login form and credentials are required")
+            selected = self._login_controls(surface)
+            if selected is None:
+                return outcome("AUTH_REQUIRED", "Login controls are unsupported or ambiguous")
+            selection_basis = selected["contract"]["selection_basis"]
+            retained = self.retain_nodes([selected[name] for name in ("root", "user", "password", "button")])
+            for kind, field, value in [("type", "user", credentials["username"]),
+                                       ("type", "password", credentials["password"]),
+                                       ("click", "button", None)]:
+                current = self.read()
+                if not supported_view(current):
+                    return outcome("AUTH_REQUIRED", "Authentication requires a settled same-origin view")
+                fresh = self._login_controls(current)
+                if (fresh is None or fresh["contract"] != selected["contract"]
+                        or not self.nodes_retained(retained, [fresh[name] for name in
+                                                            ("root", "user", "password", "button")])):
+                    return outcome("AUTH_REQUIRED", "Login controls changed before interaction")
                 # Login actions bypass the public evidence recorder, including errors.
-                result = self.act(Primitive(kind, node, value))
                 actions += 1
+                result = self.act(Primitive(kind, fresh[field], value))
                 if not result.ok:
-                    return {"status": "AUTH_REQUIRED", "reason": "Login interaction did not complete",
-                            "authentication_actions": actions}
+                    return outcome("AUTH_REQUIRED", "Login interaction did not complete")
             deadline = time.monotonic() + self.max_settle_ms / 1000
             while True:
                 after = self.read()
+                if not supported_view(after):
+                    return outcome("AUTH_REQUIRED", "Authentication requires a settled same-origin view")
                 still_password = any(control["input_type"] == "password" for control in after.controls.values())
                 if not still_password or time.monotonic() >= deadline:
                     break
-            return {"status": "AUTH_REQUIRED" if still_password else "CONNECTED",
-                    "authentication_actions": actions}
+            return outcome("AUTH_REQUIRED" if still_password else "CONNECTED")
         except Exception:
-            return {"status": "AUTH_REQUIRED", "reason": "Login could not be confirmed",
-                    "authentication_actions": actions}
+            return outcome("AUTH_REQUIRED", "Login could not be confirmed")
+        finally:
+            if retained is not None:
+                try:
+                    self.release_nodes(retained)
+                except Exception:
+                    pass  # Handle cleanup must not expose credential-bearing errors.

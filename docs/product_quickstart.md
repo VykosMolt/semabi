@@ -31,8 +31,12 @@ open; reconnecting one preserves the others.
 
 Create a private JSON file containing the test account's `username` and
 `password`. Use an application and account where you have authorized exploratory
-writes. The initial authentication adapter supports an ordinary visible password
-form; MFA, SSO, and ambiguous login forms require additional work.
+writes. The authentication adapter supports an ordinary visible password form
+with one native submit, or one same-form button labeled Login, Log in or Sign in.
+It rechecks control ownership, element continuity, origin and settling before
+each credential action. Results disclose this English fallback and the limited
+password-form-absence readback; see [authentication evidence](data/v4/transport/product/authentication_repair_v1/README.md).
+MFA, SSO, and ambiguous login forms require additional work.
 
 ## Connect and discover
 
