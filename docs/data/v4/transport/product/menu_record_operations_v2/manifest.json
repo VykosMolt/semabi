@@ -1,0 +1,163 @@
+{
+  "active_operation_support_digest_contract_and_source_verified": true,
+  "active_operations": [
+    {
+      "id": "op_562fcb42c95d9c59eba3",
+      "kind": "create_visible_record",
+      "supporting_trials": 2,
+      "version": 2
+    },
+    {
+      "id": "op_7f641de8dbf9e29226fb",
+      "kind": "read_visible_record",
+      "supporting_trials": 2,
+      "version": 1
+    },
+    {
+      "id": "op_d245e3cc03c44e6800cd",
+      "kind": "update_visible_record",
+      "supporting_trials": 2,
+      "version": 1
+    }
+  ],
+  "classification": "DISCLOSED_EXACT_KNOWN_ANCHOR_READ_UPDATE_AND_RESTARTED_READ_DEVELOPMENT_CHECKPOINT",
+  "created_at": "2026-09-09T18:52:30.376527+00:00",
+  "historical_snapshot_resolution": {
+    "earlier_bytes_match_pre_restart_comparison_digests": true,
+    "earlier_public_artifact": "service_snapshot_before_restart.json",
+    "earlier_sha256": "d5e9d1f9e43284243e4e7debf1e829941da87d1fef2ce19f67907139fbc28e5d",
+    "original_input_path": "runs/product_menu_v2/service_snapshot.json",
+    "refreshed_public_artifact": "service_snapshot.json"
+  },
+  "identity": "UNESTABLISHED",
+  "independent_capture_script_sha256": "11a1133461432cd20f705f49ca2afbbe21401713fcbc061f2967ef24cc12b7ff",
+  "independent_evaluator_metrics": {
+    "all_fourteen_owned_processes_terminated": true,
+    "authentication_primitives": 6,
+    "business_write_primitives": 0,
+    "cpu_seconds": 4.304,
+    "elapsed_seconds": 10.51,
+    "evaluator_sessions": 2,
+    "independent_dom_captures": 4,
+    "navigations": 2,
+    "peak_aggregate_rss_bytes": 955580416,
+    "reloads": 2
+  },
+  "independent_integrity_checker_sha256": "fabba0ab8099019ec814e50503847238cc09b0503dca421222c3e9c66d12740c",
+  "independent_reader_sha256": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38",
+  "independently_checked_invocations": 3,
+  "input_artifacts_sha256": {
+    "runs/product_menu_evaluator_v1/cached_baseline_candidate_v2/cached_record_delivery_v2.json": "f5f8eaf51c89aa78d7695b6ae2bbc46ef36c4f48dd5da3d1c7a1c32f64e55590",
+    "runs/product_menu_evaluator_v1/cached_baseline_review.json": "c5c2b2ca15a8c2e77bbb9cd6806b9f4b14726251ff548ff3096baeb6182d2c4d",
+    "runs/product_menu_evaluator_v2/after/result.json": "d079a0b7de6b2492e5dd657ebaef7a5e8e2d90df36469d0a733eff36c6994a4e",
+    "runs/product_menu_evaluator_v2/after_check.json": "7a9282d1ddc6da982886bbc1f682384c823523d63276530048bb1d9628e8c6f0",
+    "runs/product_menu_evaluator_v2/before/result.json": "85c6f7085954c58809cefba3f3a0081e154a05235fe0d5f64368ed8e9cffdc6a",
+    "runs/product_menu_evaluator_v2/before_check.json": "451649aa1914ef40e46dacfd4f3f854b6ef90c6fe2ab449f3d2b664b9879c280",
+    "runs/product_menu_evaluator_v2/comparison.json": "10132cc36d8d88168fd3a63ec7956694c16b963bf5ae23c8d6054e19caf68b52",
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/forensics/candidate_comparison.json": "4bc315f7ffc22c4a3166e1019f02f3f9084a239dc8ac0d72ad7c2abb51357471",
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/forensics/editor_contract_diff.json": "a93c4e9650ab2eb534a8daa948940690eabe2489fa7f1aa502dc23e98fb628a0",
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/numeric_context_manifest.json": "5ae68c88ed297553d74f08f85456749c051c6eb8c95df0600a3ce988510ca39b",
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/numeric_context_results.json": "7574a86cda48a4731a5c42ee8f6cdafd38b011e0fa82422db715526c0f645cc5",
+    "runs/product_menu_evaluator_v2/read_after_restart_check.json": "3cf49adc0c8600340cbcee31abddd5db4b61dd793c301096a0ef4e92d07795ba",
+    "runs/product_menu_evaluator_v2/read_check.json": "899da2109109ed82069afd559c6050dbbb41b2373b2cba23a35c9f491000f781",
+    "runs/product_menu_evaluator_v2/service_snapshot_before_restart.json": "d5e9d1f9e43284243e4e7debf1e829941da87d1fef2ce19f67907139fbc28e5d",
+    "runs/product_menu_evaluator_v2/source_review.json": "2ea7402972dfd0c14d56554e5255e353d0787805c52d383f2b3d8b1bfa9c2636",
+    "runs/product_menu_v2/capture_service.py": "02eb0439412f77e3e419091e78448c250dd914cb6951c1537e1528d621f6168c",
+    "runs/product_menu_v2/integrated_tests.log": "37594bd288769a5b6017395b8816393875c540d43ea62d2b44a0357a187f9bfe",
+    "runs/product_menu_v2/integrated_tests.xml": "cc1178805b223eb4be904f77b5c38b973f706aef9264171f2c13d0b6a09772ea",
+    "runs/product_menu_v2/integration_events.json": "4a2ec75de8bdcd02d214c8db0aad01e436ccf28899b6accd4aef542bab1018e0",
+    "runs/product_menu_v2/memos_learn.log": "41c9c96f44dcc58ef1a40a9b543a21994919d5d36e2cd87e67b387bad6272a7b",
+    "runs/product_menu_v2/memos_read.log": "8fb6efa8223467959899a02793e417e832018e0a68dab26d73a9cfa51a07e1ad",
+    "runs/product_menu_v2/memos_read_after_restart.log": "8923ca534884530e270444c8ba56300d1944dd468211b2c4cce979ab3f53a32c",
+    "runs/product_menu_v2/memos_update.log": "dae4141e652b58c38c7aa73854b69369f1fecebaa8b49e57a975196d2be81b9e",
+    "runs/product_menu_v2/service_snapshot.json": "49be8c466c84d19e05a2f53b55646cee8c0933bc69166f0f4155fdfa3c8b1ac7",
+    "runs/product_menu_v2/source_sha256.json": "29be699dd9c017a7b020d646552c8313c1ab626e6727e9ad9db309921a1b03d2",
+    "runs/product_menu_v2/validation.json": "050c09d5d048d0d2b1ed1bd1a514da12456e0c96f6d499936deb10200d8f1cc0"
+  },
+  "numeric_context_raw_two_read_trial_evidence_bound": true,
+  "prior_failed_artifacts_unchanged": true,
+  "prior_failed_checkpoint": "../menu_record_operations_v1/README.md",
+  "prior_failed_manifest_sha256": "b5cc526e8cee6ccc78b5587e3ebe05bb5f1154a7cfbf3ced224cde8aa141322f",
+  "privacy": "Known Memos/Linkding credential and service-token strings are absent from public artifacts; no full DOM pages or exact source/test snapshots were copied into this package.",
+  "private_exact_source_directory": "runs/product_menu_v2/source_snapshot",
+  "private_exact_test_directory": "runs/product_menu_evaluator_v2/validation_test_snapshot",
+  "private_full_snapshot_sha256": {
+    "runs/product_menu_evaluator_v2/after/eval_dom_86ec016ee4de417696d49ab0db882a6d.json": "0b513c25ebbb435dd9cf83fe361a5349286ff7c1bb24c6ccf7ffcbfea2b2cb97",
+    "runs/product_menu_evaluator_v2/after/eval_dom_e86aef36f03746f8ac00bb129837439f.json": "35c2516b7985bb4c83affedda6c2bf47662c00e7b7cd4bcb5fc5ef6e1b19826d",
+    "runs/product_menu_evaluator_v2/before/eval_dom_5e73539d6812448b849eb82689f5cb9b.json": "6e38eec0552b9ceeb7c44b9121853b444c0116d8369f6100fd5f7940a2196091",
+    "runs/product_menu_evaluator_v2/before/eval_dom_964f1be4743e493f91330c10fb7f49f4.json": "ac74eb18cbe75ecdafd7c7a4fea841643dabfa2a5fdcb1a5cb168734f3c7b7ca"
+  },
+  "private_reviewed_patches": {
+    "runs/product_menu_evaluator_v1/cached_baseline_candidate_v2/cached_record_v2.patch": "7ab731883ed7ceb5459f34d15ab3cc15a0ab59c05db8312b2b066687d0a84d68",
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/numeric_context.patch": "068300675221c8bd511642ae6dd55ff480e9ea6d5a5efa4beff86b6b204cb557"
+  },
+  "public_jobs_completed": 6,
+  "raw_logs_root_validation_and_selected_evidence_copied_identically": true,
+  "schema": "menu_record_operations_checkpoint_manifest.v2",
+  "scope": "Exact-known-anchor READ, one local exact-value UPDATE with one sampled non-target, and restarted READ. No broad search, global identity, general correctness, unobserved-side-effect, prospective task battery completion, or paired baseline claim.",
+  "shareable_artifacts_sha256": {
+    "README.md": "145f322f56e367a56ca220b195e153d7a4e1e6b36aa8e6e59a64ee66928fa5dc",
+    "after_check.json": "7a9282d1ddc6da982886bbc1f682384c823523d63276530048bb1d9628e8c6f0",
+    "before_check.json": "451649aa1914ef40e46dacfd4f3f854b6ef90c6fe2ab449f3d2b664b9879c280",
+    "cached_baseline_review.json": "c5c2b2ca15a8c2e77bbb9cd6806b9f4b14726251ff548ff3096baeb6182d2c4d",
+    "cached_record_delivery_v2.json": "f5f8eaf51c89aa78d7695b6ae2bbc46ef36c4f48dd5da3d1c7a1c32f64e55590",
+    "capture_service.py": "02eb0439412f77e3e419091e78448c250dd914cb6951c1537e1528d621f6168c",
+    "comparisons.json": "989cd53c5167ff77bd7854a5ffd2e60cf4ac58afaf42d4ca00a4e652a1dcb169",
+    "historical_candidate_comparison.json": "4bc315f7ffc22c4a3166e1019f02f3f9084a239dc8ac0d72ad7c2abb51357471",
+    "integrated_tests.log": "37594bd288769a5b6017395b8816393875c540d43ea62d2b44a0357a187f9bfe",
+    "integrated_tests.xml": "cc1178805b223eb4be904f77b5c38b973f706aef9264171f2c13d0b6a09772ea",
+    "integration_events.json": "4a2ec75de8bdcd02d214c8db0aad01e436ccf28899b6accd4aef542bab1018e0",
+    "memos_learn.log": "41c9c96f44dcc58ef1a40a9b543a21994919d5d36e2cd87e67b387bad6272a7b",
+    "memos_read.log": "8fb6efa8223467959899a02793e417e832018e0a68dab26d73a9cfa51a07e1ad",
+    "memos_read_after_restart.log": "8923ca534884530e270444c8ba56300d1944dd468211b2c4cce979ab3f53a32c",
+    "memos_update.log": "dae4141e652b58c38c7aa73854b69369f1fecebaa8b49e57a975196d2be81b9e",
+    "numeric_context_manifest.json": "5ae68c88ed297553d74f08f85456749c051c6eb8c95df0600a3ce988510ca39b",
+    "numeric_context_results.json": "7574a86cda48a4731a5c42ee8f6cdafd38b011e0fa82422db715526c0f645cc5",
+    "prior_editor_contract_diff.json": "a93c4e9650ab2eb534a8daa948940690eabe2489fa7f1aa502dc23e98fb628a0",
+    "review.json": "2ea7402972dfd0c14d56554e5255e353d0787805c52d383f2b3d8b1bfa9c2636",
+    "service_snapshot.json": "49be8c466c84d19e05a2f53b55646cee8c0933bc69166f0f4155fdfa3c8b1ac7",
+    "service_snapshot_before_restart.json": "d5e9d1f9e43284243e4e7debf1e829941da87d1fef2ce19f67907139fbc28e5d",
+    "source_sha256.json": "29be699dd9c017a7b020d646552c8313c1ab626e6727e9ad9db309921a1b03d2",
+    "validation.json": "050c09d5d048d0d2b1ed1bd1a514da12456e0c96f6d499936deb10200d8f1cc0"
+  },
+  "source_hashes_match_current_private_snapshots_tests_service_and_both_independent_capture_phases": true,
+  "source_identity": "The combined v6 runtime and cached baseline were uncommitted development source at execution; exact per-file hashes and private source/test snapshots identify this checkpoint. Later commits do not replace execution attribution.",
+  "source_sha256": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "temporal_order_verified": "Independent BEFORE, learning, target READ, target UPDATE, independent AFTER, service restart/reconnection and READ of the exact new anchor without relearning",
+  "test_files_sha256": {
+    "tests/test_cached_form.py": "96872db638fd5193d573933f3074d2713fa740b75c630f1958648331910eef60",
+    "tests/test_operation_runtime.py": "a31924f51d4d63f57cb65434e74d9e56d9a81d82b1ef4aea63d3f4f123e488fe",
+    "tests/test_service.py": "8a8286fe7658ded6b435dc21c863f889674d41002ab61e90c6d6fca9ca53fc2b",
+    "tests/test_v4_navigation_settling.py": "a3b371c8f05b75b4b84e964d06fc2144f94ccbb04f4e6567b984492eaff08501"
+  },
+  "test_results": {
+    "count_passed": 324,
+    "cpu_affinity": [
+      8,
+      9
+    ],
+    "elapsed_seconds": 24.4,
+    "exit_code": 0,
+    "files_sha256": {
+      "tests/test_cached_form.py": "96872db638fd5193d573933f3074d2713fa740b75c630f1958648331910eef60",
+      "tests/test_operation_runtime.py": "a31924f51d4d63f57cb65434e74d9e56d9a81d82b1ef4aea63d3f4f123e488fe",
+      "tests/test_service.py": "8a8286fe7658ded6b435dc21c863f889674d41002ab61e90c6d6fca9ca53fc2b",
+      "tests/test_v4_navigation_settling.py": "a3b371c8f05b75b4b84e964d06fc2144f94ccbb04f4e6567b984492eaff08501"
+    },
+    "launch_chunk": "221103",
+    "library_threads": 1,
+    "session_id": 5240,
+    "terminal_chunk": "c5baed"
+  }
+}

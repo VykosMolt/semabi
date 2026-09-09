@@ -1,0 +1,68 @@
+{
+  "candidate_root": "/tmp/semabi_context_value_candidate",
+  "source_sha256": {
+    "runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+  },
+  "test_sha256": "a31924f51d4d63f57cb65434e74d9e56d9a81d82b1ef4aea63d3f4f123e488fe",
+  "import_provenance": {
+    "candidate_module_paths_asserted": true,
+    "loaded_source_equals_current_source_asserted": true,
+    "modules": [
+      "/tmp/semabi_context_value_candidate/semabi/compiler/runtime.py",
+      "/tmp/semabi_context_value_candidate/semabi/compiler/surface.py",
+      "/tmp/semabi_context_value_candidate/semabi/compiler/browser_session.py"
+    ]
+  },
+  "runs": [
+    {
+      "selection": "tests/test_operation_runtime.py -k \"numeric_context or numeric_record_comparison\" -m \"not slow\"",
+      "passed": 33,
+      "deselected": 169,
+      "seconds": 0.97,
+      "exit_code": 0,
+      "cpu": 1,
+      "session_id": 91429,
+      "terminal_chunk_id": "b9b5ab"
+    },
+    {
+      "selection": "tests/test_operation_runtime.py -m \"not slow\"",
+      "passed": 200,
+      "deselected": 2,
+      "seconds": 12.38,
+      "exit_code": 0,
+      "cpu": 1,
+      "session_id": 15115,
+      "terminal_chunk_id": "bcef1d"
+    }
+  ],
+  "environment": "Candidate cwd/PYTHONPATH; taskset CPU1; python -B; one-thread BLAS/OpenMP/MKL; no application or native-browser calls",
+  "distinct_verified_tests": 200,
+  "review": "product_effect_evaluator reports no material finding against frozen mechanism/source/test assertions",
+  "retained_evidence_comparison": {
+    "path": "/tmp/semabi_context_value_candidate/forensics/candidate_comparison.json",
+    "sha256": "4bc315f7ffc22c4a3166e1019f02f3f9084a239dc8ac0d72ad7c2abb51357471",
+    "exit_code": 0,
+    "tool_chunk_id": "2a2d7f",
+    "finding": "The comparison accepts only the observed numeric-label difference, leaves raw candidate intact, and has no completed-read/publication flag."
+  },
+  "original_negative_forensic_report": {
+    "path": "/tmp/semabi_context_value_candidate/forensics/editor_contract_diff.json",
+    "sha256": "a93c4e9650ab2eb534a8daa948940690eabe2489fa7f1aa502dc23e98fb628a0"
+  },
+  "coverage": [
+    "Two distinct successful READ exits required; failed trial2 cannot publish its temporary shape",
+    "Equal labels remain literal; only ASCII digit widths and literal punctuation/whitespace may generalize",
+    "At most one unexecuted dialog context button; uniqueness counts all selected-editor controls including auxiliary dialogs",
+    "Missing/extra/static-context/field/popup/state/layout/width/separator/word/non-ASCII drift stops before filling",
+    "Raw full form/context/default state is preserved and rechecked before READ exit/fill/Save",
+    "Same-state dynamic-button DOM replacement stops through existing temporary element continuity",
+    "CREATE/raw form candidates/executable descriptors stay literal; field-local Clear tolerance remains",
+    "Existing runtime deadline, draft, persistence, policy/evidence/version and negative effect checks pass"
+  ],
+  "remaining": "Parent integrates reviewed two-file patch and retains the first live negative; no live success is claimed by these diagnostics."
+}

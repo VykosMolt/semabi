@@ -1654,6 +1654,215 @@ class _MenuRecordBrowser(_SyntheticElementContinuity):
         return ActionResult(True)
 
 
+class _NumericContextBrowser(_MenuRecordBrowser):
+    """Rendered numeric dialog-button labels vary by record, never by date logic."""
+
+    def __init__(self, *, context_labels=('004-77', '018-82'), mode=None, with_default=False):
+        super().__init__(mode=mode)
+        self.context_labels = context_labels
+        self.with_default = with_default
+
+    def read(self):
+        surface = super().read()
+        if self.scene != 'editor' or self.selected is None:
+            return surface
+        candidate = next(candidate for candidate in form_candidates(surface)
+                         if candidate['descriptor']['submit']['label'] == 'Save'
+                         and any(field['value'] == self.value for field in candidate['fields']))
+        root = candidate['root']
+        nodes = deepcopy(surface.observation.nodes)
+        properties = deepcopy(surface.controls)
+        label = self.context_labels[self.selected % len(self.context_labels)]
+        late = self.edit_reads >= (4 if self.mode in {'numeric_before_save', 'numeric_remount_before_save'} else 2)
+        if self.mode in {'numeric_before_fill', 'numeric_before_save', 'numeric_read_exit'} and late:
+            label = '771-55'
+        if self.mode == 'numeric_second_read_fails' and self.editor_generation == 2 and self.edit_reads >= 2:
+            label = '771-55'
+        if self.mode == 'numeric_width':
+            label = '0' + label
+        elif self.mode == 'numeric_separator':
+            label = label.replace('-', '/')
+        elif self.mode == 'numeric_words':
+            label = 'Status ' + label
+        elif self.mode == 'numeric_unicode':
+            label = label.replace('0', '０')
+
+        def button(parent, name, *, popup=None, token=None, **state):
+            index = len(nodes)
+            nodes.append(Node(index, parent, 'button', name))
+            properties[index] = {'has_popup': popup, **state}
+            self.element_tokens[index] = token or ('context', self.editor_generation, name)
+            return index
+
+        if self.mode in {'numeric_auxiliary_duplicate', 'numeric_field_clear'}:
+            owner = len(nodes)
+            nodes.append(Node(owner, root, 'group', ''))
+            nodes[candidate['fields'][0]['node']].parent = owner
+            if self.mode == 'numeric_auxiliary_duplicate':
+                button(owner, '999-11', popup='dialog')
+            elif self.edit_reads >= 3:
+                button(owner, 'Clear')
+        parent = root
+        if self.mode == 'numeric_layout':
+            parent = len(nodes)
+            nodes.append(Node(parent, root, 'group', ''))
+        if self.mode != 'numeric_missing':
+            epoch = int(self.mode in {'numeric_remount_before_fill', 'numeric_remount_before_save'} and late)
+            button(parent, label, popup='menu' if self.mode == 'numeric_popup' else 'dialog',
+                   token=('numeric context', self.editor_generation, epoch),
+                   disabled=self.mode == 'numeric_disabled', readonly=self.mode == 'numeric_readonly')
+        if self.mode == 'numeric_duplicate':
+            button(root, '999-11', popup='dialog')
+        button(root, 'Changed settings' if self.mode == 'numeric_static_context' else 'Settings')
+        if self.mode == 'numeric_extra_context':
+            button(root, 'Extra action')
+        if self.mode == 'numeric_field':
+            nodes[candidate['fields'][0]['node']].name = 'Changed field label'
+            properties[candidate['fields'][0]['node']]['label'] = 'Changed field label'
+        if self.with_default:
+            index = len(nodes)
+            checked = ((self.mode == 'numeric_default_between_trials' and self.selected == 1)
+                       or self.mode == 'numeric_default_during_call' and self.edit_reads >= 2)
+            nodes.append(Node(index, root, 'checkbox', 'Pinned', checked=checked))
+            properties[index] = {'input_type': 'checkbox'}
+        self.surface = _surface(nodes, properties)
+        return self.surface
+
+
+def test_numeric_context_generalizes_two_completed_reads_without_changing_raw_descriptors(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_NumericContextBrowser())
+    assert learned['attempts'] == []
+    creation, reading, updating = learned['operations']
+    assert 'context_label_binding' not in creation['procedure']
+    binding = reading['procedure']['context_label_binding']
+    assert binding['descriptor'] == {'role': 'button', 'input_type': '', 'has_popup': 'dialog'}
+    assert binding['shape'] == [{'digits': 3}, {'literal': '-'}, {'digits': 2}]
+    assert binding['completed_read_trials'] == 2
+    assert [trial['label'] for trial in binding['read_evidence']] == ['004-77', '018-82']
+    assert binding['prior'] == runtime_module.NUMERIC_CONTEXT_PRIOR
+    for evidence, trial in zip(binding['read_evidence'], reading['support']['trials']):
+        assert evidence['raw_form'] == trial['editor_state']['raw_form']
+        assert evidence['editor_state'] == trial['editor_state']
+        assert evidence['observation'] == trial['editor_observation']
+        assert any(control['label'] == evidence['label'] for control in evidence['raw_form']['context_controls'])
+    assert any(control['label'] == '004-77' for control in reading['procedure']['form']['context_controls'])
+    assert 'semantically irrelevant' in reading['scope']['numeric_context_labels']
+    for operation in learned['operations']:
+        runtime._check_operation(operation)
+    browser.context_labels = ('952-17', '628-41')
+    read = runtime.invoke(connection, reading, {'target': browser.rows[0]}, lambda event: None)
+    assert read['outcome'] == 'CONFIRMED'
+    update = runtime.invoke(connection, updating, {'target': browser.rows[1], 'value': 'New record value'}, lambda event: None)
+    assert update['outcome'] == 'CONFIRMED'
+    assert browser.rows[1] == 'New record value'
+
+
+def test_equal_numeric_context_trials_keep_literal_matching(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_NumericContextBrowser(context_labels=('004-77', '004-77')))
+    assert learned['attempts'] == []
+    assert all('context_label_binding' not in operation['procedure'] for operation in learned['operations'])
+    browser.context_labels = ('018-82', '018-82')
+    before = len(browser.actions)
+    result = runtime.invoke(connection, learned['operations'][1], {'target': browser.rows[0]}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert result['operation_status'] == 'STALE'
+    assert len(browser.actions) == before + 2
+
+
+@pytest.mark.parametrize('labels', [('004-77', '0018-82'), ('004-77', '018/82'),
+                                   ('Status 004', 'Status 018'), ('００４', '０１８'), ('---', '...')])
+def test_numeric_context_prior_does_not_generalize_widths_separators_words_or_nonascii(tmp_path, monkeypatch, labels):
+    _, _, _, learned = _learn_editable_records(tmp_path, monkeypatch,
+                                              browser=_NumericContextBrowser(context_labels=labels))
+    assert [operation['kind'] for operation in learned['operations']] == ['create_visible_record']
+    assert learned['attempts'][0]['confirmed_trials'] == 1
+    assert learned['attempts'][0]['stage'] == 'read_visible_record'
+
+
+def test_failed_second_numeric_context_read_does_not_publish_temporary_generalization(tmp_path, monkeypatch):
+    _, _, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_NumericContextBrowser(mode='numeric_second_read_fails'))
+    assert [operation['kind'] for operation in learned['operations']] == ['create_visible_record']
+    assert learned['attempts'][0]['confirmed_trials'] == 1
+    assert 'context_label_binding' not in learned['operations'][0]['procedure']
+    assert browser.scene == 'editor'
+    assert 'changed since capture' in learned['attempts'][0]['reason']
+
+
+@pytest.mark.parametrize('mode', ['numeric_duplicate', 'numeric_auxiliary_duplicate', 'numeric_default_between_trials'])
+def test_numeric_context_promotion_requires_whole_editor_uniqueness_and_unchanged_defaults(tmp_path, monkeypatch, mode):
+    _, _, _, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_NumericContextBrowser(mode=mode, with_default=True))
+    assert [operation['kind'] for operation in learned['operations']] == ['create_visible_record']
+    assert learned['attempts'][0]['confirmed_trials'] == 1
+    assert learned['attempts'][0]['stage'] == 'read_visible_record'
+
+
+@pytest.mark.parametrize('mode', ['numeric_missing', 'numeric_duplicate', 'numeric_auxiliary_duplicate',
+                                 'numeric_popup', 'numeric_layout', 'numeric_extra_context',
+                                 'numeric_static_context', 'numeric_field', 'numeric_width', 'numeric_separator',
+                                 'numeric_words', 'numeric_unicode', 'numeric_disabled', 'numeric_readonly'])
+def test_numeric_context_invocation_drift_stops_before_filling(tmp_path, monkeypatch, mode):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_NumericContextBrowser())
+    browser.mode = mode
+    before = len(browser.actions)
+    original_rows = list(browser.rows)
+    result = runtime.invoke(connection, learned['operations'][2],
+                            {'target': browser.rows[0], 'value': 'New record value'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert result['operation_status'] == 'STALE'
+    assert browser.rows == original_rows
+    assert len(browser.actions) == before + 2
+
+
+@pytest.mark.parametrize('mode, kind, fills', [('numeric_before_fill', 2, 0), ('numeric_before_save', 2, 1),
+                                            ('numeric_read_exit', 1, 0), ('numeric_remount_before_fill', 2, 0),
+                                            ('numeric_remount_before_save', 2, 1),
+                                            ('numeric_default_during_call', 2, 0)])
+def test_numeric_context_literal_state_and_element_are_frozen_during_a_call(tmp_path, monkeypatch, mode, kind, fills):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_NumericContextBrowser(with_default=True))
+    browser.mode = mode
+    before, reloads, navigations = len(browser.actions), browser.reload_count, browser.navigation_count
+    arguments = {'target': browser.rows[0]}
+    if kind == 2:
+        arguments['value'] = 'New record value'
+    result = runtime.invoke(connection, learned['operations'][kind], arguments, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert sum(action.kind == 'type' for action in browser.actions[before:]) == fills
+    assert sum(action.kind == 'click' for action in browser.actions[before:]) == 2
+    assert browser.scene == 'editor'
+    assert browser.reload_count == reloads
+    assert browser.navigation_count == navigations + 1
+    assert ('continuity' if 'remount' in mode else 'changed since capture') in result['effect']['reason']
+
+
+def test_numeric_context_guard_preserves_existing_field_local_clear_tolerance(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_NumericContextBrowser())
+    browser.mode = 'numeric_field_clear'
+    result = runtime.invoke(connection, learned['operations'][2],
+                            {'target': browser.rows[0], 'value': 'New record value'}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED'
+
+
+def test_numeric_record_comparison_never_changes_create_form_matching(tmp_path, monkeypatch):
+    runtime, _, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=_NumericContextBrowser())
+    reading = learned['operations'][1]
+    browser.scene, browser.selected, browser.value = 'editor', 0, browser.rows[0]
+    browser.context_labels = ('952-17', '628-41')
+    surface = browser.read()
+    raw_before = deepcopy(form_candidates(surface))
+    record_form = runtime._record_form(surface, reading['procedure'], browser.value)
+    assert any(control['label'] == '952-17' for control in record_form['descriptor']['context_controls'])
+    with pytest.raises(runtime_module.StopOperation, match='form is absent'):
+        runtime._form(surface, reading['procedure']['form'])
+    assert form_candidates(surface) == raw_before
+
+
 def test_menu_record_family_learns_unlabeled_reads_and_exact_value_replacement(tmp_path, monkeypatch):
     runtime, connection, browser, learned = _learn_editable_records(
         tmp_path, monkeypatch, browser=_MenuRecordBrowser())

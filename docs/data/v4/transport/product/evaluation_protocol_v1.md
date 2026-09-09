@@ -45,9 +45,14 @@ shares only the generic browser/authentication adapter.
 
 The [record-operation checkpoint](record_operations_v1/README.md) now establishes
 local Linkding READ/UPDATE and restart reuse with independent target and sampled
-non-target checks. Memos remains CREATE-only on that source. Menu-based editing
-and single-field replacement are the active development milestone. The task
-families and acceptance criteria below remain unchanged; unsupported tasks will
+non-target checks. Memos remained CREATE-only on that source. The subsequent
+[menu-operation checkpoint](menu_record_operations_v2/README.md) establishes
+Memos exact local READ/UPDATE through an advertised menu, including sole-text
+replacement and restart reuse. It preserves the prior failed second READ trial
+and discloses the numeric context-label prior used by the repair. The same
+source also relearned all three Linkding families and read an older bookmark.
+These selected development calls do not complete the fixed requests below.
+The task families and acceptance criteria remain unchanged; unsupported tasks
 remain in the denominator. No fixed-source assessment has started.
 
 ## Requested workflows

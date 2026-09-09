@@ -1,0 +1,87 @@
+{
+  "source_sha256": {
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c"
+  },
+  "tests": {
+    "count_passed": 324,
+    "elapsed_seconds": 24.4,
+    "launch_chunk": "221103",
+    "session_id": 5240,
+    "cpu_affinity": [
+      8,
+      9
+    ],
+    "library_threads": 1,
+    "files_sha256": {
+      "tests/test_operation_runtime.py": "a31924f51d4d63f57cb65434e74d9e56d9a81d82b1ef4aea63d3f4f123e488fe",
+      "tests/test_service.py": "8a8286fe7658ded6b435dc21c863f889674d41002ab61e90c6d6fca9ca53fc2b",
+      "tests/test_cached_form.py": "96872db638fd5193d573933f3074d2713fa740b75c630f1958648331910eef60",
+      "tests/test_v4_navigation_settling.py": "a3b371c8f05b75b4b84e964d06fc2144f94ccbb04f4e6567b984492eaff08501"
+    },
+    "terminal_chunk": "c5baed",
+    "exit_code": 0
+  },
+  "new_live_application_calls": 4,
+  "owned_service": {
+    "session_id": 44145,
+    "launch_chunk": "dd9b79",
+    "cpu_affinity": [
+      2,
+      3
+    ],
+    "data_dir": "runs/product_service_v1",
+    "state": "stopped and reaped",
+    "terminal_chunk": "b3df8a",
+    "exit_code": 0
+  },
+  "clients": [
+    {
+      "name": "memos_learn",
+      "session_id": 15267,
+      "launch_chunk": "bf52f3",
+      "terminal_chunk": "18bc82",
+      "exit_code": 0
+    },
+    {
+      "name": "memos_read",
+      "session_id": 66725,
+      "launch_chunk": "d2ba2a",
+      "terminal_chunk": "fbb82c",
+      "exit_code": 0
+    },
+    {
+      "name": "memos_update",
+      "session_id": 66774,
+      "launch_chunk": "003472",
+      "terminal_chunk": "be229d",
+      "exit_code": 0
+    },
+    {
+      "name": "memos_read_after_restart",
+      "session_id": 22261,
+      "launch_chunk": "1fe664",
+      "terminal_chunk": "03c185",
+      "exit_code": 0
+    }
+  ],
+  "all_frozen_source_files_still_match": true,
+  "replacement_service": {
+    "session_id": 27610,
+    "launch_chunk": "f82229",
+    "cpu_affinity": [
+      2,
+      3
+    ],
+    "data_dir": "runs/product_service_v1",
+    "state": "serving after persisted-artifact restart"
+  }
+}

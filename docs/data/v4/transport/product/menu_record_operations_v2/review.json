@@ -1,0 +1,49 @@
+{
+  "checked": [
+    "One unexecuted role=button/has_popup=dialog context control; input type and other descriptors fixed",
+    "One label-free control match across the entire selected editor, including auxiliary dialog controls",
+    "Whole nonempty ASCII labels with at least one digit; exact digit-run widths and exact nondigit literals",
+    "Different labels in two completed selected-record READ trials are required; equal labels retain literal matching",
+    "Trial2 uses a temporary copied procedure; generalized procedure is adopted only after its guarded READ exit",
+    "Two raw labels, form descriptors, editor states, observation signatures and explicit prior remain in bound support",
+    "Only comparison copies normalize the one label; raw surface/form descriptors and CREATE matching remain exact",
+    "Raw labels/context flags/defaults are frozen during each call; non-label dynamic control state and layout path also bind across records",
+    "Dynamic control DOM element is retained along with owner, fields and submit; replacement with identical state stops",
+    "Existing draft, global editor, request budget, deadline, effect-slot, readback URL, no-retry and two-trial guards retained"
+  ],
+  "findings": [],
+  "focused_tests": {
+    "cpu": 1,
+    "reported_elapsed_seconds": 0.97,
+    "reported_exit_code": 0,
+    "reported_passed": 33,
+    "reported_terminal_chunk": "b9b5ab"
+  },
+  "full_synthetic_tests": {
+    "cpu": 1,
+    "reported_deselected": 2,
+    "reported_elapsed_seconds": 12.38,
+    "reported_exit_code": 0,
+    "reported_passed": 200,
+    "reported_terminal_chunk": "bcef1d"
+  },
+  "historical_comparison_limit": "Replaying previously captured editor observations supplies diagnostic evidence only; completed_read_trials was null and no live success was inferred.",
+  "not_established": "Numeric context values may be amounts or status codes. The syntactic prior does not establish semantic irrelevance, global record identity, unobserved side effects, or live application success.",
+  "private_final_package_sha256": {
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/forensics/candidate_comparison.json": "4bc315f7ffc22c4a3166e1019f02f3f9084a239dc8ac0d72ad7c2abb51357471",
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/forensics/editor_contract_diff.json": "a93c4e9650ab2eb534a8daa948940690eabe2489fa7f1aa502dc23e98fb628a0",
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/numeric_context.patch": "068300675221c8bd511642ae6dd55ff480e9ea6d5a5efa4beff86b6b204cb557",
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/numeric_context_manifest.json": "5ae68c88ed297553d74f08f85456749c051c6eb8c95df0600a3ce988510ca39b",
+    "runs/product_menu_evaluator_v2/numeric_context_candidate/numeric_context_results.json": "7574a86cda48a4731a5c42ee8f6cdafd38b011e0fa82422db715526c0f645cc5"
+  },
+  "schema": "numeric_context_review.v1",
+  "scope": "Bounded source/test review against the root-frozen one-control numeric context proposal; no app calls or main source edits",
+  "source_sha256": {
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "tests/test_operation_runtime.py": "a31924f51d4d63f57cb65434e74d9e56d9a81d82b1ef4aea63d3f4f123e488fe"
+  },
+  "status": "NO_MATERIAL_FINDING_ON_FROZEN_SOURCE_AND_TESTS",
+  "test_cases_inspected": 33
+}

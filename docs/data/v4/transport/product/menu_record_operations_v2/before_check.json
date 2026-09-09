@@ -1,0 +1,350 @@
+{
+  "application": "memos",
+  "authentication": {
+    "authentication_actions": 3,
+    "status": "CONNECTED"
+  },
+  "capture_script_sha256": "11a1133461432cd20f705f49ca2afbbe21401713fcbc061f2967ef24cc12b7ff",
+  "captures": [
+    {
+      "absence_check": {
+        "exact_matching_record_count": 0,
+        "selected_records": [],
+        "visible_candidate_records": 16
+      },
+      "captured_at": "2026-09-09T18:35:39.720000+00:00",
+      "records": {
+        "sampled_non_target": {
+          "exact_matching_record_count": 1,
+          "selected_records": [
+            {
+              "body_nodes": [
+                {
+                  "bbox": [
+                    541,
+                    670,
+                    638,
+                    24
+                  ],
+                  "index": 288,
+                  "own_text": "Two application service Memos 20260909 1655",
+                  "parent": 287,
+                  "role": "",
+                  "tag": "p",
+                  "text": "Two application service Memos 20260909 1655"
+                }
+              ],
+              "root": {
+                "bbox": [
+                  524,
+                  631,
+                  672,
+                  76
+                ],
+                "index": 272,
+                "own_text": "",
+                "parent": 133,
+                "role": "",
+                "tag": "article",
+                "text": "Two application service Memos 20260909 1655"
+              }
+            }
+          ],
+          "visible_candidate_records": 16
+        },
+        "target": {
+          "exact_matching_record_count": 1,
+          "selected_records": [
+            {
+              "body_nodes": [
+                {
+                  "bbox": [
+                    541,
+                    586,
+                    638,
+                    24
+                  ],
+                  "index": 271,
+                  "own_text": "Memos remained connected after Linkding reconnect 20260909",
+                  "parent": 270,
+                  "role": "",
+                  "tag": "p",
+                  "text": "Memos remained connected after Linkding reconnect 20260909"
+                }
+              ],
+              "root": {
+                "bbox": [
+                  524,
+                  548,
+                  672,
+                  76
+                ],
+                "index": 247,
+                "own_text": "",
+                "parent": 133,
+                "role": "",
+                "tag": "article",
+                "text": "Memos remained connected after Linkding reconnect 20260909"
+              }
+            }
+          ],
+          "visible_candidate_records": 16
+        }
+      },
+      "snapshot_id": "eval_dom_5e73539d6812448b849eb82689f5cb9b",
+      "snapshot_sha256": "6e38eec0552b9ceeb7c44b9121853b444c0116d8369f6100fd5f7940a2196091",
+      "stage": "before_reload",
+      "url": "http://127.0.0.1:8852/"
+    },
+    {
+      "absence_check": {
+        "exact_matching_record_count": 0,
+        "selected_records": [],
+        "visible_candidate_records": 16
+      },
+      "captured_at": "2026-09-09T18:35:41.098031+00:00",
+      "records": {
+        "sampled_non_target": {
+          "exact_matching_record_count": 1,
+          "selected_records": [
+            {
+              "body_nodes": [
+                {
+                  "bbox": [
+                    541,
+                    670,
+                    638,
+                    24
+                  ],
+                  "index": 280,
+                  "own_text": "Two application service Memos 20260909 1655",
+                  "parent": 279,
+                  "role": "",
+                  "tag": "p",
+                  "text": "Two application service Memos 20260909 1655"
+                }
+              ],
+              "root": {
+                "bbox": [
+                  524,
+                  631,
+                  672,
+                  76
+                ],
+                "index": 264,
+                "own_text": "",
+                "parent": 133,
+                "role": "",
+                "tag": "article",
+                "text": "Two application service Memos 20260909 1655"
+              }
+            }
+          ],
+          "visible_candidate_records": 16
+        },
+        "target": {
+          "exact_matching_record_count": 1,
+          "selected_records": [
+            {
+              "body_nodes": [
+                {
+                  "bbox": [
+                    541,
+                    586,
+                    638,
+                    24
+                  ],
+                  "index": 263,
+                  "own_text": "Memos remained connected after Linkding reconnect 20260909",
+                  "parent": 262,
+                  "role": "",
+                  "tag": "p",
+                  "text": "Memos remained connected after Linkding reconnect 20260909"
+                }
+              ],
+              "root": {
+                "bbox": [
+                  524,
+                  548,
+                  672,
+                  76
+                ],
+                "index": 247,
+                "own_text": "",
+                "parent": 133,
+                "role": "",
+                "tag": "article",
+                "text": "Memos remained connected after Linkding reconnect 20260909"
+              }
+            }
+          ],
+          "visible_candidate_records": 16
+        }
+      },
+      "snapshot_id": "eval_dom_964f1be4743e493f91330c10fb7f49f4",
+      "snapshot_sha256": "ac74eb18cbe75ecdafd7c7a4fea841643dabfa2a5fdcb1a5cb168734f3c7b7ca",
+      "stage": "after_reload",
+      "url": "http://127.0.0.1:8852/"
+    }
+  ],
+  "completed_at": "2026-09-09T18:35:41.180766+00:00",
+  "expectations": {
+    "sampled_non_target": {
+      "value": "Two application service Memos 20260909 1655"
+    },
+    "target": {
+      "value": "Memos remained connected after Linkding reconnect 20260909"
+    }
+  },
+  "expected_absent_value": "Existing memo updated through a learned HTTP operation 20260909",
+  "input_jobs": {
+    "sampled_non_target": "job_79806e94f2b74e12ba178cfebfbab33b",
+    "target_initial": "job_a29422347c1741559dc8db056b38c9a1"
+  },
+  "integrity_checker_sha256": "fabba0ab8099019ec814e50503847238cc09b0503dca421222c3e9c66d12740c",
+  "integrity_checks": {
+    "known_credential_strings_absent": true,
+    "owned_processes_still_terminated": true,
+    "selected_bodies_within_same_article": true,
+    "selected_nodes_equal_raw_snapshot": true,
+    "snapshot_hashes_verified": true,
+    "source_hashes_match_all_ten_frozen_sources": true
+  },
+  "method": "Unchanged independent v3 visible-DOM extraction and same-record matching; ordinary UI authentication only",
+  "metrics": {
+    "authentication_primitives": 3,
+    "browser_session_raw_snapshot_reads_by_phase": {
+      "after_reload": 7,
+      "authentication": 12,
+      "before_reload": 3,
+      "navigation": 6
+    },
+    "browser_session_read_calls_by_phase": {
+      "after_reload": 1,
+      "authentication": 2,
+      "before_reload": 1,
+      "navigation": 1
+    },
+    "business_write_primitives": 0,
+    "conservative_possible_write_primitives": 3,
+    "cpu_affinity": [
+      4
+    ],
+    "cpu_seconds": 2.175,
+    "elapsed_seconds": 5.332,
+    "fresh_browser_sessions": 1,
+    "independent_dom_reads": 2,
+    "interaction_total_including_auth_navigation_reload": 5,
+    "main_frame_navigation_events": 6,
+    "model_calls": 0,
+    "paid_cost": 0,
+    "peak_aggregate_rss_bytes": 950038528,
+    "primitive_kinds": [
+      {
+        "kind": "type",
+        "phase": "authentication"
+      },
+      {
+        "kind": "type",
+        "phase": "authentication"
+      },
+      {
+        "kind": "click",
+        "phase": "authentication"
+      }
+    ],
+    "requested_navigations": 1,
+    "requested_reloads": 1,
+    "retries": 0,
+    "setup_resets": 0
+  },
+  "phase": "before",
+  "reader_sha256": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38",
+  "reader_source": "runs/product_evaluator_v3/check_effects.py",
+  "replacement_value": "Existing memo updated through a learned HTTP operation 20260909",
+  "scope": "Exact visible paragraph/body values in the inspected current record view; no cross-view or global identity claim.",
+  "source_after": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_before": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-09-09T18:35:35.848565+00:00",
+  "termination": {
+    "checked_at": "2026-09-09T18:35:41.180632+00:00",
+    "close_returned": true,
+    "close_started_at": "2026-09-09T18:35:41.109937+00:00",
+    "live_owned_process_count": 0,
+    "owned_processes": [
+      {
+        "after_close": "absent",
+        "name": "MainThread",
+        "pid": 1146561,
+        "ppid": 1146559,
+        "start_ticks": 6786213
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1146576,
+        "ppid": 1146561,
+        "start_ticks": 6786252
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1146578,
+        "ppid": 1146576,
+        "start_ticks": 6786254
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1146579,
+        "ppid": 1146576,
+        "start_ticks": 6786254
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1146596,
+        "ppid": 1146578,
+        "start_ticks": 6786257
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1146610,
+        "ppid": 1146576,
+        "start_ticks": 6786259
+      },
+      {
+        "after_close": "absent",
+        "name": "chrome-headless",
+        "pid": 1146619,
+        "ppid": 1146579,
+        "start_ticks": 6786264
+      }
+    ]
+  },
+  "verdict": "PASS"
+}

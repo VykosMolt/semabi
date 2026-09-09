@@ -1,0 +1,166 @@
+{
+  "application_calls": 0,
+  "commits": 0,
+  "created_at": "2026-09-09T18:23:22.733029+00:00",
+  "dependencies": {
+    "semabi/compiler/browser_session.py": {
+      "authority": "P4 worker declared these bytes frozen and ready for dependency copying.",
+      "candidate_matches_frozen_source": true,
+      "current_main_matches_candidate": true,
+      "sha256": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+      "source": "/tmp/semabi_menu_record_candidate/semabi/compiler/browser_session.py"
+    },
+    "semabi/compiler/surface.py": {
+      "authority": "P4 worker declared these bytes frozen and ready for dependency copying.",
+      "candidate_matches_frozen_source": true,
+      "current_main_matches_candidate": true,
+      "sha256": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+      "source": "/tmp/semabi_menu_record_candidate/semabi/compiler/surface.py"
+    }
+  },
+  "files": {
+    "semabi/baselines/cached_form.py": {
+      "base_sha256": "3ec9081f3bb92152f5970938894e891bc2c206b9921d29a0c9373aeac6647503",
+      "bytes": 34620,
+      "candidate_sha256": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+      "net_added_lines": 136
+    },
+    "tests/test_cached_form.py": {
+      "base_sha256": "d8ce0bac6c4a4f9079b9d3b087998c81562e6b112363603d125ae1f842b8c142",
+      "bytes": 36429,
+      "candidate_sha256": "96872db638fd5193d573933f3074d2713fa740b75c630f1958648331910eef60",
+      "net_added_lines": 341
+    }
+  },
+  "independent_review": {
+    "agent": "product_effect_evaluator",
+    "conclusion": "No remaining material finding in assigned baseline scope after inspecting corrected source and the 82-pass XML.",
+    "confirmed_added_regressions": 7,
+    "confirmed_fixes": 5,
+    "source_sha256": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "test_sha256": "96872db638fd5193d573933f3074d2713fa740b75c630f1958648331910eef60"
+  },
+  "integration_verification": {
+    "adopted_by": "root",
+    "checked_at": "2026-09-09T18:25:30.031898+00:00",
+    "forward_patch_check": {
+      "exit_code": 1,
+      "reason": "Root had already adopted both exact reviewed candidate files.",
+      "tool_chunk_id": "9769e8"
+    },
+    "frozen_p4_dependencies_match_main_exactly": true,
+    "main_head": "607499d81fda0b8ec6134199e875ec4f4329689d",
+    "no_new_code_changes_after_82_pass_test_run": true,
+    "owned_sources_match_main_exactly": true,
+    "ownership_released_to_root": true,
+    "reverse_patch_check": {
+      "exit_code": 0,
+      "tool_chunk_id": "bf3304"
+    },
+    "source_hash_comparison_tool_chunk_id": "7cd85a"
+  },
+  "limitations": [
+    "Shared SemABI acquisition and cached recipe assistance must be charged to both comparison arms.",
+    "Conditional replay is not independent onboarding.",
+    "Global descriptor uniqueness can reject a composer/editor pair that full learned local form binding can resolve.",
+    "All cached read-field values are guarded, but full learned form contracts and unmodeled defaults or side effects are not checked.",
+    "Temporary DOM continuity is not persistent record identity.",
+    "The baseline deadline includes authentication; invocation Runtime-only limits account for authentication separately.",
+    "No live application test or paired assessment was performed."
+  ],
+  "main_source_edits": 0,
+  "mechanism": {
+    "editor_binding": "Global unique cached field and submit descriptors with common native form ownership if any.",
+    "families": [
+      "create_visible_record",
+      "read_visible_record",
+      "update_visible_record"
+    ],
+    "read_outcome": "DISPATCHED with structured values; browser closes without reload or effect confirmation.",
+    "shared_artifact_fields": [
+      "kind",
+      "argument_schema",
+      "procedure.readback_url",
+      "procedure.selector_argument",
+      "procedure.anchor",
+      "procedure.read_fields",
+      "procedure.edit",
+      "procedure.menu_trigger if present",
+      "procedure.update_arguments",
+      "procedure.form.submit"
+    ],
+    "shared_surface_utility": "visible_record_matches selects an exact current local record; learned effect_slots are not read.",
+    "update_continuity": "Temporary observed DOM owner/field/submit references via frozen P4 retain_nodes/nodes_retained/release_nodes; all cached read values rechecked as they evolve before each fill and the one Save.",
+    "update_outcome": "DISPATCHED after one successful cached Save; no saved effect or replacement absence is verified."
+  },
+  "patch": {
+    "bytes": 36803,
+    "path": "cached_record_v2.patch",
+    "sha256": "7ab731883ed7ceb5459f34d15ab3cc15a0ab59c05db8312b2b066687d0a84d68"
+  },
+  "review_corrections": [
+    "Check deadline after successful continuity cleanup, outside finally to preserve an existing failure.",
+    "Check deadline after write-intent logging before possible_action and browser dispatch.",
+    "Check deadline after navigation logging before goto.",
+    "Check deadline after authentication logging inside auth_budget_failure propagation before dispatch.",
+    "Redact longer credential strings before overlapping shorter values."
+  ],
+  "schema": "cached_record_baseline_candidate.v2",
+  "source_snapshot": {
+    "copied_file_count": 495,
+    "created_at": "2026-09-09T18:05:31.962972+00:00",
+    "owned_file_sha256": {
+      "semabi/baselines/cached_form.py": "3ec9081f3bb92152f5970938894e891bc2c206b9921d29a0c9373aeac6647503",
+      "tests/test_cached_form.py": "d8ce0bac6c4a4f9079b9d3b087998c81562e6b112363603d125ae1f842b8c142"
+    },
+    "owned_patch_files": [
+      "semabi/baselines/cached_form.py",
+      "tests/test_cached_form.py"
+    ],
+    "p4_dependencies": {
+      "semabi/compiler/browser_session.py": {
+        "authority": "P4 worker declared these bytes frozen and ready for dependency copying.",
+        "sha256": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+        "source": "/tmp/semabi_menu_record_candidate/semabi/compiler/browser_session.py"
+      },
+      "semabi/compiler/surface.py": {
+        "authority": "P4 worker declared these bytes frozen and ready for dependency copying.",
+        "sha256": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+        "source": "/tmp/semabi_menu_record_candidate/semabi/compiler/surface.py"
+      }
+    },
+    "source_head": "db0ced66f7d67f574a1ded8fd68a6a1d593d2080",
+    "source_root": "/home/moloch/semabi",
+    "source_stable_during_copy": true,
+    "source_worktree_includes_baseline_v2_deadline": true
+  },
+  "status": "READY_AFTER_INDEPENDENT_REVIEW",
+  "supersedes": "cached_record_delivery_v1.json",
+  "validation": {
+    "budget_replay_cli_and_unchanged_trace_helpers_ast_preserved": true,
+    "candidate_sources_parse": true,
+    "cpu_affinity": [
+      7
+    ],
+    "duration_seconds": 0.29,
+    "errors": 0,
+    "existing_tests": 43,
+    "failures": 0,
+    "new_record_cases": 32,
+    "no_runtime_import_or_full_contract_or_effect_or_reload_calls": true,
+    "process_exit_code": 0,
+    "review_changes_to_existing_helpers": [
+      "__init__: longest-first redaction",
+      "act: post-intent deadline check",
+      "execute: new record branch and post-event navigation/auth deadline checks",
+      "resolve: optional current-record scope"
+    ],
+    "review_regression_cases": 7,
+    "skipped": 0,
+    "tests": 82,
+    "thread_libraries": 1,
+    "tool_chunk_id": "93adfa",
+    "xml": "cached_record_tests_v2.xml",
+    "xml_sha256": "4cfc1dfa75207e1e6ca8b426de2da417684ba0a09909d8ecb3de342170a38f78"
+  }
+}

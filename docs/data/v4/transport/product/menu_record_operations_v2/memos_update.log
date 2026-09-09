@@ -1,0 +1,370 @@
+{
+  "operations": [
+    {
+      "id": "op_562fcb42c95d9c59eba3",
+      "version": 2,
+      "name": "save_record",
+      "kind": "create_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "description": "Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "id": "op_7f641de8dbf9e29226fb",
+      "version": 1,
+      "name": "read_record",
+      "kind": "read_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "target": {
+            "description": "Exact current local anchor: Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "target"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "id": "op_d245e3cc03c44e6800cd",
+      "version": 1,
+      "name": "update_record",
+      "kind": "update_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "target": {
+            "description": "Exact current local anchor: Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "description": "Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "value"
+        ],
+        "type": "object"
+      }
+    }
+  ]
+}
+{"execution_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "idempotency_key": "memos-update-v2-20260909"}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 0}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 1}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 2}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 4}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 6}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 9}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 11}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 12}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 13}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 15}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 17}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 19}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 20}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "RUNNING", "events": 22}
+{"job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089", "status": "COMPLETED", "events": 24}
+{
+  "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+  "created_at": "2026-09-09T18:39:58.966553+00:00",
+  "events": [
+    {
+      "created_at": "2026-09-09T18:39:58.976830+00:00",
+      "kind": "invoke",
+      "sequence": 1,
+      "type": "job_started"
+    },
+    {
+      "created_at": "2026-09-09T18:39:59.329150+00:00",
+      "sequence": 2,
+      "settled": true,
+      "signature": "7d4814d475ad562c",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:39:59.651727+00:00",
+      "sequence": 3,
+      "settled": true,
+      "signature": "7d4814d475ad562c",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:39:59.666447+00:00",
+      "sequence": 4,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8852/"
+    },
+    {
+      "created_at": "2026-09-09T18:40:00.787732+00:00",
+      "sequence": 5,
+      "settled": true,
+      "signature": "7d4814d475ad562c",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 287
+      },
+      "created_at": "2026-09-09T18:40:00.821056+00:00",
+      "sequence": 6,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T18:40:01.373519+00:00",
+      "sequence": 7,
+      "settled": true,
+      "signature": "59e60b01e7b1395f",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T18:40:01.382030+00:00",
+      "ok": true,
+      "sequence": 8,
+      "type": "action_result"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 457
+      },
+      "created_at": "2026-09-09T18:40:01.389590+00:00",
+      "sequence": 9,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T18:40:01.866828+00:00",
+      "sequence": 10,
+      "settled": true,
+      "signature": "5f2c2668c31d565b",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T18:40:01.875473+00:00",
+      "ok": true,
+      "sequence": 11,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T18:40:02.240130+00:00",
+      "sequence": 12,
+      "settled": true,
+      "signature": "5f2c2668c31d565b",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "type",
+        "target": 289,
+        "text": "Existing memo updated through a learned HTTP operation 20260909"
+      },
+      "created_at": "2026-09-09T18:40:02.275544+00:00",
+      "sequence": 13,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T18:40:02.602773+00:00",
+      "sequence": 14,
+      "settled": true,
+      "signature": "35431b50b9437023",
+      "type": "observation"
+    },
+    {
+      "action": "type",
+      "created_at": "2026-09-09T18:40:02.611187+00:00",
+      "ok": true,
+      "sequence": 15,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T18:40:02.920891+00:00",
+      "sequence": 16,
+      "settled": true,
+      "signature": "35431b50b9437023",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 308
+      },
+      "created_at": "2026-09-09T18:40:02.954832+00:00",
+      "sequence": 17,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T18:40:03.335431+00:00",
+      "sequence": 18,
+      "settled": true,
+      "signature": "f7263cd636bc37b8",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T18:40:03.344242+00:00",
+      "ok": true,
+      "sequence": 19,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T18:40:03.803434+00:00",
+      "sequence": 20,
+      "settled": true,
+      "signature": "f8962fd51d47f968",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:40:04.166659+00:00",
+      "sequence": 21,
+      "settled": true,
+      "signature": "f8962fd51d47f968",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:40:04.181772+00:00",
+      "sequence": 22,
+      "type": "reload"
+    },
+    {
+      "created_at": "2026-09-09T18:40:04.970135+00:00",
+      "sequence": 23,
+      "settled": true,
+      "signature": "7c679db56a5c59a8",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:40:04.991720+00:00",
+      "outcome": "CONFIRMED",
+      "sequence": 24,
+      "status": "COMPLETED",
+      "type": "job_finished"
+    }
+  ],
+  "id": "job_0bcb8848339a4f3ea7d9d95fc7a49089",
+  "job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089",
+  "kind": "invoke",
+  "request": {
+    "arguments": {
+      "target": "Memos remained connected after Linkding reconnect 20260909",
+      "value": "Existing memo updated through a learned HTTP operation 20260909"
+    },
+    "limits": {
+      "max_actions": 20,
+      "max_seconds": 60.0,
+      "max_writes": 12
+    },
+    "operation_id": "op_d245e3cc03c44e6800cd",
+    "version": 1
+  },
+  "result": {
+    "effect": {
+      "arguments": {
+        "value": "Existing memo updated through a learned HTTP operation 20260909"
+      },
+      "before": {
+        "value": "Memos remained connected after Linkding reconnect 20260909"
+      },
+      "before_witness": {
+        "basis": "visible_local_record",
+        "link_destinations": [],
+        "observation": "7d4814d475ad562c",
+        "role": "article",
+        "root": 281,
+        "texts": [
+          "Memos remained connected after Linkding reconnect 20260909"
+        ],
+        "value_node": 297
+      },
+      "identity": "UNESTABLISHED",
+      "kind": "visible_record_value_replaced",
+      "old_anchor_absence": {
+        "after_reload_observation": "7c679db56a5c59a8",
+        "after_submit_observation": "f8962fd51d47f968",
+        "value": "Memos remained connected after Linkding reconnect 20260909"
+      },
+      "scope": "Local exact-value replacement in the inspected record view, retained after reload",
+      "witness": {
+        "basis": "visible_local_record",
+        "field_slots": {
+          "value": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        "link_destinations": [],
+        "observation": "7c679db56a5c59a8",
+        "old_anchor_absence": {
+          "after_reload_observation": "7c679db56a5c59a8",
+          "after_submit_observation": "f8962fd51d47f968",
+          "value": "Memos remained connected after Linkding reconnect 20260909"
+        },
+        "role": "article",
+        "root": 281,
+        "texts": [
+          "Existing memo updated through a learned HTTP operation 20260909"
+        ],
+        "value_node": 297
+      }
+    },
+    "metrics": {
+      "actions": 6,
+      "elapsed_seconds": 6.013,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 4
+    },
+    "outcome": "CONFIRMED"
+  },
+  "status": "COMPLETED",
+  "updated_at": "2026-09-09T18:40:04.991771+00:00",
+  "write_intent": true
+}

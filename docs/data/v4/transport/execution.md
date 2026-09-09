@@ -43,12 +43,14 @@ Rolling queue:
    an identity-assisted diagnostic; ordinary learned JOIN is still unestablished.
 2. P3 committed at `db0ced6`: learned local READ/UPDATE, independent target
    and non-target checks, and a successful read after service restart.
-3. Active P4: generalize record editing through advertised menus, resolve an
-   unlabeled but uniquely observed field beside a blank creation form, and
-   support exact local replacement when the only text value is also the anchor.
-   Two observed trials and fresh state/effect checks remain required.
-4. Run the predefined development workflow set, align invocation limits with
-   the prospective budgets, and preserve every unsupported task. After general
+3. P4 now passes Memos learning, exact local READ/UPDATE, independent effect
+   checks and persisted-operation reuse after service restart. Advertised menus,
+   unlabeled observed fields and sole-value replacement use two trials and
+   fresh form, DOM continuity and effect checks. Linkding reuse on the same
+   source is being checked.
+4. Active: prepare equivalent ordinary-UI fixtures and run the predefined
+   development workflow set with the implemented per-invocation limits.
+   Preserve every unsupported task. After general
    repairs, freeze the common source/onboarding/baseline/protocol before opening
    reserved Vikunja. Use equivalent reset fixtures for the paired comparison.
 5. Preserve failures and continue against the highest-value demonstrated
@@ -187,7 +189,7 @@ record slot is unsupported. The exact comparison is retained in
 exact source alongside the first pre-state check. The next source revision and
 application run must use new snapshot identities.
 
-The bounded repair is being implemented in `/tmp/semabi_context_value_candidate`:
+The bounded repair was adopted from `/tmp/semabi_context_value_candidate`:
 learn one numeric context-label shape across two completed READ trials, preserve
 all separators and digit widths, and retain every other form constraint. The
 button must uniquely advertise a dialog throughout its editor. Its raw label,
@@ -203,10 +205,33 @@ effects or consume learned form contracts. Review fixed delayed-event deadline
 gaps, late cleanup reporting, and overlapping-credential redaction. Its
 60-second deadline includes connection and authentication. A separate agent is
 materializing the unchanged prospective development requests and fixture plan;
-no assessment results or setup actions exist yet. Vikunja remains unopened and reserved. Next:
-repair the demonstrated editor contract difference, verify the change, then
-repeat P4 through the same HTTP entry point. No fixed assessment has begun,
-and no native fits or full unchanged corpus runs are queued.
+no assessment results or setup actions exist yet. Vikunja remains unopened and
+reserved. No native fits or full unchanged corpus runs are queued.
+
+P4's second frozen source (`local-record-v6`, runtime
+`ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1`)
+passed **324 integrated tests in 24.40 s** (exec 5240, terminal `c5baed`, exit
+zero). Memos learning established CREATE, READ and UPDATE with two successful
+trials each, no failed candidates, 29 actions, 16 possible writes and 28.399 s.
+An actual HTTP READ returned the older memo's content (4 actions, 2 possible
+writes, 4.259 s); one UPDATE replaced it (6 actions, 4 possible writes, 6.013 s).
+Independent DOM checks found the old target once and replacement absent before
+the call, then replacement once and old target absent afterward, both before
+and after reload. A sampled non-target remained unchanged. After service
+restart, a default fresh client reused the persisted READ operation and returned
+the new content (4 actions, 2 possible writes, 4.325 s), without relearning.
+This establishes exact-known-anchor operations, not content search or general
+workflow competence. The prior negative P4 run remains preserved separately.
+
+Root stopped and reaped service 44145, then restarted the same data directory as
+service 27610 on CPUs 2–3. All four Memos clients and independent browsers are
+closed. The fixed request plan has 16 requests per development application and
+64 paired result slots. Setup needs an opaque prepared-fixture snapshot/restore
+extension: the existing reset restores only the initial account. That bounded
+helper is being tested separately; no application reset has occurred. Next:
+finish the same-source Linkding check, preserve P4, then prepare ordinary UI
+fixtures and execute the fixed development comparison without discarding
+unsupported search, unread, duplicate-selection or multiple-step requests.
 
 ## Paused for user review (2026-09-08 11:53 UTC)
 

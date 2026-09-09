@@ -1,0 +1,246 @@
+{
+  "operations": [
+    {
+      "id": "op_562fcb42c95d9c59eba3",
+      "version": 2,
+      "name": "save_record",
+      "kind": "create_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "description": "Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "id": "op_7f641de8dbf9e29226fb",
+      "version": 1,
+      "name": "read_record",
+      "kind": "read_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "target": {
+            "description": "Exact current local anchor: Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "target"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "id": "op_d245e3cc03c44e6800cd",
+      "version": 1,
+      "name": "update_record",
+      "kind": "update_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "target": {
+            "description": "Exact current local anchor: Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "description": "Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "value"
+        ],
+        "type": "object"
+      }
+    }
+  ]
+}
+{"execution_id": "job_3280ef0b62304988a598343532fb89c7", "idempotency_key": "60236fd7f52d934b549ad662da72152c"}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "RUNNING", "events": 0}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "RUNNING", "events": 1}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "RUNNING", "events": 2}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "RUNNING", "events": 4}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "RUNNING", "events": 6}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "RUNNING", "events": 9}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "RUNNING", "events": 10}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "RUNNING", "events": 11}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "RUNNING", "events": 13}
+{"job_id": "job_3280ef0b62304988a598343532fb89c7", "status": "COMPLETED", "events": 15}
+{
+  "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+  "created_at": "2026-09-09T18:38:58.817855+00:00",
+  "events": [
+    {
+      "created_at": "2026-09-09T18:38:58.828084+00:00",
+      "kind": "invoke",
+      "sequence": 1,
+      "type": "job_started"
+    },
+    {
+      "created_at": "2026-09-09T18:38:59.182101+00:00",
+      "sequence": 2,
+      "settled": true,
+      "signature": "7d4814d475ad562c",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:38:59.533216+00:00",
+      "sequence": 3,
+      "settled": true,
+      "signature": "7d4814d475ad562c",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:38:59.548242+00:00",
+      "sequence": 4,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8852/"
+    },
+    {
+      "created_at": "2026-09-09T18:39:00.485952+00:00",
+      "sequence": 5,
+      "settled": true,
+      "signature": "7d4814d475ad562c",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 287
+      },
+      "created_at": "2026-09-09T18:39:00.513442+00:00",
+      "sequence": 6,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T18:39:01.058674+00:00",
+      "sequence": 7,
+      "settled": true,
+      "signature": "59e60b01e7b1395f",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T18:39:01.067318+00:00",
+      "ok": true,
+      "sequence": 8,
+      "type": "action_result"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 457
+      },
+      "created_at": "2026-09-09T18:39:01.074825+00:00",
+      "sequence": 9,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T18:39:01.596226+00:00",
+      "sequence": 10,
+      "settled": true,
+      "signature": "5f2c2668c31d565b",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T18:39:01.604824+00:00",
+      "ok": true,
+      "sequence": 11,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T18:39:01.931927+00:00",
+      "sequence": 12,
+      "settled": true,
+      "signature": "5f2c2668c31d565b",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:39:01.959395+00:00",
+      "sequence": 13,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8852/"
+    },
+    {
+      "created_at": "2026-09-09T18:39:03.078926+00:00",
+      "sequence": 14,
+      "settled": true,
+      "signature": "7d4814d475ad562c",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:39:03.089065+00:00",
+      "outcome": "CONFIRMED",
+      "sequence": 15,
+      "status": "COMPLETED",
+      "type": "job_finished"
+    }
+  ],
+  "id": "job_3280ef0b62304988a598343532fb89c7",
+  "job_id": "job_3280ef0b62304988a598343532fb89c7",
+  "kind": "invoke",
+  "request": {
+    "arguments": {
+      "target": "Memos remained connected after Linkding reconnect 20260909"
+    },
+    "limits": {
+      "max_actions": 20,
+      "max_seconds": 60.0,
+      "max_writes": 12
+    },
+    "operation_id": "op_7f641de8dbf9e29226fb",
+    "version": 1
+  },
+  "result": {
+    "effect": {
+      "field_descriptors": {
+        "value": {
+          "input_type": "contenteditable",
+          "label": "",
+          "role": "textbox"
+        }
+      },
+      "kind": "visible_record_read",
+      "scope": "Current descriptor-bound edit-form values for one exact local anchor in the rendered view",
+      "values": {
+        "value": "Memos remained connected after Linkding reconnect 20260909"
+      },
+      "witness": {
+        "basis": "visible_local_record",
+        "link_destinations": [],
+        "observation": "7d4814d475ad562c",
+        "role": "article",
+        "root": 281,
+        "texts": [
+          "Memos remained connected after Linkding reconnect 20260909"
+        ],
+        "value_node": 297
+      }
+    },
+    "metrics": {
+      "actions": 4,
+      "elapsed_seconds": 4.259,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 2
+    },
+    "outcome": "CONFIRMED"
+  },
+  "status": "COMPLETED",
+  "updated_at": "2026-09-09T18:39:03.089123+00:00",
+  "write_intent": true
+}

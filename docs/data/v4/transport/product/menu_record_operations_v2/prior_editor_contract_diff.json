@@ -1,0 +1,1383 @@
+{
+  "classification": "Read-only forensic analysis of a retained negative development learning attempt",
+  "job_id": "job_6cde78a2f7844cbfae57195f32e4bc47",
+  "trace_directory": "/home/moloch/semabi/runs/product_service_v1/connections/conn_0e51f4498eb547f6ac639acc96f8bab1/evidence/98d146e6eebe432892da79764b129aca",
+  "source_sha256_recorded_by_service": {
+    "semabi/compiler/runtime.py": "aaaf7578cdfd21619fd00e7ad941b2dac392b5d45dd10400e5678696ebc58eb5",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07"
+  },
+  "analysis_source_sha256": {
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+  },
+  "input_sha256": {
+    "/home/moloch/semabi/runs/product_menu_v1/service_snapshot.json": "5a9704adfc3ba44e3a848f3e24a97d94946af4624c2be5846fb3fc94af145eee",
+    "/home/moloch/semabi/runs/product_service_v1/connections/conn_0e51f4498eb547f6ac639acc96f8bab1/evidence/98d146e6eebe432892da79764b129aca/observations.jsonl": "71776d418da6cbb24c837943a40fafe8637e63802bce2b56587733ca8cbec256",
+    "/home/moloch/semabi/runs/product_service_v1/connections/conn_0e51f4498eb547f6ac639acc96f8bab1/evidence/98d146e6eebe432892da79764b129aca/surfaces.jsonl": "0ba4cb5c8244ca2db330293279b5a6b3f5c391d48688bbd10cfb22df3e565f20",
+    "/home/moloch/semabi/runs/product_service_v1/connections/conn_0e51f4498eb547f6ac639acc96f8bab1/evidence/98d146e6eebe432892da79764b129aca/steps.jsonl": "5c2d4949a5654d23e4b6fc2c0a8b84e0d3bb06320a16ae4b148d666a4679b571"
+  },
+  "trials": [
+    {
+      "anchor": "semabi_633c61d2be_0",
+      "editor_observation": "25e62823eb19e28e",
+      "candidate": {
+        "root": 179,
+        "submit_node": 206,
+        "fields": [
+          {
+            "argument": "value",
+            "node": 187,
+            "descriptor": {
+              "role": "textbox",
+              "label": "",
+              "input_type": "contenteditable"
+            },
+            "required": false,
+            "role": "textbox",
+            "input_type": "contenteditable",
+            "min": null,
+            "max": null,
+            "max_length": null,
+            "options": [],
+            "value": "semabi_633c61d2be_0",
+            "checked": null
+          }
+        ],
+        "descriptor": {
+          "submit": {
+            "role": "button",
+            "label": "Save",
+            "input_type": ""
+          },
+          "context_controls": [
+            {
+              "role": "button",
+              "label": "",
+              "input_type": "",
+              "has_popup": "menu"
+            },
+            {
+              "role": "button",
+              "label": "Private",
+              "input_type": "",
+              "has_popup": "menu"
+            },
+            {
+              "role": "button",
+              "label": "Cancel",
+              "input_type": ""
+            },
+            {
+              "role": "button",
+              "label": "2026-09-09 20:09:03",
+              "input_type": "",
+              "has_popup": "dialog"
+            }
+          ],
+          "fields": [
+            {
+              "argument": "value",
+              "descriptor": {
+                "role": "textbox",
+                "label": "",
+                "input_type": "contenteditable"
+              },
+              "required": false,
+              "role": "textbox",
+              "input_type": "contenteditable",
+              "min": null,
+              "max": null,
+              "max_length": null,
+              "options": []
+            }
+          ]
+        },
+        "signature": "6a833758884e64bf64f3aa36fb588716b66427d292a2c2bf6581e6b34e433151",
+        "proposal_basis": "local_control_group"
+      },
+      "varying_context_control": {
+        "role": "button",
+        "label": "2026-09-09 20:09:03",
+        "input_type": "",
+        "has_popup": "dialog"
+      },
+      "pre_edit": [
+        {
+          "observation": "9c258cec0558fdb8",
+          "record": {
+            "root": 179,
+            "value_node": 195,
+            "role": "article",
+            "texts": [
+              "semabi_633c61d2be_0"
+            ],
+            "link_destinations": [],
+            "basis": "visible_local_record",
+            "observation": "9c258cec0558fdb8"
+          },
+          "context_label_slots": [],
+          "global_exact_label_nodes": [],
+          "selected_record_nodes": [
+            {
+              "i": 179,
+              "parent": 133,
+              "role": "article",
+              "name": "",
+              "bbox": [
+                524,
+                214,
+                672,
+                76
+              ]
+            },
+            {
+              "i": 180,
+              "parent": 179,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                227,
+                638,
+                18
+              ]
+            },
+            {
+              "i": 181,
+              "parent": 180,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                227,
+                510,
+                18
+              ]
+            },
+            {
+              "i": 182,
+              "parent": 181,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                541,
+                227,
+                28,
+                18
+              ]
+            },
+            {
+              "i": 183,
+              "parent": 182,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                226,
+                28,
+                19
+              ]
+            },
+            {
+              "i": 184,
+              "parent": 180,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1163,
+                227,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 185,
+              "parent": 184,
+              "role": "button",
+              "name": "",
+              "bbox": [
+                1163,
+                227,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 186,
+              "parent": 185,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1163,
+                227,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 187,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                235,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 188,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                230,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 189,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                239,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 190,
+              "parent": 179,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 191,
+              "parent": 190,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 192,
+              "parent": 191,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 193,
+              "parent": 192,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 194,
+              "parent": 193,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 195,
+              "parent": 194,
+              "role": "text",
+              "name": "semabi_633c61d2be_0",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            }
+          ]
+        },
+        {
+          "observation": "92a87913f2084419",
+          "record": {
+            "root": 179,
+            "value_node": 207,
+            "role": "article",
+            "texts": [
+              "semabi_633c61d2be_0"
+            ],
+            "link_destinations": [],
+            "basis": "visible_local_record",
+            "observation": "92a87913f2084419"
+          },
+          "context_label_slots": [],
+          "global_exact_label_nodes": [],
+          "selected_record_nodes": [
+            {
+              "i": 179,
+              "parent": 133,
+              "role": "article",
+              "name": "",
+              "bbox": [
+                524,
+                214,
+                672,
+                76
+              ]
+            },
+            {
+              "i": 180,
+              "parent": 179,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                227,
+                638,
+                18
+              ]
+            },
+            {
+              "i": 181,
+              "parent": 180,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                227,
+                510,
+                18
+              ]
+            },
+            {
+              "i": 182,
+              "parent": 181,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                541,
+                227,
+                28,
+                18
+              ]
+            },
+            {
+              "i": 183,
+              "parent": 182,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                226,
+                28,
+                19
+              ]
+            },
+            {
+              "i": 184,
+              "parent": 180,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1139,
+                227,
+                40,
+                16
+              ]
+            },
+            {
+              "i": 185,
+              "parent": 184,
+              "role": "button",
+              "name": "",
+              "bbox": [
+                1139,
+                227,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 186,
+              "parent": 185,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1139,
+                227,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 187,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1140,
+                229,
+                13,
+                13
+              ]
+            },
+            {
+              "i": 188,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1144,
+                237,
+                5,
+                1
+              ]
+            },
+            {
+              "i": 189,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1145,
+                233,
+                0,
+                0
+              ]
+            },
+            {
+              "i": 190,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1149,
+                233,
+                0,
+                0
+              ]
+            },
+            {
+              "i": 191,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1150,
+                231,
+                4,
+                0
+              ]
+            },
+            {
+              "i": 192,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1152,
+                229,
+                0,
+                4
+              ]
+            },
+            {
+              "i": 193,
+              "parent": 184,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                -1,
+                -1,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 194,
+              "parent": 184,
+              "role": "button",
+              "name": "",
+              "bbox": [
+                1163,
+                227,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 195,
+              "parent": 194,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1163,
+                227,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 196,
+              "parent": 195,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                235,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 197,
+              "parent": 195,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                230,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 198,
+              "parent": 195,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                239,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 199,
+              "parent": 184,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                -1,
+                -1,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 200,
+              "parent": 184,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                -1,
+                -1,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 201,
+              "parent": 184,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                -1,
+                -1,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 202,
+              "parent": 179,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 203,
+              "parent": 202,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 204,
+              "parent": 203,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 205,
+              "parent": 204,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 206,
+              "parent": 205,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 207,
+              "parent": 206,
+              "role": "text",
+              "name": "semabi_633c61d2be_0",
+              "bbox": [
+                541,
+                252,
+                638,
+                24
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "anchor": "semabi_a219b824bd_1",
+      "editor_observation": "bda45078c1d86a72",
+      "candidate": {
+        "root": 162,
+        "submit_node": 189,
+        "fields": [
+          {
+            "argument": "value",
+            "node": 170,
+            "descriptor": {
+              "role": "textbox",
+              "label": "",
+              "input_type": "contenteditable"
+            },
+            "required": false,
+            "role": "textbox",
+            "input_type": "contenteditable",
+            "min": null,
+            "max": null,
+            "max_length": null,
+            "options": [],
+            "value": "semabi_a219b824bd_1",
+            "checked": null
+          }
+        ],
+        "descriptor": {
+          "submit": {
+            "role": "button",
+            "label": "Save",
+            "input_type": ""
+          },
+          "context_controls": [
+            {
+              "role": "button",
+              "label": "",
+              "input_type": "",
+              "has_popup": "menu"
+            },
+            {
+              "role": "button",
+              "label": "Private",
+              "input_type": "",
+              "has_popup": "menu"
+            },
+            {
+              "role": "button",
+              "label": "2026-09-09 20:09:06",
+              "input_type": "",
+              "has_popup": "dialog"
+            },
+            {
+              "role": "button",
+              "label": "Cancel",
+              "input_type": ""
+            }
+          ],
+          "fields": [
+            {
+              "argument": "value",
+              "descriptor": {
+                "role": "textbox",
+                "label": "",
+                "input_type": "contenteditable"
+              },
+              "required": false,
+              "role": "textbox",
+              "input_type": "contenteditable",
+              "min": null,
+              "max": null,
+              "max_length": null,
+              "options": []
+            }
+          ]
+        },
+        "signature": "3b558e80a58f1bc1be73398cde9f490325ab9a541fe99781ed5bb9cc5a8ef6b9",
+        "proposal_basis": "local_control_group"
+      },
+      "varying_context_control": {
+        "role": "button",
+        "label": "2026-09-09 20:09:06",
+        "input_type": "",
+        "has_popup": "dialog"
+      },
+      "pre_edit": [
+        {
+          "observation": "9c258cec0558fdb8",
+          "record": {
+            "root": 162,
+            "value_node": 178,
+            "role": "article",
+            "texts": [
+              "semabi_a219b824bd_1"
+            ],
+            "link_destinations": [],
+            "basis": "visible_local_record",
+            "observation": "9c258cec0558fdb8"
+          },
+          "context_label_slots": [],
+          "global_exact_label_nodes": [],
+          "selected_record_nodes": [
+            {
+              "i": 162,
+              "parent": 133,
+              "role": "article",
+              "name": "",
+              "bbox": [
+                524,
+                130,
+                672,
+                76
+              ]
+            },
+            {
+              "i": 163,
+              "parent": 162,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                143,
+                638,
+                18
+              ]
+            },
+            {
+              "i": 164,
+              "parent": 163,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                143,
+                510,
+                18
+              ]
+            },
+            {
+              "i": 165,
+              "parent": 164,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                541,
+                143,
+                28,
+                18
+              ]
+            },
+            {
+              "i": 166,
+              "parent": 165,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                142,
+                28,
+                19
+              ]
+            },
+            {
+              "i": 167,
+              "parent": 163,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1163,
+                144,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 168,
+              "parent": 167,
+              "role": "button",
+              "name": "",
+              "bbox": [
+                1163,
+                144,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 169,
+              "parent": 168,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1163,
+                144,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 170,
+              "parent": 169,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                151,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 171,
+              "parent": 169,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                146,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 172,
+              "parent": 169,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                156,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 173,
+              "parent": 162,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 174,
+              "parent": 173,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 175,
+              "parent": 174,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 176,
+              "parent": 175,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 177,
+              "parent": 176,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 178,
+              "parent": 177,
+              "role": "text",
+              "name": "semabi_a219b824bd_1",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            }
+          ]
+        },
+        {
+          "observation": "f2dad0bababe1377",
+          "record": {
+            "root": 162,
+            "value_node": 190,
+            "role": "article",
+            "texts": [
+              "semabi_a219b824bd_1"
+            ],
+            "link_destinations": [],
+            "basis": "visible_local_record",
+            "observation": "f2dad0bababe1377"
+          },
+          "context_label_slots": [],
+          "global_exact_label_nodes": [],
+          "selected_record_nodes": [
+            {
+              "i": 162,
+              "parent": 133,
+              "role": "article",
+              "name": "",
+              "bbox": [
+                524,
+                130,
+                672,
+                76
+              ]
+            },
+            {
+              "i": 163,
+              "parent": 162,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                143,
+                638,
+                18
+              ]
+            },
+            {
+              "i": 164,
+              "parent": 163,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                143,
+                510,
+                18
+              ]
+            },
+            {
+              "i": 165,
+              "parent": 164,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                541,
+                143,
+                28,
+                18
+              ]
+            },
+            {
+              "i": 166,
+              "parent": 165,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                142,
+                28,
+                19
+              ]
+            },
+            {
+              "i": 167,
+              "parent": 163,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1139,
+                144,
+                40,
+                16
+              ]
+            },
+            {
+              "i": 168,
+              "parent": 167,
+              "role": "button",
+              "name": "",
+              "bbox": [
+                1139,
+                144,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 169,
+              "parent": 168,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1139,
+                144,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 170,
+              "parent": 169,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1140,
+                145,
+                13,
+                13
+              ]
+            },
+            {
+              "i": 171,
+              "parent": 169,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1144,
+                153,
+                5,
+                1
+              ]
+            },
+            {
+              "i": 172,
+              "parent": 169,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1145,
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "i": 173,
+              "parent": 169,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1149,
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "i": 174,
+              "parent": 169,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1150,
+                147,
+                4,
+                0
+              ]
+            },
+            {
+              "i": 175,
+              "parent": 169,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1152,
+                145,
+                0,
+                4
+              ]
+            },
+            {
+              "i": 176,
+              "parent": 167,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                -1,
+                -1,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 177,
+              "parent": 167,
+              "role": "button",
+              "name": "",
+              "bbox": [
+                1163,
+                144,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 178,
+              "parent": 177,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1163,
+                144,
+                16,
+                16
+              ]
+            },
+            {
+              "i": 179,
+              "parent": 178,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                151,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 180,
+              "parent": 178,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                146,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 181,
+              "parent": 178,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                1170,
+                156,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 182,
+              "parent": 167,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                -1,
+                -1,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 183,
+              "parent": 167,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                -1,
+                -1,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 184,
+              "parent": 167,
+              "role": "text",
+              "name": "",
+              "bbox": [
+                -1,
+                -1,
+                1,
+                1
+              ]
+            },
+            {
+              "i": 185,
+              "parent": 162,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 186,
+              "parent": 185,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 187,
+              "parent": 186,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 188,
+              "parent": 187,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 189,
+              "parent": 188,
+              "role": "group",
+              "name": "",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            },
+            {
+              "i": 190,
+              "parent": 189,
+              "role": "text",
+              "name": "semabi_a219b824bd_1",
+              "bbox": [
+                541,
+                169,
+                638,
+                24
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "finding": "The sole form-contract difference is the label of one uninvoked dialog-advertising context button.",
+  "all_other_form_contract_components_identical": true,
+  "proposed_pre_edit_local_value_binding_supported": false,
+  "reason": "Neither differing label occurs as an exact visible value anywhere in the retained pre-edit observations; all selected-record relative value slots are empty.",
+  "scope": "No timestamp-specific prior, label wildcard, application source or hidden state was introduced; this evidence does not establish a context-value binding."
+}

@@ -14,6 +14,7 @@ import json
 import hashlib
 from pathlib import Path
 import re
+import string
 import time
 import uuid
 
@@ -27,7 +28,7 @@ from semabi.compiler.surface import (SUBMIT_WORDS, Surface, argument_name, diges
                                      visible_record_matches)
 
 
-POLICY_VERSION = "local-record-v5"
+POLICY_VERSION = "local-record-v6"
 OPEN_WORDS = re.compile(r"\b(add|new|create|compose)\b", re.I)
 EDIT_WORDS = re.compile(r"\b(edit|modify|update)\b", re.I)
 EXCLUDED_WORDS = re.compile(r"\b(delete|remove|logout|log out|sign out|reset|purchase|pay|invite)\b", re.I)
@@ -36,6 +37,29 @@ URL_LABEL = re.compile(r"^(url|uri|web\s*(address|link)|website(\s+address)?)$",
 OPERATION_KINDS = {"create_visible_record", "read_visible_record", "update_visible_record"}
 CONTRACT_FIELDS = ("kind", "procedure", "argument_schema", "output_schema",
                    "prerequisites", "effect_checks", "scope")
+NUMERIC_CONTEXT_PRIOR = ("One unexecuted dialog-advertising context button may vary between records: "
+                         "ASCII digit runs retain their widths and all punctuation/whitespace stays literal; "
+                         "two distinct labels require two completed selected-record read trials")
+
+
+def numeric_label_shape(label: str) -> list | None:
+    allowed = string.digits + string.punctuation + string.whitespace
+    if not label or not any(char in string.digits for char in label) or any(char not in allowed for char in label):
+        return None
+    return [{"digits": len(part)} if part[0] in string.digits else {"literal": part}
+            for part in re.findall(r"[0-9]+|[^0-9]+", label)]
+
+
+def control_path(surface: Surface, root: int, node: int) -> list:
+    """Compare observed placement; this path is never used to select a control."""
+    path = []
+    while node != root:
+        field = surface.observation.node(node)
+        siblings = [sibling for sibling in surface.observation.children(field.parent)
+                    if surface.observation.node(sibling).role == field.role]
+        path.append([field.role, siblings.index(node)])
+        node = field.parent
+    return list(reversed(path))
 
 
 def bind_contract(operation: dict) -> None:
@@ -407,6 +431,22 @@ class Runtime:
         # other editor scopes, including incomplete or disabled forms, without
         # observation-local IDs. Ancestor scopes exempt only selected controls.
         selected = set(surface.observation.subtree(candidate["root"]))
+        state["raw_form"] = deepcopy(candidate["descriptor"])
+        # Keep literal labels and state even when a copied contract permits a
+        # between-record numeric variation. Field-local plain buttons (such as
+        # Clear) retain their existing exemption; auxiliary dialog buttons do
+        # participate in context uniqueness and current-call state checks.
+        state["context_controls"] = sorted([
+            {"descriptor": surface.descriptor(node),
+             **{name: surface.controls[node].get(name) for name in
+                ("disabled", "readonly", "required", "min", "max", "max_length", "options")},
+             **({"path": control_path(surface, candidate["root"], node)}
+                if surface.controls[node].get("has_popup") == "dialog" else {})}
+            for node in selected if node in surface.controls and node != candidate["submit_node"]
+            and surface.controls[node]["role"] == "button"
+            and (surface.descriptor(node) in candidate["descriptor"]["context_controls"]
+                 or surface.controls[node].get("has_popup") == "dialog")
+        ], key=digest)
         state["other_editors"] = sorted([
             sorted([{**surface.descriptor(node),
                      "value": surface.observation.node(node).value,
@@ -427,6 +467,8 @@ class Runtime:
             if len(fields) != 1:
                 raise StopOperation("Editor continuity field is absent or ambiguous", stale=True)
             nodes.append(fields[0])
+        if binding := procedure.get("context_label_binding"):
+            nodes.append(Runtime._context_button(surface, candidate, binding))
         return [*nodes, candidate["submit_node"]]
 
     @contextmanager
@@ -480,7 +522,89 @@ class Runtime:
         return values
 
     @staticmethod
-    def _record_form(surface: Surface, procedure: dict, target: str) -> dict:
+    def _context_signature(descriptor: dict) -> dict:
+        return {key: descriptor.get(key) for key in ("role", "input_type", "has_popup")}
+
+    @staticmethod
+    def _context_button(surface: Surface, candidate: dict, binding: dict) -> int:
+        nodes = surface.resolve(binding["descriptor"], within=candidate["root"])
+        if len(nodes) != 1:
+            raise StopOperation("Numeric context control is absent or ambiguous in the selected editor", stale=True)
+        node = nodes[0]
+        if (surface.descriptor(node) not in candidate["descriptor"]["context_controls"]
+                or numeric_label_shape(surface.controls[node]["label"]) != binding["shape"]
+                or control_path(surface, candidate["root"], node) != binding["path"]
+                or any(surface.controls[node].get(key) != value for key, value in binding["state"].items())):
+            raise StopOperation("Numeric context label shape, state or observed placement changed", stale=True)
+        return node
+
+    @staticmethod
+    def _comparable_record_form(descriptor: dict, binding: dict) -> dict:
+        # Only this comparison copy is generalized. Stored form descriptors,
+        # surface candidates, CREATE contracts and executable locators stay raw.
+        copied = deepcopy(descriptor)
+        controls = [control for control in copied["context_controls"]
+                    if Runtime._context_signature(control) == binding["descriptor"]]
+        if len(controls) != 1 or numeric_label_shape(controls[0]["label"]) != binding["shape"]:
+            raise StopOperation("Learned numeric context form binding changed", stale=True)
+        controls[0].pop("label")
+        controls[0]["numeric_label_shape"] = deepcopy(binding["shape"])
+        copied["context_controls"].sort(key=digest)
+        return copied
+
+    def _propose_context_binding(self, surface: Surface, candidate: dict, procedure: dict,
+                                 first_trial: dict) -> dict:
+        expected = procedure["form"]
+        actual = candidate["descriptor"]
+        before = list(expected["context_controls"])
+        after = list(actual["context_controls"])
+        for control in before[:]:
+            if control in after:
+                before.remove(control)
+                after.remove(control)
+        if len(before) != 1 or len(after) != 1:
+            raise StopOperation("Record form change is not one numeric context label", stale=True)
+        original, current = before[0], after[0]
+        signature = self._context_signature(original)
+        shape = numeric_label_shape(original["label"])
+        if (signature["role"] != "button" or signature["has_popup"] != "dialog"
+                or self._context_signature(current) != signature or shape is None
+                or numeric_label_shape(current["label"]) != shape or current["label"] == original["label"]):
+            raise StopOperation("Record context change does not satisfy the declared numeric-label prior", stale=True)
+        captured = first_trial["editor_state"]
+        controls = [control for control in captured["context_controls"]
+                    if self._context_signature(control["descriptor"]) == signature]
+        if len(controls) != 1:
+            raise StopOperation("First read did not establish a unique context control", stale=True)
+        binding = {"descriptor": signature, "shape": shape, "path": controls[0]["path"],
+                   "state": {key: value for key, value in controls[0].items() if key not in {"descriptor", "path"}},
+                   "prior": NUMERIC_CONTEXT_PRIOR}
+        self._context_button(surface, candidate, binding)
+        second_state = self._editor_state(surface, candidate)
+        comparable_states = []
+        for state in (captured, second_state):
+            comparable = deepcopy(state)
+            comparable["raw_form"] = self._comparable_record_form(comparable["raw_form"], binding)
+            for field in procedure["read_fields"].values():
+                comparable[digest(field)]["value"] = None
+            for control in comparable["context_controls"]:
+                if self._context_signature(control["descriptor"]) == signature:
+                    control["descriptor"].pop("label")
+                    control["descriptor"]["numeric_label_shape"] = deepcopy(shape)
+            comparable["context_controls"].sort(key=digest)
+            comparable_states.append(comparable)
+        if comparable_states[0] != comparable_states[1]:
+            raise StopOperation("Other record form, context or default state changed between read trials", stale=True)
+        binding["read_evidence"] = [
+            {"label": original["label"], "observation": first_trial["editor_observation"],
+             "raw_form": deepcopy(expected), "editor_state": deepcopy(captured)},
+            {"label": current["label"], "observation": surface.observation.structural_signature(),
+             "raw_form": deepcopy(actual), "editor_state": second_state},
+        ]
+        return binding
+
+    def _record_form(self, surface: Surface, procedure: dict, target: str,
+                     *, context_trial: dict | None = None) -> dict:
         # An empty creation form can share every descriptor with a populated
         # record editor. Resolve by the observed anchor value, never form order.
         descriptor = procedure["read_fields"][procedure["anchor"]]
@@ -495,7 +619,17 @@ class Runtime:
         if len(candidates) != 1:
             raise StopOperation("Loaded editor does not uniquely retain the selected anchor", stale=True)
         candidate = candidates[0]
-        if candidate["descriptor"] != procedure["form"]:
+        binding = procedure.get("context_label_binding")
+        if binding is None and candidate["descriptor"] != procedure["form"] and context_trial is not None:
+            binding = self._propose_context_binding(surface, candidate, procedure, context_trial)
+            procedure["context_label_binding"] = binding
+        if binding is not None:
+            self._context_button(surface, candidate, binding)
+            matches = self._comparable_record_form(candidate["descriptor"], binding) == self._comparable_record_form(
+                procedure["form"], binding)
+        else:
+            matches = candidate["descriptor"] == procedure["form"]
+        if not matches:
             raise StopOperation("Learned record editor form contract has changed", stale=True)
         return candidate
 
@@ -508,7 +642,8 @@ class Runtime:
     def _record_editor(self, browser, procedure: dict, target: str, trace: Trace,
                        *, expected_values: dict | None = None, discover: bool = False,
                        replacement_value: str | None = None,
-                       read_trials_remaining: int = 0) -> tuple[Surface, dict, dict]:
+                       read_trials_remaining: int = 0,
+                       context_trial: dict | None = None) -> tuple[Surface, dict, dict]:
         required = {"edit", "form"} | ({"menu"} if "menu_trigger" in procedure else set())
         if not discover and not required <= procedure.keys():
             raise StopOperation("Learned record editor procedure is incomplete", stale=True)
@@ -585,7 +720,7 @@ class Runtime:
             if len(candidates) != 1:
                 raise StopOperation("No unique edit form retains the original descriptors and expected trial values")
             procedure["form"] = candidates[0]["descriptor"]
-        candidate = self._record_form(surface, procedure, target)
+        candidate = self._record_form(surface, procedure, target, context_trial=context_trial)
         values = self._read_values(surface, candidate, procedure)
         if values[procedure["anchor"]] != target:
             raise StopOperation("Loaded editor does not retain the selected anchor", stale=True)
@@ -678,6 +813,13 @@ class Runtime:
         selector, anchor = procedure["selector_argument"], procedure["anchor"]
         if len(trials) != 2 or len({trial["arguments"][selector] for trial in trials}) != 2:
             raise StopOperation("Record operations require two distinct selected-record trials")
+        if binding := procedure.get("context_label_binding"):
+            evidence = binding.get("read_evidence", [])
+            if (binding.get("completed_read_trials") != 2 or len(evidence) != 2
+                    or len({trial["label"] for trial in evidence}) != 2
+                    or binding.get("prior") != NUMERIC_CONTEXT_PRIOR
+                    or any(numeric_label_shape(trial["label"]) != binding["shape"] for trial in evidence)):
+                raise StopOperation("Numeric context generalization requires two completed contrasting read trials")
         fields = argument_schema({"fields": procedure["form"]["fields"]},
                                  list(procedure["read_fields"]))["properties"]
         properties = {selector: {**fields[anchor],
@@ -727,6 +869,12 @@ class Runtime:
                                  "parent_create_id": creation["id"], "parent_create_version": creation["version"],
                                  "parent_create_evidence_sha256": creation["evidence_sha256"],
                                  "trials": deepcopy(trials)}}
+        if binding:
+            operation["prerequisites"].append(
+                "One bound numeric dialog context control retains its label, state, placement and DOM element during the call")
+            operation["scope"]["numeric_context_labels"] = (
+                "The declared numeric-label shape generalizes between two selected records; current-call labels stay frozen. "
+                "Outcomes check observed record fields, without establishing that numeric context values are semantically irrelevant.")
         bind_contract(operation)
         return operation
 
@@ -762,6 +910,10 @@ class Runtime:
                 writes = 2 if reading else 2 * (len(update_names) + 2 + menu)
                 self._reserve_record_actions(trace, actions, writes)
                 for trial_index, created in enumerate(created_trials):
+                    # A second-read comparison may propose a numeric binding,
+                    # but it cannot alter the retained procedure until that
+                    # read exits successfully. Failed extensions keep CREATE.
+                    trial_procedure = deepcopy(procedure) if reading and trial_index == 1 else procedure
                     target = created["arguments"][procedure["anchor"]]
                     arguments = {selector: target}
                     if not reading:
@@ -769,20 +921,27 @@ class Runtime:
                                                                       if field["argument"] in update_names]},
                                                          trial_index + 2))
                     surface, witness, before = self._record_editor(
-                        browser, procedure, target, trace, expected_values=created["arguments"], discover=True,
+                        browser, trial_procedure, target, trace, expected_values=created["arguments"], discover=True,
                         replacement_value=arguments[procedure["anchor"]] if replacing and not reading else None,
-                        read_trials_remaining=2 - trial_index if reading else 0)
+                        read_trials_remaining=2 - trial_index if reading else 0,
+                        context_trial=trials[0] if reading and trial_index == 1 else None)
                     selected_witness = witness
                     if reading:
-                        captured = self._leave_editor(browser, surface, procedure, before, trace)
+                        captured = self._leave_editor(browser, surface, trial_procedure, before, trace)
                         values = before
                     else:
                         values = {**({procedure["anchor"]: target} if not replacing else {}),
                                   **{name: arguments[name] for name in update_names}}
                         witness, captured = self._update_record(browser, surface, procedure, before, values, trace)
                     trials.append({"arguments": arguments, "before": before, "values": values,
-                                   "editor_state": captured, "witness": witness,
+                                   "editor_state": captured, "editor_observation": surface.observation.structural_signature(),
+                                   "witness": witness,
                                    **({"before_witness": selected_witness} if replacing and not reading else {})})
+                    if reading and trial_index == 1:
+                        procedure = trial_procedure
+                        if binding := procedure.get("context_label_binding"):
+                            binding["read_evidence"][1]["editor_state"] = deepcopy(captured)
+                            binding["completed_read_trials"] = 2
                 operation = self._record_operation(creation, kind, procedure, trials, settings)
                 operations.append(operation)
                 emit({"type": "operation_learned", "id": operation["id"], "version": operation["version"]})

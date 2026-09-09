@@ -1,0 +1,251 @@
+{
+  "before_after": {
+    "chronology_verified": "BEFORE, learning, target READ, target UPDATE, AFTER",
+    "identity": "UNESTABLISHED",
+    "input_sha256": {
+      "runs/product_menu_evaluator_v2/after_check.json": "7a9282d1ddc6da982886bbc1f682384c823523d63276530048bb1d9628e8c6f0",
+      "runs/product_menu_evaluator_v2/before_check.json": "451649aa1914ef40e46dacfd4f3f854b6ef90c6fe2ab449f3d2b664b9879c280",
+      "runs/product_menu_evaluator_v2/read_check.json": "899da2109109ed82069afd559c6050dbbb41b2373b2cba23a35c9f491000f781",
+      "runs/product_menu_v2/memos_read.log": "8fb6efa8223467959899a02793e417e832018e0a68dab26d73a9cfa51a07e1ad",
+      "runs/product_menu_v2/memos_update.log": "dae4141e652b58c38c7aa73854b69369f1fecebaa8b49e57a975196d2be81b9e",
+      "runs/product_menu_v2/service_snapshot.json": "d5e9d1f9e43284243e4e7debf1e829941da87d1fef2ce19f67907139fbc28e5d"
+    },
+    "method": "Unchanged independent v3 visible-DOM extraction and same-record matching; conclusions compare actual selected paragraph/body nodes to client requests and READ return, without using Runtime effect witnesses.",
+    "metrics": {
+      "all_fourteen_owned_processes_terminated": true,
+      "authentication_primitives": 6,
+      "business_write_primitives": 0,
+      "cpu_seconds": 4.304,
+      "elapsed_seconds": 10.51,
+      "evaluator_sessions": 2,
+      "independent_dom_captures": 4,
+      "navigations": 2,
+      "peak_aggregate_rss_bytes": 955580416,
+      "reloads": 2
+    },
+    "read": {
+      "independently_observed_before": [
+        {
+          "value": "Memos remained connected after Linkding reconnect 20260909"
+        },
+        {
+          "value": "Memos remained connected after Linkding reconnect 20260909"
+        }
+      ],
+      "job_id": "job_3280ef0b62304988a598343532fb89c7",
+      "returned_values": {
+        "value": "Memos remained connected after Linkding reconnect 20260909"
+      },
+      "verdict": "PASS"
+    },
+    "sampled_non_target": {
+      "matching_record_counts": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "observed_after": [
+        {
+          "value": "Two application service Memos 20260909 1655"
+        },
+        {
+          "value": "Two application service Memos 20260909 1655"
+        }
+      ],
+      "observed_before": [
+        {
+          "value": "Two application service Memos 20260909 1655"
+        },
+        {
+          "value": "Two application service Memos 20260909 1655"
+        }
+      ],
+      "verdict": "UNCHANGED"
+    },
+    "schema": "independent_memos_record_comparison.v1",
+    "scope": "One selected local exact-value replacement and one sampled non-target in the inspected rendered record view, observed before and after reload. No global uniqueness, persistent identity, or unobserved-side-effect claim.",
+    "source_sha256": {
+      "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+      "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+      "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+      "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+      "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+      "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+      "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+      "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+      "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+    },
+    "source_unchanged_all_ten_files": true,
+    "update": {
+      "independently_observed_after": [
+        {
+          "value": "Existing memo updated through a learned HTTP operation 20260909"
+        },
+        {
+          "value": "Existing memo updated through a learned HTTP operation 20260909"
+        }
+      ],
+      "independently_observed_before": [
+        {
+          "value": "Memos remained connected after Linkding reconnect 20260909"
+        },
+        {
+          "value": "Memos remained connected after Linkding reconnect 20260909"
+        }
+      ],
+      "job_id": "job_0bcb8848339a4f3ea7d9d95fc7a49089",
+      "new_value_after_update_matching_record_counts": [
+        1,
+        1
+      ],
+      "new_value_before_update_matching_record_counts": [
+        0,
+        0
+      ],
+      "old_value_after_update_matching_record_counts": [
+        0,
+        0
+      ],
+      "requested_arguments": {
+        "target": "Memos remained connected after Linkding reconnect 20260909",
+        "value": "Existing memo updated through a learned HTTP operation 20260909"
+      },
+      "verdict": "PASS"
+    }
+  },
+  "historical_input_resolution": {
+    "earlier_sha256": "d5e9d1f9e43284243e4e7debf1e829941da87d1fef2ce19f67907139fbc28e5d",
+    "explanation": "The original READ/UPDATE comparisons recorded the four-job snapshot hash before restart. The exact earlier bytes are preserved alongside the later six-job snapshot.",
+    "latest_public_artifact": "service_snapshot.json",
+    "preserved_public_artifact": "service_snapshot_before_restart.json",
+    "recorded_path": "runs/product_menu_v2/service_snapshot.json"
+  },
+  "read": {
+    "before_check_sha256": "451649aa1914ef40e46dacfd4f3f854b6ef90c6fe2ab449f3d2b664b9879c280",
+    "independently_observed_values": [
+      {
+        "captured_at": "2026-09-09T18:35:39.720000+00:00",
+        "snapshot_id": "eval_dom_5e73539d6812448b849eb82689f5cb9b",
+        "values": {
+          "value": "Memos remained connected after Linkding reconnect 20260909"
+        }
+      },
+      {
+        "captured_at": "2026-09-09T18:35:41.098031+00:00",
+        "snapshot_id": "eval_dom_964f1be4743e493f91330c10fb7f49f4",
+        "values": {
+          "value": "Memos remained connected after Linkding reconnect 20260909"
+        }
+      }
+    ],
+    "job_id": "job_3280ef0b62304988a598343532fb89c7",
+    "method": "Compare returned values to actual selected paragraph/body nodes in the independently captured pre-state; no Runtime witness or effect matching function is used.",
+    "new_browser_calls": 0,
+    "operation_id": "op_7f641de8dbf9e29226fb",
+    "operation_version": 1,
+    "read_log_sha256": "8fb6efa8223467959899a02793e417e832018e0a68dab26d73a9cfa51a07e1ad",
+    "request": {
+      "arguments": {
+        "target": "Memos remained connected after Linkding reconnect 20260909"
+      },
+      "limits": {
+        "max_actions": 20,
+        "max_seconds": 60.0,
+        "max_writes": 12
+      },
+      "operation_id": "op_7f641de8dbf9e29226fb",
+      "version": 1
+    },
+    "returned_values": {
+      "value": "Memos remained connected after Linkding reconnect 20260909"
+    },
+    "runtime_outcome": "CONFIRMED",
+    "schema": "independent_memos_read_check.v1",
+    "scope": "One selected visible record in the independently inspected current view; no global identity claim.",
+    "service_snapshot_sha256": "d5e9d1f9e43284243e4e7debf1e829941da87d1fef2ce19f67907139fbc28e5d",
+    "source_sha256": {
+      "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+      "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+      "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+      "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+      "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+      "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+      "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+      "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+      "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+    },
+    "source_snapshot": "runs/product_menu_v2/service_snapshot.json",
+    "verdict": "PASS"
+  },
+  "read_after_restart": {
+    "independently_observed_after": [
+      {
+        "captured_at": "2026-09-09T18:42:47.172329+00:00",
+        "snapshot_id": "eval_dom_86ec016ee4de417696d49ab0db882a6d",
+        "values": {
+          "value": "Existing memo updated through a learned HTTP operation 20260909"
+        }
+      },
+      {
+        "captured_at": "2026-09-09T18:42:48.389612+00:00",
+        "snapshot_id": "eval_dom_e86aef36f03746f8ac00bb129837439f",
+        "values": {
+          "value": "Existing memo updated through a learned HTTP operation 20260909"
+        }
+      }
+    ],
+    "input_sha256": {
+      "runs/product_menu_evaluator_v2/after_check.json": "7a9282d1ddc6da982886bbc1f682384c823523d63276530048bb1d9628e8c6f0",
+      "runs/product_menu_v2/memos_read_after_restart.log": "8923ca534884530e270444c8ba56300d1944dd468211b2c4cce979ab3f53a32c",
+      "runs/product_menu_v2/service_snapshot.json": "49be8c466c84d19e05a2f53b55646cee8c0933bc69166f0f4155fdfa3c8b1ac7"
+    },
+    "job_id": "job_c4b211e55d454fde88c548be4db711ac",
+    "method": "Returned current memo value compared with actual selected paragraph/body values in both independent AFTER captures; no new browser or Runtime effect matcher.",
+    "new_browser_calls": 0,
+    "operation_id": "op_7f641de8dbf9e29226fb",
+    "operation_version": 1,
+    "request": {
+      "arguments": {
+        "target": "Existing memo updated through a learned HTTP operation 20260909"
+      },
+      "limits": {
+        "max_actions": 17,
+        "max_seconds": 50.0,
+        "max_writes": 9
+      },
+      "operation_id": "op_7f641de8dbf9e29226fb",
+      "version": 1
+    },
+    "returned_values": {
+      "value": "Existing memo updated through a learned HTTP operation 20260909"
+    },
+    "runtime_metrics": {
+      "actions": 4,
+      "elapsed_seconds": 4.325,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 2
+    },
+    "runtime_outcome": "CONFIRMED",
+    "schema": "independent_memos_restarted_read_check.v1",
+    "scope": "Read of one exact known current local anchor after service restart and default client reconnection; broad search and general correctness are not established.",
+    "source_sha256": {
+      "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+      "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+      "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+      "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+      "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+      "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+      "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+      "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+      "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+    },
+    "verdict": "PASS"
+  },
+  "schema": "memos_menu_independent_comparisons.v2",
+  "scope": "Three disclosed exact-known-anchor development invocations: READ, local exact-value UPDATE and READ after restart. No broad search, global identity or general correctness claim."
+}

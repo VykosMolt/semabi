@@ -1,0 +1,64 @@
+{
+  "checked": [
+    "Only declared create/read/update families accepted; unknown/missing recipe unsupported before browser",
+    "Exact target selection and globally unique cached field bindings",
+    "Shared native ownership and wrong-loaded-anchor rejection",
+    "Current expected field values and temporary DOM continuity checked before each update action",
+    "No effect verification, reload, or automatic retry; successful replay reports DISPATCHED",
+    "Shared SemABI acquisition/artifact assistance and auth-inclusive deadline disclosed"
+  ],
+  "final_package_artifacts_sha256": {
+    "runs/product_menu_evaluator_v1/cached_baseline_candidate_v2/cached_record_delivery_v2.json": "f5f8eaf51c89aa78d7695b6ae2bbc46ef36c4f48dd5da3d1c7a1c32f64e55590",
+    "runs/product_menu_evaluator_v1/cached_baseline_candidate_v2/cached_record_package_manifest_v2.json": "2b490d3292d3f82b432095f79501fe9d13d2867af8e3b90a3266b38927f6dd8b",
+    "runs/product_menu_evaluator_v1/cached_baseline_candidate_v2/cached_record_tests_v2.xml": "4cfc1dfa75207e1e6ca8b426de2da417684ba0a09909d8ecb3de342170a38f78",
+    "runs/product_menu_evaluator_v1/cached_baseline_candidate_v2/cached_record_v2.patch": "7ab731883ed7ceb5459f34d15ab3cc15a0ab59c05db8312b2b066687d0a84d68"
+  },
+  "findings": [
+    {
+      "origin": "root",
+      "problem": "Late successful DOM-handle release could still return DISPATCHED",
+      "resolution": "Deadline checked after successful finally cleanup; prior failure preserved when cleanup returns late",
+      "status": "ADDRESSED"
+    },
+    {
+      "origin": "root",
+      "problem": "Delayed write-intent evidence could expire deadline before an unguarded browser dispatch",
+      "resolution": "Deadline checked after intent and before possible_action/dispatch",
+      "status": "ADDRESSED"
+    },
+    {
+      "origin": "independent reviewer",
+      "problem": "Delayed navigation event could expire deadline before unguarded goto",
+      "resolution": "Deadline checked after navigation event",
+      "status": "ADDRESSED"
+    },
+    {
+      "origin": "independent reviewer",
+      "problem": "Delayed authentication event could expire deadline before credential action",
+      "resolution": "Deadline checked after auth event inside existing auth_budget_failure propagation",
+      "status": "ADDRESSED"
+    },
+    {
+      "origin": "independent reviewer",
+      "problem": "Username that prefixes password was redacted first, disclosing password suffix in structured READ result/evidence",
+      "resolution": "Credentials sorted longest-first; overlapping-credential READ/evidence regression",
+      "status": "ADDRESSED"
+    }
+  ],
+  "limits": "This review does not establish live task success, global identity, or unobserved side effects; independent task evaluation is still required.",
+  "schema": "cached_record_baseline_review.v1",
+  "scope": "Bounded read-only review of shared-acquisition cached READ/UPDATE extension; no app calls or source edits by reviewer",
+  "source_sha256": {
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "tests/test_cached_form.py": "96872db638fd5193d573933f3074d2713fa740b75c630f1958648331910eef60"
+  },
+  "status": "NO_REMAINING_MATERIAL_FINDING_ON_REVIEWED_CORRECTED_SOURCE",
+  "test_receipt": {
+    "reported_terminal_chunk": "93adfa",
+    "xml_elapsed_seconds": 0.291,
+    "xml_errors": 0,
+    "xml_failures": 0,
+    "xml_sha256": "4cfc1dfa75207e1e6ca8b426de2da417684ba0a09909d8ecb3de342170a38f78",
+    "xml_tests": 82
+  }
+}

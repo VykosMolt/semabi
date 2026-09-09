@@ -105,6 +105,13 @@ Separate editor drafts stop navigation or submission. The current selection
 scope is one exact, unique anchor in the rendered record view; search across
 pages and arbitrary filters are not established.
 
+Two successful read trials can establish one varying numeric label on an
+untouched dialog button. This declared prior preserves digit widths, separators,
+placement, and every other form constraint. The button's exact label, state,
+and DOM element remain fixed during each call. Its numeric value is not thereby
+established as semantically irrelevant; the operation checks its supported
+record fields and exposes this limitation in its learned scope.
+
 The authenticated HTTP routes are:
 
 | Route | Purpose |

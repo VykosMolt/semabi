@@ -1,0 +1,36 @@
+{
+  "candidate_root": "/tmp/semabi_context_value_candidate",
+  "scope": "One numeric context-label comparison binding from two completed READ trials",
+  "active_repository_edited": false,
+  "app_calls": false,
+  "policy_version": "local-record-v6",
+  "source_sha256": {
+    "runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+  },
+  "patch": {
+    "path": "/tmp/semabi_context_value_candidate/numeric_context.patch",
+    "sha256": "068300675221c8bd511642ae6dd55ff480e9ea6d5a5efa4beff86b6b204cb557"
+  },
+  "files": [
+    {
+      "path": "semabi/compiler/runtime.py",
+      "baseline_path": "/tmp/semabi_context_value_candidate/runtime.base.py",
+      "baseline_sha256": "aaaf7578cdfd21619fd00e7ad941b2dac392b5d45dd10400e5678696ebc58eb5",
+      "candidate_sha256": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+      "baseline_verified": true
+    },
+    {
+      "path": "tests/test_operation_runtime.py",
+      "baseline_path": "/tmp/semabi_context_value_candidate/test_operation_runtime.base.py",
+      "baseline_sha256": "a7da94d68ed1f373d5357a7fa301ac74e9cba1f0bb82b14cacf70542dcb80cf2",
+      "candidate_sha256": "a31924f51d4d63f57cb65434e74d9e56d9a81d82b1ef4aea63d3f4f123e488fe",
+      "baseline_verified": true
+    }
+  ],
+  "preserved": "All main P4 DOM-continuity and Trace.read/pause/deadline wrappers remain; BrowserSession/Surface unchanged."
+}
