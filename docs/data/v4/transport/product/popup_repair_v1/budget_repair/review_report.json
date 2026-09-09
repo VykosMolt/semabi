@@ -1,0 +1,73 @@
+{
+  "format": "semabi.popup_budget_review.v1",
+  "review_scope": [
+    "semabi/compiler/runtime.py",
+    "semabi/compiler/browser_session.py",
+    "semabi/baselines/cached_form.py",
+    "tests/test_operation_runtime.py",
+    "tests/test_cached_form.py"
+  ],
+  "finding": {
+    "severity": "blocking correctness and safety defect",
+    "base_location": "semabi/compiler/runtime.py:1112",
+    "summary": "The two-update-trial reservation omitted one charged Escape action and possible write per updated field per trial.",
+    "consequence": "A near-budget learning run could pass its complete-experiment gate, fill a record, and exhaust its budget before save/readback or during the second trial.",
+    "base_one_field_menu_boundaries": {
+      "max_writes_16": "one trial completed; second trial filled before budget exhaustion",
+      "max_writes_17": "one trial completed; second trial filled and dismissed before budget exhaustion",
+      "max_actions_29": "one trial completed; second trial filled and dismissed before budget exhaustion",
+      "max_actions_30": "one trial completed; second trial filled and dismissed before budget exhaustion"
+    }
+  },
+  "candidate": {
+    "runtime_changes": [
+      "The initial learning gate reserves one worst-case retained Escape for every updated field in each of two trials when the browser exposes the popup-observation and retained-dispatch methods.",
+      "The per-route gate repeats the same remaining-trial reserve after the current navigation has been charged.",
+      "Browsers without the popup methods retain the prior ordinary-update budget because they cannot discover or dispatch the optional action."
+    ],
+    "boundary_test": "tests/test_operation_runtime.py:2793",
+    "boundary_result": "At max_writes=17 and max_actions=30, learning retains CREATE and READ, reports zero confirmed update trials, and performs zero update fills and zero Escapes."
+  },
+  "source_sha256": {
+    "base_semabi/compiler/runtime.py": "d1cd79fa2ba16b11a59603dd7a4240b8c743976bdc419de2a1d331addd8e9e9a",
+    "base_tests/test_operation_runtime.py": "c21a2c9ed4d20bda252edb403394c3aadb500ccc35defe9f15f09d9eeb4fc332",
+    "candidate_semabi/compiler/runtime.py": "6125ad066446c9cc64ebc94085dfc25daac884b428fce2ae7859a3e946d4cded",
+    "candidate_tests/test_operation_runtime.py": "4ea3a7a439bfd8871c3fd60430e2a699ed35794799da2424e800a9adb29d0161"
+  },
+  "verification": {
+    "command": "/home/moloch/semabi/.venv/bin/python -m pytest -q tests/test_operation_runtime.py -m 'not slow'",
+    "working_directory": "/tmp/semabi_popup_budget_candidate",
+    "environment": "PYTHONPATH=/tmp/semabi_popup_budget_candidate; inherited CPU affinity [1]",
+    "result": "316 passed, 5 deselected in 13.69s",
+    "meter": {
+      "path": "test_meter_v3/result.json",
+      "status": "TERMINAL",
+      "exit_code": 0,
+      "wall_seconds": 13.967326,
+      "child_rusage_cpu_seconds": 3.194176,
+      "sampled_peak_aggregate_rss_bytes": 49770496,
+      "rss_limit_bytes": 4294967296,
+      "max_observed_affinity_count": 1,
+      "terminal_ownership_verified": true
+    },
+    "receipt_sha256": {
+      "test_meter_v3/result.json": "24fa11bd5105a26566d9bebce5959a9f8a249d0711fe6c215e815dcbb4157c4d",
+      "test_meter_v3/stdout.log": "4311a4a8d04a67e56ed377c87969cbf7774ed3186df15b4e237524e73e730559",
+      "test_meter_v3/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "retained_development_logs": {
+    "test_meter": "Control run imported the unchanged main runtime and reproduced both new boundary failures; 314 other non-slow cases passed.",
+    "test_meter_v2": "First candidate iteration exposed over-reservation for browsers without popup methods; 314 cases passed and two existing ordinary-menu boundaries failed.",
+    "sha256": {
+      "test_meter/result.json": "e9f2047e09efdd17d39669cf94d873f14ed27e6dc094b75e2474e2f0c3e3777a",
+      "test_meter/stdout.log": "c20fff9521154e6690ba7c9955ed99d1dd7484a898b2fcc81de0cf8da5f30852",
+      "test_meter/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_meter_v2/result.json": "ac362a27cd2970e5cbb50b76a398b2f646c117f282a98e13c2c04bf4053ca09b",
+      "test_meter_v2/stdout.log": "a9e8ba166e4d4ff39dad743b82a960d862c079c292b02bc93a48c664f2fd4fa6",
+      "test_meter_v2/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "remaining_review_result": "No second concrete defect was found in the bounded popup paths. Publication follows two saved and reloaded trials, unlearned popup rules are refused, and retained-control plus ARIA restoration checks fail closed.",
+  "limitations": "The Chromium-marked test and live applications were not run during this review; live timing races were not exercised."
+}

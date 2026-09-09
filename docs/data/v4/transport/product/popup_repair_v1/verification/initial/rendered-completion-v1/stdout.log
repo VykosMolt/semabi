@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__ test_rendered_completion_affinity_and_escape_preserve_the_retained_textbox __
+
+    @pytest.mark.slow
+    def test_rendered_completion_affinity_and_escape_preserve_the_retained_textbox():
+        from semabi.compiler.browser import Primitive
+        browser = BrowserSession('https://synthetic.invalid/')
+        browser.settle_ms, browser.max_settle_ms = 1, 100
+        html = '''<!doctype html><form id="editor"><label>Caption <textarea id="field" aria-autocomplete="list"></textarea></label>
+          <div id="popup" role="listbox" hidden><div role="option" id="option">Suggestion</div></div>
+          <button type="button">Save</button><button type="button">Cancel</button></form>
+          <input id="other" aria-label="Other"><output id="count">0</output>
+          <script>
+          const field = document.querySelector('#field'), popup = document.querySelector('#popup');
+          field.addEventListener('input', () => {popup.hidden=false;
+            field.setAttribute('aria-haspopup','listbox');field.setAttribute('aria-controls','popup');
+            field.setAttribute('aria-activedescendant','option');});
+          field.addEventListener('keydown', event => {if(event.key==='Escape') {
+            document.querySelector('#count').textContent=String(Number(document.querySelector('#count').textContent)+1);
+            popup.hidden=true; for(const name of ['aria-haspopup','aria-controls','aria-activedescendant']) field.removeAttribute(name);}});
+          </script>'''
+        retained = None
+        try:
+            browser._page.route('https://synthetic.invalid/**', lambda route: route.fulfill(content_type='text/html', body=html))
+            browser.goto()
+            before = browser.read()
+>           candidate = form_candidates(before)[0]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           IndexError: list index out of range
+
+tests/test_operation_runtime.py:2839: IndexError
+=========================== short test summary info ============================
+FAILED tests/test_operation_runtime.py::test_rendered_completion_affinity_and_escape_preserve_the_retained_textbox
+1 failed, 316 deselected in 1.38s

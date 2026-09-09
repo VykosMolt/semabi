@@ -28,7 +28,7 @@ from semabi.compiler.surface import (SUBMIT_WORDS, Surface, argument_name, diges
                                      visible_record_matches)
 
 
-POLICY_VERSION = "local-record-v6"
+POLICY_VERSION = "local-record-v7"
 OPEN_WORDS = re.compile(r"\b(add|new|create|compose)\b", re.I)
 EDIT_WORDS = re.compile(r"\b(edit|modify|update)\b", re.I)
 EXCLUDED_WORDS = re.compile(r"\b(delete|remove|logout|log out|sign out|reset|purchase|pay|invite)\b", re.I)
@@ -40,6 +40,9 @@ CONTRACT_FIELDS = ("kind", "procedure", "argument_schema", "output_schema",
 NUMERIC_CONTEXT_PRIOR = ("One unexecuted dialog-advertising context button may vary between records: "
                          "ASCII digit runs retain their widths and all punctuation/whitespace stays literal; "
                          "two distinct labels require two completed selected-record read trials")
+TEXT_PROBE_PRIOR = ("Free-form update trials reuse complete #/@-prefixed tokens from current rendered text, "
+                    "choosing among the first eight in lexical order, or a bare # when none are observed. "
+                    "This lexical completion stimulus is a prior, not a business identity or reference assertion")
 
 
 def numeric_label_shape(label: str) -> list | None:
@@ -163,13 +166,19 @@ class Trace:
         self.budget.check_deadline()
         return self.observe(browser.reload())
 
-    def act(self, browser, surface: Surface, primitive: Primitive) -> Surface:
+    def act(self, browser, surface: Surface, primitive: Primitive, *, retained=None,
+            retained_offset: int | None = None) -> Surface:
         self.budget.take(writing=True)
         # The service commits this event before returning. Even a fill may autosave.
         self.emit({"type": "write_intent", "action": primitive.to_json()})
         self.budget.check_deadline()
         self.possible_effect = True
-        result = browser.act(primitive)
+        if retained is None:
+            result = browser.act(primitive)
+        else:
+            timeout = 2000 if self.budget.deadline is None else max(
+                1, min(2000, int((self.budget.deadline - time.monotonic()) * 1000)))
+            result = browser.press_retained(primitive, retained, retained_offset, timeout)
         self.budget.check_deadline()
         after = browser.read()
         self.budget.check_deadline()
@@ -187,7 +196,22 @@ class Trace:
                 "model_calls": 0, "paid_cost": 0}
 
 
-def probe_arguments(candidate: dict, trial: int) -> dict:
+def completion_probe_tokens(surface: Surface) -> list[dict]:
+    """Propose lexical stimuli from rendered text; never infer tag/user semantics."""
+    found = {}
+    for node in surface.observation.nodes:
+        if (node.role not in {"text", "link", "heading", "listitem", "cell"}
+                or not surface.text_is_complete(node.i)):
+            continue
+        for match in re.finditer(r"(?<![\w#@])([#@][A-Za-z][\w-]{0,79})(?![\w-])", node.name):
+            found.setdefault(match.group(1), []).append(node.i)
+    signature = surface.observation.structural_signature()
+    return [{"value": value, "nodes": sorted(set(found[value])), "observation": signature}
+            for value in sorted(found)[:8]]
+
+
+def probe_arguments(candidate: dict, trial: int, *, punctuation: bool = False,
+                    completion_token: str | None = None) -> dict:
     values = {}
     for field in candidate["fields"]:
         if field["role"] != "textbox" or field["input_type"] not in TEXT_TYPES:
@@ -199,6 +223,8 @@ def probe_arguments(candidate: dict, trial: int) -> dict:
             token = "https://example.invalid/" + token
         elif field_format(field) == "email":
             token += "@example.invalid"
+        elif punctuation:
+            token += " " + (completion_token or "#")
         if field["max_length"] is not None and len(token) > field["max_length"]:
             raise StopOperation("Visible input limit is too short for a distinct probe")
         values[field["argument"]] = token
@@ -644,6 +670,8 @@ class Runtime:
                        *, expected_values: dict | None = None, discover: bool = False,
                        replacement_value: str | None = None,
                        read_trials_remaining: int = 0,
+                       update_trials_remaining: int = 0,
+                       completion_actions_per_trial: int = 0,
                        context_trial: dict | None = None) -> tuple[Surface, dict, dict]:
         required = {"edit", "form"} | ({"menu"} if "menu_trigger" in procedure else set())
         if not discover and not required <= procedure.keys():
@@ -677,6 +705,15 @@ class Runtime:
         if read_trials_remaining:
             self._reserve_record_actions(trace, read_trials_remaining * (3 + int(menu_route)) - 1,
                                          read_trials_remaining * (1 + int(menu_route)))
+        if update_trials_remaining:
+            # Each updated field can require one retained Escape in addition to
+            # its fill. Navigation for the current trial has already been taken.
+            fields = len(procedure["update_arguments"])
+            self._reserve_record_actions(
+                trace, update_trials_remaining * (
+                    fields + completion_actions_per_trial + 4 + int(menu_route)) - 1,
+                update_trials_remaining * (
+                    fields + completion_actions_per_trial + 2 + int(menu_route)))
         self._guard_current_editor(surface)
         edit_scope = record["root"]
         if menu_route:
@@ -737,31 +774,188 @@ class Runtime:
             trace.navigate(browser, procedure["readback_url"])
         return captured
 
+    @staticmethod
+    def _popup_indices(browser, retained, trace: Trace) -> list[int]:
+        trace.budget.check_deadline()
+        nodes = browser.retained_node_indices(retained)
+        if (not nodes or any(type(node) is not int or node < 0 for node in nodes)
+                or not browser.nodes_retained(retained, nodes)):
+            raise StopOperation("Completion editor elements changed", stale=True)
+        trace.budget.check_deadline()
+        return nodes
+
+    @staticmethod
+    def _popup_control_state(surface: Surface, nodes: list[int]) -> list[dict]:
+        root = nodes[0]
+        if set(nodes[1:]) != {node for node in surface.observation.subtree(root) if node in surface.controls}:
+            raise StopOperation("Completion editor control inventory changed", stale=True)
+        result = []
+        for node in nodes[1:]:
+            control = deepcopy(surface.controls[node])
+            owner = control.pop("form", None)
+            if owner is not None and owner != root:
+                raise StopOperation("Completion editor control ownership is unsupported", stale=True)
+            if not control.get("has_popup"):
+                control.pop("has_popup", None)
+            observed = surface.observation.node(node).to_json()
+            for key in ("i", "parent", "bbox"):
+                observed.pop(key, None)
+            result.append({"control": control, "native_owner": owner is not None, "node": observed})
+        return result
+
+    @staticmethod
+    def _popup_metadata(browser, surface: Surface, field: int, trace: Trace) -> dict:
+        trace.budget.check_deadline()
+        value = browser.textbox_popup_context(field)
+        trace.budget.check_deadline()
+        if (not value.get("target_visible") or value.get("unmapped_listboxes")
+                or value.get("unmapped_other_popups")
+                or set(value["listboxes"]) != {node.i for node in surface.observation.nodes if node.role == "listbox"}):
+            raise StopOperation("Completion widget observation changed or is incomplete", stale=True)
+        trace.emit({"type": "textbox_popup_observation", "observation": surface.observation.structural_signature(),
+                    "field": field, "metadata": value})
+        return value
+
+    @contextmanager
+    def _capture_popup_controls(self, browser, surface: Surface, candidate: dict, procedure: dict,
+                                trace: Trace, discover: bool):
+        available = all(callable(getattr(browser, name, None)) for name in
+                        ("retained_node_indices", "textbox_popup_context", "press_retained"))
+        rules = procedure.get("textbox_popups", {})
+        if rules and not available:
+            raise StopOperation("Learned completion widget checks are unavailable", stale=True)
+        if not available or not (discover or rules):
+            yield None
+            return
+        nodes = [candidate["root"], *(node for node in surface.observation.subtree(candidate["root"])
+                                      if node in surface.controls)]
+        trace.budget.check_deadline()
+        retained = browser.retain_nodes(nodes)
+        try:
+            if self._popup_indices(browser, retained, trace) != nodes:
+                raise StopOperation("Completion editor changed before capture", stale=True)
+            yield {"retained": retained, "expected": self._popup_control_state(surface, nodes),
+                   "used": False, "before": None}
+        finally:
+            try:
+                browser.release_nodes(retained)
+            except Exception:
+                pass
+        trace.budget.check_deadline()
+
+    def _check_popup_controls(self, browser, surface: Surface, context: dict, trace: Trace) -> list[int]:
+        nodes = self._popup_indices(browser, context["retained"], trace)
+        if self._popup_control_state(surface, nodes) != context["expected"]:
+            raise StopOperation("Completion editor values, controls or context changed", stale=True)
+        return nodes
+
+    def _dismiss_completion(self, browser, surface: Surface, procedure: dict, name: str,
+                            expected: dict, retained, context: dict | None, trace: Trace,
+                            *, discover: bool, events: list[dict]) -> Surface:
+        if context is None:
+            return surface  # Ordinary exact form checks still apply before another write.
+        nodes = self._popup_indices(browser, context["retained"], trace)
+        field = nodes[context["field_offset"]]
+        if surface.controls[field].get("has_popup") != "listbox":
+            return surface
+        descriptor = procedure["read_fields"][name]
+        rule = {"kind": "explicit_aria_listbox_escape_v1", "field": deepcopy(descriptor),
+                "autocomplete": "list"}
+        if not discover and procedure.get("textbox_popups", {}).get(name) != rule:
+            raise StopOperation("This field has no learned completion dismissal", stale=True)
+        before, current = context["before"], self._popup_metadata(browser, surface, field, trace)
+        refs = [current[key] for key in ("aria_controls", "aria_owns", "aria_activedescendant")]
+        direct = current["aria_controls"]["nodes"] + current["aria_owns"]["nodes"]
+        if (before is None or before["listboxes"] or before["other_popups"]
+                or before["aria_autocomplete"] != "list" or current["aria_autocomplete"] != "list"
+                or current["other_popups"] or len(current["listboxes"]) != 1
+                or not current["target_focused"] or current["active_node"] != field
+                or current["unmapped_scope_textboxes"] or current["scope_textboxes"] != [field]
+                or any(ref["unresolved"] for ref in refs)
+                or not direct or any(node != current["listboxes"][0] for node in direct)
+                or current["aria_expanded"] not in (None, "true")):
+            raise StopOperation("No unique explicit focused-textbox completion relation", stale=True)
+        popup, scope = current["listboxes"][0], current["scope"]
+        if (scope not in surface.observation.subtree(nodes[0])
+                or not {field, popup} <= set(surface.observation.subtree(scope))
+                or any(node not in surface.observation.subtree(popup)
+                       for node in current["aria_activedescendant"]["nodes"])):
+            raise StopOperation("Completion popup is outside its retained editor scope", stale=True)
+        # Only this field's popup advertisement is masked, only in this copy,
+        # and only to authorize one Escape. Submission requires the raw contract.
+        comparison = deepcopy(surface)
+        comparison.controls[field].pop("has_popup", None)
+        candidate = self._checked_editor(browser, comparison, procedure, expected, retained, trace)
+        self._guard_current_editor(comparison, selected_root=candidate["root"])
+        self._check_popup_controls(browser, comparison, context, trace)
+        filled = surface.observation.structural_signature()
+        after = trace.act(browser, surface, Primitive("press", field, "Escape"),
+                          retained=context["retained"], retained_offset=context["field_offset"])
+        nodes = self._popup_indices(browser, context["retained"], trace)
+        field = nodes[context["field_offset"]]
+        restored = self._popup_metadata(browser, after, field, trace)
+        if (restored["listboxes"] or restored["other_popups"] or not restored["target_focused"]
+                or restored["active_node"] != field or after.controls[field].get("has_popup")
+                or any(restored[key] != before[key] for key in
+                       ("aria_controls", "aria_owns", "aria_activedescendant", "aria_expanded", "aria_autocomplete"))):
+            raise StopOperation("Escape did not restore the original completion contract", stale=True)
+        candidate = self._checked_editor(browser, after, procedure, expected, retained, trace)
+        self._guard_current_editor(after, selected_root=candidate["root"])
+        self._check_popup_controls(browser, after, context, trace)
+        context["used"] = True
+        event = {"field": name, "rule": rule, "filled_observation": filled,
+                 "restored_observation": after.observation.structural_signature(),
+                 "dispatches": 1, "raw_contract_restored": True}
+        events.append(event)
+        trace.emit({"type": "textbox_popup_dismissed", **event})
+        if discover:
+            procedure.setdefault("textbox_popups", {})[name] = rule
+        return after
+
     def _update_record(self, browser, surface: Surface, procedure: dict, before: dict, values: dict,
-                       trace: Trace) -> tuple[dict, dict]:
+                       trace: Trace, *, discover: bool = False,
+                       popup_events: list[dict] | None = None) -> tuple[dict, dict]:
         old_anchor = before[procedure["anchor"]] if procedure["anchor_mode"] == "replace_value" else None
+        popup_events = [] if popup_events is None else popup_events
         with self._capture_editor(browser, surface, procedure, before, trace) as (captured, retained):
             expected = deepcopy(captured)
-            for name in procedure["update_arguments"]:
+            candidate = self._record_form(surface, procedure, before[procedure["anchor"]])
+            with self._capture_popup_controls(browser, surface, candidate, procedure, trace, discover) as popup:
+                for name in procedure["update_arguments"]:
+                    surface = trace.read(browser)
+                    candidate = self._checked_editor(browser, surface, procedure, expected, retained, trace)
+                    self._guard_current_editor(surface, selected_root=candidate["root"])
+                    if old_anchor is not None and visible_record_matches(surface, values[procedure["anchor"]]):
+                        raise StopOperation("Replacement value became visible before writing")
+                    descriptor = procedure["read_fields"][name]
+                    nodes = surface.resolve(descriptor, within=candidate["root"])
+                    if len(nodes) != 1:
+                        raise StopOperation("Update field binding is ambiguous", stale=True)
+                    if popup is not None:
+                        original = self._check_popup_controls(browser, surface, popup, trace)
+                        popup["field_offset"] = original.index(nodes[0])
+                        popup["before"] = self._popup_metadata(browser, surface, nodes[0], trace)
+                        if procedure.get("textbox_popups", {}).get(name) and (
+                                popup["before"]["aria_autocomplete"] != "list"
+                                or popup["before"]["listboxes"] or popup["before"]["other_popups"]
+                                or surface.controls[nodes[0]].get("has_popup")):
+                            raise StopOperation("Learned completion prerequisite changed", stale=True)
+                    surface = trace.act(browser, surface, Primitive("type", nodes[0], values[name]))
+                    expected[digest(descriptor)]["value"] = values[name]
+                    if popup is not None:
+                        popup["expected"][popup["field_offset"] - 1]["node"]["value"] = values[name]
+                    surface = self._dismiss_completion(browser, surface, procedure, name, expected,
+                                                       retained, popup, trace, discover=discover, events=popup_events)
                 surface = trace.read(browser)
                 candidate = self._checked_editor(browser, surface, procedure, expected, retained, trace)
                 self._guard_current_editor(surface, selected_root=candidate["root"])
+                if popup is not None and popup["used"]:
+                    self._check_popup_controls(browser, surface, popup, trace)
                 if old_anchor is not None and visible_record_matches(surface, values[procedure["anchor"]]):
-                    raise StopOperation("Replacement value became visible before writing")
-                descriptor = procedure["read_fields"][name]
-                nodes = surface.resolve(descriptor, within=candidate["root"])
-                if len(nodes) != 1:
-                    raise StopOperation("Update field binding is ambiguous", stale=True)
-                surface = trace.act(browser, surface, Primitive("type", nodes[0], values[name]))
-                expected[digest(descriptor)]["value"] = values[name]
-            surface = trace.read(browser)
-            candidate = self._checked_editor(browser, surface, procedure, expected, retained, trace)
-            self._guard_current_editor(surface, selected_root=candidate["root"])
-            if old_anchor is not None and visible_record_matches(surface, values[procedure["anchor"]]):
-                raise StopOperation("Replacement value became visible before submission")
-            if surface.controls[candidate["submit_node"]]["disabled"]:
-                raise StopOperation("Application left the learned submit control disabled", refusal=True)
-            after = trace.act(browser, surface, Primitive("click", candidate["submit_node"]))
+                    raise StopOperation("Replacement value became visible before submission")
+                if surface.controls[candidate["submit_node"]]["disabled"]:
+                    raise StopOperation("Application left the learned submit control disabled", refusal=True)
+                after = trace.act(browser, surface, Primitive("click", candidate["submit_node"]))
         after, witness = self._witness(browser, after, values, procedure["anchor"], trace,
                                        procedure["effect_slots"], absent_value=old_anchor,
                                        expected_url=procedure["readback_url"] if old_anchor is not None else None)
@@ -814,6 +1008,14 @@ class Runtime:
         selector, anchor = procedure["selector_argument"], procedure["anchor"]
         if len(trials) != 2 or len({trial["arguments"][selector] for trial in trials}) != 2:
             raise StopOperation("Record operations require two distinct selected-record trials")
+        for name, rule in procedure.get("textbox_popups", {}).items():
+            if kind != "update_visible_record" or name not in procedure["update_arguments"]:
+                raise StopOperation("Completion dismissal is not bound to an updated field")
+            for trial in trials:
+                matching = [event for event in trial.get("popup_dismissals", []) if event["field"] == name]
+                if (len(matching) != 1 or matching[0]["rule"] != rule
+                        or matching[0].get("dispatches") != 1 or not matching[0].get("raw_contract_restored")):
+                    raise StopOperation("Completion dismissal requires two persisted popup-triggered update trials")
         if binding := procedure.get("context_label_binding"):
             evidence = binding.get("read_evidence", [])
             if (binding.get("completed_read_trials") != 2 or len(evidence) != 2
@@ -876,6 +1078,17 @@ class Runtime:
             operation["scope"]["numeric_context_labels"] = (
                 "The declared numeric-label shape generalizes between two selected records; current-call labels stay frozen. "
                 "Outcomes check observed record fields, without establishing that numeric context values are semantically irrelevant.")
+        if not reading:
+            operation["support"]["text_probe_prior"] = TEXT_PROBE_PRIOR
+        if procedure.get("textbox_popups"):
+            operation["prerequisites"].append(
+                "Completion-enabled textboxes retain their observed explicit ARIA list-completion prerequisites")
+            operation["effect_checks"].append(
+                "One retained-focused Escape must restore the complete raw editor contract before submission")
+            operation["scope"]["textbox_completion"] = (
+                "Optional unique explicitly linked local listbox dismissal, observed in two persisted update trials; "
+                "no option selection, inline completion or repeated Escape. The typed value and all original "
+                "editor controls and element identities stay unchanged through submission.")
         bind_contract(operation)
         return operation
 
@@ -907,9 +1120,15 @@ class Runtime:
                 # Reserve enough actions for two complete experiments, including
                 # guarded read exit or update reload. Budget.take still guards each action.
                 menu = int("menu_trigger" in procedure)
-                actions = 6 if reading else 2 * (len(update_names) + 4 + menu)
-                writes = 2 if reading else 2 * (len(update_names) + 2 + menu)
+                completion_actions = (len(update_names) if not reading and all(
+                    callable(getattr(browser, name, None)) for name in
+                    ("retained_node_indices", "textbox_popup_context", "press_retained")) else 0)
+                actions = 6 if reading else 2 * (
+                    len(update_names) + completion_actions + 4 + menu)
+                writes = 2 if reading else 2 * (
+                    len(update_names) + completion_actions + 2 + menu)
                 self._reserve_record_actions(trace, actions, writes)
+                completion_tokens = completion_probe_tokens(trace.read(browser)) if not reading else []
                 for trial_index, created in enumerate(created_trials):
                     # A second-read comparison may propose a numeric binding,
                     # but it cannot alter the retained procedure until that
@@ -917,14 +1136,19 @@ class Runtime:
                     trial_procedure = deepcopy(procedure) if reading and trial_index == 1 else procedure
                     target = created["arguments"][procedure["anchor"]]
                     arguments = {selector: target}
+                    popup_events = []
+                    stimulus = completion_tokens[trial_index % len(completion_tokens)] if completion_tokens else None
                     if not reading:
                         arguments.update(probe_arguments({"fields": [field for field in procedure["form"]["fields"]
                                                                       if field["argument"] in update_names]},
-                                                         trial_index + 2))
+                                                         trial_index + 2, punctuation=True,
+                                                         completion_token=stimulus["value"] if stimulus else None))
                     surface, witness, before = self._record_editor(
                         browser, trial_procedure, target, trace, expected_values=created["arguments"], discover=True,
                         replacement_value=arguments[procedure["anchor"]] if replacing and not reading else None,
                         read_trials_remaining=2 - trial_index if reading else 0,
+                        update_trials_remaining=2 - trial_index if not reading else 0,
+                        completion_actions_per_trial=completion_actions,
                         context_trial=trials[0] if reading and trial_index == 1 else None)
                     selected_witness = witness
                     if reading:
@@ -933,10 +1157,13 @@ class Runtime:
                     else:
                         values = {**({procedure["anchor"]: target} if not replacing else {}),
                                   **{name: arguments[name] for name in update_names}}
-                        witness, captured = self._update_record(browser, surface, procedure, before, values, trace)
+                        witness, captured = self._update_record(browser, surface, procedure, before, values, trace,
+                                                                discover=True, popup_events=popup_events)
                     trials.append({"arguments": arguments, "before": before, "values": values,
                                    "editor_state": captured, "editor_observation": surface.observation.structural_signature(),
                                    "witness": witness,
+                                   **({"popup_dismissals": popup_events, "completion_stimulus": stimulus}
+                                      if not reading else {}),
                                    **({"before_witness": selected_witness} if replacing and not reading else {})})
                     if reading and trial_index == 1:
                         procedure = trial_procedure

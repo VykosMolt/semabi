@@ -1,0 +1,108 @@
+"""Execute one frozen development slot with existing lifecycle, clients and checker."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+from datetime import datetime, timezone
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE = Path(__file__).resolve().parent
+PYTHON = sys.executable
+
+
+def read(path):
+    return json.loads(path.read_text())
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--slot-id', required=True)
+    args = parser.parse_args()
+    os.umask(0o077)
+    plan = read(BASE / 'request_plan.json')
+    assert args.slot_id in read(BASE / 'plan_v1.json')['selected_original_slots']
+    slot = next(item for item in plan['result_slots'] if item['slot_id'] == args.slot_id)
+    assert slot['application'] == 'memos'
+    sources = read(BASE / 'source_sha256.json')
+    assert all(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == sha for name, sha in sources.items())
+    path = BASE / 'case_receipts' / (args.slot_id + '.json')
+    path.parent.mkdir(exist_ok=True)
+    assert not (BASE / 'attempts' / args.slot_id).exists()
+    assert not (BASE / 'request_checks' / args.slot_id).exists()
+    record = {'slot_id': args.slot_id, 'started_at': datetime.now(timezone.utc).isoformat(),
+              'classification': 'Development reassessment with unchanged original goal and binder',
+              'source_sha256': sources, 'status': 'RUNNING', 'commands': [], 'write_retries': 0}
+    with path.open('x') as receipt:
+        def checkpoint():
+            receipt.seek(0); json.dump(record, receipt, indent=2); receipt.write('\n'); receipt.truncate()
+            receipt.flush(); os.fsync(receipt.fileno())
+
+        def execute(argv, name, *, meter=True, cpus='4'):
+            command = ['taskset', '-c', cpus, PYTHON, '-B']
+            if meter:
+                command += [str(BASE / 'meter/command_meter.py'), '--output-dir', str(BASE / 'meters' / name), '--', PYTHON, '-B']
+            command += argv
+            record['commands'].append({'name': name, 'argv': command, 'exit_code': None})
+            checkpoint()
+            with (BASE / (name + '-launch.log')).open('x') as log:
+                result = subprocess.run(command, cwd=ROOT, stdin=subprocess.DEVNULL, stdout=log, stderr=log)
+            record['commands'][-1]['exit_code'] = result.returncode
+            checkpoint()
+            if meter:
+                measured = read(BASE / 'meters' / name / 'result.json')
+                assert measured['status'] == 'TERMINAL' and measured['terminal_ownership_verified']
+                assert measured['stop_reason'] == 'command_exit'
+            return result.returncode
+
+        try:
+            restore = BASE / ('restore_' + args.slot_id + '_v1.json')
+            fixture = plan['run_token'] + '-' + slot['fixture_variant'].replace('_', '-')
+            assert execute([str(BASE / 'run_lifecycle.py'), '--output', str(restore), 'restore', 'memos', fixture],
+                           'restore-' + args.slot_id, meter=False, cpus='2') == 0
+            assert read(restore)['exit_code'] == 0
+            checker = [str(BASE / 'check_memos_request.py'), '--slot-id', args.slot_id,
+                       '--source-hashes', str(BASE / 'source_sha256.json')]
+            execute([*checker, '--phase', 'before', '--restore-receipt', str(restore)], 'check-' + args.slot_id + '-before')
+            before_paths = list((BASE / 'request_checks' / args.slot_id).glob('before_*/result.json'))
+            assert len(before_paths) == 1
+            before = read(before_paths[0]); assert before['verdict'] == 'PREPARED_FIXTURE_MATCH'
+            assert before['termination']['live_owned_process_count'] == 0
+            record['before_receipt'] = str(before_paths[0]); checkpoint()
+            binding, output = BASE / 'preflight' / (args.slot_id + '.json'), BASE / 'attempts' / args.slot_id
+            assert read(binding)['status'] == 'ELIGIBLE'
+            if slot['arm'] == 'semabi':
+                connection = read(BASE / 'onboarding_v1/onboarding.json')['connection_id']
+                runner = [str(BASE / 'run_service_call.py'), '--binding-file', str(binding),
+                          '--connection', connection, '--output-dir', str(output)]
+            else:
+                runner = [str(BASE / 'run_baseline_call.py'), '--binding-file', str(binding),
+                          '--application-url', 'http://127.0.0.1:8852/', '--credentials-file',
+                          str(ROOT / 'runs/product_apps_v1/memos/private/credentials.json'), '--output-dir', str(output)]
+            execute(runner, args.slot_id, cpus='2,3')
+            if slot['arm'] == 'semabi':
+                owner = read(output / 'service_owner.json')
+                assert owner['accepted_jobs_terminal_before_close'] and owner['service_exit_code'] == 0
+                attempt = output / 'attempt.json'
+            else:
+                attempt = output / 'baseline/result.json'
+            execute([*checker, '--phase', 'after', '--before-receipt', str(before_paths[0]), '--attempt', str(attempt)],
+                    'check-' + args.slot_id + '-after')
+            after_paths = list((BASE / 'request_checks' / args.slot_id).glob('after_*/result.json'))
+            assert len(after_paths) == 1
+            after = read(after_paths[0]); assert after['termination']['live_owned_process_count'] == 0
+            record.update(status='TERMINAL', after_receipt=str(after_paths[0]), independent_verdict=after['verdict'],
+                          attempt=str(attempt))
+        except Exception as error:
+            record.update(status='INCOMPLETE', error_type=type(error).__name__,
+                          next_action='Reconcile retained phase evidence before any further fixture mutation or retry')
+        finally:
+            record['completed_at'] = datetime.now(timezone.utc).isoformat(); checkpoint()
+    print(json.dumps({key: record.get(key) for key in ['slot_id', 'status', 'independent_verdict', 'error_type']}))
+    raise SystemExit(0 if record['status'] == 'TERMINAL' else 2)
+
+
+if __name__ == '__main__':
+    main()

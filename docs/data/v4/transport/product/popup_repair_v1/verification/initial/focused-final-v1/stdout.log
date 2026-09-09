@@ -1,0 +1,1056 @@
+........................................................................ [ 16%]
+........................................................................ [ 33%]
+........................................................................ [ 50%]
+........................................................................ [ 67%]
+........................................................................ [ 84%]
+......................................EEEEEEE.EEEEEEEEEEEEEEEFF...       [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_http_connect_learn_schema_invoke_reconnect_and_private_storage _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_http_connect_learn_schema0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_connection_validation_rejects_invalid_or_credential_bearing_urls[file:///tmp/app] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_connection_validation_rej0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_connection_validation_rejects_invalid_or_credential_bearing_urls[http://user:secret@example.test/] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_connection_validation_rej1')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_connection_validation_rejects_invalid_or_credential_bearing_urls[http://user@example.test/] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_connection_validation_rej2')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_connection_validation_rejects_invalid_or_credential_bearing_urls[http://example.test:99999/] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_connection_validation_rej3')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_connection_validation_rejects_invalid_or_credential_bearing_urls[not a URL] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_connection_validation_rej4')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_connection_validation_rejects_invalid_or_credential_bearing_urls[http://example.test\\evil/] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_connection_validation_rej5')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+______ ERROR at setup of test_authentication_openapi_and_body_validation _______
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_authentication_openapi_an0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_learning_requires_scope_and_cannot_inject_versions_or_expand_budgets _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_learning_requires_scope_a0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_learning_supplies_only_the_current_connections_active_artifacts_internally _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_learning_supplies_only_th0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_invocations_bind_connection_and_require_explicit_active_version _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_invocations_bind_connecti0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_concurrent_idempotency_returns_one_job_and_changed_request_conflicts _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_concurrent_idempotency_re0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_invocation_limit_validation_rejects_expansion_and_nonexact_types _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_invocation_limit_validati0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_invocation_limits_normalize_for_idempotency_and_do_not_leak_scope _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_invocation_limits_normali0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_invocation_limits_apply_runtime_hard_caps_and_default_writes_to_actions _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_invocation_limits_apply_r0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_omitted_invocation_limits_preserve_legacy_request_and_fingerprint _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_omitted_invocation_limits0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_missing_rediscovery_preserves_operations_and_new_support_versions_them _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_missing_rediscovery_prese0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+___ ERROR at setup of test_explicit_invalidation_preserves_failed_assumption ___
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_explicit_invalidation_pre0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_stale_result_atomically_blocks_already_queued_invocation _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_stale_result_atomically_b0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_job_completion_never_invents_confirmed_effect[refuse-APPLICATION_REFUSAL-COMPLETED] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_job_completion_never_inve0')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_job_completion_never_invents_confirmed_effect[raise_before-FAILED_BEFORE_EFFECT-FAILED] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_job_completion_never_inve1')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ ERROR at setup of test_job_completion_never_invents_confirmed_effect[raise_after-UNCERTAIN-FAILED] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_job_completion_never_inve2')
+
+    @pytest.fixture
+    def api(tmp_path):
+>       harness = HTTPHarness(tmp_path / "service")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+=================================== FAILURES ===================================
+_ test_restart_fails_queued_work_and_preserves_write_uncertainty_without_replay[None] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_restart_fails_queued_work0')
+limits = None
+
+    @pytest.mark.parametrize("limits", [None, {"max_actions": 3, "max_writes": 2, "max_seconds": 15}])
+    def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_replay(tmp_path, limits):
+        directory = tmp_path / "service"
+        store = ArtifactStore(directory)
+        configuration, credentials = connection_request({"url": "http://example.test/", "credentials": {"username": "private-user", "password": "private-password"}})
+        connection, connect_job = store.create_connection(configuration, credentials)
+        store.start_job(connect_job)
+        store.finish_job(connect_job, {"status": "CONNECTED"})
+        learn_job = store.queue_job(connection["id"], "learn", {"settings": {}})
+        store.start_job(learn_job)
+        store.finish_job(learn_job, {"status": "COMPLETE"}, operations=[operation()])
+        jobs = {}
+        for label in ("queued", "running_no_write", "running_write"):
+            job_id, _ = store.queue_invocation(connection["id"], "create", 1, {"title": label}, label, limits)
+            jobs[label] = job_id
+            if label != "queued":
+                store.start_job(job_id)
+            if label == "running_write":
+                store.add_event(job_id, {"type": "write_intent"})
+        store.close()
+>       api = HTTPHarness(directory)
+              ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:473: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_ test_restart_fails_queued_work_and_preserves_write_uncertainty_without_replay[limits1] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-49/test_restart_fails_queued_work1')
+limits = {'max_actions': 3, 'max_writes': 2, 'max_seconds': 15}
+
+    @pytest.mark.parametrize("limits", [None, {"max_actions": 3, "max_writes": 2, "max_seconds": 15}])
+    def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_replay(tmp_path, limits):
+        directory = tmp_path / "service"
+        store = ArtifactStore(directory)
+        configuration, credentials = connection_request({"url": "http://example.test/", "credentials": {"username": "private-user", "password": "private-password"}})
+        connection, connect_job = store.create_connection(configuration, credentials)
+        store.start_job(connect_job)
+        store.finish_job(connect_job, {"status": "CONNECTED"})
+        learn_job = store.queue_job(connection["id"], "learn", {"settings": {}})
+        store.start_job(learn_job)
+        store.finish_job(learn_job, {"status": "COMPLETE"}, operations=[operation()])
+        jobs = {}
+        for label in ("queued", "running_no_write", "running_write"):
+            job_id, _ = store.queue_invocation(connection["id"], "create", 1, {"title": label}, label, limits)
+            jobs[label] = job_id
+            if label != "queued":
+                store.start_job(job_id)
+            if label == "running_write":
+                store.add_event(job_id, {"type": "write_intent"})
+        store.close()
+>       api = HTTPHarness(directory)
+              ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_service.py:473: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_service.py:108: in __init__
+    self.server = make_server(self.service, port=0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/service.py:547: in make_server
+    server = ThreadingHTTPServer((host, port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_service.py::test_restart_fails_queued_work_and_preserves_write_uncertainty_without_replay[None]
+FAILED tests/test_service.py::test_restart_fails_queued_work_and_preserves_write_uncertainty_without_replay[limits1]
+ERROR tests/test_service.py::test_http_connect_learn_schema_invoke_reconnect_and_private_storage
+ERROR tests/test_service.py::test_connection_validation_rejects_invalid_or_credential_bearing_urls[file:///tmp/app]
+ERROR tests/test_service.py::test_connection_validation_rejects_invalid_or_credential_bearing_urls[http://user:secret@example.test/]
+ERROR tests/test_service.py::test_connection_validation_rejects_invalid_or_credential_bearing_urls[http://user@example.test/]
+ERROR tests/test_service.py::test_connection_validation_rejects_invalid_or_credential_bearing_urls[http://example.test:99999/]
+ERROR tests/test_service.py::test_connection_validation_rejects_invalid_or_credential_bearing_urls[not a URL]
+ERROR tests/test_service.py::test_connection_validation_rejects_invalid_or_credential_bearing_urls[http://example.test\\evil/]
+ERROR tests/test_service.py::test_authentication_openapi_and_body_validation
+ERROR tests/test_service.py::test_learning_requires_scope_and_cannot_inject_versions_or_expand_budgets
+ERROR tests/test_service.py::test_learning_supplies_only_the_current_connections_active_artifacts_internally
+ERROR tests/test_service.py::test_invocations_bind_connection_and_require_explicit_active_version
+ERROR tests/test_service.py::test_concurrent_idempotency_returns_one_job_and_changed_request_conflicts
+ERROR tests/test_service.py::test_invocation_limit_validation_rejects_expansion_and_nonexact_types
+ERROR tests/test_service.py::test_invocation_limits_normalize_for_idempotency_and_do_not_leak_scope
+ERROR tests/test_service.py::test_invocation_limits_apply_runtime_hard_caps_and_default_writes_to_actions
+ERROR tests/test_service.py::test_omitted_invocation_limits_preserve_legacy_request_and_fingerprint
+ERROR tests/test_service.py::test_missing_rediscovery_preserves_operations_and_new_support_versions_them
+ERROR tests/test_service.py::test_explicit_invalidation_preserves_failed_assumption
+ERROR tests/test_service.py::test_stale_result_atomically_blocks_already_queued_invocation
+ERROR tests/test_service.py::test_job_completion_never_invents_confirmed_effect[refuse-APPLICATION_REFUSAL-COMPLETED]
+ERROR tests/test_service.py::test_job_completion_never_invents_confirmed_effect[raise_before-FAILED_BEFORE_EFFECT-FAILED]
+ERROR tests/test_service.py::test_job_completion_never_invents_confirmed_effect[raise_after-UNCERTAIN-FAILED]
+2 failed, 402 passed, 5 deselected, 22 errors in 14.48s

@@ -1,0 +1,44 @@
+........................................................................ [ 22%]
+........................................................................ [ 45%]
+........................................................................ [ 68%]
+...................................................................F..F. [ 91%]
+............................                                             [100%]
+=================================== FAILURES ===================================
+_ test_menu_record_learning_reserves_both_complete_menu_trials[max_writes-16-3-16] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-57/test_menu_record_learning_rese2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f906e0971a0>
+budget = 'max_writes', limit = 16, kinds = 3, writes = 16
+
+    @pytest.mark.parametrize('budget, limit, kinds, writes', [
+        ('max_writes', 7, 1, 4), ('max_writes', 15, 2, 8), ('max_writes', 16, 3, 16),
+        ('max_actions', 16, 1, 4), ('max_actions', 28, 2, 8), ('max_actions', 29, 3, 16)])
+    def test_menu_record_learning_reserves_both_complete_menu_trials(tmp_path, monkeypatch, budget, limit, kinds, writes):
+        _, _, _, learned = _learn_editable_records(tmp_path, monkeypatch, browser=_MenuRecordBrowser(),
+                                                  settings={budget: limit})
+>       assert len(learned['operations']) == kinds
+E       AssertionError: assert 2 == 3
+E        +  where 2 = len([{'id': 'op_815ef27e26340984833e', 'version': 1, 'name': 'save_record', 'kind': 'create_visible_record', ...}, {'id': 'op_0c7873b965346a1cc233', 'version': 1, 'name': 'read_record', 'kind': 'read_visible_record', ...}])
+
+tests/test_operation_runtime.py:2547: AssertionError
+_ test_menu_record_learning_reserves_both_complete_menu_trials[max_actions-29-3-16] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-57/test_menu_record_learning_rese5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f906e1f6bd0>
+budget = 'max_actions', limit = 29, kinds = 3, writes = 16
+
+    @pytest.mark.parametrize('budget, limit, kinds, writes', [
+        ('max_writes', 7, 1, 4), ('max_writes', 15, 2, 8), ('max_writes', 16, 3, 16),
+        ('max_actions', 16, 1, 4), ('max_actions', 28, 2, 8), ('max_actions', 29, 3, 16)])
+    def test_menu_record_learning_reserves_both_complete_menu_trials(tmp_path, monkeypatch, budget, limit, kinds, writes):
+        _, _, _, learned = _learn_editable_records(tmp_path, monkeypatch, browser=_MenuRecordBrowser(),
+                                                  settings={budget: limit})
+>       assert len(learned['operations']) == kinds
+E       AssertionError: assert 2 == 3
+E        +  where 2 = len([{'id': 'op_815ef27e26340984833e', 'version': 1, 'name': 'save_record', 'kind': 'create_visible_record', ...}, {'id': 'op_0c7873b965346a1cc233', 'version': 1, 'name': 'read_record', 'kind': 'read_visible_record', ...}])
+
+tests/test_operation_runtime.py:2547: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_operation_runtime.py::test_menu_record_learning_reserves_both_complete_menu_trials[max_writes-16-3-16]
+FAILED tests/test_operation_runtime.py::test_menu_record_learning_reserves_both_complete_menu_trials[max_actions-29-3-16]
+2 failed, 314 passed, 5 deselected in 13.91s

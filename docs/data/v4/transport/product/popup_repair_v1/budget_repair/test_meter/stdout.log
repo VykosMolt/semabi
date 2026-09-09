@@ -1,0 +1,48 @@
+........................................................................ [ 22%]
+........................................................................ [ 45%]
+........................................................................ [ 68%]
+........................................................................ [ 91%]
+......................FF....                                             [100%]
+=================================== FAILURES ===================================
+_ test_completion_learning_reserves_two_worst_case_trials_before_first_update_fill[max_writes-17] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-56/test_completion_learning_reser0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fcc903b6d20>
+budget = 'max_writes', limit = 17
+
+    @pytest.mark.parametrize('budget,limit', [('max_writes', 17), ('max_actions', 30)])
+    def test_completion_learning_reserves_two_worst_case_trials_before_first_update_fill(
+            tmp_path, monkeypatch, budget, limit):
+        browser = _CompletionRecordBrowser()
+        _, _, browser, learned = _learn_editable_records(
+            tmp_path, monkeypatch, browser=browser, settings={budget: limit})
+        assert [operation['kind'] for operation in learned['operations']] == [
+            'create_visible_record', 'read_visible_record']
+        assert learned['attempts'][0]['stage'] == 'update_visible_record'
+>       assert learned['attempts'][0]['confirmed_trials'] == 0
+E       assert 1 == 0
+
+/tmp/semabi_popup_budget_candidate/tests/test_operation_runtime.py:2802: AssertionError
+_ test_completion_learning_reserves_two_worst_case_trials_before_first_update_fill[max_actions-30] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-56/test_completion_learning_reser1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fcc90308560>
+budget = 'max_actions', limit = 30
+
+    @pytest.mark.parametrize('budget,limit', [('max_writes', 17), ('max_actions', 30)])
+    def test_completion_learning_reserves_two_worst_case_trials_before_first_update_fill(
+            tmp_path, monkeypatch, budget, limit):
+        browser = _CompletionRecordBrowser()
+        _, _, browser, learned = _learn_editable_records(
+            tmp_path, monkeypatch, browser=browser, settings={budget: limit})
+        assert [operation['kind'] for operation in learned['operations']] == [
+            'create_visible_record', 'read_visible_record']
+        assert learned['attempts'][0]['stage'] == 'update_visible_record'
+>       assert learned['attempts'][0]['confirmed_trials'] == 0
+E       assert 1 == 0
+
+/tmp/semabi_popup_budget_candidate/tests/test_operation_runtime.py:2802: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../tmp/semabi_popup_budget_candidate/tests/test_operation_runtime.py::test_completion_learning_reserves_two_worst_case_trials_before_first_update_fill[max_writes-17]
+FAILED ../../../tmp/semabi_popup_budget_candidate/tests/test_operation_runtime.py::test_completion_learning_reserves_two_worst_case_trials_before_first_update_fill[max_actions-30]
+2 failed, 314 passed, 5 deselected in 13.88s

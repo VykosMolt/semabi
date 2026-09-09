@@ -1,0 +1,58 @@
+{
+  "status": "PREPARED_FOR_ROOT_REVIEW_NO_LIVE_CALL",
+  "owner_after_handoff": "root",
+  "artifacts_sha256": {
+    "probe.py": "baa8fb4584826b904823c94bb9952f9766b33bfb2c78e73256c01437ad925bbc",
+    "plan.md": "9e8b8aafb3cf6add9aa1952eb1c6a8cfeea3b1e4e1edde49bd2c263d4875cab5",
+    "preparation_checks.json": "e8fcfd8103a37b3e444c8d6082a2f0380053bec9b594eaa945a914c659db288e"
+  },
+  "source_before_and_after_preparation": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_unchanged": true,
+  "source_freeze_sha256": "c54749729288a3517bdad47ebdf3b06c91a5b192024fd57fb8a782cdbe957901",
+  "browser_launches": 0,
+  "application_calls": 0,
+  "credentials_read": false,
+  "evaluator_expectations_read": false,
+  "main_source_edits": 0,
+  "checks": {
+    "synthetic_and_local_contract_checks": "PASS",
+    "tool_chunk": "27cbc8",
+    "elapsed_wall_seconds": 0.027413329,
+    "cpu_affinity": [
+      4
+    ],
+    "cli_help": "PASS",
+    "cli_tool_chunk": "c68ade"
+  },
+  "frozen_limits": {
+    "seconds": 60,
+    "actions": 20,
+    "possible_writes": 12,
+    "cpu_affinity": [
+      4
+    ],
+    "sampled_aggregate_rss_limit_bytes": 4294967296
+  },
+  "launch": "Root executes the exact meter/timeout CLI in plan.md with the application URL and private credentials path",
+  "submission_permitted": false,
+  "maximum_escape_dispatches": 1,
+  "guard_failure_reason": "StopOperation message retained and credential-redacted; arbitrary exceptions expose type only",
+  "known_limitations": [
+    "Historical-artifact diagnostic; no supported-operation or fresh-compatibility claim",
+    "Provisional local containment is disclosed and never certifies a semantic reference",
+    "Forced timeout may prevent final source/cleanup receipt; root must classify unknown and check source externally",
+    "Existing meter guarantees cover observed PID/start-time descendants and sampled RSS only",
+    "No business-effect or persistence claim; a draft fill may have effects and no cleanup write is attempted"
+  ]
+}

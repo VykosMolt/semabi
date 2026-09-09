@@ -1,0 +1,508 @@
+{
+  "format": "product_assessment_service_owner.v1",
+  "started_at": "2026-09-09T21:59:08.066259+00:00",
+  "service_data_dir": "/home/moloch/semabi/runs/product_popup_repair_v2/service",
+  "fresh_service_process": true,
+  "service_restart_reuses_persisted_artifacts": true,
+  "new_learning": false,
+  "accepted_jobs_terminal_before_close": true,
+  "service_pid": 1483840,
+  "service_startup_seconds": 0.1511428160010837,
+  "client_exit_code": 0,
+  "terminal_jobs": [
+    {
+      "connection_id": "conn_3e9039e6132b4c1e9d02a02255581f87",
+      "created_at": "2026-09-09T21:59:08.276330+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T21:59:08.278109+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T21:59:11.420420+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_1f774686281f4f4b93789bb2afc2b86a",
+      "job_id": "job_1f774686281f4f4b93789bb2afc2b86a",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "authentication_evidence": "same_origin_settled_password_form_absence",
+        "elapsed_seconds": 2.723,
+        "login_selection_basis": "unique_native_submit",
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T21:59:11.420459+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_3e9039e6132b4c1e9d02a02255581f87",
+      "created_at": "2026-09-09T21:59:11.456633+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T21:59:11.459063+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T21:59:11.732556+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "fb25104d4146c0cd",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:59:12.015319+00:00",
+          "sequence": 3,
+          "settled": true,
+          "signature": "fb25104d4146c0cd",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:59:12.029026+00:00",
+          "sequence": 4,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T21:59:13.088253+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "fb25104d4146c0cd",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 202
+          },
+          "created_at": "2026-09-09T21:59:13.118510+00:00",
+          "sequence": 6,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:59:13.593722+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "ad6d7d6e30a7977b",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T21:59:13.601922+00:00",
+          "ok": true,
+          "sequence": 8,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 237
+          },
+          "created_at": "2026-09-09T21:59:13.608142+00:00",
+          "sequence": 9,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:59:14.047105+00:00",
+          "sequence": 10,
+          "settled": true,
+          "signature": "85c78ce78970f77a",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T21:59:14.055885+00:00",
+          "ok": true,
+          "sequence": 11,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T21:59:14.370917+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "85c78ce78970f77a",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:59:14.407071+00:00",
+          "field": 204,
+          "metadata": {
+            "active_node": 204,
+            "aria_activedescendant": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_autocomplete": "list",
+            "aria_controls": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_expanded": null,
+            "aria_owns": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "listboxes": [],
+            "other_popups": [],
+            "scope": null,
+            "scope_textboxes": [],
+            "target_focused": true,
+            "target_visible": true,
+            "unmapped_listboxes": 0,
+            "unmapped_other_popups": 0,
+            "unmapped_scope_textboxes": 0
+          },
+          "observation": "85c78ce78970f77a",
+          "sequence": 13,
+          "type": "textbox_popup_observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 204,
+            "text": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+          },
+          "created_at": "2026-09-09T21:59:14.408260+00:00",
+          "sequence": 14,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:59:14.818035+00:00",
+          "sequence": 15,
+          "settled": true,
+          "signature": "d495a3d36da75c41",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T21:59:14.827101+00:00",
+          "ok": true,
+          "sequence": 16,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T21:59:14.831856+00:00",
+          "field": 204,
+          "metadata": {
+            "active_node": 204,
+            "aria_activedescendant": {
+              "nodes": [
+                209
+              ],
+              "present": true,
+              "token_count": 1,
+              "unresolved": 0
+            },
+            "aria_autocomplete": "list",
+            "aria_controls": {
+              "nodes": [
+                208
+              ],
+              "present": true,
+              "token_count": 1,
+              "unresolved": 0
+            },
+            "aria_expanded": null,
+            "aria_owns": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "listboxes": [
+              208
+            ],
+            "other_popups": [],
+            "scope": 202,
+            "scope_textboxes": [
+              204
+            ],
+            "target_focused": true,
+            "target_visible": true,
+            "unmapped_listboxes": 0,
+            "unmapped_other_popups": 0,
+            "unmapped_scope_textboxes": 0
+          },
+          "observation": "d495a3d36da75c41",
+          "sequence": 17,
+          "type": "textbox_popup_observation"
+        },
+        {
+          "action": {
+            "kind": "press",
+            "target": 204,
+            "text": "Escape"
+          },
+          "created_at": "2026-09-09T21:59:14.855775+00:00",
+          "sequence": 18,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:59:15.142407+00:00",
+          "sequence": 19,
+          "settled": true,
+          "signature": "424affc302de6c37",
+          "type": "observation"
+        },
+        {
+          "action": "press",
+          "created_at": "2026-09-09T21:59:15.151035+00:00",
+          "ok": true,
+          "sequence": 20,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T21:59:15.155805+00:00",
+          "field": 204,
+          "metadata": {
+            "active_node": 204,
+            "aria_activedescendant": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_autocomplete": "list",
+            "aria_controls": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_expanded": null,
+            "aria_owns": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "listboxes": [],
+            "other_popups": [],
+            "scope": null,
+            "scope_textboxes": [],
+            "target_focused": true,
+            "target_visible": true,
+            "unmapped_listboxes": 0,
+            "unmapped_other_popups": 0,
+            "unmapped_scope_textboxes": 0
+          },
+          "observation": "424affc302de6c37",
+          "sequence": 21,
+          "type": "textbox_popup_observation"
+        },
+        {
+          "created_at": "2026-09-09T21:59:15.175733+00:00",
+          "dispatches": 1,
+          "field": "value",
+          "filled_observation": "d495a3d36da75c41",
+          "raw_contract_restored": true,
+          "restored_observation": "424affc302de6c37",
+          "rule": {
+            "autocomplete": "list",
+            "field": {
+              "input_type": "contenteditable",
+              "label": "",
+              "role": "textbox"
+            },
+            "kind": "explicit_aria_listbox_escape_v1"
+          },
+          "sequence": 22,
+          "type": "textbox_popup_dismissed"
+        },
+        {
+          "created_at": "2026-09-09T21:59:15.441927+00:00",
+          "sequence": 23,
+          "settled": true,
+          "signature": "424affc302de6c37",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 224
+          },
+          "created_at": "2026-09-09T21:59:15.475201+00:00",
+          "sequence": 24,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:59:15.809024+00:00",
+          "sequence": 25,
+          "settled": true,
+          "signature": "66bdb9c5da98769c",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T21:59:15.817414+00:00",
+          "ok": true,
+          "sequence": 26,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T21:59:16.205103+00:00",
+          "sequence": 27,
+          "settled": true,
+          "signature": "6f862798244ee9c2",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:59:16.488558+00:00",
+          "sequence": 28,
+          "settled": true,
+          "signature": "6f862798244ee9c2",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:59:16.502674+00:00",
+          "sequence": 29,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T21:59:17.261536+00:00",
+          "sequence": 30,
+          "settled": true,
+          "signature": "6f862798244ee9c2",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:59:17.275029+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 31,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_f58a760b713549a595a955fc8cd1d3c8",
+      "job_id": "job_f58a760b713549a595a955fc8cd1d3c8",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+          "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 56.7079740999965,
+          "max_writes": 9
+        },
+        "operation_id": "op_d245e3cc03c44e6800cd",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+          },
+          "before": {
+            "value": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+          },
+          "before_witness": {
+            "basis": "visible_local_record",
+            "link_destinations": [],
+            "observation": "fb25104d4146c0cd",
+            "role": "article",
+            "root": 196,
+            "text_boundaries": {
+              "212": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+            },
+            "texts": [
+              "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+            ],
+            "value_node": 212
+          },
+          "identity": "UNESTABLISHED",
+          "kind": "visible_record_value_replaced",
+          "old_anchor_absence": {
+            "after_reload_observation": "6f862798244ee9c2",
+            "after_submit_observation": "6f862798244ee9c2",
+            "value": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+          },
+          "scope": "Local exact-value replacement in the inspected record view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "field_slots": {
+              "value": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      1
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "link_destinations": [],
+            "observation": "6f862798244ee9c2",
+            "old_anchor_absence": {
+              "after_reload_observation": "6f862798244ee9c2",
+              "after_submit_observation": "6f862798244ee9c2",
+              "value": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+            },
+            "role": "article",
+            "root": 196,
+            "text_boundaries": {
+              "212": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+            },
+            "texts": [
+              "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+            ],
+            "value_node": 212
+          }
+        },
+        "metrics": {
+          "actions": 7,
+          "elapsed_seconds": 5.814,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 5
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T21:59:17.275082+00:00",
+      "write_intent": true
+    }
+  ],
+  "service_exit_code": 0,
+  "elapsed_seconds_including_startup_client_reconciliation_and_shutdown": 9.397781052000937,
+  "completed_at": "2026-09-09T21:59:17.464071+00:00"
+}

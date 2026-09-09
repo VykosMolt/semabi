@@ -9,7 +9,7 @@ from __future__ import annotations
 import time
 from urllib.parse import urlsplit
 
-from semabi.compiler.browser import Browser, Primitive
+from semabi.compiler.browser import ActionResult, Browser, Primitive
 from semabi.compiler.observation import Node, Observation
 from semabi.compiler.surface import Surface, digest
 
@@ -162,6 +162,57 @@ def origin_of(url: str) -> str:
     return f"{parsed.scheme}://{host}" + ("" if default else f":{port}")
 
 
+# Visible textbox/listbox affinity. References resolve only to observed DOM nodes.
+TEXTBOX_POPUP_JS = r"""target => {
+  const handles = window.__semabi_nodes || [];
+  const visible = e => {
+    if (!e || !e.isConnected) return false;
+    const s = getComputedStyle(e), r = e.getBoundingClientRect();
+    return s.display !== 'none' && !['hidden', 'collapse'].includes(s.visibility)
+      && e.checkVisibility({checkOpacity:true, checkVisibilityCSS:true})
+      && (r.width > 0 || r.height > 0);
+  };
+  const index = e => visible(e) && handles.includes(e) ? handles.indexOf(e) : null;
+  const field = handles[target];
+  if (!visible(field)) return {target_visible:false};
+  const refs = name => {
+    const raw = field.getAttribute(name);
+    const tokens = (raw || '').split(/\s+/).filter(Boolean);
+    const nodes = tokens.map(id => index(document.getElementById(id)));
+    return {present:raw !== null, token_count:tokens.length,
+            nodes:nodes.filter(node => node !== null), unresolved:nodes.filter(node => node === null).length};
+  };
+  const listboxes = Array.from(document.querySelectorAll('[role="listbox"]')).filter(visible);
+  const other = Array.from(document.querySelectorAll('[role="menu"],[role="dialog"],[role="alertdialog"]'))
+    .filter(visible);
+  const textbox = e => {
+    const role = e.getAttribute('role');
+    if (role && !['none', 'presentation'].includes(role)) return role === 'textbox';
+    if (e.isContentEditable && !e.parentElement?.isContentEditable) return true;
+    if (e.tagName === 'TEXTAREA') return true;
+    return e.tagName === 'INPUT' && !['hidden','button','submit','reset','image','checkbox','radio'].includes(e.type);
+  };
+  let scope = null, owned = [];
+  if (listboxes.length === 1) {
+    scope = field.parentElement;
+    while (scope && !scope.contains(listboxes[0])) scope = scope.parentElement;
+    if (scope) owned = Array.from(scope.querySelectorAll('input,textarea,[contenteditable],[role="textbox"]'))
+      .filter(e => textbox(e) && visible(e));
+  }
+  return {target_visible:true, target_focused:document.activeElement === field,
+    active_node:index(document.activeElement), listboxes:listboxes.map(index).filter(node => node !== null),
+    unmapped_listboxes:listboxes.filter(e => index(e) === null).length,
+    other_popups:other.map(index).filter(node => node !== null),
+    unmapped_other_popups:other.filter(e => index(e) === null).length,
+    scope:index(scope), scope_textboxes:owned.map(index).filter(node => node !== null),
+    unmapped_scope_textboxes:owned.filter(e => index(e) === null).length,
+    aria_controls:refs('aria-controls'), aria_owns:refs('aria-owns'),
+    aria_activedescendant:refs('aria-activedescendant'),
+    aria_expanded:field.getAttribute('aria-expanded'),
+    aria_autocomplete:field.getAttribute('aria-autocomplete')};
+}"""
+
+
 class BrowserSession(Browser):
     def __init__(self, url: str, *, headless: bool = True, playwright=None):
         self.allowed_origin = origin_of(url)
@@ -243,6 +294,51 @@ class BrowserSession(Browser):
     @staticmethod
     def release_nodes(retained) -> None:
         retained.dispose()
+
+    def retained_node_indices(self, retained) -> list[int]:
+        """Locate retained elements in the current rendered observation only."""
+        return retained.evaluate(
+            "elements => elements.map(element => window.__semabi_nodes.indexOf(element))")
+
+    def textbox_popup_context(self, node: int) -> dict:
+        if origin_of(self._page.url) != self.allowed_origin:
+            raise ValueError("Popup observation is outside the connection origin")
+        return self._page.evaluate(TEXTBOX_POPUP_JS, node)
+
+    def press_retained(self, primitive: Primitive, retained, offset: int,
+                       timeout_ms: int = 2000) -> ActionResult:
+        """Dispatch one Escape to an already focused retained textbox."""
+        result, handle = ActionResult(False, "Retained Escape target is unavailable"), None
+        try:
+            if (primitive.kind != "press" or primitive.text != "Escape"
+                    or origin_of(self._page.url) != self.allowed_origin):
+                raise ValueError("Only Escape is supported by this retained action")
+            handle = retained.evaluate_handle("(elements, offset) => elements[offset]", offset)
+            element = handle.as_element()
+            if element is None or not element.evaluate("""e => {
+              const role = e.getAttribute('role');
+              const textbox = role && !['none', 'presentation'].includes(role) ? role === 'textbox' :
+                e.tagName === 'TEXTAREA' || e.isContentEditable ||
+                e.tagName === 'INPUT' && ['text','search','url','email','tel'].includes(e.type);
+              return e.isConnected && document.activeElement === e && textbox && !e.disabled && !e.readOnly
+                && e.getAttribute('aria-disabled') !== 'true' && e.getAttribute('aria-readonly') !== 'true'
+                && e.checkVisibility({checkOpacity:true, checkVisibilityCSS:true});
+            }"""):
+                raise ValueError("The retained Escape target is not focused")
+            element.press("Escape", timeout=timeout_ms)
+            result = ActionResult(True)
+        except Exception:
+            pass  # Expose no page-generated text or opaque browser exception details.
+        finally:
+            if handle is not None:
+                try:
+                    handle.dispose()
+                except Exception:
+                    pass
+        self.n_primitives += 1
+        for hook in self.step_hooks:
+            hook(self, primitive, result)
+        return result
 
     def act(self, primitive: Primitive):
         if primitive.kind == "reset":

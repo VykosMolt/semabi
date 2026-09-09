@@ -1,0 +1,12 @@
+{
+  "base_commit": "c7fabfdf6698fa3dd99db94f754dcbd6a936dbdf",
+  "reconstruction": "Apply source_changes.patch to base_commit. Reverse stimulus_refinement.patch in runtime.py to recover the initial bare-sigil learner runtime.",
+  "test_sha256": {
+    "tests/test_operation_runtime.py": "c21a2c9ed4d20bda252edb403394c3aadb500ccc35defe9f15f09d9eeb4fc332",
+    "tests/test_cached_form.py": "4329db6c48a88d4d88e7772ddafdbd3e16f3ad82a81cb92f7389052fd5bdaf53"
+  },
+  "private_witness_policy": "Raw DOM, credentials, service tokens and native snapshots remain local. Accepted checker receipts retain witness hashes; source paths record original locations.",
+  "recorded_run_source_map": "source_sha256.json",
+  "post_review_source_map": "budget_repair/source_adoption.json",
+  "post_review_reconstruction": "Apply budget_repair/changes.patch after source_changes.patch to obtain main after review."
+}

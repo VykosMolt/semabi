@@ -1,0 +1,134 @@
+{
+  "format": "owned_command_meter.v1",
+  "argv": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "tests/test_operation_runtime.py",
+    "-k",
+    "rendered_completion",
+    "-q"
+  ],
+  "exit_code": 1,
+  "source_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+  "started_at": "2026-09-09T21:37:39.240415+00:00",
+  "rss_limit_bytes": 4294967296,
+  "sample_interval_seconds": 0.05,
+  "sampled_peak_aggregate_rss_bytes": 712306688,
+  "samples": 33,
+  "inherited_cpu_affinity": [
+    1
+  ],
+  "max_observed_affinity_count": 1,
+  "signals": [],
+  "stop_reason": "command_exit",
+  "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+  "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "wall_seconds": 1.610716,
+  "rss_limit_exceeded": false,
+  "child_rusage_cpu_seconds": 1.093658,
+  "completed_at": "2026-09-09T21:37:40.851256+00:00",
+  "owned_processes": [
+    {
+      "pid": 1419611,
+      "ppid": 1419610,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7878552,
+      "rss_bytes": 6656000,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1419624,
+      "ppid": 1419611,
+      "name": "MainThread",
+      "state": "R",
+      "start_ticks": 7878607,
+      "rss_bytes": 34648064,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1419649,
+      "ppid": 1419624,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7878648,
+      "rss_bytes": 44474368,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1419651,
+      "ppid": 1419649,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7878650,
+      "rss_bytes": 45453312,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1419652,
+      "ppid": 1419649,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7878650,
+      "rss_bytes": 45170688,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1419669,
+      "ppid": 1419651,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 7878653,
+      "rss_bytes": 118099968,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1419683,
+      "ppid": 1419649,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7878655,
+      "rss_bytes": 67084288,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1419692,
+      "ppid": 1419652,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 7878662,
+      "rss_bytes": 58388480,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    }
+  ],
+  "terminal_ownership_verified": true,
+  "status": "TERMINAL"
+}

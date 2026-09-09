@@ -1,0 +1,79 @@
+--- a/semabi/compiler/runtime.py
++++ b/semabi/compiler/runtime.py
+@@ -40,8 +40,9 @@
+ NUMERIC_CONTEXT_PRIOR = ("One unexecuted dialog-advertising context button may vary between records: "
+                          "ASCII digit runs retain their widths and all punctuation/whitespace stays literal; "
+                          "two distinct labels require two completed selected-record read trials")
+-TEXT_PROBE_PRIOR = ("Free-form update trials include a trailing # character to exercise punctuation and "
+-                    "possible completion widgets; this is a syntactic exploration prior, not a business mapping")
++TEXT_PROBE_PRIOR = ("Free-form update trials reuse complete #/@-prefixed tokens from current rendered text, "
++                    "choosing among the first eight in lexical order, or a bare # when none are observed. "
++                    "This lexical completion stimulus is a prior, not a business identity or reference assertion")
+ 
+ 
+ def numeric_label_shape(label: str) -> list | None:
+@@ -195,7 +196,22 @@
+                 "model_calls": 0, "paid_cost": 0}
+ 
+ 
+-def probe_arguments(candidate: dict, trial: int, *, punctuation: bool = False) -> dict:
++def completion_probe_tokens(surface: Surface) -> list[dict]:
++    """Propose lexical stimuli from rendered text; never infer tag/user semantics."""
++    found = {}
++    for node in surface.observation.nodes:
++        if (node.role not in {"text", "link", "heading", "listitem", "cell"}
++                or not surface.text_is_complete(node.i)):
++            continue
++        for match in re.finditer(r"(?<![\w#@])([#@][A-Za-z][\w-]{0,79})(?![\w-])", node.name):
++            found.setdefault(match.group(1), []).append(node.i)
++    signature = surface.observation.structural_signature()
++    return [{"value": value, "nodes": sorted(set(found[value])), "observation": signature}
++            for value in sorted(found)[:8]]
++
++
++def probe_arguments(candidate: dict, trial: int, *, punctuation: bool = False,
++                    completion_token: str | None = None) -> dict:
+     values = {}
+     for field in candidate["fields"]:
+         if field["role"] != "textbox" or field["input_type"] not in TEXT_TYPES:
+@@ -208,7 +224,7 @@
+         elif field_format(field) == "email":
+             token += "@example.invalid"
+         elif punctuation:
+-            token += " #"
++            token += " " + (completion_token or "#")
+         if field["max_length"] is not None and len(token) > field["max_length"]:
+             raise StopOperation("Visible input limit is too short for a distinct probe")
+         values[field["argument"]] = token
+@@ -1096,6 +1112,7 @@
+                 actions = 6 if reading else 2 * (len(update_names) + 4 + menu)
+                 writes = 2 if reading else 2 * (len(update_names) + 2 + menu)
+                 self._reserve_record_actions(trace, actions, writes)
++                completion_tokens = completion_probe_tokens(trace.read(browser)) if not reading else []
+                 for trial_index, created in enumerate(created_trials):
+                     # A second-read comparison may propose a numeric binding,
+                     # but it cannot alter the retained procedure until that
+@@ -1104,10 +1121,12 @@
+                     target = created["arguments"][procedure["anchor"]]
+                     arguments = {selector: target}
+                     popup_events = []
++                    stimulus = completion_tokens[trial_index % len(completion_tokens)] if completion_tokens else None
+                     if not reading:
+                         arguments.update(probe_arguments({"fields": [field for field in procedure["form"]["fields"]
+                                                                       if field["argument"] in update_names]},
+-                                                         trial_index + 2, punctuation=True))
++                                                         trial_index + 2, punctuation=True,
++                                                         completion_token=stimulus["value"] if stimulus else None))
+                     surface, witness, before = self._record_editor(
+                         browser, trial_procedure, target, trace, expected_values=created["arguments"], discover=True,
+                         replacement_value=arguments[procedure["anchor"]] if replacing and not reading else None,
+@@ -1125,7 +1144,8 @@
+                     trials.append({"arguments": arguments, "before": before, "values": values,
+                                    "editor_state": captured, "editor_observation": surface.observation.structural_signature(),
+                                    "witness": witness,
+-                                   **({"popup_dismissals": popup_events} if not reading else {}),
++                                   **({"popup_dismissals": popup_events, "completion_stimulus": stimulus}
++                                      if not reading else {}),
+                                    **({"before_witness": selected_witness} if replacing and not reading else {})})
+                     if reading and trial_index == 1:
+                         procedure = trial_procedure

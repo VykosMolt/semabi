@@ -1,0 +1,420 @@
+{
+  "classification": "Development reassessment of unchanged original Memos U1/U2 goals, after guarded-completion repair",
+  "completed_at": "2026-09-09T22:05:47.292137+00:00",
+  "source_sha256": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "5e82ee9b0d8330a685ce3dc0ca2d573c7214b88ec26af354ca6911caa0b85f01",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "a99c469586ac286dd88e4df45771415bf80ee7808610b4c733eb24932256914b",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "d1cd79fa2ba16b11a59603dd7a4240b8c743976bdc419de2a1d331addd8e9e9a",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "all_jobs_terminal": true,
+  "ready_for_source_advance": true,
+  "rows": [
+    {
+      "slot_id": "memos-U1-semabi",
+      "arm": "semabi",
+      "arguments": {
+        "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "runtime_outcome": "CONFIRMED",
+      "independently_completed": true,
+      "independent_verdict": "EFFECT_OBSERVED",
+      "actions": 11,
+      "possible_writes": 8,
+      "workflow_seconds_including_auth": 9.064925,
+      "baseline_failure_reason": null,
+      "wrong_side_effects_unobserved": null,
+      "visible_effect_scope": "Two saved article bodies and their own tags, before and after reload; intended inventory delta only for successful updates",
+      "before_receipt": "/home/moloch/semabi/runs/product_popup_repair_v2/request_checks/memos-U1-semabi/before_3119c2c32bd74703b0c35724e2ca357a/result.json",
+      "after_receipt": "/home/moloch/semabi/runs/product_popup_repair_v2/request_checks/memos-U1-semabi/after_ee85f063642e46adb099e92a59bb82c6/result.json",
+      "attempt": "/home/moloch/semabi/runs/product_popup_repair_v2/attempts/memos-U1-semabi/attempt.json"
+    },
+    {
+      "slot_id": "memos-U1-cached_form",
+      "arm": "cached_form",
+      "arguments": {
+        "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains peaches; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "runtime_outcome": "UNKNOWN",
+      "independently_completed": false,
+      "independent_verdict": "EFFECT_NOT_OBSERVED",
+      "actions": 7,
+      "possible_writes": 5,
+      "workflow_seconds_including_auth": 5.582,
+      "baseline_failure_reason": "Cached control is missing or ambiguous",
+      "wrong_side_effects_unobserved": null,
+      "visible_effect_scope": "Two saved article bodies and their own tags, before and after reload; intended inventory delta only for successful updates",
+      "before_receipt": "/home/moloch/semabi/runs/product_popup_repair_v2/request_checks/memos-U1-cached_form/before_16d9992b6b31442fa7cc727486436f17/result.json",
+      "after_receipt": "/home/moloch/semabi/runs/product_popup_repair_v2/request_checks/memos-U1-cached_form/after_cfec6dadb4d54bd9bd46582b442bc4a7/result.json",
+      "attempt": "/home/moloch/semabi/runs/product_popup_repair_v2/attempts/memos-U1-cached_form/baseline/result.json"
+    },
+    {
+      "slot_id": "memos-U2-cached_form",
+      "arm": "cached_form",
+      "arguments": {
+        "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "runtime_outcome": "UNKNOWN",
+      "independently_completed": false,
+      "independent_verdict": "EFFECT_NOT_OBSERVED",
+      "actions": 7,
+      "possible_writes": 5,
+      "workflow_seconds_including_auth": 5.658,
+      "baseline_failure_reason": "Cached control is missing or ambiguous",
+      "wrong_side_effects_unobserved": null,
+      "visible_effect_scope": "Two saved article bodies and their own tags, before and after reload; intended inventory delta only for successful updates",
+      "before_receipt": "/home/moloch/semabi/runs/product_popup_repair_v2/request_checks/memos-U2-cached_form/before_d5b72a820fc54489a0ddf83cebd7dea6/result.json",
+      "after_receipt": "/home/moloch/semabi/runs/product_popup_repair_v2/request_checks/memos-U2-cached_form/after_b508ac097f834c34852fea64ac9c93b2/result.json",
+      "attempt": "/home/moloch/semabi/runs/product_popup_repair_v2/attempts/memos-U2-cached_form/baseline/result.json"
+    },
+    {
+      "slot_id": "memos-U2-semabi",
+      "arm": "semabi",
+      "arguments": {
+        "target": "pa260909af9b86d0 orchard notebook: Alpha basket contains pears; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha",
+        "value": "pa260909af9b86d0 orchard notebook: Alpha basket now contains cherries; keeper Mira. pa260909af9b86d0alphafind #pa260909af9b86d0alpha"
+      },
+      "runtime_outcome": "CONFIRMED",
+      "independently_completed": true,
+      "independent_verdict": "EFFECT_OBSERVED",
+      "actions": 11,
+      "possible_writes": 8,
+      "workflow_seconds_including_auth": 9.013408,
+      "baseline_failure_reason": null,
+      "wrong_side_effects_unobserved": null,
+      "visible_effect_scope": "Two saved article bodies and their own tags, before and after reload; intended inventory delta only for successful updates",
+      "before_receipt": "/home/moloch/semabi/runs/product_popup_repair_v2/request_checks/memos-U2-semabi/before_b78f5164c1cf4e18a651f41da28632ac/result.json",
+      "after_receipt": "/home/moloch/semabi/runs/product_popup_repair_v2/request_checks/memos-U2-semabi/after_b74aacc126804083b2f4c09af0f537c5/result.json",
+      "attempt": "/home/moloch/semabi/runs/product_popup_repair_v2/attempts/memos-U2-semabi/attempt.json"
+    }
+  ],
+  "checks": [
+    {
+      "slot_id": "memos-U1-semabi",
+      "phase": "before",
+      "path": "runs/product_popup_repair_v2/request_checks/memos-U1-semabi/before_3119c2c32bd74703b0c35724e2ca357a/result.json",
+      "sha256": "6d70bae4c4289afc7da552da4e547d87a6ef86daf252364850ae30b5c3341880",
+      "verdict": "PREPARED_FIXTURE_MATCH",
+      "metrics": {
+        "actions": 6,
+        "business_writes": 0,
+        "cpu_affinity": [
+          4
+        ],
+        "cpu_seconds": 2.398,
+        "elapsed_seconds": 6.504,
+        "fresh_browser_sessions": 1,
+        "independent_dom_reads": 4,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "peak_aggregate_rss_bytes": 813633536,
+        "possible_writes": 3,
+        "retries": 0
+      }
+    },
+    {
+      "slot_id": "memos-U1-semabi",
+      "phase": "after",
+      "path": "runs/product_popup_repair_v2/request_checks/memos-U1-semabi/after_ee85f063642e46adb099e92a59bb82c6/result.json",
+      "sha256": "24ac38439c74d503a4ab0ea946d209badcfe5ea40432c811263a2144a46b24a3",
+      "verdict": "EFFECT_OBSERVED",
+      "metrics": {
+        "actions": 6,
+        "business_writes": 0,
+        "cpu_affinity": [
+          4
+        ],
+        "cpu_seconds": 2.314,
+        "elapsed_seconds": 6.366,
+        "fresh_browser_sessions": 1,
+        "independent_dom_reads": 5,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "peak_aggregate_rss_bytes": 822165504,
+        "possible_writes": 3,
+        "retries": 0
+      }
+    },
+    {
+      "slot_id": "memos-U1-cached_form",
+      "phase": "before",
+      "path": "runs/product_popup_repair_v2/request_checks/memos-U1-cached_form/before_16d9992b6b31442fa7cc727486436f17/result.json",
+      "sha256": "5d3fdfb457a28cbdd38c733cdcfb72102ef5599b6e472777399c684359fe6c28",
+      "verdict": "PREPARED_FIXTURE_MATCH",
+      "metrics": {
+        "actions": 6,
+        "business_writes": 0,
+        "cpu_affinity": [
+          4
+        ],
+        "cpu_seconds": 2.378,
+        "elapsed_seconds": 6.481,
+        "fresh_browser_sessions": 1,
+        "independent_dom_reads": 4,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "peak_aggregate_rss_bytes": 817995776,
+        "possible_writes": 3,
+        "retries": 0
+      }
+    },
+    {
+      "slot_id": "memos-U1-cached_form",
+      "phase": "after",
+      "path": "runs/product_popup_repair_v2/request_checks/memos-U1-cached_form/after_cfec6dadb4d54bd9bd46582b442bc4a7/result.json",
+      "sha256": "1850c14fdd6b07b6b5bdbea28ab09094389dc05a1c1c4098b6ebd4458bae0ea9",
+      "verdict": "EFFECT_NOT_OBSERVED",
+      "metrics": {
+        "actions": 6,
+        "business_writes": 0,
+        "cpu_affinity": [
+          4
+        ],
+        "cpu_seconds": 2.304,
+        "elapsed_seconds": 6.332,
+        "fresh_browser_sessions": 1,
+        "independent_dom_reads": 5,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "peak_aggregate_rss_bytes": 822456320,
+        "possible_writes": 3,
+        "retries": 0
+      }
+    },
+    {
+      "slot_id": "memos-U2-cached_form",
+      "phase": "before",
+      "path": "runs/product_popup_repair_v2/request_checks/memos-U2-cached_form/before_d5b72a820fc54489a0ddf83cebd7dea6/result.json",
+      "sha256": "13eeb39dc9e8687d152f0e1b17bb23756b6e1ce719fedcb3c6fdc6fddf79d646",
+      "verdict": "PREPARED_FIXTURE_MATCH",
+      "metrics": {
+        "actions": 6,
+        "business_writes": 0,
+        "cpu_affinity": [
+          4
+        ],
+        "cpu_seconds": 2.302,
+        "elapsed_seconds": 6.35,
+        "fresh_browser_sessions": 1,
+        "independent_dom_reads": 5,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "peak_aggregate_rss_bytes": 812605440,
+        "possible_writes": 3,
+        "retries": 0
+      }
+    },
+    {
+      "slot_id": "memos-U2-cached_form",
+      "phase": "after",
+      "path": "runs/product_popup_repair_v2/request_checks/memos-U2-cached_form/after_b508ac097f834c34852fea64ac9c93b2/result.json",
+      "sha256": "3375a7f1a01a87763e4438a7669f37b266e3a2c548154e5ab6f0e8361b6bac72",
+      "verdict": "EFFECT_NOT_OBSERVED",
+      "metrics": {
+        "actions": 6,
+        "business_writes": 0,
+        "cpu_affinity": [
+          4
+        ],
+        "cpu_seconds": 2.339,
+        "elapsed_seconds": 6.378,
+        "fresh_browser_sessions": 1,
+        "independent_dom_reads": 5,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "peak_aggregate_rss_bytes": 814764032,
+        "possible_writes": 3,
+        "retries": 0
+      }
+    },
+    {
+      "slot_id": "memos-U2-semabi",
+      "phase": "before",
+      "path": "runs/product_popup_repair_v2/request_checks/memos-U2-semabi/before_b78f5164c1cf4e18a651f41da28632ac/result.json",
+      "sha256": "498e56b554db51e6478c7995c17bd6e856d8396e4bdaef8f3653044f06be5baf",
+      "verdict": "PREPARED_FIXTURE_MATCH",
+      "metrics": {
+        "actions": 6,
+        "business_writes": 0,
+        "cpu_affinity": [
+          4
+        ],
+        "cpu_seconds": 2.474,
+        "elapsed_seconds": 6.741,
+        "fresh_browser_sessions": 1,
+        "independent_dom_reads": 5,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "peak_aggregate_rss_bytes": 815243264,
+        "possible_writes": 3,
+        "retries": 0
+      }
+    },
+    {
+      "slot_id": "memos-U2-semabi",
+      "phase": "after",
+      "path": "runs/product_popup_repair_v2/request_checks/memos-U2-semabi/after_b74aacc126804083b2f4c09af0f537c5/result.json",
+      "sha256": "90f7d3d01ceaa33a897ded229af53a45759abbf3c3dd038a248d7ff29a32a76d",
+      "verdict": "EFFECT_OBSERVED",
+      "metrics": {
+        "actions": 6,
+        "business_writes": 0,
+        "cpu_affinity": [
+          4
+        ],
+        "cpu_seconds": 2.342,
+        "elapsed_seconds": 6.484,
+        "fresh_browser_sessions": 1,
+        "independent_dom_reads": 5,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "peak_aggregate_rss_bytes": 811573248,
+        "possible_writes": 3,
+        "retries": 0
+      }
+    }
+  ],
+  "meters": [
+    {
+      "path": "runs/product_popup_repair_v2/meters/check-memos-U1-cached_form-after/result.json",
+      "sha256": "40b8eff4a719dda898cd89991b0d8f3721b240f37b8ed22bebd2756b02efc165",
+      "exit_code": 0,
+      "wall_seconds": 6.521907,
+      "child_rusage_cpu_seconds": 2.433959,
+      "sampled_peak_aggregate_rss_bytes": 824492032
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/check-memos-U1-cached_form-before/result.json",
+      "sha256": "0cbd356bde44fc7db361f09ecac05a9cf66e83245ea10d3c711e6c4aeec1cf18",
+      "exit_code": 0,
+      "wall_seconds": 6.68385,
+      "child_rusage_cpu_seconds": 2.507439,
+      "sampled_peak_aggregate_rss_bytes": 818241536
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/check-memos-U1-semabi-after/result.json",
+      "sha256": "298c9b807a54892ca7d7936144fd49ad81b9e241c21d5bdb2d22f4f9c96bc487",
+      "exit_code": 0,
+      "wall_seconds": 6.561715,
+      "child_rusage_cpu_seconds": 2.444002,
+      "sampled_peak_aggregate_rss_bytes": 821903360
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/check-memos-U1-semabi-before/result.json",
+      "sha256": "d28c5f2485294201f7ed2f25961269837fdbe7bec40db61a0993dc5f3004936a",
+      "exit_code": 0,
+      "wall_seconds": 6.705266,
+      "child_rusage_cpu_seconds": 2.533922,
+      "sampled_peak_aggregate_rss_bytes": 815366144
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/check-memos-U2-cached_form-after/result.json",
+      "sha256": "0f8f5c6017a0d36ab313d5f4db85d92f9c7ec233e2530c50764f975ad59f1351",
+      "exit_code": 0,
+      "wall_seconds": 6.560004,
+      "child_rusage_cpu_seconds": 2.470655,
+      "sampled_peak_aggregate_rss_bytes": 815636480
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/check-memos-U2-cached_form-before/result.json",
+      "sha256": "61e8aaf261ace56bc858c7666b40d815de787601c93962939e7d0625e732f98d",
+      "exit_code": 0,
+      "wall_seconds": 6.54623,
+      "child_rusage_cpu_seconds": 2.431129,
+      "sampled_peak_aggregate_rss_bytes": 812580864
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/check-memos-U2-semabi-after/result.json",
+      "sha256": "a0c29087b6756c29cf142dfa88007f4464c4e439e7fdc83f88e515c99c1e229f",
+      "exit_code": 0,
+      "wall_seconds": 6.664587,
+      "child_rusage_cpu_seconds": 2.473938,
+      "sampled_peak_aggregate_rss_bytes": 812556288
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/check-memos-U2-semabi-before/result.json",
+      "sha256": "9d38363d877a0183c0117caa866e8841fa3b2bc81ebeea7bdc7f32f5742def0f",
+      "exit_code": 0,
+      "wall_seconds": 6.922821,
+      "child_rusage_cpu_seconds": 2.605214,
+      "sampled_peak_aggregate_rss_bytes": 815243264
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/memos-U1-cached_form/result.json",
+      "sha256": "2e875118bb83b18813f923ede13c988564725e357ed007a662790b06bc7cff91",
+      "exit_code": 2,
+      "wall_seconds": 5.764457,
+      "child_rusage_cpu_seconds": 1.786776,
+      "sampled_peak_aggregate_rss_bytes": 835731456
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/memos-U1-semabi/result.json",
+      "sha256": "37afdb8116346444d041909a0154ccf17694ce516d1420a3008d4b6c0725fad5",
+      "exit_code": 0,
+      "wall_seconds": 9.462124,
+      "child_rusage_cpu_seconds": 3.067215,
+      "sampled_peak_aggregate_rss_bytes": 920109056
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/memos-U2-cached_form/result.json",
+      "sha256": "5f923a3f25c8a55da30802da83db1bc6dc468fd2314f799d8bcec48c37b07bcc",
+      "exit_code": 2,
+      "wall_seconds": 5.805784,
+      "child_rusage_cpu_seconds": 1.777351,
+      "sampled_peak_aggregate_rss_bytes": 830038016
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/memos-U2-semabi/result.json",
+      "sha256": "830ccfe0d8585c905037c7ded1ce3c95b9cede5eacb86c7504150b9ac42c40ef",
+      "exit_code": 0,
+      "wall_seconds": 9.461716,
+      "child_rusage_cpu_seconds": 3.072635,
+      "sampled_peak_aggregate_rss_bytes": 912781312
+    },
+    {
+      "path": "runs/product_popup_repair_v2/meters/onboarding-v1/result.json",
+      "sha256": "3ecd03c970fdf3e86ed24db3bc5b676a30d6be1c5af731ba0682215b53125ee1",
+      "exit_code": 0,
+      "wall_seconds": 31.989747,
+      "child_rusage_cpu_seconds": 10.238396,
+      "sampled_peak_aggregate_rss_bytes": 1052897280
+    }
+  ],
+  "completion_by_arm": {
+    "semabi": "2/2",
+    "cached_form": "0/2"
+  },
+  "actual_invocations_by_arm": {
+    "semabi": 2,
+    "cached_form": 2
+  },
+  "confirmed_by_runtime": 2,
+  "independently_corroborated_confirmations": 2,
+  "original_assessment_denominators_unchanged": true,
+  "acquisition": {
+    "physical_runs_in_this_reassessment": 1,
+    "charge_shared_learning_to_each_arm": true,
+    "actions": 35,
+    "possible_writes": 21,
+    "external_wall_seconds": 31.989747,
+    "popup_triggered_saved_learning_trials": 2,
+    "stimuli": "Automatically selected complete sigil-prefixed tokens from current rendered text; no authored app-specific value mapping"
+  },
+  "earlier_development_costs_retained": {
+    "bare_sigil_learning": "runs/product_popup_repair_v1/phase_terminal_v1.json",
+    "one_escape_diagnostic": "runs/product_popup_probe_v1/diagnostic_01/result.json"
+  },
+  "runtime_model_calls": 0,
+  "paid_runtime_cost": 0,
+  "new_application_specific_learner_code": 0,
+  "limits": "Completion applies only to an explicitly linked unique local listbox on the retained focused textbox; one Escape, exact original raw editor state restored, normal saved-value witnesses and reload; no unseen-side-effect or universal-transfer claim"
+}

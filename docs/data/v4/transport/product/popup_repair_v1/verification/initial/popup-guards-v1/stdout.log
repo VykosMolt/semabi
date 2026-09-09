@@ -1,0 +1,33 @@
+...............F.....                                                    [100%]
+=================================== FAILURES ===================================
+_ test_completion_never_saves_or_retries_after_unestablished_context[remounted_cancel-1] _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-47/test_completion_never_saves_or14')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f64e720f1a0>
+mode = 'remounted_cancel', expected_escapes = 1
+
+    @pytest.mark.parametrize('mode,expected_escapes', [
+        ('missing_reference', 0), ('unresolved_reference', 0), ('wrong_reference', 0),
+        ('lost_focus', 0), ('second_listbox', 0), ('outside_scope', 0),
+        ('outside_descendant', 0), ('second_textbox', 0), ('other_popup', 0),
+        ('changed_control', 0), ('remounted_control', 0), ('stays_open', 1),
+        ('changed_value', 1), ('changed_editor', 1), ('remounted_cancel', 1),
+        ('sibling_draft', 1), ('lost_escape_reply', 1),
+    ])
+    def test_completion_never_saves_or_retries_after_unestablished_context(tmp_path, monkeypatch, mode, expected_escapes):
+        runtime, connection, browser, learned = _learn_editable_records(
+            tmp_path, monkeypatch, browser=_CompletionRecordBrowser())
+        update = _learned_kind(learned, 'update_visible_record')
+        before, calls, escapes = list(browser.rows), len(browser.actions), browser.escapes
+        browser.popup_mode = mode
+        result = runtime.invoke(connection, update, {'target': before[0], 'value': 'New requested value #'}, lambda event: None)
+        assert result['outcome'] == 'UNCERTAIN'
+        assert browser.rows == before
+>       assert browser.escapes - escapes == expected_escapes
+E       assert (2 - 2) == 1
+E        +  where 2 = <test_operation_runtime._CompletionRecordBrowser object at 0x7f64e720d640>.escapes
+
+tests/test_operation_runtime.py:2773: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_operation_runtime.py::test_completion_never_saves_or_retries_after_unestablished_context[remounted_cancel-1]
+1 failed, 20 passed, 295 deselected in 0.95s

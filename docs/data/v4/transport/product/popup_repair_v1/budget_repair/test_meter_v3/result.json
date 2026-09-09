@@ -1,0 +1,49 @@
+{
+  "format": "owned_command_meter.v1",
+  "argv": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_operation_runtime.py",
+    "-m",
+    "not slow"
+  ],
+  "exit_code": 0,
+  "source_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+  "started_at": "2026-09-09T22:26:40.599132+00:00",
+  "rss_limit_bytes": 4294967296,
+  "sample_interval_seconds": 0.05,
+  "sampled_peak_aggregate_rss_bytes": 49770496,
+  "samples": 280,
+  "inherited_cpu_affinity": [
+    1
+  ],
+  "max_observed_affinity_count": 1,
+  "signals": [],
+  "stop_reason": "command_exit",
+  "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+  "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "wall_seconds": 13.967326,
+  "rss_limit_exceeded": false,
+  "child_rusage_cpu_seconds": 3.194176,
+  "completed_at": "2026-09-09T22:26:54.566584+00:00",
+  "owned_processes": [
+    {
+      "pid": 1544840,
+      "ppid": 1544830,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 8172688,
+      "rss_bytes": 6180864,
+      "last_cpu_affinity": [
+        1
+      ],
+      "terminal_state": "absent"
+    }
+  ],
+  "terminal_ownership_verified": true,
+  "status": "TERMINAL"
+}

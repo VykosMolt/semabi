@@ -94,17 +94,45 @@ Rolling queue:
    four calls, six checks and eleven terminal process meters to the source.
    The [public demonstration evidence](product/vikunja_schema_demo_v1/README.md)
    retains the source, learned schemas, calls and independent accepted inventories.
-9. Active: general autocomplete repair in `/tmp/semabi_popup_candidate`, with
-   main source unchanged. One bounded Memos diagnostic found explicit visible
+9. General autocomplete repair is verified in main; its
+   [public evidence](product/popup_repair_v1/README.md) retains both acquisition
+   versions and the matched reassessment. One bounded Memos diagnostic found explicit visible
    ARIA linkage from the focused textbox to its suggestion list. One retained
    Escape restored the exact original form, typed value and control identities;
    no Save was attempted. A separate fresh-browser check confirmed both saved
    article bodies/tags still matched the prior fixture after reload. Evidence:
-   `runs/product_popup_probe_v1`. Next: implement guarded dismissal during
-   learning, require two popup-triggered update trials with persisted readback,
-   then test a newly learned operation through HTTP. Preserve ordinary strict
-   checks and reassess transfer on newly reserved evidence after repairs.
-   The first product milestone remains unmet.
+   `runs/product_popup_probe_v1`. The first bare-# stimulus learned ordinary
+   operations but triggered no completion actions; that negative result is in
+   `runs/product_popup_repair_v1/phase_terminal_v1.json`. The refined policy
+   selects sigil-prefixed text from rendered observations. Fresh learning used
+   35 actions and 21 possible writes, including two popup-triggered updates
+   saved and reloaded normally. No application token or mapping was supplied.
+   Both original U1/U2 HTTP update requests now passed independent body/tag
+   checks after reload, including the changed non-target fixture and fresh
+   service reuse. Cached replay failed both on ambiguous control resolution.
+   `runs/product_popup_repair_v2/reassessment_summary_v1.json` binds four calls,
+   eight checks and thirteen terminal meters. Their runtime hash starts
+   `d1cd79fa2ba16b11`. Independent Sol review then found an omitted Escape
+   reservation near the exploration limit. The bounded repair passed 316
+   runtime checks, including zero-fill budget boundaries, and is adopted at
+   runtime hash `6125ad066446c9cc`; live results retain the earlier source.
+10. Vikunja's learned anchor link opens a uniquely matched value textbox whose
+    descriptor differs from the creation field. A bounded experiment on one
+    learner-created record filled that field, dispatched one retained Tab,
+    and witnessed replacement plus old-value absence in the original list and
+    after reload: 10 actions, six possible writes, 9.302 seconds. Evidence is
+    in `runs/product_anchor_probe_v1/edit_diagnostic_01`; all owned processes
+    are terminal. The preceding read diagnostic's coordinator serialization
+    failure and pre-browser import failure remain retained. No independent
+    whole-app effect or causal claim about which step saves is established.
+    Next: implement general linked-value correspondence and a learned
+    fill/Tab/readback sequence in `/tmp/semabi_linked_value_candidate`;
+    two completed read/update trials, retained local controls, strict ambiguity
+    and draft guards, saved-value/reload witnesses, and matched cached replay
+    are required before adoption and fresh HTTP calls. No application route
+    pattern, field alias or native ID may be supplied. Reassess transfer on
+    newly reserved evidence after repairs. The first product milestone remains
+    unmet.
 
 Application setup is separate from learner implementation. Proposed disclosed
 development applications are linkding and Memos; Vikunja is reserved, subject to

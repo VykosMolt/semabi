@@ -765,3 +765,53 @@ def test_synthetic_cached_read_redacts_overlapping_credentials_as_whole_values(t
     contents = json.dumps(result) + "".join(path.read_text() for path in (tmp_path / "replay").iterdir())
     assert "demo" not in contents and "private-secret" not in contents
     assert browser.closed
+
+
+@pytest.mark.parametrize('failed', [False, True])
+def test_cached_record_replays_learned_optional_escape_once_without_effect_verification(tmp_path, failed):
+    class Completion(_RecordBrowser):
+        def __init__(self):
+            super().__init__()
+            self.popup_open, self.escapes = False, 0
+
+        def read(self):
+            surface = super().read()
+            if self.page == 'editor' and self.popup_open:
+                node = next(node for node, control in surface.controls.items() if control['label'] == 'Alpha')
+                surface.controls[node]['has_popup'] = 'listbox'
+            return surface
+
+        def act(self, action):
+            opening = action.kind == 'type' and self.surface.controls[action.target]['label'] == 'Alpha'
+            result = super().act(action)
+            if opening:
+                self.popup_open = True
+            return result
+
+        def press_retained(self, action, retained, offset, timeout_ms):
+            assert action.kind == 'press' and action.text == 'Escape'
+            assert retained[offset] == self.tokens[action.target]
+            self.actions.append(action)
+            self.escapes += 1
+            self.popup_open = False
+            return ActionResult(not failed, 'Reply lost' if failed else None)
+
+    browser = Completion()
+    operation = _record_operation(browser)
+    operation['procedure']['textbox_popups'] = {'alpha': {
+        'kind': 'explicit_aria_listbox_escape_v1', 'field': operation['procedure']['read_fields']['alpha'],
+        'autocomplete': 'list'}}
+    result = _run_record(tmp_path, browser, operation=operation)
+    assert result['outcome'] == ('UNKNOWN' if failed else 'DISPATCHED')
+    assert result['effect_verification'] == 'NOT_PERFORMED'
+    assert browser.escapes == 1 and len(browser.submits) == int(not failed)
+    assert browser.closed and browser.retained == browser.released
+
+
+def test_cached_unknown_completion_step_is_unsupported_before_browser(tmp_path):
+    browser = _RecordBrowser()
+    operation = _record_operation(browser)
+    operation['procedure']['textbox_popups'] = {'alpha': {'kind': 'pick_first_option'}}
+    result = _run_record(tmp_path, browser, operation=operation)
+    assert result['outcome'] == 'UNSUPPORTED'
+    assert browser.actions == []

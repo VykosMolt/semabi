@@ -1,0 +1,469 @@
+"""Development-only, single-Escape popup diagnostic; never submit an editor."""
+from __future__ import annotations
+
+import argparse
+from copy import deepcopy
+import hashlib
+import json
+import os
+from pathlib import Path
+import time
+
+from semabi.compiler.browser import Primitive
+from semabi.compiler.browser_session import BrowserSession, origin_of
+from semabi.compiler.evidence import EvidenceLog
+from semabi.compiler.observation import Observation
+from semabi.compiler.runtime import Budget, Runtime, StopOperation, SUBMIT_WORDS, Trace, validate_arguments
+from semabi.compiler.surface import Surface, digest
+
+
+ROOT = Path(__file__).resolve().parents[2]
+SOURCE_PATHS = {"examples/client.py", "semabi/service.py", "semabi/baselines/cached_form.py",
+                *(f"semabi/compiler/{name}.py" for name in
+                  ("artifacts", "browser", "browser_session", "evidence", "observation", "runtime", "surface"))}
+LIMIT_SECONDS, LIMIT_ACTIONS, LIMIT_WRITES = 60, 20, 12
+
+# References are resolved only to current visible observation nodes. ID strings,
+# hidden referenced content, application stores and network responses are absent.
+AFFINITY_JS = r"""target => {
+  const handles = window.__semabi_nodes || [];
+  const visible = e => {
+    if (!e || !e.isConnected) return false;
+    const s = getComputedStyle(e), r = e.getBoundingClientRect();
+    return s.display !== 'none' && !['hidden', 'collapse'].includes(s.visibility)
+      && e.checkVisibility({checkOpacity:true, checkVisibilityCSS:true})
+      && (r.width > 0 || r.height > 0);
+  };
+  const index = e => visible(e) && handles.includes(e) ? handles.indexOf(e) : null;
+  const field = handles[target];
+  if (!visible(field)) return {target_visible:false};
+  const refs = name => {
+    const raw = field.getAttribute(name);
+    const tokens = (raw || '').split(/\s+/).filter(Boolean);
+    const nodes = tokens.map(id => index(document.getElementById(id)));
+    return {present:raw !== null, token_count:tokens.length,
+            nodes:nodes.filter(node => node !== null), unresolved:nodes.filter(node => node === null).length};
+  };
+  const listboxes = Array.from(document.querySelectorAll('[role="listbox"]')).filter(visible);
+  const other = Array.from(document.querySelectorAll('[role="menu"],[role="dialog"],[role="alertdialog"]'))
+    .filter(visible);
+  const textbox = e => {
+    const role = e.getAttribute('role');
+    if (role && !['none', 'presentation'].includes(role)) return role === 'textbox';
+    if (e.isContentEditable && !e.parentElement?.isContentEditable) return true;
+    if (e.tagName === 'TEXTAREA') return true;
+    return e.tagName === 'INPUT' && !['hidden','button','submit','reset','image','checkbox','radio'].includes(e.type);
+  };
+  let scope = null, owned = [];
+  if (listboxes.length === 1) {
+    scope = field.parentElement;
+    while (scope && !scope.contains(listboxes[0])) scope = scope.parentElement;
+    if (scope) owned = Array.from(scope.querySelectorAll('input,textarea,[contenteditable],[role="textbox"]'))
+      .filter(e => textbox(e) && visible(e));
+  }
+  return {target_visible:true, target_focused:document.activeElement === field,
+    active_node:index(document.activeElement), listboxes:listboxes.map(index).filter(node => node !== null),
+    unmapped_listboxes:listboxes.filter(e => index(e) === null).length,
+    other_popups:other.map(index).filter(node => node !== null),
+    unmapped_other_popups:other.filter(e => index(e) === null).length,
+    scope:index(scope), scope_textboxes:owned.map(index).filter(node => node !== null),
+    unmapped_scope_textboxes:owned.filter(e => index(e) === null).length,
+    aria_controls:refs('aria-controls'), aria_owns:refs('aria-owns'),
+    aria_activedescendant:refs('aria-activedescendant'),
+    aria_expanded:field.getAttribute('aria-expanded'),
+    aria_autocomplete:field.getAttribute('aria-autocomplete')};
+}"""
+
+
+def require(condition, reason):
+    if not condition:
+        raise StopOperation(reason)
+
+
+def redact(value, secrets):
+    if isinstance(value, dict):
+        return {key: redact(item, secrets) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [redact(item, secrets) for item in value]
+    if isinstance(value, str):
+        for secret in secrets:
+            value = value.replace(secret, "[REDACTED_CREDENTIAL]")
+    return value
+
+
+def source_hashes(expected):
+    require(set(expected) == SOURCE_PATHS, "The exact ten-file source freeze is required")
+    return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in sorted(expected)}
+
+
+class PrivateLog(EvidenceLog):
+    def __init__(self, directory, secrets):
+        super().__init__(directory)
+        self.secrets = secrets
+
+    def add_step(self, episode, action, ok, error, before, after):
+        safe = lambda obs: Observation.from_json(redact(obs.to_json(), self.secrets))
+        action = Primitive(**redact(action.to_json(), self.secrets))
+        return super().add_step(episode, action, ok, "Primitive did not complete" if error else None,
+                                safe(before), safe(after))
+
+
+class PrivateTrace(Trace):
+    def __init__(self, directory, emit, budget, secrets, allowed_origin):
+        super().__init__(directory, emit, budget)
+        self.log = PrivateLog(directory, secrets)
+        self.secrets, self.allowed_origin = secrets, allowed_origin
+
+    def observe(self, surface):
+        require(origin_of(surface.observation.url) == self.allowed_origin, "Observed origin changed")
+        require(not any(control.get("input_type") == "password" for control in surface.controls.values()),
+                "Authentication is required")
+        safe = Surface(Observation.from_json(redact(surface.observation.to_json(), self.secrets)),
+                       redact(surface.controls, self.secrets), redact(surface.forms, self.secrets),
+                       surface.settled, redact(surface.text_boundaries, self.secrets))
+        super().observe(safe)
+        return surface  # Operational comparisons always use the original surface.
+
+
+class ProbeSession(BrowserSession):
+    def __init__(self, url, budget, emit, record):
+        self.budget, self.emit, self.record = budget, emit, record
+        self.auth_phase, self.allowed_fill_node = False, None
+        super().__init__(url)
+
+    def read(self):
+        self.budget.check_deadline()
+        surface = super().read()
+        self.record["surface_reads"] += 1
+        self.budget.check_deadline()
+        require(surface.settled and origin_of(surface.observation.url) == self.allowed_origin,
+                "A settled same-origin view is required")
+        return surface
+
+    def act(self, primitive):
+        self.budget.check_deadline()
+        if self.auth_phase:
+            self.budget.take(writing=True)
+            self.record["authentication_dispatches"] += 1
+            self.emit({"type": "authentication_write_intent", "kind": primitive.kind})
+        else:
+            require(primitive.kind in {"click", "type"}, "Only learned navigation and one fill are allowed")
+            if primitive.kind == "click":
+                require(not SUBMIT_WORDS.search(self.surface.controls[primitive.target]["label"]),
+                        "Submission is forbidden in this diagnostic")
+            else:
+                require(not self.record["fill_attempted"] and primitive.target == self.allowed_fill_node,
+                        "Only the retained replacement field may be filled once")
+                self.record["fill_attempted"] = True
+        return super().act(primitive)
+
+    def authenticate(self, credentials):
+        self.auth_phase = True
+        try:
+            return super().authenticate(credentials)
+        finally:
+            self.auth_phase = False
+
+
+def retained_indices(browser, retained, budget):
+    budget.check_deadline()
+    nodes = retained.evaluate("elements => elements.map(element => window.__semabi_nodes.indexOf(element))")
+    require(nodes and all(type(node) is int and node >= 0 for node in nodes)
+            and browser.nodes_retained(retained, nodes), "Retained editor elements or ownership changed")
+    budget.check_deadline()
+    return nodes
+
+
+def controls_state(surface, nodes):
+    root = nodes[0]
+    require(set(nodes[1:]) == {node for node in surface.observation.subtree(root) if node in surface.controls},
+            "The editor control inventory changed")
+    result = []
+    for node in nodes[1:]:
+        control = deepcopy(surface.controls[node])
+        owner = control.pop("form", None)
+        require(owner is None or owner == root, "A control has an unsupported form owner")
+        if not control.get("has_popup"):
+            control.pop("has_popup", None)
+        observed = surface.observation.node(node).to_json()
+        for key in ("i", "parent", "bbox"):
+            observed.pop(key, None)
+        result.append({"control": control, "native_owner": owner is not None, "node": observed})
+    return result
+
+
+def capture_affinity(browser, surface, field, budget, record):
+    budget.check_deadline()
+    value = browser._page.evaluate(AFFINITY_JS, field)
+    record["affinity_reads"] += 1
+    budget.check_deadline()
+    require(value.get("target_visible") and not value["unmapped_listboxes"]
+            and not value["unmapped_other_popups"], "Rendered popup metadata is incomplete")
+    require(set(value["listboxes"]) == {node.i for node in surface.observation.nodes if node.role == "listbox"},
+            "The listbox inventory changed since the rendered read")
+    value["observation"] = surface.observation.structural_signature()
+    value["field"] = field
+    return value
+
+
+def other_popups(surface, affinity):
+    return sorted((surface.observation.node(node).role, surface.observation.node(node).name)
+                  for node in affinity["other_popups"])
+
+
+def popup_affiliation(surface, affinity, root, field):
+    require(affinity["target_focused"] and affinity["active_node"] == field,
+            "The retained replacement field no longer has focus")
+    require(len(affinity["listboxes"]) == 1 and not affinity["unmapped_scope_textboxes"]
+            and affinity["scope_textboxes"] == [field], "A unique local textbox/listbox scope is required")
+    popup, scope = affinity["listboxes"][0], affinity["scope"]
+    require(scope in surface.observation.subtree(root)
+            and {field, popup} <= set(surface.observation.subtree(scope)), "Popup scope is outside the retained editor")
+    references = [affinity[name] for name in ("aria_controls", "aria_owns", "aria_activedescendant")]
+    require(not any(reference["unresolved"] for reference in references), "Visible ARIA references are unresolved")
+    direct = affinity["aria_controls"]["nodes"] + affinity["aria_owns"]["nodes"]
+    if direct:
+        require(all(node == popup or popup in surface.observation.subtree(node) for node in direct),
+                "ARIA ownership does not identify the observed popup")
+        basis = "explicit_rendered_aria_reference"
+    else:
+        basis = "provisional_unique_local_containment_hypothesis"
+    require(all(node in surface.observation.subtree(popup) for node in affinity["aria_activedescendant"]["nodes"]),
+            "The active descendant is outside the observed popup")
+    require(affinity["aria_expanded"] in (None, "true"), "Expanded state conflicts with the visible popup")
+    return {"basis": basis, "semantic_reference": "UNESTABLISHED", "scope": scope, "listbox": popup}
+
+
+def targeted_escape(element, node, trace, record):
+    """One retained-element dispatch, charged and recorded before .press()."""
+    require(not record.get("escape_requested"), "A second Escape request is forbidden")
+    record["escape_requested"] = True
+    trace.budget.check_deadline()
+    require(element.evaluate("e => e.isConnected && document.activeElement === e"),
+            "The retained Escape target lost focus")
+    trace.budget.take(writing=True)
+    record["escape_attempted"] = True
+    trace.possible_effect = True
+    trace.emit({"type": "write_intent", "action": {"kind": "press", "target": node, "text": "Escape"},
+                "dispatch": "retained_focused_element", "submission_permitted": False})
+    try:
+        timeout = max(1, min(2000, int((trace.budget.deadline - time.monotonic()) * 1000)))
+        element.press("Escape", timeout=timeout)
+    except Exception as error:
+        record["escape_error_type"] = type(error).__name__
+        trace.emit({"type": "action_result", "ok": False, "action": "targeted_escape",
+                    "error_type": type(error).__name__})
+        return False
+    trace.emit({"type": "action_result", "ok": True, "action": "targeted_escape"})
+    return True
+
+
+def load_binding(path, allowed_origin, current_sources):
+    call = json.loads(path.read_text())["call"]
+    operation, arguments = call["operation"], call["arguments"]
+    require(operation["kind"] == "update_visible_record", "A historical update binding is required")
+    validate_arguments(operation["argument_schema"], arguments)
+    procedure = deepcopy(operation["procedure"])
+    updates = procedure["update_arguments"]
+    require(isinstance(updates, list) and len(updates) == 1 and updates[0] in procedure["read_fields"]
+            and set(arguments) == {procedure["selector_argument"], updates[0]}, "Exactly one bound replacement is required")
+    require(origin_of(procedure["readback_url"]) == allowed_origin, "The historical route has a different origin")
+    previous = operation["support"]["source_sha256"]
+    require(set(previous) == set(current_sources)
+            and {name for name in previous if previous[name] != current_sources[name]} == {"browser_session.py"},
+            "The historical binding does not have the expected authentication-only source boundary")
+    require(digest(operation["support"]) == operation["evidence_sha256"], "Historical operation evidence changed")
+    return operation, procedure, arguments
+
+
+def run(args):
+    started = time.monotonic()
+    budget = Budget(LIMIT_ACTIONS, LIMIT_WRITES, deadline=started + LIMIT_SECONDS)
+    record = {"mode": "development_historical_artifact_popup_diagnostic", "status": "RUNNING",
+              "stage": "preflight", "public_invocation": False, "supported_operation": False,
+              "submission_permitted": False, "save_attempts": 0, "fill_attempted": False,
+              "escape_requested": False, "escape_attempted": False, "authentication_dispatches": 0,
+              "surface_reads": 0, "affinity_reads": 0, "limits": {"seconds": LIMIT_SECONDS,
+              "actions": LIMIT_ACTIONS, "possible_writes": LIMIT_WRITES}}
+    secrets, expected, browser, runtime = [], None, None, None
+    output = args.output_dir
+    output.mkdir(parents=True, exist_ok=False, mode=0o700)
+    output.chmod(0o700)
+
+    def save(name, value):
+        with (output / name).open("w") as stream:
+            json.dump(redact(value, secrets), stream, indent=2)
+            stream.write("\n")
+
+    def emit(value):
+        with (output / "events.jsonl").open("a") as stream:
+            stream.write(json.dumps(redact({"stage": record["stage"], **value}, secrets)) + "\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+
+    try:
+        allowed_origin = origin_of(args.application_url)
+        expected = json.loads(args.source_hashes.read_text())
+        record["source_before"] = source_hashes(expected)
+        require(record["source_before"] == expected, "Frozen source changed before startup")
+        runtime = Runtime(output / "runtime")
+        require(all(runtime.source_sha256[name] == expected[f"semabi/compiler/{name}"]
+                    for name in runtime.source_sha256), "Loaded runtime differs from the frozen source")
+        operation, procedure, arguments = load_binding(args.binding_file, allowed_origin, runtime.source_sha256)
+        record["binding"] = {"path": str(args.binding_file), "sha256": hashlib.sha256(args.binding_file.read_bytes()).hexdigest(),
+                             "operation_id": operation["id"], "operation_version": operation["version"],
+                             "historical_source_sha256": operation["support"]["source_sha256"],
+                             "compatibility": "Historical diagnostic only; source compatibility is not asserted"}
+        record["probe_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+        credentials = json.loads(args.credentials_file.read_text())
+        require(isinstance(credentials, dict) and all(isinstance(credentials.get(key), str)
+                and credentials[key] for key in ("username", "password")), "Supported credentials are required")
+        secrets[:] = sorted({value for value in credentials.values() if isinstance(value, str) and value},
+                            key=len, reverse=True)
+        save("started.json", record)
+        budget.check_deadline()
+        browser = ProbeSession(args.application_url, budget, emit, record)
+        record["stage"] = "authentication"
+        budget.take()
+        emit({"type": "navigation", "url": args.application_url})
+        browser.goto()
+        authentication = browser.authenticate(credentials)
+        credentials.clear()
+        record["authentication"] = authentication
+        require(authentication.get("status") == "CONNECTED"
+                and authentication.get("authentication_actions") == record["authentication_dispatches"],
+                "Authentication did not complete within the diagnostic budget")
+        trace = PrivateTrace(output / "evidence", emit, budget, secrets, allowed_origin)
+        record["stage"] = "open_editor"
+        field = procedure["update_arguments"][0]
+        target, replacement = arguments[procedure["selector_argument"]], arguments[field]
+        surface, witness, values = runtime._record_editor(
+            browser, procedure, target, trace,
+            replacement_value=replacement if procedure["anchor_mode"] == "replace_value" else None)
+        save("opened_record.json", {"witness": witness, "values": values})
+        with runtime._capture_editor(browser, surface, procedure, values, trace) as (captured, retained):
+            surface = trace.read(browser)
+            candidate = runtime._checked_editor(browser, surface, procedure, captured, retained, trace)
+            descriptor = procedure["read_fields"][field]
+            fields = surface.resolve(descriptor, within=candidate["root"])
+            require(len(fields) == 1, "Replacement field is ambiguous")
+            node = fields[0]
+            original_popup = surface.controls[node].get("has_popup")
+            require(not original_popup, "The original field already advertises a popup")
+            control_nodes = [index for index in surface.observation.subtree(candidate["root"])
+                             if index in surface.controls]
+            retained_all = browser.retain_nodes([candidate["root"], *control_nodes])
+            try:
+                original_controls = controls_state(surface, retained_indices(browser, retained_all, budget))
+                expected_controls = deepcopy(original_controls)
+                expected_controls[control_nodes.index(node)]["node"]["value"] = replacement
+                expected_state = deepcopy(captured)
+                expected_state[digest(descriptor)]["value"] = replacement
+                before_affinity = capture_affinity(browser, surface, node, budget, record)
+                require(not before_affinity["listboxes"], "A popup was already visible before the diagnostic fill")
+                baseline_popups = other_popups(surface, before_affinity)
+                save("before_fill.json", {"editor_state": captured, "all_controls": original_controls,
+                                          "affinity": before_affinity})
+                record["stage"] = "fill"
+                runtime._guard_current_editor(surface, selected_root=candidate["root"])
+                browser.allowed_fill_node = node
+                surface = trace.act(browser, surface, Primitive("type", node, replacement))
+                record["stage"] = "popup_guard"
+                indices = retained_indices(browser, retained, budget)
+                node = indices[1 + sorted(procedure["read_fields"]).index(field)]
+                affinity = capture_affinity(browser, surface, node, budget, record)
+                save("post_fill_raw.json", {"observation": surface.observation.to_json(), "controls": surface.controls,
+                                           "forms": surface.forms, "text_boundaries": surface.text_boundaries,
+                                           "affinity": affinity})
+                require(surface.controls[node].get("has_popup") == "listbox"
+                        and surface.observation.node(node).value == replacement,
+                        "The filled field did not retain exactly the proposed popup transition")
+                affiliation = popup_affiliation(surface, affinity, indices[0], node)
+                require(other_popups(surface, affinity) == baseline_popups, "Other visible popup context changed")
+                comparison = deepcopy(surface)
+                comparison.controls[node].pop("has_popup", None)
+                checked = runtime._checked_editor(browser, comparison, procedure, expected_state, retained, trace)
+                runtime._guard_current_editor(comparison, selected_root=checked["root"])
+                require(controls_state(comparison, retained_indices(browser, retained_all, budget)) == expected_controls,
+                        "Another editor control, owner, value or context changed")
+                record["affiliation"] = affiliation
+                save("dismissal_authorization.json", {"scope": "One Escape only; never submission", "affiliation": affiliation,
+                     "raw_observation": surface.observation.structural_signature(), "masked_field": node,
+                     "comparison_exception": "Only this textbox has_popup removed from a temporary Surface copy"})
+                handle = retained.evaluate_handle("(elements, offset) => elements[offset]",
+                                                  1 + sorted(procedure["read_fields"]).index(field))
+                try:
+                    element = handle.as_element()
+                    require(element is not None, "The retained Escape target is unavailable")
+                    record["stage"] = "one_escape"
+                    ok = targeted_escape(element, node, trace, record)
+                    after = trace.read(browser)
+                    trace.log.add_step(0, Primitive("press", node, "Escape"), ok,
+                                       None if ok else "Escape did not complete", surface.observation, after.observation)
+                finally:
+                    handle.dispose()
+                record["stage"] = "restored_contract_guard"
+                indices = retained_indices(browser, retained, budget)
+                node = indices[1 + sorted(procedure["read_fields"]).index(field)]
+                after_affinity = capture_affinity(browser, after, node, budget, record)
+                save("post_escape_raw.json", {"observation": after.observation.to_json(), "controls": after.controls,
+                                             "forms": after.forms, "text_boundaries": after.text_boundaries,
+                                             "affinity": after_affinity, "escape_returned_ok": ok})
+                require(ok and not after_affinity["listboxes"] and after_affinity["target_focused"]
+                        and after.controls[node].get("has_popup") == original_popup
+                        and after.observation.node(node).value == replacement,
+                        "Escape did not restore the original popup state and exact focused field value")
+                checked = runtime._checked_editor(browser, after, procedure, expected_state, retained, trace)
+                runtime._guard_current_editor(after, selected_root=checked["root"])
+                require(controls_state(after, retained_indices(browser, retained_all, budget)) == expected_controls
+                        and other_popups(after, after_affinity) == baseline_popups,
+                        "Editor controls or visible context changed after Escape")
+                record["status"] = "DIAGNOSTIC_OBSERVED"
+                record["observation"] = "One Escape dismissed the popup and restored the original editor contract"
+                record["business_effect"] = "UNESTABLISHED; no submission or cleanup write was attempted"
+            finally:
+                browser.release_nodes(retained_all)
+    except Exception as error:
+        record.update(status="UNESTABLISHED", error_type=type(error).__name__,
+                      reason=redact(str(error), secrets) if isinstance(error, StopOperation) else
+                      "The diagnostic did not establish every required condition; no retry was made")
+    finally:
+        record["stopped_at_stage"] = record["stage"]
+        for owner in (browser, runtime):
+            if owner is not None:
+                try:
+                    owner.close()
+                except Exception as error:
+                    record.update(status="UNESTABLISHED", cleanup_error_type=type(error).__name__)
+        if expected is not None:
+            try:
+                record["source_after"] = source_hashes(expected)
+                record["source_unchanged"] = record["source_after"] == record.get("source_before") == expected
+            except Exception as error:
+                record.update(source_unchanged=False, source_check_error_type=type(error).__name__)
+        if not record.get("source_unchanged") or time.monotonic() > budget.deadline:
+            record["status"] = "UNESTABLISHED"
+        record.update(actions=budget.actions, possible_writes=budget.writes,
+                      elapsed_seconds=round(time.monotonic() - started, 6))
+        save("result.json", record)
+    return {key: record.get(key) for key in ("status", "actions", "possible_writes", "fill_attempted",
+                                            "escape_attempted", "source_unchanged", "elapsed_seconds")}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--application-url", required=True)
+    parser.add_argument("--credentials-file", type=Path, required=True)
+    parser.add_argument("--binding-file", type=Path, required=True)
+    parser.add_argument("--source-hashes", type=Path, required=True)
+    parser.add_argument("--output-dir", type=Path, required=True)
+    args = parser.parse_args()
+    previous_umask = os.umask(0o077)
+    try:
+        print(json.dumps(run(args)))
+    finally:
+        os.umask(previous_umask)
+
+
+if __name__ == "__main__":
+    main()

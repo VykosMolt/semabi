@@ -35,7 +35,7 @@ from semabi.compiler.observation import Observation
 from semabi.compiler.surface import visible_record_matches
 
 
-BASELINE_VERSION = "cached-form-v3"
+BASELINE_VERSION = "cached-form-v4"
 TEXT_INPUTS = {"", "text", "textarea", "contenteditable", "url", "email", "search",
                "number", "tel", "date", "datetime-local", "month", "week", "time"}
 
@@ -195,10 +195,16 @@ def _record_procedure(operation: dict, arguments: dict, allowed_origin: str) -> 
     menu = _descriptor(cached["menu_trigger"], {"button"}) if "menu_trigger" in cached else None
     if (menu is not None and menu.get("has_popup") != "menu") or ("menu" in cached and menu is None):
         raise _Stop("Cached record menu trigger is unsupported", unsupported=True)
+    popups = cached.get("textbox_popups", {})
+    if (not isinstance(popups, dict) or not set(popups) <= set(updates)
+            or any(rule != {"kind": "explicit_aria_listbox_escape_v1", "field": fields[name],
+                            "autocomplete": "list"} for name, rule in popups.items())):
+        raise _Stop("Cached completion step is unsupported", unsupported=True)
     return {"kind": kind, "entry_url": entry, "navigation": [], "fields": descriptors,
             "submit": _descriptor(form.get("submit"), {"button"}), "selector_argument": selector,
             "anchor": anchor, "update_arguments": updates,
-            "edit": _descriptor(cached.get("edit"), {"button", "link", "menuitem"}), "menu_trigger": menu}
+            "edit": _descriptor(cached.get("edit"), {"button", "link", "menuitem"}), "menu_trigger": menu,
+            "popup_fields": sorted(popups)}
 
 
 class _Replay:
@@ -365,21 +371,40 @@ class _Replay:
                 node = bindings[name] if name is not None else submit
                 self.writable(surface, node)
                 action = Primitive("type", node, arguments[name]) if name is not None else Primitive("click", node)
-                self.act(surface, action, allowed_origin, submit=name is None)
+                surface = self.act(surface, action, allowed_origin, submit=name is None)
                 if name is not None:
                     expected[name] = arguments[name]
+                    if name in procedure.get("popup_fields", []):
+                        bindings, _, current, nodes = self.record_bindings(surface, procedure)
+                        if current != expected or not self.browser.nodes_retained(retained, nodes):
+                            raise _Stop("Cached completion target or editor values changed")
+                        node = bindings[name]
+                        if surface.controls[node].get("has_popup") == "listbox":
+                            if not callable(getattr(self.browser, "press_retained", None)):
+                                raise _Stop("Cached completion dispatch is unavailable", unsupported=True)
+                            self.stage = "completion"
+                            # Replay the observed optional step; this baseline does
+                            # not infer full form contracts or verify business effects.
+                            self.act(surface, Primitive("press", node, "Escape"), allowed_origin,
+                                     retained=retained, retained_offset=nodes.index(node))
         finally:
             self.browser.release_nodes(retained)
         self.budget.check()
         return {"before": values, "reason": "Cached update submit completed; business effect is unverified"}
 
-    def act(self, surface, action: Primitive, allowed_origin: str, *, submit: bool = False):
+    def act(self, surface, action: Primitive, allowed_origin: str, *, submit: bool = False,
+            retained=None, retained_offset=None):
         self.budget.take(writing=True)
         self.event({"type": "write_intent", "action": action.to_json(), "cached_submit": submit})
         self.budget.check()
         self.possible_action = True
         self.submit_attempted |= submit
-        result = self.browser.act(action)
+        if retained is None:
+            result = self.browser.act(action)
+        else:
+            timeout = 2000 if self.budget.deadline is None else max(
+                1, min(2000, int((self.budget.deadline - time.monotonic()) * 1000)))
+            result = self.browser.press_retained(action, retained, retained_offset, timeout)
         if submit:
             self.submit_returned_ok = result.ok
         self.event({"type": "action_result", "kind": action.kind, "ok": result.ok,

@@ -1,0 +1,35 @@
+{
+  "classification": "Development reassessment after observed lexical-stimulus refinement",
+  "frozen_at": "2026-09-09T21:55:23.315494+00:00",
+  "learner_and_baseline_sources": "source_sha256.json",
+  "source_adoption": "source_adoption_v1.json",
+  "prior_diagnostic": "runs/product_popup_probe_v1/diagnostic_01/result.json",
+  "first_action": "Standard HTTP onboarding on current saved local Memos fixture; same URL/credentials/exploration scope, no semantic recipes",
+  "onboarding_limits": {
+    "actions": 60,
+    "possible_writes": 30
+  },
+  "required_before_live_update_claim": "A newly learned optional Escape rule supported by two actually triggered popup update trials saved and reloaded normally",
+  "selected_original_slots": [
+    "memos-U1-semabi",
+    "memos-U1-cached_form",
+    "memos-U2-cached_form",
+    "memos-U2-semabi"
+  ],
+  "goals_and_expected_values": "Byte-identical original request_plan.json and expected_results.json; no ordinary-goal rescue",
+  "task_protocol": "Restore original base or B-changed fixture before each arm/slot, independent before and after+reload, unchanged shared binder, fresh service/browser per attempt, no write retries or relearning mid-assessment",
+  "workflow_limits": {
+    "seconds": 60,
+    "actions": 20,
+    "possible_writes": 12
+  },
+  "independent_check_limits_per_slot": {
+    "seconds": 30,
+    "actions": 12,
+    "possible_writes": 8
+  },
+  "new_runtime_models": 0,
+  "paid_runtime_cost": 0,
+  "setup_reference": "Current local Memos saved fixture plus two v1 learner probe records; all v1 work terminal; no fixture reset before this learning",
+  "prior_zero_targeted_acquisition": "/home/moloch/semabi/runs/product_popup_repair_v1/phase_terminal_v1.json"
+}

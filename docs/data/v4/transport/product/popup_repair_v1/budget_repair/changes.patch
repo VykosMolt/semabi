@@ -1,0 +1,75 @@
+--- a/semabi/compiler/runtime.py
++++ b/semabi/compiler/runtime.py
+@@ -670,6 +670,8 @@
+                        *, expected_values: dict | None = None, discover: bool = False,
+                        replacement_value: str | None = None,
+                        read_trials_remaining: int = 0,
++                       update_trials_remaining: int = 0,
++                       completion_actions_per_trial: int = 0,
+                        context_trial: dict | None = None) -> tuple[Surface, dict, dict]:
+         required = {"edit", "form"} | ({"menu"} if "menu_trigger" in procedure else set())
+         if not discover and not required <= procedure.keys():
+@@ -703,6 +705,15 @@
+         if read_trials_remaining:
+             self._reserve_record_actions(trace, read_trials_remaining * (3 + int(menu_route)) - 1,
+                                          read_trials_remaining * (1 + int(menu_route)))
++        if update_trials_remaining:
++            # Each updated field can require one retained Escape in addition to
++            # its fill. Navigation for the current trial has already been taken.
++            fields = len(procedure["update_arguments"])
++            self._reserve_record_actions(
++                trace, update_trials_remaining * (
++                    fields + completion_actions_per_trial + 4 + int(menu_route)) - 1,
++                update_trials_remaining * (
++                    fields + completion_actions_per_trial + 2 + int(menu_route)))
+         self._guard_current_editor(surface)
+         edit_scope = record["root"]
+         if menu_route:
+@@ -1109,8 +1120,13 @@
+                 # Reserve enough actions for two complete experiments, including
+                 # guarded read exit or update reload. Budget.take still guards each action.
+                 menu = int("menu_trigger" in procedure)
+-                actions = 6 if reading else 2 * (len(update_names) + 4 + menu)
+-                writes = 2 if reading else 2 * (len(update_names) + 2 + menu)
++                completion_actions = (len(update_names) if not reading and all(
++                    callable(getattr(browser, name, None)) for name in
++                    ("retained_node_indices", "textbox_popup_context", "press_retained")) else 0)
++                actions = 6 if reading else 2 * (
++                    len(update_names) + completion_actions + 4 + menu)
++                writes = 2 if reading else 2 * (
++                    len(update_names) + completion_actions + 2 + menu)
+                 self._reserve_record_actions(trace, actions, writes)
+                 completion_tokens = completion_probe_tokens(trace.read(browser)) if not reading else []
+                 for trial_index, created in enumerate(created_trials):
+@@ -1131,6 +1147,8 @@
+                         browser, trial_procedure, target, trace, expected_values=created["arguments"], discover=True,
+                         replacement_value=arguments[procedure["anchor"]] if replacing and not reading else None,
+                         read_trials_remaining=2 - trial_index if reading else 0,
++                        update_trials_remaining=2 - trial_index if not reading else 0,
++                        completion_actions_per_trial=completion_actions,
+                         context_trial=trials[0] if reading and trial_index == 1 else None)
+                     selected_witness = witness
+                     if reading:
+--- a/tests/test_operation_runtime.py
++++ b/tests/test_operation_runtime.py
+@@ -2790,6 +2790,20 @@
+     assert browser.escapes == 1
+ 
+ 
++@pytest.mark.parametrize('budget,limit', [('max_writes', 17), ('max_actions', 30)])
++def test_completion_learning_reserves_two_worst_case_trials_before_first_update_fill(
++        tmp_path, monkeypatch, budget, limit):
++    browser = _CompletionRecordBrowser()
++    _, _, browser, learned = _learn_editable_records(
++        tmp_path, monkeypatch, browser=browser, settings={budget: limit})
++    assert [operation['kind'] for operation in learned['operations']] == [
++        'create_visible_record', 'read_visible_record']
++    assert learned['attempts'][0]['stage'] == 'update_visible_record'
++    assert learned['attempts'][0]['confirmed_trials'] == 0
++    assert 'budget' in learned['attempts'][0]['reason']
++    assert browser.update_fills == 0 and browser.escapes == 0
++
++
+ def test_completion_absent_from_learned_recipe_is_never_added_during_invocation(tmp_path, monkeypatch):
+     runtime, connection, original, learned = _learn_editable_records(
+         tmp_path, monkeypatch, browser=_MenuRecordBrowser())

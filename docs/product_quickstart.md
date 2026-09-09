@@ -110,10 +110,13 @@ scope is one exact, unique anchor in the rendered record view; search across
 pages and arbitrary filters are not established. The fixed development run found
 that inline markup defeated exact paragraph lookup. The
 [paragraph repair](data/v4/transport/product/paragraph_repair_v1/README.md) now
-retains complete inline values and rejects partial text witnesses. A new Memos
-call resolved the target but stopped when typing opened suggestions and changed
-the editor contract; the saved update remains unestablished. The original failed
-calls remain in the [workflow assessment](data/v4/transport/product/development_assessment_v1/README.md).
+retains complete inline values and rejects partial text witnesses. The subsequent
+[completion repair](data/v4/transport/product/popup_repair_v1/README.md) learns an
+optional, guarded Escape from two saved update trials with explicitly linked
+suggestion lists. Both original Memos update cases now pass independent checks,
+including a changed non-target record and fresh service reuse; cached replay
+completes neither. The original failed calls remain in the
+[workflow assessment](data/v4/transport/product/development_assessment_v1/README.md).
 The [first reserved assessment](data/v4/transport/product/reserved_assessment_v1/README.md)
 completed no workflows because authentication stopped before learning.
 After the authentication repair, a separate
@@ -196,7 +199,10 @@ distinguish a populated record editor from a simultaneous blank creator.
 Updating preserves a separate anchor unless there is exactly one supported text
 argument. That case establishes local value replacement, including old-value
 absence and new-value checks in the original view, without certifying record
-identity. Missing element continuity or changed form contracts can stop a call.
+identity. A learned completion rule permits one Escape on the retained focused
+textbox only when the observed local listbox and explicit ARIA linkage match;
+the full original editor contract and typed value must be restored before Save.
+Missing element continuity or changed form contracts can stop a call.
 This path does not yet establish arbitrary workflows, global record identity,
 relational queries, unobserved side effects, rollback, or universal application support. Results on
 independently developed applications are tracked in the

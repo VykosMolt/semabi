@@ -2634,3 +2634,292 @@ def test_learning_invalidates_incompatible_old_ids_without_retiring_compatible_o
             assert store.operations(saved['id']) == [retained]
     finally:
         store.close()
+
+
+class _CompletionRecordBrowser(_MenuRecordBrowser):
+    """Invented ARIA completion observations with independently mutable failure modes."""
+
+    def __init__(self):
+        super().__init__()
+        self.popup_mode = None
+        self.popup_open = False
+        self.escapes = 0
+        self.update_fills = 0
+        self.last_escape = False
+        self.saved_updates = 0
+
+    def retained_node_indices(self, retained):
+        return [next((node for node, token in self.element_tokens.items() if token == wanted), -1)
+                for wanted in retained]
+
+    def read(self):
+        surface = super().read()
+        if self.scene != 'editor':
+            return surface
+        candidate = next(candidate for candidate in form_candidates(surface)
+                         if any(field['value'] == self.value for field in candidate['fields']))
+        self.popup_root = candidate['root']
+        self.popup_field = candidate['fields'][0]['node']
+        nodes, properties = deepcopy(surface.observation.nodes), deepcopy(surface.controls)
+        if self.popup_open:
+            properties[self.popup_field]['has_popup'] = 'listbox'
+            self.popup_node = len(nodes)
+            nodes.append(Node(len(nodes), self.popup_root, 'listbox', ''))
+            nodes.append(Node(len(nodes), self.popup_node, 'option', 'Invented completion'))
+            if self.popup_mode == 'second_listbox':
+                nodes.append(Node(len(nodes), self.popup_root, 'listbox', ''))
+            if self.popup_mode == 'changed_control':
+                properties[candidate['submit_node']]['readonly'] = True
+            if self.popup_mode == 'remounted_control':
+                self.element_tokens[candidate['submit_node']] = ('replacement save', self.editor_generation)
+        if self.last_escape and self.popup_mode == 'remounted_cancel':
+            cancel = next(node.i for node in nodes if node.parent == self.popup_root and node.name == 'Cancel')
+            self.element_tokens[cancel] = ('replacement cancel', self.editor_generation)
+        self.surface = _surface(nodes, properties)
+        return self.surface
+
+    def textbox_popup_context(self, node):
+        def refs(nodes=(), unresolved=0):
+            return {'present': bool(nodes or unresolved), 'token_count': len(nodes) + unresolved,
+                    'nodes': list(nodes), 'unresolved': unresolved}
+        open_now = self.popup_open
+        boxes = [node.i for node in self.surface.observation.nodes if node.role == 'listbox']
+        result = {'target_visible': True, 'target_focused': self.popup_mode != 'lost_focus', 'active_node': node,
+                  'listboxes': boxes, 'unmapped_listboxes': 0, 'other_popups': [], 'unmapped_other_popups': 0,
+                  'scope': self.popup_root if open_now else None, 'scope_textboxes': [node] if open_now else [],
+                  'unmapped_scope_textboxes': 0, 'aria_controls': refs([self.popup_node]) if open_now else refs(),
+                  'aria_owns': refs(), 'aria_activedescendant': refs([self.popup_node + 1]) if open_now else refs(),
+                  'aria_expanded': None, 'aria_autocomplete': 'list'}
+        if open_now:
+            if self.popup_mode == 'missing_reference':
+                result['aria_controls'] = refs()
+            elif self.popup_mode == 'unresolved_reference':
+                result['aria_controls'] = refs(unresolved=1)
+            elif self.popup_mode == 'wrong_reference':
+                result['aria_controls'] = refs([self.composer_root])
+            elif self.popup_mode == 'outside_scope':
+                result['scope'] = self.composer_root
+            elif self.popup_mode == 'outside_descendant':
+                result['aria_activedescendant'] = refs([self.composer_root])
+            elif self.popup_mode == 'second_textbox':
+                result['scope_textboxes'].append(self.composer_root + 1)
+            elif self.popup_mode == 'other_popup':
+                result['other_popups'] = [self.composer_root]
+        return result
+
+    def act(self, action):
+        was_update = self.scene == 'editor' and action.kind == 'type'
+        saving = (self.scene == 'editor' and action.kind == 'click'
+                  and self.surface.observation.node(action.target).name == 'Save')
+        result = super().act(action)
+        self.saved_updates += int(saving)
+        if was_update:
+            self.update_fills += 1
+            self.last_escape = False
+            self.popup_open = (action.text.endswith('#') and
+                               not (self.popup_mode == 'first_only' and self.update_fills == 2))
+        elif self.scene == 'editor':
+            self.last_escape = False
+        if self.scene != 'editor':
+            self.popup_open = False
+        return result
+
+    def press_retained(self, primitive, retained, offset, timeout_ms):
+        assert primitive.kind == 'press' and primitive.text == 'Escape'
+        assert self.retained_node_indices(retained)[offset] == self.popup_field
+        self.escapes += 1
+        self.actions.append(primitive)
+        self.last_escape = True
+        self.popup_open = self.popup_mode == 'stays_open'
+        if self.popup_mode == 'changed_value':
+            self.value = 'Wrong completion committed'
+        elif self.popup_mode == 'changed_editor':
+            self.editor_generation += 1
+        elif self.popup_mode == 'sibling_draft':
+            self.composer = 'Preserve unrelated draft'
+        return ActionResult(self.popup_mode != 'lost_escape_reply', 'Lost Escape reply' if self.popup_mode == 'lost_escape_reply' else None)
+
+
+def test_completion_learning_requires_two_triggered_trials_and_reuses_without_punctuation_requirement(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_CompletionRecordBrowser())
+    assert learned['attempts'] == []
+    update = _learned_kind(learned, 'update_visible_record')
+    assert browser.escapes == 2
+    assert update['procedure']['textbox_popups']['value']['kind'] == 'explicit_aria_listbox_escape_v1'
+    assert [len(trial['popup_dismissals']) for trial in update['support']['trials']] == [1, 1]
+    assert all(trial['values']['value'].endswith(' #') for trial in update['support']['trials'])
+    assert update['support']['text_probe_prior'] == runtime_module.TEXT_PROBE_PRIOR
+    for value in ['A fresh saved value #', 'Another fresh value without suggestions']:
+        previous, other = browser.rows
+        result = runtime.invoke(connection, update, {'target': previous, 'value': value}, lambda event: None)
+        assert result['outcome'] == 'CONFIRMED'
+        assert browser.rows == [value, other]
+    assert browser.escapes == 3
+    assert browser.reload_count >= 5
+
+
+@pytest.mark.parametrize('mode,expected_escapes', [
+    ('missing_reference', 0), ('unresolved_reference', 0), ('wrong_reference', 0),
+    ('lost_focus', 0), ('second_listbox', 0), ('outside_scope', 0),
+    ('outside_descendant', 0), ('second_textbox', 0), ('other_popup', 0),
+    ('changed_control', 0), ('remounted_control', 0), ('stays_open', 1),
+    ('changed_value', 1), ('changed_editor', 1), ('remounted_cancel', 1),
+    ('sibling_draft', 1), ('lost_escape_reply', 1),
+])
+def test_completion_never_saves_or_retries_after_unestablished_context(tmp_path, monkeypatch, mode, expected_escapes):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_CompletionRecordBrowser())
+    update = _learned_kind(learned, 'update_visible_record')
+    before, saves, escapes = list(browser.rows), browser.saved_updates, browser.escapes
+    browser.popup_mode = mode
+    result = runtime.invoke(connection, update, {'target': before[0], 'value': 'New requested value #'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert browser.rows == before
+    assert browser.escapes - escapes == expected_escapes
+    assert browser.saved_updates == saves
+
+
+def test_one_completion_trial_cannot_publish_an_optional_action(tmp_path, monkeypatch):
+    browser = _CompletionRecordBrowser()
+    browser.popup_mode = 'first_only'
+    _, _, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=browser)
+    assert [operation['kind'] for operation in learned['operations']] == ['create_visible_record', 'read_visible_record']
+    assert learned['attempts'][0]['confirmed_trials'] == 2
+    assert 'two persisted popup-triggered' in learned['attempts'][0]['reason']
+    assert browser.escapes == 1
+
+
+@pytest.mark.parametrize('budget,limit', [('max_writes', 17), ('max_actions', 30)])
+def test_completion_learning_reserves_two_worst_case_trials_before_first_update_fill(
+        tmp_path, monkeypatch, budget, limit):
+    browser = _CompletionRecordBrowser()
+    _, _, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=browser, settings={budget: limit})
+    assert [operation['kind'] for operation in learned['operations']] == [
+        'create_visible_record', 'read_visible_record']
+    assert learned['attempts'][0]['stage'] == 'update_visible_record'
+    assert learned['attempts'][0]['confirmed_trials'] == 0
+    assert 'budget' in learned['attempts'][0]['reason']
+    assert browser.update_fills == 0 and browser.escapes == 0
+
+
+def test_completion_absent_from_learned_recipe_is_never_added_during_invocation(tmp_path, monkeypatch):
+    runtime, connection, original, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MenuRecordBrowser())
+    browser = _CompletionRecordBrowser()
+    browser.rows = list(original.rows)
+    runtime.sessions[connection['id']] = browser
+    update = _learned_kind(learned, 'update_visible_record')
+    result = runtime.invoke(connection, update, {'target': browser.rows[0], 'value': 'Unlearned suggestions #'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert browser.escapes == 0
+    assert 'textbox_popups' not in update['procedure']
+
+
+def test_punctuation_probe_respects_formats_and_declared_length_limits():
+    candidate = form_candidates(_form_surface())[0]
+    field = deepcopy(candidate['fields'][0])
+    field['argument'] = 'value'
+    assert runtime_module.probe_arguments({'fields': [field]}, 2, punctuation=True)['value'].endswith(' #')
+    field['max_length'] = 2
+    with pytest.raises(runtime_module.StopOperation, match='too short'):
+        runtime_module.probe_arguments({'fields': [field]}, 2, punctuation=True)
+
+
+@pytest.mark.slow
+def test_rendered_completion_affinity_and_escape_preserve_the_retained_textbox():
+    from semabi.compiler.browser import Primitive
+    browser = BrowserSession('https://synthetic.invalid/')
+    browser.settle_ms, browser.max_settle_ms = 1, 100
+    html = '''<!doctype html><form id="editor"><label>Caption <textarea id="field" aria-autocomplete="list"></textarea></label>
+      <div id="popup" role="listbox" hidden><div role="option" id="option">Suggestion</div></div>
+      <button type="submit">Save</button><button type="button">Cancel</button></form>
+      <input id="other" aria-label="Other"><output id="count">0</output>
+      <script>
+      const field = document.querySelector('#field'), popup = document.querySelector('#popup');
+      field.addEventListener('input', () => {popup.hidden=false;
+        field.setAttribute('aria-haspopup','listbox');field.setAttribute('aria-controls','popup');
+        field.setAttribute('aria-activedescendant','option');});
+      field.addEventListener('keydown', event => {if(event.key==='Escape') {
+        document.querySelector('#count').textContent=String(Number(document.querySelector('#count').textContent)+1);
+        popup.hidden=true; for(const name of ['aria-haspopup','aria-controls','aria-activedescendant']) field.removeAttribute(name);}});
+      </script>'''
+    retained = None
+    try:
+        browser._page.route('https://synthetic.invalid/**', lambda route: route.fulfill(content_type='text/html', body=html))
+        browser.goto()
+        before = browser.read()
+        candidate = form_candidates(before)[0]
+        field = candidate['fields'][0]['node']
+        nodes = [candidate['root'], *(node for node in before.observation.subtree(candidate['root']) if node in before.controls)]
+        offset = nodes.index(field)
+        retained = browser.retain_nodes(nodes)
+        assert browser.act(Primitive('type', field, 'Unseen replacement #')).ok
+        filled = browser.read()
+        current_nodes = browser.retained_node_indices(retained)
+        assert browser.nodes_retained(retained, current_nodes)
+        meta = browser.textbox_popup_context(current_nodes[offset])
+        assert meta['target_focused'] and meta['scope_textboxes'] == [current_nodes[offset]]
+        assert meta['aria_controls']['nodes'] == meta['listboxes']
+        assert meta['aria_activedescendant']['unresolved'] == 0
+        assert browser.press_retained(Primitive('press', current_nodes[offset], 'Escape'), retained, offset).ok
+        after = browser.read()
+        current_nodes = browser.retained_node_indices(retained)
+        assert browser.nodes_retained(retained, current_nodes)
+        assert after.observation.node(current_nodes[offset]).value == 'Unseen replacement #'
+        assert form_candidates(after)[0]['descriptor'] == candidate['descriptor']
+        assert browser.textbox_popup_context(current_nodes[offset])['listboxes'] == []
+        assert browser._page.locator('#count').inner_text() == '1'
+        # Retained dispatch must neither redirect to a newly focused control nor
+        # reacquire a same-looking replacement element after disconnection.
+        browser._page.locator('#other').focus()
+        assert not browser.press_retained(Primitive('press', current_nodes[offset], 'Escape'), retained, offset).ok
+        browser._page.locator('#field').evaluate('e => {const copy=e.cloneNode(true);e.replaceWith(copy);copy.focus()}')
+        browser.read()
+        assert -1 in browser.retained_node_indices(retained)
+        assert not browser.press_retained(Primitive('press', field, 'Escape'), retained, offset).ok
+        assert browser._page.locator('#count').inner_text() == '1'
+    finally:
+        if retained is not None:
+            browser.release_nodes(retained)
+        browser.close()
+
+
+def test_completion_stimuli_are_bounded_rendered_tokens_without_input_or_partial_paragraph_values():
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'text', '#complete-tag'),
+             Node(2, 1, 'text', '#partial'), Node(3, 0, 'textbox', '#input-label', value='@privatevalue'),
+             Node(4, 0, 'text', 'person@example.invalid #123 #'+('a'*81))]
+    nodes += [Node(len(nodes)+i, 0, 'text', f'#{letter}-item') for i, letter in enumerate('zyxwvutsrqpon')]
+    surface = _surface(nodes, text_boundaries={1:'#complete-tag'})
+    tokens = runtime_module.completion_probe_tokens(surface)
+    assert len(tokens) == 8
+    assert [item['value'] for item in tokens] == sorted(['#complete-tag', *['#'+letter+'-item' for letter in 'zyxwvutsrqpon']])[:8]
+    assert not any(item['value'] in {'#partial', '#input-label', '@privatevalue', '@example', '#123'} for item in tokens)
+    assert all(item['observation'] == surface.observation.structural_signature() for item in tokens)
+
+
+def test_learning_targets_a_completion_with_an_observed_lexical_stimulus(tmp_path, monkeypatch):
+    class ObservedCompletion(_CompletionRecordBrowser):
+        def read(self):
+            surface = super().read()
+            nodes = deepcopy(surface.observation.nodes)
+            nodes.append(Node(len(nodes), 0, 'text', 'Rendered choice #invented-completion'))
+            self.surface = Surface(Observation(nodes, surface.observation.url), surface.controls, surface.forms)
+            return self.surface
+
+        def act(self, action):
+            was_update = self.scene == 'editor' and action.kind == 'type'
+            result = super().act(action)
+            if was_update:
+                self.popup_open = action.text.endswith('#invented-completion')
+            return result
+
+    _, _, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=ObservedCompletion())
+    assert learned['attempts'] == [] and browser.escapes == 2
+    update = _learned_kind(learned, 'update_visible_record')
+    for trial in update['support']['trials']:
+        assert trial['completion_stimulus']['value'] == '#invented-completion'
+        assert trial['completion_stimulus']['nodes']
+        assert trial['arguments']['value'].endswith(' #invented-completion')
+        assert len(trial['popup_dismissals']) == 1
