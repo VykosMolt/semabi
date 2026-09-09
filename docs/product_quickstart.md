@@ -6,9 +6,10 @@ The current product path supports local form creation, reading a selected
 record, and updating its supported text fields with visible read-back. It uses
 no runtime model or paid API. A general English action-word prior proposes exploration; visible URL labels can also propose URL arguments
 when the interface omits an HTML input type. Repeated observed effects establish
-an operation's limited support. Record reads and updates are proposed from a
-unique visible local Edit, Modify or Update action and tested on two created
-records. This path is separate from the relational research pipeline.
+an operation's limited support. Record reads and updates use a unique local
+Edit, Modify or Update action, directly or through a record control advertising
+a menu. Both are tested on two created records. This path is separate from the
+relational research pipeline.
 
 ## Start
 
@@ -69,12 +70,22 @@ Add `--reuse-session` to use the connection's current browser for repeated calls
 The service can also be stopped and restarted with the same `--data-dir`; no
 relearning is needed for an unchanged supported contract.
 
+Bound an individual call with `--invoke-max-actions 20 --invoke-max-writes 12
+--invoke-max-seconds 60`. These limits apply to that invocation; they do not
+change the connection's exploration scope. The elapsed limit starts when the
+runtime begins execution, after queueing and authentication. Browser calls are
+synchronous and may return late; deadline expiry after a possible write yields
+`UNCERTAIN` without a retry. Account for reconnect costs separately when setting
+a complete workflow budget.
+
 When learning exposes `read_record` and `update_record`, select their returned
 operation IDs. A read usually takes a `target` argument containing the complete
 current anchor, such as a URL. Its result contains structured current values in
 `result.effect.values`. An update takes that selector and all supported new field
-values. The selector stays unchanged; use the returned schema for the exact
-argument names and constraints. For example, **if the learned read schema has
+values. With several text arguments, the anchor stays unchanged. With exactly
+one, the selector identifies the old value and the text argument supplies its
+replacement. Use the returned schema for the exact argument names and
+constraints. For example, **if the learned read schema has
 one `target` argument**:
 
 ```sh
@@ -86,6 +97,10 @@ one `target` argument**:
 A read opens the selected record's editor and returns its current field values.
 An update rechecks the complete captured editor state before each fill and
 submission, then verifies the requested fields after saving and reloading.
+Temporary DOM-element checks retain the selected editor, fields and submit
+control; an interface remount can stop the operation even when its labels and
+values look unchanged. A single-field replacement also requires the old value
+to be absent from the original readback view after saving and reloading.
 Separate editor drafts stop navigation or submission. The current selection
 scope is one exact, unique anchor in the rendered record view; search across
 pages and arbitrary filters are not established.
@@ -105,12 +120,19 @@ The authenticated HTTP routes are:
 
 Send `Authorization: Bearer TOKEN` on every request. An invocation body is
 `{"version":1,"arguments":{"value":"..."}}`, using the learned schema.
+An optional `limits` object accepts `max_actions`, `max_writes`, and
+`max_seconds`. Action and write limits cannot exceed the connection scope or
+runtime caps (40 actions, 25 possible writes); writes cannot exceed actions.
+Seconds must be a positive finite number at most 600. Omitting `limits`
+preserves the previous default execution behavior.
 Writes return `202` and a durable job ID. HTTP acceptance and job completion do
 not mean the requested effect was confirmed.
 
 For creation and update, `CONFIRMED` requires all expected values together in
-one unique visible local record and again after reload. For a read it requires
-the selected labeled editor values and an unchanged editor state before exit.
+one unique visible local record and again after reload. Single-field replacement
+also requires old-value absence in that same learned view. For a read it requires
+the selected descriptor-bound values and unchanged editor state and element
+continuity before exit.
 Text and inspectable link destinations have separate learned field bindings; displaying a URL as text cannot substitute for
 the saved destination of a link. `FAILED_BEFORE_EFFECT` means execution stopped
 before a potentially writing interaction. `UNCERTAIN` includes lost replies,
@@ -120,7 +142,9 @@ application refusal with no unresolved partial effect. The current runtime
 conservatively reports uncertainty after potentially saving fills.
 
 Reuse an idempotency key only for the identical connection, operation version,
-and arguments. It returns the original execution; changed arguments conflict.
+arguments, and normalized invocation limits. It returns the original execution;
+changed arguments or limits conflict. Existing keys from calls without limits
+continue to deduplicate unchanged requests.
 Interrupted writes are retained as uncertain and are never replayed on restart.
 This is service request deduplication, not target-application exactly-once delivery.
 
@@ -139,9 +163,15 @@ The initial mechanism requires forms with discoverable text controls and
 record values that can be read back as complete visible text or rendered link
 destinations. It excludes hidden fields, including closed disclosure panels,
 and tolerates field-local controls such as a Clear button appearing during
-typing. Record reading currently requires labeled fields and a direct local
-edit action; updating also requires a separate anchor that remains unchanged.
-The observed Memos menu and unnamed editor are an active coverage limitation.
+typing. A record menu must be explicitly advertised and expose one unique
+visible edit item. An unnamed field is supported only when its original
+descriptor resolves uniquely and two populated creation trials establish its
+values; the schema discloses that binding basis. Exact expected values can
+distinguish a populated record editor from a simultaneous blank creator.
+Updating preserves a separate anchor unless there is exactly one supported text
+argument. That case establishes local value replacement, including old-value
+absence and new-value checks in the original view, without certifying record
+identity. Missing element continuity or changed form contracts can stop a call.
 This path does not yet establish arbitrary workflows, global record identity,
 relational queries, unobserved side effects, rollback, or universal application support. Results on
 independently developed applications are tracked in the

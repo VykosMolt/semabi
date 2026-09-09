@@ -361,3 +361,49 @@ def test_synthetic_replay_refuses_to_reuse_an_existing_evidence_directory(tmp_pa
         _run(tmp_path, browser)
 
     assert not browser.navigations and (output / "result.json").read_text() == "preserve previous attempt"
+
+
+@pytest.mark.parametrize("max_seconds", [True, False, 0, -1, float("inf"), float("nan"), "60"])
+def test_synthetic_invalid_deadlines_do_not_create_evidence_or_connect(tmp_path, max_seconds):
+    browser = _Browser()
+    with pytest.raises(ValueError, match="time budget"):
+        _run(tmp_path, browser, max_seconds=max_seconds)
+    assert not browser.navigations and not (tmp_path / "replay").exists()
+
+
+@pytest.mark.parametrize("phase", ["connect", "authentication", "fill", "submit", "observation"])
+def test_synthetic_deadline_stops_next_action_and_preserves_possible_effect(tmp_path, monkeypatch, phase):
+    now = [100.0]
+    monkeypatch.setattr(cached_form.time, "monotonic", lambda: now[0])
+    browser = _Browser(authentication=phase == "authentication")
+    original_act, original_read = browser.act, browser.read
+
+    def late_action(action):
+        result = original_act(action)
+        if (phase == "authentication" or phase == "fill"
+                or (phase == "submit" and browser.submits)):
+            now[0] += 2
+        return result
+
+    def late_read():
+        result = original_read()
+        if phase == "observation":
+            now[0] += 2
+        return result
+
+    def factory(_url):
+        if phase == "connect":
+            now[0] += 2
+        return browser
+
+    browser.act, browser.read = late_action, late_read
+    result = cached_form.replay(_operation(browser), {"alpha": "New alpha", "beta": "New beta"},
+                                application_url=URL, credentials={"username": "user", "password": "password"},
+                                output_dir=tmp_path / "replay", max_seconds=1, browser_factory=factory)
+
+    assert result["outcome"] == ("UNKNOWN" if phase in {"fill", "submit"} else "FAILED")
+    assert result["reason"] == "Execution time budget exhausted"
+    assert len(browser.actions) == (1 if phase == "fill" else 3 if phase == "submit" else 0)
+    assert len(browser.submits) == int(phase == "submit")
+    assert len(browser.authentication_actions) == int(phase == "authentication")
+    assert browser.closed and result["limits"]["max_seconds"] == 1

@@ -1,0 +1,51 @@
+{
+  "candidate_root": "/tmp/semabi_menu_record_candidate",
+  "base_commit": "db0ced6",
+  "base_runtime_sha256": "9547b4cb9c96146c7b7eccae1a83be4de7bc6a8555ef79833826a68ac60e4f1e",
+  "scope": "P4 generic advertised record menu, descriptor-bound unlabeled read, and local single-value replacement",
+  "active_repository_edited": false,
+  "app_calls": false,
+  "source_sha256": {
+    "runtime.py": "89eaeec021dd9d97e804401dee3a644bf306cf8a309b533d0b6e36f2590f5448",
+    "surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+  },
+  "patch": {
+    "path": "/tmp/semabi_menu_record_candidate/menu_record_operations.patch",
+    "sha256": "0b8525d6f31d40d0626ce7a8b87ca05f3c08bcb30d0b9e6cbbd45331b0cfd39f"
+  },
+  "files": [
+    {
+      "path": "semabi/compiler/runtime.py",
+      "baseline_path": "/tmp/semabi_menu_record_candidate/runtime.base.py",
+      "baseline_sha256": "9547b4cb9c96146c7b7eccae1a83be4de7bc6a8555ef79833826a68ac60e4f1e",
+      "candidate_sha256": "89eaeec021dd9d97e804401dee3a644bf306cf8a309b533d0b6e36f2590f5448",
+      "baseline_verified": true
+    },
+    {
+      "path": "semabi/compiler/surface.py",
+      "baseline_path": "/tmp/semabi_menu_record_candidate/surface.base.py",
+      "baseline_sha256": "c87e8f0e9977d860e61d46279e30995a1d86dbeff27f55cdfc234becccabfaab",
+      "candidate_sha256": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+      "baseline_verified": true
+    },
+    {
+      "path": "semabi/compiler/browser_session.py",
+      "baseline_path": "/tmp/semabi_menu_record_candidate/browser_session.base.py",
+      "baseline_sha256": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+      "candidate_sha256": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+      "baseline_verified": true
+    },
+    {
+      "path": "tests/test_operation_runtime.py",
+      "baseline_path": "/tmp/semabi_menu_record_candidate/test_operation_runtime.base.py",
+      "baseline_sha256": "c947213e55dddfc74428ef878087baabe9960ac2230ddf9c431b4ab0aeb2f3cd",
+      "candidate_sha256": "f225e05da277169fe38058fd0e6648471f0ee0749ece0e4b20ddabc84bf88b35",
+      "baseline_verified": true
+    }
+  ],
+  "integration": "Runtime patch is against pre-limit P3 bytes. Preserve separately integrated Budget/Trace/invoke limits and apply Trace.read/pause wrappers to new record reads/polls."
+}

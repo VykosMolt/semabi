@@ -43,9 +43,12 @@ source, database, hidden endpoint response, or private client store entered
 learning or runtime verification. Evaluation uses separate DOM matching and
 shares only the generic browser/authentication adapter.
 
-Read/update support is the active development milestone. The task families and
-acceptance criteria below remain unchanged; unsupported tasks will remain in
-the denominator. No fixed-source assessment has started.
+The [record-operation checkpoint](record_operations_v1/README.md) now establishes
+local Linkding READ/UPDATE and restart reuse with independent target and sampled
+non-target checks. Memos remains CREATE-only on that source. Menu-based editing
+and single-field replacement are the active development milestone. The task
+families and acceptance criteria below remain unchanged; unsupported tasks will
+remain in the denominator. No fixed-source assessment has started.
 
 ## Requested workflows
 

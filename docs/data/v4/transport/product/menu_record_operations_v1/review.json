@@ -1,0 +1,74 @@
+{
+  "application_calls": 0,
+  "copied_artifacts": {
+    "invocation_limits_v1.patch": "65e0549e86744f1038fb1a8f96610d0aa2b28758ac7fbe503cbd603580b8851e",
+    "limits_delivery_v1.json": "9021a26e111046825bfaf03e5f164711ee23620848d2649d8c391dc139e9030c",
+    "menu_record_operations.patch": "0b8525d6f31d40d0626ce7a8b87ca05f3c08bcb30d0b9e6cbbd45331b0cfd39f",
+    "menu_record_operations_manifest.json": "98598cc74abede807c460ffd042bf54227af40eb54a045fe3d8e6166e2a57d3d",
+    "menu_record_operations_results.json": "48566c5015d52100fbe849995326fba07494046e962fb52a76f754f894530e50"
+  },
+  "integration_followup": {
+    "checked": "Trace passed to capture and checked editor; deadline checked before and after retain/continuity observations; release unconditional in finally; deadline checked after successful cleanup before returning READ/UPDATE. Four fake-clock late-continuity phases inspect unchanged app rows and no next fill or Save, release exactly once.",
+    "reported_focused_test_receipt": "57cdf2",
+    "reported_focused_tests_passed": 4,
+    "runtime_sha256": "aaaf7578cdfd21619fd00e7ad941b2dac392b5d45dd10400e5678696ebc58eb5",
+    "status": "REVIEWED_NO_REMAINING_MATERIAL_FINDING"
+  },
+  "main_source_edits": 0,
+  "optional_invocation_limits": {
+    "checked": [
+      "Omitted limits retain exact legacy request and fingerprint",
+      "Provided limits normalize under scope/hard bounds and participate in idempotency",
+      "Execution scope copy does not alter durable or later invocation scope",
+      "Deadline checks bracket old browser reads, actions, navigations, reloads and polling",
+      "Late possible writes remain UNCERTAIN without retry"
+    ],
+    "inspected": [
+      "semabi/compiler/artifacts.py",
+      "semabi/service.py",
+      "semabi/compiler/runtime.py",
+      "examples/client.py",
+      "tests/test_service.py",
+      "tests/test_operation_runtime.py"
+    ],
+    "status": "NO_ADDITIONAL_MATERIAL_SOURCE_FINDING_ON_REVIEWED_CANDIDATE"
+  },
+  "p4": {
+    "findings": [
+      {
+        "failure": "Re-resolving only by expected descriptor/value could substitute a sibling composer after the original editor disappeared, including when a fresh blank composer preserved the full surrounding state.",
+        "id": "editor_substitution",
+        "resolution": "Retain actual DOM elements for selected editor root, all learned fields and submit; require fresh descriptors to resolve to those connected contained elements; release handles in finally.",
+        "status": "ADDRESSED",
+        "verification": "Inspected synthetic composer_substitution and composer_substitution_with_fresh_blank cases plus native rendered_portal_menu_binding_and_same_shape_editor_substitution; worker native receipt 1938ad, exit 0."
+      },
+      {
+        "failure": "Apparent Save could copy the new value to a different detail view while leaving the old record in the original collection; identical local slots and old absence in that detail view were insufficient.",
+        "id": "changed_readback_view",
+        "resolution": "Require the exact learned readback URL both after Save and reload, alongside new learned slots and old-value absence.",
+        "status": "ADDRESSED",
+        "verification": "Inspected copy_to_different_view and retained-old/duplicate/wrong-slot/reappearance/lost-reply cases."
+      }
+    ],
+    "manifest": "menu_record_operations_manifest.json",
+    "reported_tests": {
+      "native_in_memory": {
+        "deselected": 151,
+        "exit_code": 0,
+        "passed": 1,
+        "receipt": "1938ad",
+        "seconds": 1.94
+      },
+      "synthetic": {
+        "deselected": 2,
+        "exit_code": 0,
+        "passed": 150,
+        "receipt": "5a9792",
+        "seconds": 11.41
+      }
+    },
+    "scope": "Generic advertised menu and exact local single-value replacement; root retains final acceptance",
+    "status": "NO_REMAINING_MATERIAL_SOURCE_FINDING_ON_REVIEWED_CANDIDATE"
+  },
+  "schema": "bounded_source_review.v1"
+}

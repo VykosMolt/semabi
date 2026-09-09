@@ -1,0 +1,61 @@
+{
+  "candidate_root": "/tmp/semabi_menu_record_candidate",
+  "source_sha256": {
+    "runtime.py": "89eaeec021dd9d97e804401dee3a644bf306cf8a309b533d0b6e36f2590f5448",
+    "surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+  },
+  "test_sha256": "f225e05da277169fe38058fd0e6648471f0ee0749ece0e4b20ddabc84bf88b35",
+  "import_provenance": {
+    "modules": [
+      "/tmp/semabi_menu_record_candidate/semabi/compiler/runtime.py",
+      "/tmp/semabi_menu_record_candidate/semabi/compiler/surface.py",
+      "/tmp/semabi_menu_record_candidate/semabi/compiler/browser_session.py"
+    ],
+    "candidate_path_assertions_passed": true,
+    "loaded_source_equals_current_source_assertion_passed": true
+  },
+  "runs": [
+    {
+      "selection": "tests/test_operation_runtime.py -m \"not slow\"",
+      "cpu": 1,
+      "environment": "PYTHONPATH candidate; python -B; one-thread BLAS/OpenMP/MKL; taskset; no app calls",
+      "passed": 150,
+      "deselected": 2,
+      "seconds": 11.41,
+      "exit_code": 0,
+      "session_id": 38588,
+      "terminal_chunk_id": "5a9792"
+    },
+    {
+      "selection": "tests/test_operation_runtime.py -k rendered_portal_menu_binding",
+      "cpu": 6,
+      "environment": "PYTHONPATH candidate; python -B; one-thread BLAS/OpenMP/MKL; taskset; authorized native in-memory HTML only",
+      "passed": 1,
+      "deselected": 151,
+      "seconds": 1.94,
+      "exit_code": 0,
+      "session_id": 56958,
+      "terminal_chunk_id": "1938ad"
+    }
+  ],
+  "verified_distinct_tests": 151,
+  "coverage": [
+    "Advertised menu property participates in descriptor resolution and can distinguish two anonymous buttons",
+    "Unique portal menu/edit item route; missing, wrong and duplicate routes stop before fill",
+    "Two original creation trials bind unlabeled current values in the populated editor beside a blank composer",
+    "Direct edit precedence and immutable multi-field anchor remain supported",
+    "Single supported text argument uses separate old selector plus new value; new-existing/old-duplicate/missing targets stop before menu",
+    "Temporary actual DOM handles retain owner, all learned fields and submit; unavailable/rebound continuity stops; finally release",
+    "Native same-state substitution plus fresh blank composer is rejected on element continuity before Save",
+    "Captured full field/default/sibling-editor state preserves drafts before fills, Save, READ exit and reload",
+    "New value must retain learned slots, old value absent after Save and reload in the exact learned readback URL",
+    "Retained-old, duplicate-new, wrong-value/slot, copied detail view, reload reappearance and lost-reply failures remain uncertain without retry",
+    "Full two-trial direct/menu budgets reserve work before each stage; prior CREATE/READ retained on unsupported extension",
+    "Existing source/policy/kind/contract binding, artifact JSON roundtrip and independent versions remain covered"
+  ],
+  "remaining": "No isolated candidate work remains; parent combines reviewed patch with separately integrated execution limits and performs live adoption."
+}

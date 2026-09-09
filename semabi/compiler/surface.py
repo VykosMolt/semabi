@@ -35,14 +35,17 @@ class Surface:
 
     def descriptor(self, node: int) -> dict:
         control = self.controls[node]
-        return {key: control[key] for key in ("role", "label", "input_type")}
+        descriptor = {key: control[key] for key in ("role", "label", "input_type")}
+        if control.get("has_popup"):
+            descriptor["has_popup"] = control["has_popup"]
+        return descriptor
 
     def resolve(self, descriptor: dict, within: int | None = None) -> list[int]:
         members = set(self.observation.subtree(within)) if within is not None else None
         return [node for node, control in self.controls.items()
                 if (members is None or node in members)
                 and all(control.get(key) == value for key, value in descriptor.items()
-                        if key in {"role", "label", "input_type"})]
+                        if key in {"role", "label", "input_type", "has_popup"})]
 
 
 def local_regions(observation: Observation) -> list[dict]:

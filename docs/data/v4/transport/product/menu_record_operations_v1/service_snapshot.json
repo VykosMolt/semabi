@@ -1,0 +1,1235 @@
+{
+  "classification": "Disclosed development HTTP calls, not a fixed task assessment",
+  "source_sha256": {
+    "semabi/compiler/runtime.py": "aaaf7578cdfd21619fd00e7ad941b2dac392b5d45dd10400e5678696ebc58eb5",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07"
+  },
+  "client_logs": [
+    {
+      "path": "runs/product_menu_v1/memos_learn.log",
+      "sha256": "ec0c30aeb3ee838d2afaa99620929d36e789979d346ebdc0c328881ae2ae9faa",
+      "job_ids": [
+        "job_580c2e35dcdb484ea886a89cd069e345",
+        "job_6cde78a2f7844cbfae57195f32e4bc47"
+      ]
+    }
+  ],
+  "jobs": {
+    "job_580c2e35dcdb484ea886a89cd069e345": {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T18:08:56.767353+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T18:08:56.784027+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T18:08:59.362260+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_580c2e35dcdb484ea886a89cd069e345",
+      "job_id": "job_580c2e35dcdb484ea886a89cd069e345",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 2.195,
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T18:08:59.362322+00:00",
+      "write_intent": false
+    },
+    "job_6cde78a2f7844cbfae57195f32e4bc47": {
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "created_at": "2026-09-09T18:08:59.556297+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T18:08:59.567375+00:00",
+          "kind": "learn",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T18:08:59.569752+00:00",
+          "id": "op_32fe04fdd2dd8d082206",
+          "reason": "Operation evidence or runtime compatibility changed; relearn its contract",
+          "sequence": 2,
+          "status": "STALE",
+          "type": "operation_invalidated",
+          "version": 1
+        },
+        {
+          "created_at": "2026-09-09T18:08:59.882405+00:00",
+          "sequence": 3,
+          "settled": true,
+          "signature": "645427a517d8945f",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:00.227600+00:00",
+          "sequence": 4,
+          "settled": true,
+          "signature": "645427a517d8945f",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:00.235158+00:00",
+          "sequence": 5,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T18:09:01.349503+00:00",
+          "sequence": 6,
+          "settled": true,
+          "signature": "b41a54871988f7ff",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:01.361544+00:00",
+          "prior": "General English form action words; not observed support",
+          "proposal_basis": "local_control_group",
+          "sequence": 7,
+          "signature": "21994b00fcc9010f283a84bbed8385f424fd0e1b8b690f9d0171c8910ceca208",
+          "type": "candidate"
+        },
+        {
+          "created_at": "2026-09-09T18:09:01.670975+00:00",
+          "sequence": 8,
+          "settled": true,
+          "signature": "b41a54871988f7ff",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:01.685122+00:00",
+          "sequence": 9,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T18:09:02.786464+00:00",
+          "sequence": 10,
+          "settled": true,
+          "signature": "b41a54871988f7ff",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 140,
+            "text": "semabi_633c61d2be_0"
+          },
+          "created_at": "2026-09-09T18:09:02.806792+00:00",
+          "sequence": 11,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T18:09:03.157745+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "843dd224d19dacbe",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T18:09:03.166507+00:00",
+          "ok": true,
+          "sequence": 13,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 158
+          },
+          "created_at": "2026-09-09T18:09:03.170671+00:00",
+          "sequence": 14,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T18:09:03.821976+00:00",
+          "sequence": 15,
+          "settled": true,
+          "signature": "84f242a2cbf75de0",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T18:09:03.830513+00:00",
+          "ok": true,
+          "sequence": 16,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T18:09:04.140883+00:00",
+          "sequence": 17,
+          "settled": true,
+          "signature": "84f242a2cbf75de0",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:04.156350+00:00",
+          "sequence": 18,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T18:09:04.978089+00:00",
+          "sequence": 19,
+          "settled": true,
+          "signature": "8ab6b2b5796f4b6f",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:05.322730+00:00",
+          "sequence": 20,
+          "settled": true,
+          "signature": "8ab6b2b5796f4b6f",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:05.337487+00:00",
+          "sequence": 21,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T18:09:06.234550+00:00",
+          "sequence": 22,
+          "settled": true,
+          "signature": "8ab6b2b5796f4b6f",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 140,
+            "text": "semabi_a219b824bd_1"
+          },
+          "created_at": "2026-09-09T18:09:06.254574+00:00",
+          "sequence": 23,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T18:09:06.629054+00:00",
+          "sequence": 24,
+          "settled": true,
+          "signature": "7ce2ea4650881904",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T18:09:06.637577+00:00",
+          "ok": true,
+          "sequence": 25,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 158
+          },
+          "created_at": "2026-09-09T18:09:06.641517+00:00",
+          "sequence": 26,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T18:09:07.313777+00:00",
+          "sequence": 27,
+          "settled": true,
+          "signature": "7265d9fec25744b8",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T18:09:07.322505+00:00",
+          "ok": true,
+          "sequence": 28,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T18:09:07.632804+00:00",
+          "sequence": 29,
+          "settled": true,
+          "signature": "7265d9fec25744b8",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:07.647224+00:00",
+          "sequence": 30,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T18:09:08.450364+00:00",
+          "sequence": 31,
+          "settled": true,
+          "signature": "9c258cec0558fdb8",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:08.466420+00:00",
+          "id": "op_562fcb42c95d9c59eba3",
+          "sequence": 32,
+          "type": "operation_learned",
+          "version": 1
+        },
+        {
+          "created_at": "2026-09-09T18:09:08.781617+00:00",
+          "sequence": 33,
+          "settled": true,
+          "signature": "9c258cec0558fdb8",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:08.795656+00:00",
+          "sequence": 34,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T18:09:09.904751+00:00",
+          "sequence": 35,
+          "settled": true,
+          "signature": "9c258cec0558fdb8",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 185
+          },
+          "created_at": "2026-09-09T18:09:09.937817+00:00",
+          "sequence": 36,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T18:09:10.498289+00:00",
+          "sequence": 37,
+          "settled": true,
+          "signature": "92a87913f2084419",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T18:09:10.506488+00:00",
+          "ok": true,
+          "sequence": 38,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 457
+          },
+          "created_at": "2026-09-09T18:09:10.514096+00:00",
+          "sequence": 39,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T18:09:10.992979+00:00",
+          "sequence": 40,
+          "settled": true,
+          "signature": "25e62823eb19e28e",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T18:09:11.002109+00:00",
+          "ok": true,
+          "sequence": 41,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T18:09:11.383675+00:00",
+          "sequence": 42,
+          "settled": true,
+          "signature": "25e62823eb19e28e",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:11.411083+00:00",
+          "sequence": 43,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T18:09:12.546950+00:00",
+          "sequence": 44,
+          "settled": true,
+          "signature": "9c258cec0558fdb8",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:12.863639+00:00",
+          "sequence": 45,
+          "settled": true,
+          "signature": "9c258cec0558fdb8",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T18:09:12.878716+00:00",
+          "sequence": 46,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8852/"
+        },
+        {
+          "created_at": "2026-09-09T18:09:14.017124+00:00",
+          "sequence": 47,
+          "settled": true,
+          "signature": "9c258cec0558fdb8",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 168
+          },
+          "created_at": "2026-09-09T18:09:14.050835+00:00",
+          "sequence": 48,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T18:09:14.600292+00:00",
+          "sequence": 49,
+          "settled": true,
+          "signature": "f2dad0bababe1377",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T18:09:14.608929+00:00",
+          "ok": true,
+          "sequence": 50,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 457
+          },
+          "created_at": "2026-09-09T18:09:14.616932+00:00",
+          "sequence": 51,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T18:09:15.092600+00:00",
+          "sequence": 52,
+          "settled": true,
+          "signature": "bda45078c1d86a72",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T18:09:15.101129+00:00",
+          "ok": true,
+          "sequence": 53,
+          "type": "action_result"
+        },
+        {
+          "candidate": "op_562fcb42c95d9c59eba3",
+          "confirmed_trials": 1,
+          "created_at": "2026-09-09T18:09:15.105800+00:00",
+          "error_type": "StopOperation",
+          "reason": "Learned record editor form contract has changed",
+          "sequence": 54,
+          "stage": "read_visible_record",
+          "type": "candidate_unestablished"
+        },
+        {
+          "created_at": "2026-09-09T18:09:15.108628+00:00",
+          "sequence": 55,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_6cde78a2f7844cbfae57195f32e4bc47",
+      "job_id": "job_6cde78a2f7844cbfae57195f32e4bc47",
+      "kind": "learn",
+      "request": {
+        "settings": {
+          "max_actions": 60,
+          "max_writes": 30
+        }
+      },
+      "result": {
+        "attempts": [
+          {
+            "candidate": "op_562fcb42c95d9c59eba3",
+            "confirmed_trials": 1,
+            "error_type": "StopOperation",
+            "reason": "Learned record editor form contract has changed",
+            "stage": "read_visible_record"
+          }
+        ],
+        "invalidations": [
+          {
+            "id": "op_32fe04fdd2dd8d082206",
+            "reason": "Operation evidence or runtime compatibility changed; relearn its contract",
+            "status": "STALE",
+            "version": 1
+          }
+        ],
+        "metrics": {
+          "actions": 16,
+          "elapsed_seconds": 15.538,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 8
+        },
+        "operations": [
+          {
+            "argument_schema": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "description": "Visible editor value",
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            },
+            "effect_checks": [
+              "All supplied values together in one unique local record",
+              "Values occupy the relative field slots learned across both trials",
+              "Same record values remain visible after reload"
+            ],
+            "evidence_sha256": "1c9c2f40ee95404314f8b0f9cbda23c2c789815b3b4178901ee9421992101836",
+            "id": "op_562fcb42c95d9c59eba3",
+            "kind": "create_visible_record",
+            "name": "save_record",
+            "output_schema": {
+              "description": "Outcome, visible effect witness, and execution metrics",
+              "type": "object"
+            },
+            "prerequisites": [
+              "Authenticated session",
+              "Unchanged visible form contract",
+              "Empty argument controls and unchanged other control defaults",
+              "Anchor absent from the current read-back view"
+            ],
+            "procedure": {
+              "anchor": "value",
+              "defaults": {},
+              "effect_slots": {
+                "value": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        1
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "entry_url": "http://127.0.0.1:8852/",
+              "form": {
+                "context_controls": [
+                  {
+                    "has_popup": "menu",
+                    "input_type": "",
+                    "label": "",
+                    "role": "button"
+                  },
+                  {
+                    "has_popup": "menu",
+                    "input_type": "",
+                    "label": "Private",
+                    "role": "button"
+                  }
+                ],
+                "fields": [
+                  {
+                    "argument": "value",
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "",
+                      "role": "textbox"
+                    },
+                    "input_type": "contenteditable",
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "required": false,
+                    "role": "textbox"
+                  }
+                ],
+                "submit": {
+                  "input_type": "",
+                  "label": "Save",
+                  "role": "button"
+                }
+              },
+              "navigation": [],
+              "readback_url": "http://127.0.0.1:8852/"
+            },
+            "scope": {
+              "operation_family": "local form creation",
+              "origin": "http://127.0.0.1:8852",
+              "prior": "General English action vocabulary proposes exploration",
+              "runtime_model": null,
+              "unsupported": [
+                "global record uniqueness",
+                "rollback",
+                "exactly-once delivery",
+                "relational selection",
+                "unobserved side effects"
+              ]
+            },
+            "status": "ACTIVE",
+            "support": {
+              "argument_schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "description": "Visible editor value",
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "type": "object"
+              },
+              "effect_checks": [
+                "All supplied values together in one unique local record",
+                "Values occupy the relative field slots learned across both trials",
+                "Same record values remain visible after reload"
+              ],
+              "kind": "create_visible_record",
+              "output_schema": {
+                "description": "Outcome, visible effect witness, and execution metrics",
+                "type": "object"
+              },
+              "policy_version": "local-record-v5",
+              "prerequisites": [
+                "Authenticated session",
+                "Unchanged visible form contract",
+                "Empty argument controls and unchanged other control defaults",
+                "Anchor absent from the current read-back view"
+              ],
+              "procedure": {
+                "anchor": "value",
+                "defaults": {},
+                "effect_slots": {
+                  "value": [
+                    {
+                      "channel": "text",
+                      "path": [
+                        [
+                          "group",
+                          1
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "text",
+                          0
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                "entry_url": "http://127.0.0.1:8852/",
+                "form": {
+                  "context_controls": [
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "",
+                      "role": "button"
+                    },
+                    {
+                      "has_popup": "menu",
+                      "input_type": "",
+                      "label": "Private",
+                      "role": "button"
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "argument": "value",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "submit": {
+                    "input_type": "",
+                    "label": "Save",
+                    "role": "button"
+                  }
+                },
+                "navigation": [],
+                "readback_url": "http://127.0.0.1:8852/"
+              },
+              "scope": {
+                "operation_family": "local form creation",
+                "origin": "http://127.0.0.1:8852",
+                "prior": "General English action vocabulary proposes exploration",
+                "runtime_model": null,
+                "unsupported": [
+                  "global record uniqueness",
+                  "rollback",
+                  "exactly-once delivery",
+                  "relational selection",
+                  "unobserved side effects"
+                ]
+              },
+              "source_sha256": {
+                "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+                "browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+                "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+                "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+                "runtime.py": "aaaf7578cdfd21619fd00e7ad941b2dac392b5d45dd10400e5678696ebc58eb5",
+                "surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c"
+              },
+              "trials": [
+                {
+                  "arguments": {
+                    "value": "semabi_633c61d2be_0"
+                  },
+                  "witness": {
+                    "basis": "visible_local_record",
+                    "field_slots": {
+                      "value": [
+                        {
+                          "channel": "text",
+                          "path": [
+                            [
+                              "group",
+                              1
+                            ],
+                            [
+                              "group",
+                              0
+                            ],
+                            [
+                              "group",
+                              0
+                            ],
+                            [
+                              "group",
+                              0
+                            ],
+                            [
+                              "group",
+                              0
+                            ],
+                            [
+                              "text",
+                              0
+                            ]
+                          ]
+                        }
+                      ]
+                    },
+                    "link_destinations": [],
+                    "observation": "8ab6b2b5796f4b6f",
+                    "role": "article",
+                    "root": 162,
+                    "texts": [
+                      "semabi_633c61d2be_0"
+                    ],
+                    "value_node": 178
+                  }
+                },
+                {
+                  "arguments": {
+                    "value": "semabi_a219b824bd_1"
+                  },
+                  "witness": {
+                    "basis": "visible_local_record",
+                    "field_slots": {
+                      "value": [
+                        {
+                          "channel": "text",
+                          "path": [
+                            [
+                              "group",
+                              1
+                            ],
+                            [
+                              "group",
+                              0
+                            ],
+                            [
+                              "group",
+                              0
+                            ],
+                            [
+                              "group",
+                              0
+                            ],
+                            [
+                              "group",
+                              0
+                            ],
+                            [
+                              "text",
+                              0
+                            ]
+                          ]
+                        }
+                      ]
+                    },
+                    "link_destinations": [],
+                    "observation": "9c258cec0558fdb8",
+                    "role": "article",
+                    "root": 162,
+                    "texts": [
+                      "semabi_a219b824bd_1"
+                    ],
+                    "value_node": 178
+                  }
+                }
+              ]
+            },
+            "version": 1
+          }
+        ],
+        "status": "COMPLETED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T18:09:15.108707+00:00",
+      "write_intent": true
+    }
+  },
+  "operations": [
+    {
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "description": "Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "type": "object"
+      },
+      "effect_checks": [
+        "All supplied values together in one unique local record",
+        "Values occupy the relative field slots learned across both trials",
+        "Same record values remain visible after reload"
+      ],
+      "evidence_sha256": "1c9c2f40ee95404314f8b0f9cbda23c2c789815b3b4178901ee9421992101836",
+      "id": "op_562fcb42c95d9c59eba3",
+      "kind": "create_visible_record",
+      "name": "save_record",
+      "output_schema": {
+        "description": "Outcome, visible effect witness, and execution metrics",
+        "type": "object"
+      },
+      "prerequisites": [
+        "Authenticated session",
+        "Unchanged visible form contract",
+        "Empty argument controls and unchanged other control defaults",
+        "Anchor absent from the current read-back view"
+      ],
+      "procedure": {
+        "anchor": "value",
+        "defaults": {},
+        "effect_slots": {
+          "value": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        "entry_url": "http://127.0.0.1:8852/",
+        "form": {
+          "context_controls": [
+            {
+              "has_popup": "menu",
+              "input_type": "",
+              "label": "",
+              "role": "button"
+            },
+            {
+              "has_popup": "menu",
+              "input_type": "",
+              "label": "Private",
+              "role": "button"
+            }
+          ],
+          "fields": [
+            {
+              "argument": "value",
+              "descriptor": {
+                "input_type": "contenteditable",
+                "label": "",
+                "role": "textbox"
+              },
+              "input_type": "contenteditable",
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "options": [],
+              "required": false,
+              "role": "textbox"
+            }
+          ],
+          "submit": {
+            "input_type": "",
+            "label": "Save",
+            "role": "button"
+          }
+        },
+        "navigation": [],
+        "readback_url": "http://127.0.0.1:8852/"
+      },
+      "scope": {
+        "operation_family": "local form creation",
+        "origin": "http://127.0.0.1:8852",
+        "prior": "General English action vocabulary proposes exploration",
+        "runtime_model": null,
+        "unsupported": [
+          "global record uniqueness",
+          "rollback",
+          "exactly-once delivery",
+          "relational selection",
+          "unobserved side effects"
+        ]
+      },
+      "status": "ACTIVE",
+      "support": {
+        "argument_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "description": "Visible editor value",
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "effect_checks": [
+          "All supplied values together in one unique local record",
+          "Values occupy the relative field slots learned across both trials",
+          "Same record values remain visible after reload"
+        ],
+        "kind": "create_visible_record",
+        "output_schema": {
+          "description": "Outcome, visible effect witness, and execution metrics",
+          "type": "object"
+        },
+        "policy_version": "local-record-v5",
+        "prerequisites": [
+          "Authenticated session",
+          "Unchanged visible form contract",
+          "Empty argument controls and unchanged other control defaults",
+          "Anchor absent from the current read-back view"
+        ],
+        "procedure": {
+          "anchor": "value",
+          "defaults": {},
+          "effect_slots": {
+            "value": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "entry_url": "http://127.0.0.1:8852/",
+          "form": {
+            "context_controls": [
+              {
+                "has_popup": "menu",
+                "input_type": "",
+                "label": "",
+                "role": "button"
+              },
+              {
+                "has_popup": "menu",
+                "input_type": "",
+                "label": "Private",
+                "role": "button"
+              }
+            ],
+            "fields": [
+              {
+                "argument": "value",
+                "descriptor": {
+                  "input_type": "contenteditable",
+                  "label": "",
+                  "role": "textbox"
+                },
+                "input_type": "contenteditable",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "required": false,
+                "role": "textbox"
+              }
+            ],
+            "submit": {
+              "input_type": "",
+              "label": "Save",
+              "role": "button"
+            }
+          },
+          "navigation": [],
+          "readback_url": "http://127.0.0.1:8852/"
+        },
+        "scope": {
+          "operation_family": "local form creation",
+          "origin": "http://127.0.0.1:8852",
+          "prior": "General English action vocabulary proposes exploration",
+          "runtime_model": null,
+          "unsupported": [
+            "global record uniqueness",
+            "rollback",
+            "exactly-once delivery",
+            "relational selection",
+            "unobserved side effects"
+          ]
+        },
+        "source_sha256": {
+          "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+          "browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+          "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+          "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+          "runtime.py": "aaaf7578cdfd21619fd00e7ad941b2dac392b5d45dd10400e5678696ebc58eb5",
+          "surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c"
+        },
+        "trials": [
+          {
+            "arguments": {
+              "value": "semabi_633c61d2be_0"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "value": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        1
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [],
+              "observation": "8ab6b2b5796f4b6f",
+              "role": "article",
+              "root": 162,
+              "texts": [
+                "semabi_633c61d2be_0"
+              ],
+              "value_node": 178
+            }
+          },
+          {
+            "arguments": {
+              "value": "semabi_a219b824bd_1"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "value": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        1
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [],
+              "observation": "9c258cec0558fdb8",
+              "role": "article",
+              "root": 162,
+              "texts": [
+                "semabi_a219b824bd_1"
+              ],
+              "value_node": 178
+            }
+          }
+        ]
+      },
+      "version": 1
+    }
+  ],
+  "connection": {
+    "allowed_origin": "http://127.0.0.1:8852",
+    "created_at": "2026-09-09T15:52:01.733970+00:00",
+    "id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+    "scope": {
+      "exploration_enabled": true,
+      "max_actions": 60,
+      "max_writes": 30
+    },
+    "status": "CONNECTED",
+    "url": "http://127.0.0.1:8852/"
+  }
+}

@@ -23,6 +23,7 @@ import argparse
 from dataclasses import dataclass
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import time
@@ -33,7 +34,7 @@ from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.observation import Observation
 
 
-BASELINE_VERSION = "cached-form-v1"
+BASELINE_VERSION = "cached-form-v2"
 TEXT_INPUTS = {"", "text", "textarea", "contenteditable", "url", "email", "search",
                "number", "tel", "date", "datetime-local", "month", "week", "time"}
 
@@ -62,8 +63,15 @@ class _Budget:
     actions: int = 0
     writes: int = 0
     authentication_actions: int = 0
+    deadline: float | None = None
+    max_seconds: float = 60
+
+    def check(self):
+        if self.deadline is not None and time.monotonic() >= self.deadline:
+            raise _Stop("Execution time budget exhausted")
 
     def take(self, *, writing: bool = False, authentication: bool = False):
+        self.check()
         if self.actions >= self.max_actions or (writing and self.writes >= self.max_writes):
             raise _Stop("Interaction budget exhausted")
         self.actions += 1
@@ -175,7 +183,9 @@ class _Replay:
         return Observation.from_json(self.redact(surface.observation.to_json()))
 
     def observe(self, allowed_origin: str):
+        self.budget.check()
         surface = self.browser.read()
+        self.budget.check()
         if origin_of(surface.observation.url) != allowed_origin:
             raise _Stop("Current page is outside the allowed origin")
         if any(control.get("input_type") == "password" for control in surface.controls.values()):
@@ -254,7 +264,10 @@ class _Replay:
         result = {"baseline": BASELINE_VERSION, "comparison_mode": "shared_acquisition",
                   "assistance": "SemABI learned operation artifact; charge acquisition to both arms",
                   "independent_onboarding": False, "effect_verification": "NOT_PERFORMED",
-                  "source_sha256": LOADED_SOURCE_SHA256.copy(), "outcome": "FAILED"}
+                  "source_sha256": LOADED_SOURCE_SHA256.copy(), "outcome": "FAILED",
+                  "limits": {"max_actions": self.budget.max_actions,
+                             "max_writes": self.budget.max_writes,
+                             "max_seconds": self.budget.max_seconds}}
         original_act = original_read = None
         try:
             allowed_origin = origin_of(application_url)
@@ -271,13 +284,16 @@ class _Replay:
             original_act, original_read = self.browser.act, self.browser.read
 
             def counted_read():
+                self.budget.check()
                 self.surface_reads += 1
                 surface = original_read()
+                self.budget.check()
                 if origin_of(surface.observation.url) != allowed_origin:
                     raise _Stop("Current page is outside the allowed origin")
                 return surface
 
             self.browser.read = counted_read
+            self.budget.check()
             self.browser.goto(application_url)
             self.stage = "authentication"
             auth_budget_failure = None
@@ -399,6 +415,7 @@ class _Replay:
 
 def replay(operation: dict, arguments: dict, *, application_url: str, credentials: dict,
            output_dir: Path, max_actions: int = 20, max_writes: int = 8,
+           max_seconds: float = 60,
            browser_factory=None) -> dict:
     """Run one replay, with fresh browser state and no automatic write retry.
 
@@ -406,13 +423,20 @@ FAILED means no replay action was attempted; authentication may have occurred.
 UNKNOWN means a replay action may have changed state. Navigation clicks and
 field edits conservatively count as possible writes. Raw authentication views
 and actions carrying credentials are excluded from the evidence log.
+The execution deadline includes connection and authentication. It is checked
+between browser calls; an in-flight call may finish after it expires.
 """
     if (type(max_actions) is not int or type(max_writes) is not int
             or max_actions < 0 or max_writes < 0):
         raise ValueError("Action and write budgets must be nonnegative integers")
+    if (isinstance(max_seconds, bool) or not isinstance(max_seconds, (int, float))
+            or not math.isfinite(max_seconds) or max_seconds <= 0):
+        raise ValueError("The time budget must be a positive finite number")
     if not isinstance(credentials, dict) or not all(isinstance(value, str) for value in credentials.values()):
         raise ValueError("Credentials must be an object containing strings")
-    runner = _Replay(output_dir, credentials, _Budget(max_actions, max_writes))
+    runner = _Replay(output_dir, credentials,
+                     _Budget(max_actions, max_writes, deadline=time.monotonic() + max_seconds,
+                             max_seconds=max_seconds))
     return runner.execute(operation, arguments, application_url, credentials, browser_factory or BrowserSession)
 
 
@@ -425,6 +449,7 @@ def main(argv=None) -> int:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--max-actions", type=int, default=20)
     parser.add_argument("--max-writes", type=int, default=8)
+    parser.add_argument("--max-seconds", type=float, default=60)
     args = parser.parse_args(argv)
     try:
         operation = json.loads(args.operation_file.read_text())
@@ -432,7 +457,8 @@ def main(argv=None) -> int:
         arguments = json.loads(args.arguments)
         result = replay(operation, arguments, application_url=args.application_url,
                         credentials=credentials, output_dir=args.output_dir,
-                        max_actions=args.max_actions, max_writes=args.max_writes)
+                        max_actions=args.max_actions, max_writes=args.max_writes,
+                        max_seconds=args.max_seconds)
     except BaseException as error:
         # Input and browser errors must not echo credentials or filled values.
         print(json.dumps({"outcome": "FAILED", "reason": "Baseline input or evidence setup failed",

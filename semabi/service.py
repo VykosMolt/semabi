@@ -195,12 +195,13 @@ class Service:
         return {"id": job_id, "job_id": job_id, "connection_id": connection_id}
 
     def invoke(self, connection_id: str, operation_id: str, body: dict, key: str | None) -> dict:
-        _keys(body, {"arguments", "version"}, "invocation")
+        _keys(body, {"arguments", "version", "limits"}, "invocation")
         version = _integer(body.get("version"), "version", 1, 2**31 - 1)
         arguments = _object(body.get("arguments"), "arguments")
+        limits = _object(body["limits"], "limits") if "limits" in body else None
         if key is not None and (not key or len(key) > 200 or any(ord(char) < 33 for char in key)):
             raise StoreError("Idempotency-Key must contain 1 to 200 non-whitespace characters")
-        job_id, created = self.store.queue_invocation(connection_id, operation_id, version, arguments, key)
+        job_id, created = self.store.queue_invocation(connection_id, operation_id, version, arguments, key, limits)
         if created:
             self._enqueue(job_id)
         return {"id": job_id, "job_id": job_id, "execution_id": job_id,
@@ -297,6 +298,10 @@ class Service:
                 operation = self.store.operation(connection["id"], request["operation_id"], request["version"])
                 if operation["status"] != "ACTIVE":
                     raise StoreError("operation version became unavailable before execution", 409)
+                if "limits" in request:
+                    # This copy is only for this Runtime call; queueing and authentication
+                    # precede its elapsed deadline, and durable connection scope is unchanged.
+                    connection = {**connection, "scope": {**connection["scope"], **request["limits"]}}
                 result = runtime.invoke(connection, operation, request["arguments"], emit)
                 _object(result, "Runtime result")
                 if result.get("outcome") not in OUTCOMES:
@@ -344,8 +349,16 @@ def openapi() -> dict:
                        "properties": {"id": string, "url": string, "allowed_origin": string, "scope": ref("Scope"),
                                       "status": string, "created_at": {"type": "string", "format": "date-time"}}},
         "LearnInput": obj({"settings": obj({"max_actions": integer, "max_writes": {"type": "integer", "minimum": 0}})}),
+        "InvocationLimits": {**obj({
+            "max_actions": {"type": "integer", "minimum": 1, "maximum": 40,
+                            "description": "Cannot exceed connection scope. Omitted values use its effective runtime cap."},
+            "max_writes": {"type": "integer", "minimum": 0, "maximum": 25,
+                           "description": "Cannot exceed connection scope or max_actions; defaults to their effective cap."},
+            "max_seconds": {"type": "number", "exclusiveMinimum": 0, "maximum": 600,
+                            "description": "Optional finite Runtime elapsed limit in seconds; excludes queueing and authentication."}}),
+            "description": "Limits apply only to this invocation and participate in idempotency. Deadline checks bracket browser work and polling; an in-flight primitive can finish late. Expiry after a possible write is UNCERTAIN, with no automatic retry. Omitting limits retains legacy execution behavior."},
         "Invocation": obj({"arguments": {"type": "object", "description": "Must satisfy the learned operation's argument_schema."},
-                           "version": integer}, ("arguments", "version")),
+                           "version": integer, "limits": ref("InvocationLimits")}, ("arguments", "version")),
         "Accepted": {"type": "object", "required": ["id", "job_id"],
                      "properties": {"id": string, "job_id": string, "connection_id": string,
                                     "execution_id": string, "deduplicated": {"type": "boolean"}}},

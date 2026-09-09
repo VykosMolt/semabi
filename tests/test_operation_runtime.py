@@ -2,7 +2,7 @@
 
 Most fixtures describe rendered observations and form metadata only. Settling
 uses an invented snapshot stream and clock; one browser test checks actual
-closed-disclosure rendering and its effect on form discovery.
+closed-disclosure rendering and menu/element continuity against in-memory HTML.
 """
 from copy import deepcopy
 from itertools import count
@@ -27,7 +27,9 @@ def _surface(nodes, properties=None, forms=()):
     properties = properties or {}
     observation = Observation(nodes, "https://synthetic.invalid/")
     controls = {}
-    for node in observation.interactive():
+    for node in observation.nodes:
+        if node.role not in {'button', 'link', 'textbox', 'combobox', 'checkbox', 'radio', 'menu', 'menuitem'}:
+            continue
         controls[node.i] = {
             "role": node.role, "label": node.name,
             "input_type": "text" if node.role == "textbox" else "",
@@ -524,6 +526,168 @@ def test_synthetic_invocation_resolves_reordered_fields_and_confirms_after_reloa
     assert sum(event['type'] == 'write_intent' for event in events) == 3
 
 
+def _invocation_clock(monkeypatch):
+    clock = SimpleNamespace(now=1000.0, sleeps=[])
+
+    def sleep(seconds):
+        clock.sleeps.append(seconds)
+        clock.now += seconds
+
+    monkeypatch.setattr(runtime_module, 'time', SimpleNamespace(monotonic=lambda: clock.now, sleep=sleep))
+    return clock
+
+
+@pytest.mark.parametrize('limits,writes', [({'max_actions': 1}, 0), ({'max_writes': 0}, 0),
+                                           ({'max_actions': 3}, 1), ({'max_writes': 1}, 1)])
+def test_synthetic_invocation_enforces_each_call_interaction_limits(tmp_path, limits, writes):
+    browser = _RecordBrowser()
+    runtime, connection, operation = _runtime_with_operation(tmp_path, browser)
+    connection['scope'].update(limits)
+    result = runtime.invoke(connection, operation, {'first': 'Fresh alpha', 'second': 'Fresh beta'}, lambda event: None)
+    assert result['outcome'] == ('UNCERTAIN' if writes else 'FAILED_BEFORE_EFFECT')
+    assert len(browser.actions) == writes
+    assert all(action.kind == 'type' for action in browser.actions)
+    assert browser.rows == []
+    assert result['metrics']['possible_write_actions'] == writes
+
+
+@pytest.mark.parametrize('expiry', ['before_read', 'during_read', 'before_navigation', 'before_primitive'])
+def test_synthetic_invocation_deadline_before_first_primitive_fails_without_dispatch(tmp_path, monkeypatch, expiry):
+    browser = _NavigationReloadBrowser()
+    runtime, connection, operation = _runtime_with_operation(tmp_path, browser)
+    clock = _invocation_clock(monkeypatch)
+    connection['scope']['max_seconds'] = 1.0
+    reads = []
+    original_read = browser.read
+
+    def read():
+        reads.append(clock.now)
+        surface = original_read()
+        if expiry == 'during_read':
+            clock.now += 2
+        return surface
+
+    browser.read = read
+    if expiry == 'before_read':
+        original_check = runtime._check_operation
+
+        def check(artifact):
+            original_check(artifact)
+            clock.now += 2
+
+        runtime._check_operation = check
+
+    def emit(event):
+        if ((expiry == 'before_navigation' and event['type'] == 'navigation')
+                or (expiry == 'before_primitive' and event['type'] == 'write_intent')):
+            clock.now += 2
+
+    result = runtime.invoke(connection, operation, {'first': 'Fresh alpha', 'second': 'Fresh beta'}, emit)
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT'
+    assert result['effect']['reason'] == 'Invocation time budget exhausted'
+    assert browser.actions == [] and browser.rows == []
+    if expiry in ('before_read', 'during_read', 'before_navigation'):
+        assert browser.navigation_count == 0
+        assert len(reads) == (0 if expiry == 'before_read' else 1)
+
+
+@pytest.mark.parametrize('late_action', ['type', 'click'])
+def test_synthetic_late_primitive_is_uncertain_without_further_read_or_retry(tmp_path, monkeypatch, late_action):
+    browser = _RecordBrowser()
+    runtime, connection, operation = _runtime_with_operation(tmp_path, browser)
+    clock = _invocation_clock(monkeypatch)
+    connection['scope']['max_seconds'] = 1.0
+    reads, counts_at_expiry = [], []
+    original_read, original_act = browser.read, browser.act
+
+    def read():
+        reads.append(clock.now)
+        return original_read()
+
+    def act(action):
+        result = original_act(action)
+        if action.kind == late_action:
+            clock.now += 2
+            counts_at_expiry.append(len(reads))
+        return result
+
+    browser.read, browser.act = read, act
+    result = runtime.invoke(connection, operation, {'first': 'Fresh alpha', 'second': 'Fresh beta'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert result['effect']['reason'] == 'Invocation time budget exhausted'
+    assert counts_at_expiry == [len(reads)]
+    assert len(browser.actions) == (1 if late_action == 'type' else 3)
+    assert sum(action.kind == 'click' for action in browser.actions) == (late_action == 'click')
+    assert len(browser.rows) == (late_action == 'click')
+
+
+def test_synthetic_late_reload_cannot_confirm_an_already_saved_record(tmp_path, monkeypatch):
+    browser = _RecordBrowser()
+    runtime, connection, operation = _runtime_with_operation(tmp_path, browser)
+    clock = _invocation_clock(monkeypatch)
+    connection['scope']['max_seconds'] = 1.0
+    original_reload = browser.reload
+    reloads = []
+
+    def reload():
+        reloads.append(clock.now)
+        surface = original_reload()
+        clock.now += 2
+        return surface
+
+    browser.reload = reload
+    result = runtime.invoke(connection, operation, {'first': 'Fresh alpha', 'second': 'Fresh beta'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert result['effect']['reason'] == 'Invocation time budget exhausted'
+    assert len(reloads) == len(browser.rows) == 1
+    assert sum(action.kind == 'click' for action in browser.actions) == 1
+
+
+def test_synthetic_effect_polling_stops_at_invocation_deadline_without_resubmission(tmp_path, monkeypatch):
+    browser = _InferredPreviewBrowser()
+    runtime, connection, operation = _runtime_with_operation(tmp_path, browser)
+    clock = _invocation_clock(monkeypatch)
+    connection['scope']['max_seconds'] = 0.25
+    started = clock.now
+    reads = []
+    original_read = browser.read
+
+    def read():
+        reads.append(clock.now)
+        return original_read()
+
+    browser.read = read
+    result = runtime.invoke(connection, operation, {'first': 'Fresh alpha', 'second': 'Fresh beta'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert result['effect']['reason'] == 'Invocation time budget exhausted'
+    assert clock.now == pytest.approx(started + 0.25)
+    assert sum(clock.sleeps) == pytest.approx(0.25)
+    assert all(timestamp < started + 0.25 for timestamp in reads)
+    assert sum(action.kind == 'click' for action in browser.actions) == 1
+    assert browser.rows == []
+
+
+def test_synthetic_record_polling_checks_deadline_before_another_read(tmp_path, monkeypatch):
+    browser = _RecordBrowser()
+    runtime, connection, operation = _runtime_with_operation(tmp_path, browser)
+    clock = _invocation_clock(monkeypatch)
+    trace = runtime._trace(connection, lambda event: None,
+                           runtime_module.Budget(40, 25, deadline=clock.now + 0.25))
+    surface = browser.read()
+    reads = []
+    original_read = browser.read
+
+    def read():
+        reads.append(clock.now)
+        return original_read()
+
+    browser.read = read
+    with pytest.raises(runtime_module.StopOperation, match='Invocation time budget exhausted'):
+        runtime._wait_for_record(browser, surface, operation['procedure'], 'Missing record', trace)
+    assert len(reads) == 2
+    assert browser.actions == [] and not trace.possible_effect
+
+
 @pytest.mark.parametrize('mode', ['nonpersistent', 'lost_reply', 'duplicate'])
 def test_synthetic_completed_click_is_insufficient_for_confirmation(tmp_path, mode):
     browser = _RecordBrowser(persistent=mode != 'nonpersistent', lose_reply=mode == 'lost_reply',
@@ -755,6 +919,70 @@ def test_rendered_closed_disclosure_fields_are_absent_until_opened():
         browser.close()
 
 
+@pytest.mark.slow
+def test_rendered_portal_menu_binding_and_same_shape_editor_substitution(tmp_path):
+    from semabi.compiler.browser import Primitive
+    browser = BrowserSession('https://synthetic.invalid/')
+    try:
+        browser._page.set_content('''
+          <div id="composer"><textarea></textarea><button>Save</button><button>Cancel</button></div>
+          <article id="record"><p>Old target</p><button></button>
+            <button aria-haspopup="menu" onclick="document.querySelector('[role=menu]').hidden=false"></button>
+          </article>
+          <div role="menu" aria-label="Actions" hidden>
+            <div role="menuitem" onclick="document.querySelector('#record').innerHTML =
+              '<div id=selected><textarea>Old target</textarea><button>Save</button><button>Cancel</button></div>';
+              this.parentElement.hidden=true">Edit</div>
+            <div role="menuitem">Archive</div>
+          </div>''')
+        before = browser.read()
+        assert not any(control['role'] == 'menu' for control in before.controls.values())
+        trigger = next(node for node, control in before.controls.items() if control.get('has_popup') == 'menu')
+        descriptor = before.descriptor(trigger)
+        assert descriptor == {'role': 'button', 'label': '', 'input_type': '', 'has_popup': 'menu'}
+        assert len(before.resolve({key: value for key, value in descriptor.items() if key != 'has_popup'})) == 2
+        assert before.resolve(descriptor) == [trigger]
+        assert browser.act(Primitive('click', trigger)).ok
+        menu_surface = browser.read()
+        menu = next(node for node, control in menu_surface.controls.items() if control['role'] == 'menu')
+        article = next(node.i for node in menu_surface.observation.nodes if node.role == 'article')
+        assert menu not in menu_surface.observation.subtree(article)
+        edit = menu_surface.resolve({'role': 'menuitem', 'label': 'Edit', 'input_type': ''}, within=menu)
+        assert len(edit) == 1
+        assert browser.act(Primitive('click', edit[0])).ok
+        surface = browser.read()
+        candidates = [candidate for candidate in form_candidates(surface)
+                      if candidate['descriptor']['submit']['label'] == 'Save']
+        assert len(candidates) == 2
+        candidate = next(candidate for candidate in candidates if candidate['fields'][0]['value'] == 'Old target')
+        field_descriptor = candidate['fields'][0]['descriptor']
+        assert field_descriptor['label'] == ''
+        procedure = {'anchor': 'value', 'read_fields': {'value': field_descriptor}, 'form': candidate['descriptor']}
+        runtime = Runtime(tmp_path)
+        trace = runtime._trace({'id': 'native'}, lambda event: None, runtime_module.Budget(20, 12))
+        with runtime._capture_editor(browser, surface, procedure, {'value': 'Old target'}, trace) as (captured, retained):
+            assert browser.act(Primitive('type', candidate['fields'][0]['node'], 'New target')).ok
+            expected = deepcopy(captured)
+            expected[digest(field_descriptor)]['value'] = 'New target'
+            fresh = browser.read()
+            runtime._checked_editor(browser, fresh, procedure, expected, retained, trace)
+            browser._page.evaluate('''() => {
+              document.querySelector('#selected').remove();
+              const composer = document.querySelector('#composer');
+              composer.querySelector('textarea').value = 'New target';
+              const blank = composer.cloneNode(true);
+              blank.id = 'fresh-blank'; blank.querySelector('textarea').value = '';
+              document.body.appendChild(blank);
+            }''')
+            changed = browser.read()
+            substituted = runtime._record_form(changed, procedure, 'New target')
+            assert runtime._editor_state(changed, substituted) == expected
+            with pytest.raises(runtime_module.StopOperation, match='continuity'):
+                runtime._checked_editor(browser, changed, procedure, expected, retained, trace)
+    finally:
+        browser.close()
+
+
 def _linked_record_surface(*, swapped=False, text_echo=False, editor=False):
     nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'group', ''),
              Node(2, 1, 'list', ''), Node(3, 2, 'listitem', ''),
@@ -795,7 +1023,20 @@ def test_wrong_link_target_or_form_preview_cannot_confirm_learned_fields(changed
     assert record_witness(current, values, 'title', learned['field_slots']) is None
 
 
-class _EditableRecordBrowser:
+class _SyntheticElementContinuity:
+    """Stable invented DOM element tokens, independent of snapshot node order."""
+
+    def retain_nodes(self, nodes):
+        return tuple(self.element_tokens[node] for node in nodes)
+
+    def nodes_retained(self, retained, nodes):
+        return retained == tuple(self.element_tokens[node] for node in nodes)
+
+    def release_nodes(self, retained):
+        pass
+
+
+class _EditableRecordBrowser(_SyntheticElementContinuity):
     """Rendered list/edit states; all addresses and labels are invented fixtures."""
     allowed_origin = 'https://synthetic.invalid'
 
@@ -877,6 +1118,7 @@ class _EditableRecordBrowser:
             properties[submit] = {'form': root, 'submit': True}
             forms = (*forms, root)
         self.surface = _surface(nodes, properties, forms=forms)
+        self.element_tokens = {node.i: (node.role, node.name) for node in nodes}
         return self.surface
 
     def goto(self, _url):
@@ -955,6 +1197,42 @@ def _learn_editable_records(tmp_path, monkeypatch, *, browser=None, settings=Non
 
 def _learned_kind(result, kind):
     return next(operation for operation in result['operations'] if operation['kind'] == kind)
+
+
+@pytest.mark.parametrize('phase', ['retain', 'initial_validation', 'fresh_validation', 'read_release'])
+def test_record_continuity_calls_obey_deadline_and_always_release(tmp_path, monkeypatch, phase):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    clock = _invocation_clock(monkeypatch)
+    connection['scope']['max_seconds'] = 1
+    reading = phase == 'read_release'
+    operation = _learned_kind(learned, 'read_visible_record' if reading else 'update_visible_record')
+    arguments = {'target': browser.rows[0]['URL']}
+    if not reading:
+        arguments.update(title='Requested title', description='Requested description')
+    originals = {method: getattr(browser, method) for method in
+                 ('retain_nodes', 'nodes_retained', 'release_nodes')}
+    counts = dict.fromkeys(originals, 0)
+
+    def wrap(method):
+        def call(*args):
+            counts[method] += 1
+            result = originals[method](*args)
+            if ((phase == 'retain' and method == 'retain_nodes')
+                    or (phase == 'initial_validation' and method == 'nodes_retained' and counts[method] == 1)
+                    or (phase == 'fresh_validation' and method == 'nodes_retained' and counts[method] == 2)
+                    or (phase == 'read_release' and method == 'release_nodes')):
+                clock.now += 2
+            return result
+        return call
+
+    for method in originals:
+        monkeypatch.setattr(browser, method, wrap(method))
+    before_actions, before_rows = len(browser.actions), deepcopy(browser.rows)
+    result = runtime.invoke(connection, operation, arguments, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'  # The record's Edit action already ran.
+    assert result['effect']['reason'] == 'Invocation time budget exhausted'
+    assert len(browser.actions) == before_actions + 1  # No fill or Save follows late continuity work.
+    assert browser.rows == before_rows and counts['release_nodes'] == 1
 
 
 def test_record_family_learns_two_distinct_labeled_reads_and_persistent_updates(tmp_path, monkeypatch):
@@ -1215,6 +1493,350 @@ def test_record_family_artifacts_round_trip_and_relearn_as_independent_versions(
     result = runtime.invoke(connection, reading, {'target': browser.rows[0]['URL']}, lambda event: None)
     assert result['outcome'] == 'CONFIRMED'
     assert all(operation['version'] == 1 for operation in saved)
+
+
+class _MenuRecordBrowser(_SyntheticElementContinuity):
+    """One-field rendered records, a portal menu, and a separate blank composer."""
+    allowed_origin = 'https://synthetic.invalid'
+
+    def __init__(self, *, mode=None, label='', direct=False, cancel=True):
+        self.mode, self.label, self.direct, self.cancel = mode, label, direct, cancel
+        self.rows, self.actions = [], []
+        self.composer, self.value = '', ''
+        self.scene, self.selected = 'list', None
+        self.editor_present = True
+        self.edit_reads = self.navigation_count = self.reload_count = 0
+        self.saved_before = None
+        self.moved_value = None
+        self.surface = None
+        self.editor_generation = 0
+        self.detail_view = False
+
+    def read(self):
+        if self.scene == 'editor':
+            self.edit_reads += 1
+            if self.mode == 'intervening_editor' and self.edit_reads == 2:
+                self.value = 'Preserve changed editor'
+            if self.mode == 'sibling_before_fill' and self.edit_reads == 2:
+                self.composer = 'Preserve separate draft'
+            if self.mode == 'new_before_fill' and self.edit_reads == 2:
+                self.rows.append('Replacement candidate')
+            if self.mode == 'sibling_before_save' and self.edit_reads == 4:
+                self.composer = 'Preserve separate draft'
+            if self.mode == 'new_before_save' and self.edit_reads == 4:
+                self.rows.append(self.value)
+        nodes = [Node(0, -1, 'group', '')]
+        properties = {}
+        self.element_tokens = {}
+
+        def editor(parent, value, *, cancel=False, owner='composer', disabled=False):
+            root = len(nodes)
+            nodes.append(Node(root, parent, 'group', ''))
+            field = len(nodes)
+            nodes.append(Node(field, root, 'textbox', self.label, value=value))
+            properties[field] = {'input_type': 'textarea', 'disabled': disabled}
+            nodes.append(Node(len(nodes), root, 'button', 'Save'))
+            if cancel:
+                nodes.append(Node(len(nodes), root, 'button', 'Cancel'))
+            self.element_tokens.update({node.i: (owner, node.role, node.name)
+                                        for node in nodes[root:]})
+            return root
+
+        self.composer_root = editor(0, self.composer)
+        self.row_roots = []
+        for index, value in enumerate(self.rows):
+            root = len(nodes)
+            self.row_roots.append(root)
+            nodes.append(Node(root, 0, 'article', ''))
+            if self.scene == 'editor' and self.selected == index and self.editor_present:
+                editor(root, self.value, cancel=self.cancel, owner=('editor', self.editor_generation))
+                if self.mode == 'duplicate_editor':
+                    editor(root, self.value, cancel=self.cancel, owner='duplicate')
+                continue
+            if value == self.moved_value:
+                nested = len(nodes)
+                nodes.append(Node(nested, root, 'group', ''))
+                nodes.append(Node(len(nodes), nested, 'text', value))
+            else:
+                nodes.append(Node(len(nodes), root, 'text', value))
+            # The blank names intentionally agree: the advertised menu property
+            # is the only rendered descriptor distinction between the buttons.
+            nodes.append(Node(len(nodes), root, 'button', ''))
+            trigger = len(nodes)
+            nodes.append(Node(trigger, root, 'button', ''))
+            if self.mode != 'missing_advertisement':
+                properties[trigger] = {'has_popup': 'menu'}
+            if self.mode == 'duplicate_trigger':
+                duplicate = len(nodes)
+                nodes.append(Node(duplicate, root, 'button', ''))
+                properties[duplicate] = {'has_popup': 'menu'}
+            if self.direct:
+                nodes.append(Node(len(nodes), root, 'link', 'Edit'))
+        if self.scene == 'menu' and self.mode != 'no_menu':
+            for _ in range(2 if self.mode == 'duplicate_menu' else 1):
+                root = len(nodes)
+                nodes.append(Node(root, 0, 'menu', 'Unexpected' if self.mode == 'wrong_menu' else 'Actions'))
+                nodes.append(Node(len(nodes), root, 'menuitem', 'Rename' if self.mode == 'wrong_item' else 'Edit'))
+                if self.mode == 'duplicate_item':
+                    nodes.append(Node(len(nodes), root, 'menuitem', 'Edit'))
+                nodes.append(Node(len(nodes), root, 'menuitem', 'Archive'))
+        if self.mode == 'composer_substitution_with_fresh_blank' and not self.editor_present:
+            editor(0, '', owner='fresh composer')
+        self.surface = _surface(nodes, properties)
+        if self.detail_view:
+            self.surface.observation.url = self.allowed_origin + '/unrelated-copy'
+        return self.surface
+
+    def goto(self, _url):
+        self.navigation_count += 1
+        self.scene, self.selected, self.composer = 'list', None, ''
+        self.editor_present = True
+        self.detail_view = False
+        return self.read().observation
+
+    def reload(self):
+        self.reload_count += 1
+        if self.mode == 'old_returns_on_reload' and self.saved_before is not None:
+            self.rows.append(self.saved_before)
+        self.scene, self.selected, self.composer = 'list', None, ''
+        return self.read()
+
+    def act(self, action):
+        self.actions.append(action)
+        node = self.surface.observation.node(action.target)
+        control = self.surface.controls[action.target]
+        if action.kind == 'type':
+            if node.parent == self.composer_root:
+                self.composer = action.text
+            else:
+                self.value = action.text
+                if self.mode in {'composer_substitution', 'composer_substitution_with_fresh_blank'}:
+                    self.editor_present, self.composer = False, action.text
+            return ActionResult(True)
+        if control.get('has_popup') == 'menu':
+            self.selected = self.row_roots.index(node.parent)
+            self.scene = 'menu'
+            if self.mode == 'sibling_after_menu':
+                self.composer = 'Preserve separate draft'
+        elif node.name == 'Edit':
+            if node.role == 'link':
+                self.selected = self.row_roots.index(node.parent)
+            if self.mode == 'wrong_editor':
+                self.selected = (self.selected + 1) % len(self.rows)
+            self.scene, self.edit_reads = 'editor', 0
+            self.editor_generation += 1
+            self.value = self.rows[self.selected]
+        else:
+            assert node.name == 'Save'
+            if node.parent == self.composer_root:
+                self.rows.append(self.composer)
+                self.composer = ''
+            else:
+                self.saved_before = self.rows[self.selected]
+                value = 'Unrequested result' if self.mode == 'wrong_effect' else self.value
+                if self.mode in {'old_retained', 'copy_to_different_view'}:
+                    self.rows.append(value)
+                else:
+                    self.rows[self.selected] = value
+                if self.mode == 'duplicate_new':
+                    self.rows.append(value)
+                if self.mode == 'wrong_slot':
+                    self.moved_value = value
+                if self.mode == 'sibling_after_save':
+                    self.composer = 'Preserve separate draft'
+                if self.mode == 'copy_to_different_view':
+                    self.collection_rows = list(self.rows)
+                    self.rows = [value]
+                    self.detail_view = True
+            self.scene, self.selected = 'list', None
+            if self.mode == 'lost_reply' and self.saved_before is not None:
+                return ActionResult(False, 'Reply lost after local replacement')
+        return ActionResult(True)
+
+
+def test_menu_record_family_learns_unlabeled_reads_and_exact_value_replacement(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MenuRecordBrowser())
+    assert learned['attempts'] == []
+    creation, reading, updating = learned['operations']
+    for operation in (reading, updating):
+        runtime._check_operation(operation)
+        assert len(operation['support']['trials']) == 2
+        assert operation['procedure']['menu_trigger'] == {
+            'role': 'button', 'label': '', 'input_type': '', 'has_popup': 'menu'}
+        assert operation['procedure']['menu']['role'] == 'menu'
+        assert operation['procedure']['edit']['role'] == 'menuitem'
+        assert operation['procedure']['read_fields'] == {
+            'value': {'role': 'textbox', 'label': '', 'input_type': 'textarea'}}
+    schema = reading['output_schema']['properties']['effect']['properties']['values']['properties']['value']
+    assert schema == {'type': 'string', 'description': 'Visible editor value',
+                      'binding_basis': 'unique_original_descriptor_and_two_distinct_creation_trials'}
+    assert set(updating['argument_schema']['required']) == {'target', 'value'}
+    assert updating['procedure']['anchor_mode'] == 'replace_value'
+    assert updating['scope']['identity'] == 'UNESTABLISHED'
+    original_values = [trial['arguments']['value'] for trial in creation['support']['trials']]
+    assert [trial['values']['value'] for trial in reading['support']['trials']] == original_values
+    assert all(value not in browser.rows for value in original_values)
+    for trial in updating['support']['trials']:
+        assert trial['before_witness']['texts'][0] == trial['arguments']['target']
+        assert trial['witness']['old_anchor_absence']['value'] == trial['arguments']['target']
+    target = browser.rows[0]
+    read = runtime.invoke(connection, reading, {'target': target}, lambda event: None)
+    assert read['outcome'] == 'CONFIRMED'
+    assert read['effect']['values'] == {'value': target}
+    before = len(browser.actions)
+    untouched = browser.rows[1]
+    update = runtime.invoke(connection, updating, {'target': target, 'value': 'Fresh replacement'}, lambda event: None)
+    assert update['outcome'] == 'CONFIRMED'
+    assert update['effect']['kind'] == 'visible_record_value_replaced'
+    assert update['effect']['before'] == {'value': target}
+    assert update['effect']['arguments'] == {'value': 'Fresh replacement'}
+    assert update['effect']['identity'] == 'UNESTABLISHED'
+    assert update['effect']['old_anchor_absence']['value'] == target
+    assert all(update['effect']['old_anchor_absence'][key] for key in
+               ('after_submit_observation', 'after_reload_observation'))
+    assert browser.rows == ['Fresh replacement', untouched]
+    assert [action.kind for action in browser.actions[before:]] == ['click', 'click', 'type', 'click']
+
+
+def test_record_direct_edit_precedes_an_advertised_menu_and_single_labeled_anchor_can_change(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MenuRecordBrowser(label='Target', direct=True))
+    assert learned['attempts'] == []
+    reading, updating = learned['operations'][1:]
+    assert 'menu_trigger' not in reading['procedure']
+    assert updating['procedure']['selector_argument'] == '_target'
+    assert set(updating['argument_schema']['required']) == {'_target', 'target'}
+    result = runtime.invoke(connection, updating, {'_target': browser.rows[0], 'target': 'New caption'}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED'
+
+
+@pytest.mark.parametrize('mode, writes', [('missing_advertisement', 0), ('duplicate_trigger', 0),
+                                         ('no_menu', 1), ('duplicate_menu', 1), ('wrong_menu', 1),
+                                         ('wrong_item', 1), ('duplicate_item', 1),
+                                         ('wrong_editor', 2), ('duplicate_editor', 2)])
+def test_menu_record_route_drift_or_ambiguity_stops_before_any_fill(tmp_path, monkeypatch, mode, writes):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MenuRecordBrowser())
+    updating = learned['operations'][2]
+    browser.mode = mode
+    before = len(browser.actions)
+    result = runtime.invoke(connection, updating, {'target': browser.rows[0], 'value': 'Fresh replacement'}, lambda event: None)
+    assert result['outcome'] == ('UNCERTAIN' if writes else 'FAILED_BEFORE_EFFECT')
+    assert result['operation_status'] == 'STALE'
+    assert len(browser.actions) == before + writes
+    assert all(action.kind == 'click' for action in browser.actions[before:])
+
+
+@pytest.mark.parametrize('mode', ['duplicate_target', 'missing_target', 'same_value', 'new_existing'])
+def test_record_replacement_selection_failures_precede_menu_opening(tmp_path, monkeypatch, mode):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MenuRecordBrowser())
+    arguments = {'target': browser.rows[0], 'value': 'Fresh replacement'}
+    if mode == 'duplicate_target':
+        browser.rows.append(browser.rows[0])
+    elif mode == 'missing_target':
+        arguments['target'] = 'Absent record'
+    elif mode == 'same_value':
+        arguments['value'] = arguments['target']
+    else:
+        arguments['value'] = browser.rows[1]
+    before = len(browser.actions)
+    result = runtime.invoke(connection, learned['operations'][2], arguments, lambda event: None)
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT'
+    assert len(browser.actions) == before
+
+
+@pytest.mark.parametrize('mode, fills, saves', [('sibling_after_menu', 0, 0), ('sibling_before_fill', 0, 0),
+                                              ('intervening_editor', 0, 0), ('sibling_before_save', 1, 0),
+                                              ('composer_substitution', 1, 0),
+                                              ('composer_substitution_with_fresh_blank', 1, 0),
+                                              ('new_before_fill', 0, 0),
+                                              ('new_before_save', 1, 0), ('sibling_after_save', 1, 1)])
+def test_record_replacement_preserves_editor_and_sibling_drafts_before_actions(tmp_path, monkeypatch, mode, fills, saves):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MenuRecordBrowser(cancel=not mode.startswith('composer_substitution')))
+    updating = learned['operations'][2]
+    browser.mode = mode
+    before, reloads = len(browser.actions), browser.reload_count
+    result = runtime.invoke(connection, updating, {'target': browser.rows[0], 'value': 'Replacement candidate'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    actions = browser.actions[before:]
+    assert sum(action.kind == 'type' for action in actions) == fills
+    assert sum(action.kind == 'click' for action in actions) == (1 if mode == 'sibling_after_menu' else 2) + saves
+    assert browser.reload_count == reloads
+    if mode.startswith('sibling_'):
+        assert browser.composer == 'Preserve separate draft'
+    elif mode.startswith('composer_substitution'):
+        assert browser.composer == 'Replacement candidate'
+        assert ('continuity' if mode.endswith('fresh_blank') else 'changed since capture') in result['effect']['reason']
+    elif mode == 'intervening_editor':
+        assert browser.value == 'Preserve changed editor'
+
+
+@pytest.mark.parametrize('mode, reloads', [('old_retained', 0), ('duplicate_new', 0), ('wrong_effect', 0),
+                                        ('wrong_slot', 0), ('old_returns_on_reload', 1), ('lost_reply', 0),
+                                        ('copy_to_different_view', 0)])
+def test_record_replacement_never_confirms_wrong_or_nonpersistent_local_effects(tmp_path, monkeypatch, mode, reloads):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MenuRecordBrowser())
+    browser.mode = mode
+    before, prior_reloads = len(browser.actions), browser.reload_count
+    old_target = browser.rows[0]
+    result = runtime.invoke(connection, learned['operations'][2],
+                            {'target': old_target, 'value': 'Replacement candidate'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert len(browser.actions) == before + 4
+    assert browser.reload_count == prior_reloads + reloads
+    if mode == 'copy_to_different_view':
+        assert old_target in browser.collection_rows
+        assert 'Replacement candidate' in browser.collection_rows
+        assert 'readback view' in result['effect']['reason']
+
+
+@pytest.mark.parametrize('mode', ['old_retained', 'copy_to_different_view'])
+def test_unestablished_replacement_learning_preserves_creation_and_read(tmp_path, monkeypatch, mode):
+    _, _, _, learned = _learn_editable_records(tmp_path, monkeypatch, browser=_MenuRecordBrowser(mode=mode))
+    assert [operation['kind'] for operation in learned['operations']] == ['create_visible_record', 'read_visible_record']
+    assert learned['attempts'][0]['stage'] == 'update_visible_record'
+    assert learned['attempts'][0]['confirmed_trials'] == 0
+
+
+def test_missing_editor_element_continuity_stops_before_an_update_fill(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MenuRecordBrowser())
+    browser.retain_nodes = None
+    before = len(browser.actions)
+    result = runtime.invoke(connection, learned['operations'][2],
+                            {'target': browser.rows[0], 'value': 'Replacement candidate'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert result['operation_status'] == 'STALE'
+    assert len(browser.actions) == before + 2
+    assert 'continuity is unavailable' in result['effect']['reason']
+
+
+@pytest.mark.parametrize('mode, writes', [('duplicate_trigger', 4), ('duplicate_menu', 5),
+                                         ('duplicate_item', 5), ('wrong_editor', 6), ('duplicate_editor', 6)])
+def test_menu_learning_retains_creation_when_editor_discovery_is_unestablished(tmp_path, monkeypatch, mode, writes):
+    _, _, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=_MenuRecordBrowser(mode=mode))
+    assert [operation['kind'] for operation in learned['operations']] == ['create_visible_record']
+    assert learned['attempts'][0]['stage'] == 'read_visible_record'
+    assert learned['attempts'][0]['confirmed_trials'] == 0
+    assert learned['metrics']['possible_write_actions'] == writes
+    assert len(browser.rows) == 2
+
+
+@pytest.mark.parametrize('budget, limit, kinds, writes', [
+    ('max_writes', 7, 1, 4), ('max_writes', 15, 2, 8), ('max_writes', 16, 3, 16),
+    ('max_actions', 16, 1, 4), ('max_actions', 28, 2, 8), ('max_actions', 29, 3, 16)])
+def test_menu_record_learning_reserves_both_complete_menu_trials(tmp_path, monkeypatch, budget, limit, kinds, writes):
+    _, _, _, learned = _learn_editable_records(tmp_path, monkeypatch, browser=_MenuRecordBrowser(),
+                                              settings={budget: limit})
+    assert len(learned['operations']) == kinds
+    assert learned['metrics']['possible_write_actions'] == writes
+    if kinds < 3:
+        assert 'budget' in learned['attempts'][0]['reason']
+        assert learned['attempts'][0]['confirmed_trials'] == 0
 
 
 @pytest.mark.parametrize('permanent', [False, True], ids=['loading_then_record', 'permanently_missing'])

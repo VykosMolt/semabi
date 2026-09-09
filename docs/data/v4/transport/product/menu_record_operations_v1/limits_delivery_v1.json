@@ -1,0 +1,156 @@
+{
+  "commits": 0,
+  "created_at": "2026-09-09T18:00:15.127487+00:00",
+  "deadline_scope": "Runtime.invoke elapsed time only, excluding service queueing and connection/authentication. A synchronous primitive may return late; expiry after possible effect is UNCERTAIN and no retry is performed.",
+  "files": {
+    "examples/client.py": {
+      "base_sha256": "acf8485747ed76b6f6d9798cc80afb6a12555f80678c7936acd0c4c538a29ba7",
+      "bytes": 7171,
+      "candidate_sha256": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07"
+    },
+    "semabi/compiler/artifacts.py": {
+      "base_sha256": "9210437c800fe384bd49b25435ed59ab6130a6c856d4cb01a9274d69c6444983",
+      "bytes": 20288,
+      "candidate_sha256": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7"
+    },
+    "semabi/compiler/runtime.py": {
+      "base_sha256": "9547b4cb9c96146c7b7eccae1a83be4de7bc6a8555ef79833826a68ac60e4f1e",
+      "bytes": 49429,
+      "candidate_sha256": "140d151c13c8cb376cdc25388d632b7e4a9bc4f8af48a5c3188a7eed72bc7f4a"
+    },
+    "semabi/service.py": {
+      "base_sha256": "8152e9a337128f367ddbea57706658858b8fa5523d26aa208aaf96a5f0c70e25",
+      "bytes": 31428,
+      "candidate_sha256": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+    },
+    "tests/test_operation_runtime.py": {
+      "base_sha256": "c947213e55dddfc74428ef878087baabe9960ac2230ddf9c431b4ab0aeb2f3cd",
+      "bytes": 70504,
+      "candidate_sha256": "3851e9dfd5c3559a01e122f75d7f452e98285a67c81f87b5149b0846be3867c5"
+    },
+    "tests/test_service.py": {
+      "base_sha256": "49119da6461a0bf552cebd37f299f9bd57b65170fe4b4e66ba8de398258bc7d3",
+      "bytes": 29668,
+      "candidate_sha256": "8a8286fe7658ded6b435dc21c863f889674d41002ab61e90c6d6fca9ca53fc2b"
+    }
+  },
+  "main_source_edits": 0,
+  "new_application_calls": 0,
+  "patch": {
+    "bytes": 38078,
+    "path": "invocation_limits_v1.patch",
+    "sha256": "65e0549e86744f1038fb1a8f96610d0aa2b28758ac7fbe503cbd603580b8851e"
+  },
+  "runtime_integration": {
+    "mechanical_replacements": [
+      {
+        "after": "trace.read(browser)",
+        "before": "trace.observe(browser.read())",
+        "original_count": 12
+      },
+      {
+        "after": "trace.pause(0.1)",
+        "before": "time.sleep(0.1)",
+        "original_count": 2
+      }
+    ],
+    "p4_note": "P4 changes record helpers and _witness in its isolated tree. Preserve those semantics and use Trace.read/pause on all final live read/poll paths when combining; no browser proxy."
+  },
+  "schema": "optional_invocation_limits_candidate.v1",
+  "source_snapshot": {
+    "copied_file_count": 495,
+    "created_at": "2026-09-09T17:45:16.245129+00:00",
+    "excluded_top_level_documentation_dirs": [
+      "docs",
+      "tex",
+      "paper",
+      "figures"
+    ],
+    "owned_file_sha256": {
+      "examples/client.py": "acf8485747ed76b6f6d9798cc80afb6a12555f80678c7936acd0c4c538a29ba7",
+      "semabi/compiler/artifacts.py": "9210437c800fe384bd49b25435ed59ab6130a6c856d4cb01a9274d69c6444983",
+      "semabi/compiler/runtime.py": "9547b4cb9c96146c7b7eccae1a83be4de7bc6a8555ef79833826a68ac60e4f1e",
+      "semabi/service.py": "8152e9a337128f367ddbea57706658858b8fa5523d26aa208aaf96a5f0c70e25",
+      "tests/test_operation_runtime.py": "c947213e55dddfc74428ef878087baabe9960ac2230ddf9c431b4ab0aeb2f3cd",
+      "tests/test_service.py": "49119da6461a0bf552cebd37f299f9bd57b65170fe4b4e66ba8de398258bc7d3"
+    },
+    "source_head": "177bc44f89ca0c6100280f12ceb96b3ab63709af",
+    "source_root": "/home/moloch/semabi",
+    "source_stable_during_copy": true,
+    "source_worktree_includes_uncommitted_p3": true
+  },
+  "status": "READY_FOR_COMBINED_REVIEW",
+  "storage_migration_required": false,
+  "validation": {
+    "all_six_sources_parse": true,
+    "all_test_commands_cpu_affinity": [
+      7
+    ],
+    "distinct_passing_tests": 146,
+    "git_apply_check_against_current_main": {
+      "exit_code": 0,
+      "main_mutated": false,
+      "tool_chunk_id": "289203"
+    },
+    "initial_environment_failure": "The first test attempt used /usr/bin/python, which had no pytest; it failed before test collection. Subsequent tests used the existing repository .venv interpreter.",
+    "no_limits_legacy_fingerprint_test_passed": true,
+    "recovery_with_limits_has_no_retry": true,
+    "runtime_operation_ast_unchanged_after_reversing_approved_read_poll_replacements": true,
+    "thread_library_limits": 1,
+    "tool_receipts": [
+      {
+        "chunk_id": "411b17",
+        "exit_code": 1,
+        "kind": "precollection missing pytest"
+      },
+      {
+        "chunk_id": "27933c",
+        "exit_code": 0,
+        "kind": "13 focused runtime tests"
+      },
+      {
+        "chunk_id": "372f13",
+        "exit_code": 0,
+        "kind": "28 service/storage/client tests; temporary loopback HTTP with fake Runtime; host approval granted"
+      },
+      {
+        "chunk_id": "61b791",
+        "kind": "118 runtime test launch",
+        "session_id": 49726
+      },
+      {
+        "chunk_id": "80cf02",
+        "exit_code": 0,
+        "kind": "118 runtime tests completed",
+        "session_reaped": true
+      }
+    ],
+    "unchanged_rendered_extraction_test_deselected": 1,
+    "xml_receipts": [
+      {
+        "errors": 0,
+        "failures": 0,
+        "path": "limits_runtime_focused_v1.xml",
+        "sha256": "a61a19cb2c4c1309260c3e8660bed455901672c545412b7343f9e6f0c8992a73",
+        "skipped": 0,
+        "tests": 13
+      },
+      {
+        "errors": 0,
+        "failures": 0,
+        "path": "limits_service_v1.xml",
+        "sha256": "d6ffdf855a775491c023521feb60ea9e39ec453e52a735cb92e7de7e4716fedf",
+        "skipped": 0,
+        "tests": 28
+      },
+      {
+        "errors": 0,
+        "failures": 0,
+        "path": "limits_runtime_v1.xml",
+        "sha256": "20ea863c757fb3049c83bf244408b4944e241747aaa552065f736ca5bdd4dfb3",
+        "skipped": 0,
+        "tests": 118
+      }
+    ]
+  }
+}

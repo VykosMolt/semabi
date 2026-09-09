@@ -4,6 +4,7 @@ from __future__ import annotations
 import fcntl
 import hashlib
 import json
+import math
 import os
 import sqlite3
 import threading
@@ -21,6 +22,27 @@ class StoreError(ValueError):
 
 def canonical(value) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+def invocation_limits(value: dict, scope: dict) -> dict:
+    """Normalize execution-only limits without changing the connection's scope."""
+    if not isinstance(value, dict) or set(value) - {"max_actions", "max_writes", "max_seconds"}:
+        raise StoreError("limits must be an object containing only max_actions, max_writes and max_seconds")
+    action_cap = min(40, scope.get("max_actions", 40))
+    actions = value.get("max_actions", action_cap)
+    if type(actions) is not int or not 1 <= actions <= action_cap:
+        raise StoreError(f"limits.max_actions must be an integer between 1 and {action_cap}")
+    write_cap = min(25, scope.get("max_writes", 25), actions)
+    writes = value.get("max_writes", write_cap)
+    if type(writes) is not int or not 0 <= writes <= write_cap:
+        raise StoreError(f"limits.max_writes must be an integer between 0 and {write_cap}")
+    limits = {"max_actions": actions, "max_writes": writes}
+    if "max_seconds" in value:
+        seconds = value["max_seconds"]
+        if type(seconds) not in (int, float) or not 0 < seconds <= 600 or not math.isfinite(seconds):
+            raise StoreError("limits.max_seconds must be a finite number greater than 0 and at most 600")
+        limits["max_seconds"] = float(seconds)
+    return limits
 
 
 def now() -> str:
@@ -214,11 +236,15 @@ class ArtifactStore:
                 "SELECT id,MAX(version) FROM operations WHERE connection_id = ? GROUP BY id", (connection_id,))}
 
     def queue_invocation(self, connection_id: str, operation_id: str, version: int,
-                         arguments: dict, idempotency_key: str | None) -> tuple[str, bool]:
+                         arguments: dict, idempotency_key: str | None,
+                         limits: dict | None = None) -> tuple[str, bool]:
         request = {"operation_id": operation_id, "version": version, "arguments": arguments}
-        fingerprint = hashlib.sha256(canonical(request).encode()).hexdigest()
         with self.transaction() as db:
-            self._connection(db, connection_id)
+            connection = self._connection(db, connection_id)
+            # Omitting limits preserves the exact legacy request and fingerprint.
+            if limits is not None:
+                request["limits"] = invocation_limits(limits, connection["scope"])
+            fingerprint = hashlib.sha256(canonical(request).encode()).hexdigest()
             if idempotency_key is not None:
                 previous = db.execute("SELECT fingerprint,job_id FROM idempotency WHERE connection_id = ? AND key = ?",
                                       (connection_id, idempotency_key)).fetchone()

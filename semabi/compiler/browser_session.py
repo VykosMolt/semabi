@@ -90,9 +90,9 @@ SURFACE_JS = r"""() => {
     const tag = e.tagName.toLowerCase();
     if (['script','style','option','title','head','noscript','template'].includes(tag) || !visible(e)) return;
     if (tag === 'input' && e.type === 'hidden') return;
-    const role = roleOf(e), interactive = ['button','link','textbox','combobox','checkbox','radio'].includes(role);
+    const role = roleOf(e), interactive = ['button','link','textbox','combobox','checkbox','radio','menu','menuitem'].includes(role);
     let name = interactive ? label(e) : ownText(e);
-    if (!name && ['button','link','heading','text','cell','alert','status','listitem'].includes(role))
+    if (!name && ['button','link','menuitem','heading','text','cell','alert','status','listitem'].includes(role))
       name = text(e.innerText);
     if (!name && role === 'button' && tag === 'input') name = text(e.value);
     const i = nodes.length, r = e.getBoundingClientRect();
@@ -112,7 +112,8 @@ SURFACE_JS = r"""() => {
     if (interactive) controls[i] = {role, label:name, input_type:type, required:!!e.required,
       disabled:!!e.disabled || e.getAttribute('aria-disabled') === 'true', readonly:!!e.readOnly,
       min:e.min || null, max:e.max || null, max_length:e.maxLength >= 0 ? e.maxLength : null,
-      options:n.options || [], submit:role === 'button' && e.type === 'submit', form:null};
+      options:n.options || [], submit:role === 'button' && e.type === 'submit', form:null,
+      has_popup:e.getAttribute('aria-haspopup') || null};
     // The destination a user can inspect/copy from a rendered link. Reading
     // this affordance never follows it or retrieves an endpoint response.
     if (role === 'link' && tag === 'a' && e.hasAttribute('href')) controls[i].destination = e.href;
@@ -206,6 +207,19 @@ class BrowserSession(Browser):
     def reload(self) -> Surface:
         self._page.reload(wait_until="domcontentloaded", timeout=10000)
         return self.read()
+
+    def retain_nodes(self, nodes: list[int]):
+        """Keep temporary observed DOM elements, never a persistent record key."""
+        return self._page.evaluate_handle("indices => indices.map(i => window.__semabi_nodes[i])", nodes)
+
+    def nodes_retained(self, retained, nodes: list[int]) -> bool:
+        return retained.evaluate("""(elements, indices) => elements.length === indices.length &&
+          elements.every((element, i) => element && element.isConnected &&
+            element === window.__semabi_nodes[indices[i]] && elements[0].contains(element))""", nodes)
+
+    @staticmethod
+    def release_nodes(retained) -> None:
+        retained.dispose()
 
     def act(self, primitive: Primitive):
         if primitive.kind == "reset":

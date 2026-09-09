@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import sqlite3
 import stat
 import threading
@@ -34,6 +35,7 @@ class FakeRuntime:
         self.sessions = {}
         self.settings = []
         self.invocations = []
+        self.invocation_connections = []
         self.mode = "confirm"
         self.empty_learning = False
         self.invalidations = []
@@ -63,6 +65,7 @@ class FakeRuntime:
     def invoke(self, connection, artifact, arguments, emit):
         self._record("invoke", connection["id"])
         self.invocations.append((connection["id"], artifact, arguments))
+        self.invocation_connections.append(json.loads(json.dumps(connection)))
         self.entered.set()
         assert self.release.wait(5), "test did not release fake invocation"
         if self.mode == "stale":
@@ -157,9 +160,12 @@ class HTTPHarness:
         assert job["status"] == "COMPLETED", job
         return job
 
-    def invoke(self, connection_id, title="fresh", *, version=1, key=None):
+    def invoke(self, connection_id, title="fresh", *, version=1, key=None, limits=None):
+        body = {"version": version, "arguments": {"title": title}}
+        if limits is not None:
+            body["limits"] = limits
         return self.request("POST", f"/v1/connections/{connection_id}/operations/create/invoke",
-                            {"version": version, "arguments": {"title": title}},
+                            body,
                             headers={"Idempotency-Key": key} if key else None)
 
 
@@ -233,6 +239,12 @@ def test_authentication_openapi_and_body_validation(api):
     status, description = api.request("GET", "/openapi.json")
     assert status == 200 and description["security"] == [{"localBearer": []}]
     assert description["components"]["schemas"]["Invocation"]["required"] == ["arguments", "version"]
+    limits = description["components"]["schemas"]["InvocationLimits"]
+    assert limits["additionalProperties"] is False and limits["required"] == []
+    assert limits["properties"]["max_actions"]["maximum"] == 40
+    assert limits["properties"]["max_writes"]["maximum"] == 25
+    assert limits["properties"]["max_seconds"]["exclusiveMinimum"] == 0
+    assert limits["properties"]["max_seconds"]["maximum"] == 600
     assert set(description["components"]["schemas"]["InvocationResult"]["properties"]["outcome"]["enum"]) == {
         "CONFIRMED", "APPLICATION_REFUSAL", "FAILED_BEFORE_EFFECT", "UNCERTAIN"}
     assert "/v1/executions/{execution_id}" in description["paths"]
@@ -296,6 +308,82 @@ def test_concurrent_idempotency_returns_one_job_and_changed_request_conflicts(ap
     api.fake.release.set()
     job = api.completed(responses[0][1])
     assert job["result"]["outcome"] == "CONFIRMED" and len(api.fake.invocations) == 1
+
+
+def test_invocation_limit_validation_rejects_expansion_and_nonexact_types(api):
+    connection_id = api.connect()
+    api.learn(connection_id)
+    path = f"/v1/connections/{connection_id}/operations/create/invoke"
+    bad_limits = [None, [], False, {"unexpected": 1}]
+    bad_limits += [{"max_actions": value} for value in (True, 2.0, "2", 0, -1, 13)]
+    bad_limits += [{"max_writes": value} for value in (False, 1.0, "1", -1, 4)]
+    bad_limits += [{"max_seconds": value} for value in (True, "1", None, 0, -1, 600.01, float("nan"), float("inf"))]
+    bad_limits += [{"max_actions": 2, "max_writes": 3}]
+    for limits in bad_limits:
+        code, _ = api.request("POST", path, {"version": 1, "arguments": {"title": "fresh"}, "limits": limits})
+        assert code == 400, limits
+    assert api.fake.invocations == []
+    with api.service.store._lock:
+        assert api.service.store.db.execute("SELECT COUNT(*) FROM jobs WHERE kind='invoke'").fetchone()[0] == 0
+
+
+def test_invocation_limits_normalize_for_idempotency_and_do_not_leak_scope(api):
+    connection_id = api.connect()
+    api.learn(connection_id)
+    original = api.service.store.connection(connection_id)
+    first_limits = {"max_actions": 6, "max_seconds": 10}
+    code, accepted = api.invoke(connection_id, key="limited", limits=first_limits)
+    assert code == 202
+    job = api.completed(accepted)
+    normalized = {"max_actions": 6, "max_writes": 3, "max_seconds": 10.0}
+    assert job["request"]["limits"] == normalized
+    assert type(job["request"]["limits"]["max_seconds"]) is float
+    code, repeated = api.invoke(connection_id, key="limited", limits=normalized)
+    assert code == 202 and repeated["deduplicated"] and repeated["id"] == accepted["id"]
+    for changed in ({**normalized, "max_actions": 5}, {**normalized, "max_writes": 2},
+                    {**normalized, "max_seconds": 9}):
+        assert api.invoke(connection_id, key="limited", limits=changed)[0] == 409
+    assert api.invoke(connection_id, key="limited")[0] == 409
+    code, following = api.invoke(connection_id, "following", key="following")
+    assert code == 202 and api.completed(following)["result"]["outcome"] == "CONFIRMED"
+    assert api.fake.invocation_connections[0]["scope"] == {**original["scope"], **normalized}
+    assert api.fake.invocation_connections[1] == original
+    assert api.service.store.connection(connection_id) == original
+    assert len(api.fake.invocations) == 2
+    assert first_limits == {"max_actions": 6, "max_seconds": 10}
+
+
+def test_invocation_limits_apply_runtime_hard_caps_and_default_writes_to_actions(api):
+    code, connected = api.request("POST", "/v1/connections", {
+        "url": "http://example.test/work", "scope": {"exploration_enabled": True, "max_actions": 100, "max_writes": 80}})
+    assert code == 202 and api.completed(connected)["status"] == "COMPLETED"
+    connection_id = connected["id"]
+    api.learn(connection_id)
+    for limits in ({"max_actions": 41}, {"max_writes": 26}, {"max_actions": 2, "max_writes": 3}):
+        assert api.invoke(connection_id, limits=limits)[0] == 400
+    for limits, expected in (({}, {"max_actions": 40, "max_writes": 25}),
+                             ({"max_actions": 2}, {"max_actions": 2, "max_writes": 2}),
+                             ({"max_writes": 0, "max_seconds": 600},
+                              {"max_actions": 40, "max_writes": 0, "max_seconds": 600.0})):
+        code, accepted = api.invoke(connection_id, limits=limits)
+        assert code == 202 and api.completed(accepted)["request"]["limits"] == expected
+    assert api.service.store.connection(connection_id)["scope"] == {
+        "exploration_enabled": True, "max_actions": 100, "max_writes": 80}
+
+
+def test_omitted_invocation_limits_preserve_legacy_request_and_fingerprint(api):
+    connection_id = api.connect()
+    api.learn(connection_id)
+    code, accepted = api.invoke(connection_id, key="legacy")
+    assert code == 202
+    assert api.completed(accepted)["request"] == {
+        "operation_id": "create", "version": 1, "arguments": {"title": "fresh"}}
+    with api.service.store._lock:
+        row = api.service.store.db.execute(
+            "SELECT fingerprint FROM idempotency WHERE connection_id=? AND key='legacy'", (connection_id,)).fetchone()
+    legacy_bytes = b'{"arguments":{"title":"fresh"},"operation_id":"create","version":1}'
+    assert row["fingerprint"] == hashlib.sha256(legacy_bytes).hexdigest()
+    assert api.invoke(connection_id, key="legacy", limits={})[0] == 409
 
 
 def test_missing_rediscovery_preserves_operations_and_new_support_versions_them(api):
@@ -362,7 +450,8 @@ def test_job_completion_never_invents_confirmed_effect(api, mode, outcome, statu
     assert "private-onboarding-password" not in json.dumps(job)
 
 
-def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_replay(tmp_path):
+@pytest.mark.parametrize("limits", [None, {"max_actions": 3, "max_writes": 2, "max_seconds": 15}])
+def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_replay(tmp_path, limits):
     directory = tmp_path / "service"
     store = ArtifactStore(directory)
     configuration, credentials = connection_request({"url": "http://example.test/", "credentials": {"username": "private-user", "password": "private-password"}})
@@ -374,7 +463,7 @@ def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_repla
     store.finish_job(learn_job, {"status": "COMPLETE"}, operations=[operation()])
     jobs = {}
     for label in ("queued", "running_no_write", "running_write"):
-        job_id, _ = store.queue_invocation(connection["id"], "create", 1, {"title": label}, label)
+        job_id, _ = store.queue_invocation(connection["id"], "create", 1, {"title": label}, label, limits)
         jobs[label] = job_id
         if label != "queued":
             store.start_job(job_id)
@@ -387,10 +476,14 @@ def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_repla
             code, job = api.request("GET", "/v1/executions/" + job_id)
             assert code == 200 and job["status"] == "FAILED"
             assert job["result"]["outcome"] == ("UNCERTAIN" if label == "running_write" else "FAILED_BEFORE_EFFECT")
+            assert job["request"].get("limits") == limits
         assert api.fake.calls == []
         assert api.service.store.connection(connection["id"])["status"] == "DISCONNECTED"
-        code, old = api.invoke(connection["id"], "running_write", key="running_write")
+        code, old = api.invoke(connection["id"], "running_write", key="running_write", limits=limits)
         assert code == 202 and old["job_id"] == jobs["running_write"] and old["deduplicated"]
+        if limits is not None:
+            assert api.invoke(connection["id"], "running_write", key="running_write",
+                              limits={**limits, "max_seconds": 14})[0] == 409
         assert api.fake.invocations == []
         assert api.service.store.operation(connection["id"], "create")["status"] == "ACTIVE"
         code, fresh = api.request("POST", f"/v1/connections/{connection['id']}/reconnect", {})
@@ -425,3 +518,39 @@ def test_store_has_one_owner_and_operation_publication_is_transactional(tmp_path
         assert store.operation(connection["id"], "create")["name"] == "FAKE create item"
     finally:
         store.close()
+
+
+@pytest.mark.parametrize("supplied", [False, True])
+def test_example_client_sends_optional_invocation_limits_only_when_requested(tmp_path, monkeypatch, supplied):
+    from io import BytesIO
+    from pathlib import Path
+    import runpy
+    import sys
+
+    token_file = tmp_path / "token"
+    token_file.write_text("synthetic-client-token")
+    requests = []
+
+    def respond(request, **_kwargs):
+        body = json.loads(request.data) if request.data is not None else None
+        requests.append((request.method, request.full_url, body))
+        if request.full_url.endswith("/operations"):
+            value = {"operations": [operation()]}
+        elif request.full_url.endswith("/invoke"):
+            value = {"job_id": "synthetic", "execution_id": "synthetic"}
+        else:
+            value = {"id": "synthetic", "status": "COMPLETED", "events": [], "result": {"outcome": "CONFIRMED"}}
+        return BytesIO(json.dumps(value).encode())
+
+    argv = ["client.py", "--connection", "synthetic", "--reuse-session", "--token-file", str(token_file),
+            "--arguments", '{"title":"fresh"}', "--idempotency-key", "synthetic-client"]
+    if supplied:
+        argv += ["--invoke-max-actions", "4", "--invoke-max-writes", "0", "--invoke-max-seconds", "1.5"]
+    monkeypatch.setattr(sys, "argv", argv)
+    monkeypatch.setattr(urllib.request, "urlopen", respond)
+    runpy.run_path(str(Path(__file__).resolve().parents[1] / "examples/client.py"), run_name="__main__")
+    invoked = [body for method, url, body in requests if method == "POST" and url.endswith("/invoke")]
+    expected = {"version": 1, "arguments": {"title": "fresh"}}
+    if supplied:
+        expected["limits"] = {"max_actions": 4, "max_writes": 0, "max_seconds": 1.5}
+    assert invoked == [expected]

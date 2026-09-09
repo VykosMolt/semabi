@@ -1,0 +1,117 @@
+{
+  "application": "memos",
+  "classification": "ONGOING_DEVELOPMENT_NEGATIVE_FOR_MEMOS_READ_UPDATE",
+  "independent_after_update_check": "NOT_PERFORMED",
+  "independent_before_check": {
+    "all_owned_processes_terminated": true,
+    "completed_at": "2026-09-09T18:07:55.851589+00:00",
+    "metrics": {
+      "authentication_primitives": 3,
+      "browser_session_raw_snapshot_reads_by_phase": {
+        "after_reload": 6,
+        "authentication": 12,
+        "before_reload": 3,
+        "navigation": 6
+      },
+      "browser_session_read_calls_by_phase": {
+        "after_reload": 1,
+        "authentication": 2,
+        "before_reload": 1,
+        "navigation": 1
+      },
+      "business_write_primitives": 0,
+      "conservative_possible_write_primitives": 3,
+      "cpu_affinity": [
+        4
+      ],
+      "cpu_seconds": 2.147,
+      "elapsed_seconds": 5.209,
+      "fresh_browser_sessions": 1,
+      "independent_dom_reads": 2,
+      "interaction_total_including_auth_navigation_reload": 5,
+      "main_frame_navigation_events": 6,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "peak_aggregate_rss_bytes": 954019840,
+      "primitive_kinds": [
+        {
+          "kind": "type",
+          "phase": "authentication"
+        },
+        {
+          "kind": "type",
+          "phase": "authentication"
+        },
+        {
+          "kind": "click",
+          "phase": "authentication"
+        }
+      ],
+      "requested_navigations": 1,
+      "requested_reloads": 1,
+      "retries": 0,
+      "setup_resets": 0
+    },
+    "replacement_value_absent": "Existing memo updated through a learned HTTP operation 20260909",
+    "sampled_non_target": {
+      "value": "Two application service Memos 20260909 1655"
+    },
+    "target": {
+      "value": "Memos remained connected after Linkding reconnect 20260909"
+    },
+    "verdict": "PASS"
+  },
+  "interpretation": "One confirmed READ learning trial is insufficient to publish a READ operation; no UPDATE stage or requested target invocation was established. The pre-state observation belongs only to this source version.",
+  "invalidations": [
+    {
+      "id": "op_32fe04fdd2dd8d082206",
+      "reason": "Operation evidence or runtime compatibility changed; relearn its contract",
+      "status": "STALE",
+      "version": 1
+    }
+  ],
+  "learning_completed_at": "2026-09-09T18:09:15.108707+00:00",
+  "learning_created_at": "2026-09-09T18:08:59.556297+00:00",
+  "learning_job_id": "job_6cde78a2f7844cbfae57195f32e4bc47",
+  "learning_metrics": {
+    "actions": 16,
+    "elapsed_seconds": 15.538,
+    "model_calls": 0,
+    "paid_cost": 0,
+    "possible_write_actions": 8
+  },
+  "learning_status": "COMPLETED",
+  "published_operations": [
+    {
+      "id": "op_562fcb42c95d9c59eba3",
+      "kind": "create_visible_record",
+      "status": "ACTIVE",
+      "supporting_trials": 2,
+      "version": 1
+    }
+  ],
+  "requested_existing_target_read": "NOT_PERFORMED",
+  "requested_existing_target_update": "NOT_PERFORMED",
+  "schema": "menu_record_attempt.v1",
+  "scope": "Selected existing records in one inspected current view. This is a disclosed development attempt, with no prospective denominator or paired baseline.",
+  "service_reconnect": [
+    {
+      "job_id": "job_580c2e35dcdb484ea886a89cd069e345",
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8852",
+        "authentication_actions": 3,
+        "elapsed_seconds": 2.195,
+        "status": "CONNECTED"
+      }
+    }
+  ],
+  "unestablished_attempts": [
+    {
+      "candidate": "op_562fcb42c95d9c59eba3",
+      "confirmed_trials": 1,
+      "error_type": "StopOperation",
+      "reason": "Learned record editor form contract has changed",
+      "stage": "read_visible_record"
+    }
+  ]
+}

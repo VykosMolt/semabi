@@ -31,6 +31,12 @@ def main():
     parser.add_argument("--learn", action="store_true")
     parser.add_argument("--max-actions", type=int, default=40)
     parser.add_argument("--max-writes", type=int, default=4)
+    parser.add_argument("--invoke-max-actions", type=int,
+                        help="Limit actions for this invocation within the connection scope (at most 40)")
+    parser.add_argument("--invoke-max-writes", type=int,
+                        help="Limit possible writes for this invocation within its actions and scope (at most 25)")
+    parser.add_argument("--invoke-max-seconds", type=float,
+                        help="Runtime elapsed limit up to 600 seconds, excluding queueing/authentication; in-flight work can overrun")
     parser.add_argument("--operation")
     parser.add_argument("--arguments", help="Optional JSON object using names in the learned argument_schema; omit to discover only")
     parser.add_argument("--idempotency-key", default=None)
@@ -105,8 +111,14 @@ def main():
         raise SystemExit("Select exactly one discovered active operation with --operation.")
     operation = candidates[0]
     key = args.idempotency_key or secrets.token_hex(16)
+    invocation = {"version": operation["version"], "arguments": arguments}
+    limits = {name: value for name, value in (("max_actions", args.invoke_max_actions),
+                                             ("max_writes", args.invoke_max_writes),
+                                             ("max_seconds", args.invoke_max_seconds)) if value is not None}
+    if limits:
+        invocation["limits"] = limits
     accepted = request("POST", prefix + "/operations/" + operation["id"] + "/invoke",
-                       {"version": operation["version"], "arguments": arguments}, idempotency=key)
+                       invocation, idempotency=key)
     print(json.dumps({"execution_id": accepted["execution_id"], "idempotency_key": key}), flush=True)
     wait(accepted)
     execution = request("GET", "/v1/executions/" + accepted["execution_id"])

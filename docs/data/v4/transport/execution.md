@@ -41,9 +41,8 @@ Rolling queue:
 1. P1/P2 complete: persisted HTTP creation and session/restart reuse; separate
    independent checks on Memos and Linkding. The receiver-view control remains
    an identity-assisted diagnostic; ordinary learned JOIN is still unestablished.
-2. P3 complete in working code: learned local READ/UPDATE, independent target
-   and non-target checks, and a successful read after service restart. Preserve
-   the final source, verification and demonstration in a coherent local commit.
+2. P3 committed at `db0ced6`: learned local READ/UPDATE, independent target
+   and non-target checks, and a successful read after service restart.
 3. Active P4: generalize record editing through advertised menus, resolve an
    unlabeled but uniquely observed field beside a blank creation form, and
    support exact local replacement when the only text value is also the anchor.
@@ -159,11 +158,38 @@ Root owns service exec 46217 (CPUs 2–3), restarted with the same private data
 directory; the prior P3 service 60197 and all five client jobs are reaped. All
 independent P3 browsers and the 170-test process are closed. The implementation
 agent owns only `/tmp/semabi_menu_record_candidate` for P4; it must not change
-main or call applications. The evaluator is preserving P3 evidence without new
-browser calls. Vikunja remains unopened and reserved. Next: commit the coherent
-P3 source/evidence, review the isolated P4 mechanism and meaningful tests, then
-exercise it through the same HTTP entry point on Memos. No reserved assessment
-has begun, and no native fits or full unchanged corpus runs are queued.
+main or call applications. The evaluator is reviewing two concrete P4 rivals:
+a disappearing editor replaced by an equal-valued sibling, and a Save-copy
+transition that hides the original record on another page. The candidate now
+requires temporary DOM element continuity and the original replacement-check
+view. These are locators and local absence checks, not global business identity.
+
+Optional invocation limits and P4 are integrated. The combined runtime hash
+`aaaf7578cdfd21619fd00e7ad941b2dac392b5d45dd10400e5678696ebc58eb5`
+passed **252 tests in 22.93 s** (exec 97984, terminal `34c826`, exit zero).
+New DOM continuity reads and successful cleanup are also deadline checked;
+cleanup still runs after expiry. Source snapshots and candidate/test receipts
+are in `runs/product_menu_v1`. Root stopped and reaped service 46217 before
+integration; service 97053 now owns the same private data directory on CPUs 2–3.
+
+The first live P4 Memos run is negative and preserved. Independent checks first
+found the old target and sampled non-target once, and proposed replacement zero
+times, before and after reload. Learning then established CREATE, completed one
+READ trial, and stopped on the second with `Learned record editor form contract
+has changed` (16 actions, 8 possible writes, 15.538 s). No requested target read
+or update was performed. The implementation agent is comparing the two recorded
+rendered forms; no new application inspection is required for that diagnosis.
+The evaluator preserves this failure and its exact source alongside the first
+pre-state check. The next source revision and application run must use new
+snapshot identities.
+
+A separate agent owns a bounded cached READ/UPDATE replay extension in
+`/tmp/semabi_cached_record_candidate`. Main's baseline already has a 60-second
+deadline including connection and authentication; 43 focused tests passed
+(exec `702ade`, actual exit zero). Vikunja remains unopened and reserved. Next:
+repair the demonstrated editor contract difference, verify the change, then
+repeat P4 through the same HTTP entry point. No fixed assessment has begun,
+and no native fits or full unchanged corpus runs are queued.
 
 ## Paused for user review (2026-09-08 11:53 UTC)
 
