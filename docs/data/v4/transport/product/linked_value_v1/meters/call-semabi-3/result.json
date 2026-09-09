@@ -1,0 +1,172 @@
+{
+  "format": "owned_command_meter.v1",
+  "argv": [
+    "env",
+    "PYTHONPATH=/home/moloch/semabi",
+    ".venv/bin/python",
+    "-B",
+    "runs/product_linked_value_development_v1/run_service_call.py",
+    "--binding-file",
+    "runs/product_linked_value_development_v1/schema_calls/call_3.json",
+    "--connection",
+    "conn_34fdcbbceab948b8a0f861138f04ef09",
+    "--output-dir",
+    "runs/product_linked_value_development_v1/attempts/semabi-3"
+  ],
+  "exit_code": 0,
+  "source_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+  "started_at": "2026-09-09T23:01:52.793808+00:00",
+  "rss_limit_bytes": 4294967296,
+  "sample_interval_seconds": 0.05,
+  "sampled_peak_aggregate_rss_bytes": 995782656,
+  "samples": 219,
+  "inherited_cpu_affinity": [
+    2,
+    3
+  ],
+  "max_observed_affinity_count": 2,
+  "signals": [],
+  "stop_reason": "command_exit",
+  "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+  "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "wall_seconds": 10.923143,
+  "rss_limit_exceeded": false,
+  "child_rusage_cpu_seconds": 4.516176,
+  "completed_at": "2026-09-09T23:02:03.717100+00:00",
+  "owned_processes": [
+    {
+      "pid": 1603563,
+      "ppid": 1603562,
+      "name": "env",
+      "state": "R",
+      "start_ticks": 8383908,
+      "rss_bytes": 483328,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1603576,
+      "ppid": 1603563,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 8383912,
+      "rss_bytes": 14712832,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1603578,
+      "ppid": 1603563,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 8383927,
+      "rss_bytes": 14286848,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1603594,
+      "ppid": 1603576,
+      "name": "MainThread",
+      "state": "R",
+      "start_ticks": 8383934,
+      "rss_bytes": 56664064,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1603631,
+      "ppid": 1603594,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 8383964,
+      "rss_bytes": 83484672,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1603634,
+      "ppid": 1603631,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 8383965,
+      "rss_bytes": 45477888,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1603635,
+      "ppid": 1603631,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 8383965,
+      "rss_bytes": 47300608,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1603651,
+      "ppid": 1603634,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 8383967,
+      "rss_bytes": 122081280,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1603653,
+      "ppid": 1603631,
+      "name": "exe",
+      "state": "R",
+      "start_ticks": 8383968,
+      "rss_bytes": 15712256,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1603677,
+      "ppid": 1603635,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 8383971,
+      "rss_bytes": 73400320,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    }
+  ],
+  "terminal_ownership_verified": true,
+  "status": "TERMINAL"
+}

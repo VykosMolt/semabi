@@ -1,0 +1,1555 @@
+{
+  "call": {
+    "arguments": {
+      "add_a_task": "lcfc758258f3 first replacement",
+      "target": "sdcb66c52b handoff review"
+    },
+    "operation": {
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "add_a_task": {
+            "description": "Title",
+            "minLength": 1,
+            "type": "string"
+          },
+          "target": {
+            "description": "Exact current local anchor: Title",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "add_a_task"
+        ],
+        "type": "object"
+      },
+      "effect_checks": [
+        "One retained-focused Tab after the guarded fill, with unchanged surrounding control state",
+        "Replacement occupies the original list slot and the old value is absent, again after reload"
+      ],
+      "evidence_sha256": "4dc73c17113024b204fcbecc9f2e84d81ddc4ff38d1f018cd1c7d8c3963f38c7",
+      "id": "op_aa0d714f0ae97c8fcac4",
+      "kind": "update_visible_record",
+      "name": "update_record",
+      "output_schema": {
+        "properties": {
+          "effect": {
+            "properties": {
+              "arguments": {
+                "additionalProperties": false,
+                "properties": {
+                  "add_a_task": {
+                    "binding_basis": "exact_value_correspondence_in_two_distinct_creation_trials",
+                    "description": "Title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "add_a_task"
+                ],
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "metrics": {
+            "type": "object"
+          },
+          "outcome": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "outcome",
+          "effect",
+          "metrics"
+        ],
+        "type": "object"
+      },
+      "prerequisites": [
+        "One exact local anchor in its learned list slots and one current same-origin link carrying its complete value",
+        "One editable value textbox in its unchanged small parent scope, matched by value in two created-record trials",
+        "Retained local scope, textbox and every local control; other observed value controls stay unchanged",
+        "No other populated editable textbox or visible popup",
+        "The filled textbox stays focused before the learned retained Tab"
+      ],
+      "procedure": {
+        "anchor": "add_a_task",
+        "anchor_link": {
+          "kind": "exact_visible_anchor_link_v1"
+        },
+        "anchor_mode": "replace_value",
+        "context_label_binding": {
+          "completed_read_trials": 2,
+          "descriptor": {
+            "has_popup": null,
+            "input_type": "",
+            "role": "button"
+          },
+          "path": [
+            [
+              "group",
+              0
+            ],
+            [
+              "group",
+              0
+            ],
+            [
+              "button",
+              0
+            ]
+          ],
+          "prior": "One unexecuted plain context button beside a linked value editor may vary between records: ASCII digit runs retain their widths and all punctuation/whitespace stays literal; two distinct labels require two completed selected-record read trials",
+          "read_evidence": [
+            {
+              "editor_state": {
+                "1fd0aba5ffeedd0d669fa536b5f5939ad7d3ce22558987dd481772370b4f782b": {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "Title",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": "semabi_7e2e2cb9e1_0"
+                },
+                "context_controls": [
+                  {
+                    "descriptor": {
+                      "input_type": "",
+                      "label": "#8",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "button",
+                        0
+                      ]
+                    ],
+                    "readonly": false,
+                    "required": false
+                  }
+                ],
+                "other_editors": [],
+                "other_value_controls": [
+                  {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Enter a description, hit '/' for more options\u2026",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": ""
+                  },
+                  {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Add your comment, hit '/' for more options\u2026",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": ""
+                  }
+                ],
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "input_type": "",
+                      "label": "#8",
+                      "role": "button"
+                    }
+                  ],
+                  "field_path": [
+                    [
+                      "textbox",
+                      0
+                    ]
+                  ],
+                  "fields": [
+                    {
+                      "argument": "add_a_task",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "Title",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "scope_role": "group",
+                  "submit": null
+                }
+              },
+              "label": "#8",
+              "observation": "6b5899f734349e0f",
+              "raw_form": {
+                "context_controls": [
+                  {
+                    "input_type": "",
+                    "label": "#8",
+                    "role": "button"
+                  }
+                ],
+                "field_path": [
+                  [
+                    "textbox",
+                    0
+                  ]
+                ],
+                "fields": [
+                  {
+                    "argument": "add_a_task",
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Title",
+                      "role": "textbox"
+                    },
+                    "input_type": "contenteditable",
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "required": false,
+                    "role": "textbox"
+                  }
+                ],
+                "scope_role": "group",
+                "submit": null
+              }
+            },
+            {
+              "editor_state": {
+                "1fd0aba5ffeedd0d669fa536b5f5939ad7d3ce22558987dd481772370b4f782b": {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "Title",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": "semabi_d49effd069_1"
+                },
+                "context_controls": [
+                  {
+                    "descriptor": {
+                      "input_type": "",
+                      "label": "#9",
+                      "role": "button"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "button",
+                        0
+                      ]
+                    ],
+                    "readonly": false,
+                    "required": false
+                  }
+                ],
+                "other_editors": [],
+                "other_value_controls": [
+                  {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Enter a description, hit '/' for more options\u2026",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": ""
+                  },
+                  {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Add your comment, hit '/' for more options\u2026",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": ""
+                  }
+                ],
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "input_type": "",
+                      "label": "#9",
+                      "role": "button"
+                    }
+                  ],
+                  "field_path": [
+                    [
+                      "textbox",
+                      0
+                    ]
+                  ],
+                  "fields": [
+                    {
+                      "argument": "add_a_task",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "Title",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "scope_role": "group",
+                  "submit": null
+                }
+              },
+              "label": "#9",
+              "observation": "a4990e0a9fc99e67",
+              "raw_form": {
+                "context_controls": [
+                  {
+                    "input_type": "",
+                    "label": "#9",
+                    "role": "button"
+                  }
+                ],
+                "field_path": [
+                  [
+                    "textbox",
+                    0
+                  ]
+                ],
+                "fields": [
+                  {
+                    "argument": "add_a_task",
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Title",
+                      "role": "textbox"
+                    },
+                    "input_type": "contenteditable",
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "required": false,
+                    "role": "textbox"
+                  }
+                ],
+                "scope_role": "group",
+                "submit": null
+              }
+            }
+          ],
+          "shape": [
+            {
+              "literal": "#"
+            },
+            {
+              "digits": 1
+            }
+          ],
+          "state": {
+            "disabled": false,
+            "max": null,
+            "max_length": null,
+            "min": null,
+            "options": [],
+            "readonly": false,
+            "required": false
+          }
+        },
+        "effect_slots": {
+          "add_a_task": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        "form": {
+          "context_controls": [
+            {
+              "input_type": "",
+              "label": "#8",
+              "role": "button"
+            }
+          ],
+          "field_path": [
+            [
+              "textbox",
+              0
+            ]
+          ],
+          "fields": [
+            {
+              "argument": "add_a_task",
+              "descriptor": {
+                "input_type": "contenteditable",
+                "label": "Title",
+                "role": "textbox"
+              },
+              "input_type": "contenteditable",
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "options": [],
+              "required": false,
+              "role": "textbox"
+            }
+          ],
+          "scope_role": "group",
+          "submit": null
+        },
+        "linked_value_editor": {
+          "commit": {
+            "field": {
+              "input_type": "contenteditable",
+              "label": "Title",
+              "role": "textbox"
+            },
+            "kind": "retained_tab_readback_v1"
+          },
+          "kind": "single_linked_value_v1",
+          "prior": "A unique visible local link carrying a created value may open its editable value: one exact-value textbox in a small form-less parent scope, independently matched in two created records. A fill, one retained-focused Tab and navigation to the learned list is a proposed commit sequence; only two persisted update trials establish it, without identifying which step saves or asserting global identity"
+        },
+        "read_fields": {
+          "add_a_task": {
+            "input_type": "contenteditable",
+            "label": "Title",
+            "role": "textbox"
+          }
+        },
+        "readback_url": "http://127.0.0.1:8853/",
+        "selector_argument": "target",
+        "update_arguments": [
+          "add_a_task"
+        ]
+      },
+      "scope": {
+        "identity": "UNESTABLISHED",
+        "linked_value_editor": "One value-corresponding textbox; no authored field alias, global identity, unobserved-field relationship or save-trigger claim. The observed sequence includes fill, Tab and navigation; neighboring populated editors prevent the call.",
+        "numeric_context_labels": "The declared numeric-label shape generalizes between two selected records; current-call labels stay frozen. Outcomes check observed record fields, without establishing that numeric context values are semantically irrelevant.",
+        "operation_family": "local exact-value replacement",
+        "origin": "http://127.0.0.1:8853",
+        "prior": "General English action vocabulary proposes exploration",
+        "replacement": "New value retained and old value absent after submission and reload",
+        "runtime_model": null,
+        "selection": "Exact old value in the inspected record view",
+        "unsupported": [
+          "global record uniqueness",
+          "rollback",
+          "exactly-once delivery",
+          "relational selection",
+          "unobserved side effects"
+        ]
+      },
+      "status": "ACTIVE",
+      "support": {
+        "argument_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "add_a_task": {
+              "description": "Title",
+              "minLength": 1,
+              "type": "string"
+            },
+            "target": {
+              "description": "Exact current local anchor: Title",
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "target",
+            "add_a_task"
+          ],
+          "type": "object"
+        },
+        "effect_checks": [
+          "One retained-focused Tab after the guarded fill, with unchanged surrounding control state",
+          "Replacement occupies the original list slot and the old value is absent, again after reload"
+        ],
+        "kind": "update_visible_record",
+        "linked_value_prior": "A unique visible local link carrying a created value may open its editable value: one exact-value textbox in a small form-less parent scope, independently matched in two created records. A fill, one retained-focused Tab and navigation to the learned list is a proposed commit sequence; only two persisted update trials establish it, without identifying which step saves or asserting global identity",
+        "output_schema": {
+          "properties": {
+            "effect": {
+              "properties": {
+                "arguments": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "add_a_task": {
+                      "binding_basis": "exact_value_correspondence_in_two_distinct_creation_trials",
+                      "description": "Title",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "add_a_task"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "metrics": {
+              "type": "object"
+            },
+            "outcome": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "outcome",
+            "effect",
+            "metrics"
+          ],
+          "type": "object"
+        },
+        "parent_create_evidence_sha256": "bd04561ee94260f8eb84c5822a7f0e97746b58f7377a2bfd660e174e19a6cd41",
+        "parent_create_id": "op_98cf711d3da577a6b7e6",
+        "parent_create_version": 1,
+        "policy_version": "local-record-v8",
+        "prerequisites": [
+          "One exact local anchor in its learned list slots and one current same-origin link carrying its complete value",
+          "One editable value textbox in its unchanged small parent scope, matched by value in two created-record trials",
+          "Retained local scope, textbox and every local control; other observed value controls stay unchanged",
+          "No other populated editable textbox or visible popup",
+          "The filled textbox stays focused before the learned retained Tab"
+        ],
+        "procedure": {
+          "anchor": "add_a_task",
+          "anchor_link": {
+            "kind": "exact_visible_anchor_link_v1"
+          },
+          "anchor_mode": "replace_value",
+          "context_label_binding": {
+            "completed_read_trials": 2,
+            "descriptor": {
+              "has_popup": null,
+              "input_type": "",
+              "role": "button"
+            },
+            "path": [
+              [
+                "group",
+                0
+              ],
+              [
+                "group",
+                0
+              ],
+              [
+                "button",
+                0
+              ]
+            ],
+            "prior": "One unexecuted plain context button beside a linked value editor may vary between records: ASCII digit runs retain their widths and all punctuation/whitespace stays literal; two distinct labels require two completed selected-record read trials",
+            "read_evidence": [
+              {
+                "editor_state": {
+                  "1fd0aba5ffeedd0d669fa536b5f5939ad7d3ce22558987dd481772370b4f782b": {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Title",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": "semabi_7e2e2cb9e1_0"
+                  },
+                  "context_controls": [
+                    {
+                      "descriptor": {
+                        "input_type": "",
+                        "label": "#8",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "path": [
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "button",
+                          0
+                        ]
+                      ],
+                      "readonly": false,
+                      "required": false
+                    }
+                  ],
+                  "other_editors": [],
+                  "other_value_controls": [
+                    {
+                      "checked": null,
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "Enter a description, hit '/' for more options\u2026",
+                        "role": "textbox"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "Add your comment, hit '/' for more options\u2026",
+                        "role": "textbox"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "value": ""
+                    }
+                  ],
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "input_type": "",
+                        "label": "#8",
+                        "role": "button"
+                      }
+                    ],
+                    "field_path": [
+                      [
+                        "textbox",
+                        0
+                      ]
+                    ],
+                    "fields": [
+                      {
+                        "argument": "add_a_task",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "Title",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "scope_role": "group",
+                    "submit": null
+                  }
+                },
+                "label": "#8",
+                "observation": "6b5899f734349e0f",
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "input_type": "",
+                      "label": "#8",
+                      "role": "button"
+                    }
+                  ],
+                  "field_path": [
+                    [
+                      "textbox",
+                      0
+                    ]
+                  ],
+                  "fields": [
+                    {
+                      "argument": "add_a_task",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "Title",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "scope_role": "group",
+                  "submit": null
+                }
+              },
+              {
+                "editor_state": {
+                  "1fd0aba5ffeedd0d669fa536b5f5939ad7d3ce22558987dd481772370b4f782b": {
+                    "checked": null,
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Title",
+                      "role": "textbox"
+                    },
+                    "disabled": false,
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "readonly": false,
+                    "required": false,
+                    "value": "semabi_d49effd069_1"
+                  },
+                  "context_controls": [
+                    {
+                      "descriptor": {
+                        "input_type": "",
+                        "label": "#9",
+                        "role": "button"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "path": [
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "group",
+                          0
+                        ],
+                        [
+                          "button",
+                          0
+                        ]
+                      ],
+                      "readonly": false,
+                      "required": false
+                    }
+                  ],
+                  "other_editors": [],
+                  "other_value_controls": [
+                    {
+                      "checked": null,
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "Enter a description, hit '/' for more options\u2026",
+                        "role": "textbox"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "value": ""
+                    },
+                    {
+                      "checked": null,
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "Add your comment, hit '/' for more options\u2026",
+                        "role": "textbox"
+                      },
+                      "disabled": false,
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "readonly": false,
+                      "required": false,
+                      "value": ""
+                    }
+                  ],
+                  "raw_form": {
+                    "context_controls": [
+                      {
+                        "input_type": "",
+                        "label": "#9",
+                        "role": "button"
+                      }
+                    ],
+                    "field_path": [
+                      [
+                        "textbox",
+                        0
+                      ]
+                    ],
+                    "fields": [
+                      {
+                        "argument": "add_a_task",
+                        "descriptor": {
+                          "input_type": "contenteditable",
+                          "label": "Title",
+                          "role": "textbox"
+                        },
+                        "input_type": "contenteditable",
+                        "max": null,
+                        "max_length": null,
+                        "min": null,
+                        "options": [],
+                        "required": false,
+                        "role": "textbox"
+                      }
+                    ],
+                    "scope_role": "group",
+                    "submit": null
+                  }
+                },
+                "label": "#9",
+                "observation": "a4990e0a9fc99e67",
+                "raw_form": {
+                  "context_controls": [
+                    {
+                      "input_type": "",
+                      "label": "#9",
+                      "role": "button"
+                    }
+                  ],
+                  "field_path": [
+                    [
+                      "textbox",
+                      0
+                    ]
+                  ],
+                  "fields": [
+                    {
+                      "argument": "add_a_task",
+                      "descriptor": {
+                        "input_type": "contenteditable",
+                        "label": "Title",
+                        "role": "textbox"
+                      },
+                      "input_type": "contenteditable",
+                      "max": null,
+                      "max_length": null,
+                      "min": null,
+                      "options": [],
+                      "required": false,
+                      "role": "textbox"
+                    }
+                  ],
+                  "scope_role": "group",
+                  "submit": null
+                }
+              }
+            ],
+            "shape": [
+              {
+                "literal": "#"
+              },
+              {
+                "digits": 1
+              }
+            ],
+            "state": {
+              "disabled": false,
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "options": [],
+              "readonly": false,
+              "required": false
+            }
+          },
+          "effect_slots": {
+            "add_a_task": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "form": {
+            "context_controls": [
+              {
+                "input_type": "",
+                "label": "#8",
+                "role": "button"
+              }
+            ],
+            "field_path": [
+              [
+                "textbox",
+                0
+              ]
+            ],
+            "fields": [
+              {
+                "argument": "add_a_task",
+                "descriptor": {
+                  "input_type": "contenteditable",
+                  "label": "Title",
+                  "role": "textbox"
+                },
+                "input_type": "contenteditable",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "required": false,
+                "role": "textbox"
+              }
+            ],
+            "scope_role": "group",
+            "submit": null
+          },
+          "linked_value_editor": {
+            "commit": {
+              "field": {
+                "input_type": "contenteditable",
+                "label": "Title",
+                "role": "textbox"
+              },
+              "kind": "retained_tab_readback_v1"
+            },
+            "kind": "single_linked_value_v1",
+            "prior": "A unique visible local link carrying a created value may open its editable value: one exact-value textbox in a small form-less parent scope, independently matched in two created records. A fill, one retained-focused Tab and navigation to the learned list is a proposed commit sequence; only two persisted update trials establish it, without identifying which step saves or asserting global identity"
+          },
+          "read_fields": {
+            "add_a_task": {
+              "input_type": "contenteditable",
+              "label": "Title",
+              "role": "textbox"
+            }
+          },
+          "readback_url": "http://127.0.0.1:8853/",
+          "selector_argument": "target",
+          "update_arguments": [
+            "add_a_task"
+          ]
+        },
+        "scope": {
+          "identity": "UNESTABLISHED",
+          "linked_value_editor": "One value-corresponding textbox; no authored field alias, global identity, unobserved-field relationship or save-trigger claim. The observed sequence includes fill, Tab and navigation; neighboring populated editors prevent the call.",
+          "numeric_context_labels": "The declared numeric-label shape generalizes between two selected records; current-call labels stay frozen. Outcomes check observed record fields, without establishing that numeric context values are semantically irrelevant.",
+          "operation_family": "local exact-value replacement",
+          "origin": "http://127.0.0.1:8853",
+          "prior": "General English action vocabulary proposes exploration",
+          "replacement": "New value retained and old value absent after submission and reload",
+          "runtime_model": null,
+          "selection": "Exact old value in the inspected record view",
+          "unsupported": [
+            "global record uniqueness",
+            "rollback",
+            "exactly-once delivery",
+            "relational selection",
+            "unobserved side effects"
+          ]
+        },
+        "source_sha256": {
+          "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+          "browser_session.py": "d3585b9e255e01b8d03fbd51cc52dfdfe8d39d994c314c01a1e35414ca5a9367",
+          "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+          "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+          "runtime.py": "266d6a9aa62f21193d9a93cc0ef5ece73dc4ff1f04e0acbbc45efa8ec8980d74",
+          "surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+        },
+        "text_probe_prior": "Distinct generated plain text values for the proposed linked-value commit sequence",
+        "trials": [
+          {
+            "arguments": {
+              "add_a_task": "semabi_88c7991894_2",
+              "target": "semabi_7e2e2cb9e1_0"
+            },
+            "before": {
+              "add_a_task": "semabi_7e2e2cb9e1_0"
+            },
+            "before_witness": {
+              "basis": "visible_local_record",
+              "link_destinations": [
+                "http://127.0.0.1:8853/projects/1",
+                "http://127.0.0.1:8853/tasks/8"
+              ],
+              "observation": "d97d947b5863a278",
+              "role": "listitem",
+              "root": 131,
+              "text_boundaries": {},
+              "texts": [
+                "Inboxsemabi_7e2e2cb9e1_0 Add to Favorites",
+                "Mark 'semabi_7e2e2cb9e1_0' as done",
+                "Inboxsemabi_7e2e2cb9e1_0",
+                "Inbox",
+                "semabi_7e2e2cb9e1_0",
+                "semabi_7e2e2cb9e1_0"
+              ],
+              "value_node": 144
+            },
+            "completion_stimulus": null,
+            "editor_observation": "6b5899f734349e0f",
+            "editor_state": {
+              "1fd0aba5ffeedd0d669fa536b5f5939ad7d3ce22558987dd481772370b4f782b": {
+                "checked": null,
+                "descriptor": {
+                  "input_type": "contenteditable",
+                  "label": "Title",
+                  "role": "textbox"
+                },
+                "disabled": false,
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "readonly": false,
+                "required": false,
+                "value": "semabi_7e2e2cb9e1_0"
+              },
+              "context_controls": [
+                {
+                  "descriptor": {
+                    "input_type": "",
+                    "label": "#8",
+                    "role": "button"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "path": [
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "button",
+                      0
+                    ]
+                  ],
+                  "readonly": false,
+                  "required": false
+                }
+              ],
+              "other_editors": [],
+              "other_value_controls": [
+                {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "Enter a description, hit '/' for more options\u2026",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": ""
+                },
+                {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "Add your comment, hit '/' for more options\u2026",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": ""
+                }
+              ],
+              "raw_form": {
+                "context_controls": [
+                  {
+                    "input_type": "",
+                    "label": "#8",
+                    "role": "button"
+                  }
+                ],
+                "field_path": [
+                  [
+                    "textbox",
+                    0
+                  ]
+                ],
+                "fields": [
+                  {
+                    "argument": "add_a_task",
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Title",
+                      "role": "textbox"
+                    },
+                    "input_type": "contenteditable",
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "required": false,
+                    "role": "textbox"
+                  }
+                ],
+                "scope_role": "group",
+                "submit": null
+              }
+            },
+            "linked_commits": [
+              {
+                "dispatches": 1,
+                "editor_state_retained_after_tab": true,
+                "field": "add_a_task",
+                "rule": {
+                  "field": {
+                    "input_type": "contenteditable",
+                    "label": "Title",
+                    "role": "textbox"
+                  },
+                  "kind": "retained_tab_readback_v1"
+                }
+              }
+            ],
+            "popup_dismissals": [],
+            "values": {
+              "add_a_task": "semabi_88c7991894_2"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "add_a_task": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [
+                "http://127.0.0.1:8853/projects/1",
+                "http://127.0.0.1:8853/tasks/8"
+              ],
+              "observation": "58f1ea7b246acd8c",
+              "old_anchor_absence": {
+                "after_reload_observation": "58f1ea7b246acd8c",
+                "after_submit_observation": "58f1ea7b246acd8c",
+                "value": "semabi_7e2e2cb9e1_0"
+              },
+              "role": "listitem",
+              "root": 131,
+              "text_boundaries": {},
+              "texts": [
+                "Inboxsemabi_88c7991894_2 Add to Favorites",
+                "Mark 'semabi_88c7991894_2' as done",
+                "Inboxsemabi_88c7991894_2",
+                "Inbox",
+                "semabi_88c7991894_2",
+                "semabi_88c7991894_2"
+              ],
+              "value_node": 144
+            }
+          },
+          {
+            "arguments": {
+              "add_a_task": "semabi_2318072860_3",
+              "target": "semabi_d49effd069_1"
+            },
+            "before": {
+              "add_a_task": "semabi_d49effd069_1"
+            },
+            "before_witness": {
+              "basis": "visible_local_record",
+              "link_destinations": [
+                "http://127.0.0.1:8853/projects/1",
+                "http://127.0.0.1:8853/tasks/9"
+              ],
+              "observation": "58f1ea7b246acd8c",
+              "role": "listitem",
+              "root": 115,
+              "text_boundaries": {},
+              "texts": [
+                "semabi_d49effd069_1",
+                "semabi_d49effd069_1",
+                "Inboxsemabi_d49effd069_1 Add to Favorites",
+                "Mark 'semabi_d49effd069_1' as done",
+                "Inboxsemabi_d49effd069_1",
+                "Inbox"
+              ],
+              "value_node": 128
+            },
+            "completion_stimulus": null,
+            "editor_observation": "a4990e0a9fc99e67",
+            "editor_state": {
+              "1fd0aba5ffeedd0d669fa536b5f5939ad7d3ce22558987dd481772370b4f782b": {
+                "checked": null,
+                "descriptor": {
+                  "input_type": "contenteditable",
+                  "label": "Title",
+                  "role": "textbox"
+                },
+                "disabled": false,
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "readonly": false,
+                "required": false,
+                "value": "semabi_d49effd069_1"
+              },
+              "context_controls": [
+                {
+                  "descriptor": {
+                    "input_type": "",
+                    "label": "#9",
+                    "role": "button"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "path": [
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "button",
+                      0
+                    ]
+                  ],
+                  "readonly": false,
+                  "required": false
+                }
+              ],
+              "other_editors": [],
+              "other_value_controls": [
+                {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "Enter a description, hit '/' for more options\u2026",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": ""
+                },
+                {
+                  "checked": null,
+                  "descriptor": {
+                    "input_type": "contenteditable",
+                    "label": "Add your comment, hit '/' for more options\u2026",
+                    "role": "textbox"
+                  },
+                  "disabled": false,
+                  "max": null,
+                  "max_length": null,
+                  "min": null,
+                  "options": [],
+                  "readonly": false,
+                  "required": false,
+                  "value": ""
+                }
+              ],
+              "raw_form": {
+                "context_controls": [
+                  {
+                    "input_type": "",
+                    "label": "#9",
+                    "role": "button"
+                  }
+                ],
+                "field_path": [
+                  [
+                    "textbox",
+                    0
+                  ]
+                ],
+                "fields": [
+                  {
+                    "argument": "add_a_task",
+                    "descriptor": {
+                      "input_type": "contenteditable",
+                      "label": "Title",
+                      "role": "textbox"
+                    },
+                    "input_type": "contenteditable",
+                    "max": null,
+                    "max_length": null,
+                    "min": null,
+                    "options": [],
+                    "required": false,
+                    "role": "textbox"
+                  }
+                ],
+                "scope_role": "group",
+                "submit": null
+              }
+            },
+            "linked_commits": [
+              {
+                "dispatches": 1,
+                "editor_state_retained_after_tab": true,
+                "field": "add_a_task",
+                "rule": {
+                  "field": {
+                    "input_type": "contenteditable",
+                    "label": "Title",
+                    "role": "textbox"
+                  },
+                  "kind": "retained_tab_readback_v1"
+                }
+              }
+            ],
+            "popup_dismissals": [],
+            "values": {
+              "add_a_task": "semabi_2318072860_3"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "add_a_task": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [
+                "http://127.0.0.1:8853/projects/1",
+                "http://127.0.0.1:8853/tasks/9"
+              ],
+              "observation": "24744003f15cda8b",
+              "old_anchor_absence": {
+                "after_reload_observation": "24744003f15cda8b",
+                "after_submit_observation": "24744003f15cda8b",
+                "value": "semabi_d49effd069_1"
+              },
+              "role": "listitem",
+              "root": 115,
+              "text_boundaries": {},
+              "texts": [
+                "semabi_2318072860_3",
+                "semabi_2318072860_3",
+                "Inboxsemabi_2318072860_3 Add to Favorites",
+                "Mark 'semabi_2318072860_3' as done",
+                "Inboxsemabi_2318072860_3",
+                "Inbox"
+              ],
+              "value_node": 128
+            }
+          }
+        ]
+      },
+      "version": 1
+    }
+  },
+  "classification": "Direct learned-schema development call; no ordinary-language binding claim",
+  "status": "ELIGIBLE"
+}

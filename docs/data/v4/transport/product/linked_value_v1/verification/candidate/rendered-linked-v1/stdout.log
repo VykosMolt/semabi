@@ -1,0 +1,60 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_rendered_linked_value_learning_and_retained_tab_persist_through_navigation _
+
+tmp_path = PosixPath('/tmp/pytest-of-moloch/pytest-61/test_rendered_linked_value_lea0')
+
+    @pytest.mark.slow
+    def test_rendered_linked_value_learning_and_retained_tab_persist_through_navigation(tmp_path):
+        html = '''<!doctype html><main></main><script>
+          const main=document.querySelector('main');
+          const rows=JSON.parse(localStorage.getItem('fixture_rows')||'[]');
+          const save=()=>localStorage.setItem('fixture_rows',JSON.stringify(rows));
+          if(location.pathname==='/') {
+            main.innerHTML='<form><label>Incoming phrase <input></label><button>Add</button></form><section></section>';
+            const form=main.querySelector('form'), input=form.querySelector('input'), list=main.querySelector('section');
+            const render=()=>{list.replaceChildren();rows.forEach((value,index)=>{
+              const article=document.createElement('article'), link=document.createElement('a');
+              link.href='/item/'+index;link.textContent=value;article.append(link);list.append(article);});};
+            form.addEventListener('submit',event=>{event.preventDefault();rows.push(input.value);save();input.value='';render();});
+            render();
+          } else {
+            const index=Number(location.pathname.split('/').pop());
+            main.innerHTML='<div><button>#'+String(11+index)+'</button><div contenteditable="true" role="textbox" '
+              +'aria-label="Recorded phrase" style="min-height:30px;min-width:200px"></div></div>'
+              +'<div><textarea aria-label="Separate draft"></textarea><button>Save draft</button></div>';
+            const field=main.querySelector('[contenteditable]');field.textContent=rows[index];
+            field.addEventListener('blur',()=>{rows[index]=field.textContent;save();});
+          }
+          </script>'''
+        browser = BrowserSession('https://synthetic.invalid/')
+        browser.settle_ms, browser.max_settle_ms = 1, 100
+        runtime = Runtime(tmp_path)
+        connection = {'id':'native-linked', 'url':browser.allowed_origin+'/',
+                      'scope':{'exploration_enabled':True,'max_actions':60,'max_writes':30}}
+        try:
+            browser._page.route('https://synthetic.invalid/**', lambda route: route.fulfill(content_type='text/html',body=html))
+            browser.goto()
+            runtime.sessions[connection['id']] = browser
+            learned = runtime.learn(connection, {}, lambda event: None)
+            assert learned['attempts'] == []
+            update = _learned_kind(learned, 'update_visible_record')
+            anchor = update['procedure']['anchor']
+            target = update['support']['trials'][0]['values'][anchor]
+            result = runtime.invoke(connection, update, {'target':target,anchor:'New rendered caller value'}, lambda event: None)
+            assert result['outcome'] == 'CONFIRMED'
+            surface = browser.reload()
+            assert len(visible_record_matches(surface,'New rendered caller value')) == 1
+            assert visible_record_matches(surface,target) == []
+            # The browser guard also refuses Tab if focus has moved; it must not
+            # focus an old editor before dispatching the learned key.
+            record = visible_record_matches(surface,'New rendered caller value')[0]
+            link = runtime._anchor_link(surface,record,'New rendered caller value')
+>           assert browser.act(Primitive('click',link)).ok
+                               ^^^^^^^^^
+E           NameError: name 'Primitive' is not defined
+
+tests/test_operation_runtime.py:3147: NameError
+=========================== short test summary info ============================
+FAILED tests/test_operation_runtime.py::test_rendered_linked_value_learning_and_retained_tab_persist_through_navigation
+1 failed, 1 passed, 336 deselected in 3.37s

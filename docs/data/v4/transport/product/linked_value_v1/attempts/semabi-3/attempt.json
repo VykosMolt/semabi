@@ -1,0 +1,853 @@
+{
+  "format": "product_assessment_http_attempt.v1",
+  "arm": "semabi",
+  "binding_sha256": "8d39131cf724561e44acbbd2eb195b07f5e68748ffc15c9aca22b7be972662aa",
+  "call_sha256": "43c9a9cf6eddac90f018b7c37fa433c74905f5de4bc5497b1b8218768d2ea077",
+  "operation_id": "op_aa0d714f0ae97c8fcac4",
+  "operation_version": 1,
+  "arguments": {
+    "add_a_task": "lcfc758258f3 second replacement",
+    "target": "lcfc758258f3 first replacement"
+  },
+  "source_before": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "abf8c7bb410b4c23c1d2938c98ece56547384c8d4bee65c967c0ddd60ea8b159",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "d3585b9e255e01b8d03fbd51cc52dfdfe8d39d994c314c01a1e35414ca5a9367",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "266d6a9aa62f21193d9a93cc0ef5ece73dc4ff1f04e0acbbc45efa8ec8980d74",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "started_at": "2026-09-09T23:01:53.041819+00:00",
+  "limits": {
+    "max_seconds": 60,
+    "max_actions": 20,
+    "max_possible_writes": 12
+  },
+  "jobs": [
+    {
+      "connection_id": "conn_34fdcbbceab948b8a0f861138f04ef09",
+      "created_at": "2026-09-09T23:01:53.054998+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T23:01:53.057225+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T23:01:56.338505+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_a041801c13124117bb0086510ca5798e",
+      "job_id": "job_a041801c13124117bb0086510ca5798e",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8853",
+        "authentication_actions": 3,
+        "authentication_evidence": "same_origin_settled_password_form_absence",
+        "authentication_prior": "Whole normalized English label: Login, Log in, Sign in",
+        "elapsed_seconds": 2.853,
+        "login_selection_basis": "exact_english_login_label_prior",
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T23:01:56.338543+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_34fdcbbceab948b8a0f861138f04ef09",
+      "created_at": "2026-09-09T23:01:56.390879+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T23:01:56.393657+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T23:01:56.699916+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "ee6493d09c3d9c03",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:01:57.009731+00:00",
+          "sequence": 3,
+          "settled": true,
+          "signature": "ee6493d09c3d9c03",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:01:57.019699+00:00",
+          "sequence": 4,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T23:01:58.338305+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "6a2dc9cbc0253522",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 177
+          },
+          "created_at": "2026-09-09T23:01:58.350898+00:00",
+          "sequence": 6,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T23:01:59.345496+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "1cd0d39b8a24d3bc",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T23:01:59.349003+00:00",
+          "ok": true,
+          "sequence": 8,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T23:01:59.744296+00:00",
+          "sequence": 9,
+          "settled": true,
+          "signature": "1cd0d39b8a24d3bc",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:01:59.779724+00:00",
+          "field": 99,
+          "metadata": {
+            "active_node": 0,
+            "aria_activedescendant": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_autocomplete": null,
+            "aria_controls": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_expanded": null,
+            "aria_owns": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "listboxes": [],
+            "other_popups": [],
+            "scope": null,
+            "scope_textboxes": [],
+            "target_focused": false,
+            "target_visible": true,
+            "unmapped_listboxes": 0,
+            "unmapped_other_popups": 0,
+            "unmapped_scope_textboxes": 0
+          },
+          "observation": "1cd0d39b8a24d3bc",
+          "sequence": 10,
+          "type": "textbox_popup_observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 99,
+            "text": "lcfc758258f3 second replacement"
+          },
+          "created_at": "2026-09-09T23:01:59.781279+00:00",
+          "sequence": 11,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T23:02:00.182108+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "785f4f7ade4cc2eb",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T23:02:00.190950+00:00",
+          "ok": true,
+          "sequence": 13,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T23:02:00.212886+00:00",
+          "field": 99,
+          "metadata": {
+            "active_node": 99,
+            "aria_activedescendant": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_autocomplete": null,
+            "aria_controls": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_expanded": null,
+            "aria_owns": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "listboxes": [],
+            "other_popups": [],
+            "scope": null,
+            "scope_textboxes": [],
+            "target_focused": true,
+            "target_visible": true,
+            "unmapped_listboxes": 0,
+            "unmapped_other_popups": 0,
+            "unmapped_scope_textboxes": 0
+          },
+          "observation": "785f4f7ade4cc2eb",
+          "sequence": 14,
+          "type": "textbox_popup_observation"
+        },
+        {
+          "action": {
+            "kind": "press",
+            "target": 99,
+            "text": "Tab"
+          },
+          "created_at": "2026-09-09T23:02:00.214708+00:00",
+          "sequence": 15,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T23:02:00.736083+00:00",
+          "sequence": 16,
+          "settled": true,
+          "signature": "7e8394d1ac14e227",
+          "type": "observation"
+        },
+        {
+          "action": "press",
+          "created_at": "2026-09-09T23:02:00.737834+00:00",
+          "ok": true,
+          "sequence": 17,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T23:02:00.761054+00:00",
+          "sequence": 18,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T23:02:02.137240+00:00",
+          "sequence": 19,
+          "settled": true,
+          "signature": "0be5d8cb3788d5de",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:02:02.458103+00:00",
+          "sequence": 20,
+          "settled": true,
+          "signature": "0be5d8cb3788d5de",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:02:02.468172+00:00",
+          "sequence": 21,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T23:02:03.497417+00:00",
+          "sequence": 22,
+          "settled": true,
+          "signature": "0be5d8cb3788d5de",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:02:03.508523+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 23,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_54e5ff3086ac4418b1ba06632908cb09",
+      "job_id": "job_54e5ff3086ac4418b1ba06632908cb09",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "add_a_task": "lcfc758258f3 second replacement",
+          "target": "lcfc758258f3 first replacement"
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 56.55370094600075,
+          "max_writes": 9
+        },
+        "operation_id": "op_aa0d714f0ae97c8fcac4",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "add_a_task": "lcfc758258f3 second replacement"
+          },
+          "before": {
+            "add_a_task": "lcfc758258f3 first replacement"
+          },
+          "before_witness": {
+            "basis": "visible_local_record",
+            "link_destinations": [
+              "http://127.0.0.1:8853/projects/1",
+              "http://127.0.0.1:8853/tasks/6"
+            ],
+            "observation": "6a2dc9cbc0253522",
+            "role": "listitem",
+            "root": 163,
+            "text_boundaries": {},
+            "texts": [
+              "Inboxlcfc758258f3 first replacement Add to Favorites",
+              "Mark 'lcfc758258f3 first replacement' as done",
+              "Inboxlcfc758258f3 first replacement",
+              "Inbox",
+              "lcfc758258f3 first replacement",
+              "lcfc758258f3 first replacement"
+            ],
+            "value_node": 176
+          },
+          "identity": "UNESTABLISHED",
+          "kind": "visible_record_value_replaced",
+          "old_anchor_absence": {
+            "after_reload_observation": "0be5d8cb3788d5de",
+            "after_submit_observation": "0be5d8cb3788d5de",
+            "value": "lcfc758258f3 first replacement"
+          },
+          "scope": "Local exact-value replacement in the inspected record view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "field_slots": {
+              "add_a_task": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "link",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "link_destinations": [
+              "http://127.0.0.1:8853/projects/1",
+              "http://127.0.0.1:8853/tasks/6"
+            ],
+            "observation": "0be5d8cb3788d5de",
+            "old_anchor_absence": {
+              "after_reload_observation": "0be5d8cb3788d5de",
+              "after_submit_observation": "0be5d8cb3788d5de",
+              "value": "lcfc758258f3 first replacement"
+            },
+            "role": "listitem",
+            "root": 163,
+            "text_boundaries": {},
+            "texts": [
+              "Inboxlcfc758258f3 second replacement Add to Favorites",
+              "Mark 'lcfc758258f3 second replacement' as done",
+              "Inboxlcfc758258f3 second replacement",
+              "Inbox",
+              "lcfc758258f3 second replacement",
+              "lcfc758258f3 second replacement"
+            ],
+            "value_node": 176
+          }
+        },
+        "metrics": {
+          "actions": 6,
+          "elapsed_seconds": 7.113,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 3
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T23:02:03.508587+00:00",
+      "write_intent": true
+    }
+  ],
+  "accepted_jobs": [
+    {
+      "connection_id": "conn_34fdcbbceab948b8a0f861138f04ef09",
+      "id": "job_a041801c13124117bb0086510ca5798e",
+      "job_id": "job_a041801c13124117bb0086510ca5798e"
+    },
+    {
+      "connection_id": "conn_34fdcbbceab948b8a0f861138f04ef09",
+      "deduplicated": false,
+      "execution_id": "job_54e5ff3086ac4418b1ba06632908cb09",
+      "id": "job_54e5ff3086ac4418b1ba06632908cb09",
+      "job_id": "job_54e5ff3086ac4418b1ba06632908cb09"
+    }
+  ],
+  "http_requests": 203,
+  "write_retries": 0,
+  "browser_started": true,
+  "status": "RUNTIME_FINISHED",
+  "effect_verification": "INDEPENDENT_CHECK_PENDING",
+  "pending_http_request": {
+    "method": "POST",
+    "path": "/v1/connections/conn_34fdcbbceab948b8a0f861138f04ef09/operations/op_aa0d714f0ae97c8fcac4/invoke",
+    "body": {
+      "version": 1,
+      "arguments": {
+        "add_a_task": "lcfc758258f3 second replacement",
+        "target": "lcfc758258f3 first replacement"
+      },
+      "limits": {
+        "max_actions": 16,
+        "max_writes": 9,
+        "max_seconds": 56.55370094600075
+      }
+    },
+    "idempotency_key": "assessment-c13b04539a68c87a42b7aaa0f9105120021e8c6c"
+  },
+  "last_observed_job": {
+    "connection_id": "conn_34fdcbbceab948b8a0f861138f04ef09",
+    "created_at": "2026-09-09T23:01:56.390879+00:00",
+    "events": [
+      {
+        "created_at": "2026-09-09T23:01:56.393657+00:00",
+        "kind": "invoke",
+        "sequence": 1,
+        "type": "job_started"
+      },
+      {
+        "created_at": "2026-09-09T23:01:56.699916+00:00",
+        "sequence": 2,
+        "settled": true,
+        "signature": "ee6493d09c3d9c03",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T23:01:57.009731+00:00",
+        "sequence": 3,
+        "settled": true,
+        "signature": "ee6493d09c3d9c03",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T23:01:57.019699+00:00",
+        "sequence": 4,
+        "type": "navigation",
+        "url": "http://127.0.0.1:8853/"
+      },
+      {
+        "created_at": "2026-09-09T23:01:58.338305+00:00",
+        "sequence": 5,
+        "settled": true,
+        "signature": "6a2dc9cbc0253522",
+        "type": "observation"
+      },
+      {
+        "action": {
+          "kind": "click",
+          "target": 177
+        },
+        "created_at": "2026-09-09T23:01:58.350898+00:00",
+        "sequence": 6,
+        "type": "write_intent"
+      },
+      {
+        "created_at": "2026-09-09T23:01:59.345496+00:00",
+        "sequence": 7,
+        "settled": true,
+        "signature": "1cd0d39b8a24d3bc",
+        "type": "observation"
+      },
+      {
+        "action": "click",
+        "created_at": "2026-09-09T23:01:59.349003+00:00",
+        "ok": true,
+        "sequence": 8,
+        "type": "action_result"
+      },
+      {
+        "created_at": "2026-09-09T23:01:59.744296+00:00",
+        "sequence": 9,
+        "settled": true,
+        "signature": "1cd0d39b8a24d3bc",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T23:01:59.779724+00:00",
+        "field": 99,
+        "metadata": {
+          "active_node": 0,
+          "aria_activedescendant": {
+            "nodes": [],
+            "present": false,
+            "token_count": 0,
+            "unresolved": 0
+          },
+          "aria_autocomplete": null,
+          "aria_controls": {
+            "nodes": [],
+            "present": false,
+            "token_count": 0,
+            "unresolved": 0
+          },
+          "aria_expanded": null,
+          "aria_owns": {
+            "nodes": [],
+            "present": false,
+            "token_count": 0,
+            "unresolved": 0
+          },
+          "listboxes": [],
+          "other_popups": [],
+          "scope": null,
+          "scope_textboxes": [],
+          "target_focused": false,
+          "target_visible": true,
+          "unmapped_listboxes": 0,
+          "unmapped_other_popups": 0,
+          "unmapped_scope_textboxes": 0
+        },
+        "observation": "1cd0d39b8a24d3bc",
+        "sequence": 10,
+        "type": "textbox_popup_observation"
+      },
+      {
+        "action": {
+          "kind": "type",
+          "target": 99,
+          "text": "lcfc758258f3 second replacement"
+        },
+        "created_at": "2026-09-09T23:01:59.781279+00:00",
+        "sequence": 11,
+        "type": "write_intent"
+      },
+      {
+        "created_at": "2026-09-09T23:02:00.182108+00:00",
+        "sequence": 12,
+        "settled": true,
+        "signature": "785f4f7ade4cc2eb",
+        "type": "observation"
+      },
+      {
+        "action": "type",
+        "created_at": "2026-09-09T23:02:00.190950+00:00",
+        "ok": true,
+        "sequence": 13,
+        "type": "action_result"
+      },
+      {
+        "created_at": "2026-09-09T23:02:00.212886+00:00",
+        "field": 99,
+        "metadata": {
+          "active_node": 99,
+          "aria_activedescendant": {
+            "nodes": [],
+            "present": false,
+            "token_count": 0,
+            "unresolved": 0
+          },
+          "aria_autocomplete": null,
+          "aria_controls": {
+            "nodes": [],
+            "present": false,
+            "token_count": 0,
+            "unresolved": 0
+          },
+          "aria_expanded": null,
+          "aria_owns": {
+            "nodes": [],
+            "present": false,
+            "token_count": 0,
+            "unresolved": 0
+          },
+          "listboxes": [],
+          "other_popups": [],
+          "scope": null,
+          "scope_textboxes": [],
+          "target_focused": true,
+          "target_visible": true,
+          "unmapped_listboxes": 0,
+          "unmapped_other_popups": 0,
+          "unmapped_scope_textboxes": 0
+        },
+        "observation": "785f4f7ade4cc2eb",
+        "sequence": 14,
+        "type": "textbox_popup_observation"
+      },
+      {
+        "action": {
+          "kind": "press",
+          "target": 99,
+          "text": "Tab"
+        },
+        "created_at": "2026-09-09T23:02:00.214708+00:00",
+        "sequence": 15,
+        "type": "write_intent"
+      },
+      {
+        "created_at": "2026-09-09T23:02:00.736083+00:00",
+        "sequence": 16,
+        "settled": true,
+        "signature": "7e8394d1ac14e227",
+        "type": "observation"
+      },
+      {
+        "action": "press",
+        "created_at": "2026-09-09T23:02:00.737834+00:00",
+        "ok": true,
+        "sequence": 17,
+        "type": "action_result"
+      },
+      {
+        "created_at": "2026-09-09T23:02:00.761054+00:00",
+        "sequence": 18,
+        "type": "navigation",
+        "url": "http://127.0.0.1:8853/"
+      },
+      {
+        "created_at": "2026-09-09T23:02:02.137240+00:00",
+        "sequence": 19,
+        "settled": true,
+        "signature": "0be5d8cb3788d5de",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T23:02:02.458103+00:00",
+        "sequence": 20,
+        "settled": true,
+        "signature": "0be5d8cb3788d5de",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T23:02:02.468172+00:00",
+        "sequence": 21,
+        "type": "reload"
+      },
+      {
+        "created_at": "2026-09-09T23:02:03.497417+00:00",
+        "sequence": 22,
+        "settled": true,
+        "signature": "0be5d8cb3788d5de",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T23:02:03.508523+00:00",
+        "outcome": "CONFIRMED",
+        "sequence": 23,
+        "status": "COMPLETED",
+        "type": "job_finished"
+      }
+    ],
+    "id": "job_54e5ff3086ac4418b1ba06632908cb09",
+    "job_id": "job_54e5ff3086ac4418b1ba06632908cb09",
+    "kind": "invoke",
+    "request": {
+      "arguments": {
+        "add_a_task": "lcfc758258f3 second replacement",
+        "target": "lcfc758258f3 first replacement"
+      },
+      "limits": {
+        "max_actions": 16,
+        "max_seconds": 56.55370094600075,
+        "max_writes": 9
+      },
+      "operation_id": "op_aa0d714f0ae97c8fcac4",
+      "version": 1
+    },
+    "result": {
+      "effect": {
+        "arguments": {
+          "add_a_task": "lcfc758258f3 second replacement"
+        },
+        "before": {
+          "add_a_task": "lcfc758258f3 first replacement"
+        },
+        "before_witness": {
+          "basis": "visible_local_record",
+          "link_destinations": [
+            "http://127.0.0.1:8853/projects/1",
+            "http://127.0.0.1:8853/tasks/6"
+          ],
+          "observation": "6a2dc9cbc0253522",
+          "role": "listitem",
+          "root": 163,
+          "text_boundaries": {},
+          "texts": [
+            "Inboxlcfc758258f3 first replacement Add to Favorites",
+            "Mark 'lcfc758258f3 first replacement' as done",
+            "Inboxlcfc758258f3 first replacement",
+            "Inbox",
+            "lcfc758258f3 first replacement",
+            "lcfc758258f3 first replacement"
+          ],
+          "value_node": 176
+        },
+        "identity": "UNESTABLISHED",
+        "kind": "visible_record_value_replaced",
+        "old_anchor_absence": {
+          "after_reload_observation": "0be5d8cb3788d5de",
+          "after_submit_observation": "0be5d8cb3788d5de",
+          "value": "lcfc758258f3 first replacement"
+        },
+        "scope": "Local exact-value replacement in the inspected record view, retained after reload",
+        "witness": {
+          "basis": "visible_local_record",
+          "field_slots": {
+            "add_a_task": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "link_destinations": [
+            "http://127.0.0.1:8853/projects/1",
+            "http://127.0.0.1:8853/tasks/6"
+          ],
+          "observation": "0be5d8cb3788d5de",
+          "old_anchor_absence": {
+            "after_reload_observation": "0be5d8cb3788d5de",
+            "after_submit_observation": "0be5d8cb3788d5de",
+            "value": "lcfc758258f3 first replacement"
+          },
+          "role": "listitem",
+          "root": 163,
+          "text_boundaries": {},
+          "texts": [
+            "Inboxlcfc758258f3 second replacement Add to Favorites",
+            "Mark 'lcfc758258f3 second replacement' as done",
+            "Inboxlcfc758258f3 second replacement",
+            "Inbox",
+            "lcfc758258f3 second replacement",
+            "lcfc758258f3 second replacement"
+          ],
+          "value_node": 176
+        }
+      },
+      "metrics": {
+        "actions": 6,
+        "elapsed_seconds": 7.113,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "possible_write_actions": 3
+      },
+      "outcome": "CONFIRMED"
+    },
+    "status": "COMPLETED",
+    "updated_at": "2026-09-09T23:02:03.508587+00:00",
+    "write_intent": true
+  },
+  "connection_navigation_actions": 1,
+  "authentication_actions": 3,
+  "invocation_request": {
+    "version": 1,
+    "arguments": {
+      "add_a_task": "lcfc758258f3 second replacement",
+      "target": "lcfc758258f3 first replacement"
+    },
+    "limits": {
+      "max_actions": 16,
+      "max_writes": 9,
+      "max_seconds": 56.55370094600075
+    }
+  },
+  "idempotency_key": "assessment-c13b04539a68c87a42b7aaa0f9105120021e8c6c",
+  "runtime_outcome": "CONFIRMED",
+  "interaction_total": 10,
+  "possible_write_total": 6,
+  "public_observation_events": 10,
+  "raw_dom_snapshot_count": null,
+  "raw_dom_snapshot_count_status": "Not exposed by this service version",
+  "elapsed_seconds_including_auth_http_polling": 10.491124,
+  "source_after": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "abf8c7bb410b4c23c1d2938c98ece56547384c8d4bee65c967c0ddd60ea8b159",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "d3585b9e255e01b8d03fbd51cc52dfdfe8d39d994c314c01a1e35414ca5a9367",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "266d6a9aa62f21193d9a93cc0ef5ece73dc4ff1f04e0acbbc45efa8ec8980d74",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_unchanged": true,
+  "within_workflow_budget": true,
+  "completed_at": "2026-09-09T23:02:03.533329+00:00"
+}

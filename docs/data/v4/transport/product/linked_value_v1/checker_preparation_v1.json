@@ -1,0 +1,38 @@
+{
+  "classification": "Offline evaluator checks using retained ordinary UI inventory; no new app calls",
+  "checker_sha256": "4b1383aa16fbcab7bd5a73a68c48c03f217665035e0184a3567a0e580bbb9add",
+  "cases": {
+    "retained_before": {
+      "expected": true,
+      "actual": true
+    },
+    "exact_rename": {
+      "expected": true,
+      "actual": true
+    },
+    "no_rename": {
+      "expected": false,
+      "actual": false
+    },
+    "read_no_change": {
+      "expected": true,
+      "actual": true
+    },
+    "non_target_completion": {
+      "expected": false,
+      "actual": false
+    },
+    "target_destination_change": {
+      "expected": false,
+      "actual": false
+    },
+    "added_duplicate": {
+      "expected": false,
+      "actual": false
+    },
+    "second_rename": {
+      "expected": true,
+      "actual": true
+    }
+  }
+}

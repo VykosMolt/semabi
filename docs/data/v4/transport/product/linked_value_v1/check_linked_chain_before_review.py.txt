@@ -1,0 +1,416 @@
+"""Independent ordinary-UI task checks; run only in a root-coordinated phase.
+
+The browser observes rendered nodes and performs authentication, navigation and
+reload only. Expected titles are used by this evaluator after observation, never
+by a learner matcher. Each named phase has one 30s/12-action/8-write attempt.
+"""
+from __future__ import annotations
+
+import argparse
+from collections import Counter
+from copy import deepcopy
+from datetime import datetime, timezone
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import sys
+import threading
+import time
+from urllib.parse import urlsplit
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE = Path(__file__).resolve().parent
+OBSERVER = ROOT / "runs/product_assessment_reserved_v1/setup/ui_session.py"
+ACCOUNTING = ROOT / "runs/product_evaluator_v3/check_effects.py"
+FIXTURES = ROOT / "runs/product_assessment_reserved_v1/setup/fixture_values_v1.json"
+ORIGIN = "http://127.0.0.1:8853/"
+PHASES = ("before", "after_call_1", "after_call_2", "after_call_3")
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def digest(body):
+    return hashlib.sha256(body).hexdigest()
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+
+
+def owned_inventory(observation, controls):
+    """Extract every visible task link and its nearest own listitem, or fail."""
+    nodes = {node["i"]: node for node in observation["nodes"]}
+    controls = {int(key): value for key, value in controls.items()}
+    origin = urlsplit(ORIGIN)
+
+    def row_of(index):
+        seen = set()
+        while index >= 0:
+            if index in seen or index not in nodes:
+                raise ValueError("Malformed observed parent chain")
+            seen.add(index)
+            node = nodes[index]
+            if node["role"] == "listitem":
+                return index
+            index = node["parent"]
+        return None
+
+    def task_link(node):
+        if node["role"] != "link":
+            return False
+        destination = urlsplit(controls.get(node["i"], {}).get("destination", ""))
+        parts = destination.path.strip("/").split("/")
+        return (destination.scheme, destination.netloc) == (origin.scheme, origin.netloc) and len(parts) == 2 and parts[0] == "tasks" and bool(parts[1])
+
+    links = [node for node in nodes.values() if task_link(node)]
+    groups = {}
+    for link in links:
+        row = row_of(link["i"])
+        if row is None:
+            raise ValueError("Visible task link has no own listitem")
+        groups.setdefault(row, []).append(link)
+    records = []
+    for row, titles in groups.items():
+        if len(titles) != 1 or not titles[0]["name"]:
+            raise ValueError("Task row has missing or ambiguous title links")
+        local = [node for node in nodes.values() if row_of(node["i"]) == row]
+        checkboxes = [node for node in local if node["role"] == "checkbox"]
+        if len(checkboxes) != 1 or type(checkboxes[0].get("checked")) is not bool:
+            raise ValueError("Task row has missing or ambiguous completion checkbox")
+        projects = []
+        for node in local:
+            destination = urlsplit(controls.get(node["i"], {}).get("destination", ""))
+            if node["role"] == "link" and destination.path.startswith("/projects/") and (destination.scheme, destination.netloc) == (origin.scheme, origin.netloc):
+                projects.append(node["name"])
+        # Preserve the entire own row's observable semantics, including repeated
+        # named controls/text and link destinations. DOM indices/bboxes are local
+        # witnesses, not stable record identities or comparison keys.
+        semantics = []
+        for node in local:
+            if node["role"] not in {"group", "list", "listitem"} and (node["name"] or node.get("value") is not None or node.get("checked") is not None):
+                semantics.append({key: node.get(key) for key in ("role", "name", "value", "checked", "options")})
+                if node["role"] == "link":
+                    semantics[-1]["destination"] = controls.get(node["i"], {}).get("destination")
+        semantics.sort(key=canonical)
+        records.append({"title": titles[0]["name"], "done": checkboxes[0]["checked"],
+                        "project_names": sorted(projects), "own_visible_names": sorted(node["name"] for node in local if node["name"]),
+                        "semantics": semantics, "row_node": row, "title_node": titles[0]["i"],
+                        "checkbox_node": checkboxes[0]["i"]})
+    return sorted(records, key=lambda record: canonical(record_semantics(record)))
+
+
+def record_semantics(record):
+    return {key: record[key] for key in ("title", "done", "project_names", "semantics")}
+
+
+def inventory_counts(records):
+    return Counter(canonical(record_semantics(record)) for record in records)
+
+
+def renamed_inventory(prior_records, target, replacement):
+    expected = deepcopy(prior_records)
+    selected = [record for record in expected if record["title"] == target]
+    if len(selected) != 1 or any(record["title"] == replacement for record in expected):
+        raise ValueError("Rename requires one prior target and an absent replacement")
+    record = selected[0]
+    record["title"] = replacement
+    for node in record["semantics"]:
+        name = node.get("name")
+        if name == target and node["role"] in {"link", "text"}:
+            node["name"] = replacement
+        elif node["role"] == "checkbox" and isinstance(name, str) and name.count(target) == 1:
+            node["name"] = name.replace(target, replacement)
+    # Destinations, project links, labels, completion and every non-target row
+    # remain literal observed witnesses. None enter the operation's inputs.
+    return expected
+
+
+def assess(records, fixtures, plan, phase, prior_records=None, reference_records=None):
+    counts = Counter(record["title"] for record in records)
+    base_checks = {}
+    for name in ("A", "B", "C"):
+        expected = fixtures[name]
+        selected = [record for record in records if record["title"] == expected["title"]]
+        base_checks[name] = {"title_matches": len(selected),
+            "expected_label_visible_in_own_row": len(selected) == 1 and expected["label"] in selected[0]["own_visible_names"],
+            "Inbox_and_open": len(selected) == 1 and selected[0]["project_names"] == ["Inbox"] and selected[0]["done"] is False}
+    base_ok = all(check["title_matches"] == 1 and check["expected_label_visible_in_own_row"] and check["Inbox_and_open"]
+                  for check in base_checks.values())
+    step = PHASES.index(phase)
+    current = inventory_counts(records)
+    transition = None
+    if step:
+        if prior_records is None:
+            raise ValueError("An earlier accepted phase is required")
+        call = plan["calls"][step - 1]
+        expected = (renamed_inventory(prior_records, call["target_value"], call["replacement_value"])
+                    if call["kind"] == "update" else prior_records)
+        matched = current == inventory_counts(expected)
+        transition = {"kind": call["kind"], "exact_expected_inventory": matched,
+                      "removed": list((inventory_counts(prior_records) - current).elements()),
+                      "added": list((current - inventory_counts(prior_records)).elements())}
+    else:
+        matched = counts[plan["initial_target"]] == 1 and all(counts[value] == 0 for value in plan["replacements"])
+    reference_matches = None if reference_records is None else current == inventory_counts(reference_records)
+    matched = matched and base_ok and len(records) == plan["expected_visible_task_count"]
+    if reference_records is not None:
+        matched = matched and reference_matches
+    return {"expected_state_matches": matched, "base_fixture_checks": base_checks,
+            "visible_task_count": len(records), "expected_visible_task_count": plan["expected_visible_task_count"],
+            "inventory_transition": transition, "reference_arm_before_matches": reference_matches,
+            "scope": "Current rendered task-list rows only; link destinations preserve observed row witnesses, never runtime identities"}
+
+
+def load_module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class Check:
+    def __init__(self, args):
+        self.args = args
+        self.started = time.monotonic()
+        self.plan = json.loads(args.plan.read_bytes())
+        self.hashes = json.loads(args.source_hashes.read_bytes())
+        self.fixtures = json.loads(FIXTURES.read_bytes())
+        if ([call["kind"] for call in self.plan["calls"]] != ["update", "read", "update"]
+                or len(self.plan["replacements"]) != 2 or len(set(self.plan["replacements"])) != 2
+                or self.plan["initial_target"] in self.plan["replacements"]
+                or [(call["target_value"], call.get("replacement_value")) for call in self.plan["calls"]] != [
+                    (self.plan["initial_target"], self.plan["replacements"][0]),
+                    (self.plan["replacements"][0], None),
+                    (self.plan["replacements"][0], self.plan["replacements"][1])]
+                or self.plan["independent_verification_budget_per_phase"] != {"seconds": 30, "actions": 12, "possible_writes": 8}):
+            raise ValueError("Frozen demo phase contract differs")
+        if self.source_hashes() != self.hashes:
+            raise ValueError("Source differs from frozen linked-value demonstration")
+        sys.path.insert(0, str(ROOT))
+        self.observer = load_module("_schema_demo_observer", OBSERVER)
+        self.accounting = load_module("_schema_demo_accounting", ACCOUNTING)
+        self.cpu_started = self.accounting.cpu_seconds()
+        self.path = BASE / "independent_schema_checks" / args.arm / args.phase
+        self.credentials = json.loads(args.credentials_file.read_bytes())
+        self.secrets = sorted({v for v in self.credentials.values() if isinstance(v, str) and v}, key=len, reverse=True)
+        self.prior = self.previous(args.prior_receipt, PHASES[PHASES.index(args.phase) - 1]) if args.phase != "before" else None
+        self.reference = self.previous(args.reference_before, "before", other_arm=True) if args.reference_before else None
+        if args.phase == "before":
+            if args.restore_receipt is None:
+                raise ValueError("Coordinated successful opaque restore receipt required")
+            restore = json.loads(args.restore_receipt.read_bytes())
+            restored = json.loads(restore.get("stdout", "null"))
+            if (restore.get("exit_code") != 0 or restore.get("command", [])[-2:] != ["restore", args.snapshot_name]
+                    or not isinstance(restored, dict) or restored.get("action") != "restore"
+                    or restored.get("name") != args.snapshot_name):
+                raise ValueError("Opaque restore receipt is not successful")
+            if args.arm == "cached_form" and self.reference is None:
+                raise ValueError("Second arm requires first arm's accepted before-state")
+        self.path.mkdir(parents=True, mode=0o700, exist_ok=False)
+        self.result = {"format": "vikunja_independent_linked_chain_check.v1", "arm": args.arm, "phase": args.phase,
+                       "started_at": now(), "status": "STARTED", "verdict": "CHECK_UNESTABLISHED",
+                       "source_before": self.hashes, "checker_sha256": digest(Path(__file__).read_bytes()),
+                       "observer_sha256": digest(OBSERVER.read_bytes()), "accounting_helper_sha256": digest(ACCOUNTING.read_bytes()),
+                       "inputs": {str(path.relative_to(ROOT)): digest(path.read_bytes()) for path in [args.plan, args.source_hashes, FIXTURES, args.prior_receipt, args.reference_before, args.restore_receipt] if path is not None},
+                       "limits": {"max_seconds": 30, "max_actions": 12, "max_possible_writes": 8},
+                       "actions": 0, "possible_writes": 0, "business_writes": 0, "events": [], "captures": [],
+                       "accepted_captures": [], "scope": "Independent saved visible task rows; runtime effect matcher and private app state not used",
+                       "manual_assistance": "Evaluator role/name login and task-row ownership procedure; no task recipe supplied to evaluated arm"}
+        self.browser = None
+        self.serial = 0
+        self.peak = 0
+        self.stop = threading.Event()
+        self.thread = threading.Thread(target=self.monitor, daemon=True)
+        self.save("started.json", self.result)
+        self.thread.start()
+
+    def source_hashes(self):
+        return {name: digest((ROOT / name).read_bytes()) for name in self.hashes}
+
+    def previous(self, path, phase, other_arm=False):
+        if path is None:
+            raise ValueError("Prior successful phase receipt required")
+        value = json.loads(path.read_bytes())
+        if (value.get("phase") != phase or value.get("verdict") != "EXPECTED_STATE_OBSERVED"
+                or value.get("source_before") != self.hashes or value.get("source_after") != self.hashes
+                or not value.get("source_unchanged") or (not other_arm and value.get("arm") != self.args.arm)
+                or not value.get("accepted_inventories_agree") or value.get("termination", {}).get("live_owned_process_count") != 0):
+            raise ValueError("Prior phase identity or outcome differs")
+        if other_arm and value.get("arm") != "semabi":
+            raise ValueError("Reference before-state must be the first arm")
+        for capture in value["accepted_captures"]:
+            if digest((path.parent / capture["snapshot_file"]).read_bytes()) != capture["snapshot_sha256"]:
+                raise ValueError("Prior rendered witness changed")
+        return value["accepted_captures"][-1]["inventory"]
+
+    def redact(self, value):
+        if isinstance(value, str):
+            for secret in self.secrets:
+                value = value.replace(secret, "[REDACTED]")
+            return value
+        if isinstance(value, list):
+            return [self.redact(item) for item in value]
+        if isinstance(value, dict):
+            return {key: self.redact(item) for key, item in value.items()}
+        return value
+
+    def save(self, name, value):
+        body = (json.dumps(self.redact(value), indent=2, sort_keys=True) + "\n").encode()
+        path = self.path / name
+        temporary = path.with_name(path.name + ".new")
+        temporary.write_bytes(body)
+        temporary.replace(path)
+
+    def remaining(self):
+        return 30 - (time.monotonic() - self.started)
+
+    def meter(self, kind, possible_write=False):
+        if self.remaining() <= 0 or self.result["actions"] >= 12 or possible_write and self.result["possible_writes"] >= 8:
+            raise RuntimeError("Independent phase budget exhausted")
+        self.result["actions"] += 1
+        self.result["possible_writes"] += int(possible_write)
+        self.result["events"].append({"kind": kind, "possible_write": possible_write, "at": now()})
+        self.save("events.json", self.result["events"])
+
+    def monitor(self):
+        while not self.stop.is_set():
+            table = self.accounting.process_table()
+            owned = self.accounting.descendants(table, os.getpid())
+            self.peak = max(self.peak, sum(table[pid]["rss_bytes"] for pid in owned if pid in table))
+            self.stop.wait(0.05)
+
+    def read(self, label):
+        if self.remaining() <= 0:
+            raise RuntimeError("Independent phase read budget exhausted")
+        surface = self.browser.read()
+        self.serial += 1
+        file = f"observation_{self.serial:03d}.json"
+        snapshot = {"observed_at": now(), "label": label, "settled": surface.settled,
+                    "observation": surface.observation.to_json(), "controls": surface.controls, "forms": surface.forms}
+        self.save(file, snapshot)
+        receipt = {"snapshot_file": file, "snapshot_sha256": digest((self.path / file).read_bytes()),
+                   "label": label, "settled": surface.settled}
+        self.result["captures"].append(receipt)
+        return surface, receipt
+
+    def primitive(self, role, name, kind, secret=None):
+        surface, _ = self.read("before_authentication_" + kind)
+        matches = [node.i for node in surface.observation.nodes if node.role == role and node.name == name]
+        if len(matches) != 1:
+            raise ValueError("Rendered authentication role/name is ambiguous")
+        self.meter("authentication_" + kind, True)
+        result = self.browser.act(self.observer.Primitive(kind, matches[0], self.credentials[secret] if secret else None))
+        if not result.ok:
+            raise RuntimeError("Ordinary authentication primitive failed")
+
+    def capture(self, stage):
+        previous = None
+        for attempt in range(4):
+            surface, witness = self.read(stage + "_read_" + str(attempt + 1))
+            records = owned_inventory(surface.observation.to_json(), surface.controls)
+            current = inventory_counts(records)
+            if surface.settled and records and current == previous:
+                check = assess(records, self.fixtures, self.plan, self.args.phase, self.prior, self.reference)
+                self.result["accepted_captures"].append({**witness, "stage": stage, "inventory": records, "check": check})
+                return
+            previous = current
+        raise RuntimeError("Visible task inventory did not settle within four reads")
+
+    def run(self):
+        try:
+            self.browser = self.observer.ReadCountedBrowser(ORIGIN)
+            self.browser._page.set_default_timeout(2000)
+            self.meter("set_viewport")
+            self.browser._page.set_viewport_size({"width": 1280, "height": 900})
+            self.meter("navigate")
+            self.browser._page.goto(ORIGIN, wait_until="domcontentloaded", timeout=max(1, min(5000, int(self.remaining() * 1000))))
+            self.primitive("textbox", "Username Or Email Address", "type", "username")
+            self.primitive("textbox", "Password", "type", "password")
+            self.primitive("button", "LOGIN", "click")
+            surface, _ = self.read("after_authentication")
+            if any(control.get("input_type") == "password" for control in surface.controls.values()):
+                raise RuntimeError("Login did not establish an authenticated view")
+            overview = [node.i for node in surface.observation.nodes if node.role == "link" and node.name == "Overview"]
+            if len(overview) > 1:
+                raise ValueError("Overview link is ambiguous")
+            if overview:
+                self.meter("open_overview", True)
+                if not self.browser.act(self.observer.Primitive("click", overview[0])).ok:
+                    raise RuntimeError("Overview navigation failed")
+            self.capture("before_reload")
+            self.meter("reload")
+            self.browser._page.reload(wait_until="domcontentloaded", timeout=max(1, min(5000, int(self.remaining() * 1000))))
+            self.capture("after_reload")
+            accepted = self.result["accepted_captures"]
+            equal = inventory_counts(accepted[0]["inventory"]) == inventory_counts(accepted[1]["inventory"])
+            self.result["accepted_inventories_agree"] = equal
+            self.result["verdict"] = "EXPECTED_STATE_OBSERVED" if equal and all(capture["check"]["expected_state_matches"] for capture in accepted) else "EXPECTED_STATE_NOT_OBSERVED"
+        except Exception as error:
+            self.result.update(verdict="CHECK_UNESTABLISHED", error_type=type(error).__name__, error=str(error))
+        finally:
+            self.finish()
+        return 0 if self.result["verdict"] == "EXPECTED_STATE_OBSERVED" else 2
+
+    def finish(self):
+        if self.browser is not None:
+            table = self.accounting.process_table()
+            owned = [table[pid] for pid in self.accounting.descendants(table, os.getpid()) - {os.getpid()}]
+            self.result["raw_browser_reads"] = self.browser.raw_reads
+            close_returned = False
+            try:
+                self.browser.close()
+                close_returned = True
+            except Exception as error:
+                self.result.update(verdict="CHECK_UNESTABLISHED_BROWSER_CLOSE_ERROR", close_error_type=type(error).__name__)
+            deadline = time.monotonic() + 5
+            while True:
+                after = self.accounting.process_table()
+                live = [proc for proc in owned if proc["pid"] in after and proc["start_ticks"] == after[proc["pid"]]["start_ticks"] and after[proc["pid"]]["state"] != "Z"]
+                if not live or time.monotonic() >= deadline:
+                    break
+                time.sleep(0.05)
+            self.result["termination"] = {"close_returned": close_returned, "live_owned_process_count": len(live),
+                                          "observed_owned_processes": [{"pid": proc["pid"], "start_ticks": proc["start_ticks"],
+                                            "terminal_state": "absent" if proc["pid"] not in after else "pid_reused" if after[proc["pid"]]["start_ticks"] != proc["start_ticks"] else "zombie_terminated" if after[proc["pid"]]["state"] == "Z" else "still_live"} for proc in owned]}
+            if live:
+                self.result["verdict"] = "CHECK_UNESTABLISHED_BROWSER_STILL_LIVE"
+        self.stop.set()
+        self.thread.join()
+        self.result.update(status="REQUIRES_PROCESS_RECONCILIATION" if self.result.get("termination", {}).get("live_owned_process_count") else "TERMINAL", completed_at=now(), elapsed_seconds=round(time.monotonic() - self.started, 6),
+                           cpu_seconds=round(self.accounting.cpu_seconds() - self.cpu_started, 6), sampled_peak_aggregate_rss_bytes=self.peak,
+                           cpu_affinity=sorted(os.sched_getaffinity(0)), source_after=self.source_hashes(),
+                           independent_read_calls=self.serial, runtime_model_calls=0, paid_runtime_cost=0, retries=0)
+        self.result["source_unchanged"] = self.result["source_after"] == self.hashes
+        if not self.result["source_unchanged"]:
+            self.result["verdict"] = "CHECK_UNESTABLISHED_SOURCE_CHANGED"
+        if self.result["elapsed_seconds"] > 30 or self.result["actions"] > 12 or self.result["possible_writes"] > 8:
+            self.result["verdict"] = "CHECK_UNESTABLISHED_BUDGET_EXCEEDED"
+        self.save("result.json", self.result)
+        print(json.dumps({key: self.result[key] for key in ("arm", "phase", "verdict", "actions", "possible_writes", "elapsed_seconds")}, sort_keys=True))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--arm", choices=("semabi", "cached_form"), required=True)
+    parser.add_argument("--phase", choices=PHASES, required=True)
+    parser.add_argument("--plan", type=Path, default=BASE / "linked_chain_plan_v1.json")
+    parser.add_argument("--source-hashes", type=Path, default=BASE / "source_sha256.json")
+    parser.add_argument("--credentials-file", type=Path, default=ROOT / "runs/product_apps_v1/reserved/private/credentials.json")
+    parser.add_argument("--restore-receipt", type=Path)
+    parser.add_argument("--snapshot-name", required=True)
+    parser.add_argument("--prior-receipt", type=Path)
+    parser.add_argument("--reference-before", type=Path)
+    args = parser.parse_args()
+    for key, value in vars(args).items():
+        if isinstance(value, Path):
+            setattr(args, key, value.resolve())
+    os.umask(0o077)
+    return Check(args).run()
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

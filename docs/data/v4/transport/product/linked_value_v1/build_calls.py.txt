@@ -1,0 +1,43 @@
+"""Build a bounded direct-schema chain from the mechanically learned catalog."""
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import secrets
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[1]
+
+def save(path, value):
+    with path.open('x') as stream:
+        json.dump(value, stream, indent=2, sort_keys=True)
+        stream.write('\n')
+
+def main():
+    snapshot = json.loads((BASE/'onboarding_v1/service_snapshot.json').read_bytes())
+    operations = snapshot['operations']
+    chosen = {}
+    for kind in ('read_visible_record', 'update_visible_record'):
+        candidates = [op for op in operations if op['kind']==kind and op['status']=='ACTIVE' and op['procedure'].get('linked_value_editor')]
+        if len(candidates)!=1:
+            raise ValueError('Catalog does not contain one learned linked read and update')
+        op=candidates[0]; procedure=op['procedure']; schema=op['argument_schema']
+        names={procedure['selector_argument']} | ({procedure['anchor']} if kind=='update_visible_record' else set())
+        if (set(schema['properties'])!=names or set(schema['required'])!=names or schema['additionalProperties'] is not False
+                or any(value['type']!='string' for value in schema['properties'].values())):
+            raise ValueError('Catalog is outside the closed string-schema demonstration')
+        chosen[kind]=op
+    initial=json.loads((ROOT/'runs/product_auth_development_v1/schema_demo_plan_v1.json').read_bytes())['calls'][0]['payload']
+    nonce='lc'+secrets.token_hex(5)
+    replacements=[nonce+' first replacement',nonce+' second replacement']
+    calls=[]; (BASE/'schema_calls').mkdir(exist_ok=False)
+    for number,(kind,target,replacement) in enumerate((('update',initial,replacements[0]),('read',replacements[0],None),('update',replacements[0],replacements[1])),1):
+        op=chosen[kind+'_visible_record']; procedure=op['procedure']; arguments={procedure['selector_argument']:target}
+        if replacement is not None: arguments[procedure['anchor']]=replacement
+        call={'status':'ELIGIBLE','classification':'Direct learned-schema development call; no ordinary-language binding claim','call':{'operation':op,'arguments':arguments}}
+        path=BASE/'schema_calls'/f'call_{number}.json';save(path,call)
+        calls.append({'number':number,'kind':kind,'target_value':target,**({'replacement_value':replacement} if replacement is not None else {}),'call_path':str(path.relative_to(ROOT)),'call_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'operation_id':op['id'],'operation_version':op['version']})
+    save(BASE/'linked_chain_plan_v1.json',{'format':'linked_value_development_chain.v1','frozen_at':datetime.now(timezone.utc).isoformat(),'classification':'Development-only direct learned-schema update/read/update chain; original fixed and reserved request denominators unchanged','calls':calls,'initial_target':initial,'replacements':replacements,'snapshot_name':nonce+'-postlearn','expected_visible_task_count':9,'arms':['semabi','cached_form'],'max_per_call':{'seconds':60,'actions':20,'possible_writes':12},'independent_verification_budget_per_phase':{'seconds':30,'actions':12,'possible_writes':8},'schedule':'Opaque post-onboarding snapshot restored once before each arm. Three calls in order without reset, relearning or write retry. Fresh service and browser per HTTP call; fresh browser per baseline call. Independent complete visible task-list inventory before and after each call, with reload. Second arm starts from equal independently observed inventory.','assistance':'Both arms receive identical automatically learned operation artifacts and structured arguments. Exact current initial target was retained from earlier caller input. Installer/evaluator selectors never enter learner. Shared acquisition charged to both arms.','selection_algorithm':'Unique ACTIVE learned linked read/update artifacts with closed string argument schema; parameter names taken from learned procedure','runtime_model_calls':0,'paid_runtime_cost':0})
+    print(json.dumps({'connection_id':snapshot['connection']['id'],'snapshot_name':nonce+'-postlearn','calls':[(c['kind'],c['operation_id']) for c in calls]}))
+
+if __name__=='__main__':main()

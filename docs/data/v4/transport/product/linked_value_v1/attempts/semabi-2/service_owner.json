@@ -1,0 +1,202 @@
+{
+  "format": "product_assessment_service_owner.v1",
+  "started_at": "2026-09-09T23:00:52.507364+00:00",
+  "service_data_dir": "/home/moloch/semabi/runs/product_linked_value_development_v1/service",
+  "fresh_service_process": true,
+  "service_restart_reuses_persisted_artifacts": true,
+  "new_learning": false,
+  "accepted_jobs_terminal_before_close": true,
+  "service_pid": 1601306,
+  "service_startup_seconds": 0.15108893399883527,
+  "client_exit_code": 0,
+  "terminal_jobs": [
+    {
+      "connection_id": "conn_34fdcbbceab948b8a0f861138f04ef09",
+      "created_at": "2026-09-09T23:00:52.717435+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T23:00:52.719116+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T23:00:56.078563+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_a1c5e134803c469b867e5ea2798dcf43",
+      "job_id": "job_a1c5e134803c469b867e5ea2798dcf43",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8853",
+        "authentication_actions": 3,
+        "authentication_evidence": "same_origin_settled_password_form_absence",
+        "authentication_prior": "Whole normalized English label: Login, Log in, Sign in",
+        "elapsed_seconds": 2.931,
+        "login_selection_basis": "exact_english_login_label_prior",
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T23:00:56.078619+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_34fdcbbceab948b8a0f861138f04ef09",
+      "created_at": "2026-09-09T23:00:56.105379+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T23:00:56.108370+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T23:00:56.410090+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "ee6493d09c3d9c03",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:00:56.726791+00:00",
+          "sequence": 3,
+          "settled": true,
+          "signature": "ee6493d09c3d9c03",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:00:56.736382+00:00",
+          "sequence": 4,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T23:00:57.971132+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "6a2dc9cbc0253522",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 177
+          },
+          "created_at": "2026-09-09T23:00:57.982162+00:00",
+          "sequence": 6,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T23:00:58.996116+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "7562fc4c2b8ff429",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T23:00:59.004295+00:00",
+          "ok": true,
+          "sequence": 8,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T23:00:59.366906+00:00",
+          "sequence": 9,
+          "settled": true,
+          "signature": "7562fc4c2b8ff429",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:00:59.395149+00:00",
+          "sequence": 10,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T23:01:00.737531+00:00",
+          "sequence": 11,
+          "settled": true,
+          "signature": "6a2dc9cbc0253522",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T23:01:00.747945+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 12,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_902c1cb8ec6a419b94ec191a3de87615",
+      "job_id": "job_902c1cb8ec6a419b94ec191a3de87615",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "target": "lcfc758258f3 first replacement"
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 56.500649118001455,
+          "max_writes": 9
+        },
+        "operation_id": "op_a661d8595e0a886ac637",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "field_descriptors": {
+            "add_a_task": {
+              "input_type": "contenteditable",
+              "label": "Title",
+              "role": "textbox"
+            }
+          },
+          "kind": "visible_record_read",
+          "scope": "Current value of the unique linked textbox matched in two created-record trials",
+          "values": {
+            "add_a_task": "lcfc758258f3 first replacement"
+          },
+          "witness": {
+            "basis": "visible_local_record",
+            "link_destinations": [
+              "http://127.0.0.1:8853/projects/1",
+              "http://127.0.0.1:8853/tasks/6"
+            ],
+            "observation": "6a2dc9cbc0253522",
+            "role": "listitem",
+            "root": 163,
+            "text_boundaries": {},
+            "texts": [
+              "Inboxlcfc758258f3 first replacement Add to Favorites",
+              "Mark 'lcfc758258f3 first replacement' as done",
+              "Inboxlcfc758258f3 first replacement",
+              "Inbox",
+              "lcfc758258f3 first replacement",
+              "lcfc758258f3 first replacement"
+            ],
+            "value_node": 176
+          }
+        },
+        "metrics": {
+          "actions": 3,
+          "elapsed_seconds": 4.638,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 1
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T23:01:00.747994+00:00",
+      "write_intent": true
+    }
+  ],
+  "service_exit_code": 0,
+  "elapsed_seconds_including_startup_client_reconciliation_and_shutdown": 8.380450917989947,
+  "completed_at": "2026-09-09T23:01:00.887847+00:00"
+}

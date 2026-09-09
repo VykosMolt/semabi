@@ -1,0 +1,140 @@
+{
+  "format": "semabi_linked_value_final_reviewer_receipt.v2",
+  "completed_at": "2026-09-09T23:07:02Z",
+  "classification": "Independent bounded source, evaluator, retained-evidence, and existing-test review; no application invocation or product-source edit by this reviewer",
+  "verdict": "ACCEPTED_WITH_DISCLOSED_EVALUATOR_LINEAGE_LIMITATIONS",
+  "blocking_findings": [],
+  "scope": {
+    "reviewed": [
+      "linked-value runtime and browser-session implementation",
+      "cached-form linked-value baseline",
+      "v1 independent checker integrity repair",
+      "post-outcome v2 evaluator correction and retained-capture reassessment",
+      "existing bounded candidate and integrated test receipts"
+    ],
+    "not_certified_here": [
+      "the final aggregate comparison report"
+    ]
+  },
+  "adopted_source_sha256": {
+    "semabi/compiler/runtime.py": "266d6a9aa62f21193d9a93cc0ef5ece73dc4ff1f04e0acbbc45efa8ec8980d74",
+    "semabi/compiler/browser_session.py": "d3585b9e255e01b8d03fbd51cc52dfdfe8d39d994c314c01a1e35414ca5a9367",
+    "semabi/baselines/cached_form.py": "abf8c7bb410b4c23c1d2938c98ece56547384c8d4bee65c967c0ddd60ea8b159",
+    "tests/test_operation_runtime.py": "0d01c5087f18307a7e0ef9b46ae346f63ffb7e0761937c02476a43fdbdedca59",
+    "tests/test_cached_form.py": "568619535dbc74b39a63c11ee116170c4f22896169f3d8a6dab66710e17a3bd8"
+  },
+  "implementation_review": {
+    "runtime": {
+      "verdict": "NO_BLOCKER",
+      "evidence": [
+        "The first linked-value trial requires one exact-value, form-less editable binding; the second trial requires a distinct created-record descriptor/form/state correspondence.",
+        "The separate LINKED_CONTEXT_PRIOR keeps plain-button numeric shape, path, and state and captures the current call's exact label.",
+        "Execution retains the selected parent, field, and local controls, checks the other values, and admits an update only after two complete saved-and-reloaded trials; READ does not receive the update commit rule.",
+        "Update execution guards focus and Tab, then returns a post-reload new-value witness plus old-value absence."
+      ],
+      "nonblocking_note": "Candidate selection rejects multiple exact-name links before same-origin filtering. This is a conservative narrowing that can decline an otherwise usable page but cannot silently select a broader target."
+    },
+    "cached_form": {
+      "verdict": "NO_BLOCKER",
+      "evidence": [
+        "The baseline selects a unique complete-name enabled same-origin task link and a fresh globally unique form-less parent/field binding.",
+        "READ returns the linked value without mutation.",
+        "UPDATE retains parent and field, fills once, rebinds the new value and continuity, performs one retained-field Tab, uses one counted navigation for readback, and has no verification retry."
+      ]
+    }
+  },
+  "checker_review": {
+    "v1_checker_sha256": "4b1383aa16fbcab7bd5a73a68c48c03f217665035e0184a3567a0e580bbb9add",
+    "v2_checker_sha256": "fae9f368821d5a40bc5c4b956e75000586b44cdc1eb3511ca74c4ada4d62ff11",
+    "resolved_v1_findings": [
+      {
+        "finding": "Prior phases did not bind evaluator and input identities or verify that they stayed unchanged during a phase.",
+        "resolution": "The checker now binds checker, observer, accounting helper, fixtures, plan, and product source map in evaluator_before/evaluator_after, requires exact prior equality, and invalidates changed or missing evaluator files."
+      },
+      {
+        "finding": "The row inventory omitted observable node and stable control state while claiming unchanged semantics.",
+        "resolution": "Every non-structural row node now retains role, name, value, checked, options, placeholder, current, stable control state, and link destination."
+      },
+      {
+        "finding": "The preparation receipt briefly named a predecessor checker hash.",
+        "resolution": "checker_preparation_v1.json was regenerated against v1 hash 4b1383aa16fb and its eight offline cases passed."
+      }
+    ],
+    "v2_change_assessment": {
+      "verdict": "SOUND_FOR_THE_OBSERVED_REPRESENTATION",
+      "change": "Within the uniquely selected row only, replace one literal target occurrence in text-node names, retain the exact-target link rule and one-occurrence checkbox rule, then re-sort semantics.",
+      "positive_evidence": "The complete retained nine-row before and after-call-1 inventories match exactly under this rule. The actual delta is limited to title, exact title link/text, checkbox label, and the aggregate text name containing Inbox plus the title; destinations, completion, control state, project label, and every other row remain literal.",
+      "negative_evidence": [
+        "a non-target completion mutation is rejected",
+        "a target control disabled-state mutation is rejected",
+        "a target link destination mutation is rejected"
+      ],
+      "reassessment_script_sha256": "fbd6852dc6a1b13481bd683ec10ab69fa3b2b38d16222ba45db8f5e800b330cc",
+      "reassessment_receipt_sha256": "ab7cfb4bfe9aa7b3fddf1366d0b28b8f4fd17c8f68944e0c340214867f973aec",
+      "comparison_amendment_sha256": "2c812f8baabfb50e18cb524c9ee0ff1933c9bc681c9c4c95b34214e9fdf3ac54"
+    }
+  },
+  "retained_result_lineage": {
+    "semabi_before_v1": {
+      "sha256": "5a447238310dbff6a0e23d6a58b755d38619044a080c90e3e142134dd5234d7c",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    "semabi_after_call_1_v1": {
+      "sha256": "b104689447b0a6fc51416fefa4c70b84e6d872c1012b87dee3f1c02821d321b2",
+      "verdict": "EXPECTED_STATE_NOT_OBSERVED",
+      "preserved": true
+    },
+    "semabi_before_reassessed_v2": {
+      "sha256": "d0ecb4f7917fbe7a5c1a4317997db972edd138606de72dbc2524163ae875e966",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    "semabi_after_call_1_reassessed_v2": {
+      "sha256": "105d04439f0ec729864a8171f2853e364e29fd547100503a97961b526954be9a",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    "semabi_after_call_2_native_v2": {
+      "sha256": "ba5fb9185df52cc0adbcb8f13d3774d847b820c4b7c88148234e4d4ecaa42e1e",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    "semabi_after_call_3_native_v2": {
+      "sha256": "757a4655909f612caf4d682224d1505255ed94c5bf021ed584693800065f67b7",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    }
+  },
+  "existing_executable_evidence": [
+    {
+      "receipt": "/tmp/semabi_linked_value_candidate/jobs/baseline-fast-v1/result.json",
+      "receipt_sha256": "9ef3293e404027faa8360082b0f7b609561843543413ebb7e06d2802de6a2cdb",
+      "result": "92 passed in 0.36s",
+      "source_scope": "final cached-form source and test",
+      "resource_result": "exit 0, CPU 1, 4 GiB limit not exceeded, 50,245,632-byte sampled peak, terminal ownership verified"
+    },
+    {
+      "receipt": "/tmp/semabi_linked_value_candidate/jobs/linked-final-fast-v1/result.json",
+      "receipt_sha256": "ad449621b3c07c73bf3c6876fb8f3743808469aa05151fc57a24e9ebd8fa3879",
+      "result": "18 linked-value tests passed in 0.69s",
+      "source_scope": "final runtime and operation-runtime test source",
+      "resource_result": "exit 0, CPU 0, 4 GiB limit not exceeded, 66,043,904-byte sampled peak, terminal ownership verified"
+    },
+    {
+      "receipt": "runs/product_linked_value_development_v1/meters/integrated-tests-v1/result.json",
+      "receipt_sha256": "406b9ff8dd2ef27b6a7e7b5d5b056c7d493f639dab4d7f550b957febb6ae3b47",
+      "result": "460 operation-runtime, cached-form, and service tests passed in 32.38s",
+      "source_scope": "adopted final product source before live comparison",
+      "resource_result": "exit 0, CPUs 0-1, 4 GiB limit not exceeded, 738,693,120-byte sampled peak, terminal ownership verified"
+    }
+  ],
+  "comparison_status_observed_at_review_close": {
+    "semabi": "All three frozen calls returned CONFIRMED and the retained/offline-v2 or native-v2 independent checks observed the expected state after each call.",
+    "cached_form": "The first rename was dispatched and independently observed. The second workflow attempt failed during authentication before replay, and its independent check also failed login with the ordinary UI text 'Too Many Requests'. The third call was not attempted.",
+    "stop_discipline": "The coordinator stopped under the frozen no-retry rule: no call retry, reset, cooldown branch, or third baseline call was performed.",
+    "comparison_interpretation": "The realized denominators are SemABI 3/3 frozen slots and cached form 1/3 frozen slots, comprising one replay and two workflow attempts. Access order and rate limiting confound the arms, so this run does not support a competence or speed superiority claim."
+  },
+  "temporal_and_lineage_limitations": [
+    "The v2 rule was written after the first SemABI outcome and after v1 produced a false negative. The v1 source, v1 result, captures, timestamps, actions, costs, and stopped-chain evidence remain preserved, but the first-call v2 verdict is a transparent post-outcome reassessment and is not a prospectively frozen v1 verdict.",
+    "In each derived receipt, top-level checker_sha256 remains 4b1383aa16fb even though evaluator_before/evaluator_after and the recomputed checks use fae9f368821d. Interpret 4b1383 as observation_checker_sha256 and fae9f368 as assessment_checker_sha256; the original maps and both hashes are retained in reassessment lineage.",
+    "The reviewer reported that checker-hash ambiguity and the lack of a dedicated frozen SemABI continuation coordinator after direct call 2 and call 3 had already run. The root coordinator used sequential metered commands, passed the reassessed v2 after-call-1 receipt, verified terminal ownership and expected state before the next phase, and performed no restore or call-1 retry. This procedural continuation is disclosed rather than retroactively represented as a pre-frozen coordinator path.",
+    "The correction is narrow and applied to the same retained row representation used for both arms, but any comparison claim must label the first SemABI check as post-outcome reassessed and preserve the original v1 false-negative result."
+  ],
+  "reviewer_conclusion": "No product-code or v2 evaluator-logic blocker remains. The linked-value mechanism and observed SemABI effects are supported by source review, final tests, retained before/after evidence, and native v2 read/second-update checks. The baseline arm stopped on an access-order/rate-limit confound, so the final report must avoid competence or speed superiority claims and carry the disclosed post-outcome evaluator and continuation-lineage limitations verbatim in substance."
+}

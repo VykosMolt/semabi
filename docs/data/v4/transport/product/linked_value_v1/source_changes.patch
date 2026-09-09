@@ -1,0 +1,1074 @@
+diff --git a/semabi/baselines/cached_form.py b/semabi/baselines/cached_form.py
+index d0cd724..c8a6ef9 100644
+--- a/semabi/baselines/cached_form.py
++++ b/semabi/baselines/cached_form.py
+@@ -3,8 +3,9 @@
+ Both comparison arms must be charged for SemABI's acquisition and artifact
+ assistance. This is a conditional replay baseline, not independent onboarding.
+ It consumes discovered navigation and control descriptors, substitutes supplied
+-arguments, and reports DISPATCHED after cached reading or a completed submit action. It does not
+-infer form contracts, learn operations, verify effects, reload, or retry writes.
++arguments, and reports DISPATCHED after cached reading, a completed submit action,
++or a learned linked-value commit sequence. It does not infer form contracts,
++learn operations, verify effects, reload, or retry writes.
+ Unsupported operation families remain unsupported in the task denominator.
+ 
+ Example::
+@@ -35,7 +36,7 @@ from semabi.compiler.observation import Observation
+ from semabi.compiler.surface import visible_record_matches
+ 
+ 
+-BASELINE_VERSION = "cached-form-v4"
++BASELINE_VERSION = "cached-form-v5"
+ TEXT_INPUTS = {"", "text", "textarea", "contenteditable", "url", "email", "search",
+                "number", "tel", "date", "datetime-local", "month", "week", "time"}
+ 
+@@ -192,6 +193,30 @@ def _record_procedure(operation: dict, arguments: dict, allowed_origin: str) ->
+         raise _Stop("Cached record readback URL is missing", unsupported=True)
+     if origin_of(entry) != allowed_origin:
+         raise _Stop("Cached readback URL is outside the allowed origin")
++    linked_branch = "anchor_link" in cached or "linked_value_editor" in cached
++    if linked_branch:
++        linked = cached.get("linked_value_editor")
++        expected_keys = {"kind", "prior"} | ({"commit"} if kind == "update_visible_record" else set())
++        expected_commit = {"kind": "retained_tab_readback_v1", "field": fields[anchor]}
++        form_fields = form.get("fields")
++        field = form_fields[0] if isinstance(form_fields, list) and len(form_fields) == 1 else None
++        if (cached.get("anchor_link") != {"kind": "exact_visible_anchor_link_v1"}
++                or not isinstance(linked, dict) or set(linked) != expected_keys
++                or linked.get("kind") != "single_linked_value_v1"
++                or not isinstance(linked.get("prior"), str) or not linked["prior"].strip()
++                or (kind == "update_visible_record" and linked.get("commit") != expected_commit)
++                or set(fields) != {anchor}
++                or updates != ([anchor] if kind == "update_visible_record" else [])
++                or "submit" not in form or form["submit"] is not None
++                or not isinstance(field, dict) or field.get("argument") != anchor
++                or field.get("descriptor") != fields[anchor]
++                or field.get("role") != "textbox"
++                or field.get("input_type") != fields[anchor]["input_type"]
++                or any(name in cached for name in ("edit", "menu_trigger", "menu"))):
++            raise _Stop("Artifact has no supported cached linked-value recipe", unsupported=True)
++        return {"kind": kind, "entry_url": entry, "navigation": [], "fields": descriptors,
++                "selector_argument": selector, "anchor": anchor, "update_arguments": updates,
++                "linked_value_editor": True}
+     menu = _descriptor(cached["menu_trigger"], {"button"}) if "menu_trigger" in cached else None
+     if (menu is not None and menu.get("has_popup") != "menu") or ("menu" in cached and menu is None):
+         raise _Stop("Cached record menu trigger is unsupported", unsupported=True)
+@@ -324,6 +349,78 @@ class _Replay:
+             raise _Stop("A cached record field no longer exposes a string value")
+         return bindings, submit, values, [owner, *nodes]
+ 
++    @staticmethod
++    def linked_anchor_link(surface, record: dict, target: str, allowed_origin: str) -> int:
++        members = set(surface.observation.subtree(record["root"]))
++        links = []
++        for node, control in surface.controls.items():
++            if (node not in members or control["role"] != "link" or control.get("disabled")
++                    or not surface.text_is_complete(node)
++                    or surface.observation.node(node).name != target):
++                continue
++            destination = control.get("destination")
++            try:
++                local = isinstance(destination, str) and origin_of(destination) == allowed_origin
++            except ValueError:
++                local = False
++            if local:
++                links.append(node)
++        if len(links) != 1:
++            raise _Stop("Cached target has no unique enabled same-origin anchor link")
++        return links[0]
++
++    def linked_binding(self, surface, procedure: dict, expected: str) -> tuple[int, int]:
++        field = self.resolve(surface, procedure["fields"][0]["descriptor"])
++        control = surface.controls[field]
++        root = surface.observation.node(field).parent
++        if (self.value(surface, field) != expected or control.get("form") is not None
++                or root < 0 or root in surface.forms):
++            raise _Stop("Cached linked editor no longer has its expected form-less parent and value")
++        self.writable(surface, field)
++        return root, field
++
++    def linked_record(self, surface, procedure: dict, arguments: dict, allowed_origin: str,
++                      record: dict) -> dict:
++        updating = procedure["kind"] == "update_visible_record"
++        required = ("retain_nodes", "nodes_retained", "release_nodes", "press_retained")
++        if updating and not all(callable(getattr(self.browser, name, None)) for name in required):
++            raise _Stop("Retained linked-value dispatch is unavailable", unsupported=True)
++        target = arguments[procedure["selector_argument"]]
++        self.stage = "record_link"
++        link = self.linked_anchor_link(surface, record, target, allowed_origin)
++        self.writable(surface, link)
++        surface = self.act(surface, Primitive("click", link), allowed_origin)
++        self.stage = "record_values"
++        root, field = self.linked_binding(surface, procedure, target)
++        values = {procedure["anchor"]: target}
++        if not updating:
++            return {"values": values, "reason": "Cached linked editor value read; no effect verification performed"}
++
++        retained = self.browser.retain_nodes([root, field])
++        try:
++            self.stage = "parameters"
++            replacement = arguments[procedure["anchor"]]
++            surface = self.act(surface, Primitive("type", field, replacement), allowed_origin)
++            current_root, current_field = self.linked_binding(surface, procedure, replacement)
++            current_nodes = [current_root, current_field]
++            self.budget.check()
++            if not self.browser.nodes_retained(retained, current_nodes):
++                raise _Stop("Cached linked editor DOM elements changed before commit")
++            self.stage = "completion"
++            surface = self.act(surface, Primitive("press", current_field, "Tab"), allowed_origin,
++                               retained=retained, retained_offset=1)
++            self.stage = "linked_readback"
++            self.budget.take()
++            self.event({"type": "navigation", "url": procedure["entry_url"]})
++            self.budget.check()
++            self.browser.goto(procedure["entry_url"])
++            self.budget.check()
++        finally:
++            self.browser.release_nodes(retained)
++        self.budget.check()
++        return {"before": values,
++                "reason": "Cached linked-value commit sequence completed; business effect is unverified"}
++
+     def record(self, surface, procedure: dict, arguments: dict, allowed_origin: str) -> dict:
+         updating = procedure["kind"] == "update_visible_record"
+         if updating and not all(callable(getattr(self.browser, method, None)) for method in
+@@ -336,6 +433,8 @@ class _Replay:
+         if len(records) != 1:
+             raise _Stop("Cached target record is missing or ambiguous")
+         self.preserve_drafts(surface, procedure["fields"])
++        if procedure.get("linked_value_editor"):
++            return self.linked_record(surface, procedure, arguments, allowed_origin, records[0])
+         menu = procedure["menu_trigger"]
+         self.stage = "record_menu" if menu else "record_edit"
+         node = self.resolve(surface, menu or procedure["edit"], within=records[0]["root"])
+diff --git a/semabi/compiler/browser_session.py b/semabi/compiler/browser_session.py
+index b7c9978..dda994c 100644
+--- a/semabi/compiler/browser_session.py
++++ b/semabi/compiler/browser_session.py
+@@ -307,12 +307,12 @@ class BrowserSession(Browser):
+ 
+     def press_retained(self, primitive: Primitive, retained, offset: int,
+                        timeout_ms: int = 2000) -> ActionResult:
+-        """Dispatch one Escape to an already focused retained textbox."""
+-        result, handle = ActionResult(False, "Retained Escape target is unavailable"), None
++        """Dispatch one learned Escape or Tab to an already focused retained textbox."""
++        result, handle = ActionResult(False, "Retained textbox key target is unavailable"), None
+         try:
+-            if (primitive.kind != "press" or primitive.text != "Escape"
++            if (primitive.kind != "press" or primitive.text not in {"Escape", "Tab"}
+                     or origin_of(self._page.url) != self.allowed_origin):
+-                raise ValueError("Only Escape is supported by this retained action")
++                raise ValueError("Only Escape and Tab are supported by this retained action")
+             handle = retained.evaluate_handle("(elements, offset) => elements[offset]", offset)
+             element = handle.as_element()
+             if element is None or not element.evaluate("""e => {
+@@ -324,8 +324,8 @@ class BrowserSession(Browser):
+                 && e.getAttribute('aria-disabled') !== 'true' && e.getAttribute('aria-readonly') !== 'true'
+                 && e.checkVisibility({checkOpacity:true, checkVisibilityCSS:true});
+             }"""):
+-                raise ValueError("The retained Escape target is not focused")
+-            element.press("Escape", timeout=timeout_ms)
++                raise ValueError("The retained textbox key target is not focused")
++            element.press(primitive.text, timeout=timeout_ms)
+             result = ActionResult(True)
+         except Exception:
+             pass  # Expose no page-generated text or opaque browser exception details.
+diff --git a/semabi/compiler/runtime.py b/semabi/compiler/runtime.py
+index 1c6152c..f96f32f 100644
+--- a/semabi/compiler/runtime.py
++++ b/semabi/compiler/runtime.py
+@@ -28,7 +28,7 @@ from semabi.compiler.surface import (SUBMIT_WORDS, Surface, argument_name, diges
+                                      visible_record_matches)
+ 
+ 
+-POLICY_VERSION = "local-record-v7"
++POLICY_VERSION = "local-record-v8"
+ OPEN_WORDS = re.compile(r"\b(add|new|create|compose)\b", re.I)
+ EDIT_WORDS = re.compile(r"\b(edit|modify|update)\b", re.I)
+ EXCLUDED_WORDS = re.compile(r"\b(delete|remove|logout|log out|sign out|reset|purchase|pay|invite)\b", re.I)
+@@ -40,6 +40,13 @@ CONTRACT_FIELDS = ("kind", "procedure", "argument_schema", "output_schema",
+ NUMERIC_CONTEXT_PRIOR = ("One unexecuted dialog-advertising context button may vary between records: "
+                          "ASCII digit runs retain their widths and all punctuation/whitespace stays literal; "
+                          "two distinct labels require two completed selected-record read trials")
++LINKED_CONTEXT_PRIOR = ("One unexecuted plain context button beside a linked value editor may vary between records: "
++                        "ASCII digit runs retain their widths and all punctuation/whitespace stays literal; "
++                        "two distinct labels require two completed selected-record read trials")
++LINKED_VALUE_PRIOR = ("A unique visible local link carrying a created value may open its editable value: "
++                      "one exact-value textbox in a small form-less parent scope, independently matched in two created records. "
++                      "A fill, one retained-focused Tab and navigation to the learned list is a proposed commit sequence; "
++                      "only two persisted update trials establish it, without identifying which step saves or asserting global identity")
+ TEXT_PROBE_PRIOR = ("Free-form update trials reuse complete #/@-prefixed tokens from current rendered text, "
+                     "choosing among the first eight in lexical order, or a bare # when none are observed. "
+                     "This lexical completion stimulus is a prior, not a business identity or reference assertion")
+@@ -437,6 +444,61 @@ class Runtime:
+             raise StopOperation("Target anchor no longer occupies its learned field slots and channel", stale=True)
+         return record
+ 
++    @staticmethod
++    def _anchor_link(surface: Surface, record: dict, target: str) -> int:
++        members = set(surface.observation.subtree(record["root"]))
++        links = [node for node, control in surface.controls.items() if node in members
++                 and control["role"] == "link" and not control["disabled"]
++                 and surface.text_is_complete(node) and surface.observation.node(node).name == target]
++        if len(links) != 1:
++            raise StopOperation("The exact local anchor no longer identifies one visible link", stale=True)
++        destination = surface.controls[links[0]].get("destination")
++        try:
++            local = isinstance(destination, str) and origin_of(destination) == origin_of(surface.observation.url)
++        except ValueError:
++            local = False
++        if not local:
++            raise StopOperation("The anchor link has no inspectable same-origin destination", stale=True)
++        return links[0]
++
++    @staticmethod
++    def _linked_candidate(surface: Surface, anchor: str, target: str, descriptor: dict | None = None) -> dict:
++        """Propose field correspondence from values, without an authored field alias."""
++        if any(node.role in {"menu", "listbox", "dialog", "alertdialog"} for node in surface.observation.nodes):
++            raise StopOperation("A visible popup prevents linked-value navigation", stale=True)
++        fields = [node for node, control in surface.controls.items()
++                  if control["role"] == "textbox" and control["input_type"] in {"", "text", "textarea", "contenteditable"}
++                  and not control["disabled"] and not control["readonly"] and control.get("form") is None
++                  and not control.get("has_popup") and surface.observation.node(node).value == target
++                  and (descriptor is None or surface.descriptor(node) == descriptor)]
++        if len(fields) != 1:
++            raise StopOperation("The linked trial value does not identify one editable textbox", stale=True)
++        field = fields[0]
++        root = surface.observation.node(field).parent
++        if root < 0 or root in surface.forms:
++            raise StopOperation("Linked value editing requires a visible form-less parent scope", stale=True)
++        members = set(surface.observation.subtree(root))
++        controls = {node: control for node, control in surface.controls.items() if node in members}
++        if (len(controls) > 6 or any(node != field and (control["role"] != "button"
++                or control.get("has_popup") or control.get("form") is not None) for node, control in controls.items())):
++            raise StopOperation("The linked value parent has an unsupported control inventory", stale=True)
++        # Other populated editors can be saved data or drafts; this narrow mode
++        # cannot distinguish them and must not navigate away from them.
++        for node, control in surface.controls.items():
++            if (node not in members and control["role"] in {"textbox", "combobox"}
++                    and control["input_type"] != "search" and not control["readonly"]
++                    and surface.observation.node(node).value):
++                raise StopOperation("Another populated value editor prevents linked-value navigation")
++        control = surface.controls[field]
++        spec = {"argument": anchor, "descriptor": surface.descriptor(field), "role": control["role"],
++                "input_type": control["input_type"], **{key: control.get(key) for key in
++                ("required", "min", "max", "max_length", "options")}}
++        contract = {"submit": None, "fields": [spec], "scope_role": surface.observation.node(root).role,
++                    "field_path": control_path(surface, root, field),
++                    "context_controls": sorted([surface.descriptor(node) for node in controls if node != field], key=digest)}
++        return {"root": root, "submit_node": None, "fields": [{**spec, "node": field, "value": target, "checked": None}],
++                "descriptor": contract, "linked_value": True}
++
+     def _wait_for_record(self, browser, surface: Surface, procedure: dict, target: str,
+                          trace: Trace) -> tuple[Surface, dict]:
+         deadline = time.monotonic() + 5
+@@ -468,7 +530,7 @@ class Runtime:
+              **{name: surface.controls[node].get(name) for name in
+                 ("disabled", "readonly", "required", "min", "max", "max_length", "options")},
+              **({"path": control_path(surface, candidate["root"], node)}
+-                if surface.controls[node].get("has_popup") == "dialog" else {})}
++                if surface.controls[node].get("has_popup") == "dialog" or candidate.get("linked_value") else {})}
+             for node in selected if node in surface.controls and node != candidate["submit_node"]
+             and surface.controls[node]["role"] == "button"
+             and (surface.descriptor(node) in candidate["descriptor"]["context_controls"]
+@@ -484,6 +546,13 @@ class Runtime:
+                     if node not in selected and node in surface.controls], key=digest)
+             for root in editor_scopes(surface) if root not in selected
+         ], key=digest)
++        if candidate.get("linked_value"):
++            state["other_value_controls"] = sorted([
++                {"descriptor": surface.descriptor(node), "value": surface.observation.node(node).value,
++                 "checked": surface.observation.node(node).checked,
++                 **{key: control.get(key) for key in ("disabled", "readonly", "required", "min", "max", "max_length", "options")}}
++                for node, control in surface.controls.items() if node not in selected
++                and control["role"] in {"textbox", "combobox", "checkbox", "radio"}], key=digest)
+         return state
+ 
+     @staticmethod
+@@ -494,6 +563,10 @@ class Runtime:
+             if len(fields) != 1:
+                 raise StopOperation("Editor continuity field is absent or ambiguous", stale=True)
+             nodes.append(fields[0])
++        if candidate.get("linked_value"):
++            others = [node for node in surface.observation.subtree(candidate["root"])
++                      if node in surface.controls and node not in nodes]
++            return [*nodes, *sorted(others, key=lambda node: control_path(surface, candidate["root"], node))]
+         if binding := procedure.get("context_label_binding"):
+             nodes.append(Runtime._context_button(surface, candidate, binding))
+         return [*nodes, candidate["submit_node"]]
+@@ -594,7 +667,8 @@ class Runtime:
+         original, current = before[0], after[0]
+         signature = self._context_signature(original)
+         shape = numeric_label_shape(original["label"])
+-        if (signature["role"] != "button" or signature["has_popup"] != "dialog"
++        linked = bool(procedure.get("linked_value_editor"))
++        if (signature["role"] != "button" or signature["has_popup"] != (None if linked else "dialog")
+                 or self._context_signature(current) != signature or shape is None
+                 or numeric_label_shape(current["label"]) != shape or current["label"] == original["label"]):
+             raise StopOperation("Record context change does not satisfy the declared numeric-label prior", stale=True)
+@@ -605,7 +679,7 @@ class Runtime:
+             raise StopOperation("First read did not establish a unique context control", stale=True)
+         binding = {"descriptor": signature, "shape": shape, "path": controls[0]["path"],
+                    "state": {key: value for key, value in controls[0].items() if key not in {"descriptor", "path"}},
+-                   "prior": NUMERIC_CONTEXT_PRIOR}
++                   "prior": LINKED_CONTEXT_PRIOR if linked else NUMERIC_CONTEXT_PRIOR}
+         self._context_button(surface, candidate, binding)
+         second_state = self._editor_state(surface, candidate)
+         comparable_states = []
+@@ -636,13 +710,16 @@ class Runtime:
+         # record editor. Resolve by the observed anchor value, never form order.
+         descriptor = procedure["read_fields"][procedure["anchor"]]
+         candidates = []
+-        for candidate in form_candidates(surface):
+-            if (not SUBMIT_WORDS.search(candidate["descriptor"]["submit"]["label"])
+-                    or EXCLUDED_WORDS.search(candidate["descriptor"]["submit"]["label"])):
+-                continue
+-            fields = surface.resolve(descriptor, within=candidate["root"])
+-            if len(fields) == 1 and surface.observation.node(fields[0]).value == target:
+-                candidates.append(candidate)
++        if procedure.get("linked_value_editor"):
++            candidates = [self._linked_candidate(surface, procedure["anchor"], target, descriptor)]
++        else:
++            for candidate in form_candidates(surface):
++                if (not SUBMIT_WORDS.search(candidate["descriptor"]["submit"]["label"])
++                        or EXCLUDED_WORDS.search(candidate["descriptor"]["submit"]["label"])):
++                    continue
++                fields = surface.resolve(descriptor, within=candidate["root"])
++                if len(fields) == 1 and surface.observation.node(fields[0]).value == target:
++                    candidates.append(candidate)
+         if len(candidates) != 1:
+             raise StopOperation("Loaded editor does not uniquely retain the selected anchor", stale=True)
+         candidate = candidates[0]
+@@ -673,7 +750,8 @@ class Runtime:
+                        update_trials_remaining: int = 0,
+                        completion_actions_per_trial: int = 0,
+                        context_trial: dict | None = None) -> tuple[Surface, dict, dict]:
+-        required = {"edit", "form"} | ({"menu"} if "menu_trigger" in procedure else set())
++        required = {"form"} | (set() if procedure.get("anchor_link") else {"edit"})
++        required |= {"menu"} if "menu_trigger" in procedure else set()
+         if not discover and not required <= procedure.keys():
+             raise StopOperation("Learned record editor procedure is incomplete", stale=True)
+         self._guard_current_editor(trace.read(browser))
+@@ -685,7 +763,7 @@ class Runtime:
+         if expected_values is not None and record_witness(
+                 surface, expected_values, procedure["anchor"], procedure["effect_slots"]) is None:
+             raise StopOperation("Creation trial values changed before its record experiment")
+-        if "edit" not in procedure and "menu_trigger" not in procedure:
++        if "edit" not in procedure and "menu_trigger" not in procedure and not procedure.get("anchor_link"):
+             members = set(surface.observation.subtree(record["root"]))
+             edits = [node for node, control in surface.controls.items()
+                      if node in members and control["role"] in {"button", "link"}
+@@ -698,16 +776,18 @@ class Runtime:
+                             and surface.controls[node]["role"] in {"button", "link"}
+                             and surface.controls[node].get("has_popup") == "menu"
+                             and not surface.controls[node]["disabled"]]
+-                if len(triggers) != 1:
++                if len(triggers) == 1:
++                    procedure["menu_trigger"] = surface.descriptor(triggers[0])
++                elif not edits and not triggers and len(procedure["read_fields"]) == 1:
++                    self._anchor_link(surface, record, target)
++                    procedure["anchor_link"] = {"kind": "exact_visible_anchor_link_v1"}
++                else:
+                     raise StopOperation("No unique direct edit action or advertised record menu was observed")
+-                procedure["menu_trigger"] = surface.descriptor(triggers[0])
+         menu_route = "menu_trigger" in procedure
+         if read_trials_remaining:
+             self._reserve_record_actions(trace, read_trials_remaining * (3 + int(menu_route)) - 1,
+                                          read_trials_remaining * (1 + int(menu_route)))
+         if update_trials_remaining:
+-            # Each updated field can require one retained Escape in addition to
+-            # its fill. Navigation for the current trial has already been taken.
+             fields = len(procedure["update_arguments"])
+             self._reserve_record_actions(
+                 trace, update_trials_remaining * (
+@@ -743,10 +823,18 @@ class Runtime:
+             if len(menus) != 1:
+                 raise StopOperation("Learned visible edit menu is absent or ambiguous", stale=True)
+             edit_scope = menus[0]
+-        edits = surface.resolve(procedure["edit"], within=edit_scope)
++        edits = ([self._anchor_link(surface, record, target)] if procedure.get("anchor_link") else
++                 surface.resolve(procedure["edit"], within=edit_scope))
+         if len(edits) != 1 or surface.controls[edits[0]]["disabled"]:
+             raise StopOperation("Learned record-local edit action is absent or ambiguous", stale=True)
+         surface = trace.act(browser, surface, Primitive("click", edits[0]))
++        if procedure.get("anchor_link") and "form" not in procedure:
++            if expected_values != {procedure["anchor"]: target}:
++                raise StopOperation("Linked value correspondence requires one established creation-trial value")
++            candidate = self._linked_candidate(surface, procedure["anchor"], target)
++            procedure["linked_value_editor"] = {"kind": "single_linked_value_v1", "prior": LINKED_VALUE_PRIOR}
++            procedure["read_fields"] = {procedure["anchor"]: candidate["fields"][0]["descriptor"]}
++            procedure["form"] = candidate["descriptor"]
+         if "form" not in procedure:
+             candidates = [candidate for candidate in form_candidates(surface)
+                           if SUBMIT_WORDS.search(candidate["descriptor"]["submit"]["label"])
+@@ -912,9 +1000,55 @@ class Runtime:
+             procedure.setdefault("textbox_popups", {})[name] = rule
+         return after
+ 
++    def _update_linked_value(self, browser, surface: Surface, procedure: dict, before: dict, values: dict,
++                             trace: Trace, *, discover: bool, commit_events: list[dict]) -> tuple[dict, dict]:
++        anchor = procedure["anchor"]
++        rule = {"kind": "retained_tab_readback_v1", "field": procedure["read_fields"][anchor]}
++        if (procedure["update_arguments"] != [anchor] or set(before) != {anchor}
++                or (not discover and procedure["linked_value_editor"].get("commit") != rule)):
++            raise StopOperation("The linked value commit sequence has not been established", stale=True)
++        if not all(callable(getattr(browser, name, None)) for name in
++                   ("press_retained", "retained_node_indices", "textbox_popup_context")):
++            raise StopOperation("Retained linked-value dispatch and focus observation are unavailable", stale=True)
++        with self._capture_editor(browser, surface, procedure, before, trace) as (captured, retained):
++            expected = deepcopy(captured)
++            surface = trace.read(browser)
++            candidate = self._checked_editor(browser, surface, procedure, expected, retained, trace)
++            self._guard_current_editor(surface, selected_root=candidate["root"])
++            field = candidate["fields"][0]["node"]
++            if visible_record_matches(surface, values[anchor]):
++                raise StopOperation("Replacement value became visible before the linked-value fill")
++            before_popup = self._popup_metadata(browser, surface, field, trace)
++            if before_popup["listboxes"] or before_popup["other_popups"]:
++                raise StopOperation("A visible popup prevents linked-value editing", stale=True)
++            surface = trace.act(browser, surface, Primitive("type", field, values[anchor]))
++            expected[digest(procedure["read_fields"][anchor])]["value"] = values[anchor]
++            candidate = self._checked_editor(browser, surface, procedure, expected, retained, trace)
++            self._guard_current_editor(surface, selected_root=candidate["root"])
++            field = candidate["fields"][0]["node"]
++            popup = self._popup_metadata(browser, surface, field, trace)
++            if (not popup["target_focused"] or popup["listboxes"] or popup["other_popups"]
++                    or surface.controls[field].get("has_popup")):
++                raise StopOperation("The filled linked textbox changed focus or exposed a popup")
++            nodes = self._editor_nodes(surface, candidate, procedure)
++            surface = trace.act(browser, surface, Primitive("press", field, "Tab"),
++                                retained=retained, retained_offset=nodes.index(field))
++            candidate = self._checked_editor(browser, surface, procedure, expected, retained, trace)
++            self._guard_current_editor(surface, selected_root=candidate["root"])
++            # Tab and subsequent navigation are part of the observed sequence;
++            # no causal claim is made about which event commits the value.
++            commit_events.append({"field": anchor, "rule": rule, "dispatches": 1,
++                                  "editor_state_retained_after_tab": True})
++            after = trace.navigate(browser, procedure["readback_url"])
++        return self._verify_updated_values(browser, after, procedure, values, before[anchor], captured, trace)
++
+     def _update_record(self, browser, surface: Surface, procedure: dict, before: dict, values: dict,
+                        trace: Trace, *, discover: bool = False,
+-                       popup_events: list[dict] | None = None) -> tuple[dict, dict]:
++                       popup_events: list[dict] | None = None,
++                       commit_events: list[dict] | None = None) -> tuple[dict, dict]:
++        if procedure.get("linked_value_editor"):
++            return self._update_linked_value(browser, surface, procedure, before, values, trace,
++                                            discover=discover, commit_events=[] if commit_events is None else commit_events)
+         old_anchor = before[procedure["anchor"]] if procedure["anchor_mode"] == "replace_value" else None
+         popup_events = [] if popup_events is None else popup_events
+         with self._capture_editor(browser, surface, procedure, before, trace) as (captured, retained):
+@@ -956,6 +1090,10 @@ class Runtime:
+                 if surface.controls[candidate["submit_node"]]["disabled"]:
+                     raise StopOperation("Application left the learned submit control disabled", refusal=True)
+                 after = trace.act(browser, surface, Primitive("click", candidate["submit_node"]))
++        return self._verify_updated_values(browser, after, procedure, values, old_anchor, captured, trace)
++
++    def _verify_updated_values(self, browser, after: Surface, procedure: dict, values: dict,
++                               old_anchor: str | None, captured: dict, trace: Trace) -> tuple[dict, dict]:
+         after, witness = self._witness(browser, after, values, procedure["anchor"], trace,
+                                        procedure["effect_slots"], absent_value=old_anchor,
+                                        expected_url=procedure["readback_url"] if old_anchor is not None else None)
+@@ -988,6 +1126,8 @@ class Runtime:
+             effect = {"kind": "visible_record_read", "values": values,
+                       "field_descriptors": procedure["read_fields"], "witness": record,
+                       "scope": "Current descriptor-bound edit-form values for one exact local anchor in the rendered view"}
++            if procedure.get("linked_value_editor"):
++                effect["scope"] = "Current value of the unique linked textbox matched in two created-record trials"
+         else:
+             updated = {**({procedure["anchor"]: target} if not replacing else {}),
+                        **{name: arguments[name] for name in procedure["update_arguments"]}}
+@@ -1018,11 +1158,24 @@ class Runtime:
+                     raise StopOperation("Completion dismissal requires two persisted popup-triggered update trials")
+         if binding := procedure.get("context_label_binding"):
+             evidence = binding.get("read_evidence", [])
++            context_prior = LINKED_CONTEXT_PRIOR if procedure.get("linked_value_editor") else NUMERIC_CONTEXT_PRIOR
+             if (binding.get("completed_read_trials") != 2 or len(evidence) != 2
+                     or len({trial["label"] for trial in evidence}) != 2
+-                    or binding.get("prior") != NUMERIC_CONTEXT_PRIOR
++                    or binding.get("prior") != context_prior
+                     or any(numeric_label_shape(trial["label"]) != binding["shape"] for trial in evidence)):
+                 raise StopOperation("Numeric context generalization requires two completed contrasting read trials")
++        linked = procedure.get("linked_value_editor")
++        if linked:
++            if (linked.get("kind") != "single_linked_value_v1" or linked.get("prior") != LINKED_VALUE_PRIOR
++                    or procedure.get("anchor_link") != {"kind": "exact_visible_anchor_link_v1"}
++                    or set(procedure["read_fields"]) != {anchor}):
++                raise StopOperation("Linked value correspondence lacks its learned local contract")
++            if kind == "update_visible_record":
++                rule = {"kind": "retained_tab_readback_v1", "field": procedure["read_fields"][anchor]}
++                expected_event = {"field": anchor, "rule": rule, "dispatches": 1,
++                                  "editor_state_retained_after_tab": True}
++                if linked.get("commit") != rule or any(trial.get("linked_commits") != [expected_event] for trial in trials):
++                    raise StopOperation("Linked value commits require two saved and reloaded retained-Tab trials")
+         fields = argument_schema({"fields": procedure["form"]["fields"]},
+                                  list(procedure["read_fields"]))["properties"]
+         properties = {selector: {**fields[anchor],
+@@ -1074,12 +1227,30 @@ class Runtime:
+                                  "trials": deepcopy(trials)}}
+         if binding:
+             operation["prerequisites"].append(
+-                "One bound numeric dialog context control retains its label, state, placement and DOM element during the call")
++                "One bound numeric context control retains its label, state, placement and DOM element during the call")
+             operation["scope"]["numeric_context_labels"] = (
+                 "The declared numeric-label shape generalizes between two selected records; current-call labels stay frozen. "
+                 "Outcomes check observed record fields, without establishing that numeric context values are semantically irrelevant.")
+         if not reading:
+-            operation["support"]["text_probe_prior"] = TEXT_PROBE_PRIOR
++            operation["support"]["text_probe_prior"] = (
++                "Distinct generated plain text values for the proposed linked-value commit sequence" if linked else TEXT_PROBE_PRIOR)
++        if linked:
++            operation["support"]["linked_value_prior"] = LINKED_VALUE_PRIOR
++            operation["prerequisites"] = [
++                "One exact local anchor in its learned list slots and one current same-origin link carrying its complete value",
++                "One editable value textbox in its unchanged small parent scope, matched by value in two created-record trials",
++                "Retained local scope, textbox and every local control; other observed value controls stay unchanged",
++                "No other populated editable textbox or visible popup",
++                *([] if reading else ["The filled textbox stays focused before the learned retained Tab"])]
++            operation["effect_checks"] = (["Selected value and complete captured control state rechecked before leaving"] if reading else [
++                "One retained-focused Tab after the guarded fill, with unchanged surrounding control state",
++                "Replacement occupies the original list slot and the old value is absent, again after reload"])
++            operation["scope"]["linked_value_editor"] = (
++                "One value-corresponding textbox; no authored field alias, global identity, unobserved-field relationship or save-trigger claim. "
++                "The observed sequence includes fill, Tab and navigation; neighboring populated editors prevent the call.")
++            operation["output_schema"]["properties"]["effect"]["properties"][
++                "values" if reading else "arguments"]["properties"][anchor]["binding_basis"] = (
++                    "exact_value_correspondence_in_two_distinct_creation_trials")
+         if procedure.get("textbox_popups"):
+             operation["prerequisites"].append(
+                 "Completion-enabled textboxes retain their observed explicit ARIA list-completion prerequisites")
+@@ -1128,7 +1299,8 @@ class Runtime:
+                 writes = 2 if reading else 2 * (
+                     len(update_names) + completion_actions + 2 + menu)
+                 self._reserve_record_actions(trace, actions, writes)
+-                completion_tokens = completion_probe_tokens(trace.read(browser)) if not reading else []
++                completion_tokens = (completion_probe_tokens(trace.read(browser))
++                                     if not reading and not procedure.get("linked_value_editor") else [])
+                 for trial_index, created in enumerate(created_trials):
+                     # A second-read comparison may propose a numeric binding,
+                     # but it cannot alter the retained procedure until that
+@@ -1137,11 +1309,12 @@ class Runtime:
+                     target = created["arguments"][procedure["anchor"]]
+                     arguments = {selector: target}
+                     popup_events = []
++                    commit_events = []
+                     stimulus = completion_tokens[trial_index % len(completion_tokens)] if completion_tokens else None
+                     if not reading:
+                         arguments.update(probe_arguments({"fields": [field for field in procedure["form"]["fields"]
+                                                                       if field["argument"] in update_names]},
+-                                                         trial_index + 2, punctuation=True,
++                                                         trial_index + 2, punctuation=not bool(procedure.get("linked_value_editor")),
+                                                          completion_token=stimulus["value"] if stimulus else None))
+                     surface, witness, before = self._record_editor(
+                         browser, trial_procedure, target, trace, expected_values=created["arguments"], discover=True,
+@@ -1158,18 +1331,23 @@ class Runtime:
+                         values = {**({procedure["anchor"]: target} if not replacing else {}),
+                                   **{name: arguments[name] for name in update_names}}
+                         witness, captured = self._update_record(browser, surface, procedure, before, values, trace,
+-                                                                discover=True, popup_events=popup_events)
++                            discover=True, popup_events=popup_events,
++                            **({"commit_events": commit_events} if procedure.get("linked_value_editor") else {}))
+                     trials.append({"arguments": arguments, "before": before, "values": values,
+                                    "editor_state": captured, "editor_observation": surface.observation.structural_signature(),
+                                    "witness": witness,
+                                    **({"popup_dismissals": popup_events, "completion_stimulus": stimulus}
+                                       if not reading else {}),
++                                   **({"linked_commits": commit_events} if not reading and procedure.get("linked_value_editor") else {}),
+                                    **({"before_witness": selected_witness} if replacing and not reading else {})})
+                     if reading and trial_index == 1:
+                         procedure = trial_procedure
+                         if binding := procedure.get("context_label_binding"):
+                             binding["read_evidence"][1]["editor_state"] = deepcopy(captured)
+                             binding["completed_read_trials"] = 2
++                if not reading and procedure.get("linked_value_editor"):
++                    procedure["linked_value_editor"]["commit"] = {
++                        "kind": "retained_tab_readback_v1", "field": procedure["read_fields"][procedure["anchor"]]}
+                 operation = self._record_operation(creation, kind, procedure, trials, settings)
+                 operations.append(operation)
+                 emit({"type": "operation_learned", "id": operation["id"], "version": operation["version"]})
+diff --git a/tests/test_cached_form.py b/tests/test_cached_form.py
+index f6e7603..9e9f308 100644
+--- a/tests/test_cached_form.py
++++ b/tests/test_cached_form.py
+@@ -815,3 +815,230 @@ def test_cached_unknown_completion_step_is_unsupported_before_browser(tmp_path):
+     result = _run_record(tmp_path, browser, operation=operation)
+     assert result['outcome'] == 'UNSUPPORTED'
+     assert browser.actions == []
++
++
++LINKED_READBACK = "https://synthetic.invalid/records"
++
++
++class _LinkedValueBrowser(_Browser):
++    """Synthetic form-less linked editor with observation-local node indices."""
++
++    def __init__(self, mode=None):
++        super().__init__(mode=mode)
++        self.page = "records"
++        self.rows = ["Selected linked value", "Other linked value"]
++        self.selected, self.editor_value, self.focused = None, "", False
++        self.editor_reads, self.field_generation = 0, 0
++        self.fills = self.tab_attempts = self.tabs = 0
++        self.retained, self.released, self.tokens = [], [], {}
++
++    @staticmethod
++    def linked_descriptor():
++        return {"role": "textbox", "label": "Recorded phrase", "input_type": "contenteditable"}
++
++    def read(self):
++        nodes, controls = [Node(0, -1, "group", "")], {}
++        self.record_actions = {}
++        if self.page == "records":
++            for index, value in enumerate(self.rows):
++                root = len(nodes)
++                nodes.append(Node(root, 0, "article", ""))
++                link = len(nodes)
++                nodes.append(Node(link, root, "link", value))
++                controls[link] = {"role": "link", "label": value, "input_type": "", "form": None,
++                                  "disabled": False, "readonly": False,
++                                  "destination": f"https://synthetic.invalid/item/{index}"}
++                self.record_actions[link] = index
++                if self.mode == "duplicate_link" and index == 0:
++                    duplicate = len(nodes)
++                    nodes.append(Node(duplicate, root, "link", value))
++                    controls[duplicate] = {**controls[link],
++                                           "destination": "https://synthetic.invalid/alternate/0"}
++                    self.record_actions[duplicate] = index
++            self.tokens = {node.i: (node.parent, node.role, node.name) for node in nodes}
++        else:
++            self.editor_reads += 1
++            parent = len(nodes)
++            nodes.append(Node(parent, 0, "group", ""))
++
++            def add_context():
++                node = len(nodes)
++                nodes.append(Node(node, parent, "button", "#11"))
++                controls[node] = {"role": "button", "label": "#11", "input_type": "", "form": None,
++                                  "disabled": False, "readonly": False}
++                return node
++
++            def add_field():
++                node = len(nodes)
++                descriptor = self.linked_descriptor()
++                nodes.append(Node(node, parent, "textbox", descriptor["label"], value=self.editor_value))
++                controls[node] = {**descriptor, "form": None, "disabled": False, "readonly": False}
++                return node
++
++            # Reorder siblings on each read so the baseline must resolve the
++            # descriptor afresh while retained element identity stays stable.
++            if self.editor_reads % 2:
++                context, field = add_context(), add_field()
++            else:
++                field, context = add_field(), add_context()
++            self.current_parent, self.current_field = parent, field
++            self.tokens = {parent: ("parent", 0), field: ("field", self.field_generation),
++                           context: ("context", 0), 0: ("document", 0)}
++        self.surface = Surface(Observation(nodes, LINKED_READBACK if self.page == "records" else
++                                           f"https://synthetic.invalid/item/{self.selected}"),
++                               controls, {})
++        return self.surface
++
++    def goto(self, url):
++        self.navigations.append(url)
++        self.page, self.selected, self.focused = "records", None, False
++        return self.read().observation
++
++    def act(self, action):
++        self.actions.append(action)
++        node = self.surface.observation.node(action.target)
++        if self.page == "records":
++            assert action.kind == "click" and node.role == "link"
++            self.selected = self.record_actions[action.target]
++            self.editor_value = self.rows[self.selected]
++            self.page, self.focused = "editor", False
++        else:
++            assert action.kind == "type" and action.target == self.current_field
++            self.editor_value, self.focused = action.text, True
++            self.fills += 1
++            if self.mode == "field_changed":
++                self.field_generation += 1
++            if self.mode == "focus_failure":
++                self.focused = False
++        return ActionResult(True)
++
++    def retain_nodes(self, nodes):
++        assert nodes == [self.current_parent, self.current_field]
++        retained = [self.tokens[node] for node in nodes]
++        self.retained.append(retained)
++        return retained
++
++    def nodes_retained(self, retained, nodes):
++        return retained == [self.tokens[node] for node in nodes]
++
++    def release_nodes(self, retained):
++        self.released.append(retained)
++
++    def press_retained(self, action, retained, offset, timeout_ms):
++        assert action.kind == "press" and action.text == "Tab" and offset == 1
++        assert retained[offset] == self.tokens[action.target]
++        self.actions.append(action)
++        self.tab_attempts += 1
++        if not self.focused:
++            return ActionResult(False, "Retained textbox key target is unavailable")
++        self.focused = False
++        self.tabs += 1
++        return ActionResult(True)
++
++
++def _linked_operation(browser, kind="update_visible_record"):
++    anchor, descriptor = "value", browser.linked_descriptor()
++    updating = kind == "update_visible_record"
++    properties = {"target": {"type": "string", "minLength": 1, "maxLength": 80}}
++    if updating:
++        properties[anchor] = {"type": "string", "minLength": 1, "maxLength": 80}
++    linked = {"kind": "single_linked_value_v1", "prior": "Synthetic disclosed linked-value prior."}
++    if updating:
++        linked["commit"] = {"kind": "retained_tab_readback_v1", "field": deepcopy(descriptor)}
++    field = {"argument": anchor, "descriptor": deepcopy(descriptor), "role": "textbox",
++             "input_type": descriptor["input_type"], "required": False, "min": None, "max": None,
++             "max_length": None, "options": []}
++    procedure = {"readback_url": LINKED_READBACK, "selector_argument": "target", "anchor": anchor,
++                 "read_fields": {anchor: deepcopy(descriptor)},
++                 "update_arguments": [anchor] if updating else [],
++                 "anchor_link": {"kind": "exact_visible_anchor_link_v1"},
++                 "linked_value_editor": linked,
++                 "form": {"submit": None, "fields": [field], "scope_role": "group",
++                          "field_path": [["textbox", 0]],
++                          "context_controls": [{"role": "button", "label": "#11", "input_type": ""}]}}
++    return {"id": "synthetic-cached-linked-value", "version": 1, "status": "ACTIVE", "kind": kind,
++            "argument_schema": {"type": "object", "properties": properties,
++                                "required": list(properties), "additionalProperties": False},
++            "procedure": procedure}
++
++
++def _run_linked(tmp_path, browser, kind="update_visible_record", *, operation=None):
++    arguments = {"target": browser.rows[0]}
++    if kind == "update_visible_record":
++        arguments["value"] = "Replacement linked value"
++    return _run(tmp_path, browser,
++                operation=_linked_operation(browser, kind) if operation is None else operation,
++                arguments=arguments)
++
++
++@pytest.mark.parametrize("kind", ["read_visible_record", "update_visible_record"])
++def test_cached_linked_value_replays_exact_current_sequence_without_effect_verification(tmp_path, kind):
++    browser = _LinkedValueBrowser()
++    operation = _linked_operation(browser, kind)
++    before = deepcopy(operation)
++
++    result = _run_linked(tmp_path, browser, kind, operation=operation)
++
++    assert result["outcome"] == "DISPATCHED" and result["baseline"] == "cached-form-v5"
++    assert result["effect_verification"] == "NOT_PERFORMED" and not result["submit_attempted"]
++    assert operation == before and browser.closed
++    events = [json.loads(line) for line in (tmp_path / "replay" / "events.jsonl").read_text().splitlines()]
++    sequence = [(event["type"], event.get("action", {}).get("kind"), event.get("url"))
++                for event in events if event["type"] in {"navigation", "write_intent"}]
++    if kind == "read_visible_record":
++        assert result["values"] == {"value": "Selected linked value"}
++        assert [action.kind for action in browser.actions] == ["click"]
++        assert browser.navigations == [URL, LINKED_READBACK]
++        assert browser.retained == browser.released == [] and browser.fills == browser.tabs == 0
++        assert (result["metrics"]["actions"], result["metrics"]["possible_write_actions"],
++                result["metrics"]["surface_reads"]) == (3, 1, 5)
++        assert sequence == [("navigation", None, LINKED_READBACK), ("write_intent", "click", None)]
++    else:
++        assert result["before"] == {"value": "Selected linked value"}
++        assert [(action.kind, action.text) for action in browser.actions] == [
++            ("click", None), ("type", "Replacement linked value"), ("press", "Tab")]
++        assert browser.navigations == [URL, LINKED_READBACK, LINKED_READBACK]
++        assert len(browser.retained) == len(browser.released) == 1
++        assert browser.retained == browser.released and browser.fills == browser.tabs == 1
++        assert browser.rows == ["Selected linked value", "Other linked value"]
++        assert (result["metrics"]["actions"], result["metrics"]["possible_write_actions"],
++                result["metrics"]["surface_reads"]) == (6, 3, 8)
++        assert sequence == [("navigation", None, LINKED_READBACK), ("write_intent", "click", None),
++                            ("write_intent", "type", None), ("write_intent", "press", None),
++                            ("navigation", None, LINKED_READBACK)]
++
++
++def test_cached_linked_value_requires_one_current_same_origin_anchor_link(tmp_path):
++    browser = _LinkedValueBrowser(mode="duplicate_link")
++
++    result = _run_linked(tmp_path, browser, "read_visible_record")
++
++    assert result["outcome"] == "FAILED" and browser.actions == []
++    assert browser.navigations == [URL, LINKED_READBACK] and browser.closed
++
++
++@pytest.mark.parametrize("mode,kinds,tab_attempts", [
++    ("field_changed", ["click", "type"], 0),
++    ("focus_failure", ["click", "type", "press"], 1),
++])
++def test_cached_linked_value_rechecks_field_continuity_and_retained_focus(tmp_path, mode, kinds, tab_attempts):
++    browser = _LinkedValueBrowser(mode=mode)
++
++    result = _run_linked(tmp_path, browser)
++
++    assert result["outcome"] == "UNKNOWN"
++    assert [action.kind for action in browser.actions] == kinds
++    assert browser.fills == 1 and browser.tab_attempts == tab_attempts and browser.tabs == 0
++    assert browser.navigations == [URL, LINKED_READBACK]
++    assert len(browser.retained) == len(browser.released) == 1 and browser.closed
++
++
++def test_cached_linked_update_without_exact_commit_is_unsupported_before_browser(tmp_path):
++    browser = _LinkedValueBrowser()
++    operation = _linked_operation(browser)
++    del operation["procedure"]["linked_value_editor"]["commit"]
++
++    result = _run_linked(tmp_path, browser, operation=operation)
++
++    assert result["outcome"] == "UNSUPPORTED"
++    assert browser.navigations == browser.actions == [] and browser.retained == []
+diff --git a/tests/test_operation_runtime.py b/tests/test_operation_runtime.py
+index 398665a..68a47d4 100644
+--- a/tests/test_operation_runtime.py
++++ b/tests/test_operation_runtime.py
+@@ -2923,3 +2923,245 @@ def test_learning_targets_a_completion_with_an_observed_lexical_stimulus(tmp_pat
+         assert trial['completion_stimulus']['nodes']
+         assert trial['arguments']['value'].endswith(' #invented-completion')
+         assert len(trial['popup_dismissals']) == 1
++
++
++class _LinkedValueBrowser(_SyntheticElementContinuity):
++    """Invented list links and a differently labeled editor that commits on Tab."""
++    allowed_origin = 'https://synthetic.invalid'
++
++    def __init__(self):
++        self.rows, self.actions = [], []
++        self.scene, self.composer, self.value, self.sibling = 'list', '', '', ''
++        self.selected, self.generation, self.mode = None, 0, None
++        self.fills = self.tabs = self.navigation_count = self.reload_count = 0
++        self.focused = False
++        self.old = None
++
++    def read(self):
++        nodes = [Node(0, -1, 'group', '')]
++        props, forms, self.element_tokens = {}, (), {}
++        self.row_roots = []
++        if self.scene == 'list':
++            nodes += [Node(1, 0, 'group', ''), Node(2, 1, 'textbox', 'Incoming phrase', value=self.composer),
++                      Node(3, 1, 'button', 'Add')]
++            props = {2:{'form':1}, 3:{'form':1, 'submit':True}}
++            forms = (1,)
++            for index, value in enumerate(self.rows):
++                root = len(nodes)
++                self.row_roots.append(root)
++                nodes.append(Node(root, 0, 'article', ''))
++                link = len(nodes)
++                nodes.append(Node(link, root, 'link', value))
++                props[link] = {'destination':self.allowed_origin + '/item/' + str(index)}
++                if self.mode == 'external_link':
++                    props[link]['destination'] = 'https://outside.invalid/item/' + str(index)
++                if self.mode == 'duplicate_link':
++                    nodes.append(Node(len(nodes), root, 'link', value))
++                    props[len(nodes)-1] = props[link].copy()
++        else:
++            number = 11 + self.selected + (1 if self.mode == 'context_after_fill' and self.focused else 0)
++            nodes += [Node(1, 0, 'group', ''), Node(2, 1, 'group', ''),
++                      Node(3, 2, 'button', '#' + str(number)),
++                      Node(4, 2, 'textbox', 'Recorded phrase', value=self.value),
++                      Node(5, 1, 'group', ''), Node(6, 5, 'textbox', 'Separate draft', value=self.sibling),
++                      Node(7, 5, 'button', 'Save draft')]
++            props[4] = {'input_type':'contenteditable', 'required':self.mode == 'new_required'}
++            if self.mode == 'duplicate_value_field':
++                nodes.append(Node(len(nodes), 5, 'textbox', 'Copied value', value=self.value))
++            if self.mode == 'popup_after_fill' and self.focused:
++                props[4]['has_popup'] = 'listbox'
++                nodes.append(Node(len(nodes), 2, 'listbox', ''))
++            if self.mode == 'outside_popup':
++                nodes.append(Node(len(nodes), 0, 'dialog', 'Unfinished choice'))
++            self.element_tokens = {2:('scope',self.generation), 3:('context',self.generation),
++                                   4:('field',self.generation)}
++            if self.mode == 'remounted_context' and self.focused:
++                self.element_tokens[3] = ('replacement context',self.generation)
++        for node in nodes:
++            self.element_tokens.setdefault(node.i, (node.parent,node.role,node.name))
++        self.surface = _surface(nodes, props, forms=forms)
++        if self.scene != 'list':
++            self.surface.observation.url = self.allowed_origin + '/item/' + str(self.selected)
++        return self.surface
++
++    def goto(self, url):
++        assert url == self.allowed_origin + '/'
++        self.navigation_count += 1
++        self.scene, self.selected, self.composer, self.focused = 'list', None, '', False
++        return self.read().observation
++
++    def reload(self):
++        self.reload_count += 1
++        if self.mode == 'old_returns' and self.old is not None:
++            self.rows.append(self.old)
++        return self.read()
++
++    def act(self, action):
++        self.actions.append(action)
++        node = self.surface.observation.node(action.target)
++        if action.kind == 'type':
++            if self.scene == 'list':
++                self.composer = action.text
++            else:
++                assert action.target == 4
++                self.value, self.focused = action.text, True
++                self.fills += 1
++                if self.mode == 'sibling_after_fill':
++                    self.sibling = 'Keep this draft'
++        elif self.scene == 'list' and node.role == 'link':
++            self.selected = self.row_roots.index(node.parent)
++            if self.mode == 'wrong_editor':
++                self.selected = (self.selected + 1) % len(self.rows)
++            self.scene, self.value = 'detail', self.rows[self.selected]
++            self.generation += 1
++            if self.mode == 'existing_sibling':
++                self.sibling = 'Existing saved-or-draft value'
++        else:
++            assert self.scene == 'list' and node.name == 'Add'
++            self.rows.append(self.composer)
++            self.composer = ''
++        return ActionResult(True)
++
++    def retained_node_indices(self, retained):
++        return [next((i for i, token in self.element_tokens.items() if token == wanted), -1) for wanted in retained]
++
++    def textbox_popup_context(self, field):
++        return {'target_visible':True, 'target_focused':self.focused and self.mode != 'lost_focus',
++                'unmapped_listboxes':0, 'unmapped_other_popups':0,
++                'listboxes':[n.i for n in self.surface.observation.nodes if n.role == 'listbox'], 'other_popups':[]}
++
++    def press_retained(self, action, retained, offset, timeout_ms):
++        assert action.kind == 'press' and action.text == 'Tab'
++        assert self.retained_node_indices(retained)[offset] == 4
++        assert self.focused
++        self.actions.append(action)
++        self.tabs += 1
++        self.old, self.focused = self.rows[self.selected], False
++        if self.mode != 'no_save':
++            self.rows[self.selected] = self.value
++        if self.mode == 'duplicate_new':
++            self.rows.append(self.value)
++        return ActionResult(self.mode != 'lost_reply', 'Unobserved reply' if self.mode == 'lost_reply' else None)
++
++
++def test_linked_value_learning_binds_changed_labels_and_reuses_two_saved_tab_trials(tmp_path, monkeypatch):
++    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=_LinkedValueBrowser())
++    assert learned['attempts'] == []
++    assert [o['kind'] for o in learned['operations']] == ['create_visible_record','read_visible_record','update_visible_record']
++    create = _learned_kind(learned, 'create_visible_record')
++    update = _learned_kind(learned, 'update_visible_record')
++    read = _learned_kind(learned, 'read_visible_record')
++    anchor = update['procedure']['anchor']
++    assert create['procedure']['form']['fields'][0]['descriptor']['label'] == 'Incoming phrase'
++    assert update['procedure']['read_fields'][anchor]['label'] == 'Recorded phrase'
++    assert update['procedure']['context_label_binding']['prior'] == runtime_module.LINKED_CONTEXT_PRIOR
++    assert 'commit' not in read['procedure']['linked_value_editor']
++    assert all(len(t['linked_commits']) == 1 for t in update['support']['trials'])
++    assert browser.tabs == browser.fills == 2
++    before = list(browser.rows)
++    browser.actions.clear()
++    result = runtime.invoke(connection, update, {'target':before[0],anchor:'Fresh caller value'}, lambda event: None)
++    assert result['outcome'] == 'CONFIRMED'
++    assert browser.rows == ['Fresh caller value',before[1]]
++    assert [a.kind for a in browser.actions] == ['click','type','press']
++    assert browser.actions[-1].text == 'Tab'
++    result = runtime.invoke(connection, read, {'target':'Fresh caller value'}, lambda event: None)
++    assert result['outcome'] == 'CONFIRMED' and result['effect']['values'] == {anchor:'Fresh caller value'}
++
++
++@pytest.mark.parametrize('mode,fills,tabs', [
++    ('duplicate_link',0,0), ('external_link',0,0), ('wrong_editor',0,0), ('duplicate_value_field',0,0), ('new_required',0,0),
++    ('outside_popup',0,0),
++    ('existing_sibling',0,0), ('sibling_after_fill',1,0), ('context_after_fill',1,0), ('remounted_context',1,0),
++    ('popup_after_fill',1,0), ('lost_focus',1,0), ('no_save',1,1), ('old_returns',1,1),
++    ('duplicate_new',1,1), ('lost_reply',1,1)])
++def test_linked_value_failures_preserve_uncertainty_and_never_retry(tmp_path, monkeypatch, mode, fills, tabs):
++    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=_LinkedValueBrowser())
++    update = _learned_kind(learned, 'update_visible_record')
++    target = browser.rows[0]
++    browser.mode, browser.fills, browser.tabs = mode, 0, 0
++    result = runtime.invoke(connection, update, {'target':target,update['procedure']['anchor']:'Fresh caller value'}, lambda event: None)
++    assert result['outcome'] != 'CONFIRMED'
++    assert browser.fills == fills and browser.tabs == tabs
++    if fills:
++        assert result['outcome'] == 'UNCERTAIN'
++
++
++def test_linked_value_commit_requires_two_completed_trials_and_cannot_be_added_at_invocation(tmp_path, monkeypatch):
++    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=_LinkedValueBrowser())
++    create = _learned_kind(learned, 'create_visible_record')
++    update = deepcopy(_learned_kind(learned, 'update_visible_record'))
++    trials = deepcopy(update['support']['trials'])
++    trials[1]['linked_commits'] = []
++    with pytest.raises(runtime_module.StopOperation, match='two saved and reloaded'):
++        runtime._record_operation(create, update['kind'], update['procedure'], trials, {})
++    del update['procedure']['linked_value_editor']['commit']
++    runtime_module.bind_contract(update)
++    browser.fills = browser.tabs = 0
++    result = runtime.invoke(connection, update, {'target':browser.rows[0],update['procedure']['anchor']:'Fresh caller value'}, lambda event: None)
++    assert result['outcome'] != 'CONFIRMED'
++    assert browser.fills == browser.tabs == 0
++
++
++@pytest.mark.slow
++def test_rendered_linked_value_learning_and_retained_tab_persist_through_navigation(tmp_path):
++    from semabi.compiler.browser import Primitive
++    html = '''<!doctype html><main></main><script>
++      const main=document.querySelector('main');
++      const rows=JSON.parse(localStorage.getItem('fixture_rows')||'[]');
++      const save=()=>localStorage.setItem('fixture_rows',JSON.stringify(rows));
++      if(location.pathname==='/') {
++        main.innerHTML='<form><label>Incoming phrase <input></label><button>Add</button></form><section></section>';
++        const form=main.querySelector('form'), input=form.querySelector('input'), list=main.querySelector('section');
++        const render=()=>{list.replaceChildren();rows.forEach((value,index)=>{
++          const article=document.createElement('article'), link=document.createElement('a');
++          link.href='/item/'+index;link.textContent=value;article.append(link);list.append(article);});};
++        form.addEventListener('submit',event=>{event.preventDefault();rows.push(input.value);save();input.value='';render();});
++        render();
++      } else {
++        const index=Number(location.pathname.split('/').pop());
++        main.innerHTML='<div><button>#'+String(11+index)+'</button><div contenteditable="true" role="textbox" '
++          +'aria-label="Recorded phrase" style="min-height:30px;min-width:200px"></div></div>'
++          +'<div><textarea aria-label="Separate draft"></textarea><button>Save draft</button></div>';
++        const field=main.querySelector('[contenteditable]');field.textContent=rows[index];
++        field.addEventListener('blur',()=>{rows[index]=field.textContent;save();});
++      }
++      </script>'''
++    browser = BrowserSession('https://synthetic.invalid/')
++    browser.settle_ms, browser.max_settle_ms = 1, 100
++    runtime = Runtime(tmp_path)
++    connection = {'id':'native-linked', 'url':browser.allowed_origin+'/',
++                  'scope':{'exploration_enabled':True,'max_actions':60,'max_writes':30}}
++    try:
++        browser._page.route('https://synthetic.invalid/**', lambda route: route.fulfill(content_type='text/html',body=html))
++        browser.goto()
++        runtime.sessions[connection['id']] = browser
++        learned = runtime.learn(connection, {}, lambda event: None)
++        assert learned['attempts'] == []
++        update = _learned_kind(learned, 'update_visible_record')
++        anchor = update['procedure']['anchor']
++        target = update['support']['trials'][0]['values'][anchor]
++        result = runtime.invoke(connection, update, {'target':target,anchor:'New rendered caller value'}, lambda event: None)
++        assert result['outcome'] == 'CONFIRMED'
++        surface = browser.reload()
++        assert len(visible_record_matches(surface,'New rendered caller value')) == 1
++        assert visible_record_matches(surface,target) == []
++        # The browser guard also refuses Tab if focus has moved; it must not
++        # focus an old editor before dispatching the learned key.
++        record = visible_record_matches(surface,'New rendered caller value')[0]
++        link = runtime._anchor_link(surface,record,'New rendered caller value')
++        assert browser.act(Primitive('click',link)).ok
++        surface = browser.read()
++        candidate = runtime._record_form(surface,update['procedure'],'New rendered caller value')
++        field = candidate['fields'][0]['node']
++        nodes = [candidate['root'],field]
++        retained = browser.retain_nodes(nodes)
++        try:
++            assert not browser.press_retained(Primitive('press',field,'Tab'),retained,1).ok
++        finally:
++            browser.release_nodes(retained)
++    finally:
++        if connection['id'] in runtime.sessions:
++            runtime.close()
++        else:
++            browser.close()

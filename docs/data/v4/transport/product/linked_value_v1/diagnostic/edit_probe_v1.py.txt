@@ -1,0 +1,251 @@
+"""Development-only experiment: one learned-trial textbox fill and retained Tab.
+
+The historical creation artifact supplies a learning-trial value only. Ordinary
+rendered observations select its current link and exact-value textbox. No public
+invocation, operation establishment, or global identity claim is made.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import time
+
+from semabi.compiler.browser import Primitive
+from semabi.compiler.browser_session import BrowserSession, origin_of
+from semabi.compiler.runtime import Budget, Runtime, StopOperation, record_witness
+from semabi.compiler.surface import digest, editor_scopes, form_candidates
+
+ROOT = Path(__file__).resolve().parents[2]
+HELPER = ROOT / 'runs/product_popup_probe_v1/probe.py'
+spec = importlib.util.spec_from_file_location('private_diagnostic_helpers', HELPER)
+helpers = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(helpers)
+require = helpers.require
+
+
+class Session(BrowserSession):
+    def __init__(self, url, budget, record):
+        self.budget, self.record = budget, record
+        self.auth_phase, self.link_node, self.field_node = False, None, None
+        super().__init__(url)
+
+    def read(self):
+        self.budget.check_deadline()
+        surface = super().read()
+        self.record['surface_reads'] += 1
+        require(surface.settled and origin_of(surface.observation.url) == self.allowed_origin,
+                'A settled same-origin surface is required')
+        self.budget.check_deadline()
+        return surface
+
+    def authenticate(self, credentials):
+        self.auth_phase = True
+        try:
+            return super().authenticate(credentials)
+        finally:
+            self.auth_phase = False
+
+    def act(self, primitive):
+        self.budget.check_deadline()
+        if self.auth_phase:
+            self.budget.take(writing=True)
+            self.record['authentication_dispatches'] += 1
+        elif primitive.kind == 'type':
+            require(primitive.target == self.field_node and not self.record['fill_attempted'],
+                    'Only the selected exact-value textbox may be filled once')
+            self.record['fill_attempted'] = True
+        else:
+            require(primitive.kind == 'click' and primitive.target == self.link_node
+                    and not self.record['link_click_attempted'], 'Only one selected visible link may be clicked')
+            require(self.surface.controls[primitive.target]['role'] == 'link', 'Selected control is no longer a link')
+            self.record['link_click_attempted'] = True
+        return super().act(primitive)
+
+
+def run(args):
+    output = args.output_dir
+    output.mkdir(parents=True, exist_ok=False, mode=0o700)
+    started = time.monotonic()
+    budget = Budget(14, 8, deadline=started + 45)
+    record = dict(classification='Development experiment on a learner-created trial record: fill and retained Tab',
+                  status='UNESTABLISHED', stage='prepare', surface_reads=0,
+                  authentication_dispatches=0, link_click_attempted=False, fill_attempted=False, tab_attempted=False,
+                  allowed_interactions='Authentication; navigation; one current learned-value link click; one exact-value textbox fill; one retained-focused Tab; return and reload',
+                  business_effect='UNESTABLISHED until fresh saved-view and reload witnesses; no global side-effect claim')
+    secrets, browser, runtime, expected = [], None, None, None
+
+    def save(name, value):
+        (output / name).write_text(json.dumps(helpers.redact(value, secrets), indent=2) + '\n')
+
+    def emit(value):
+        with (output / 'events.jsonl').open('a') as stream:
+            stream.write(json.dumps(helpers.redact(value, secrets)) + '\n')
+
+    try:
+        expected = json.loads(args.source_hashes.read_text())
+        record['source_before'] = helpers.source_hashes(expected)
+        require(record['source_before'] == expected, 'Source changed before diagnostic')
+        record['probe_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+        record['helper_sha256'] = hashlib.sha256(HELPER.read_bytes()).hexdigest()
+        onboarding = json.loads(args.onboarding_file.read_text())
+        operations = [op for op in onboarding['catalog']['operations'] if op['kind'] == 'create_visible_record']
+        require(len(operations) == 1, 'The historical creation operation is ambiguous')
+        operation = operations[0]
+        require(digest(operation['support']) == operation['evidence_sha256'], 'Historical evidence digest changed')
+        procedure = operation['procedure']
+        trial = operation['support']['trials'][0]
+        target = trial['arguments'][procedure['anchor']]
+        edit_plan = json.loads(args.edit_plan.read_text())
+        replacement = edit_plan['replacement']
+        require(isinstance(replacement, str) and replacement and replacement != target,
+                'The frozen experiment requires one fresh replacement')
+        record['edit_plan'] = dict(path=str(args.edit_plan), sha256=hashlib.sha256(args.edit_plan.read_bytes()).hexdigest(),
+                                   replacement=replacement)
+        allowed_origin = origin_of(args.application_url)
+        require(origin_of(procedure['readback_url']) == allowed_origin, 'Historical readback origin is not allowed')
+        record['diagnostic_input'] = dict(onboarding_path=str(args.onboarding_file),
+            sha256=hashlib.sha256(args.onboarding_file.read_bytes()).hexdigest(), operation_id=operation['id'],
+            historical_source=operation['support']['source_sha256'], trial_index=0, target=target,
+            compatibility='Historical observations used for a diagnostic; no runtime compatibility claim')
+        credentials = json.loads(args.credentials_file.read_text())
+        require(all(isinstance(credentials.get(k), str) and credentials[k] for k in ('username', 'password')),
+                'Ordinary credentials are required')
+        secrets[:] = sorted({v for v in credentials.values() if isinstance(v, str) and v}, key=len, reverse=True)
+        save('started.json', record)
+        runtime = Runtime(output / 'runtime')
+        require(all(runtime.source_sha256[k] == expected['semabi/compiler/' + k] for k in runtime.source_sha256),
+                'Loaded runtime differs from source freeze')
+        browser = Session(args.application_url, budget, record)
+        budget.take()
+        browser.goto()
+        record['stage'] = 'authentication'
+        auth = browser.authenticate(credentials)
+        credentials.clear()
+        require(auth.get('status') == 'CONNECTED' and auth.get('authentication_actions') == record['authentication_dispatches'],
+                'Authentication did not complete with exact accounting')
+        record['authentication'] = auth
+        trace = helpers.PrivateTrace(output / 'evidence', emit, budget, secrets, allowed_origin)
+        surface = trace.navigate(browser, procedure['readback_url'])
+        surface, selected = runtime._wait_for_record(browser, surface, procedure, target, trace)
+        runtime._guard_current_editor(surface)
+        from semabi.compiler.surface import visible_record_matches
+        require(not visible_record_matches(surface, replacement), 'Proposed replacement is already visible')
+        record['stage'] = 'resolve_visible_link'
+        members = set(surface.observation.subtree(selected['root']))
+        links = [i for i, control in surface.controls.items() if i in members and control['role'] == 'link'
+                 and not control['disabled'] and surface.text_is_complete(i)
+                 and surface.observation.node(i).name == target]
+        require(len(links) == 1, 'Learned value does not identify one visible local link')
+        node = links[0]
+        browser.link_node = node
+        save('before_link.json', dict(selected=selected, link=surface.controls[node], node=surface.observation.node(node).to_json()))
+        record['stage'] = 'one_link_click'
+        surface = trace.act(browser, surface, Primitive('click', node))
+        # A further rendered read observes a settled destination without another action.
+        surface = trace.read(browser)
+        fields = [dict(node=surface.observation.node(i).to_json(), control=control,
+                       descriptor=surface.descriptor(i)) for i, control in surface.controls.items()
+                  if control['role'] in {'textbox', 'combobox'}]
+        detail = dict(observation=surface.observation.to_json(), controls=surface.controls, forms=surface.forms,
+                      editor_scopes=sorted(editor_scopes(surface)), candidates=form_candidates(surface), fields=fields,
+                      exact_trial_value_nodes=[n.to_json() for n in surface.observation.nodes
+                                               if n.name == target or n.value == target])
+        save('opened_detail.json', detail)
+        record['detail_summary'] = dict(url=surface.observation.url, field_count=len(fields),
+             form_candidates=len(detail['candidates']), exact_trial_value_nodes=detail['exact_trial_value_nodes'])
+        record['stage'] = 'select_trial_value_textbox'
+        selected_fields = [i for i, control in surface.controls.items() if control['role'] == 'textbox'
+                           and not control['disabled'] and not control['readonly']
+                           and not control.get('has_popup') and control['input_type'] in {'text', 'textarea', 'contenteditable', ''}
+                           and surface.observation.node(i).value == target]
+        require(len(selected_fields) == 1, 'Trial value does not identify one supported editable textbox')
+        field = selected_fields[0]
+        descriptor = surface.descriptor(field)
+        require(surface.resolve(descriptor) == [field], 'The observed field descriptor is ambiguous')
+        # Keep all current textbox elements and their descriptors/values. Blank
+        # description/comment editors must not be confused with the selected field.
+        field_nodes = [i for i, control in surface.controls.items() if control['role'] in {'textbox', 'combobox'}]
+        scope = next((i for i in surface.observation.ancestors(field)
+                      if set(field_nodes) <= set(surface.observation.subtree(i))), None)
+        require(scope is not None, 'Textboxes lack a retained visible common scope')
+        retained = browser.retain_nodes([scope, *field_nodes])
+        original_fields = [(surface.descriptor(i), surface.observation.node(i).value) for i in field_nodes]
+        try:
+            browser.field_node = field
+            record['stage'] = 'one_fill'
+            surface = trace.act(browser, surface, Primitive('type', field, replacement))
+            retained_indices = browser.retained_node_indices(retained)
+            require(browser.nodes_retained(retained, retained_indices) and len(retained_indices) == len(field_nodes) + 1,
+                    'Textbox elements changed')
+            current = retained_indices[1:]
+            expected_fields = [(d, replacement if i == field else value) for i, (d, value) in zip(field_nodes, original_fields)]
+            require([(surface.descriptor(i), surface.observation.node(i).value) for i in current] == expected_fields,
+                    'Another textbox changed or the typed value was not retained')
+            selected_offset = field_nodes.index(field)
+            field = current[selected_offset]
+            context = browser.textbox_popup_context(field)
+            require(context['target_focused'] and not context['listboxes'] and not context['unmapped_listboxes']
+                    and not surface.controls[field].get('has_popup'), 'The filled field focus or popup context changed')
+            save('after_fill.json', dict(observation=surface.observation.to_json(), controls=surface.controls,
+                                         focus=context, expected_fields=expected_fields))
+            handle = retained.evaluate_handle('(elements, offset) => elements[offset]', selected_offset + 1)
+            try:
+                element = handle.as_element()
+                require(element is not None and element.evaluate('(e) => e.isConnected && document.activeElement === e'),
+                        'The retained field is no longer focused')
+                record['stage'] = 'one_tab'
+                budget.take(writing=True)
+                record['tab_attempted'] = True
+                action = Primitive('press', field, 'Tab')
+                emit({'type':'write_intent', 'action':action.to_json(), 'scope':'Retained focused textbox only'})
+                element.press('Tab', timeout=2000)
+                after = trace.read(browser)
+                trace.log.add_step(0, action, True, None, surface.observation, after.observation)
+                save('after_tab.json', dict(observation=after.observation.to_json(), controls=after.controls))
+            finally:
+                handle.dispose()
+        finally:
+            browser.release_nodes(retained)
+        record['stage'] = 'return_and_reload'
+        returned = trace.navigate(browser, procedure['readback_url'])
+        expected_values = {**trial['arguments'], procedure['anchor']: replacement}
+        returned, witness = runtime._witness(browser, returned, expected_values, procedure['anchor'], trace,
+              procedure['effect_slots'], absent_value=target, expected_url=procedure['readback_url'])
+        require(witness is not None, 'Filled-and-blurred replacement not witnessed in the saved list')
+        reloaded = trace.reload(browser)
+        reloaded, persisted = runtime._witness(browser, reloaded, expected_values, procedure['anchor'], trace,
+              procedure['effect_slots'], absent_value=target, expected_url=procedure['readback_url'])
+        require(persisted is not None, 'Replacement not retained after reload')
+        save('returned_record.json', dict(before=selected, after=witness, after_reload=persisted))
+        record['status'] = 'FILL_TAB_PERSISTENCE_OBSERVED'
+        record['business_effect'] = 'Replacement occupies the original learned list slot and old value is absent before and after reload; no causal separation of fill, Tab and navigation; no global identity or side-effect claim'
+    except Exception as error:
+        record.update(status='UNESTABLISHED', error_type=type(error).__name__,
+                      reason=str(error) if isinstance(error, StopOperation) else 'Diagnostic did not complete; no retry')
+    finally:
+        for owner in (browser, runtime):
+            if owner is not None:
+                try:
+                    owner.close()
+                except Exception as error:
+                    record.update(status='UNESTABLISHED', close_error_type=type(error).__name__)
+        if expected is not None:
+            record['source_after'] = helpers.source_hashes(expected)
+            record['source_unchanged'] = record['source_after'] == record.get('source_before') == expected
+        if not record.get('source_unchanged') or time.monotonic() > budget.deadline:
+            record['status'] = 'UNESTABLISHED'
+        record.update(actions=budget.actions, possible_writes=budget.writes, elapsed_seconds=round(time.monotonic()-started, 6))
+        save('result.json', record)
+    print(json.dumps({k:record.get(k) for k in ('status','actions','possible_writes','elapsed_seconds','source_unchanged')}))
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    for name in ('output-dir', 'credentials-file', 'source-hashes', 'onboarding-file'):
+        parser.add_argument('--' + name, type=Path, required=True)
+    parser.add_argument('--application-url', required=True)
+    parser.add_argument('--edit-plan', type=Path, required=True)
+    run(parser.parse_args())

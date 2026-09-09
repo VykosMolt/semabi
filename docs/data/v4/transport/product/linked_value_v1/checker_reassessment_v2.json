@@ -1,0 +1,31 @@
+{
+  "checks": [
+    "non_target_completion_rejected",
+    "target_control_state_rejected",
+    "target_destination_rejected"
+  ],
+  "classification": "Offline evaluator correction after first SemABI invocation; no product source/arguments/observations changed",
+  "completed_at": "2026-09-09T22:59:51.548611+00:00",
+  "elapsed_seconds": 0.043655304005369544,
+  "evaluator_map": {
+    "runs/product_assessment_reserved_v1/setup/fixture_values_v1.json": "b923ede6d973353eb93d9d0df28ad3b2fc49246b8b7185accf69a4f81502bc73",
+    "runs/product_assessment_reserved_v1/setup/ui_session.py": "5028170806fb9f661854c85e348a27cb07789927d817220ef8f798e8b5459157",
+    "runs/product_evaluator_v3/check_effects.py": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38",
+    "runs/product_linked_value_development_v1/check_linked_chain.py": "fae9f368821d5a40bc5c4b956e75000586b44cdc1eb3511ca74c4ada4d62ff11",
+    "runs/product_linked_value_development_v1/linked_chain_plan_v1.json": "edc58f539eed86b16c550d984e452fb7969638d3fc249d2b4007c84344980bf8",
+    "runs/product_linked_value_development_v1/source_sha256.json": "ba3ed0ee9914dc988ce374f1d6eb7fa36374c55977f34fda6b15b9ad410ad001"
+  },
+  "new_checker_sha256": "fae9f368821d5a40bc5c4b956e75000586b44cdc1eb3511ca74c4ada4d62ff11",
+  "original_checker_sha256": "4b1383aa16fbcab7bd5a73a68c48c03f217665035e0184a3567a0e580bbb9add",
+  "outputs": [
+    {
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/semabi/before/result_reassessed_v2.json",
+      "sha256": "d0ecb4f7917fbe7a5c1a4317997db972edd138606de72dbc2524163ae875e966"
+    },
+    {
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/semabi/after_call_1/result_reassessed_v2.json",
+      "sha256": "105d04439f0ec729864a8171f2853e364e29fd547100503a97961b526954be9a"
+    }
+  ],
+  "script_sha256": "fbd6852dc6a1b13481bd683ec10ab69fa3b2b38d16222ba45db8f5e800b330cc"
+}

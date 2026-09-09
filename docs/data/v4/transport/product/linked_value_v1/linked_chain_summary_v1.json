@@ -1,0 +1,390 @@
+{
+  "actual_invocation_or_replay_counts": {
+    "cached_form": 1,
+    "semabi": 3
+  },
+  "all_jobs_terminal": true,
+  "baseline_access_failure": {
+    "path": "runs/product_linked_value_development_v1/access_failure_v1.json",
+    "sha256": "e01c1c37690bb31af4a48ea01c7de31266bb774da6bc6360dcba6811b6a9e96d"
+  },
+  "classification": "Development direct-schema linked-value chain; post-outcome evaluator correction and later baseline access failure retained",
+  "completed_at": "2026-09-09T23:07:19.985121+00:00",
+  "completion_by_arm": {
+    "cached_form": "1/3",
+    "semabi": "3/3"
+  },
+  "effect_scope": "Successful checks cover all nine current visible task rows, local text/control state/completion/project labels/link destinations. Last failed baseline check establishes no saved-state outcome. Unobserved/hidden effects not measured.",
+  "evaluator_correction": {
+    "lineage_clarification": {
+      "path": "runs/product_linked_value_development_v1/checker_lineage_clarification_v1.json",
+      "sha256": "f00039aed040563535ec4db48f3f7b86ce0eb1e43ed4619be544e49de87d570e"
+    },
+    "offline_reassessment": {
+      "path": "runs/product_linked_value_development_v1/checker_reassessment_v2.json",
+      "sha256": "ab7cfb4bfe9aa7b3fddf1366d0b28b8f4fd17c8f68944e0c340214867f973aec"
+    },
+    "original_first_after_verdict": "EXPECTED_STATE_NOT_OBSERVED",
+    "original_retained": {
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/semabi/after_call_1/result.json",
+      "sha256": "b104689447b0a6fc51416fefa4c70b84e6d872c1012b87dee3f1c02821d321b2"
+    }
+  },
+  "independent_checks": [
+    {
+      "actions": 7,
+      "arm": "semabi",
+      "elapsed_seconds": 5.336694,
+      "error": null,
+      "observed_rows": 9,
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/semabi/before/result_reassessed_v2.json",
+      "phase": "before",
+      "possible_writes": 4,
+      "post_outcome_offline_reassessment": true,
+      "sha256": "d0ecb4f7917fbe7a5c1a4317997db972edd138606de72dbc2524163ae875e966",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    {
+      "actions": 7,
+      "arm": "semabi",
+      "elapsed_seconds": 5.271581,
+      "error": null,
+      "observed_rows": 9,
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/semabi/after_call_1/result_reassessed_v2.json",
+      "phase": "after_call_1",
+      "possible_writes": 4,
+      "post_outcome_offline_reassessment": true,
+      "sha256": "105d04439f0ec729864a8171f2853e364e29fd547100503a97961b526954be9a",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    {
+      "actions": 7,
+      "arm": "semabi",
+      "elapsed_seconds": 5.371417,
+      "error": null,
+      "observed_rows": 9,
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/semabi/after_call_2/result.json",
+      "phase": "after_call_2",
+      "possible_writes": 4,
+      "post_outcome_offline_reassessment": false,
+      "sha256": "ba5fb9185df52cc0adbcb8f13d3774d847b820c4b7c88148234e4d4ecaa42e1e",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    {
+      "actions": 7,
+      "arm": "semabi",
+      "elapsed_seconds": 5.388203,
+      "error": null,
+      "observed_rows": 9,
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/semabi/after_call_3/result.json",
+      "phase": "after_call_3",
+      "possible_writes": 4,
+      "post_outcome_offline_reassessment": false,
+      "sha256": "757a4655909f612caf4d682224d1505255ed94c5bf021ed584693800065f67b7",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    {
+      "actions": 7,
+      "arm": "cached_form",
+      "elapsed_seconds": 5.566941,
+      "error": null,
+      "observed_rows": 9,
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/cached_form/before/result.json",
+      "phase": "before",
+      "possible_writes": 4,
+      "post_outcome_offline_reassessment": false,
+      "sha256": "7ae635f4c34c73b837a2318dc1a2dc973a6827627d3ba666d52b84acb1f64667",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    {
+      "actions": 7,
+      "arm": "cached_form",
+      "elapsed_seconds": 5.205745,
+      "error": null,
+      "observed_rows": 9,
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/cached_form/after_call_1/result.json",
+      "phase": "after_call_1",
+      "possible_writes": 4,
+      "post_outcome_offline_reassessment": false,
+      "sha256": "eb4771fe90db7f4d314be6f9c79fe2fd1d78b55a4c378122b3b93e4d4d4a4fcc",
+      "verdict": "EXPECTED_STATE_OBSERVED"
+    },
+    {
+      "actions": 5,
+      "arm": "cached_form",
+      "elapsed_seconds": 2.293549,
+      "error": "Login did not establish an authenticated view",
+      "observed_rows": null,
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/cached_form/after_call_2/result.json",
+      "phase": "after_call_2",
+      "possible_writes": 3,
+      "post_outcome_offline_reassessment": false,
+      "sha256": "83f5ff2f1aba0ccffb756225272c622c489776d919b43e9fc3a4c378c24cf6e9",
+      "verdict": "CHECK_UNESTABLISHED"
+    },
+    {
+      "arm": "cached_form",
+      "phase": "after_call_3",
+      "verdict": "NOT_ATTEMPTED_AFTER_ACCESS_FAILURE"
+    }
+  ],
+  "new_application_specific_learner_code": 0,
+  "onboarding": {
+    "actions": 31,
+    "external_wall_seconds": 35.782695,
+    "physically_once_charged_once_to_each_arm": true,
+    "possible_writes": 15
+  },
+  "original_ordinary_goals": {
+    "count": 18,
+    "eligible_ids": [
+      "vikunja-U1"
+    ],
+    "new_catalog_preflight_eligible": 1,
+    "new_original_goal_invocations": 0,
+    "original_denominators_unchanged": true
+  },
+  "paid_runtime_cost": 0,
+  "process_meters": [
+    {
+      "child_cpu_seconds": 3.181808,
+      "exit_code": 0,
+      "name": "call-cached_form-1",
+      "path": "runs/product_linked_value_development_v1/meters/call-cached_form-1/result.json",
+      "sampled_peak_aggregate_rss_bytes": 933085184,
+      "sha256": "8b75077caf3e77621ece51dabfaacf6c600f73591553755b134e799e248a4dcc",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 8.138701
+    },
+    {
+      "child_cpu_seconds": 1.465237,
+      "exit_code": 2,
+      "name": "call-cached_form-2",
+      "path": "runs/product_linked_value_development_v1/meters/call-cached_form-2/result.json",
+      "sampled_peak_aggregate_rss_bytes": 790700032,
+      "sha256": "1416ae82d720b0540167eca3acc404cb8043edb127d3f85e4a209ece1a8bb7d4",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 4.736512
+    },
+    {
+      "child_cpu_seconds": 4.544354,
+      "exit_code": 0,
+      "name": "call-semabi-1",
+      "path": "runs/product_linked_value_development_v1/meters/call-semabi-1/result.json",
+      "sampled_peak_aggregate_rss_bytes": 997388288,
+      "sha256": "a1fc1296e9c037b921e52687179f21eab5bd1fbf9634ecd6ac6e5cd4d16e9419",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 10.878547
+    },
+    {
+      "child_cpu_seconds": 3.478724,
+      "exit_code": 0,
+      "name": "call-semabi-2",
+      "path": "runs/product_linked_value_development_v1/meters/call-semabi-2/result.json",
+      "sampled_peak_aggregate_rss_bytes": 975634432,
+      "sha256": "b246bf48f99acf2afc45f471f18b77000f690809a9c3b99cd9e7e3f749de3664",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 8.478259
+    },
+    {
+      "child_cpu_seconds": 4.516176,
+      "exit_code": 0,
+      "name": "call-semabi-3",
+      "path": "runs/product_linked_value_development_v1/meters/call-semabi-3/result.json",
+      "sampled_peak_aggregate_rss_bytes": 995782656,
+      "sha256": "8c20dbcaadf934cd0509aa11d4f0710e0b9144c1879d47c222069e6aede87971",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 10.923143
+    },
+    {
+      "child_cpu_seconds": 2.910951,
+      "exit_code": 0,
+      "name": "check-cached_form-1",
+      "path": "runs/product_linked_value_development_v1/meters/check-cached_form-1/result.json",
+      "sampled_peak_aggregate_rss_bytes": 843309056,
+      "sha256": "8ebca977646aae9910af472b26f22e20b21534191e64450fd9f43313db7701de",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 5.317365
+    },
+    {
+      "child_cpu_seconds": 1.468,
+      "exit_code": 2,
+      "name": "check-cached_form-2",
+      "path": "runs/product_linked_value_development_v1/meters/check-cached_form-2/result.json",
+      "sampled_peak_aggregate_rss_bytes": 738312192,
+      "sha256": "5b791edb91b16494184ef75eca0f624876546fef1de8b9203cebe09f6b472a29",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 2.38675
+    },
+    {
+      "child_cpu_seconds": 2.964615,
+      "exit_code": 0,
+      "name": "check-cached_form-before",
+      "path": "runs/product_linked_value_development_v1/meters/check-cached_form-before/result.json",
+      "sampled_peak_aggregate_rss_bytes": 859619328,
+      "sha256": "61f358c2e010bd2e1cca59a7019760fd8c59f77d84d33e22d50a58f2196b0f7f",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 5.670444
+    },
+    {
+      "child_cpu_seconds": 2.931241,
+      "exit_code": 2,
+      "name": "check-semabi-1",
+      "path": "runs/product_linked_value_development_v1/meters/check-semabi-1/result.json",
+      "sampled_peak_aggregate_rss_bytes": 848941056,
+      "sha256": "a0c45354b3159dc83baad342fe029462136a47dabe8f41a4a522003793af195c",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 5.358989
+    },
+    {
+      "child_cpu_seconds": 2.963281,
+      "exit_code": 0,
+      "name": "check-semabi-2",
+      "path": "runs/product_linked_value_development_v1/meters/check-semabi-2/result.json",
+      "sampled_peak_aggregate_rss_bytes": 853000192,
+      "sha256": "bfd62f4cf81992dfb41475ec00885868a5a455788cb03302fdb99b29faa20fa2",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 5.470459
+    },
+    {
+      "child_cpu_seconds": 2.996494,
+      "exit_code": 0,
+      "name": "check-semabi-3",
+      "path": "runs/product_linked_value_development_v1/meters/check-semabi-3/result.json",
+      "sampled_peak_aggregate_rss_bytes": 854978560,
+      "sha256": "7f4333fc6a81e642feb6f1564904a2f2d03f5abc788665d477e8f967994d9f44",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 5.503978
+    },
+    {
+      "child_cpu_seconds": 2.99229,
+      "exit_code": 0,
+      "name": "check-semabi-before",
+      "path": "runs/product_linked_value_development_v1/meters/check-semabi-before/result.json",
+      "sampled_peak_aggregate_rss_bytes": 847208448,
+      "sha256": "c09c072b4ed75cd298c4a06fb5cc76b7defc3cef957e4d2ff00260ea0dfe8ff4",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 5.453731
+    },
+    {
+      "child_cpu_seconds": 9.755957,
+      "exit_code": 0,
+      "name": "integrated-tests-v1",
+      "path": "runs/product_linked_value_development_v1/meters/integrated-tests-v1/result.json",
+      "sampled_peak_aggregate_rss_bytes": 738693120,
+      "sha256": "406b9ff8dd2ef27b6a7e7b5d5b056c7d493f639dab4d7f550b957febb6ae3b47",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 32.617175
+    },
+    {
+      "child_cpu_seconds": 12.990661,
+      "exit_code": 0,
+      "name": "onboarding-v1",
+      "path": "runs/product_linked_value_development_v1/meters/onboarding-v1/result.json",
+      "sampled_peak_aggregate_rss_bytes": 1131950080,
+      "sha256": "434e2b34019fbf0bec9e8d877d4048957e7a515304e30b230ca648fdf3a0df54",
+      "terminal_ownership_verified": true,
+      "wall_seconds": 35.782695
+    }
+  ],
+  "rows": [
+    {
+      "actions": 10,
+      "actual_replay_or_invocation": true,
+      "arm": "semabi",
+      "execution_seconds_including_auth": 10.479592,
+      "independently_completed": true,
+      "kind": "update",
+      "number": 1,
+      "outcome": "CONFIRMED",
+      "path": "runs/product_linked_value_development_v1/attempts/semabi-1/attempt.json",
+      "possible_writes": 6,
+      "sha256": "678e2925a87908431a49f38c96cbed5f9e152199dd2f9caa906bf6bddc31f8bc"
+    },
+    {
+      "actions": 7,
+      "actual_replay_or_invocation": true,
+      "arm": "semabi",
+      "execution_seconds_including_auth": 8.048758,
+      "independently_completed": true,
+      "kind": "read",
+      "number": 2,
+      "outcome": "CONFIRMED",
+      "path": "runs/product_linked_value_development_v1/attempts/semabi-2/attempt.json",
+      "possible_writes": 4,
+      "read_values_match": true,
+      "sha256": "09c82cac2292de445bd20ea81e1795db2e7d7475ccc28fc51dba18e0d16bfac4"
+    },
+    {
+      "actions": 10,
+      "actual_replay_or_invocation": true,
+      "arm": "semabi",
+      "execution_seconds_including_auth": 10.491124,
+      "independently_completed": true,
+      "kind": "update",
+      "number": 3,
+      "outcome": "CONFIRMED",
+      "path": "runs/product_linked_value_development_v1/attempts/semabi-3/attempt.json",
+      "possible_writes": 6,
+      "sha256": "3c0bd7e1893fe3304ee5299e2fb2973b44294f40d1e0e186714af65fa12d9e9a"
+    },
+    {
+      "actions": 9,
+      "actual_replay_or_invocation": true,
+      "arm": "cached_form",
+      "authentication_status": "CONNECTED",
+      "execution_seconds_including_auth": 7.935,
+      "failure_phase": null,
+      "independently_completed": true,
+      "kind": "update",
+      "number": 1,
+      "outcome": "DISPATCHED",
+      "path": "runs/product_linked_value_development_v1/attempts/cached_form-1/baseline/result.json",
+      "possible_writes": 6,
+      "sha256": "62d18247893f1a098bc9f078f906036399ef702e810580ff139bb9ec8b204d21"
+    },
+    {
+      "actions": 4,
+      "actual_replay_or_invocation": false,
+      "arm": "cached_form",
+      "authentication_status": "AUTH_REQUIRED",
+      "execution_seconds_including_auth": 4.563,
+      "failure_phase": "BEFORE_REPLAY_ACTION",
+      "independently_completed": false,
+      "kind": "read",
+      "number": 2,
+      "outcome": "FAILED",
+      "path": "runs/product_linked_value_development_v1/attempts/cached_form-2/baseline/result.json",
+      "possible_writes": 3,
+      "sha256": "c1a35cf9a050d884f5139fd4efbfdd2dc0af760604e4182ac2dbd4288528fc43"
+    },
+    {
+      "actual_replay_or_invocation": false,
+      "arm": "cached_form",
+      "independently_completed": false,
+      "kind": "update",
+      "number": 3,
+      "outcome": "NOT_ATTEMPTED_AFTER_ACCESS_FAILURE"
+    }
+  ],
+  "runtime_model_calls": 0,
+  "runtime_validation": "460 passed in 32.38s on exact adopted source; not a new whole-repository regression claim.",
+  "source_sha256": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "abf8c7bb410b4c23c1d2938c98ece56547384c8d4bee65c967c0ddd60ea8b159",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "d3585b9e255e01b8d03fbd51cc52dfdfe8d39d994c314c01a1e35414ca5a9367",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "266d6a9aa62f21193d9a93cc0ef5ece73dc4ff1f04e0acbbc45efa8ec8980d74",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_unchanged": true,
+  "workflow_attempt_counts": {
+    "cached_form": 2,
+    "semabi": 3
+  },
+  "write_retries": 0
+}

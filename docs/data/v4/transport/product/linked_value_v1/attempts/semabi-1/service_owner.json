@@ -1,0 +1,408 @@
+{
+  "format": "product_assessment_service_owner.v1",
+  "started_at": "2026-09-09T22:57:15.714424+00:00",
+  "service_data_dir": "/home/moloch/semabi/runs/product_linked_value_development_v1/service",
+  "fresh_service_process": true,
+  "service_restart_reuses_persisted_artifacts": true,
+  "new_learning": false,
+  "accepted_jobs_terminal_before_close": true,
+  "service_pid": 1595097,
+  "service_startup_seconds": 0.15105316499830224,
+  "client_exit_code": 0,
+  "terminal_jobs": [
+    {
+      "connection_id": "conn_34fdcbbceab948b8a0f861138f04ef09",
+      "created_at": "2026-09-09T22:57:15.924326+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T22:57:15.926874+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T22:57:19.239671+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_9f30d271862149e4b3dc8026f5e24f02",
+      "job_id": "job_9f30d271862149e4b3dc8026f5e24f02",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8853",
+        "authentication_actions": 3,
+        "authentication_evidence": "same_origin_settled_password_form_absence",
+        "authentication_prior": "Whole normalized English label: Login, Log in, Sign in",
+        "elapsed_seconds": 2.89,
+        "login_selection_basis": "exact_english_login_label_prior",
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T22:57:19.239709+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_34fdcbbceab948b8a0f861138f04ef09",
+      "created_at": "2026-09-09T22:57:19.267925+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T22:57:19.270039+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T22:57:19.580627+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "1410f359445d8362",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T22:57:19.893213+00:00",
+          "sequence": 3,
+          "settled": true,
+          "signature": "1410f359445d8362",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T22:57:19.903602+00:00",
+          "sequence": 4,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T22:57:21.217895+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "24744003f15cda8b",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 177
+          },
+          "created_at": "2026-09-09T22:57:21.229606+00:00",
+          "sequence": 6,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T22:57:22.216366+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "abd8cdc313fe0637",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T22:57:22.225049+00:00",
+          "ok": true,
+          "sequence": 8,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T22:57:22.578558+00:00",
+          "sequence": 9,
+          "settled": true,
+          "signature": "abd8cdc313fe0637",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T22:57:22.611675+00:00",
+          "field": 99,
+          "metadata": {
+            "active_node": 0,
+            "aria_activedescendant": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_autocomplete": null,
+            "aria_controls": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_expanded": null,
+            "aria_owns": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "listboxes": [],
+            "other_popups": [],
+            "scope": null,
+            "scope_textboxes": [],
+            "target_focused": false,
+            "target_visible": true,
+            "unmapped_listboxes": 0,
+            "unmapped_other_popups": 0,
+            "unmapped_scope_textboxes": 0
+          },
+          "observation": "abd8cdc313fe0637",
+          "sequence": 10,
+          "type": "textbox_popup_observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 99,
+            "text": "lcfc758258f3 first replacement"
+          },
+          "created_at": "2026-09-09T22:57:22.614610+00:00",
+          "sequence": 11,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T22:57:23.002798+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "0c283c62a59ddf93",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T22:57:23.011661+00:00",
+          "ok": true,
+          "sequence": 13,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T22:57:23.034695+00:00",
+          "field": 99,
+          "metadata": {
+            "active_node": 99,
+            "aria_activedescendant": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_autocomplete": null,
+            "aria_controls": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "aria_expanded": null,
+            "aria_owns": {
+              "nodes": [],
+              "present": false,
+              "token_count": 0,
+              "unresolved": 0
+            },
+            "listboxes": [],
+            "other_popups": [],
+            "scope": null,
+            "scope_textboxes": [],
+            "target_focused": true,
+            "target_visible": true,
+            "unmapped_listboxes": 0,
+            "unmapped_other_popups": 0,
+            "unmapped_scope_textboxes": 0
+          },
+          "observation": "0c283c62a59ddf93",
+          "sequence": 14,
+          "type": "textbox_popup_observation"
+        },
+        {
+          "action": {
+            "kind": "press",
+            "target": 99,
+            "text": "Tab"
+          },
+          "created_at": "2026-09-09T22:57:23.035689+00:00",
+          "sequence": 15,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T22:57:23.563827+00:00",
+          "sequence": 16,
+          "settled": true,
+          "signature": "5f52edce464e616f",
+          "type": "observation"
+        },
+        {
+          "action": "press",
+          "created_at": "2026-09-09T22:57:23.572224+00:00",
+          "ok": true,
+          "sequence": 17,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T22:57:23.594128+00:00",
+          "sequence": 18,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T22:57:24.947215+00:00",
+          "sequence": 19,
+          "settled": true,
+          "signature": "6a2dc9cbc0253522",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T22:57:25.263176+00:00",
+          "sequence": 20,
+          "settled": true,
+          "signature": "6a2dc9cbc0253522",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T22:57:25.273021+00:00",
+          "sequence": 21,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T22:57:26.331964+00:00",
+          "sequence": 22,
+          "settled": true,
+          "signature": "6a2dc9cbc0253522",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T22:57:26.337985+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 23,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_c516d93d31864c919890f23f6b56cf3b",
+      "job_id": "job_c516d93d31864c919890f23f6b56cf3b",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "add_a_task": "lcfc758258f3 first replacement",
+          "target": "sdcb66c52b handoff review"
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 56.54473503200861,
+          "max_writes": 9
+        },
+        "operation_id": "op_aa0d714f0ae97c8fcac4",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "add_a_task": "lcfc758258f3 first replacement"
+          },
+          "before": {
+            "add_a_task": "sdcb66c52b handoff review"
+          },
+          "before_witness": {
+            "basis": "visible_local_record",
+            "link_destinations": [
+              "http://127.0.0.1:8853/projects/1",
+              "http://127.0.0.1:8853/tasks/6"
+            ],
+            "observation": "24744003f15cda8b",
+            "role": "listitem",
+            "root": 163,
+            "text_boundaries": {},
+            "texts": [
+              "Inboxsdcb66c52b handoff review Add to Favorites",
+              "Mark 'sdcb66c52b handoff review' as done",
+              "Inboxsdcb66c52b handoff review",
+              "Inbox",
+              "sdcb66c52b handoff review",
+              "sdcb66c52b handoff review"
+            ],
+            "value_node": 176
+          },
+          "identity": "UNESTABLISHED",
+          "kind": "visible_record_value_replaced",
+          "old_anchor_absence": {
+            "after_reload_observation": "6a2dc9cbc0253522",
+            "after_submit_observation": "6a2dc9cbc0253522",
+            "value": "sdcb66c52b handoff review"
+          },
+          "scope": "Local exact-value replacement in the inspected record view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "field_slots": {
+              "add_a_task": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "link",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "link_destinations": [
+              "http://127.0.0.1:8853/projects/1",
+              "http://127.0.0.1:8853/tasks/6"
+            ],
+            "observation": "6a2dc9cbc0253522",
+            "old_anchor_absence": {
+              "after_reload_observation": "6a2dc9cbc0253522",
+              "after_submit_observation": "6a2dc9cbc0253522",
+              "value": "sdcb66c52b handoff review"
+            },
+            "role": "listitem",
+            "root": 163,
+            "text_boundaries": {},
+            "texts": [
+              "Inboxlcfc758258f3 first replacement Add to Favorites",
+              "Mark 'lcfc758258f3 first replacement' as done",
+              "Inboxlcfc758258f3 first replacement",
+              "Inbox",
+              "lcfc758258f3 first replacement",
+              "lcfc758258f3 first replacement"
+            ],
+            "value_node": 176
+          }
+        },
+        "metrics": {
+          "actions": 6,
+          "elapsed_seconds": 7.064,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 3
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T22:57:26.338051+00:00",
+      "write_intent": true
+    }
+  ],
+  "service_exit_code": 0,
+  "elapsed_seconds_including_startup_client_reconciliation_and_shutdown": 10.813567756005796,
+  "completed_at": "2026-09-09T22:57:26.528022+00:00"
+}

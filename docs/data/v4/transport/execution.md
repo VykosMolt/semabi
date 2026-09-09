@@ -125,14 +125,25 @@ Rolling queue:
     are terminal. The preceding read diagnostic's coordinator serialization
     failure and pre-browser import failure remain retained. No independent
     whole-app effect or causal claim about which step saves is established.
-    Next: implement general linked-value correspondence and a learned
-    fill/Tab/readback sequence in `/tmp/semabi_linked_value_candidate`;
-    two completed read/update trials, retained local controls, strict ambiguity
-    and draft guards, saved-value/reload witnesses, and matched cached replay
-    are required before adoption and fresh HTTP calls. No application route
-    pattern, field alias or native ID may be supplied. Reassess transfer on
-    newly reserved evidence after repairs. The first product milestone remains
-    unmet.
+    The general repair is now implemented and verified: standard onboarding
+    learned three operations in 35.783 seconds externally, with 31 actions and
+    15 possible writes. SemABI completed a fresh-service rename/read/rename
+    chain, independently checked across all nine visible rows and reload.
+    Cached replay completed its first rename, then the next login and checker
+    hit visible “Too Many Requests”; its third call was not attempted. Keep
+    3/3 versus 1/3 planned slots distinct from three versus one actual
+    invocations/replays; access order confounds comparative conclusions.
+    The first checker false negative, post-outcome offline correction and late
+    lineage clarification remain in [linked-value evidence](product/linked_value_v1/README.md).
+    Exact adopted product composition: 460 tests passed in 32.38 seconds;
+    runtime SHA-256 starts `266d6a9aa62f2119`. The unchanged original binder now
+    accepts U1 at preflight (1/18), but no original request was invoked here.
+    All comparison jobs and owned applications are stopped; ports 8851–8853
+    and 8860 are closed. The user explicitly requested this stopping point.
+    See [the final handoff](handoff_2026_09_10.md) and
+    [detailed session report](session_report_2026_09_10.md). No further reserved
+    assessment or development milestone is active. The first product
+    competence milestone remains unmet.
 
 Application setup is separate from learner implementation. Proposed disclosed
 development applications are linkding and Memos; Vikunja is reserved, subject to

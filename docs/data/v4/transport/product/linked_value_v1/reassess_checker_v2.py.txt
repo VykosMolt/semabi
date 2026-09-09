@@ -1,0 +1,44 @@
+"""Explicit post-outcome evaluator correction; consumes retained UI captures only."""
+from copy import deepcopy
+from datetime import datetime,timezone
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import time
+
+BASE=Path(__file__).resolve().parent; ROOT=BASE.parents[1]
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+def read(p):return json.loads(p.read_bytes())
+def main():
+    started=time.monotonic();source=BASE/'check_linked_chain.py';spec=importlib.util.spec_from_file_location('checker_v2',source);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+    plan_path=BASE/'linked_chain_plan_v1.json';source_map=BASE/'source_sha256.json';plan=read(plan_path);fixtures=read(m.FIXTURES)
+    current={str(p.relative_to(ROOT)):sha(p) for p in [source,m.OBSERVER,m.ACCOUNTING,m.FIXTURES,plan_path,source_map]}
+    original_sha=sha(BASE/'check_linked_chain_v1.py.txt')
+    records=None;checks=[];outputs=[]
+    for phase in ['before','after_call_1']:
+        folder=BASE/'independent_schema_checks/semabi'/phase;old=read(folder/'result.json')
+        expected_old={**current,str(source.relative_to(ROOT)):original_sha}
+        assert old['evaluator_before']==old['evaluator_after']==expected_old and old['evaluator_unchanged']
+        assert old['source_before']==old['source_after']==read(source_map) and old['source_unchanged']
+        assert old['termination']['live_owned_process_count']==0 and old['accepted_inventories_agree']
+        corrected=deepcopy(old)
+        for capture in corrected['accepted_captures']:
+            raw=folder/capture['snapshot_file'];assert sha(raw)==capture['snapshot_sha256'];snapshot=read(raw)
+            inventory=m.owned_inventory(snapshot['observation'],snapshot['controls'])
+            assert m.inventory_counts(inventory)==m.inventory_counts(capture['inventory'])
+            capture['check']=m.assess(inventory,fixtures,plan,phase,records)
+            assert capture['check']['expected_state_matches'],(phase,capture['check'])
+        corrected.update(format='vikunja_independent_linked_chain_reassessment.v2',verdict='EXPECTED_STATE_OBSERVED',evaluator_before=current,evaluator_after=current,evaluator_unchanged=True)
+        corrected['reassessment']={'classification':'Post-outcome offline correction, not another browser phase. Original capture times/actions/costs and source observations preserved. No application call or retry.','performed_at':datetime.now(timezone.utc).isoformat(),'original_result_path':str((folder/'result.json').relative_to(ROOT)),'original_result_sha256':sha(folder/'result.json'),'original_verdict':old['verdict'],'original_evaluator_before':old['evaluator_before'],'original_evaluator_after':old['evaluator_after'],'script_sha256':sha(Path(__file__)),'change':'Permit one occurrence of selected title in a text-node name within that selected row, and re-sort semantics after replacement. Exact link names, destinations and all other fields stay literal.'}
+        if records is not None:
+            altered=deepcopy(corrected['accepted_captures'][0]['inventory']); other=next(r for r in altered if r['title']!=plan['replacements'][0]);other['done']=not other['done'];assert not m.assess(altered,fixtures,plan,phase,records)['expected_state_matches'];checks.append('non_target_completion_rejected')
+            altered=deepcopy(corrected['accepted_captures'][0]['inventory']);selected=next(r for r in altered if r['title']==plan['replacements'][0]);next(n for n in selected['semantics'] if n['role']=='link' and n['name']==plan['replacements'][0])['control_state']['disabled']=True;assert not m.assess(altered,fixtures,plan,phase,records)['expected_state_matches'];checks.append('target_control_state_rejected')
+            altered=deepcopy(corrected['accepted_captures'][0]['inventory']);selected=next(r for r in altered if r['title']==plan['replacements'][0]);next(n for n in selected['semantics'] if n['role']=='link' and n['name']==plan['replacements'][0])['destination']='http://127.0.0.1:8853/tasks/changed';assert not m.assess(altered,fixtures,plan,phase,records)['expected_state_matches'];checks.append('target_destination_rejected')
+        records=corrected['accepted_captures'][-1]['inventory'];out=folder/'result_reassessed_v2.json'
+        with out.open('x') as f:json.dump(corrected,f,indent=2,sort_keys=True);f.write('\n')
+        outputs.append({'path':str(out.relative_to(ROOT)),'sha256':sha(out)})
+    receipt={'classification':'Offline evaluator correction after first SemABI invocation; no product source/arguments/observations changed','completed_at':datetime.now(timezone.utc).isoformat(),'elapsed_seconds':time.monotonic()-started,'evaluator_map':current,'outputs':outputs,'checks':checks,'original_checker_sha256':original_sha,'new_checker_sha256':sha(source),'script_sha256':sha(Path(__file__))}
+    with (BASE/'checker_reassessment_v2.json').open('x') as f:json.dump(receipt,f,indent=2,sort_keys=True);f.write('\n')
+    print(json.dumps(receipt))
+if __name__=='__main__':main()

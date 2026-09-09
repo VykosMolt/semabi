@@ -1,0 +1,36 @@
+{
+  "classification": "Post-execution clarification; consumed original and derived receipts are unchanged",
+  "written_at": "2026-09-09T23:07:19.975282+00:00",
+  "derived_receipts": [
+    {
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/semabi/before/result_reassessed_v2.json",
+      "sha256": "d0ecb4f7917fbe7a5c1a4317997db972edd138606de72dbc2524163ae875e966"
+    },
+    {
+      "path": "runs/product_linked_value_development_v1/independent_schema_checks/semabi/after_call_1/result_reassessed_v2.json",
+      "sha256": "105d04439f0ec729864a8171f2853e364e29fd547100503a97961b526954be9a"
+    }
+  ],
+  "observation_checker_sha256": "4b1383aa16fbcab7bd5a73a68c48c03f217665035e0184a3567a0e580bbb9add",
+  "assessment_checker_sha256": "fae9f368821d5a40bc5c4b956e75000586b44cdc1eb3511ca74c4ada4d62ff11",
+  "legacy_field_meaning": "The derived receipt top-level checker_sha256 was copied from the original browser collection receipt. It describes observation collection, not v2 offline scoring. The explicit reassessment and evaluator_before/after fields bind v2 assessment. This naming ambiguity was found by review after continuation.",
+  "continuation": "Root sequentially dispatched metered call2/check2/call3/check3 after inspecting successful prior result and termination. No automated SemABI continuation runner was used; run_chain_v2 ran only cached_form. Its no-resume behavior therefore did not cause any restore or repeat. The final amendment and derived receipts were not authenticated by a dedicated continuation gate; root coordination and actual meter commands/times are the evidence.",
+  "manual_continuation_meters": [
+    {
+      "path": "runs/product_linked_value_development_v1/meters/call-semabi-2/result.json",
+      "sha256": "b246bf48f99acf2afc45f471f18b77000f690809a9c3b99cd9e7e3f749de3664"
+    },
+    {
+      "path": "runs/product_linked_value_development_v1/meters/check-semabi-2/result.json",
+      "sha256": "bfd62f4cf81992dfb41475ec00885868a5a455788cb03302fdb99b29faa20fa2"
+    },
+    {
+      "path": "runs/product_linked_value_development_v1/meters/call-semabi-3/result.json",
+      "sha256": "8c20dbcaadf934cd0509aa11d4f0710e0b9144c1879d47c222069e6aede87971"
+    },
+    {
+      "path": "runs/product_linked_value_development_v1/meters/check-semabi-3/result.json",
+      "sha256": "7f4333fc6a81e642feb6f1564904a2f2d03f5abc788665d477e8f967994d9f44"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+"""Record one coordinated installer lifecycle command and its local cost."""
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import resource
+import subprocess
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parents[2]
+HELPER = ROOT / "runs/product_reserved_preparation_v1/lifecycle.py"
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("action", choices=("snapshot", "restore", "reset", "start", "stop", "status"))
+    parser.add_argument("name", nargs="?")
+    args = parser.parse_args()
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    with args.output.open("x") as output:
+        command = [sys.executable, str(HELPER), args.action]
+        if args.name is not None:
+            command.append(args.name)
+        result = {"format": "product_assessment_lifecycle.v1", "command": command,
+                  "helper_sha256": hashlib.sha256(HELPER.read_bytes()).hexdigest(),
+                  "started_at": datetime.now(timezone.utc).isoformat(),
+                  "cpu_affinity": sorted(os.sched_getaffinity(0)),
+                  "ordinary_ui_actions": 0, "business_write_actions": 0,
+                  "data_access": "Opaque installer directory copy; no record interpretation"}
+        started = time.monotonic()
+        before = resource.getrusage(resource.RUSAGE_CHILDREN)
+        completed = subprocess.run(command, text=True, capture_output=True)
+        after = resource.getrusage(resource.RUSAGE_CHILDREN)
+        result.update(exit_code=completed.returncode, stdout=completed.stdout, stderr=completed.stderr,
+                      elapsed_seconds=round(time.monotonic() - started, 6),
+                      child_cpu_seconds=round(after.ru_utime + after.ru_stime - before.ru_utime - before.ru_stime, 6),
+                      child_peak_rss_bytes=after.ru_maxrss * 1024,
+                      metric_scope="Lifecycle helper and waited subprocesses; persistent application process costs excluded",
+                      completed_at=datetime.now(timezone.utc).isoformat())
+        json.dump(result, output, indent=2)
+        output.write("\n")
+    print(json.dumps({key: result[key] for key in ("exit_code", "elapsed_seconds", "child_cpu_seconds")}))
+    raise SystemExit(completed.returncode)
+
+
+if __name__ == "__main__":
+    main()

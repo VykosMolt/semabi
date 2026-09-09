@@ -1,0 +1,20 @@
+{
+  "classification": "Bounded development diagnostic; first historical creation-trial value selects a current visible anchor link",
+  "source_sha256": "source_sha256.json",
+  "probe_sha256": "00e8a084fb037a858cd87fba0f8ba6a563e756c325d9a79a5cb47eee7e1c42df",
+  "allowed_interactions": [
+    "Ordinary authentication",
+    "Navigate learned readback URL",
+    "Click exactly one enabled record-local link whose complete rendered name equals the learner trial value",
+    "Read settled detail surface",
+    "Return to learned view and reload; require target retains learned slot"
+  ],
+  "limits": {
+    "seconds": 45,
+    "actions": 12,
+    "possible_writes": 6
+  },
+  "excluded_inputs": "No native application source, route-pattern inference, private client state, DB, hidden endpoint, manual field alias or native ID. Historical operation is diagnostic input, not a compatible public invocation.",
+  "resource_budget": "CPU2,3 for owned browser/diagnostic; native apps already on2,3; 4GiB aggregate RSS per metered job; no other heavy job active",
+  "effect_claim": "No update or workflow completion claimed; selected rendered trial value before/after/reload only"
+}

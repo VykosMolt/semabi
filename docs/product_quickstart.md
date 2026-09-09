@@ -8,7 +8,7 @@ no runtime model or paid API. A general English action-word prior proposes explo
 when the interface omits an HTML input type. Repeated observed effects establish
 an operation's limited support. Record reads and updates use a unique local
 Edit, Modify or Update action, directly or through a record control advertising
-a menu. Both are tested on two created records. This path is separate from the
+a menu. Both are tested on two created records. A separate learned route can follow an exact same-origin record link to a unique matching value textbox, even when its label differs from the creation field. This path is separate from the
 relational research pipeline.
 
 ## Start
@@ -125,6 +125,16 @@ learned a creation schema through standard onboarding and persisted two fresh
 HTTP calls across service restarts. Independent UI checks confirmed both calls;
 matched cached replay also completed both. The original ordinary-language goals
 remain unsupported by the unchanged assessment binder.
+
+The [linked-value demonstration](data/v4/transport/product/linked_value_v1/README.md)
+now learns a title link, a differently labeled textbox, and a guarded fill/Tab/
+readback sequence from two saved update trials. Vikunja completed a rename/read/
+rename chain across three service restarts. This narrow route requires one
+value field, a retained small parent scope, and no other populated editor.
+It does not identify which event saves. Matched replay completed its first
+rename, then hit a visible login rate limit; the remaining comparison is
+unestablished. The evidence preserves an offline correction to the independent
+checker and its original false-negative result.
 
 Two successful read trials can establish one varying numeric label on an
 untouched dialog button. This declared prior preserves digit widths, separators,

@@ -1,0 +1,34 @@
+{
+  "adopted_at": "2026-09-09T22:51:39.084230+00:00",
+  "base_commit": "f1946709bded8e8c286a981d9e3b6d49fe36c46d",
+  "files": {
+    "semabi/baselines/cached_form.py": {
+      "before_sha256": "5e82ee9b0d8330a685ce3dc0ca2d573c7214b88ec26af354ca6911caa0b85f01",
+      "candidate_sha256": "abf8c7bb410b4c23c1d2938c98ece56547384c8d4bee65c967c0ddd60ea8b159"
+    },
+    "semabi/compiler/browser_session.py": {
+      "before_sha256": "a99c469586ac286dd88e4df45771415bf80ee7808610b4c733eb24932256914b",
+      "candidate_sha256": "d3585b9e255e01b8d03fbd51cc52dfdfe8d39d994c314c01a1e35414ca5a9367"
+    },
+    "semabi/compiler/runtime.py": {
+      "before_sha256": "6125ad066446c9cc64ebc94085dfc25daac884b428fce2ae7859a3e946d4cded",
+      "candidate_sha256": "266d6a9aa62f21193d9a93cc0ef5ece73dc4ff1f04e0acbbc45efa8ec8980d74"
+    },
+    "tests/test_cached_form.py": {
+      "before_sha256": "4329db6c48a88d4d88e7772ddafdbd3e16f3ad82a81cb92f7389052fd5bdaf53",
+      "candidate_sha256": "568619535dbc74b39a63c11ee116170c4f22896169f3d8a6dab66710e17a3bd8"
+    },
+    "tests/test_operation_runtime.py": {
+      "before_sha256": "4ea3a7a439bfd8871c3fd60430e2a699ed35794799da2424e800a9adb29d0161",
+      "candidate_sha256": "0d01c5087f18307a7e0ef9b46ae346f63ffb7e0761937c02476a43fdbdedca59"
+    }
+  },
+  "format": "reviewed_candidate_adoption.v1",
+  "scope": "General linked-value discovery and retained fill/Tab/readback; review reports no core blocker; final edge/checker review ongoing",
+  "test_evidence": [
+    "/tmp/semabi_linked_value_candidate/jobs/runtime-fast-v1/result.json",
+    "/tmp/semabi_linked_value_candidate/jobs/linked-final-fast-v1/result.json",
+    "/tmp/semabi_linked_value_candidate/jobs/rendered-linked-v2/result.json",
+    "/tmp/semabi_linked_value_candidate/jobs/baseline-fast-v1/result.json"
+  ]
+}

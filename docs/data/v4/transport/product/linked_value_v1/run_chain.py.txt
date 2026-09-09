@@ -1,0 +1,62 @@
+"""Coordinate one frozen matched arm; never retry or reset within its call chain."""
+import argparse
+from datetime import datetime,timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+BASE=Path(__file__).resolve().parent
+ROOT=BASE.parents[1]
+PYTHON=str(ROOT/'.venv/bin/python')
+CREDENTIALS=ROOT/'runs/product_apps_v1/reserved/private/credentials.json'
+
+def read(path):return json.loads(path.read_bytes())
+
+def verify_source():
+    expected=read(BASE/'source_sha256.json')
+    if {name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in expected}!=expected:
+        raise RuntimeError('Frozen product source changed')
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--arm',choices=['semabi','cached_form'],required=True);args=parser.parse_args()
+    os.umask(0o077);plan=read(BASE/'linked_chain_plan_v1.json'); connection=read(BASE/'onboarding_v1/onboarding.json')['connection_id']
+    ledger=BASE/f'chain_{args.arm}_owner.jsonl'
+    if ledger.exists():raise RuntimeError('An arm was already started; inspect its outcomes instead of retrying')
+    def execute(label,program,parameters,meter=True):
+        verify_source()
+        command=[PYTHON,'-B',str(BASE/program),*map(str,parameters)]
+        if meter:command=[PYTHON,str(BASE/'meter/command_meter.py'),'--output-dir',str(BASE/'meters'/label),'--',*command]
+        with ledger.open('a') as f:f.write(json.dumps({'label':label,'command':command,'started_at':datetime.now(timezone.utc).isoformat()})+'\n')
+        log=BASE/(label+'-launch.log')
+        with log.open('x') as f: result=subprocess.run(command,cwd=ROOT,stdout=f,stderr=subprocess.STDOUT,env={**os.environ,'PYTHONPATH':str(ROOT)})
+        entry={'label':label,'exit_code':result.returncode,'completed_at':datetime.now(timezone.utc).isoformat()}
+        if meter:
+            receipt=read(BASE/'meters'/label/'result.json');entry.update(terminal=receipt['terminal_ownership_verified'],wall_seconds=receipt['wall_seconds'])
+            if not entry['terminal']:raise RuntimeError('Owned job requires reconciliation before any next phase')
+        verify_source()
+        with ledger.open('a') as f:f.write(json.dumps(entry)+'\n')
+        print(json.dumps(entry),flush=True)
+        return result.returncode
+    restore=BASE/f'restore_{args.arm}_v1.json'
+    if execute('restore-'+args.arm,'run_lifecycle.py',['--output',restore,'restore',plan['snapshot_name']],False):raise RuntimeError('Restore failed')
+    prefix=BASE/'independent_schema_checks'/args.arm
+    parameters=['--arm',args.arm,'--phase','before','--snapshot-name',plan['snapshot_name'],'--restore-receipt',restore]
+    if args.arm=='cached_form':parameters.extend(['--reference-before',BASE/'independent_schema_checks/semabi/before/result.json'])
+    if execute('check-'+args.arm+'-before','check_linked_chain.py',parameters):raise RuntimeError('Before inventory not established')
+    for call in plan['calls']:
+        binding=ROOT/call['call_path']
+        if hashlib.sha256(binding.read_bytes()).hexdigest()!=call['call_sha256']:raise RuntimeError('Call changed')
+        number=call['number'];output=BASE/'attempts'/f'{args.arm}-{number}';parameters=['--binding-file',binding,'--output-dir',output]
+        program='run_service_call.py' if args.arm=='semabi' else 'run_baseline_call.py'
+        parameters.extend(['--connection',connection] if args.arm=='semabi' else ['--application-url','http://127.0.0.1:8853/','--credentials-file',CREDENTIALS])
+        code=execute('call-'+args.arm+'-'+str(number),program,parameters)
+        if args.arm=='semabi' and not read(output/'service_owner.json').get('accepted_jobs_terminal_before_close'):raise RuntimeError('Accepted job unconfirmed; reconcile before proceeding')
+        phase='after_call_'+str(number);prior=prefix/('before' if number==1 else 'after_call_'+str(number-1))/'result.json'
+        checked=execute('check-'+args.arm+'-'+str(number),'check_linked_chain.py',['--arm',args.arm,'--phase',phase,'--snapshot-name',plan['snapshot_name'],'--prior-receipt',prior])
+        if code or checked:raise RuntimeError('Call/check failed; no later call or retry is scheduled')
+    print(json.dumps({'arm':args.arm,'status':'CHAIN_TERMINAL'}),flush=True)
+
+if __name__=='__main__':main()

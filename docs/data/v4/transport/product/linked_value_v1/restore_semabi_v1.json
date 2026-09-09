@@ -1,0 +1,26 @@
+{
+  "format": "product_assessment_lifecycle.v1",
+  "command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py",
+    "restore",
+    "lcfc758258f3-postlearn"
+  ],
+  "helper_sha256": "3b49de19d8ed85f9d447a164d1a5b1e2d8ce50bef786b63e197f80ef633691a0",
+  "started_at": "2026-09-09T22:57:09.559412+00:00",
+  "cpu_affinity": [
+    2,
+    3
+  ],
+  "ordinary_ui_actions": 0,
+  "business_write_actions": 0,
+  "data_access": "Opaque installer directory copy; no record interpretation",
+  "exit_code": 0,
+  "stdout": "{\"account_state\": \"NOT_ASSESSED_BY_LIFECYCLE_ADAPTER\", \"action\": \"restore\", \"archive\": \"/home/moloch/semabi/runs/product_apps_v1/reserved/private/resets/1788994629686954125-ea13a390919c417cb519a3a28a2e9b6b\", \"data_access\": \"OPAQUE_BYTES_ONLY\", \"http_called\": false, \"inventory_entries\": 5, \"manifest_sha256\": \"fe9abe4715491e89a576263f90b1c5d6d7edad2797b8301c99a26f210afc71b9\", \"name\": \"lcfc758258f3-postlearn\", \"path\": \"/home/moloch/semabi/runs/product_apps_v1/reserved/private/prepared/lcfc758258f3-postlearn\", \"ui_equivalence\": \"UNESTABLISHED\", \"was_running\": true}\n",
+  "stderr": "",
+  "elapsed_seconds": 0.56992,
+  "child_cpu_seconds": 0.163822,
+  "child_peak_rss_bytes": 86876160,
+  "metric_scope": "Lifecycle helper and waited subprocesses; persistent application process costs excluded",
+  "completed_at": "2026-09-09T22:57:10.129371+00:00"
+}

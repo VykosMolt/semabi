@@ -1,0 +1,62 @@
+{
+  "arms": [
+    "semabi",
+    "cached_form"
+  ],
+  "assistance": "Both arms receive identical automatically learned operation artifacts and structured arguments. Exact current initial target was retained from earlier caller input. Installer/evaluator selectors never enter learner. Shared acquisition charged to both arms.",
+  "calls": [
+    {
+      "call_path": "runs/product_linked_value_development_v1/schema_calls/call_1.json",
+      "call_sha256": "bbb64068ceadb2f2e816bc037206226ffd56601869ab14b64e6c6b2c25b9fa94",
+      "kind": "update",
+      "number": 1,
+      "operation_id": "op_aa0d714f0ae97c8fcac4",
+      "operation_version": 1,
+      "replacement_value": "lcfc758258f3 first replacement",
+      "target_value": "sdcb66c52b handoff review"
+    },
+    {
+      "call_path": "runs/product_linked_value_development_v1/schema_calls/call_2.json",
+      "call_sha256": "e46269a5637d1e2a77540b103e69e0fe8b5b97b95d7f9b80e96dc04ce52d35be",
+      "kind": "read",
+      "number": 2,
+      "operation_id": "op_a661d8595e0a886ac637",
+      "operation_version": 1,
+      "target_value": "lcfc758258f3 first replacement"
+    },
+    {
+      "call_path": "runs/product_linked_value_development_v1/schema_calls/call_3.json",
+      "call_sha256": "5cbebd22163990187915752bdb2dd7f1950c247e5678467057be069f707f7f75",
+      "kind": "update",
+      "number": 3,
+      "operation_id": "op_aa0d714f0ae97c8fcac4",
+      "operation_version": 1,
+      "replacement_value": "lcfc758258f3 second replacement",
+      "target_value": "lcfc758258f3 first replacement"
+    }
+  ],
+  "classification": "Development-only direct learned-schema update/read/update chain; original fixed and reserved request denominators unchanged",
+  "expected_visible_task_count": 9,
+  "format": "linked_value_development_chain.v1",
+  "frozen_at": "2026-09-09T22:53:56.441192+00:00",
+  "independent_verification_budget_per_phase": {
+    "actions": 12,
+    "possible_writes": 8,
+    "seconds": 30
+  },
+  "initial_target": "sdcb66c52b handoff review",
+  "max_per_call": {
+    "actions": 20,
+    "possible_writes": 12,
+    "seconds": 60
+  },
+  "paid_runtime_cost": 0,
+  "replacements": [
+    "lcfc758258f3 first replacement",
+    "lcfc758258f3 second replacement"
+  ],
+  "runtime_model_calls": 0,
+  "schedule": "Opaque post-onboarding snapshot restored once before each arm. Three calls in order without reset, relearning or write retry. Fresh service and browser per HTTP call; fresh browser per baseline call. Independent complete visible task-list inventory before and after each call, with reload. Second arm starts from equal independently observed inventory.",
+  "selection_algorithm": "Unique ACTIVE learned linked read/update artifacts with closed string argument schema; parameter names taken from learned procedure",
+  "snapshot_name": "lcfc758258f3-postlearn"
+}

@@ -1,0 +1,42 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json
+b=Path('/home/moloch/semabi/runs/product_linked_value_development_v1'); root=b.parents[1]
+def load(p):return json.loads(p.read_bytes())
+def bind(p):return {'path':str(p.relative_to(root)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+source=load(b/'source_sha256.json');assert source=={p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in source}
+clarification={'classification':'Post-execution clarification; consumed original and derived receipts are unchanged','written_at':datetime.now(timezone.utc).isoformat(),'derived_receipts':[bind(b/'independent_schema_checks/semabi'/p/'result_reassessed_v2.json') for p in ['before','after_call_1']],'observation_checker_sha256':hashlib.sha256((b/'check_linked_chain_v1.py.txt').read_bytes()).hexdigest(),'assessment_checker_sha256':hashlib.sha256((b/'check_linked_chain.py').read_bytes()).hexdigest(),'legacy_field_meaning':'The derived receipt top-level checker_sha256 was copied from the original browser collection receipt. It describes observation collection, not v2 offline scoring. The explicit reassessment and evaluator_before/after fields bind v2 assessment. This naming ambiguity was found by review after continuation.','continuation':'Root sequentially dispatched metered call2/check2/call3/check3 after inspecting successful prior result and termination. No automated SemABI continuation runner was used; run_chain_v2 ran only cached_form. Its no-resume behavior therefore did not cause any restore or repeat. The final amendment and derived receipts were not authenticated by a dedicated continuation gate; root coordination and actual meter commands/times are the evidence.','manual_continuation_meters':[bind(b/'meters'/p/'result.json') for p in ['call-semabi-2','check-semabi-2','call-semabi-3','check-semabi-3']]}
+(b/'checker_lineage_clarification_v1.json').write_text(json.dumps(clarification,indent=2)+'\n')
+plan=load(b/'linked_chain_plan_v1.json'); rows=[];checks=[]
+for arm in ['semabi','cached_form']:
+ for phase in ['before','after_call_1','after_call_2','after_call_3']:
+  folder=b/'independent_schema_checks'/arm/phase;p=folder/('result_reassessed_v2.json' if arm=='semabi' and phase in ['before','after_call_1'] else 'result.json')
+  if not p.exists():checks.append({'arm':arm,'phase':phase,'verdict':'NOT_ATTEMPTED_AFTER_ACCESS_FAILURE'});continue
+  r=load(p);assert r['source_before']==r['source_after']==source and r['source_unchanged'] and r['evaluator_unchanged'] and r['termination']['live_owned_process_count']==0
+  checks.append({**bind(p),'arm':arm,'phase':phase,'verdict':r['verdict'],'post_outcome_offline_reassessment':bool(r.get('reassessment')),'actions':r['actions'],'possible_writes':r['possible_writes'],'elapsed_seconds':r['elapsed_seconds'],'error':r.get('error'),'observed_rows':len(r['accepted_captures'][-1]['inventory']) if r['accepted_captures'] else None})
+ for call in plan['calls']:
+  n=call['number'];folder=b/'attempts'/f'{arm}-{n}';p=folder/('attempt.json' if arm=='semabi' else 'baseline/result.json');row={'arm':arm,'number':n,'kind':call['kind'],'independently_completed':False,'actual_replay_or_invocation':False}
+  if not p.exists():row.update(outcome='NOT_ATTEMPTED_AFTER_ACCESS_FAILURE');rows.append(row);continue
+  r=load(p);row.update(bind(p))
+  if arm=='semabi':
+   assert r['source_before']==r['source_after']==source and r['source_unchanged'] and r['within_workflow_budget'];owner=load(folder/'service_owner.json');assert owner['accepted_jobs_terminal_before_close'] and owner['service_exit_code']==0
+   row.update(outcome=r['runtime_outcome'],execution_seconds_including_auth=r['elapsed_seconds_including_auth_http_polling'],actions=r['interaction_total'],possible_writes=r['possible_write_total'],actual_replay_or_invocation=True)
+   result=next(j['result'] for j in r['jobs'] if j.get('kind')=='invoke'); assert row['outcome']=='CONFIRMED'
+  else:
+   assert r['source_sha256']=={k.removeprefix('semabi/'):source[k] for k in source if k.startswith('semabi/') and k.removeprefix('semabi/') in r['source_sha256']}
+   row.update(outcome=r['outcome'],execution_seconds_including_auth=r['metrics']['elapsed_seconds'],actions=r['metrics']['actions'],possible_writes=r['metrics']['possible_write_actions'],actual_replay_or_invocation=r['possible_replay_action'],failure_phase=r['failure_phase'],authentication_status=r['authentication_status']);result=r
+  checked=next(c for c in checks if c['arm']==arm and c['phase']=='after_call_'+str(n))
+  row['independently_completed']=checked['verdict']=='EXPECTED_STATE_OBSERVED' and row['outcome'] in ['CONFIRMED','DISPATCHED']
+  if call['kind']=='read' and row['actual_replay_or_invocation']:
+   field=load(root/call['call_path'])['call']['operation']['procedure']['anchor'];values=result['effect']['values'] if arm=='semabi' else result['values'];row['read_values_match']=values=={field:call['target_value']};assert row['read_values_match']
+  rows.append(row)
+meters=[]
+for p in sorted((b/'meters').glob('*/result.json')):
+ r=load(p);assert r['terminal_ownership_verified'] and r['status']=='TERMINAL';meters.append({**bind(p),'name':p.parent.name,'exit_code':r['exit_code'],'wall_seconds':r['wall_seconds'],'child_cpu_seconds':r['child_rusage_cpu_seconds'],'sampled_peak_aggregate_rss_bytes':r['sampled_peak_aggregate_rss_bytes'],'terminal_ownership_verified':True})
+assert len(rows)==6 and len(checks)==8 and len(meters)==14
+ratepath=sorted((b/'independent_schema_checks/cached_form/after_call_2').glob('observation_*.json'))[-1];rate=load(ratepath);assert any(n.get('name')=='Too Many Requests' for n in rate['observation']['nodes'])
+rate_receipt={'classification':'Ordinary-UI observation of access refusal; no hidden endpoint or application implementation inference','visible_error':'Too Many Requests','capture':bind(ratepath),'read_call_failed_before_replay':True,'third_call_not_attempted':True,'write_retries':0,'limitation':'SemABI ran earlier; login rate limiting confounds arm order. No superiority or matched read/update3 performance inference.'};(b/'access_failure_v1.json').write_text(json.dumps(rate_receipt,indent=2)+'\n')
+learning=load(b/'onboarding_v1/onboarding.json');preflight=load(b/'original_goal_preflights_v1.json')
+summary={'classification':'Development direct-schema linked-value chain; post-outcome evaluator correction and later baseline access failure retained','completed_at':datetime.now(timezone.utc).isoformat(),'source_sha256':source,'source_unchanged':True,'all_jobs_terminal':True,'rows':rows,'independent_checks':checks,'process_meters':meters,'completion_by_arm':{'semabi':'3/3','cached_form':'1/3'},'actual_invocation_or_replay_counts':{'semabi':3,'cached_form':1},'workflow_attempt_counts':{'semabi':3,'cached_form':2},'onboarding':{'actions':learning['interaction_total'],'possible_writes':learning['possible_write_total'],'external_wall_seconds':load(b/'meters/onboarding-v1/result.json')['wall_seconds'],'physically_once_charged_once_to_each_arm':True},'evaluator_correction':{'original_first_after_verdict':'EXPECTED_STATE_NOT_OBSERVED','original_retained':bind(b/'independent_schema_checks/semabi/after_call_1/result.json'),'offline_reassessment':bind(b/'checker_reassessment_v2.json'),'lineage_clarification':bind(b/'checker_lineage_clarification_v1.json')},'baseline_access_failure':bind(b/'access_failure_v1.json'),'original_ordinary_goals':{'count':18,'new_catalog_preflight_eligible':preflight['eligible'],'eligible_ids':[r['request_id'] for r in preflight['rows'] if r['receipt']['status']=='ELIGIBLE'],'new_original_goal_invocations':0,'original_denominators_unchanged':True},'effect_scope':'Successful checks cover all nine current visible task rows, local text/control state/completion/project labels/link destinations. Last failed baseline check establishes no saved-state outcome. Unobserved/hidden effects not measured.','new_application_specific_learner_code':0,'runtime_model_calls':0,'paid_runtime_cost':0,'write_retries':0,'runtime_validation':'460 passed in 32.38s on exact adopted source; not a new whole-repository regression claim.'}
+(b/'linked_chain_summary_v1.json').write_text(json.dumps(summary,indent=2,sort_keys=True)+'\n')
+print(json.dumps({'completion':summary['completion_by_arm'],'rows':rows,'meter_count':len(meters)},indent=2))
