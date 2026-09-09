@@ -1,0 +1,51 @@
+{
+  "scope": "DEVELOPMENT_SMOKE_SHARED_ARTIFACT_ACQUISITION",
+  "utc": "2026-09-09T17:19:57.074341+00:00",
+  "requests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8860/v1/connections/conn_0e51f4498eb547f6ac639acc96f8bab1/operations/op_da6cd313fd7951e26d2c?version=3",
+      "status": 200,
+      "response_sha256": "a7f35df53b503b284bf246f252e9459504039a7554a77f65ba4376499daaeb67",
+      "elapsed_seconds": 0.008594049002567772
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8860/v1/connections/conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "status": 200,
+      "response_sha256": "d9d59ffe7ab9e881c2f000a6ccb187287f271ac79a3f7bfad935961ceea4d64f",
+      "elapsed_seconds": 0.0009249499998986721
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8860/v1/connections/conn_69dde230fe564df8899a808d6cfd5d20/operations/op_5c8e47ab193b2c074b8e?version=1",
+      "status": 200,
+      "response_sha256": "087c803dcfa4949ca7d640fb99117d6fa7324bf59ba32ba2b6f8f84fd02c20cb",
+      "elapsed_seconds": 0.001413097998010926
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8860/v1/connections/conn_69dde230fe564df8899a808d6cfd5d20",
+      "status": 200,
+      "response_sha256": "cc73fbafb9d1aeda9daa7ca14fbddf4d0fba4fc16692b5cf4b76dc3f548f969f",
+      "elapsed_seconds": 0.0009343019992229529
+    }
+  ],
+  "elapsed_seconds": 0.013896052005293313,
+  "assistance": "The exact P2 automatically learned operation artifact is supplied to cached-form replay. Its prior learning cost and this acquisition assistance must be charged to each comparison arm, separately from replay.",
+  "equivalent_fixtures": false,
+  "account_resets": false,
+  "paired_assessment": false,
+  "source_head": "1bde0a742b7aab1f55f459275e6ef55fe7350247",
+  "source_sha256": {
+    "semabi/baselines/cached_form.py": "b1e1854d10526d11798350a540e018d69536a2529d6cb07f403a748069928d9d",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13",
+    "semabi/compiler/runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/service.py": "13350367b8039b3233f6104ef4cadff4fbec0c5c4f72bf86fb3e69a6a8e87241",
+    "runs/product_evaluator_v3/check_effects.py": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38"
+  }
+}

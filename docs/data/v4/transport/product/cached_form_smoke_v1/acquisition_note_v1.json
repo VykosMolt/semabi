@@ -1,0 +1,110 @@
+{
+  "artifact_fetch": {
+    "acquisition_wrapper_elapsed_seconds": 0.013896052005293313,
+    "charge_policy": "The same exact learned artifact and its prior learning/connection setup assistance are charged to each comparison arm; shared acquisition is not free. HTTP artifact-fetch, prior learning, replay, and independent verification remain separate.",
+    "record": "acquisition_v1.json",
+    "request_count": 4,
+    "request_elapsed_seconds_sum": 0.011866398999700323
+  },
+  "associations": [
+    {
+      "application": "memos",
+      "charge_to_each_arm": [
+        "SemABI",
+        "cached_form"
+      ],
+      "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+      "connection_setup": {
+        "authentication_actions": 3,
+        "elapsed_seconds": null,
+        "job_id": "job_aa54440a4d1448e594b83bb08f253a9a",
+        "kind": "reconnect",
+        "null_note": "The retained connection-job summary reports authentication actions but no metrics object; missing write/time values are unmeasured.",
+        "possible_write_actions": null
+      },
+      "evidence": {
+        "canonical_hash_matches_recorded_public_artifact_response": true,
+        "canonical_json_rule": "JSON sorted keys with comma and colon separators, encoded UTF-8; all operation fields retained.",
+        "completed_learning_record_index": 15,
+        "immediately_following_operation_listing_record_index": 16,
+        "operation_canonical_sha256": "a7f35df53b503b284bf246f252e9459504039a7554a77f65ba4376499daaeb67",
+        "operation_file": "memos/operation.json",
+        "operation_file_sha256": "a6a978a817b20817c2b69359cf88c8424e4167a3055ac24f2b277eba62ca6c2f",
+        "operation_source_hashes_match_smoke_acquisition": true,
+        "public_log": "public_learning_evidence/memos_http_v3.log",
+        "public_log_record_indexing": "Zero-based JSON documents in the adjacent JSON stream.",
+        "public_log_sha256": "27c7d9806ed788fa832635eb6550f13527ace0e503a06fd0e6a7f6991dde5211",
+        "service_snapshot": "public_learning_evidence/service_snapshot.json",
+        "snapshot_operation_equals_entire_smoke_operation": true,
+        "subsequent_invoke_job_id": "job_79806e94f2b74e12ba178cfebfbab33b"
+      },
+      "learning_job_id": "job_12d2a82f3ad64d5284e248d232802811",
+      "learning_metrics": {
+        "actions": 9,
+        "elapsed_seconds": 6.787,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "possible_write_actions": 4
+      },
+      "operation_id": "op_da6cd313fd7951e26d2c",
+      "operation_version": 3
+    },
+    {
+      "application": "linkding",
+      "charge_to_each_arm": [
+        "SemABI",
+        "cached_form"
+      ],
+      "connection_id": "conn_69dde230fe564df8899a808d6cfd5d20",
+      "connection_setup": {
+        "authentication_actions": 3,
+        "elapsed_seconds": null,
+        "job_id": "job_d151b76b5c954c85a9dbd153d5fd9db8",
+        "kind": "connect",
+        "null_note": "The retained connection-job summary reports authentication actions but no metrics object; missing write/time values are unmeasured.",
+        "possible_write_actions": null
+      },
+      "evidence": {
+        "canonical_hash_matches_recorded_public_artifact_response": true,
+        "canonical_json_rule": "JSON sorted keys with comma and colon separators, encoded UTF-8; all operation fields retained.",
+        "completed_learning_record_index": 25,
+        "immediately_following_operation_listing_record_index": 26,
+        "operation_canonical_sha256": "087c803dcfa4949ca7d640fb99117d6fa7324bf59ba32ba2b6f8f84fd02c20cb",
+        "operation_file": "linkding/operation.json",
+        "operation_file_sha256": "99cd4faf677c3a50e025a6bf0cd5dd5caefeedf2d38a29116467dec2f5989846",
+        "operation_source_hashes_match_smoke_acquisition": true,
+        "public_log": "public_learning_evidence/linkding_http_v3.log",
+        "public_log_record_indexing": "Zero-based JSON documents in the adjacent JSON stream.",
+        "public_log_sha256": "7af1031795b3100d0b3503ba47743caf3331c0d7c8e964e8e32cec24ebfc1490",
+        "service_snapshot": "public_learning_evidence/service_snapshot.json",
+        "snapshot_operation_equals_entire_smoke_operation": true,
+        "subsequent_invoke_job_id": "job_f0ef22fe816a445f821e604782ef4db2"
+      },
+      "learning_job_id": "job_861fb06840664469b8fc27eab37f147c",
+      "learning_metrics": {
+        "actions": 20,
+        "elapsed_seconds": 8.116,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "possible_write_actions": 13
+      },
+      "operation_id": "op_5c8e47ab193b2c074b8e",
+      "operation_version": 1
+    }
+  ],
+  "created_at": "2026-09-09T17:36:19.594658+00:00",
+  "limitations": [
+    "Development smoke on existing, unreset accounts; fixtures were not matched.",
+    "Not the prospective paired assessment and no superiority claim.",
+    "Independent visible uniqueness is limited to the inspected UI.",
+    "No independent pre-submission absence snapshot or inventory of all other business effects."
+  ],
+  "missing_costs": "Historical learning before these exact P2 source jobs, and metrics not reported by the retained connection summaries, are unmeasured rather than zero. Recorded metrics are not a claim of complete project development cost.",
+  "new_app_calls": 0,
+  "new_learning_runs": 0,
+  "new_replay_requests": 0,
+  "original_records_preserved": true,
+  "relationship_to_original_records": "README.md and ledger_v1.json are byte-identical copies of the completed smoke records. Those records left prior learning unmeasured because the four acquisition GET responses did not contain it. This additive note supplies only the separately verified prior-learning measurements; it does not rewrite replay or verification evidence.",
+  "schema": "cached_form_smoke_additive_acquisition_note.v1",
+  "scope": "Retrospective cost attribution from previously saved public P2 evidence; no new application calls."
+}

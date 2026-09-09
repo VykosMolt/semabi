@@ -1,0 +1,61 @@
+{
+  "scope": "DEVELOPMENT_SMOKE",
+  "application": "memos",
+  "status": "FINISHED",
+  "command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "-B",
+    "-m",
+    "semabi.baselines.cached_form",
+    "--operation-file",
+    "/home/moloch/semabi/runs/product_baseline_smoke_v1/memos/operation.json",
+    "--application-url",
+    "http://127.0.0.1:8852/",
+    "--credentials-file",
+    "/home/moloch/semabi/runs/product_apps_v1/memos/private/credentials.json",
+    "--arguments",
+    "{\"value\": \"Baseline smoke value 3b5ba4427f1f\"}",
+    "--output-dir",
+    "/home/moloch/semabi/runs/product_baseline_smoke_v1/memos/replay",
+    "--max-actions",
+    "20",
+    "--max-writes",
+    "12"
+  ],
+  "cwd": "/home/moloch/semabi",
+  "cpu_affinity": [
+    6
+  ],
+  "started_at": "2026-09-09T17:21:20.527508+00:00",
+  "source_head": "1bde0a742b7aab1f55f459275e6ef55fe7350247",
+  "source_sha256_before": {
+    "semabi/baselines/cached_form.py": "b1e1854d10526d11798350a540e018d69536a2529d6cb07f403a748069928d9d",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13",
+    "semabi/compiler/runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/service.py": "13350367b8039b3233f6104ef4cadff4fbec0c5c4f72bf86fb3e69a6a8e87241",
+    "runs/product_evaluator_v3/check_effects.py": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38"
+  },
+  "timeout_seconds": 120,
+  "retry_policy": "One request; never retry after UNKNOWN",
+  "child_pid": 1069743,
+  "returncode": 0,
+  "source_sha256_after": {
+    "semabi/baselines/cached_form.py": "b1e1854d10526d11798350a540e018d69536a2529d6cb07f403a748069928d9d",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13",
+    "semabi/compiler/runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/service.py": "13350367b8039b3233f6104ef4cadff4fbec0c5c4f72bf86fb3e69a6a8e87241",
+    "runs/product_evaluator_v3/check_effects.py": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38"
+  },
+  "source_unchanged": true,
+  "child_reaped": true,
+  "elapsed_seconds": 6.765893674994004,
+  "ended_at": "2026-09-09T17:21:27.293415+00:00"
+}

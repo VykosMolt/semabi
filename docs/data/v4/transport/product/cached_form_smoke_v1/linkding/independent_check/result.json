@@ -1,0 +1,231 @@
+{
+  "application": "linkding",
+  "scope": "DEVELOPMENT_SMOKE_INDEPENDENT_VISIBLE_EFFECT_CHECK",
+  "verdict": "VISIBLE_SAVED_CONTENT_CONFIRMED",
+  "captures": [
+    {
+      "phase": "before_reload",
+      "snapshot_id": "baseline_eval_df7ce4cee4e24fb497cddc7b225c9c19",
+      "snapshot_sha256": "0d67aa150998675e1e7f58555aa043647886e0422050c11ab8d3cbad86d829ca",
+      "settled": true,
+      "visible_candidate_records": 11,
+      "exact_matching_record_count": 1,
+      "selected_records": [
+        {
+          "root": {
+            "index": 38,
+            "parent": 37,
+            "tag": "li",
+            "role": "listitem",
+            "own_text": "",
+            "text": "Baseline smoke title 9a7019cc4be7 baseline9a7019cc4be7 | Baseline smoke description 9a7019cc4be7 Today | View Edit Archive Remove",
+            "bbox": [
+              213,
+              149,
+              628,
+              66
+            ]
+          },
+          "title_and_destination_nodes": [
+            {
+              "index": 41,
+              "parent": 40,
+              "tag": "a",
+              "role": "",
+              "own_text": "",
+              "text": "Baseline smoke title 9a7019cc4be7",
+              "bbox": [
+                213,
+                149,
+                628,
+                22
+              ],
+              "destination": "https://example.invalid/baseline-9a7019cc4be7"
+            }
+          ],
+          "tag_nodes": [
+            {
+              "index": 45,
+              "parent": 44,
+              "tag": "a",
+              "role": "",
+              "own_text": "baseline9a7019cc4be7",
+              "text": "baseline9a7019cc4be7",
+              "bbox": [
+                213,
+                172,
+                158,
+                19
+              ],
+              "destination": "http://127.0.0.1:8851/bookmarks?q=%23baseline9a7019cc4be7"
+            }
+          ],
+          "description_nodes": [
+            {
+              "index": 46,
+              "parent": 43,
+              "tag": "span",
+              "role": "",
+              "own_text": "Baseline smoke description 9a7019cc4be7",
+              "text": "Baseline smoke description 9a7019cc4be7",
+              "bbox": [
+                385,
+                172,
+                277,
+                19
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "after_reload",
+      "snapshot_id": "baseline_eval_c39021fd32954e34b6c1c7bd9211c030",
+      "snapshot_sha256": "6d7df943786b38eb5c33b87d2c41d6125b9585a8ce2521cfc15b62d511d27c4b",
+      "settled": true,
+      "visible_candidate_records": 11,
+      "exact_matching_record_count": 1,
+      "selected_records": [
+        {
+          "root": {
+            "index": 38,
+            "parent": 37,
+            "tag": "li",
+            "role": "listitem",
+            "own_text": "",
+            "text": "Baseline smoke title 9a7019cc4be7 baseline9a7019cc4be7 | Baseline smoke description 9a7019cc4be7 Today | View Edit Archive Remove",
+            "bbox": [
+              213,
+              149,
+              628,
+              66
+            ]
+          },
+          "title_and_destination_nodes": [
+            {
+              "index": 41,
+              "parent": 40,
+              "tag": "a",
+              "role": "",
+              "own_text": "",
+              "text": "Baseline smoke title 9a7019cc4be7",
+              "bbox": [
+                213,
+                149,
+                628,
+                22
+              ],
+              "destination": "https://example.invalid/baseline-9a7019cc4be7"
+            }
+          ],
+          "tag_nodes": [
+            {
+              "index": 45,
+              "parent": 44,
+              "tag": "a",
+              "role": "",
+              "own_text": "baseline9a7019cc4be7",
+              "text": "baseline9a7019cc4be7",
+              "bbox": [
+                213,
+                172,
+                158,
+                19
+              ],
+              "destination": "http://127.0.0.1:8851/bookmarks?q=%23baseline9a7019cc4be7"
+            }
+          ],
+          "description_nodes": [
+            {
+              "index": 46,
+              "parent": 43,
+              "tag": "span",
+              "role": "",
+              "own_text": "Baseline smoke description 9a7019cc4be7",
+              "text": "Baseline smoke description 9a7019cc4be7",
+              "bbox": [
+                385,
+                172,
+                277,
+                19
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "browser_closed": true,
+  "source_sha256_before": {
+    "semabi/baselines/cached_form.py": "b1e1854d10526d11798350a540e018d69536a2529d6cb07f403a748069928d9d",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13",
+    "semabi/compiler/runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/service.py": "13350367b8039b3233f6104ef4cadff4fbec0c5c4f72bf86fb3e69a6a8e87241",
+    "runs/product_evaluator_v3/check_effects.py": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38"
+  },
+  "started_at": "2026-09-09T17:24:06.893449+00:00",
+  "matching_source": "runs/product_evaluator_v3/check_effects.py",
+  "matching_source_sha256": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38",
+  "dom_js_sha256": "0797330fa609cccd2928f1421037ee0edce9cfe22f3046db53ee31de10b6baf3",
+  "matcher_function_file": "/home/moloch/semabi/runs/product_evaluator_v3/check_effects.py",
+  "fresh_sessions": 1,
+  "business_write_primitives": 0,
+  "retries": 0,
+  "authentication": {
+    "status": "CONNECTED",
+    "authentication_actions": 3
+  },
+  "metrics": {
+    "primitives": [
+      {
+        "phase": "authentication",
+        "kind": "type"
+      },
+      {
+        "phase": "authentication",
+        "kind": "type"
+      },
+      {
+        "phase": "authentication",
+        "kind": "click"
+      }
+    ],
+    "authentication_actions": 3,
+    "navigations": 1,
+    "reloads": 1,
+    "surface_reads_by_phase": {
+      "navigation": 1,
+      "authentication": 3,
+      "before_reload": 1,
+      "after_reload": 1
+    },
+    "raw_snapshot_reads_by_phase": {
+      "navigation": 3,
+      "authentication": 11,
+      "before_reload": 3,
+      "after_reload": 3
+    },
+    "independent_dom_reads": 2,
+    "model_calls": 0,
+    "paid_cost": 0
+  },
+  "source_sha256_after": {
+    "semabi/baselines/cached_form.py": "b1e1854d10526d11798350a540e018d69536a2529d6cb07f403a748069928d9d",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13",
+    "semabi/compiler/runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/service.py": "13350367b8039b3233f6104ef4cadff4fbec0c5c4f72bf86fb3e69a6a8e87241",
+    "runs/product_evaluator_v3/check_effects.py": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38"
+  },
+  "source_unchanged": true,
+  "elapsed_seconds": 2.754444694997801,
+  "ended_at": "2026-09-09T17:24:09.647895+00:00"
+}

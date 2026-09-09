@@ -1,0 +1,707 @@
+{
+  "argument_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "description": {
+        "description": "Description",
+        "minLength": 1,
+        "type": "string"
+      },
+      "tags": {
+        "description": "Tags",
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": {
+        "description": "Title",
+        "maxLength": 512,
+        "minLength": 1,
+        "type": "string"
+      },
+      "url": {
+        "description": "URL",
+        "format": "uri",
+        "format_basis": "visible_label_prior_validated_by_trials",
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "url",
+      "tags",
+      "title",
+      "description"
+    ],
+    "type": "object"
+  },
+  "effect_checks": [
+    "All supplied values together in one unique local record",
+    "Values occupy the relative field slots learned across both trials",
+    "Same record values remain visible after reload"
+  ],
+  "evidence_sha256": "39828357a99176aff56ca011b38797f9f622e2be43ceee05de9ed7de5059daa7",
+  "id": "op_5c8e47ab193b2c074b8e",
+  "kind": "create_visible_record",
+  "name": "save_record",
+  "output_schema": {
+    "description": "Outcome, visible effect witness, and execution metrics",
+    "type": "object"
+  },
+  "prerequisites": [
+    "Authenticated session",
+    "Unchanged visible form contract",
+    "Empty argument controls and unchanged other control defaults",
+    "Anchor absent from the current read-back view"
+  ],
+  "procedure": {
+    "anchor": "url",
+    "defaults": {},
+    "effect_slots": {
+      "description": [
+        {
+          "channel": "text",
+          "path": [
+            [
+              "group",
+              0
+            ],
+            [
+              "group",
+              1
+            ],
+            [
+              "text",
+              1
+            ]
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "channel": "text",
+          "path": [
+            [
+              "group",
+              0
+            ],
+            [
+              "group",
+              1
+            ],
+            [
+              "text",
+              0
+            ],
+            [
+              "link",
+              0
+            ]
+          ]
+        }
+      ],
+      "title": [
+        {
+          "channel": "text",
+          "path": [
+            [
+              "group",
+              0
+            ],
+            [
+              "group",
+              0
+            ],
+            [
+              "link",
+              0
+            ],
+            [
+              "text",
+              0
+            ]
+          ]
+        }
+      ],
+      "url": [
+        {
+          "channel": "link_destination",
+          "path": [
+            [
+              "group",
+              0
+            ],
+            [
+              "group",
+              0
+            ],
+            [
+              "link",
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    "entry_url": "http://127.0.0.1:8851/",
+    "form": {
+      "context_controls": [
+        {
+          "input_type": "",
+          "label": "Notes",
+          "role": "button"
+        }
+      ],
+      "fields": [
+        {
+          "argument": "description",
+          "descriptor": {
+            "input_type": "textarea",
+            "label": "Description",
+            "role": "textbox"
+          },
+          "input_type": "textarea",
+          "max": null,
+          "max_length": null,
+          "min": null,
+          "required": false,
+          "role": "textbox"
+        },
+        {
+          "argument": "tags",
+          "descriptor": {
+            "input_type": "text",
+            "label": "Tags",
+            "role": "textbox"
+          },
+          "input_type": "text",
+          "max": null,
+          "max_length": null,
+          "min": null,
+          "required": false,
+          "role": "textbox"
+        },
+        {
+          "argument": "title",
+          "descriptor": {
+            "input_type": "text",
+            "label": "Title",
+            "role": "textbox"
+          },
+          "input_type": "text",
+          "max": null,
+          "max_length": 512,
+          "min": null,
+          "required": false,
+          "role": "textbox"
+        },
+        {
+          "argument": "url",
+          "descriptor": {
+            "input_type": "text",
+            "label": "URL",
+            "role": "textbox"
+          },
+          "input_type": "text",
+          "max": null,
+          "max_length": null,
+          "min": null,
+          "required": true,
+          "role": "textbox"
+        }
+      ],
+      "submit": {
+        "input_type": "submit",
+        "label": "Save",
+        "role": "button"
+      }
+    },
+    "navigation": [
+      {
+        "input_type": "",
+        "label": "Add bookmark",
+        "role": "link"
+      }
+    ],
+    "readback_url": "http://127.0.0.1:8851/bookmarks"
+  },
+  "scope": {
+    "operation_family": "local form creation",
+    "origin": "http://127.0.0.1:8851",
+    "prior": "General English action vocabulary proposes exploration",
+    "runtime_model": null,
+    "unsupported": [
+      "global record uniqueness",
+      "rollback",
+      "exactly-once delivery",
+      "relational selection",
+      "unobserved side effects"
+    ]
+  },
+  "status": "ACTIVE",
+  "support": {
+    "argument_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "description": "Description",
+          "minLength": 1,
+          "type": "string"
+        },
+        "tags": {
+          "description": "Tags",
+          "minLength": 1,
+          "type": "string"
+        },
+        "title": {
+          "description": "Title",
+          "maxLength": 512,
+          "minLength": 1,
+          "type": "string"
+        },
+        "url": {
+          "description": "URL",
+          "format": "uri",
+          "format_basis": "visible_label_prior_validated_by_trials",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "tags",
+        "title",
+        "description"
+      ],
+      "type": "object"
+    },
+    "policy_version": "local-form-v3",
+    "procedure": {
+      "anchor": "url",
+      "defaults": {},
+      "effect_slots": {
+        "description": [
+          {
+            "channel": "text",
+            "path": [
+              [
+                "group",
+                0
+              ],
+              [
+                "group",
+                1
+              ],
+              [
+                "text",
+                1
+              ]
+            ]
+          }
+        ],
+        "tags": [
+          {
+            "channel": "text",
+            "path": [
+              [
+                "group",
+                0
+              ],
+              [
+                "group",
+                1
+              ],
+              [
+                "text",
+                0
+              ],
+              [
+                "link",
+                0
+              ]
+            ]
+          }
+        ],
+        "title": [
+          {
+            "channel": "text",
+            "path": [
+              [
+                "group",
+                0
+              ],
+              [
+                "group",
+                0
+              ],
+              [
+                "link",
+                0
+              ],
+              [
+                "text",
+                0
+              ]
+            ]
+          }
+        ],
+        "url": [
+          {
+            "channel": "link_destination",
+            "path": [
+              [
+                "group",
+                0
+              ],
+              [
+                "group",
+                0
+              ],
+              [
+                "link",
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      "entry_url": "http://127.0.0.1:8851/",
+      "form": {
+        "context_controls": [
+          {
+            "input_type": "",
+            "label": "Notes",
+            "role": "button"
+          }
+        ],
+        "fields": [
+          {
+            "argument": "description",
+            "descriptor": {
+              "input_type": "textarea",
+              "label": "Description",
+              "role": "textbox"
+            },
+            "input_type": "textarea",
+            "max": null,
+            "max_length": null,
+            "min": null,
+            "required": false,
+            "role": "textbox"
+          },
+          {
+            "argument": "tags",
+            "descriptor": {
+              "input_type": "text",
+              "label": "Tags",
+              "role": "textbox"
+            },
+            "input_type": "text",
+            "max": null,
+            "max_length": null,
+            "min": null,
+            "required": false,
+            "role": "textbox"
+          },
+          {
+            "argument": "title",
+            "descriptor": {
+              "input_type": "text",
+              "label": "Title",
+              "role": "textbox"
+            },
+            "input_type": "text",
+            "max": null,
+            "max_length": 512,
+            "min": null,
+            "required": false,
+            "role": "textbox"
+          },
+          {
+            "argument": "url",
+            "descriptor": {
+              "input_type": "text",
+              "label": "URL",
+              "role": "textbox"
+            },
+            "input_type": "text",
+            "max": null,
+            "max_length": null,
+            "min": null,
+            "required": true,
+            "role": "textbox"
+          }
+        ],
+        "submit": {
+          "input_type": "submit",
+          "label": "Save",
+          "role": "button"
+        }
+      },
+      "navigation": [
+        {
+          "input_type": "",
+          "label": "Add bookmark",
+          "role": "link"
+        }
+      ],
+      "readback_url": "http://127.0.0.1:8851/bookmarks"
+    },
+    "source_sha256": {
+      "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+      "browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+      "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+      "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+      "runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+      "surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13"
+    },
+    "trials": [
+      {
+        "arguments": {
+          "description": "semabi_2d97c1c2c8_0",
+          "tags": "semabi_4e637b422a_0",
+          "title": "semabi_1fc77efcf4_0",
+          "url": "https://example.invalid/semabi_0a0d846b3e_0"
+        },
+        "witness": {
+          "basis": "visible_local_record",
+          "field_slots": {
+            "description": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "text",
+                    1
+                  ]
+                ]
+              }
+            ],
+            "tags": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ],
+            "title": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              }
+            ],
+            "url": [
+              {
+                "channel": "link_destination",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "link_destinations": [
+            "https://example.invalid/semabi_0a0d846b3e_0",
+            "http://127.0.0.1:8851/bookmarks?q=%23semabi_4e637b422a_0",
+            "https://web.archive.org/web/20260909165241/https://example.invalid/semabi_0a0d846b3e_0",
+            "http://127.0.0.1:8851/bookmarks?details=4",
+            "http://127.0.0.1:8851/bookmarks/4/edit?return_url=/bookmarks"
+          ],
+          "observation": "0bf406619c66cebc",
+          "role": "listitem",
+          "root": 38,
+          "texts": [
+            "semabi_1fc77efcf4_0 semabi_4e637b422a_0 | semabi_2d97c1c2c8_0 Today | View Edit Archive Remove",
+            "semabi_1fc77efcf4_0",
+            "semabi_1fc77efcf4_0",
+            "|",
+            "semabi_4e637b422a_0",
+            "semabi_4e637b422a_0",
+            "semabi_2d97c1c2c8_0",
+            "Today",
+            "|",
+            "View",
+            "Edit",
+            "Archive",
+            "Remove"
+          ],
+          "value_node": 41
+        }
+      },
+      {
+        "arguments": {
+          "description": "semabi_e5097ed27c_1",
+          "tags": "semabi_d12fd2620a_1",
+          "title": "semabi_b8ac811eb3_1",
+          "url": "https://example.invalid/semabi_8b60654827_1"
+        },
+        "witness": {
+          "basis": "visible_local_record",
+          "field_slots": {
+            "description": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "text",
+                    1
+                  ]
+                ]
+              }
+            ],
+            "tags": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ],
+            "title": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              }
+            ],
+            "url": [
+              {
+                "channel": "link_destination",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "link_destinations": [
+            "https://example.invalid/semabi_8b60654827_1",
+            "http://127.0.0.1:8851/bookmarks?q=%23semabi_d12fd2620a_1",
+            "https://web.archive.org/web/20260909165244/https://example.invalid/semabi_8b60654827_1",
+            "http://127.0.0.1:8851/bookmarks?details=5",
+            "http://127.0.0.1:8851/bookmarks/5/edit?return_url=/bookmarks"
+          ],
+          "observation": "098db161dd342544",
+          "role": "listitem",
+          "root": 38,
+          "texts": [
+            "semabi_b8ac811eb3_1 semabi_d12fd2620a_1 | semabi_e5097ed27c_1 Today | View Edit Archive Remove",
+            "semabi_b8ac811eb3_1",
+            "semabi_b8ac811eb3_1",
+            "|",
+            "semabi_d12fd2620a_1",
+            "semabi_d12fd2620a_1",
+            "semabi_e5097ed27c_1",
+            "Today",
+            "|",
+            "View",
+            "Edit",
+            "Archive",
+            "Remove"
+          ],
+          "value_node": 41
+        }
+      }
+    ]
+  },
+  "version": 1
+}

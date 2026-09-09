@@ -1,0 +1,440 @@
+{"job_id": "job_d151b76b5c954c85a9dbd153d5fd9db8", "status": "RUNNING", "events": 1}
+{"job_id": "job_d151b76b5c954c85a9dbd153d5fd9db8", "status": "COMPLETED", "events": 2}
+{"connection_id": "conn_69dde230fe564df8899a808d6cfd5d20"}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 0}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 2}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 3}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 5}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 7}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 9}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 13}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 15}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 18}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 21}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 24}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 27}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 30}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 33}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 35}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 37}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 40}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 43}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 46}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 49}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 52}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "RUNNING", "events": 55}
+{"job_id": "job_861fb06840664469b8fc27eab37f147c", "status": "COMPLETED", "events": 58}
+{
+  "operations": [
+    {
+      "id": "op_5c8e47ab193b2c074b8e",
+      "version": 1,
+      "name": "save_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "description": "Description",
+            "minLength": 1,
+            "type": "string"
+          },
+          "tags": {
+            "description": "Tags",
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title",
+            "maxLength": 512,
+            "minLength": 1,
+            "type": "string"
+          },
+          "url": {
+            "description": "URL",
+            "format": "uri",
+            "format_basis": "visible_label_prior_validated_by_trials",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "tags",
+          "title",
+          "description"
+        ],
+        "type": "object"
+      }
+    }
+  ]
+}
+{"execution_id": "job_f0ef22fe816a445f821e604782ef4db2", "idempotency_key": "two-app-linkding-v3"}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 0}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 1}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 3}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 5}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 7}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 10}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 13}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 16}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 19}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 22}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "RUNNING", "events": 25}
+{"job_id": "job_f0ef22fe816a445f821e604782ef4db2", "status": "COMPLETED", "events": 27}
+{
+  "connection_id": "conn_69dde230fe564df8899a808d6cfd5d20",
+  "created_at": "2026-09-09T16:52:44.880936+00:00",
+  "events": [
+    {
+      "created_at": "2026-09-09T16:52:44.891989+00:00",
+      "kind": "invoke",
+      "sequence": 1,
+      "type": "job_started"
+    },
+    {
+      "created_at": "2026-09-09T16:52:45.155602+00:00",
+      "sequence": 2,
+      "settled": true,
+      "signature": "098db161dd342544",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T16:52:45.165782+00:00",
+      "sequence": 3,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8851/bookmarks"
+    },
+    {
+      "created_at": "2026-09-09T16:52:45.760160+00:00",
+      "sequence": 4,
+      "settled": true,
+      "signature": "098db161dd342544",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T16:52:45.764084+00:00",
+      "sequence": 5,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8851/"
+    },
+    {
+      "created_at": "2026-09-09T16:52:46.334300+00:00",
+      "sequence": 6,
+      "settled": true,
+      "signature": "098db161dd342544",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 8
+      },
+      "created_at": "2026-09-09T16:52:46.343201+00:00",
+      "sequence": 7,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T16:52:46.753949+00:00",
+      "sequence": 8,
+      "settled": true,
+      "signature": "c9bc3a7a8e27ff9e",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T16:52:46.762736+00:00",
+      "ok": true,
+      "sequence": 9,
+      "type": "action_result"
+    },
+    {
+      "action": {
+        "kind": "type",
+        "target": 42,
+        "text": "Created through the same service as Memos"
+      },
+      "created_at": "2026-09-09T16:52:46.764755+00:00",
+      "sequence": 10,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T16:52:47.005265+00:00",
+      "sequence": 11,
+      "settled": true,
+      "signature": "ee6c8e853f02adb0",
+      "type": "observation"
+    },
+    {
+      "action": "type",
+      "created_at": "2026-09-09T16:52:47.014001+00:00",
+      "ok": true,
+      "sequence": 12,
+      "type": "action_result"
+    },
+    {
+      "action": {
+        "kind": "type",
+        "target": 32,
+        "text": "semabi-http-demo"
+      },
+      "created_at": "2026-09-09T16:52:47.015809+00:00",
+      "sequence": 13,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T16:52:47.256644+00:00",
+      "sequence": 14,
+      "settled": true,
+      "signature": "5c7e4fdb6eec5f73",
+      "type": "observation"
+    },
+    {
+      "action": "type",
+      "created_at": "2026-09-09T16:52:47.265329+00:00",
+      "ok": true,
+      "sequence": 15,
+      "type": "action_result"
+    },
+    {
+      "action": {
+        "kind": "type",
+        "target": 38,
+        "text": "A learned HTTP bookmark"
+      },
+      "created_at": "2026-09-09T16:52:47.267017+00:00",
+      "sequence": 16,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T16:52:47.507796+00:00",
+      "sequence": 17,
+      "settled": true,
+      "signature": "f8cb9efe497cd4c1",
+      "type": "observation"
+    },
+    {
+      "action": "type",
+      "created_at": "2026-09-09T16:52:47.516833+00:00",
+      "ok": true,
+      "sequence": 18,
+      "type": "action_result"
+    },
+    {
+      "action": {
+        "kind": "type",
+        "target": 26,
+        "text": "https://example.invalid/semabi-http-20260909-1655"
+      },
+      "created_at": "2026-09-09T16:52:47.518166+00:00",
+      "sequence": 19,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T16:52:47.758181+00:00",
+      "sequence": 20,
+      "settled": true,
+      "signature": "d1a40a07df0d9c8c",
+      "type": "observation"
+    },
+    {
+      "action": "type",
+      "created_at": "2026-09-09T16:52:47.766966+00:00",
+      "ok": true,
+      "sequence": 21,
+      "type": "action_result"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 59
+      },
+      "created_at": "2026-09-09T16:52:47.768818+00:00",
+      "sequence": 22,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T16:52:48.222357+00:00",
+      "sequence": 23,
+      "settled": true,
+      "signature": "eb2fef425c7b71a4",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T16:52:48.224248+00:00",
+      "ok": true,
+      "sequence": 24,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T16:52:48.228263+00:00",
+      "sequence": 25,
+      "type": "reload"
+    },
+    {
+      "created_at": "2026-09-09T16:52:48.539028+00:00",
+      "sequence": 26,
+      "settled": true,
+      "signature": "eb2fef425c7b71a4",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T16:52:48.550820+00:00",
+      "outcome": "CONFIRMED",
+      "sequence": 27,
+      "status": "COMPLETED",
+      "type": "job_finished"
+    }
+  ],
+  "id": "job_f0ef22fe816a445f821e604782ef4db2",
+  "job_id": "job_f0ef22fe816a445f821e604782ef4db2",
+  "kind": "invoke",
+  "request": {
+    "arguments": {
+      "description": "Created through the same service as Memos",
+      "tags": "semabi-http-demo",
+      "title": "A learned HTTP bookmark",
+      "url": "https://example.invalid/semabi-http-20260909-1655"
+    },
+    "operation_id": "op_5c8e47ab193b2c074b8e",
+    "version": 1
+  },
+  "result": {
+    "effect": {
+      "arguments": {
+        "description": "Created through the same service as Memos",
+        "tags": "semabi-http-demo",
+        "title": "A learned HTTP bookmark",
+        "url": "https://example.invalid/semabi-http-20260909-1655"
+      },
+      "kind": "visible_record_created",
+      "scope": "Unique local record in the current rendered view, retained after reload",
+      "witness": {
+        "basis": "visible_local_record",
+        "field_slots": {
+          "description": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "text",
+                  1
+                ]
+              ]
+            }
+          ],
+          "tags": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "text",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ]
+              ]
+            }
+          ],
+          "title": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ]
+              ]
+            }
+          ],
+          "url": [
+            {
+              "channel": "link_destination",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        "link_destinations": [
+          "https://example.invalid/semabi-http-20260909-1655",
+          "http://127.0.0.1:8851/bookmarks?q=%23semabi-http-demo",
+          "https://web.archive.org/web/20260909165247/https://example.invalid/semabi-http-20260909-1655",
+          "http://127.0.0.1:8851/bookmarks?details=6",
+          "http://127.0.0.1:8851/bookmarks/6/edit?return_url=/bookmarks"
+        ],
+        "observation": "eb2fef425c7b71a4",
+        "role": "listitem",
+        "root": 38,
+        "texts": [
+          "A learned HTTP bookmark semabi-http-demo | Created through the same service as Memos Today | View Edit Archive Remove",
+          "A learned HTTP bookmark",
+          "A learned HTTP bookmark",
+          "|",
+          "semabi-http-demo",
+          "semabi-http-demo",
+          "Created through the same service as Memos",
+          "Today",
+          "|",
+          "View",
+          "Edit",
+          "Archive",
+          "Remove"
+        ],
+        "value_node": 41
+      }
+    },
+    "metrics": {
+      "actions": 9,
+      "elapsed_seconds": 3.657,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 6
+    },
+    "outcome": "CONFIRMED"
+  },
+  "status": "COMPLETED",
+  "updated_at": "2026-09-09T16:52:48.550874+00:00",
+  "write_intent": true
+}

@@ -1,0 +1,87 @@
+"""Execute one cached-form CLI request, retaining its terminal process result."""
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = Path(__file__).resolve().parent
+app = sys.argv[1]
+assert app in {"memos", "linkding"}
+directory = OUT / app
+assert sorted(os.sched_getaffinity(0)) == [6]
+assert not (directory / "process_v1.json").exists()
+acquisition = json.loads((OUT / "acquisition_v1.json").read_text())
+
+
+def hashes():
+    return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
+            for name in acquisition["source_sha256"]}
+
+
+before = hashes()
+assert before == acquisition["source_sha256"]
+connection = json.loads((directory / "connection.json").read_text())
+arguments = json.loads((directory / "arguments.json").read_text())
+command = [sys.executable, "-B", "-m", "semabi.baselines.cached_form",
+    "--operation-file", str(directory / "operation.json"), "--application-url", connection["url"],
+    "--credentials-file", str(ROOT / f"runs/product_apps_v1/{app}/private/credentials.json"),
+    "--arguments", json.dumps(arguments), "--output-dir", str(directory / "replay"),
+    "--max-actions", "20", "--max-writes", "12"]
+record = {"scope": "DEVELOPMENT_SMOKE", "application": app, "status": "STARTING",
+          "command": command, "cwd": str(ROOT), "cpu_affinity": [6],
+          "started_at": datetime.datetime.now(datetime.UTC).isoformat(),
+          "source_head": acquisition["source_head"], "source_sha256_before": before,
+          "timeout_seconds": 120, "retry_policy": "One request; never retry after UNKNOWN"}
+
+
+def save():
+    path = directory / "process_v1.json"
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "w") as stream:
+        json.dump(record, stream, indent=2)
+        stream.write("\n")
+
+
+start = time.monotonic()
+save()
+child = None
+try:
+    fd = os.open(directory / "cli.log", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, "w") as stream:
+        child = subprocess.Popen(command, cwd=ROOT, stdout=stream, stderr=subprocess.STDOUT,
+                                 start_new_session=True)
+        record.update(status="RUNNING", child_pid=child.pid)
+        save()
+        print(json.dumps({"application": app, "status": "RUNNING", "child_pid": child.pid}), flush=True)
+        try:
+            code = child.wait(timeout=120)
+            record.update(status="FINISHED", returncode=code)
+        except subprocess.TimeoutExpired:
+            record.update(status="INCOMPLETE", conservative_outcome="UNKNOWN", reason="Replay process timed out")
+            os.killpg(child.pid, signal.SIGTERM)
+            try:
+                child.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                os.killpg(child.pid, signal.SIGKILL)
+                child.wait(timeout=5)
+            record["returncode"] = child.returncode
+finally:
+    if child is not None and child.poll() is None:
+        os.killpg(child.pid, signal.SIGKILL)
+        child.wait(timeout=5)
+        record.update(status="INCOMPLETE", conservative_outcome="UNKNOWN", reason="Replay wrapper interrupted")
+    after = hashes()
+    record.update(source_sha256_after=after, source_unchanged=before == after,
+                  child_reaped=child is not None and child.poll() is not None,
+                  elapsed_seconds=time.monotonic() - start,
+                  ended_at=datetime.datetime.now(datetime.UTC).isoformat())
+    save()
+    print(json.dumps({key: record[key] for key in ("application", "status", "returncode", "child_reaped",
+                       "elapsed_seconds", "source_unchanged")}), flush=True)
+raise SystemExit(0 if record["status"] == "FINISHED" and record["returncode"] == 0 else 1)

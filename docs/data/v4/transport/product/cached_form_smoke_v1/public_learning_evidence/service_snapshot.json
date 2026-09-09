@@ -1,0 +1,1280 @@
+{
+  "claims_scope": "Four retrospective development calls, including fresh-session and unchanged-session reuse",
+  "service_started_after_source_adoption": true,
+  "clients": [
+    {
+      "log": "runs/product_development_v3/memos_http_v3.log",
+      "sha256": "27c7d9806ed788fa832635eb6550f13527ace0e503a06fd0e6a7f6991dde5211",
+      "jobs": [
+        {
+          "id": "job_aa54440a4d1448e594b83bb08f253a9a",
+          "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+          "kind": "reconnect",
+          "status": "COMPLETED",
+          "request": {},
+          "created_at": "2026-09-09T16:52:14.026461+00:00",
+          "updated_at": "2026-09-09T16:52:16.277287+00:00",
+          "metrics": null,
+          "outcome": null,
+          "result_status": "CONNECTED",
+          "event_count": 2,
+          "authentication_actions": 3,
+          "learned_operation_ids": []
+        },
+        {
+          "id": "job_12d2a82f3ad64d5284e248d232802811",
+          "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+          "kind": "learn",
+          "status": "COMPLETED",
+          "request": {
+            "settings": {
+              "max_actions": 60,
+              "max_writes": 30
+            }
+          },
+          "created_at": "2026-09-09T16:52:16.294250+00:00",
+          "updated_at": "2026-09-09T16:52:23.085889+00:00",
+          "metrics": {
+            "actions": 9,
+            "elapsed_seconds": 6.787,
+            "model_calls": 0,
+            "paid_cost": 0,
+            "possible_write_actions": 4
+          },
+          "outcome": null,
+          "result_status": "COMPLETED",
+          "event_count": 27,
+          "authentication_actions": null,
+          "learned_operation_ids": [
+            "op_da6cd313fd7951e26d2c"
+          ]
+        },
+        {
+          "id": "job_79806e94f2b74e12ba178cfebfbab33b",
+          "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+          "kind": "invoke",
+          "status": "COMPLETED",
+          "request": {
+            "arguments": {
+              "value": "Two application service Memos 20260909 1655"
+            },
+            "operation_id": "op_da6cd313fd7951e26d2c",
+            "version": 3
+          },
+          "created_at": "2026-09-09T16:52:23.119469+00:00",
+          "updated_at": "2026-09-09T16:52:27.053952+00:00",
+          "metrics": {
+            "actions": 5,
+            "elapsed_seconds": 3.929,
+            "model_calls": 0,
+            "paid_cost": 0,
+            "possible_write_actions": 2
+          },
+          "outcome": "CONFIRMED",
+          "result_status": null,
+          "event_count": 15,
+          "authentication_actions": null,
+          "learned_operation_ids": []
+        }
+      ]
+    },
+    {
+      "log": "runs/product_development_v3/linkding_http_v3.log",
+      "sha256": "7af1031795b3100d0b3503ba47743caf3331c0d7c8e964e8e32cec24ebfc1490",
+      "jobs": [
+        {
+          "id": "job_d151b76b5c954c85a9dbd153d5fd9db8",
+          "connection_id": "conn_69dde230fe564df8899a808d6cfd5d20",
+          "kind": "connect",
+          "status": "COMPLETED",
+          "request": {},
+          "created_at": "2026-09-09T16:52:35.015986+00:00",
+          "updated_at": "2026-09-09T16:52:36.355233+00:00",
+          "metrics": null,
+          "outcome": null,
+          "result_status": "CONNECTED",
+          "event_count": 2,
+          "authentication_actions": 3,
+          "learned_operation_ids": []
+        },
+        {
+          "id": "job_861fb06840664469b8fc27eab37f147c",
+          "connection_id": "conn_69dde230fe564df8899a808d6cfd5d20",
+          "kind": "learn",
+          "status": "COMPLETED",
+          "request": {
+            "settings": {
+              "max_actions": 60,
+              "max_writes": 30
+            }
+          },
+          "created_at": "2026-09-09T16:52:36.538312+00:00",
+          "updated_at": "2026-09-09T16:52:44.667160+00:00",
+          "metrics": {
+            "actions": 20,
+            "elapsed_seconds": 8.116,
+            "model_calls": 0,
+            "paid_cost": 0,
+            "possible_write_actions": 13
+          },
+          "outcome": null,
+          "result_status": "COMPLETED",
+          "event_count": 58,
+          "authentication_actions": null,
+          "learned_operation_ids": [
+            "op_5c8e47ab193b2c074b8e"
+          ]
+        },
+        {
+          "id": "job_f0ef22fe816a445f821e604782ef4db2",
+          "connection_id": "conn_69dde230fe564df8899a808d6cfd5d20",
+          "kind": "invoke",
+          "status": "COMPLETED",
+          "request": {
+            "arguments": {
+              "description": "Created through the same service as Memos",
+              "tags": "semabi-http-demo",
+              "title": "A learned HTTP bookmark",
+              "url": "https://example.invalid/semabi-http-20260909-1655"
+            },
+            "operation_id": "op_5c8e47ab193b2c074b8e",
+            "version": 1
+          },
+          "created_at": "2026-09-09T16:52:44.880936+00:00",
+          "updated_at": "2026-09-09T16:52:48.550874+00:00",
+          "metrics": {
+            "actions": 9,
+            "elapsed_seconds": 3.657,
+            "model_calls": 0,
+            "paid_cost": 0,
+            "possible_write_actions": 6
+          },
+          "outcome": "CONFIRMED",
+          "result_status": null,
+          "event_count": 27,
+          "authentication_actions": null,
+          "learned_operation_ids": []
+        }
+      ]
+    },
+    {
+      "log": "runs/product_development_v3/linkding_reuse_v3.log",
+      "sha256": "20c3810a670548adac3c987465b2cd39b5eca315dcafec5d0dd6402b57cda1dc",
+      "jobs": [
+        {
+          "id": "job_1717ab0819c140ff9b5d0cd509e9875c",
+          "connection_id": "conn_69dde230fe564df8899a808d6cfd5d20",
+          "kind": "reconnect",
+          "status": "COMPLETED",
+          "request": {},
+          "created_at": "2026-09-09T16:59:45.567467+00:00",
+          "updated_at": "2026-09-09T16:59:46.975410+00:00",
+          "metrics": null,
+          "outcome": null,
+          "result_status": "CONNECTED",
+          "event_count": 2,
+          "authentication_actions": 3,
+          "learned_operation_ids": []
+        },
+        {
+          "id": "job_4ece815705384c0585afd7c3308370a4",
+          "connection_id": "conn_69dde230fe564df8899a808d6cfd5d20",
+          "kind": "invoke",
+          "status": "COMPLETED",
+          "request": {
+            "arguments": {
+              "description": "Persisted schema reused with new arguments",
+              "tags": "semabi-reuse",
+              "title": "Fresh session learned bookmark",
+              "url": "https://example.invalid/semabi-fresh-session-20260909"
+            },
+            "operation_id": "op_5c8e47ab193b2c074b8e",
+            "version": 1
+          },
+          "created_at": "2026-09-09T16:59:47.091826+00:00",
+          "updated_at": "2026-09-09T16:59:50.788551+00:00",
+          "metrics": {
+            "actions": 9,
+            "elapsed_seconds": 3.685,
+            "model_calls": 0,
+            "paid_cost": 0,
+            "possible_write_actions": 6
+          },
+          "outcome": "CONFIRMED",
+          "result_status": null,
+          "event_count": 27,
+          "authentication_actions": null,
+          "learned_operation_ids": []
+        }
+      ]
+    },
+    {
+      "log": "runs/product_development_v3/memos_still_open_v3.log",
+      "sha256": "62a5df1f9e440ec6d1f9a5b10a61a112ed7f1c5ae2b92a1c0546873448df3682",
+      "jobs": [
+        {
+          "id": "job_a29422347c1741559dc8db056b38c9a1",
+          "connection_id": "conn_0e51f4498eb547f6ac639acc96f8bab1",
+          "kind": "invoke",
+          "status": "COMPLETED",
+          "request": {
+            "arguments": {
+              "value": "Memos remained connected after Linkding reconnect 20260909"
+            },
+            "operation_id": "op_da6cd313fd7951e26d2c",
+            "version": 3
+          },
+          "created_at": "2026-09-09T17:00:17.839471+00:00",
+          "updated_at": "2026-09-09T17:00:21.880828+00:00",
+          "metrics": {
+            "actions": 5,
+            "elapsed_seconds": 4.03,
+            "model_calls": 0,
+            "paid_cost": 0,
+            "possible_write_actions": 2
+          },
+          "outcome": "CONFIRMED",
+          "result_status": null,
+          "event_count": 15,
+          "authentication_actions": null,
+          "learned_operation_ids": []
+        }
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "description": "Visible editor value",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "type": "object"
+      },
+      "effect_checks": [
+        "All supplied values together in one unique local record",
+        "Values occupy the relative field slots learned across both trials",
+        "Same record values remain visible after reload"
+      ],
+      "evidence_sha256": "374b21b4a147ad67abcf65bb5c3fd7f37620140d613b582710c2bcf50cc3fab6",
+      "id": "op_da6cd313fd7951e26d2c",
+      "kind": "create_visible_record",
+      "name": "save_record",
+      "output_schema": {
+        "description": "Outcome, visible effect witness, and execution metrics",
+        "type": "object"
+      },
+      "prerequisites": [
+        "Authenticated session",
+        "Unchanged visible form contract",
+        "Empty argument controls and unchanged other control defaults",
+        "Anchor absent from the current read-back view"
+      ],
+      "procedure": {
+        "anchor": "value",
+        "defaults": {},
+        "effect_slots": {
+          "value": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        "entry_url": "http://127.0.0.1:8852/",
+        "form": {
+          "context_controls": [
+            {
+              "input_type": "",
+              "label": "Private",
+              "role": "button"
+            },
+            {
+              "input_type": "",
+              "label": "",
+              "role": "button"
+            }
+          ],
+          "fields": [
+            {
+              "argument": "value",
+              "descriptor": {
+                "input_type": "contenteditable",
+                "label": "",
+                "role": "textbox"
+              },
+              "input_type": "contenteditable",
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "required": false,
+              "role": "textbox"
+            }
+          ],
+          "submit": {
+            "input_type": "",
+            "label": "Save",
+            "role": "button"
+          }
+        },
+        "navigation": [],
+        "readback_url": "http://127.0.0.1:8852/"
+      },
+      "scope": {
+        "operation_family": "local form creation",
+        "origin": "http://127.0.0.1:8852",
+        "prior": "General English action vocabulary proposes exploration",
+        "runtime_model": null,
+        "unsupported": [
+          "global record uniqueness",
+          "rollback",
+          "exactly-once delivery",
+          "relational selection",
+          "unobserved side effects"
+        ]
+      },
+      "status": "ACTIVE",
+      "support": {
+        "argument_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "description": "Visible editor value",
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "policy_version": "local-form-v3",
+        "procedure": {
+          "anchor": "value",
+          "defaults": {},
+          "effect_slots": {
+            "value": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "entry_url": "http://127.0.0.1:8852/",
+          "form": {
+            "context_controls": [
+              {
+                "input_type": "",
+                "label": "Private",
+                "role": "button"
+              },
+              {
+                "input_type": "",
+                "label": "",
+                "role": "button"
+              }
+            ],
+            "fields": [
+              {
+                "argument": "value",
+                "descriptor": {
+                  "input_type": "contenteditable",
+                  "label": "",
+                  "role": "textbox"
+                },
+                "input_type": "contenteditable",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "required": false,
+                "role": "textbox"
+              }
+            ],
+            "submit": {
+              "input_type": "",
+              "label": "Save",
+              "role": "button"
+            }
+          },
+          "navigation": [],
+          "readback_url": "http://127.0.0.1:8852/"
+        },
+        "source_sha256": {
+          "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+          "browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+          "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+          "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+          "runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+          "surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13"
+        },
+        "trials": [
+          {
+            "arguments": {
+              "value": "semabi_ba3df4d4c7_0"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "value": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        1
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [],
+              "observation": "1fb6de5fc6baaab0",
+              "role": "article",
+              "root": 162,
+              "texts": [
+                "semabi_ba3df4d4c7_0"
+              ],
+              "value_node": 178
+            }
+          },
+          {
+            "arguments": {
+              "value": "semabi_c0ba5d4337_1"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "value": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        1
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [],
+              "observation": "6d516344a0a96819",
+              "role": "article",
+              "root": 162,
+              "texts": [
+                "semabi_c0ba5d4337_1"
+              ],
+              "value_node": 178
+            }
+          }
+        ]
+      },
+      "version": 3
+    },
+    {
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "description": "Description",
+            "minLength": 1,
+            "type": "string"
+          },
+          "tags": {
+            "description": "Tags",
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title",
+            "maxLength": 512,
+            "minLength": 1,
+            "type": "string"
+          },
+          "url": {
+            "description": "URL",
+            "format": "uri",
+            "format_basis": "visible_label_prior_validated_by_trials",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "tags",
+          "title",
+          "description"
+        ],
+        "type": "object"
+      },
+      "effect_checks": [
+        "All supplied values together in one unique local record",
+        "Values occupy the relative field slots learned across both trials",
+        "Same record values remain visible after reload"
+      ],
+      "evidence_sha256": "39828357a99176aff56ca011b38797f9f622e2be43ceee05de9ed7de5059daa7",
+      "id": "op_5c8e47ab193b2c074b8e",
+      "kind": "create_visible_record",
+      "name": "save_record",
+      "output_schema": {
+        "description": "Outcome, visible effect witness, and execution metrics",
+        "type": "object"
+      },
+      "prerequisites": [
+        "Authenticated session",
+        "Unchanged visible form contract",
+        "Empty argument controls and unchanged other control defaults",
+        "Anchor absent from the current read-back view"
+      ],
+      "procedure": {
+        "anchor": "url",
+        "defaults": {},
+        "effect_slots": {
+          "description": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "text",
+                  1
+                ]
+              ]
+            }
+          ],
+          "tags": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "text",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ]
+              ]
+            }
+          ],
+          "title": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ]
+              ]
+            }
+          ],
+          "url": [
+            {
+              "channel": "link_destination",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        "entry_url": "http://127.0.0.1:8851/",
+        "form": {
+          "context_controls": [
+            {
+              "input_type": "",
+              "label": "Notes",
+              "role": "button"
+            }
+          ],
+          "fields": [
+            {
+              "argument": "description",
+              "descriptor": {
+                "input_type": "textarea",
+                "label": "Description",
+                "role": "textbox"
+              },
+              "input_type": "textarea",
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "required": false,
+              "role": "textbox"
+            },
+            {
+              "argument": "tags",
+              "descriptor": {
+                "input_type": "text",
+                "label": "Tags",
+                "role": "textbox"
+              },
+              "input_type": "text",
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "required": false,
+              "role": "textbox"
+            },
+            {
+              "argument": "title",
+              "descriptor": {
+                "input_type": "text",
+                "label": "Title",
+                "role": "textbox"
+              },
+              "input_type": "text",
+              "max": null,
+              "max_length": 512,
+              "min": null,
+              "required": false,
+              "role": "textbox"
+            },
+            {
+              "argument": "url",
+              "descriptor": {
+                "input_type": "text",
+                "label": "URL",
+                "role": "textbox"
+              },
+              "input_type": "text",
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "required": true,
+              "role": "textbox"
+            }
+          ],
+          "submit": {
+            "input_type": "submit",
+            "label": "Save",
+            "role": "button"
+          }
+        },
+        "navigation": [
+          {
+            "input_type": "",
+            "label": "Add bookmark",
+            "role": "link"
+          }
+        ],
+        "readback_url": "http://127.0.0.1:8851/bookmarks"
+      },
+      "scope": {
+        "operation_family": "local form creation",
+        "origin": "http://127.0.0.1:8851",
+        "prior": "General English action vocabulary proposes exploration",
+        "runtime_model": null,
+        "unsupported": [
+          "global record uniqueness",
+          "rollback",
+          "exactly-once delivery",
+          "relational selection",
+          "unobserved side effects"
+        ]
+      },
+      "status": "ACTIVE",
+      "support": {
+        "argument_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "description": "Description",
+              "minLength": 1,
+              "type": "string"
+            },
+            "tags": {
+              "description": "Tags",
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": {
+              "description": "Title",
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            },
+            "url": {
+              "description": "URL",
+              "format": "uri",
+              "format_basis": "visible_label_prior_validated_by_trials",
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "url",
+            "tags",
+            "title",
+            "description"
+          ],
+          "type": "object"
+        },
+        "policy_version": "local-form-v3",
+        "procedure": {
+          "anchor": "url",
+          "defaults": {},
+          "effect_slots": {
+            "description": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "text",
+                    1
+                  ]
+                ]
+              }
+            ],
+            "tags": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    1
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ],
+            "title": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ]
+                ]
+              }
+            ],
+            "url": [
+              {
+                "channel": "link_destination",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "entry_url": "http://127.0.0.1:8851/",
+          "form": {
+            "context_controls": [
+              {
+                "input_type": "",
+                "label": "Notes",
+                "role": "button"
+              }
+            ],
+            "fields": [
+              {
+                "argument": "description",
+                "descriptor": {
+                  "input_type": "textarea",
+                  "label": "Description",
+                  "role": "textbox"
+                },
+                "input_type": "textarea",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "required": false,
+                "role": "textbox"
+              },
+              {
+                "argument": "tags",
+                "descriptor": {
+                  "input_type": "text",
+                  "label": "Tags",
+                  "role": "textbox"
+                },
+                "input_type": "text",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "required": false,
+                "role": "textbox"
+              },
+              {
+                "argument": "title",
+                "descriptor": {
+                  "input_type": "text",
+                  "label": "Title",
+                  "role": "textbox"
+                },
+                "input_type": "text",
+                "max": null,
+                "max_length": 512,
+                "min": null,
+                "required": false,
+                "role": "textbox"
+              },
+              {
+                "argument": "url",
+                "descriptor": {
+                  "input_type": "text",
+                  "label": "URL",
+                  "role": "textbox"
+                },
+                "input_type": "text",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "required": true,
+                "role": "textbox"
+              }
+            ],
+            "submit": {
+              "input_type": "submit",
+              "label": "Save",
+              "role": "button"
+            }
+          },
+          "navigation": [
+            {
+              "input_type": "",
+              "label": "Add bookmark",
+              "role": "link"
+            }
+          ],
+          "readback_url": "http://127.0.0.1:8851/bookmarks"
+        },
+        "source_sha256": {
+          "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+          "browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+          "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+          "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+          "runtime.py": "a4e83c9168dac6c2a94366fec26086ac8f3937dfd7eef412013fbcf883ddb1b1",
+          "surface.py": "c819edcf993c8f0e7640869575af31a6b30567b9af67dea0cb662ecb9c759d13"
+        },
+        "trials": [
+          {
+            "arguments": {
+              "description": "semabi_2d97c1c2c8_0",
+              "tags": "semabi_4e637b422a_0",
+              "title": "semabi_1fc77efcf4_0",
+              "url": "https://example.invalid/semabi_0a0d846b3e_0"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "description": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        1
+                      ],
+                      [
+                        "text",
+                        1
+                      ]
+                    ]
+                  }
+                ],
+                "tags": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        1
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ]
+                    ]
+                  }
+                ],
+                "title": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ]
+                    ]
+                  }
+                ],
+                "url": [
+                  {
+                    "channel": "link_destination",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [
+                "https://example.invalid/semabi_0a0d846b3e_0",
+                "http://127.0.0.1:8851/bookmarks?q=%23semabi_4e637b422a_0",
+                "https://web.archive.org/web/20260909165241/https://example.invalid/semabi_0a0d846b3e_0",
+                "http://127.0.0.1:8851/bookmarks?details=4",
+                "http://127.0.0.1:8851/bookmarks/4/edit?return_url=/bookmarks"
+              ],
+              "observation": "0bf406619c66cebc",
+              "role": "listitem",
+              "root": 38,
+              "texts": [
+                "semabi_1fc77efcf4_0 semabi_4e637b422a_0 | semabi_2d97c1c2c8_0 Today | View Edit Archive Remove",
+                "semabi_1fc77efcf4_0",
+                "semabi_1fc77efcf4_0",
+                "|",
+                "semabi_4e637b422a_0",
+                "semabi_4e637b422a_0",
+                "semabi_2d97c1c2c8_0",
+                "Today",
+                "|",
+                "View",
+                "Edit",
+                "Archive",
+                "Remove"
+              ],
+              "value_node": 41
+            }
+          },
+          {
+            "arguments": {
+              "description": "semabi_e5097ed27c_1",
+              "tags": "semabi_d12fd2620a_1",
+              "title": "semabi_b8ac811eb3_1",
+              "url": "https://example.invalid/semabi_8b60654827_1"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "description": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        1
+                      ],
+                      [
+                        "text",
+                        1
+                      ]
+                    ]
+                  }
+                ],
+                "tags": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        1
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ]
+                    ]
+                  }
+                ],
+                "title": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ]
+                    ]
+                  }
+                ],
+                "url": [
+                  {
+                    "channel": "link_destination",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [
+                "https://example.invalid/semabi_8b60654827_1",
+                "http://127.0.0.1:8851/bookmarks?q=%23semabi_d12fd2620a_1",
+                "https://web.archive.org/web/20260909165244/https://example.invalid/semabi_8b60654827_1",
+                "http://127.0.0.1:8851/bookmarks?details=5",
+                "http://127.0.0.1:8851/bookmarks/5/edit?return_url=/bookmarks"
+              ],
+              "observation": "098db161dd342544",
+              "role": "listitem",
+              "root": 38,
+              "texts": [
+                "semabi_b8ac811eb3_1 semabi_d12fd2620a_1 | semabi_e5097ed27c_1 Today | View Edit Archive Remove",
+                "semabi_b8ac811eb3_1",
+                "semabi_b8ac811eb3_1",
+                "|",
+                "semabi_d12fd2620a_1",
+                "semabi_d12fd2620a_1",
+                "semabi_e5097ed27c_1",
+                "Today",
+                "|",
+                "View",
+                "Edit",
+                "Archive",
+                "Remove"
+              ],
+              "value_node": 41
+            }
+          }
+        ]
+      },
+      "version": 1
+    }
+  ],
+  "source_matches_current_files": true
+}

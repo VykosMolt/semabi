@@ -1,0 +1,115 @@
+"""Check the two smoke records using unchanged evaluator-v3 DOM matching."""
+import datetime
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import sys
+import time
+import uuid
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
+ACQUISITION = json.loads((OUT / "acquisition_v1.json").read_text())
+EVALUATOR_PATH = ROOT / "runs/product_evaluator_v3/check_effects.py"
+assert hashlib.sha256(EVALUATOR_PATH.read_bytes()).hexdigest() == ACQUISITION["source_sha256"][str(EVALUATOR_PATH.relative_to(ROOT))]
+spec = importlib.util.spec_from_file_location("_unchanged_evaluator_v3", EVALUATOR_PATH)
+evaluator = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = evaluator
+spec.loader.exec_module(evaluator)
+
+
+def source_hashes():
+    return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
+            for name in ACQUISITION["source_sha256"]}
+
+
+def save(path, value, private_values):
+    def redact(item):
+        if isinstance(item, str):
+            for private in private_values:
+                item = item.replace(private, "[REDACTED_CREDENTIAL]")
+            return item
+        if isinstance(item, dict):
+            return {redact(str(key)): redact(value) for key, value in item.items()}
+        if isinstance(item, (list, tuple)):
+            return [redact(value) for value in item]
+        return item
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, "w") as stream:
+        json.dump(redact(value), stream, indent=2)
+        stream.write("\n")
+
+
+def check(app):
+    directory = OUT / app / "independent_check"
+    directory.mkdir(mode=0o700)
+    args = json.loads((OUT / app / "arguments.json").read_text())
+    connection = json.loads((OUT / app / "connection.json").read_text())
+    raw_credentials = json.loads((ROOT / f"runs/product_apps_v1/{app}/private/credentials.json").read_text())
+    credentials = {key: raw_credentials[key] for key in ("username", "password")}
+    private_values = [value for value in raw_credentials.values() if isinstance(value, str) and value]
+    raw_credentials.clear()
+    before = source_hashes()
+    assert before == ACQUISITION["source_sha256"]
+    started = time.monotonic()
+    session = None
+    result = {"application": app, "scope": "DEVELOPMENT_SMOKE_INDEPENDENT_VISIBLE_EFFECT_CHECK",
+              "verdict": "UNESTABLISHED", "captures": [], "browser_closed": False,
+              "source_sha256_before": before, "started_at": datetime.datetime.now(datetime.UTC).isoformat(),
+              "matching_source": str(EVALUATOR_PATH.relative_to(ROOT)),
+              "matching_source_sha256": hashlib.sha256(EVALUATOR_PATH.read_bytes()).hexdigest(),
+              "dom_js_sha256": hashlib.sha256(evaluator.DOM_JS.encode()).hexdigest(),
+              "matcher_function_file": evaluator.record_checks.__code__.co_filename,
+              "fresh_sessions": 1, "business_write_primitives": 0, "retries": 0}
+    try:
+        session = evaluator.MeteredSession(connection["url"])
+        session.phase = "navigation"
+        session.goto()
+        session.phase = "authentication"
+        auth = session.authenticate(credentials)
+        credentials.clear()
+        result["authentication"] = auth
+        assert auth["status"] == "CONNECTED"
+        for phase in ("before_reload", "after_reload"):
+            session.phase = phase
+            surface = session.reload() if phase == "after_reload" else session.read()
+            assert surface.settled
+            snapshot = session._page.evaluate(evaluator.DOM_JS)
+            snapshot["id"] = "baseline_eval_" + uuid.uuid4().hex
+            snapshot["captured_at"] = datetime.datetime.now(datetime.UTC).isoformat()
+            assert snapshot["url"].startswith(connection["allowed_origin"] + "/")
+            checks = evaluator.record_checks(app, snapshot, args)
+            path = directory / (snapshot["id"] + ".json")
+            save(path, snapshot, private_values)
+            result["captures"].append({"phase": phase, "snapshot_id": snapshot["id"],
+                "snapshot_sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "settled": surface.settled, **checks})
+        result["verdict"] = ("VISIBLE_SAVED_CONTENT_CONFIRMED" if all(
+            capture["exact_matching_record_count"] == 1 for capture in result["captures"]) else "UNESTABLISHED")
+    except BaseException as error:
+        result.update(verdict="ERROR", error_type=type(error).__name__)
+    finally:
+        if session is not None:
+            result["metrics"] = {"primitives": session.primitives, "authentication_actions": len(session.primitives),
+                "navigations": 1, "reloads": sum(capture["phase"] == "after_reload" for capture in result["captures"]),
+                "surface_reads_by_phase": session.read_calls, "raw_snapshot_reads_by_phase": session.raw_snapshot_calls,
+                "independent_dom_reads": len(result["captures"]), "model_calls": 0, "paid_cost": 0}
+            session.close()
+            result["browser_closed"] = True
+        after = source_hashes()
+        result.update(source_sha256_after=after, source_unchanged=before == after,
+                      elapsed_seconds=time.monotonic() - started,
+                      ended_at=datetime.datetime.now(datetime.UTC).isoformat())
+        save(directory / "result.json", result, private_values)
+    print(json.dumps({"application": app, "verdict": result["verdict"],
+        "matching_counts": [capture["exact_matching_record_count"] for capture in result["captures"]],
+        "browser_closed": result["browser_closed"], "source_unchanged": result["source_unchanged"]}), flush=True)
+    return result
+
+
+assert sorted(os.sched_getaffinity(0)) == [6]
+results = [check("memos"), check("linkding")]
+raise SystemExit(0 if all(result["verdict"] == "VISIBLE_SAVED_CONTENT_CONFIRMED" and result["browser_closed"]
+                          and result["source_unchanged"] for result in results) else 1)
