@@ -43,13 +43,16 @@ Rolling queue:
    an identity-assisted diagnostic; ordinary learned JOIN is still unestablished.
 2. P3 committed at `db0ced6`: learned local READ/UPDATE, independent target
    and non-target checks, and a successful read after service restart.
-3. P4 now passes Memos learning, exact local READ/UPDATE, independent effect
+3. P4 committed at `c004534`: Memos learning, exact local READ/UPDATE, independent effect
    checks and persisted-operation reuse after service restart. Advertised menus,
    unlabeled observed fields and sole-value replacement use two trials and
    fresh form, DOM continuity and effect checks. Linkding reuse on the same
-   source is being checked.
-4. Active: prepare equivalent ordinary-UI fixtures and run the predefined
-   development workflow set with the implemented per-invocation limits.
+   source also passed independent checks.
+4. Active: execute the first fixed development workflow set with prepared Memos
+   fixtures and the implemented per-invocation limits. Linkding's independent
+   fixture checker failed before its first Save; retain that setup failure and
+   all requests. Ten Memos calls have complete bindings; other requests remain
+   unsupported or have unavailable challenge interventions.
    Preserve every unsupported task. After general
    repairs, freeze the common source/onboarding/baseline/protocol before opening
    reserved Vikunja. Use equivalent reset fixtures for the paired comparison.
@@ -232,6 +235,53 @@ helper is being tested separately; no application reset has occurred. Next:
 finish the same-source Linkding check, preserve P4, then prepare ordinary UI
 fixtures and execute the fixed development comparison without discarding
 unsupported search, unread, duplicate-selection or multiple-step requests.
+
+The [same-source Linkding check](product/menu_linkding_v2/README.md) is complete:
+learning established all three families again (40 actions, 25 possible writes,
+24.809 s), and an HTTP READ of the older URL returned its four previous values
+(3 actions, 1 possible write, 2.780 s). Independent current DOM captures before
+and after reload match those values and the earlier independent capture; the
+sampled bookmark is unchanged. All owned browsers are closed.
+
+The [prepared-fixture helper](product/prepared_fixtures_v1/README.md) is adopted.
+Its 53-test snapshot/restore extension passed an additional three tests after a
+real Linkding restart exposed the old availability probe's `TIME_WAIT` handling.
+One `SO_REUSEADDR` statement repairs that probe while still rejecting live
+listeners. The original failure and successful recovery remain preserved.
+Memos base and changed-B fixtures were created through ordinary UI and checked
+before/after reload, then saved as opaque named snapshots. A transient empty
+post-reload check is retained alongside the later already-captured matching
+state. Setup used 20 UI actions and 14 possible writes in 13.735 s, plus
+separately recorded lifecycle costs.
+
+Linkding fixture setup is unestablished in development assessment v1. Its
+independent reader omitted a styled native checkbox that ordinary control
+inspection could read. The checker stopped before any Save after seven
+possible writes. The remaining thirteen cannot complete the fixed preparation
+policy; there is no silent budget reset. All 32 Linkding arm/request slots remain
+recorded as setup-unestablished, without invented learner invocations.
+
+The first fixed assessment froze ten product/baseline files at `c004534` and
+the shared bounded caller prior before Memos onboarding. Fresh acquisition
+established CREATE/READ/UPDATE with two trials each, 33 actions and 19 possible
+writes including authentication; its public job interval is 27.975 s. Acquisition
+CPU/RSS and client wall time were not captured and remain unmeasured. The
+64-slot record retains 16 unsupported Memos slots, six unavailable viewport/
+logout/interruption slots, 32 Linkding setup-unestablished slots, and ten Memos
+calls to execute. A separate frozen command meter records actual call wall/CPU,
+sampled aggregate RSS, the 4 GiB bound and owned process termination.
+
+The first Memos C1 HTTP call is independently complete: exactly one requested
+memo added, both fixtures unchanged, and the full visible record inventory
+retained after reload. Including authentication it used 9 actions and 5 possible
+writes; service startup/call/shutdown took 7.654 s, 2.647 child CPU seconds and
+1,002,672,128 bytes sampled peak RSS. All service/browser processes terminated
+without forced signals. The identical base has been restored for C1's cached
+arm. Root has no persistent service running; each HTTP slot owns a fresh service
+process over the same assessment artifact directory. Next: complete the ten
+paired Memos calls, preserve all 64 results, then run the reserved application
+on frozen common code before general repairs. Vikunja startup preparation reads
+installation metadata only; its UI remains unopened.
 
 ## Paused for user review (2026-09-08 11:53 UTC)
 

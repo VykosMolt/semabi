@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+"""Lifecycle operations for installer-owned local development applications.
+
+This utility never reads application records or supplies browser operations.
+"""
+
+import argparse
+import json
+import os
+from pathlib import Path
+import shutil
+import signal
+import socket
+import subprocess
+import time
+import urllib.request
+
+
+ROOT = Path(__file__).resolve().parent
+THREAD_ENV = {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "GOMAXPROCS": "2",
+}
+
+
+def docker(*args):
+    return subprocess.run(
+        ["docker", *args], check=True, text=True, capture_output=True
+    ).stdout.strip()
+
+
+def native_pid(app, manifest):
+    pid_file = app / "private/server.pid"
+    if not pid_file.exists():
+        return None
+    pid = int(pid_file.read_text().strip())
+    cmdline = Path(f"/proc/{pid}/cmdline")
+    if not cmdline.exists():
+        return None
+    argv = cmdline.read_bytes().split(b"\0")
+    expected = str(app / "bin/memos").encode()
+    if expected not in argv:
+        raise RuntimeError("Recorded PID no longer belongs to the owned application")
+    return pid
+
+
+def running(app, manifest):
+    if "container_name" in manifest:
+        name = manifest["container_name"]
+        label = docker("inspect", name, "--format", '{{index .Config.Labels "semabi.owner"}}')
+        if label != "product_apps_v1":
+            raise RuntimeError("Container ownership label does not match")
+        return docker("inspect", name, "--format", "{{.State.Running}}") == "true"
+    return native_pid(app, manifest) is not None
+
+
+def stop(app, manifest):
+    if "container_name" in manifest:
+        if running(app, manifest):
+            docker("stop", "--time", "10", manifest["container_name"])
+        return
+    pid = native_pid(app, manifest)
+    if pid is None:
+        return
+    os.kill(pid, signal.SIGTERM)
+    deadline = time.monotonic() + 10
+    while time.monotonic() < deadline:
+        if not Path(f"/proc/{pid}").exists():
+            return
+        time.sleep(0.1)
+    raise RuntimeError("Owned native process did not stop within 10 seconds")
+
+
+def start(app, manifest):
+    if running(app, manifest):
+        return
+    with socket.socket() as probe:
+        probe.bind(("127.0.0.1", manifest["port"]))
+    if "container_name" in manifest:
+        docker("start", manifest["container_name"])
+    else:
+        env = os.environ.copy()
+        env.update(THREAD_ENV)
+        with (app / "logs/server.log").open("ab") as log:
+            child = subprocess.Popen(
+                manifest["command"], cwd=manifest["cwd"], env=env,
+                stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
+                start_new_session=True,
+            )
+        pid_path = app / "private/server.pid"
+        pid_path.write_text(f"{child.pid}\n")
+        pid_path.chmod(0o600)
+        manifest["pid"] = child.pid
+        manifest["started_unix"] = time.time()
+        (app / "deployment.json").write_text(json.dumps(manifest, indent=2) + "\n")
+
+
+def reset(app, manifest):
+    baseline = app / "private/baseline"
+    if not baseline.is_dir() or not any(baseline.iterdir()):
+        raise RuntimeError("Initial account baseline is absent")
+    stop(app, manifest)
+    archive_root = app / "private/resets"
+    archive_root.mkdir(mode=0o700, exist_ok=True)
+    archive = archive_root / str(time.time_ns())
+    data = app / "data"
+    if data.exists():
+        data.rename(archive)
+    shutil.copytree(baseline, data)
+    data.chmod(0o700)
+    start(app, manifest)
+
+
+def status(app, manifest):
+    is_running = running(app, manifest)
+    code = None
+    if is_running:
+        try:
+            with urllib.request.urlopen(manifest.get("health", manifest["url"]), timeout=5) as response:
+                code = response.status
+        except OSError:
+            pass
+    return {"application": manifest["application"], "running": is_running, "http_status": code}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("action", choices=("status", "start", "stop", "reset"))
+    parser.add_argument("app", choices=("linkding", "memos"))
+    args = parser.parse_args()
+    app = ROOT / args.app
+    manifest = json.loads((app / "deployment.json").read_text())
+    if args.action != "status":
+        {"start": start, "stop": stop, "reset": reset}[args.action](app, manifest)
+    print(json.dumps(status(app, manifest), sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

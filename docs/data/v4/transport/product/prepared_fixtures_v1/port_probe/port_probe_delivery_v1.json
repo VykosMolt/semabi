@@ -1,0 +1,57 @@
+{
+  "application_calls": 0,
+  "base_sha256": "f8d0900b66c8bb713f2c2cf664d95eef7a71ae579a22687897999049069ace2c",
+  "candidate_sha256": "806b213db7a71b734f889ce576394a3563ccfe7c7cdfec1cd9c500e1a4f872b7",
+  "commits": 0,
+  "created_at": "2026-09-09T19:06:02.791125+00:00",
+  "diagnostic": {
+    "exit_code": 0,
+    "kernel_tcp_state": "06 / TIME_WAIT",
+    "plain_bind_errno": 98,
+    "result_file": "probe_time_wait_result_v1.json",
+    "result_sha256": "5ea295b23b942766a3b90a4f6282b18771b8e0add9a2d82cd7ac3198e244dd0a",
+    "reuse_address_bind_succeeded": true,
+    "reuse_address_rejected_live_listener_errno": 98,
+    "tool_chunk_id": "b998ce"
+  },
+  "format": "prepared_fixture_port_probe_candidate.v1",
+  "frozen_v1_edits": 0,
+  "frozen_v1_package_unchanged": true,
+  "limits": "Localhost synthetic evidence establishes TIME_WAIT probe handling and active-listener refusal. Live source adoption and any retry remain root-coordinated.",
+  "live_failure_attribution": "Root preserved Linkding snapshot/restart failure under the frozen v1 source separately; this candidate does not rewrite that outcome.",
+  "live_helper_edits": 0,
+  "mechanism": "Set SO_REUSEADDR on the temporary availability probe before bind; the application listener configuration is unchanged.",
+  "ownership_released_to_root": true,
+  "patch": {
+    "bytes": 488,
+    "path": "port_probe_v1.patch",
+    "sha256": "7445b051e71e1db99ab21874ff79634d8a08cae9e97c9652ddae4cd5f3228614"
+  },
+  "patch_check": {
+    "exit_code": 0,
+    "source_tree_mutations": 0,
+    "tool_chunk_id": "c611a2",
+    "whitespace_errors": 0
+  },
+  "scope_proof": "Removing that single setsockopt AST statement restores the entire frozen v1 helper AST exactly.",
+  "so_reuseport_used": false,
+  "status": "READY_FOR_ROOT_REVIEW",
+  "test_sha256": "b12adaf74411db7fe3762aaba5159f88b2098b894661e380ca5fee669497762d",
+  "tests": {
+    "application_lifecycle_actions": "mocked",
+    "cpu_affinity": [
+      7
+    ],
+    "duration_seconds_reported": 0.26,
+    "errors": 0,
+    "failures": 0,
+    "new_cases": 3,
+    "numerical_library_threads": 1,
+    "skipped": 0,
+    "terminal_exit_code": 0,
+    "tests": 56,
+    "tool_chunk_id": "ac589b",
+    "xml": "prepared_fixture_port_probe_tests_v1.xml",
+    "xml_sha256": "451d22144d378bcc1180bc5de4a21807dbdf65e95ed525d01c7b678be58bc961"
+  }
+}

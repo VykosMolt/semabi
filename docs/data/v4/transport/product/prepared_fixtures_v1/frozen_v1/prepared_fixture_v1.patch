@@ -1,0 +1,861 @@
+diff --git a/runs/product_apps_v1/manage_apps.py b/runs/product_apps_v1/manage_apps.py
+--- a/runs/product_apps_v1/manage_apps.py
++++ b/runs/product_apps_v1/manage_apps.py
+@@ -5,15 +5,27 @@
+ """
+ 
+ import argparse
++from contextlib import contextmanager
++import ctypes
++from datetime import datetime, timezone
++import fcntl
++from functools import wraps
++import hashlib
+ import json
+ import os
+-from pathlib import Path
++from pathlib import Path, PurePosixPath
++import re
+ import shutil
+ import signal
+ import socket
++import stat
+ import subprocess
++import sys
++import tempfile
++import threading
+ import time
+ import urllib.request
++import uuid
+ 
+ 
+ ROOT = Path(__file__).resolve().parent
+@@ -24,6 +36,356 @@
+     "NUMEXPR_NUM_THREADS": "1",
+     "GOMAXPROCS": "2",
+ }
++NAME_PATTERN = re.compile(r"[a-z0-9][a-z0-9_-]{0,63}\Z")
++HASH_PATTERN = re.compile(r"[0-9a-f]{64}\Z")
++MAX_MANIFEST_BYTES = 16 * 1024 * 1024
++MAX_INVENTORY_ENTRIES = 100_000
++MAX_RELATIVE_PATH_BYTES = 4096
++_LOCK_STATE = threading.local()
++
++
++def _name(value):
++    if not isinstance(value, str) or NAME_PATTERN.fullmatch(value) is None:
++        raise ValueError("Snapshot name must match [a-z0-9][a-z0-9_-]{0,63}")
++    return value
++
++
++def _directory(path, *, missing=False):
++    path = Path(path).absolute()
++    for parent in reversed((path, *path.parents)):
++        try:
++            metadata = parent.lstat()
++        except FileNotFoundError:
++            if missing:
++                return None
++            raise
++        if not stat.S_ISDIR(metadata.st_mode):
++            raise ValueError(f"Expected a directory without symlinks: {parent}")
++    return metadata
++
++
++def _exists(path):
++    return os.path.lexists(path)
++
++
++@contextmanager
++def _lifecycle_lock(app):
++    app = Path(app).absolute()
++    _directory(app)
++    held = getattr(_LOCK_STATE, "held", None)
++    if held is None:
++        held = _LOCK_STATE.held = {}
++    if app in held:
++        yield
++        return
++    descriptor = os.open(app, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
++    try:
++        fcntl.flock(descriptor, fcntl.LOCK_EX)
++        held[app] = descriptor
++        try:
++            yield
++        finally:
++            del held[app]
++            fcntl.flock(descriptor, fcntl.LOCK_UN)
++    finally:
++        os.close(descriptor)
++
++
++def _serialized(function):
++    @wraps(function)
++    def wrapped(app, manifest, *args):
++        with _lifecycle_lock(app):
++            return function(Path(app), manifest, *args)
++    return wrapped
++
++
++def _private_directory(path):
++    _directory(path, missing=True)
++    path.mkdir(mode=0o700, exist_ok=True)
++    path.chmod(0o700)
++    return path
++
++
++def _relative_path(value):
++    if not isinstance(value, str) or not value or "\x00" in value:
++        raise ValueError("Invalid inventory path")
++    path = PurePosixPath(value)
++    if (value == "." or path.is_absolute() or path.as_posix() != value
++            or any(part in (".", "..") for part in path.parts)
++            or len(os.fsencode(value)) > MAX_RELATIVE_PATH_BYTES):
++        raise ValueError("Inventory path is outside the bounded relative namespace")
++    return path
++
++
++def _stable(metadata):
++    return (metadata.st_dev, metadata.st_ino, metadata.st_mode,
++            metadata.st_size, metadata.st_mtime_ns, metadata.st_ctime_ns)
++
++
++def _inventory(root):
++    _directory(root)
++    entries = []
++
++    def append(entry):
++        if len(entries) >= MAX_INVENTORY_ENTRIES:
++            raise ValueError("Snapshot inventory has too many entries")
++        entries.append(entry)
++
++    def visit(descriptor, relative):
++        before = os.fstat(descriptor)
++        append({"path": relative, "type": "directory",
++                "mode": stat.S_IMODE(before.st_mode)})
++        with os.scandir(descriptor) as stream:
++            children = sorted(stream, key=lambda entry: entry.name)
++        for child in children:
++            name = child.name if relative == "." else relative + "/" + child.name
++            _relative_path(name)
++            metadata = child.stat(follow_symlinks=False)
++            if stat.S_ISDIR(metadata.st_mode):
++                child_fd = os.open(child.name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
++                                   dir_fd=descriptor)
++                try:
++                    if _stable(os.fstat(child_fd)) != _stable(metadata):
++                        raise RuntimeError("Data directory changed during inventory")
++                    visit(child_fd, name)
++                finally:
++                    os.close(child_fd)
++            elif stat.S_ISREG(metadata.st_mode):
++                child_fd = os.open(child.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
++                                   dir_fd=descriptor)
++                try:
++                    if _stable(os.fstat(child_fd)) != _stable(metadata):
++                        raise RuntimeError("Data file changed before inventory")
++                    digest = hashlib.sha256()
++                    while block := os.read(child_fd, 1024 * 1024):
++                        digest.update(block)
++                    if _stable(os.fstat(child_fd)) != _stable(metadata):
++                        raise RuntimeError("Data file changed during inventory")
++                    append({"path": name, "type": "file",
++                            "mode": stat.S_IMODE(metadata.st_mode),
++                            "size": metadata.st_size, "sha256": digest.hexdigest()})
++                finally:
++                    os.close(child_fd)
++            else:
++                raise ValueError("Snapshot data contains a symlink or nonregular file")
++        if _stable(os.fstat(descriptor)) != _stable(before):
++            raise RuntimeError("Data directory changed during inventory")
++
++    descriptor = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
++    try:
++        visit(descriptor, ".")
++    finally:
++        os.close(descriptor)
++    return [entries[0], *sorted(entries[1:], key=lambda entry: entry["path"])]
++
++
++def _validate_inventory(entries):
++    if not isinstance(entries, list) or not 1 <= len(entries) <= MAX_INVENTORY_ENTRIES:
++        raise ValueError("Invalid snapshot inventory length")
++    seen = {}
++    for index, entry in enumerate(entries):
++        if not isinstance(entry, dict):
++            raise ValueError("Invalid inventory entry")
++        kind = entry.get("type")
++        keys = {"path", "type", "mode"}
++        if kind == "file":
++            keys |= {"size", "sha256"}
++            if (type(entry.get("size")) is not int or not 0 <= entry["size"] < 2**63
++                    or not isinstance(entry.get("sha256"), str)
++                    or HASH_PATTERN.fullmatch(entry["sha256"]) is None):
++                raise ValueError("Invalid file inventory metadata")
++        elif kind != "directory":
++            raise ValueError("Invalid inventory type")
++        if set(entry) != keys or type(entry.get("mode")) is not int or not 0 <= entry["mode"] <= 0o7777:
++            raise ValueError("Invalid inventory metadata")
++        path = entry.get("path")
++        if index == 0:
++            if path != "." or kind != "directory":
++                raise ValueError("Inventory must start with its data directory")
++        else:
++            relative = _relative_path(path)
++            if seen.get(relative.parent.as_posix()) != "directory":
++                raise ValueError("Inventory entry has no directory parent")
++        if path in seen:
++            raise ValueError("Duplicate inventory path")
++        seen[path] = kind
++    if [entry["path"] for entry in entries[1:]] != sorted(seen.keys() - {"."}):
++        raise ValueError("Inventory paths are not canonical")
++
++
++def _deployment_identity(manifest):
++    if (not isinstance(manifest, dict)
++            or not isinstance(manifest.get("application"), str) or not manifest["application"]
++            or not isinstance(manifest.get("version"), str) or not manifest["version"]):
++        raise ValueError("Application and version are required for a prepared fixture")
++    stable = {key: value for key, value in manifest.items() if key not in {"pid", "started_unix"}}
++    encoded = json.dumps(stable, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
++    return {"application": manifest["application"], "version": manifest["version"],
++            "deployment_sha256": hashlib.sha256(encoded).hexdigest()}
++
++
++def _unique_object(pairs):
++    result = {}
++    for key, value in pairs:
++        if key in result:
++            raise ValueError("Duplicate manifest key")
++        result[key] = value
++    return result
++
++
++def _load_snapshot(app, manifest, name):
++    prepared = app / "private/prepared" / _name(name)
++    for directory in (app / "private", app / "private/prepared", prepared):
++        metadata = _directory(directory)
++        if stat.S_IMODE(metadata.st_mode) != 0o700:
++            raise ValueError("Prepared fixture directories must have mode 0700")
++    if {entry.name for entry in prepared.iterdir()} != {"data", "manifest.json"}:
++        raise ValueError("Prepared fixture has unexpected or missing entries")
++    path = prepared / "manifest.json"
++    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
++    try:
++        metadata = os.fstat(descriptor)
++        if (not stat.S_ISREG(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) != 0o600
++                or not 0 < metadata.st_size <= MAX_MANIFEST_BYTES):
++            raise ValueError("Invalid prepared fixture manifest file")
++        with os.fdopen(os.dup(descriptor), "rb") as stream:
++            body = stream.read(MAX_MANIFEST_BYTES + 1)
++        if len(body) > MAX_MANIFEST_BYTES or _stable(os.fstat(descriptor)) != _stable(metadata):
++            raise ValueError("Prepared fixture manifest changed or exceeded its bound")
++    finally:
++        os.close(descriptor)
++    saved = json.loads(body, object_pairs_hook=_unique_object)
++    keys = {"format", "application", "version", "deployment_sha256", "name", "created_at", "inventory"}
++    if (not isinstance(saved, dict) or set(saved) != keys
++            or saved["format"] != "semabi.prepared_fixture.v1" or saved["name"] != name
++            or not isinstance(saved["created_at"], str) or len(saved["created_at"]) > 64):
++        raise ValueError("Invalid prepared fixture manifest")
++    if any(saved[key] != value for key, value in _deployment_identity(manifest).items()):
++        raise ValueError("Prepared fixture application, version, or deployment does not match")
++    _validate_inventory(saved["inventory"])
++    if _inventory(prepared / "data") != saved["inventory"]:
++        raise ValueError("Prepared fixture data does not match its inventory")
++    return prepared, saved, hashlib.sha256(body).hexdigest()
++
++
++def _rename_no_replace(source, destination):
++    # This installer already requires Linux (/proc, native Memos and Docker).
++    rename = getattr(ctypes.CDLL(None, use_errno=True), "renameat2", None)
++    if rename is None:
++        raise RuntimeError("Atomic rename without replacement is unavailable")
++    rename.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint]
++    rename.restype = ctypes.c_int
++    if rename(-100, os.fsencode(source), -100, os.fsencode(destination), 1) != 0:
++        error = ctypes.get_errno()
++        raise OSError(error, os.strerror(error), str(destination))
++
++
++@contextmanager
++def _stage(parent, prefix):
++    path = Path(tempfile.mkdtemp(dir=parent, prefix=prefix))
++    path.chmod(0o700)
++    try:
++        yield path
++    finally:
++        primary = sys.exc_info()[1]
++        if _exists(path):
++            try:
++                shutil.rmtree(path)
++            except BaseException as cleanup_error:
++                if primary is None:
++                    raise
++                primary.add_note(f"Staging cleanup also failed; retained {path}: {cleanup_error}")
++
++
++def _copy_verified(source, destination, inventory):
++    shutil.copytree(source, destination, symlinks=True)
++    if _inventory(source) != inventory or _inventory(destination) != inventory:
++        raise RuntimeError("Opaque data copy did not match the complete inventory")
++
++
++@contextmanager
++def _quiescent(app, manifest):
++    was_running = running(app, manifest)
++    try:
++        if was_running:
++            stop(app, manifest)
++        if running(app, manifest):
++            raise RuntimeError("Owned application is still running")
++        yield was_running
++    finally:
++        primary = sys.exc_info()[1]
++        if was_running:
++            try:
++                _directory(app / "data")
++                start(app, manifest)
++            except BaseException as restart_error:
++                if primary is None:
++                    raise RuntimeError("Restart failed; active data and any archives are preserved") from restart_error
++                primary.add_note(f"Restart also failed; active data and any archives are preserved: {restart_error}")
++
++
++@_serialized
++def snapshot(app, manifest, name):
++    name = _name(name)
++    identity = _deployment_identity(manifest)
++    _directory(app / "data")
++    _directory(app / "private", missing=True)
++    _directory(app / "private/prepared", missing=True)
++    destination = app / "private/prepared" / name
++    if _exists(destination):
++        raise FileExistsError(f"Prepared fixture already exists: {name}")
++    with _quiescent(app, manifest) as was_running:
++        private = _private_directory(app / "private")
++        prepared = _private_directory(private / "prepared")
++        with _stage(prepared, ".snapshot-") as stage:
++            inventory = _inventory(app / "data")
++            _copy_verified(app / "data", stage / "data", inventory)
++            saved = {"format": "semabi.prepared_fixture.v1", **identity, "name": name,
++                     "created_at": datetime.now(timezone.utc).isoformat(), "inventory": inventory}
++            body = (json.dumps(saved, indent=2, sort_keys=True) + "\n").encode()
++            if len(body) > MAX_MANIFEST_BYTES:
++                raise ValueError("Prepared fixture manifest exceeds its size bound")
++            descriptor = os.open(stage / "manifest.json", os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
++            with os.fdopen(descriptor, "wb") as stream:
++                os.fchmod(stream.fileno(), 0o600)
++                stream.write(body)
++                stream.flush()
++                os.fsync(stream.fileno())
++            _rename_no_replace(stage, destination)
++    return {"action": "snapshot", "name": name, "path": str(destination),
++            "manifest_sha256": hashlib.sha256(body).hexdigest(),
++            "inventory_entries": len(inventory), "was_running": was_running}
++
++
++@_serialized
++def restore(app, manifest, name):
++    prepared, saved, manifest_hash = _load_snapshot(app, manifest, _name(name))
++    data = app / "data"
++    _directory(data, missing=True)
++    _directory(app / "private/resets", missing=True)
++    archive = None
++    with _stage(app / "private", ".restore-") as stage:
++        _copy_verified(prepared / "data", stage / "data", saved["inventory"])
++        with _quiescent(app, manifest) as was_running:
++            try:
++                if _exists(data):
++                    _directory(data)
++                    _inventory(data)
++                    archives = _private_directory(app / "private/resets")
++                    archive = archives / f"{time.time_ns()}-{uuid.uuid4().hex}"
++                    _rename_no_replace(data, archive)
++                _rename_no_replace(stage / "data", data)
++            except BaseException as install_error:
++                if archive is not None and _exists(archive) and not _exists(data):
++                    try:
++                        _rename_no_replace(archive, data)
++                    except BaseException as rollback_error:
++                        install_error.add_note(f"Rollback also failed; previous data remains at {archive}: {rollback_error}")
++                install_error.add_note(f"Restore failed; retained active data at {data} and any unmoved archive at {archive}")
++                raise
++    return {"action": "restore", "name": name, "path": str(prepared),
++            "manifest_sha256": manifest_hash, "inventory_entries": len(saved["inventory"]),
++            "archive": str(archive) if archive is not None else None, "was_running": was_running}
+ 
+ 
+ def docker(*args):
+@@ -57,6 +419,7 @@
+     return native_pid(app, manifest) is not None
+ 
+ 
++@_serialized
+ def stop(app, manifest):
+     if "container_name" in manifest:
+         if running(app, manifest):
+@@ -74,6 +437,7 @@
+     raise RuntimeError("Owned native process did not stop within 10 seconds")
+ 
+ 
++@_serialized
+ def start(app, manifest):
+     if running(app, manifest):
+         return
+@@ -98,6 +462,7 @@
+         (app / "deployment.json").write_text(json.dumps(manifest, indent=2) + "\n")
+ 
+ 
++@_serialized
+ def reset(app, manifest):
+     baseline = app / "private/baseline"
+     if not baseline.is_dir() or not any(baseline.iterdir()):
+@@ -128,14 +493,31 @@
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument("action", choices=("status", "start", "stop", "reset"))
++    parser.add_argument("action", choices=("status", "start", "stop", "reset", "snapshot", "restore"))
+     parser.add_argument("app", choices=("linkding", "memos"))
++    parser.add_argument("name", nargs="?")
+     args = parser.parse_args()
++    if args.action in {"snapshot", "restore"}:
++        try:
++            _name(args.name)
++        except ValueError as error:
++            parser.error(str(error))
++    elif args.name is not None:
++        parser.error("A name is accepted only for snapshot and restore")
+     app = ROOT / args.app
+-    manifest = json.loads((app / "deployment.json").read_text())
+-    if args.action != "status":
+-        {"start": start, "stop": stop, "reset": reset}[args.action](app, manifest)
+-    print(json.dumps(status(app, manifest), sort_keys=True))
++    if args.action == "status":
++        manifest = json.loads((app / "deployment.json").read_text())
++        result = status(app, manifest)
++    else:
++        with _lifecycle_lock(app):
++            manifest = json.loads((app / "deployment.json").read_text())
++            command = {"start": start, "stop": stop, "reset": reset,
++                       "snapshot": snapshot, "restore": restore}[args.action]
++            prepared = command(app, manifest, args.name) if args.name is not None else command(app, manifest)
++            result = status(app, manifest)
++            if prepared is not None:
++                result["prepared_fixture"] = prepared
++    print(json.dumps(result, sort_keys=True))
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/runs/product_apps_v1/test_manage_apps.py b/runs/product_apps_v1/test_manage_apps.py
+new file mode 100644
+--- /dev/null
++++ b/runs/product_apps_v1/test_manage_apps.py
+@@ -0,0 +1,406 @@
++import json
++import os
++from pathlib import Path
++import shutil
++import stat
++import threading
++
++import pytest
++
++import manage_apps as helper
++
++
++@pytest.fixture
++def installation(tmp_path, monkeypatch):
++    app = tmp_path / "memos"
++    (app / "data/attachments/empty").mkdir(parents=True)
++    (app / "private").mkdir(mode=0o700)
++    (app / "data/database.sqlite").write_bytes(b"SQLite format 3\0opaque synthetic database\xff")
++    (app / "data/database.sqlite-wal").write_bytes(b"opaque synthetic WAL\x00\x03")
++    (app / "data/database.sqlite-shm").write_bytes(b"opaque synthetic shared memory\x00")
++    (app / "data/attachments/picture.bin").write_bytes(bytes(range(256)))
++    (app / "data").chmod(0o700)
++    (app / "data/attachments").chmod(0o750)
++    (app / "data/attachments/empty").chmod(0o500)
++    (app / "data/database.sqlite").chmod(0o600)
++    (app / "data/database.sqlite-wal").chmod(0o600)
++    (app / "data/database.sqlite-shm").chmod(0o600)
++    (app / "data/attachments/picture.bin").chmod(0o400)
++    credentials = app / "private/credentials.json"
++    credentials.write_text('{"password":"synthetic-only-not-an-account"}\n')
++    credentials.chmod(0o600)
++    environment = app / "server.env"
++    environment.write_bytes(b"SYNTHETIC_SETTING=unchanged\n")
++    environment.chmod(0o600)
++    manifest = {"application": "memos", "version": "0.30.0", "port": 19222,
++                "command": [str(app / "bin/memos")], "cwd": str(app),
++                "pid": 123, "started_unix": 1.0}
++    (app / "deployment.json").write_text(json.dumps(manifest))
++    state = {"running": True, "calls": []}
++
++    def running(app, manifest):
++        return state["running"]
++
++    def stop(app, manifest):
++        state["calls"].append("stop")
++        state["running"] = False
++
++    def start(app, manifest):
++        state["calls"].append("start")
++        state["running"] = True
++        manifest["pid"] += 1
++        manifest["started_unix"] += 1
++
++    monkeypatch.setattr(helper, "running", running)
++    monkeypatch.setattr(helper, "stop", stop)
++    monkeypatch.setattr(helper, "start", start)
++    return app, manifest, state
++
++
++def _change_data(app):
++    (app / "data/database.sqlite").write_bytes(b"later opaque database state")
++    (app / "data/database.sqlite-wal").write_bytes(b"later opaque WAL state")
++    (app / "data/attachments/picture.bin").unlink()
++    (app / "data/new-directory").mkdir(mode=0o700)
++    (app / "data/new-directory/new-file").write_bytes(b"later attachment")
++
++
++def _saved(app, name="base"):
++    return app / "private/prepared" / name
++
++
++def _manifest_mutation(app, mutate):
++    path = _saved(app) / "manifest.json"
++    value = json.loads(path.read_text())
++    mutate(value)
++    path.write_text(json.dumps(value))
++
++
++@pytest.mark.parametrize("was_running", [True, False])
++def test_exact_opaque_restore_preserves_modes_credentials_and_archive(installation, was_running):
++    app, manifest, state = installation
++    state["running"] = was_running
++    before = helper._inventory(app / "data")
++    external = {p: (p.read_bytes(), stat.S_IMODE(p.stat().st_mode))
++                for p in [app / "private/credentials.json", app / "server.env"]}
++    saved = helper.snapshot(app, manifest, "base")
++    assert saved["was_running"] is was_running
++    assert state["calls"] == (["stop", "start"] if was_running else [])
++    assert helper._inventory(_saved(app) / "data") == before
++    saved_bytes = (_saved(app) / "manifest.json").read_bytes()
++    for path in [app / "private", app / "private/prepared", _saved(app)]:
++        assert stat.S_IMODE(path.stat().st_mode) == 0o700
++    assert stat.S_IMODE((_saved(app) / "manifest.json").stat().st_mode) == 0o600
++    _change_data(app)
++    changed = helper._inventory(app / "data")
++    state["calls"].clear()
++    restored = helper.restore(app, manifest, "base")
++    assert restored["was_running"] is was_running
++    assert state["running"] is was_running
++    assert state["calls"] == (["stop", "start"] if was_running else [])
++    assert helper._inventory(app / "data") == before
++    assert helper._inventory(Path(restored["archive"])) == changed
++    assert helper._inventory(_saved(app) / "data") == before
++    assert (_saved(app) / "manifest.json").read_bytes() == saved_bytes
++    assert restored["manifest_sha256"] == saved["manifest_sha256"]
++    assert all((p.read_bytes(), stat.S_IMODE(p.stat().st_mode)) == values for p, values in external.items())
++    assert stat.S_IMODE((app / "private/resets").stat().st_mode) == 0o700
++    assert not list((app / "private").glob(".restore-*"))
++
++
++@pytest.mark.parametrize("name", [None, "", "../escape", "/absolute", "A", "-a", "a/b", "a\\b", "a\n", "a" * 65])
++def test_invalid_snapshot_name_does_not_mutate(installation, name):
++    app, manifest, state = installation
++    before = helper._inventory(app)
++    with pytest.raises(ValueError):
++        helper.snapshot(app, manifest, name)
++    assert not state["calls"]
++    assert helper._inventory(app) == before
++
++
++@pytest.mark.parametrize("name", ["a", "a" * 64, "base_2-final"])
++def test_valid_name_boundaries(installation, name):
++    app, manifest, state = installation
++    state["running"] = False
++    assert helper.snapshot(app, manifest, name)["name"] == name
++
++
++def test_duplicate_snapshot_is_immutable_before_lifecycle_mutation(installation):
++    app, manifest, state = installation
++    helper.snapshot(app, manifest, "base")
++    before = helper._inventory(app)
++    state["calls"].clear()
++    with pytest.raises(FileExistsError):
++        helper.snapshot(app, manifest, "base")
++    assert state["calls"] == []
++    assert helper._inventory(app) == before
++
++
++@pytest.mark.parametrize("damage", [
++    "content", "missing_file", "extra_file", "missing_empty_directory", "mode",
++    "application", "version", "deployment", "traversal", "absolute", "long_path",
++    "missing_parent", "duplicate_path", "duplicate_manifest_key", "bad_manifest_mode",
++    "manifest_symlink", "manifest_fifo", "data_symlink", "data_fifo", "extra_container_entry",
++])
++def test_invalid_prepared_fixture_is_rejected_before_stop_or_staging(installation, damage):
++    app, manifest, state = installation
++    helper.snapshot(app, manifest, "base")
++    snapshot = _saved(app)
++    data_file = snapshot / "data/database.sqlite"
++    if damage == "content":
++        data_file.write_bytes(b"tampered")
++    elif damage == "missing_file":
++        data_file.unlink()
++    elif damage == "extra_file":
++        (snapshot / "data/unlisted").write_bytes(b"extra")
++    elif damage == "missing_empty_directory":
++        (snapshot / "data/attachments/empty").rmdir()
++    elif damage == "mode":
++        data_file.chmod(0o640)
++    elif damage in {"application", "version", "deployment"}:
++        manifest[{"application": "application", "version": "version", "deployment": "port"}[damage]] = "different"
++    elif damage in {"traversal", "absolute", "long_path", "missing_parent"}:
++        path = {"traversal": "../escape", "absolute": "/escape", "long_path": "a" * 4097,
++                "missing_parent": "absent-parent/file"}[damage]
++        _manifest_mutation(app, lambda value: value["inventory"][1].update(path=path))
++    elif damage == "duplicate_path":
++        _manifest_mutation(app, lambda value: value["inventory"].append(value["inventory"][-1]))
++    elif damage == "duplicate_manifest_key":
++        path = snapshot / "manifest.json"
++        path.write_text(path.read_text().replace('"format":', '"format":"duplicate","format":', 1))
++    elif damage == "bad_manifest_mode":
++        (snapshot / "manifest.json").chmod(0o644)
++    elif damage in {"manifest_symlink", "manifest_fifo"}:
++        path = snapshot / "manifest.json"
++        path.unlink()
++        if damage == "manifest_symlink":
++            path.symlink_to(app / "private/credentials.json")
++        else:
++            os.mkfifo(path, 0o600)
++    elif damage in {"data_symlink", "data_fifo"}:
++        data_file.unlink()
++        if damage == "data_symlink":
++            data_file.symlink_to(app / "private/credentials.json")
++        else:
++            os.mkfifo(data_file, 0o600)
++    elif damage == "extra_container_entry":
++        (snapshot / "unexpected").write_text("unexpected")
++    before = helper._inventory(app / "data")
++    private_names = sorted(p.name for p in (app / "private").iterdir())
++    state["calls"].clear()
++    with pytest.raises((ValueError, OSError)):
++        helper.restore(app, manifest, "base")
++    assert state["calls"] == []
++    assert state["running"] is True
++    assert helper._inventory(app / "data") == before
++    assert sorted(p.name for p in (app / "private").iterdir()) == private_names
++
++
++@pytest.mark.parametrize("kind", ["symlink", "fifo"])
++def test_snapshot_rejects_nonregular_data_and_restarts(installation, kind):
++    app, manifest, state = installation
++    path = app / "data/nonregular"
++    if kind == "symlink":
++        path.symlink_to(app / "private/credentials.json")
++    else:
++        os.mkfifo(path, 0o600)
++    with pytest.raises(ValueError, match="symlink or nonregular"):
++        helper.snapshot(app, manifest, "base")
++    assert state["calls"] == ["stop", "start"]
++    assert state["running"] is True
++    assert not _saved(app).exists()
++
++
++@pytest.mark.parametrize("was_running", [True, False])
++def test_snapshot_copy_failure_leaves_original_and_restores_running_state(installation, monkeypatch, was_running):
++    app, manifest, state = installation
++    state["running"] = was_running
++    before = helper._inventory(app / "data")
++
++    def copy_failure(source, destination, **kwargs):
++        destination.mkdir()
++        (destination / "partial").write_bytes(b"partial")
++        raise OSError("synthetic copy failure")
++
++    monkeypatch.setattr(helper.shutil, "copytree", copy_failure)
++    with pytest.raises(OSError, match="synthetic copy failure"):
++        helper.snapshot(app, manifest, "base")
++    assert helper._inventory(app / "data") == before
++    assert state["running"] is was_running
++    assert state["calls"] == (["stop", "start"] if was_running else [])
++    assert not list((app / "private/prepared").iterdir())
++
++
++def test_snapshot_publish_never_overwrites_even_an_empty_directory(installation, monkeypatch):
++    app, manifest, state = installation
++    original = helper._rename_no_replace
++
++    def competing_destination(source, destination):
++        destination.mkdir(mode=0o700)
++        original(source, destination)
++
++    monkeypatch.setattr(helper, "_rename_no_replace", competing_destination)
++    with pytest.raises(FileExistsError):
++        helper.snapshot(app, manifest, "base")
++    assert list(_saved(app).iterdir()) == []
++    assert state["calls"] == ["stop", "start"]
++    assert not list((app / "private/prepared").glob(".snapshot-*"))
++
++
++def test_snapshot_restart_failure_preserves_published_fixture(installation, monkeypatch):
++    app, manifest, state = installation
++    before = helper._inventory(app / "data")
++
++    def fail_start(app, manifest):
++        state["calls"].append("start-failed")
++        raise OSError("synthetic restart failure")
++
++    monkeypatch.setattr(helper, "start", fail_start)
++    with pytest.raises(RuntimeError, match="Restart failed"):
++        helper.snapshot(app, manifest, "base")
++    assert helper._inventory(app / "data") == before
++    assert helper._inventory(_saved(app) / "data") == before
++    assert helper._load_snapshot(app, manifest, "base")[1]["inventory"] == before
++    assert state["calls"] == ["stop", "start-failed"]
++
++
++def test_restore_copy_failure_occurs_before_stop(installation, monkeypatch):
++    app, manifest, state = installation
++    helper.snapshot(app, manifest, "base")
++    _change_data(app)
++    before = helper._inventory(app / "data")
++    state["calls"].clear()
++
++    def fail_copy(source, destination, **kwargs):
++        destination.mkdir()
++        raise OSError("synthetic restore copy failure")
++
++    monkeypatch.setattr(helper.shutil, "copytree", fail_copy)
++    with pytest.raises(OSError, match="restore copy failure"):
++        helper.restore(app, manifest, "base")
++    assert state["calls"] == []
++    assert helper._inventory(app / "data") == before
++    assert not list((app / "private").glob(".restore-*"))
++
++
++@pytest.mark.parametrize("failure", ["archive", "install", "rollback", "destination_appears"])
++def test_restore_rename_failures_keep_prior_data_recoverable(installation, monkeypatch, failure):
++    app, manifest, state = installation
++    helper.snapshot(app, manifest, "base")
++    snapshot_inventory = helper._inventory(_saved(app) / "data")
++    _change_data(app)
++    before = helper._inventory(app / "data")
++    state["calls"].clear()
++    original = helper._rename_no_replace
++
++    def fail_rename(source, destination):
++        if failure == "archive" and source == app / "data":
++            raise OSError("synthetic archive failure")
++        if destination == app / "data" and source.parent.name.startswith(".restore-"):
++            if failure == "destination_appears":
++                destination.mkdir(mode=0o700)
++                (destination / "preserve-existing").write_bytes(b"do not replace")
++            raise OSError("synthetic install failure")
++        if failure == "rollback" and destination == app / "data":
++            raise OSError("synthetic rollback failure")
++        return original(source, destination)
++
++    monkeypatch.setattr(helper, "_rename_no_replace", fail_rename)
++    with pytest.raises(OSError, match="synthetic") as caught:
++        helper.restore(app, manifest, "base")
++    archives = list((app / "private/resets").iterdir())
++    if failure in {"archive", "install"}:
++        assert helper._inventory(app / "data") == before
++        assert archives == []
++        assert state["calls"] == ["stop", "start"]
++    else:
++        assert len(archives) == 1
++        assert helper._inventory(archives[0]) == before
++        if failure == "rollback":
++            assert not (app / "data").exists()
++            assert state["calls"] == ["stop"]
++            assert state["running"] is False
++            assert any("Rollback also failed" in note for note in caught.value.__notes__)
++        else:
++            assert (app / "data/preserve-existing").read_bytes() == b"do not replace"
++    assert helper._inventory(_saved(app) / "data") == snapshot_inventory
++    assert not list((app / "private").glob(".restore-*"))
++
++
++def test_restore_restart_failure_keeps_new_data_and_old_archive(installation, monkeypatch):
++    app, manifest, state = installation
++    helper.snapshot(app, manifest, "base")
++    original = helper._inventory(app / "data")
++    _change_data(app)
++    changed = helper._inventory(app / "data")
++
++    def fail_start(app, manifest):
++        raise OSError("synthetic restart failure")
++
++    monkeypatch.setattr(helper, "start", fail_start)
++    with pytest.raises(RuntimeError, match="Restart failed"):
++        helper.restore(app, manifest, "base")
++    assert helper._inventory(app / "data") == original
++    archives = list((app / "private/resets").iterdir())
++    assert len(archives) == 1 and helper._inventory(archives[0]) == changed
++    assert state["running"] is False
++
++
++@pytest.mark.parametrize("was_running", [True, False])
++def test_existing_reset_keeps_its_original_always_start_behavior(installation, was_running):
++    app, manifest, state = installation
++    state["running"] = was_running
++    shutil.copytree(app / "data", app / "private/baseline")
++    baseline = helper._inventory(app / "data")
++    _change_data(app)
++    before = helper._inventory(app / "data")
++    helper.reset(app, manifest)
++    assert helper._inventory(app / "data") == baseline
++    assert state["calls"] == ["stop", "start"]
++    assert state["running"] is True
++    archives = list((app / "private/resets").iterdir())
++    assert len(archives) == 1 and helper._inventory(archives[0]) == before
++
++
++def test_app_directory_lock_serializes_mutations_and_allows_nested_flow(tmp_path):
++    app = tmp_path / "memos"
++    app.mkdir()
++    attempted = threading.Event()
++    completed = threading.Event()
++
++    @helper._serialized
++    def mutation(app, manifest):
++        with helper._lifecycle_lock(app):
++            completed.set()
++
++    def worker():
++        attempted.set()
++        mutation(app, {})
++
++    with helper._lifecycle_lock(app):
++        thread = threading.Thread(target=worker, daemon=True)
++        thread.start()
++        assert attempted.wait(1)
++        assert not completed.wait(0.05)
++    thread.join(2)
++    assert not thread.is_alive() and completed.is_set()
++    assert list(app.iterdir()) == []
++
++
++@pytest.mark.parametrize("action", ["snapshot", "restore"])
++def test_cli_accepts_application_and_name_without_real_lifecycle_calls(installation, monkeypatch, capsys, action):
++    app, manifest, state = installation
++    monkeypatch.setattr(helper, "ROOT", app.parent)
++    monkeypatch.setattr(helper, "status", lambda app, manifest: {"application": "memos", "running": False})
++    calls = []
++
++    def command(app, manifest, name):
++        calls.append((app, name))
++        return {"action": action, "name": name}
++
++    monkeypatch.setattr(helper, action, command)
++    monkeypatch.setattr(helper.sys, "argv", ["manage_apps.py", action, "memos", "base-1"])
++    helper.main()
++    assert calls == [(app, "base-1")]
++    assert json.loads(capsys.readouterr().out)["prepared_fixture"] == {"action": action, "name": "base-1"}
++    assert state["calls"] == []

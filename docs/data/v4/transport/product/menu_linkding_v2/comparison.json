@@ -1,0 +1,112 @@
+{
+  "claim": "All four returned fields equal prior actual DOM fields and both fresh ordinary-DOM observations; sampled non-target fields agree before and after reload.",
+  "classification": "Disclosed development exact-known-URL READ, not paired assessment",
+  "expected_state_provenance": {
+    "captures": [
+      {
+        "captured_at": "2026-09-09T17:37:25.561078+00:00",
+        "snapshot_id": "eval_dom_0d1a9588f3ea45cd99d41de367701426",
+        "snapshot_sha256": "bed16784da3a89062f179ac4eb3945d99ae9fbfda96ed1b3414d56c22ad69cba",
+        "stage": "before_reload"
+      },
+      {
+        "captured_at": "2026-09-09T17:37:26.016090+00:00",
+        "snapshot_id": "eval_dom_ada3d983adda4f889594dc1d4927d83d",
+        "snapshot_sha256": "4ea6489fa657974e5ae82a24f9e5130d7b85e505a54d988f473179b8a1774114",
+        "stage": "after_reload"
+      }
+    ],
+    "derivation": "Actual captured title text/destination, tag text, description own_text; raw-node equality and shared native ancestor verified; both captures agree",
+    "result_path": "runs/product_record_evaluator_v1/after/result.json",
+    "result_sha256": "cf55f0c4701bee0d8860a0ee04bec58f45e1688d4eaac5775041b1026455c342"
+  },
+  "independent_current_values": [
+    {
+      "actual_observed_values": {
+        "sampled_non_target": {
+          "description": "Created through the same service as Memos",
+          "tags": "semabi-http-demo",
+          "title": "A learned HTTP bookmark",
+          "url": "https://example.invalid/semabi-http-20260909-1655"
+        },
+        "target": {
+          "description": "An existing bookmark changed after independent pre-state capture",
+          "tags": "semabi-update",
+          "title": "Updated through a learned HTTP operation",
+          "url": "https://example.invalid/semabi-fresh-session-20260909"
+        }
+      },
+      "snapshot_id": "eval_dom_8c43d9243e58405bb92c538a8648259f",
+      "stage": "before_reload"
+    },
+    {
+      "actual_observed_values": {
+        "sampled_non_target": {
+          "description": "Created through the same service as Memos",
+          "tags": "semabi-http-demo",
+          "title": "A learned HTTP bookmark",
+          "url": "https://example.invalid/semabi-http-20260909-1655"
+        },
+        "target": {
+          "description": "An existing bookmark changed after independent pre-state capture",
+          "tags": "semabi-update",
+          "title": "Updated through a learned HTTP operation",
+          "url": "https://example.invalid/semabi-fresh-session-20260909"
+        }
+      },
+      "snapshot_id": "eval_dom_ca1472fa3b344068919a1ff9f1bad890",
+      "stage": "after_reload"
+    }
+  ],
+  "inputs": {
+    "runs/product_menu_linkding_evaluator_v2/read_check/result.json": "2c51e9afcffbed754481f7b1ddff588ca5d2fd8a12dcaa65dbe7ef655a1fd601",
+    "runs/product_menu_linkding_v2/read.log": "d565a2d472cd4abc17acfea8f4e20b8c64a505eaa31d7d97cd34c5ae9457cc93",
+    "runs/product_menu_linkding_v2/service_snapshot.json": "95e84252556bd9df0d4c51e061d89eee7c58ac84e028722a77854b81ec74cd2f"
+  },
+  "job_id": "job_59f35f73c3394ed2a28c5d3ef668098c",
+  "limitations": [
+    "Exact known URL only; no search or filter request evaluated.",
+    "No new UPDATE effect check in this checkpoint.",
+    "Visible local record context does not establish persistent identity, global uniqueness, or unobserved side effects."
+  ],
+  "operation_id": "op_1eb02be1584bb7b95076",
+  "request": {
+    "arguments": {
+      "target": "https://example.invalid/semabi-fresh-session-20260909"
+    },
+    "limits": {
+      "max_actions": 20,
+      "max_seconds": 60.0,
+      "max_writes": 12
+    },
+    "operation_id": "op_1eb02be1584bb7b95076",
+    "version": 2
+  },
+  "runtime_reported_metrics": {
+    "actions": 3,
+    "elapsed_seconds": 2.78,
+    "model_calls": 0,
+    "paid_cost": 0,
+    "possible_write_actions": 1
+  },
+  "runtime_reported_values": {
+    "description": "An existing bookmark changed after independent pre-state capture",
+    "tags": "semabi-update",
+    "title": "Updated through a learned HTTP operation",
+    "url": "https://example.invalid/semabi-fresh-session-20260909"
+  },
+  "source_sha256": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "verdict": "PASS",
+  "version": 2
+}

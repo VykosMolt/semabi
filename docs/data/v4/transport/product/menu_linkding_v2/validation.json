@@ -1,0 +1,41 @@
+{
+  "classification": "Disclosed development same-source Linkding relearn and exact-known-URL READ; not a paired assessment",
+  "source_sha256": {
+    "semabi/compiler/runtime.py": "ba4d8eef0bab7fbd38982161319b1824063f540c3b3c62d427a1ec2274b85ba1",
+    "semabi/compiler/surface.py": "c735c6f7cd243741cd92bb072f33cbc22b19543b0b073b5eb6288246d1adaf6c",
+    "semabi/compiler/browser_session.py": "bd16840231dab7ed0e20783a56e304e78f33258d67e5f048ed4df03e95975cab",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500",
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "ecd63c8190e0ae64a95b0e7f4d50eec24d170d7aac169cec7bcac43d5e7a620c"
+  },
+  "shared_validation": "runs/product_menu_v2/validation.json",
+  "service": {
+    "session_id": 27610,
+    "cpu_affinity": [
+      2,
+      3
+    ],
+    "data_dir": "runs/product_service_v1"
+  },
+  "clients": [
+    {
+      "name": "learn",
+      "launch_chunk": "cfc719",
+      "session_id": 36556,
+      "terminal_chunk": "5efc04",
+      "exit_code": 0
+    },
+    {
+      "name": "read",
+      "launch_chunk": "4cbd74",
+      "session_id": 40615,
+      "terminal_chunk": "50acb5",
+      "exit_code": 0
+    }
+  ],
+  "source_unchanged": true
+}

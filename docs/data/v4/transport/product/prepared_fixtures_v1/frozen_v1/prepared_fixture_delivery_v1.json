@@ -1,0 +1,116 @@
+{
+  "application_calls": 0,
+  "application_source_or_database_queries": 0,
+  "commits": 0,
+  "created_at": "2026-09-09T19:00:18.566684+00:00",
+  "failure_coverage": [
+    "invalid and duplicate names before lifecycle mutation",
+    "corrupted content, modes, missing/extra entries, metadata mismatches, malformed paths, duplicate keys, symlinks and special files before restore mutation",
+    "snapshot and restore copy failures",
+    "publication collision without overwrite",
+    "snapshot restart failure after publication",
+    "archive and install failures",
+    "conditional rollback and rollback failure with archive preservation",
+    "destination appearing before installation without overwrite",
+    "restore restart failure preserving installed data and archive"
+  ],
+  "format": "prepared_fixture_candidate_delivery.v1",
+  "limitations": [
+    "Synthetic tests validate process-level failure handling; power-loss durability is unmeasured.",
+    "Locks coordinate this helper, so root must separately coordinate active browser sessions.",
+    "Saved inventories establish copy integrity, not task correctness or fixture equivalence."
+  ],
+  "live_lifecycle_mutations": 0,
+  "live_phase_boundary": "Root independently began authorized live use after adopting this exact helper. Live successes/failures and their costs are recorded by root; none were executed or inferred by this candidate task.",
+  "main_source_edits": 0,
+  "operational_preconditions": [
+    "Root reviews and adopts exact source before use.",
+    "Root coordinates idle evaluated/checker sessions before a live lifecycle mutation.",
+    "Prepared fixtures come from separately documented ordinary-UI setup with attributable budget costs.",
+    "Actual snapshot/restore operations and their independent fixture checks remain unexecuted by this candidate task."
+  ],
+  "patch": {
+    "bytes": 36685,
+    "path": "prepared_fixture_v1.patch",
+    "sha256": "cef6e8963a9a582715b01a7421105d5c7e08ab23228a146d289e23d85d11d903"
+  },
+  "patch_verification": {
+    "checked_at": "2026-09-09T19:01:55.233794+00:00",
+    "main_forward_patch_check_exit_code": 1,
+    "main_forward_patch_check_reason": "Root had already adopted the exact helper; the synthetic test file remains in the isolated package.",
+    "main_forward_patch_check_tool_chunk_id": "a2ba24",
+    "main_helper_equality_tool_chunk_id": "8a914b",
+    "main_helper_matches_frozen_candidate": true,
+    "ownership_released_to_root": true,
+    "patched_helper_and_test_match_candidate_exactly": true,
+    "pristine_base_git_apply_check_exit_code": 0,
+    "pristine_base_git_apply_exit_code": 0
+  },
+  "scope": {
+    "atomic_rename": "Linux renameat2 with RENAME_NOREPLACE for publication, archival, installation, and rollback.",
+    "data_handling": "Opaque full-directory copying and byte hashing; no database or application-record interpretation.",
+    "identity_pin": "Application, version, and SHA-256 of canonical deployment metadata excluding only pid and started_unix.",
+    "inventory": "Relative paths, directory/file types, permission modes, file sizes and SHA-256; all directories, including empty directories, are represented.",
+    "limits": {
+      "inventory_entries": 100000,
+      "manifest_bytes": 16777216,
+      "relative_path_bytes": 4096
+    },
+    "locking": "Reentrant advisory lock on the app directory; all lifecycle mutation commands use it.",
+    "manifest_mode": "0600",
+    "name_pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+    "new_commands": [
+      "snapshot APP NAME",
+      "restore APP NAME"
+    ],
+    "private_directory_mode": "0700",
+    "restart_rule": "New commands restore previous running state; a missing active data directory after failed rollback prevents starting an empty installation. Existing reset retains its original always-start behavior.",
+    "snapshot_location": "APP/private/prepared/NAME/{data,manifest.json}"
+  },
+  "source": {
+    "base_path": "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py",
+    "base_sha256": "602521092dda9b719faf1681a1e96abcd68375a78b45d9999bd663d8574dd567",
+    "candidate_bytes": 20982,
+    "candidate_sha256": "f8d0900b66c8bb713f2c2cf664d95eef7a71ae579a22687897999049069ace2c",
+    "patch_destinations": [
+      "runs/product_apps_v1/manage_apps.py",
+      "runs/product_apps_v1/test_manage_apps.py"
+    ],
+    "test_bytes": 17212,
+    "test_sha256": "98d607417f3fa6032f3b054c3df31c9a94b2b084e772b5cc8849819e9e7c7cff"
+  },
+  "static_verification": {
+    "all_five_lifecycle_mutators_serialized": true,
+    "exit_code": 0,
+    "main_helper_equal_to_pristine_base_at_check": true,
+    "only_existing_function_body_change": "main adds the two commands and serializes deployment loading plus dispatch. Existing lifecycle functions gain only locking decorators.",
+    "original_function_bodies_preserved": [
+      "docker",
+      "native_pid",
+      "running",
+      "stop",
+      "start",
+      "reset",
+      "status"
+    ],
+    "tool_chunk_id": "ae4898"
+  },
+  "status": "READY_FOR_ROOT_REVIEW_AND_ADOPTION",
+  "tests": {
+    "cpu_affinity": [
+      7
+    ],
+    "duration_seconds_reported": 0.25,
+    "earlier_54_check_run": "0fb57d included one AST preservation check subsequently moved into separate packaging verification.",
+    "errors": 0,
+    "failures": 0,
+    "numerical_library_threads": 1,
+    "self_contained_test_file": true,
+    "skipped": 0,
+    "terminal_exit_code": 0,
+    "tests": 53,
+    "tool_chunk_id": "eae986",
+    "xml": "prepared_fixture_tests_v2.xml",
+    "xml_sha256": "59cfc88636dbeeec7b67394a41e08e6206a5db8f2e03cf167534d502b7d7102c"
+  }
+}

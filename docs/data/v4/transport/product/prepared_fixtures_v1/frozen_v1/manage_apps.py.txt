@@ -1,0 +1,524 @@
+#!/usr/bin/env python3
+"""Lifecycle operations for installer-owned local development applications.
+
+This utility never reads application records or supplies browser operations.
+"""
+
+import argparse
+from contextlib import contextmanager
+import ctypes
+from datetime import datetime, timezone
+import fcntl
+from functools import wraps
+import hashlib
+import json
+import os
+from pathlib import Path, PurePosixPath
+import re
+import shutil
+import signal
+import socket
+import stat
+import subprocess
+import sys
+import tempfile
+import threading
+import time
+import urllib.request
+import uuid
+
+
+ROOT = Path(__file__).resolve().parent
+THREAD_ENV = {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "GOMAXPROCS": "2",
+}
+NAME_PATTERN = re.compile(r"[a-z0-9][a-z0-9_-]{0,63}\Z")
+HASH_PATTERN = re.compile(r"[0-9a-f]{64}\Z")
+MAX_MANIFEST_BYTES = 16 * 1024 * 1024
+MAX_INVENTORY_ENTRIES = 100_000
+MAX_RELATIVE_PATH_BYTES = 4096
+_LOCK_STATE = threading.local()
+
+
+def _name(value):
+    if not isinstance(value, str) or NAME_PATTERN.fullmatch(value) is None:
+        raise ValueError("Snapshot name must match [a-z0-9][a-z0-9_-]{0,63}")
+    return value
+
+
+def _directory(path, *, missing=False):
+    path = Path(path).absolute()
+    for parent in reversed((path, *path.parents)):
+        try:
+            metadata = parent.lstat()
+        except FileNotFoundError:
+            if missing:
+                return None
+            raise
+        if not stat.S_ISDIR(metadata.st_mode):
+            raise ValueError(f"Expected a directory without symlinks: {parent}")
+    return metadata
+
+
+def _exists(path):
+    return os.path.lexists(path)
+
+
+@contextmanager
+def _lifecycle_lock(app):
+    app = Path(app).absolute()
+    _directory(app)
+    held = getattr(_LOCK_STATE, "held", None)
+    if held is None:
+        held = _LOCK_STATE.held = {}
+    if app in held:
+        yield
+        return
+    descriptor = os.open(app, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        fcntl.flock(descriptor, fcntl.LOCK_EX)
+        held[app] = descriptor
+        try:
+            yield
+        finally:
+            del held[app]
+            fcntl.flock(descriptor, fcntl.LOCK_UN)
+    finally:
+        os.close(descriptor)
+
+
+def _serialized(function):
+    @wraps(function)
+    def wrapped(app, manifest, *args):
+        with _lifecycle_lock(app):
+            return function(Path(app), manifest, *args)
+    return wrapped
+
+
+def _private_directory(path):
+    _directory(path, missing=True)
+    path.mkdir(mode=0o700, exist_ok=True)
+    path.chmod(0o700)
+    return path
+
+
+def _relative_path(value):
+    if not isinstance(value, str) or not value or "\x00" in value:
+        raise ValueError("Invalid inventory path")
+    path = PurePosixPath(value)
+    if (value == "." or path.is_absolute() or path.as_posix() != value
+            or any(part in (".", "..") for part in path.parts)
+            or len(os.fsencode(value)) > MAX_RELATIVE_PATH_BYTES):
+        raise ValueError("Inventory path is outside the bounded relative namespace")
+    return path
+
+
+def _stable(metadata):
+    return (metadata.st_dev, metadata.st_ino, metadata.st_mode,
+            metadata.st_size, metadata.st_mtime_ns, metadata.st_ctime_ns)
+
+
+def _inventory(root):
+    _directory(root)
+    entries = []
+
+    def append(entry):
+        if len(entries) >= MAX_INVENTORY_ENTRIES:
+            raise ValueError("Snapshot inventory has too many entries")
+        entries.append(entry)
+
+    def visit(descriptor, relative):
+        before = os.fstat(descriptor)
+        append({"path": relative, "type": "directory",
+                "mode": stat.S_IMODE(before.st_mode)})
+        with os.scandir(descriptor) as stream:
+            children = sorted(stream, key=lambda entry: entry.name)
+        for child in children:
+            name = child.name if relative == "." else relative + "/" + child.name
+            _relative_path(name)
+            metadata = child.stat(follow_symlinks=False)
+            if stat.S_ISDIR(metadata.st_mode):
+                child_fd = os.open(child.name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                                   dir_fd=descriptor)
+                try:
+                    if _stable(os.fstat(child_fd)) != _stable(metadata):
+                        raise RuntimeError("Data directory changed during inventory")
+                    visit(child_fd, name)
+                finally:
+                    os.close(child_fd)
+            elif stat.S_ISREG(metadata.st_mode):
+                child_fd = os.open(child.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
+                                   dir_fd=descriptor)
+                try:
+                    if _stable(os.fstat(child_fd)) != _stable(metadata):
+                        raise RuntimeError("Data file changed before inventory")
+                    digest = hashlib.sha256()
+                    while block := os.read(child_fd, 1024 * 1024):
+                        digest.update(block)
+                    if _stable(os.fstat(child_fd)) != _stable(metadata):
+                        raise RuntimeError("Data file changed during inventory")
+                    append({"path": name, "type": "file",
+                            "mode": stat.S_IMODE(metadata.st_mode),
+                            "size": metadata.st_size, "sha256": digest.hexdigest()})
+                finally:
+                    os.close(child_fd)
+            else:
+                raise ValueError("Snapshot data contains a symlink or nonregular file")
+        if _stable(os.fstat(descriptor)) != _stable(before):
+            raise RuntimeError("Data directory changed during inventory")
+
+    descriptor = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        visit(descriptor, ".")
+    finally:
+        os.close(descriptor)
+    return [entries[0], *sorted(entries[1:], key=lambda entry: entry["path"])]
+
+
+def _validate_inventory(entries):
+    if not isinstance(entries, list) or not 1 <= len(entries) <= MAX_INVENTORY_ENTRIES:
+        raise ValueError("Invalid snapshot inventory length")
+    seen = {}
+    for index, entry in enumerate(entries):
+        if not isinstance(entry, dict):
+            raise ValueError("Invalid inventory entry")
+        kind = entry.get("type")
+        keys = {"path", "type", "mode"}
+        if kind == "file":
+            keys |= {"size", "sha256"}
+            if (type(entry.get("size")) is not int or not 0 <= entry["size"] < 2**63
+                    or not isinstance(entry.get("sha256"), str)
+                    or HASH_PATTERN.fullmatch(entry["sha256"]) is None):
+                raise ValueError("Invalid file inventory metadata")
+        elif kind != "directory":
+            raise ValueError("Invalid inventory type")
+        if set(entry) != keys or type(entry.get("mode")) is not int or not 0 <= entry["mode"] <= 0o7777:
+            raise ValueError("Invalid inventory metadata")
+        path = entry.get("path")
+        if index == 0:
+            if path != "." or kind != "directory":
+                raise ValueError("Inventory must start with its data directory")
+        else:
+            relative = _relative_path(path)
+            if seen.get(relative.parent.as_posix()) != "directory":
+                raise ValueError("Inventory entry has no directory parent")
+        if path in seen:
+            raise ValueError("Duplicate inventory path")
+        seen[path] = kind
+    if [entry["path"] for entry in entries[1:]] != sorted(seen.keys() - {"."}):
+        raise ValueError("Inventory paths are not canonical")
+
+
+def _deployment_identity(manifest):
+    if (not isinstance(manifest, dict)
+            or not isinstance(manifest.get("application"), str) or not manifest["application"]
+            or not isinstance(manifest.get("version"), str) or not manifest["version"]):
+        raise ValueError("Application and version are required for a prepared fixture")
+    stable = {key: value for key, value in manifest.items() if key not in {"pid", "started_unix"}}
+    encoded = json.dumps(stable, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+    return {"application": manifest["application"], "version": manifest["version"],
+            "deployment_sha256": hashlib.sha256(encoded).hexdigest()}
+
+
+def _unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("Duplicate manifest key")
+        result[key] = value
+    return result
+
+
+def _load_snapshot(app, manifest, name):
+    prepared = app / "private/prepared" / _name(name)
+    for directory in (app / "private", app / "private/prepared", prepared):
+        metadata = _directory(directory)
+        if stat.S_IMODE(metadata.st_mode) != 0o700:
+            raise ValueError("Prepared fixture directories must have mode 0700")
+    if {entry.name for entry in prepared.iterdir()} != {"data", "manifest.json"}:
+        raise ValueError("Prepared fixture has unexpected or missing entries")
+    path = prepared / "manifest.json"
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    try:
+        metadata = os.fstat(descriptor)
+        if (not stat.S_ISREG(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) != 0o600
+                or not 0 < metadata.st_size <= MAX_MANIFEST_BYTES):
+            raise ValueError("Invalid prepared fixture manifest file")
+        with os.fdopen(os.dup(descriptor), "rb") as stream:
+            body = stream.read(MAX_MANIFEST_BYTES + 1)
+        if len(body) > MAX_MANIFEST_BYTES or _stable(os.fstat(descriptor)) != _stable(metadata):
+            raise ValueError("Prepared fixture manifest changed or exceeded its bound")
+    finally:
+        os.close(descriptor)
+    saved = json.loads(body, object_pairs_hook=_unique_object)
+    keys = {"format", "application", "version", "deployment_sha256", "name", "created_at", "inventory"}
+    if (not isinstance(saved, dict) or set(saved) != keys
+            or saved["format"] != "semabi.prepared_fixture.v1" or saved["name"] != name
+            or not isinstance(saved["created_at"], str) or len(saved["created_at"]) > 64):
+        raise ValueError("Invalid prepared fixture manifest")
+    if any(saved[key] != value for key, value in _deployment_identity(manifest).items()):
+        raise ValueError("Prepared fixture application, version, or deployment does not match")
+    _validate_inventory(saved["inventory"])
+    if _inventory(prepared / "data") != saved["inventory"]:
+        raise ValueError("Prepared fixture data does not match its inventory")
+    return prepared, saved, hashlib.sha256(body).hexdigest()
+
+
+def _rename_no_replace(source, destination):
+    # This installer already requires Linux (/proc, native Memos and Docker).
+    rename = getattr(ctypes.CDLL(None, use_errno=True), "renameat2", None)
+    if rename is None:
+        raise RuntimeError("Atomic rename without replacement is unavailable")
+    rename.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint]
+    rename.restype = ctypes.c_int
+    if rename(-100, os.fsencode(source), -100, os.fsencode(destination), 1) != 0:
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error), str(destination))
+
+
+@contextmanager
+def _stage(parent, prefix):
+    path = Path(tempfile.mkdtemp(dir=parent, prefix=prefix))
+    path.chmod(0o700)
+    try:
+        yield path
+    finally:
+        primary = sys.exc_info()[1]
+        if _exists(path):
+            try:
+                shutil.rmtree(path)
+            except BaseException as cleanup_error:
+                if primary is None:
+                    raise
+                primary.add_note(f"Staging cleanup also failed; retained {path}: {cleanup_error}")
+
+
+def _copy_verified(source, destination, inventory):
+    shutil.copytree(source, destination, symlinks=True)
+    if _inventory(source) != inventory or _inventory(destination) != inventory:
+        raise RuntimeError("Opaque data copy did not match the complete inventory")
+
+
+@contextmanager
+def _quiescent(app, manifest):
+    was_running = running(app, manifest)
+    try:
+        if was_running:
+            stop(app, manifest)
+        if running(app, manifest):
+            raise RuntimeError("Owned application is still running")
+        yield was_running
+    finally:
+        primary = sys.exc_info()[1]
+        if was_running:
+            try:
+                _directory(app / "data")
+                start(app, manifest)
+            except BaseException as restart_error:
+                if primary is None:
+                    raise RuntimeError("Restart failed; active data and any archives are preserved") from restart_error
+                primary.add_note(f"Restart also failed; active data and any archives are preserved: {restart_error}")
+
+
+@_serialized
+def snapshot(app, manifest, name):
+    name = _name(name)
+    identity = _deployment_identity(manifest)
+    _directory(app / "data")
+    _directory(app / "private", missing=True)
+    _directory(app / "private/prepared", missing=True)
+    destination = app / "private/prepared" / name
+    if _exists(destination):
+        raise FileExistsError(f"Prepared fixture already exists: {name}")
+    with _quiescent(app, manifest) as was_running:
+        private = _private_directory(app / "private")
+        prepared = _private_directory(private / "prepared")
+        with _stage(prepared, ".snapshot-") as stage:
+            inventory = _inventory(app / "data")
+            _copy_verified(app / "data", stage / "data", inventory)
+            saved = {"format": "semabi.prepared_fixture.v1", **identity, "name": name,
+                     "created_at": datetime.now(timezone.utc).isoformat(), "inventory": inventory}
+            body = (json.dumps(saved, indent=2, sort_keys=True) + "\n").encode()
+            if len(body) > MAX_MANIFEST_BYTES:
+                raise ValueError("Prepared fixture manifest exceeds its size bound")
+            descriptor = os.open(stage / "manifest.json", os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+            with os.fdopen(descriptor, "wb") as stream:
+                os.fchmod(stream.fileno(), 0o600)
+                stream.write(body)
+                stream.flush()
+                os.fsync(stream.fileno())
+            _rename_no_replace(stage, destination)
+    return {"action": "snapshot", "name": name, "path": str(destination),
+            "manifest_sha256": hashlib.sha256(body).hexdigest(),
+            "inventory_entries": len(inventory), "was_running": was_running}
+
+
+@_serialized
+def restore(app, manifest, name):
+    prepared, saved, manifest_hash = _load_snapshot(app, manifest, _name(name))
+    data = app / "data"
+    _directory(data, missing=True)
+    _directory(app / "private/resets", missing=True)
+    archive = None
+    with _stage(app / "private", ".restore-") as stage:
+        _copy_verified(prepared / "data", stage / "data", saved["inventory"])
+        with _quiescent(app, manifest) as was_running:
+            try:
+                if _exists(data):
+                    _directory(data)
+                    _inventory(data)
+                    archives = _private_directory(app / "private/resets")
+                    archive = archives / f"{time.time_ns()}-{uuid.uuid4().hex}"
+                    _rename_no_replace(data, archive)
+                _rename_no_replace(stage / "data", data)
+            except BaseException as install_error:
+                if archive is not None and _exists(archive) and not _exists(data):
+                    try:
+                        _rename_no_replace(archive, data)
+                    except BaseException as rollback_error:
+                        install_error.add_note(f"Rollback also failed; previous data remains at {archive}: {rollback_error}")
+                install_error.add_note(f"Restore failed; retained active data at {data} and any unmoved archive at {archive}")
+                raise
+    return {"action": "restore", "name": name, "path": str(prepared),
+            "manifest_sha256": manifest_hash, "inventory_entries": len(saved["inventory"]),
+            "archive": str(archive) if archive is not None else None, "was_running": was_running}
+
+
+def docker(*args):
+    return subprocess.run(
+        ["docker", *args], check=True, text=True, capture_output=True
+    ).stdout.strip()
+
+
+def native_pid(app, manifest):
+    pid_file = app / "private/server.pid"
+    if not pid_file.exists():
+        return None
+    pid = int(pid_file.read_text().strip())
+    cmdline = Path(f"/proc/{pid}/cmdline")
+    if not cmdline.exists():
+        return None
+    argv = cmdline.read_bytes().split(b"\0")
+    expected = str(app / "bin/memos").encode()
+    if expected not in argv:
+        raise RuntimeError("Recorded PID no longer belongs to the owned application")
+    return pid
+
+
+def running(app, manifest):
+    if "container_name" in manifest:
+        name = manifest["container_name"]
+        label = docker("inspect", name, "--format", '{{index .Config.Labels "semabi.owner"}}')
+        if label != "product_apps_v1":
+            raise RuntimeError("Container ownership label does not match")
+        return docker("inspect", name, "--format", "{{.State.Running}}") == "true"
+    return native_pid(app, manifest) is not None
+
+
+@_serialized
+def stop(app, manifest):
+    if "container_name" in manifest:
+        if running(app, manifest):
+            docker("stop", "--time", "10", manifest["container_name"])
+        return
+    pid = native_pid(app, manifest)
+    if pid is None:
+        return
+    os.kill(pid, signal.SIGTERM)
+    deadline = time.monotonic() + 10
+    while time.monotonic() < deadline:
+        if not Path(f"/proc/{pid}").exists():
+            return
+        time.sleep(0.1)
+    raise RuntimeError("Owned native process did not stop within 10 seconds")
+
+
+@_serialized
+def start(app, manifest):
+    if running(app, manifest):
+        return
+    with socket.socket() as probe:
+        probe.bind(("127.0.0.1", manifest["port"]))
+    if "container_name" in manifest:
+        docker("start", manifest["container_name"])
+    else:
+        env = os.environ.copy()
+        env.update(THREAD_ENV)
+        with (app / "logs/server.log").open("ab") as log:
+            child = subprocess.Popen(
+                manifest["command"], cwd=manifest["cwd"], env=env,
+                stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
+                start_new_session=True,
+            )
+        pid_path = app / "private/server.pid"
+        pid_path.write_text(f"{child.pid}\n")
+        pid_path.chmod(0o600)
+        manifest["pid"] = child.pid
+        manifest["started_unix"] = time.time()
+        (app / "deployment.json").write_text(json.dumps(manifest, indent=2) + "\n")
+
+
+@_serialized
+def reset(app, manifest):
+    baseline = app / "private/baseline"
+    if not baseline.is_dir() or not any(baseline.iterdir()):
+        raise RuntimeError("Initial account baseline is absent")
+    stop(app, manifest)
+    archive_root = app / "private/resets"
+    archive_root.mkdir(mode=0o700, exist_ok=True)
+    archive = archive_root / str(time.time_ns())
+    data = app / "data"
+    if data.exists():
+        data.rename(archive)
+    shutil.copytree(baseline, data)
+    data.chmod(0o700)
+    start(app, manifest)
+
+
+def status(app, manifest):
+    is_running = running(app, manifest)
+    code = None
+    if is_running:
+        try:
+            with urllib.request.urlopen(manifest.get("health", manifest["url"]), timeout=5) as response:
+                code = response.status
+        except OSError:
+            pass
+    return {"application": manifest["application"], "running": is_running, "http_status": code}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("action", choices=("status", "start", "stop", "reset", "snapshot", "restore"))
+    parser.add_argument("app", choices=("linkding", "memos"))
+    parser.add_argument("name", nargs="?")
+    args = parser.parse_args()
+    if args.action in {"snapshot", "restore"}:
+        try:
+            _name(args.name)
+        except ValueError as error:
+            parser.error(str(error))
+    elif args.name is not None:
+        parser.error("A name is accepted only for snapshot and restore")
+    app = ROOT / args.app
+    if args.action == "status":
+        manifest = json.loads((app / "deployment.json").read_text())
+        result = status(app, manifest)
+    else:
+        with _lifecycle_lock(app):
+            manifest = json.loads((app / "deployment.json").read_text())
+            command = {"start": start, "stop": stop, "reset": reset,
+                       "snapshot": snapshot, "restore": restore}[args.action]
+            prepared = command(app, manifest, args.name) if args.name is not None else command(app, manifest)
+            result = status(app, manifest)
+            if prepared is not None:
+                result["prepared_fixture"] = prepared
+    print(json.dumps(result, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

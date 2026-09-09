@@ -145,6 +145,24 @@ order alternating by case number. Reset only after the root coordinates idle
 sessions; preserve preceding evidence. Without equivalent fixtures, label a
 comparison unmatched rather than pooling it into the paired result.
 
+The first development run uses a separately frozen, shared caller-assistance
+rule to bind a small literal creation/replacement grammar to the discovered
+schemas. Every goal clause and supplied argument must be covered, with one
+unique mapping. It supplies no defaults or expected answers and performs no
+implicit read/merge/update chain. General goal planning remains unestablished;
+preflight eligibility is not execution. The rule and all rejected requests are
+retained with the assessment. This limitation does not reduce its denominator.
+
+The current HTTP client provides no viewport, logout, or browser-interruption
+control. The first run records challenges CH3, CH5 and CH6 as unavailable under
+that harness, while retaining their goals. The actual evaluated viewport is
+1400 by 1000; fixture preparation uses 1280 by 900. No presentation change is
+claimed from those separate sessions. Raw internal snapshot counts are not
+exposed by this service version and remain unmeasured. Public observation
+events are reported separately. External elapsed time governs the 60-second
+result; a timeout does not cancel a queued job. Any accepted job must reach a
+known terminal state before fixture restoration or another arm.
+
 ## Budgets and accounting
 
 These limits apply per application and arm, including failed attempts. Keep

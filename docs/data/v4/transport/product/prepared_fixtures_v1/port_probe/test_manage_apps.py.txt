@@ -1,0 +1,460 @@
+import errno
+import json
+import os
+from pathlib import Path
+import shutil
+import socket
+import stat
+import threading
+
+import pytest
+
+import manage_apps as helper
+
+
+@pytest.fixture
+def installation(tmp_path, monkeypatch):
+    app = tmp_path / "memos"
+    (app / "data/attachments/empty").mkdir(parents=True)
+    (app / "private").mkdir(mode=0o700)
+    (app / "data/database.sqlite").write_bytes(b"SQLite format 3\0opaque synthetic database\xff")
+    (app / "data/database.sqlite-wal").write_bytes(b"opaque synthetic WAL\x00\x03")
+    (app / "data/database.sqlite-shm").write_bytes(b"opaque synthetic shared memory\x00")
+    (app / "data/attachments/picture.bin").write_bytes(bytes(range(256)))
+    (app / "data").chmod(0o700)
+    (app / "data/attachments").chmod(0o750)
+    (app / "data/attachments/empty").chmod(0o500)
+    (app / "data/database.sqlite").chmod(0o600)
+    (app / "data/database.sqlite-wal").chmod(0o600)
+    (app / "data/database.sqlite-shm").chmod(0o600)
+    (app / "data/attachments/picture.bin").chmod(0o400)
+    credentials = app / "private/credentials.json"
+    credentials.write_text('{"password":"synthetic-only-not-an-account"}\n')
+    credentials.chmod(0o600)
+    environment = app / "server.env"
+    environment.write_bytes(b"SYNTHETIC_SETTING=unchanged\n")
+    environment.chmod(0o600)
+    manifest = {"application": "memos", "version": "0.30.0", "port": 19222,
+                "command": [str(app / "bin/memos")], "cwd": str(app),
+                "pid": 123, "started_unix": 1.0}
+    (app / "deployment.json").write_text(json.dumps(manifest))
+    state = {"running": True, "calls": []}
+
+    def running(app, manifest):
+        return state["running"]
+
+    def stop(app, manifest):
+        state["calls"].append("stop")
+        state["running"] = False
+
+    def start(app, manifest):
+        state["calls"].append("start")
+        state["running"] = True
+        manifest["pid"] += 1
+        manifest["started_unix"] += 1
+
+    monkeypatch.setattr(helper, "running", running)
+    monkeypatch.setattr(helper, "stop", stop)
+    monkeypatch.setattr(helper, "start", start)
+    return app, manifest, state
+
+
+def _change_data(app):
+    (app / "data/database.sqlite").write_bytes(b"later opaque database state")
+    (app / "data/database.sqlite-wal").write_bytes(b"later opaque WAL state")
+    (app / "data/attachments/picture.bin").unlink()
+    (app / "data/new-directory").mkdir(mode=0o700)
+    (app / "data/new-directory/new-file").write_bytes(b"later attachment")
+
+
+def _saved(app, name="base"):
+    return app / "private/prepared" / name
+
+
+def _manifest_mutation(app, mutate):
+    path = _saved(app) / "manifest.json"
+    value = json.loads(path.read_text())
+    mutate(value)
+    path.write_text(json.dumps(value))
+
+
+@pytest.mark.parametrize("was_running", [True, False])
+def test_exact_opaque_restore_preserves_modes_credentials_and_archive(installation, was_running):
+    app, manifest, state = installation
+    state["running"] = was_running
+    before = helper._inventory(app / "data")
+    external = {p: (p.read_bytes(), stat.S_IMODE(p.stat().st_mode))
+                for p in [app / "private/credentials.json", app / "server.env"]}
+    saved = helper.snapshot(app, manifest, "base")
+    assert saved["was_running"] is was_running
+    assert state["calls"] == (["stop", "start"] if was_running else [])
+    assert helper._inventory(_saved(app) / "data") == before
+    saved_bytes = (_saved(app) / "manifest.json").read_bytes()
+    for path in [app / "private", app / "private/prepared", _saved(app)]:
+        assert stat.S_IMODE(path.stat().st_mode) == 0o700
+    assert stat.S_IMODE((_saved(app) / "manifest.json").stat().st_mode) == 0o600
+    _change_data(app)
+    changed = helper._inventory(app / "data")
+    state["calls"].clear()
+    restored = helper.restore(app, manifest, "base")
+    assert restored["was_running"] is was_running
+    assert state["running"] is was_running
+    assert state["calls"] == (["stop", "start"] if was_running else [])
+    assert helper._inventory(app / "data") == before
+    assert helper._inventory(Path(restored["archive"])) == changed
+    assert helper._inventory(_saved(app) / "data") == before
+    assert (_saved(app) / "manifest.json").read_bytes() == saved_bytes
+    assert restored["manifest_sha256"] == saved["manifest_sha256"]
+    assert all((p.read_bytes(), stat.S_IMODE(p.stat().st_mode)) == values for p, values in external.items())
+    assert stat.S_IMODE((app / "private/resets").stat().st_mode) == 0o700
+    assert not list((app / "private").glob(".restore-*"))
+
+
+@pytest.mark.parametrize("name", [None, "", "../escape", "/absolute", "A", "-a", "a/b", "a\\b", "a\n", "a" * 65])
+def test_invalid_snapshot_name_does_not_mutate(installation, name):
+    app, manifest, state = installation
+    before = helper._inventory(app)
+    with pytest.raises(ValueError):
+        helper.snapshot(app, manifest, name)
+    assert not state["calls"]
+    assert helper._inventory(app) == before
+
+
+@pytest.mark.parametrize("name", ["a", "a" * 64, "base_2-final"])
+def test_valid_name_boundaries(installation, name):
+    app, manifest, state = installation
+    state["running"] = False
+    assert helper.snapshot(app, manifest, name)["name"] == name
+
+
+def test_duplicate_snapshot_is_immutable_before_lifecycle_mutation(installation):
+    app, manifest, state = installation
+    helper.snapshot(app, manifest, "base")
+    before = helper._inventory(app)
+    state["calls"].clear()
+    with pytest.raises(FileExistsError):
+        helper.snapshot(app, manifest, "base")
+    assert state["calls"] == []
+    assert helper._inventory(app) == before
+
+
+@pytest.mark.parametrize("damage", [
+    "content", "missing_file", "extra_file", "missing_empty_directory", "mode",
+    "application", "version", "deployment", "traversal", "absolute", "long_path",
+    "missing_parent", "duplicate_path", "duplicate_manifest_key", "bad_manifest_mode",
+    "manifest_symlink", "manifest_fifo", "data_symlink", "data_fifo", "extra_container_entry",
+])
+def test_invalid_prepared_fixture_is_rejected_before_stop_or_staging(installation, damage):
+    app, manifest, state = installation
+    helper.snapshot(app, manifest, "base")
+    snapshot = _saved(app)
+    data_file = snapshot / "data/database.sqlite"
+    if damage == "content":
+        data_file.write_bytes(b"tampered")
+    elif damage == "missing_file":
+        data_file.unlink()
+    elif damage == "extra_file":
+        (snapshot / "data/unlisted").write_bytes(b"extra")
+    elif damage == "missing_empty_directory":
+        (snapshot / "data/attachments/empty").rmdir()
+    elif damage == "mode":
+        data_file.chmod(0o640)
+    elif damage in {"application", "version", "deployment"}:
+        manifest[{"application": "application", "version": "version", "deployment": "port"}[damage]] = "different"
+    elif damage in {"traversal", "absolute", "long_path", "missing_parent"}:
+        path = {"traversal": "../escape", "absolute": "/escape", "long_path": "a" * 4097,
+                "missing_parent": "absent-parent/file"}[damage]
+        _manifest_mutation(app, lambda value: value["inventory"][1].update(path=path))
+    elif damage == "duplicate_path":
+        _manifest_mutation(app, lambda value: value["inventory"].append(value["inventory"][-1]))
+    elif damage == "duplicate_manifest_key":
+        path = snapshot / "manifest.json"
+        path.write_text(path.read_text().replace('"format":', '"format":"duplicate","format":', 1))
+    elif damage == "bad_manifest_mode":
+        (snapshot / "manifest.json").chmod(0o644)
+    elif damage in {"manifest_symlink", "manifest_fifo"}:
+        path = snapshot / "manifest.json"
+        path.unlink()
+        if damage == "manifest_symlink":
+            path.symlink_to(app / "private/credentials.json")
+        else:
+            os.mkfifo(path, 0o600)
+    elif damage in {"data_symlink", "data_fifo"}:
+        data_file.unlink()
+        if damage == "data_symlink":
+            data_file.symlink_to(app / "private/credentials.json")
+        else:
+            os.mkfifo(data_file, 0o600)
+    elif damage == "extra_container_entry":
+        (snapshot / "unexpected").write_text("unexpected")
+    before = helper._inventory(app / "data")
+    private_names = sorted(p.name for p in (app / "private").iterdir())
+    state["calls"].clear()
+    with pytest.raises((ValueError, OSError)):
+        helper.restore(app, manifest, "base")
+    assert state["calls"] == []
+    assert state["running"] is True
+    assert helper._inventory(app / "data") == before
+    assert sorted(p.name for p in (app / "private").iterdir()) == private_names
+
+
+@pytest.mark.parametrize("kind", ["symlink", "fifo"])
+def test_snapshot_rejects_nonregular_data_and_restarts(installation, kind):
+    app, manifest, state = installation
+    path = app / "data/nonregular"
+    if kind == "symlink":
+        path.symlink_to(app / "private/credentials.json")
+    else:
+        os.mkfifo(path, 0o600)
+    with pytest.raises(ValueError, match="symlink or nonregular"):
+        helper.snapshot(app, manifest, "base")
+    assert state["calls"] == ["stop", "start"]
+    assert state["running"] is True
+    assert not _saved(app).exists()
+
+
+@pytest.mark.parametrize("was_running", [True, False])
+def test_snapshot_copy_failure_leaves_original_and_restores_running_state(installation, monkeypatch, was_running):
+    app, manifest, state = installation
+    state["running"] = was_running
+    before = helper._inventory(app / "data")
+
+    def copy_failure(source, destination, **kwargs):
+        destination.mkdir()
+        (destination / "partial").write_bytes(b"partial")
+        raise OSError("synthetic copy failure")
+
+    monkeypatch.setattr(helper.shutil, "copytree", copy_failure)
+    with pytest.raises(OSError, match="synthetic copy failure"):
+        helper.snapshot(app, manifest, "base")
+    assert helper._inventory(app / "data") == before
+    assert state["running"] is was_running
+    assert state["calls"] == (["stop", "start"] if was_running else [])
+    assert not list((app / "private/prepared").iterdir())
+
+
+def test_snapshot_publish_never_overwrites_even_an_empty_directory(installation, monkeypatch):
+    app, manifest, state = installation
+    original = helper._rename_no_replace
+
+    def competing_destination(source, destination):
+        destination.mkdir(mode=0o700)
+        original(source, destination)
+
+    monkeypatch.setattr(helper, "_rename_no_replace", competing_destination)
+    with pytest.raises(FileExistsError):
+        helper.snapshot(app, manifest, "base")
+    assert list(_saved(app).iterdir()) == []
+    assert state["calls"] == ["stop", "start"]
+    assert not list((app / "private/prepared").glob(".snapshot-*"))
+
+
+def test_snapshot_restart_failure_preserves_published_fixture(installation, monkeypatch):
+    app, manifest, state = installation
+    before = helper._inventory(app / "data")
+
+    def fail_start(app, manifest):
+        state["calls"].append("start-failed")
+        raise OSError("synthetic restart failure")
+
+    monkeypatch.setattr(helper, "start", fail_start)
+    with pytest.raises(RuntimeError, match="Restart failed"):
+        helper.snapshot(app, manifest, "base")
+    assert helper._inventory(app / "data") == before
+    assert helper._inventory(_saved(app) / "data") == before
+    assert helper._load_snapshot(app, manifest, "base")[1]["inventory"] == before
+    assert state["calls"] == ["stop", "start-failed"]
+
+
+def test_restore_copy_failure_occurs_before_stop(installation, monkeypatch):
+    app, manifest, state = installation
+    helper.snapshot(app, manifest, "base")
+    _change_data(app)
+    before = helper._inventory(app / "data")
+    state["calls"].clear()
+
+    def fail_copy(source, destination, **kwargs):
+        destination.mkdir()
+        raise OSError("synthetic restore copy failure")
+
+    monkeypatch.setattr(helper.shutil, "copytree", fail_copy)
+    with pytest.raises(OSError, match="restore copy failure"):
+        helper.restore(app, manifest, "base")
+    assert state["calls"] == []
+    assert helper._inventory(app / "data") == before
+    assert not list((app / "private").glob(".restore-*"))
+
+
+@pytest.mark.parametrize("failure", ["archive", "install", "rollback", "destination_appears"])
+def test_restore_rename_failures_keep_prior_data_recoverable(installation, monkeypatch, failure):
+    app, manifest, state = installation
+    helper.snapshot(app, manifest, "base")
+    snapshot_inventory = helper._inventory(_saved(app) / "data")
+    _change_data(app)
+    before = helper._inventory(app / "data")
+    state["calls"].clear()
+    original = helper._rename_no_replace
+
+    def fail_rename(source, destination):
+        if failure == "archive" and source == app / "data":
+            raise OSError("synthetic archive failure")
+        if destination == app / "data" and source.parent.name.startswith(".restore-"):
+            if failure == "destination_appears":
+                destination.mkdir(mode=0o700)
+                (destination / "preserve-existing").write_bytes(b"do not replace")
+            raise OSError("synthetic install failure")
+        if failure == "rollback" and destination == app / "data":
+            raise OSError("synthetic rollback failure")
+        return original(source, destination)
+
+    monkeypatch.setattr(helper, "_rename_no_replace", fail_rename)
+    with pytest.raises(OSError, match="synthetic") as caught:
+        helper.restore(app, manifest, "base")
+    archives = list((app / "private/resets").iterdir())
+    if failure in {"archive", "install"}:
+        assert helper._inventory(app / "data") == before
+        assert archives == []
+        assert state["calls"] == ["stop", "start"]
+    else:
+        assert len(archives) == 1
+        assert helper._inventory(archives[0]) == before
+        if failure == "rollback":
+            assert not (app / "data").exists()
+            assert state["calls"] == ["stop"]
+            assert state["running"] is False
+            assert any("Rollback also failed" in note for note in caught.value.__notes__)
+        else:
+            assert (app / "data/preserve-existing").read_bytes() == b"do not replace"
+    assert helper._inventory(_saved(app) / "data") == snapshot_inventory
+    assert not list((app / "private").glob(".restore-*"))
+
+
+def test_restore_restart_failure_keeps_new_data_and_old_archive(installation, monkeypatch):
+    app, manifest, state = installation
+    helper.snapshot(app, manifest, "base")
+    original = helper._inventory(app / "data")
+    _change_data(app)
+    changed = helper._inventory(app / "data")
+
+    def fail_start(app, manifest):
+        raise OSError("synthetic restart failure")
+
+    monkeypatch.setattr(helper, "start", fail_start)
+    with pytest.raises(RuntimeError, match="Restart failed"):
+        helper.restore(app, manifest, "base")
+    assert helper._inventory(app / "data") == original
+    archives = list((app / "private/resets").iterdir())
+    assert len(archives) == 1 and helper._inventory(archives[0]) == changed
+    assert state["running"] is False
+
+
+@pytest.mark.parametrize("was_running", [True, False])
+def test_existing_reset_keeps_its_original_always_start_behavior(installation, was_running):
+    app, manifest, state = installation
+    state["running"] = was_running
+    shutil.copytree(app / "data", app / "private/baseline")
+    baseline = helper._inventory(app / "data")
+    _change_data(app)
+    before = helper._inventory(app / "data")
+    helper.reset(app, manifest)
+    assert helper._inventory(app / "data") == baseline
+    assert state["calls"] == ["stop", "start"]
+    assert state["running"] is True
+    archives = list((app / "private/resets").iterdir())
+    assert len(archives) == 1 and helper._inventory(archives[0]) == before
+
+
+def test_app_directory_lock_serializes_mutations_and_allows_nested_flow(tmp_path):
+    app = tmp_path / "memos"
+    app.mkdir()
+    attempted = threading.Event()
+    completed = threading.Event()
+
+    @helper._serialized
+    def mutation(app, manifest):
+        with helper._lifecycle_lock(app):
+            completed.set()
+
+    def worker():
+        attempted.set()
+        mutation(app, {})
+
+    with helper._lifecycle_lock(app):
+        thread = threading.Thread(target=worker, daemon=True)
+        thread.start()
+        assert attempted.wait(1)
+        assert not completed.wait(0.05)
+    thread.join(2)
+    assert not thread.is_alive() and completed.is_set()
+    assert list(app.iterdir()) == []
+
+
+@pytest.mark.parametrize("action", ["snapshot", "restore"])
+def test_cli_accepts_application_and_name_without_real_lifecycle_calls(installation, monkeypatch, capsys, action):
+    app, manifest, state = installation
+    monkeypatch.setattr(helper, "ROOT", app.parent)
+    monkeypatch.setattr(helper, "status", lambda app, manifest: {"application": "memos", "running": False})
+    calls = []
+
+    def command(app, manifest, name):
+        calls.append((app, name))
+        return {"action": action, "name": name}
+
+    monkeypatch.setattr(helper, action, command)
+    monkeypatch.setattr(helper.sys, "argv", ["manage_apps.py", action, "memos", "base-1"])
+    helper.main()
+    assert calls == [(app, "base-1")]
+    assert json.loads(capsys.readouterr().out)["prepared_fixture"] == {"action": action, "name": "base-1"}
+    assert state["calls"] == []
+
+
+def _time_wait_port():
+    with socket.socket() as listener, socket.socket() as client:
+        listener.settimeout(2)
+        client.settimeout(2)
+        listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        listener.bind(("127.0.0.1", 0))
+        port = listener.getsockname()[1]
+        listener.listen(1)
+        client.connect(("127.0.0.1", port))
+        accepted, _ = listener.accept()
+        with accepted:
+            accepted.shutdown(socket.SHUT_WR)
+            assert client.recv(1) == b""
+            client.close()
+    return port
+
+
+def test_port_probe_allows_restart_after_owned_connection_time_wait(tmp_path, monkeypatch):
+    app = tmp_path / "linkding"
+    app.mkdir()
+    port = _time_wait_port()
+    with socket.socket() as original_probe:
+        with pytest.raises(OSError) as caught:
+            original_probe.bind(("127.0.0.1", port))
+        assert caught.value.errno == errno.EADDRINUSE
+    starts = []
+    monkeypatch.setattr(helper, "running", lambda app, manifest: False)
+    monkeypatch.setattr(helper, "docker", lambda *args: starts.append(args))
+    helper.start(app, {"port": port, "container_name": "synthetic-test-container"})
+    assert starts == [("start", "synthetic-test-container")]
+
+
+@pytest.mark.parametrize("listener_reuse_address", [False, True])
+def test_port_probe_rejects_live_listener_before_start(tmp_path, monkeypatch, listener_reuse_address):
+    app = tmp_path / "linkding"
+    app.mkdir()
+    starts = []
+    monkeypatch.setattr(helper, "running", lambda app, manifest: False)
+    monkeypatch.setattr(helper, "docker", lambda *args: starts.append(args))
+    with socket.socket() as listener:
+        if listener_reuse_address:
+            listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        listener.bind(("127.0.0.1", 0))
+        listener.listen(1)
+        port = listener.getsockname()[1]
+        with pytest.raises(OSError) as caught:
+            helper.start(app, {"port": port, "container_name": "synthetic-test-container"})
+        assert caught.value.errno == errno.EADDRINUSE
+        assert listener.getsockname()[1] == port
+        assert starts == []

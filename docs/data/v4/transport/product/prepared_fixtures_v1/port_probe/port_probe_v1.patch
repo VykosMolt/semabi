@@ -1,0 +1,11 @@
+diff --git a/runs/product_apps_v1/manage_apps.py b/runs/product_apps_v1/manage_apps.py
+--- a/runs/product_apps_v1/manage_apps.py
++++ b/runs/product_apps_v1/manage_apps.py
+@@ -442,6 +442,7 @@
+     if running(app, manifest):
+         return
+     with socket.socket() as probe:
++        probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+         probe.bind(("127.0.0.1", manifest["port"]))
+     if "container_name" in manifest:
+         docker("start", manifest["container_name"])

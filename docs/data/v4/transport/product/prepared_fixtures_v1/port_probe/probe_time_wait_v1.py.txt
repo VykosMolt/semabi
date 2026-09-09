@@ -1,0 +1,63 @@
+from pathlib import Path
+import errno
+import json
+import socket
+import time
+
+
+def probe(port, reuse_address):
+    with socket.socket() as sock:
+        if reuse_address:
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        try:
+            sock.bind(("127.0.0.1", port))
+        except OSError as error:
+            return {"bound": False, "errno": error.errno}
+        return {"bound": True, "errno": None}
+
+
+listener = socket.socket()
+listener.settimeout(2)
+listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+listener.bind(("127.0.0.1", 0))
+port = listener.getsockname()[1]
+listener.listen(1)
+client = socket.socket()
+client.settimeout(2)
+client.connect(("127.0.0.1", port))
+accepted, _ = listener.accept()
+try:
+    accepted.shutdown(socket.SHUT_WR)
+    assert client.recv(1) == b""
+finally:
+    client.close()
+    accepted.close()
+    listener.close()
+state = None
+deadline = time.monotonic() + 1
+while time.monotonic() < deadline:
+    for line in Path("/proc/net/tcp").read_text().splitlines()[1:]:
+        fields = line.split()
+        if fields[1] == f"0100007F:{port:04X}":
+            state = fields[3]
+    if state == "06":
+        break
+    time.sleep(0.01)
+plain = probe(port, False)
+reuse = probe(port, True)
+with socket.socket() as active:
+    active.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    active.bind(("127.0.0.1", 0))
+    active_port = active.getsockname()[1]
+    active.listen(1)
+    live_listener = probe(active_port, True)
+result = {"synthetic_time_wait_port": port, "kernel_tcp_state": state,
+          "kernel_state_06_is_time_wait": state == "06", "plain_probe": plain,
+          "reuse_address_probe": reuse, "active_listener_probe": live_listener,
+          "application_calls": 0, "live_helper_edits": 0, "reuse_port_enabled": False}
+Path(__file__).with_name("probe_time_wait_result_v1.json").write_text(json.dumps(result, indent=2) + "\n")
+print(json.dumps(result, indent=2))
+assert state == "06"
+assert plain == {"bound": False, "errno": errno.EADDRINUSE}
+assert reuse == {"bound": True, "errno": None}
+assert live_listener == {"bound": False, "errno": errno.EADDRINUSE}

@@ -1,0 +1,296 @@
+{
+  "operations": [
+    {
+      "id": "op_1eb02be1584bb7b95076",
+      "version": 2,
+      "name": "read_record",
+      "kind": "read_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "target": {
+            "description": "Exact current local anchor: URL",
+            "format": "uri",
+            "format_basis": "visible_label_prior_validated_by_trials",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "target"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "id": "op_38448a42c110ce54c36e",
+      "version": 2,
+      "name": "save_record",
+      "kind": "create_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "description": "Description",
+            "minLength": 1,
+            "type": "string"
+          },
+          "tags": {
+            "description": "Tags",
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title",
+            "maxLength": 512,
+            "minLength": 1,
+            "type": "string"
+          },
+          "url": {
+            "description": "URL",
+            "format": "uri",
+            "format_basis": "visible_label_prior_validated_by_trials",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "tags",
+          "title",
+          "description"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "id": "op_49b6746003059735c383",
+      "version": 2,
+      "name": "update_record",
+      "kind": "update_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "description": "Description",
+            "minLength": 1,
+            "type": "string"
+          },
+          "tags": {
+            "description": "Tags",
+            "minLength": 1,
+            "type": "string"
+          },
+          "target": {
+            "description": "Exact current local anchor: URL",
+            "format": "uri",
+            "format_basis": "visible_label_prior_validated_by_trials",
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title",
+            "maxLength": 512,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "tags",
+          "title",
+          "description"
+        ],
+        "type": "object"
+      }
+    }
+  ]
+}
+{"execution_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "idempotency_key": "8ecdfe14adb406699a8e10af2636bf4b"}
+{"job_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "status": "RUNNING", "events": 0}
+{"job_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "status": "RUNNING", "events": 1}
+{"job_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "status": "RUNNING", "events": 2}
+{"job_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "status": "RUNNING", "events": 4}
+{"job_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "status": "RUNNING", "events": 6}
+{"job_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "status": "RUNNING", "events": 8}
+{"job_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "status": "RUNNING", "events": 10}
+{"job_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "status": "RUNNING", "events": 11}
+{"job_id": "job_59f35f73c3394ed2a28c5d3ef668098c", "status": "COMPLETED", "events": 12}
+{
+  "connection_id": "conn_69dde230fe564df8899a808d6cfd5d20",
+  "created_at": "2026-09-09T18:48:32.951327+00:00",
+  "events": [
+    {
+      "created_at": "2026-09-09T18:48:32.961283+00:00",
+      "kind": "invoke",
+      "sequence": 1,
+      "type": "job_started"
+    },
+    {
+      "created_at": "2026-09-09T18:48:33.267494+00:00",
+      "sequence": 2,
+      "settled": true,
+      "signature": "46bfd1bfde5e55e8",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:48:33.621564+00:00",
+      "sequence": 3,
+      "settled": true,
+      "signature": "46bfd1bfde5e55e8",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:48:33.635963+00:00",
+      "sequence": 4,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8851/bookmarks"
+    },
+    {
+      "created_at": "2026-09-09T18:48:34.334028+00:00",
+      "sequence": 5,
+      "settled": true,
+      "signature": "46bfd1bfde5e55e8",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 131
+      },
+      "created_at": "2026-09-09T18:48:34.359685+00:00",
+      "sequence": 6,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T18:48:34.794187+00:00",
+      "sequence": 7,
+      "settled": true,
+      "signature": "fa7bc84d5dca75ca",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T18:48:34.802673+00:00",
+      "ok": true,
+      "sequence": 8,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T18:48:35.057062+00:00",
+      "sequence": 9,
+      "settled": true,
+      "signature": "fa7bc84d5dca75ca",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:48:35.067852+00:00",
+      "sequence": 10,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8851/bookmarks"
+    },
+    {
+      "created_at": "2026-09-09T18:48:35.732184+00:00",
+      "sequence": 11,
+      "settled": true,
+      "signature": "46bfd1bfde5e55e8",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T18:48:35.742651+00:00",
+      "outcome": "CONFIRMED",
+      "sequence": 12,
+      "status": "COMPLETED",
+      "type": "job_finished"
+    }
+  ],
+  "id": "job_59f35f73c3394ed2a28c5d3ef668098c",
+  "job_id": "job_59f35f73c3394ed2a28c5d3ef668098c",
+  "kind": "invoke",
+  "request": {
+    "arguments": {
+      "target": "https://example.invalid/semabi-fresh-session-20260909"
+    },
+    "limits": {
+      "max_actions": 20,
+      "max_seconds": 60.0,
+      "max_writes": 12
+    },
+    "operation_id": "op_1eb02be1584bb7b95076",
+    "version": 2
+  },
+  "result": {
+    "effect": {
+      "field_descriptors": {
+        "description": {
+          "input_type": "textarea",
+          "label": "Description",
+          "role": "textbox"
+        },
+        "tags": {
+          "input_type": "text",
+          "label": "Tags",
+          "role": "textbox"
+        },
+        "title": {
+          "input_type": "text",
+          "label": "Title",
+          "role": "textbox"
+        },
+        "url": {
+          "input_type": "text",
+          "label": "URL",
+          "role": "textbox"
+        }
+      },
+      "kind": "visible_record_read",
+      "scope": "Current descriptor-bound edit-form values for one exact local anchor in the rendered view",
+      "values": {
+        "description": "An existing bookmark changed after independent pre-state capture",
+        "tags": "semabi-update",
+        "title": "Updated through a learned HTTP operation",
+        "url": "https://example.invalid/semabi-fresh-session-20260909"
+      },
+      "witness": {
+        "basis": "visible_local_record",
+        "link_destinations": [
+          "https://example.invalid/semabi-fresh-session-20260909",
+          "http://127.0.0.1:8851/bookmarks?q=%23semabi-update",
+          "https://web.archive.org/web/20260909165950/https://example.invalid/semabi-fresh-session-20260909",
+          "http://127.0.0.1:8851/bookmarks?details=7",
+          "http://127.0.0.1:8851/bookmarks/7/edit?return_url=/bookmarks"
+        ],
+        "observation": "46bfd1bfde5e55e8",
+        "role": "listitem",
+        "root": 118,
+        "texts": [
+          "Today",
+          "|",
+          "View",
+          "Edit",
+          "Archive",
+          "Remove",
+          "Updated through a learned HTTP operation semabi-update | An existing bookmark changed after independent pre-state capture Today | View Edit Archive Remove",
+          "Updated through a learned HTTP operation",
+          "Updated through a learned HTTP operation",
+          "|",
+          "semabi-update",
+          "semabi-update",
+          "An existing bookmark changed after independent pre-state capture"
+        ],
+        "value_node": 121
+      }
+    },
+    "metrics": {
+      "actions": 3,
+      "elapsed_seconds": 2.78,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 1
+    },
+    "outcome": "CONFIRMED"
+  },
+  "status": "COMPLETED",
+  "updated_at": "2026-09-09T18:48:35.742712+00:00",
+  "write_intent": true
+}

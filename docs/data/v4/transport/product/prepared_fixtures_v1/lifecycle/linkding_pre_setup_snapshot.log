@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py", line 320, in _quiescent
+    start(app, manifest)
+    ~~~~~^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py", line 98, in wrapped
+    return function(Path(app), manifest, *args)
+  File "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py", line 445, in start
+    probe.bind(("127.0.0.1", manifest["port"]))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 98] Address already in use
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py", line 524, in <module>
+    main()
+    ~~~~^^
+  File "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py", line 516, in main
+    prepared = command(app, manifest, args.name) if args.name is not None else command(app, manifest)
+               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py", line 98, in wrapped
+    return function(Path(app), manifest, *args)
+  File "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py", line 337, in snapshot
+    with _quiescent(app, manifest) as was_running:
+         ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/moloch/semabi/runs/product_apps_v1/manage_apps.py", line 323, in _quiescent
+    raise RuntimeError("Restart failed; active data and any archives are preserved") from restart_error
+RuntimeError: Restart failed; active data and any archives are preserved
