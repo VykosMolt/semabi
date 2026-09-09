@@ -150,7 +150,7 @@ def _operation(browser):
               for label in ("Alpha", "Beta")]
     properties = {field["argument"]: {"type": "boolean" if field["descriptor"]["role"] == "checkbox"
                                       else "string"} for field in fields}
-    return {"id": "synthetic-cached-operation", "version": 1, "status": "ACTIVE",
+    return {"id": "synthetic-cached-operation", "version": 1, "status": "ACTIVE", "kind": "create_visible_record",
             "argument_schema": {"type": "object", "properties": properties,
                                 "required": ["alpha", "beta"], "additionalProperties": False},
             "procedure": {"entry_url": URL, "navigation": [{"role": "link", "label": "Open form", "input_type": ""}]
@@ -407,3 +407,344 @@ def test_synthetic_deadline_stops_next_action_and_preserves_possible_effect(tmp_
     assert len(browser.submits) == int(phase == "submit")
     assert len(browser.authentication_actions) == int(phase == "authentication")
     assert browser.closed and result["limits"]["max_seconds"] == 1
+
+
+class _RecordBrowser(_Browser):
+    """Synthetic cached route and temporary element tokens, with no saved effect."""
+
+    def __init__(self, *, menu=False, mode=None, authentication=False):
+        super().__init__(mode=mode, authentication=authentication)
+        self.page, self.menu, self.menu_open = "records", menu, False
+        self.rows = [{"Alpha": "Selected anchor", "Beta": "Original beta"},
+                     {"Alpha": "Other anchor", "Beta": "Other beta"}]
+        if mode == "duplicate_target":
+            self.rows[1]["Alpha"] = self.rows[0]["Alpha"]
+        self.selected, self.epoch, self.editor_reads = None, 0, 0
+        self.retained, self.released, self.tokens = [], [], {}
+        if mode == "no_continuity_api":
+            self.retain_nodes = None
+
+    def read(self):
+        if not self.authenticated:
+            return super().read()
+        if self.page == "editor":
+            self.editor_reads += 1
+            if self.mode == "before_first_fill_changed" and self.editor_reads == 3:
+                self.values["Beta"] = "Preserve this reactive value"
+            surface = super().read()
+            if self.mode == "unnamed_duplicate":
+                node = next(n for n, control in surface.controls.items() if control["label"] == "Alpha")
+                surface.observation.node(node).name = surface.controls[node]["label"] = ""
+                extra = len(surface.observation.nodes)
+                surface.observation.nodes.append(Node(extra, 0, "textbox", "", value=""))
+                surface.controls[extra] = {**surface.controls[node], "form": None}
+                surface.observation = Observation(surface.observation.nodes, URL)
+            self.tokens = {node.i: (self.epoch, node.role, node.name)
+                           for node in surface.observation.nodes}
+            return surface
+        nodes, controls = [Node(0, -1, "group", "")], {}
+        self.record_actions = {}
+
+        def control(role, label, parent, record_index, **extra):
+            node = len(nodes)
+            nodes.append(Node(node, parent, role, label))
+            controls[node] = {"role": role, "label": label, "input_type": "", "form": None,
+                              "disabled": False, "readonly": False, **extra}
+            self.record_actions[node] = record_index
+            return node
+
+        for index, row in enumerate(self.rows):
+            owner = len(nodes)
+            nodes.append(Node(owner, 0, "article", ""))
+            for value in row.values():
+                nodes.append(Node(len(nodes), owner, "text", value))
+            if self.menu:
+                control("button", "More", owner, index, has_popup="menu")
+            else:
+                control("button", "Edit", owner, index)
+                if self.mode == "duplicate_edit" and index == 0:
+                    control("button", "Edit", owner, index)
+        if self.menu_open:
+            owner = control("menu", "Actions", 0, self.selected)
+            control("menuitem", "Edit", owner, self.selected)
+            if self.mode == "duplicate_menu_edit":
+                control("menuitem", "Edit", owner, self.selected)
+        self.surface = Surface(Observation(nodes, URL), controls, {})
+        return self.surface
+
+    def goto(self, url):
+        self.navigations.append(url)
+        self.page, self.menu_open = "records", False
+        return self.read().observation
+
+    def act(self, action):
+        if not self.authenticated or self.page == "editor":
+            result = super().act(action)
+            if self.mode == "continuity_changed" and action.kind == "type":
+                self.epoch += 1
+            return result
+        self.actions.append(action)
+        self.selected = self.record_actions[action.target]
+        if self.surface.observation.node(action.target).name == "More":
+            self.menu_open = True
+        else:
+            self.values = self.rows[self.selected].copy()
+            if self.mode == "wrong_loaded_anchor":
+                self.values["Alpha"] = "Wrong record"
+            self.page, self.menu_open = "editor", False
+        return ActionResult(True)
+
+    def retain_nodes(self, nodes):
+        retained = [self.tokens[node] for node in nodes]
+        self.retained.append(retained)
+        return retained
+
+    def nodes_retained(self, retained, nodes):
+        return retained == [self.tokens[node] for node in nodes]
+
+    def release_nodes(self, retained):
+        self.released.append(retained)
+
+
+def _record_operation(browser, kind="update_visible_record"):
+    fields = {name.lower(): browser.descriptor(name) for name in ("Alpha", "Beta")}
+    if browser.mode == "unnamed_duplicate":
+        fields["alpha"]["label"] = ""
+    updates = ["alpha", "beta"] if kind == "update_visible_record" else []
+    properties = {name: {"type": "string", "minLength": 1, "maxLength": 80} for name in ["target", *updates]}
+    procedure = {"readback_url": URL, "selector_argument": "target", "anchor": "alpha",
+                 "read_fields": fields, "update_arguments": updates,
+                 "edit": {"role": "menuitem" if browser.menu else "button", "label": "Edit", "input_type": ""},
+                 "form": {"submit": {"role": "button", "label": "Save", "input_type": ""},
+                          "fields": [{"deliberately": "not a learned contract match"}]},
+                 "effect_slots": {"deliberately": "not consumed"}}
+    if browser.menu:
+        procedure.update(menu_trigger={"role": "button", "label": "More", "input_type": "", "has_popup": "menu"},
+                         menu={"role": "menu", "label": "Actions", "input_type": ""})
+    return {"id": "synthetic-cached-record", "version": 1, "status": "ACTIVE", "kind": kind,
+            "argument_schema": {"type": "object", "properties": properties, "required": list(properties),
+                                "additionalProperties": False}, "procedure": procedure}
+
+
+def _run_record(tmp_path, browser, kind="update_visible_record", *, operation=None, arguments=None, **limits):
+    default_arguments = {"target": browser.rows[0]["Alpha"]}
+    if kind == "update_visible_record":
+        default_arguments.update(alpha="Replacement anchor", beta="Updated beta")
+    return _run(tmp_path, browser, operation=_record_operation(browser, kind) if operation is None else operation,
+                arguments=default_arguments if arguments is None else arguments, **limits)
+
+
+@pytest.mark.parametrize("kind", ["read_visible_record", "update_visible_record"])
+@pytest.mark.parametrize("menu", [False, True], ids=["record_edit", "record_menu"])
+def test_synthetic_cached_record_read_and_update_dispatch_without_effect_verification(tmp_path, kind, menu):
+    browser = _RecordBrowser(menu=menu, authentication=True, mode="changed_requirement")
+    operation = _record_operation(browser, kind)
+    before = deepcopy(operation)
+
+    result = _run_record(tmp_path, browser, kind, operation=operation)
+
+    assert result["outcome"] == "DISPATCHED" and result["effect_verification"] == "NOT_PERFORMED"
+    assert result["metrics"]["authentication_actions"] == 3
+    assert browser.closed and operation == before
+    assert browser.rows[0] == {"Alpha": "Selected anchor", "Beta": "Original beta"}  # No saved effect exists.
+    if kind == "read_visible_record":
+        assert result["values"] == {"alpha": "Selected anchor", "beta": "Original beta"}
+        assert browser.submits == [] and not result["submit_attempted"]
+        assert len(browser.actions) == 1 + int(menu)
+    else:
+        assert browser.submits == [{"Alpha": "Replacement anchor", "Beta": "Updated beta"}]
+        assert len(browser.actions) == 4 + int(menu)
+        assert len(browser.retained) == len(browser.released) == 1
+        assert result["before"] == {"alpha": "Selected anchor", "beta": "Original beta"}
+
+
+@pytest.mark.parametrize("mode,before_edit", [("duplicate_target", True), ("duplicate_edit", True),
+                                             ("missing_field", False), ("duplicate_field", False),
+                                             ("unnamed_duplicate", False), ("duplicate_submit", False),
+                                             ("split_native_forms", False), ("wrong_loaded_anchor", False)])
+def test_synthetic_cached_record_selection_and_global_binding_failures_stop_honestly(tmp_path, mode, before_edit):
+    browser = _RecordBrowser(mode=mode)
+    result = _run_record(tmp_path, browser)
+    assert result["outcome"] == ("FAILED" if before_edit else "UNKNOWN")
+    assert len(browser.actions) == (0 if before_edit else 1)
+    assert browser.submits == [] and browser.closed
+
+
+def test_synthetic_cached_menu_requires_a_globally_unique_edit_control(tmp_path):
+    browser = _RecordBrowser(menu=True, mode="duplicate_menu_edit")
+    result = _run_record(tmp_path, browser)
+    assert result["outcome"] == "UNKNOWN" and len(browser.actions) == 1
+    assert browser.page == "records" and browser.submits == [] and browser.closed
+
+
+@pytest.mark.parametrize("mode,fills", [("before_first_fill_changed", 0), ("unfilled_changed", 1),
+                                       ("filled_changed", 2), ("continuity_changed", 1)])
+def test_synthetic_cached_update_rechecks_values_and_temporary_elements_before_each_action(tmp_path, mode, fills):
+    browser = _RecordBrowser(mode=mode)
+    result = _run_record(tmp_path, browser)
+    assert result["outcome"] == "UNKNOWN"
+    assert sum(action.kind == "type" for action in browser.actions) == fills
+    assert browser.submits == [] and browser.closed
+    assert len(browser.retained) == len(browser.released) == 1
+
+
+def test_synthetic_cached_update_stops_when_element_continuity_is_unavailable(tmp_path):
+    browser = _RecordBrowser(mode="no_continuity_api")
+    result = _run_record(tmp_path, browser)
+    assert result["outcome"] == "UNSUPPORTED"
+    assert not browser.actions and not browser.submits and browser.closed
+
+
+def test_synthetic_cached_record_deadline_after_edit_is_unknown_without_fill_or_retry(tmp_path, monkeypatch):
+    now = [100.0]
+    monkeypatch.setattr(cached_form.time, "monotonic", lambda: now[0])
+    browser = _RecordBrowser()
+    original_act = browser.act
+
+    def late_edit(action):
+        result = original_act(action)
+        now[0] += 2
+        return result
+
+    browser.act = late_edit
+    result = _run_record(tmp_path, browser, max_seconds=1)
+    assert result["outcome"] == "UNKNOWN" and result["reason"] == "Execution time budget exhausted"
+    assert len(browser.actions) == 1 and browser.actions[0].kind == "click"
+    assert browser.submits == [] and browser.closed
+
+
+@pytest.mark.parametrize("missing", ["kind", "read_fields", "edit", "form", "selector_argument", "update_arguments"])
+def test_synthetic_missing_cached_record_recipe_is_unsupported_before_browser(tmp_path, missing):
+    browser = _RecordBrowser()
+    operation = _record_operation(browser)
+    (operation if missing == "kind" else operation["procedure"]).pop(missing)
+    result = _run_record(tmp_path, browser, operation=operation)
+    assert result["outcome"] == "UNSUPPORTED"
+    assert not browser.navigations and not browser.actions
+
+
+@pytest.mark.parametrize("invalid,outcome", [("schema_type", "UNSUPPORTED"), ("schema_length", "UNSUPPORTED"),
+                                            ("argument_type", "FAILED"), ("argument_length", "FAILED"),
+                                            ("menu_popup", "UNSUPPORTED"), ("unknown_family", "UNSUPPORTED")])
+def test_synthetic_cached_record_schema_and_menu_validation_precedes_browser(tmp_path, invalid, outcome):
+    browser = _RecordBrowser(menu=True)
+    operation = _record_operation(browser)
+    arguments = {"target": "Selected anchor", "alpha": "Replacement anchor", "beta": "Updated beta"}
+    if invalid == "schema_type":
+        operation["argument_schema"]["properties"]["beta"]["type"] = "object"
+    elif invalid == "schema_length":
+        operation["argument_schema"]["properties"]["beta"]["maxLength"] = True
+    elif invalid == "argument_type":
+        arguments["beta"] = False
+    elif invalid == "argument_length":
+        arguments["beta"] = "x" * 81
+    elif invalid == "menu_popup":
+        operation["procedure"]["menu_trigger"]["has_popup"] = "dialog"
+    else:
+        operation["kind"] = "unknown_record_family"
+    result = _run_record(tmp_path, browser, operation=operation, arguments=arguments)
+    assert result["outcome"] == outcome
+    assert not browser.navigations and not browser.actions
+
+
+def test_synthetic_cached_read_redacts_credentials_from_structured_values_and_evidence(tmp_path):
+    browser = _RecordBrowser(authentication=True)
+    browser.rows[0]["Beta"] = "private-password"
+    result = _run_record(tmp_path, browser, "read_visible_record")
+    assert result["outcome"] == "DISPATCHED"
+    assert result["values"]["beta"] == "[REDACTED_CREDENTIAL]"
+    contents = json.dumps(result) + "".join(path.read_text() for path in (tmp_path / "replay").iterdir())
+    assert "private-password" not in contents and "private-user" not in contents
+
+
+def test_synthetic_cached_update_late_continuity_release_cannot_report_dispatched(tmp_path, monkeypatch):
+    now = [100.0]
+    monkeypatch.setattr(cached_form.time, "monotonic", lambda: now[0])
+    browser = _RecordBrowser()
+    original_release = browser.release_nodes
+
+    def late_release(retained):
+        original_release(retained)
+        now[0] += 2
+
+    browser.release_nodes = late_release
+    result = _run_record(tmp_path, browser, max_seconds=1)
+    assert result["outcome"] == "UNKNOWN" and result["reason"] == "Execution time budget exhausted"
+    assert len(browser.actions) == 4 and len(browser.submits) == 1
+    assert len(browser.released) == 1 and browser.closed
+    assert result["submit_returned_ok"] is True
+
+
+def test_synthetic_cached_update_preserves_primary_failure_after_late_release(tmp_path, monkeypatch):
+    now = [100.0]
+    monkeypatch.setattr(cached_form.time, "monotonic", lambda: now[0])
+    browser = _RecordBrowser(mode="before_first_fill_changed")
+    original_release = browser.release_nodes
+
+    def late_release(retained):
+        original_release(retained)
+        now[0] += 2
+
+    browser.release_nodes = late_release
+    result = _run_record(tmp_path, browser, max_seconds=1)
+    assert result["outcome"] == "UNKNOWN"
+    assert result["reason"] == "Cached editor values changed before the next update action"
+    assert len(browser.actions) == 1 and browser.submits == []
+    assert len(browser.released) == 1 and browser.closed
+
+
+@pytest.mark.parametrize("late_intent", [1, 2], ids=["before_edit", "before_first_fill"])
+def test_synthetic_cached_record_late_intent_logging_does_not_dispatch_another_write(tmp_path, monkeypatch, late_intent):
+    now, intents = [100.0], []
+    monkeypatch.setattr(cached_form.time, "monotonic", lambda: now[0])
+    browser = _RecordBrowser()
+    original_event = cached_form._Replay.event
+
+    def delayed_event(self, value):
+        original_event(self, value)
+        if value["type"] == "write_intent":
+            intents.append(value)
+            if len(intents) == late_intent:
+                now[0] += 2
+
+    monkeypatch.setattr(cached_form._Replay, "event", delayed_event)
+    result = _run_record(tmp_path, browser, max_seconds=1)
+    assert result["outcome"] == ("FAILED" if late_intent == 1 else "UNKNOWN")
+    assert result["reason"] == "Execution time budget exhausted"
+    assert len(browser.actions) == late_intent - 1
+    assert all(action.kind == "click" for action in browser.actions)
+    assert not browser.submits and browser.closed
+
+
+@pytest.mark.parametrize("event_type", ["navigation", "authentication_action"])
+def test_synthetic_cached_record_event_deadline_prevents_navigation_and_auth_dispatch(tmp_path, monkeypatch, event_type):
+    now = [100.0]
+    monkeypatch.setattr(cached_form.time, "monotonic", lambda: now[0])
+    browser = _RecordBrowser(authentication=event_type == "authentication_action")
+    original_event = cached_form._Replay.event
+
+    def delayed_event(self, value):
+        original_event(self, value)
+        if value["type"] == event_type:
+            now[0] += 2
+
+    monkeypatch.setattr(cached_form._Replay, "event", delayed_event)
+    result = _run_record(tmp_path, browser, max_seconds=1)
+    assert result["outcome"] == "FAILED" and result["reason"] == "Execution time budget exhausted"
+    assert browser.navigations == [URL]
+    assert not browser.authentication_actions and not browser.actions and not browser.submits
+    assert browser.closed
+
+
+def test_synthetic_cached_read_redacts_overlapping_credentials_as_whole_values(tmp_path):
+    browser = _RecordBrowser(authentication=True)
+    credentials = {"username": "demo", "password": "demo-private-secret"}
+    browser.rows[0]["Beta"] = credentials["password"]
+    result = cached_form.replay(_record_operation(browser, "read_visible_record"),
+                                {"target": "Selected anchor"}, application_url=URL, credentials=credentials,
+                                output_dir=tmp_path / "replay", browser_factory=lambda _url: browser)
+    assert result["outcome"] == "DISPATCHED"
+    assert result["values"]["beta"] == "[REDACTED_CREDENTIAL]"
+    contents = json.dumps(result) + "".join(path.read_text() for path in (tmp_path / "replay").iterdir())
+    assert "demo" not in contents and "private-secret" not in contents
+    assert browser.closed

@@ -3,7 +3,7 @@
 Both comparison arms must be charged for SemABI's acquisition and artifact
 assistance. This is a conditional replay baseline, not independent onboarding.
 It consumes discovered navigation and control descriptors, substitutes supplied
-arguments, and reports DISPATCHED after a completed submit action. It does not
+arguments, and reports DISPATCHED after cached reading or a completed submit action. It does not
 infer form contracts, learn operations, verify effects, reload, or retry writes.
 Unsupported operation families remain unsupported in the task denominator.
 
@@ -32,9 +32,10 @@ from semabi.compiler.browser import Primitive
 from semabi.compiler.browser_session import BrowserSession, origin_of
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.observation import Observation
+from semabi.compiler.surface import visible_record_matches
 
 
-BASELINE_VERSION = "cached-form-v2"
+BASELINE_VERSION = "cached-form-v3"
 TEXT_INPUTS = {"", "text", "textarea", "contenteditable", "url", "email", "search",
                "number", "tel", "date", "datetime-local", "month", "week", "time"}
 
@@ -80,7 +81,8 @@ class _Budget:
 
 
 def _descriptor(value: dict, roles: set[str]) -> dict:
-    if (not isinstance(value, dict) or set(value) != {"role", "label", "input_type"}
+    required = {"role", "label", "input_type"}
+    if (not isinstance(value, dict) or not required <= set(value) <= required | {"has_popup"}
             or not all(isinstance(part, str) for part in value.values())
             or value["role"] not in roles):
         raise _Stop("Artifact has no supported cached control descriptor", unsupported=True)
@@ -92,6 +94,11 @@ def _procedure(operation: dict, arguments: dict, allowed_origin: str) -> dict:
         raise _Stop("No cached form operation is available", unsupported=True)
     if operation.get("status", "ACTIVE") != "ACTIVE":
         raise _Stop("Cached operation is inactive", unsupported=True)
+    kind = operation.get("kind")
+    if kind not in {"create_visible_record", "read_visible_record", "update_visible_record"}:
+        raise _Stop("Cached operation family is unsupported", unsupported=True)
+    if kind != "create_visible_record":
+        return _record_procedure(operation, arguments, allowed_origin)
     procedure = operation["procedure"]
     entry = procedure.get("entry_url")
     if not isinstance(entry, str) or origin_of(entry) != allowed_origin:
@@ -143,9 +150,55 @@ def _procedure(operation: dict, arguments: dict, allowed_origin: str) -> dict:
     navigation = procedure.get("navigation", [])
     if not isinstance(navigation, list):
         raise _Stop("Cached navigation is unsupported", unsupported=True)
-    return {"entry_url": entry,
+    return {"kind": kind, "entry_url": entry,
             "navigation": [_descriptor(item, {"button", "link"}) for item in navigation],
             "fields": fields, "submit": _descriptor(form.get("submit"), {"button"})}
+
+
+def _record_procedure(operation: dict, arguments: dict, allowed_origin: str) -> dict:
+    cached, kind = operation["procedure"], operation["kind"]
+    fields, form, schema = cached.get("read_fields"), cached.get("form"), operation.get("argument_schema")
+    selector, anchor = cached.get("selector_argument"), cached.get("anchor")
+    updates = cached.get("update_arguments") if kind == "update_visible_record" else []
+    if (not isinstance(fields, dict) or not fields or not all(isinstance(name, str) for name in fields)
+            or not isinstance(selector, str) or not isinstance(anchor, str) or anchor not in fields
+            or not isinstance(updates, list) or not all(isinstance(name, str) for name in updates)
+            or len(set(updates)) != len(updates) or not set(updates) <= set(fields) or selector in updates
+            or kind == "update_visible_record" and not updates
+            or not isinstance(form, dict) or not isinstance(schema, dict) or schema.get("type") != "object"
+            or not isinstance(schema.get("properties"), dict)):
+        raise _Stop("Artifact has no supported cached record recipe", unsupported=True)
+    properties, names = schema["properties"], {selector, *updates}
+    required = schema.get("required", [])
+    if (set(properties) != names or not isinstance(required, list)
+            or not all(isinstance(name, str) for name in required) or not set(required) <= names):
+        raise _Stop("Cached record schema is unsupported", unsupported=True)
+    if not isinstance(arguments, dict) or set(arguments) != names:
+        raise _Stop("Arguments must match the cached record schema")
+    for name, prop in properties.items():
+        if not isinstance(prop, dict) or prop.get("type") != "string":
+            raise _Stop("Cached record arguments require a flat string schema", unsupported=True)
+        minimum, maximum = prop.get("minLength", 0), prop.get("maxLength", 100000)
+        if type(minimum) is not int or type(maximum) is not int or minimum < 0 or maximum < minimum:
+            raise _Stop("Artifact has invalid text length limits", unsupported=True)
+        if not isinstance(arguments[name], str) or not minimum <= len(arguments[name]) <= maximum:
+            raise _Stop("Argument does not satisfy its cached text length limits")
+    descriptors = [{"argument": name, "descriptor": _descriptor(value, {"textbox"})}
+                   for name, value in fields.items()]
+    if any(field["descriptor"]["input_type"] not in TEXT_INPUTS for field in descriptors):
+        raise _Stop("Cached record field type is unsupported", unsupported=True)
+    entry = cached.get("readback_url")
+    if not isinstance(entry, str):
+        raise _Stop("Cached record readback URL is missing", unsupported=True)
+    if origin_of(entry) != allowed_origin:
+        raise _Stop("Cached readback URL is outside the allowed origin")
+    menu = _descriptor(cached["menu_trigger"], {"button"}) if "menu_trigger" in cached else None
+    if (menu is not None and menu.get("has_popup") != "menu") or ("menu" in cached and menu is None):
+        raise _Stop("Cached record menu trigger is unsupported", unsupported=True)
+    return {"kind": kind, "entry_url": entry, "navigation": [], "fields": descriptors,
+            "submit": _descriptor(form.get("submit"), {"button"}), "selector_argument": selector,
+            "anchor": anchor, "update_arguments": updates,
+            "edit": _descriptor(cached.get("edit"), {"button", "link", "menuitem"}), "menu_trigger": menu}
 
 
 class _Replay:
@@ -153,7 +206,8 @@ class _Replay:
         self.directory = Path(output_dir)
         self.directory.mkdir(parents=True, exist_ok=False, mode=0o700)
         self.directory.chmod(0o700)
-        self.secrets = [value for value in credentials.values() if isinstance(value, str) and value]
+        self.secrets = sorted({value for value in credentials.values() if isinstance(value, str) and value},
+                              key=len, reverse=True)
         for name in ("observations.jsonl", "steps.jsonl", "surfaces.jsonl", "events.jsonl"):
             descriptor = os.open(self.directory / name, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
             os.close(descriptor)
@@ -201,8 +255,8 @@ class _Replay:
         return surface
 
     @staticmethod
-    def resolve(surface, descriptor: dict) -> int:
-        matches = surface.resolve(descriptor)
+    def resolve(surface, descriptor: dict, within: int | None = None) -> int:
+        matches = surface.resolve(descriptor, within=within)
         if len(matches) != 1:
             raise _Stop("Cached control is missing or ambiguous")
         return matches[0]
@@ -242,9 +296,86 @@ class _Replay:
         if control.get("disabled") or control.get("readonly"):
             raise _Stop("Cached control is disabled or read-only")
 
+    def record_bindings(self, surface, procedure: dict):
+        bindings = {field["argument"]: self.resolve(surface, field["descriptor"])
+                    for field in procedure["fields"]}
+        submit = self.resolve(surface, procedure["submit"])
+        nodes = [bindings[name] for name in sorted(bindings)] + [submit]
+        if len(set(nodes)) != len(nodes):
+            raise _Stop("Cached record controls are not distinct")
+        owners = [surface.controls[node].get("form") for node in nodes]
+        if any(owner is not None for owner in owners) and len(set(owners)) != 1:
+            raise _Stop("Cached record controls do not share one native form")
+        owner = owners[0]
+        if owner is None:
+            owner = next((parent for parent in surface.observation.ancestors(submit)
+                          if all(parent in surface.observation.ancestors(node) for node in bindings.values())), None)
+        if owner is None:
+            raise _Stop("Cached record controls have no observed common owner")
+        values = {name: self.value(surface, node) for name, node in bindings.items()}
+        if any(not isinstance(value, str) for value in values.values()):
+            raise _Stop("A cached record field no longer exposes a string value")
+        return bindings, submit, values, [owner, *nodes]
+
+    def record(self, surface, procedure: dict, arguments: dict, allowed_origin: str) -> dict:
+        updating = procedure["kind"] == "update_visible_record"
+        if updating and not all(callable(getattr(self.browser, method, None)) for method in
+                                ("retain_nodes", "nodes_retained", "release_nodes")):
+            raise _Stop("Observed editor element continuity is unavailable", unsupported=True)
+        target = arguments[procedure["selector_argument"]]
+        # Shared generic Surface parsing selects a current local record; learned
+        # effect slots and full form contracts are deliberately not consumed.
+        records = visible_record_matches(surface, target)
+        if len(records) != 1:
+            raise _Stop("Cached target record is missing or ambiguous")
+        self.preserve_drafts(surface, procedure["fields"])
+        menu = procedure["menu_trigger"]
+        self.stage = "record_menu" if menu else "record_edit"
+        node = self.resolve(surface, menu or procedure["edit"], within=records[0]["root"])
+        self.writable(surface, node)
+        surface = self.act(surface, Primitive("click", node), allowed_origin)
+        if menu:
+            self.stage = "record_edit"
+            self.preserve_drafts(surface, procedure["fields"])
+            node = self.resolve(surface, procedure["edit"])
+            self.writable(surface, node)
+            surface = self.act(surface, Primitive("click", node), allowed_origin)
+        self.stage = "record_values"
+        surface = self.observe(allowed_origin)
+        _, _, values, nodes = self.record_bindings(surface, procedure)
+        if values[procedure["anchor"]] != target:
+            raise _Stop("Loaded editor anchor does not match the requested record")
+        if not updating:
+            return {"values": values, "reason": "Cached editor values read; no effect verification performed"}
+        expected = values.copy()
+        self.budget.check()
+        retained = self.browser.retain_nodes(nodes)
+        try:
+            for name in [*procedure["update_arguments"], None]:
+                self.stage = "parameters" if name is not None else "submit"
+                surface = self.observe(allowed_origin)
+                bindings, submit, current, nodes = self.record_bindings(surface, procedure)
+                if current != expected:
+                    raise _Stop("Cached editor values changed before the next update action")
+                self.budget.check()
+                if not self.browser.nodes_retained(retained, nodes):
+                    raise _Stop("Cached editor DOM elements changed before the next update action")
+                self.budget.check()
+                node = bindings[name] if name is not None else submit
+                self.writable(surface, node)
+                action = Primitive("type", node, arguments[name]) if name is not None else Primitive("click", node)
+                self.act(surface, action, allowed_origin, submit=name is None)
+                if name is not None:
+                    expected[name] = arguments[name]
+        finally:
+            self.browser.release_nodes(retained)
+        self.budget.check()
+        return {"before": values, "reason": "Cached update submit completed; business effect is unverified"}
+
     def act(self, surface, action: Primitive, allowed_origin: str, *, submit: bool = False):
         self.budget.take(writing=True)
         self.event({"type": "write_intent", "action": action.to_json(), "cached_submit": submit})
+        self.budget.check()
         self.possible_action = True
         self.submit_attempted |= submit
         result = self.browser.act(action)
@@ -302,10 +433,11 @@ class _Replay:
                 nonlocal auth_budget_failure
                 try:
                     self.budget.take(writing=True, authentication=True)
+                    self.event({"type": "authentication_action", "kind": action.kind})
+                    self.budget.check()
                 except _Stop as error:
                     auth_budget_failure = error
                     raise
-                self.event({"type": "authentication_action", "kind": action.kind})
                 return original_act(action)
 
             self.browser.act = authentication_action
@@ -326,6 +458,7 @@ class _Replay:
             self.stage = "navigation"
             self.budget.take()
             self.event({"type": "navigation", "url": procedure["entry_url"]})
+            self.budget.check()
             self.browser.goto(procedure["entry_url"])
             surface = self.observe(allowed_origin)
             for descriptor in procedure["navigation"]:
@@ -334,38 +467,41 @@ class _Replay:
                 node = self.resolve(surface, descriptor)
                 self.writable(surface, node)
                 surface = self.act(surface, Primitive("click", node), allowed_origin)
-            self.stage = "parameters"
-            bindings, _ = self.bindings(surface, procedure, arguments, set())
-            for node in bindings.values():
-                self.writable(surface, node)
-            filled = set()
-            for field in procedure["fields"]:
-                name = field["argument"]
+            if procedure["kind"] != "create_visible_record":
+                result.update(self.record(surface, procedure, arguments, allowed_origin))
+            else:
+                self.stage = "parameters"
+                bindings, _ = self.bindings(surface, procedure, arguments, set())
+                for node in bindings.values():
+                    self.writable(surface, node)
+                filled = set()
+                for field in procedure["fields"]:
+                    name = field["argument"]
+                    surface = self.observe(allowed_origin)
+                    bindings, _ = self.bindings(surface, procedure, arguments, filled)
+                    node = bindings[name]
+                    self.writable(surface, node)
+                    role, value = surface.controls[node]["role"], arguments[name]
+                    if role == "checkbox":
+                        if type(self.value(surface, node)) is not bool:
+                            raise _Stop("Checkbox state is unavailable")
+                        action = Primitive("click", node) if self.value(surface, node) != value else None
+                    elif role == "combobox":
+                        if value not in surface.controls[node].get("options", []):
+                            raise _Stop("Requested selection is unavailable")
+                        action = Primitive("select", node, value)
+                    else:
+                        action = Primitive("type", node, value)
+                    if action is not None:
+                        surface = self.act(surface, action, allowed_origin)
+                    filled.add(name)
+                self.stage = "submit"
                 surface = self.observe(allowed_origin)
-                bindings, _ = self.bindings(surface, procedure, arguments, filled)
-                node = bindings[name]
-                self.writable(surface, node)
-                role, value = surface.controls[node]["role"], arguments[name]
-                if role == "checkbox":
-                    if type(self.value(surface, node)) is not bool:
-                        raise _Stop("Checkbox state is unavailable")
-                    action = Primitive("click", node) if self.value(surface, node) != value else None
-                elif role == "combobox":
-                    if value not in surface.controls[node].get("options", []):
-                        raise _Stop("Requested selection is unavailable")
-                    action = Primitive("select", node, value)
-                else:
-                    action = Primitive("type", node, value)
-                if action is not None:
-                    surface = self.act(surface, action, allowed_origin)
-                filled.add(name)
-            self.stage = "submit"
-            surface = self.observe(allowed_origin)
-            _, submit = self.bindings(surface, procedure, arguments, filled)
-            self.writable(surface, submit)
-            self.act(surface, Primitive("click", submit), allowed_origin, submit=True)
+                _, submit = self.bindings(surface, procedure, arguments, filled)
+                self.writable(surface, submit)
+                self.act(surface, Primitive("click", submit), allowed_origin, submit=True)
+                result["reason"] = "Cached submit action completed; business effect is unverified"
             result["outcome"] = "DISPATCHED"
-            result["reason"] = "Cached submit action completed; business effect is unverified"
         except BaseException as error:
             result["outcome"] = ("UNKNOWN" if self.possible_action else
                                  "UNSUPPORTED" if isinstance(error, _Stop) and error.unsupported else "FAILED")

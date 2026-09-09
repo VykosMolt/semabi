@@ -169,24 +169,41 @@ Optional invocation limits and P4 are integrated. The combined runtime hash
 passed **252 tests in 22.93 s** (exec 97984, terminal `34c826`, exit zero).
 New DOM continuity reads and successful cleanup are also deadline checked;
 cleanup still runs after expiry. Source snapshots and candidate/test receipts
-are in `runs/product_menu_v1`. Root stopped and reaped service 46217 before
-integration; service 97053 now owns the same private data directory on CPUs 2–3.
+are in `runs/product_menu_v1`. This checkpoint is committed at `607499d`.
+Root stopped and reaped service 46217 before integration. The subsequent
+service 97053 was also stopped after preserving the live failure; the same
+private data directory will be reused after the next source freeze.
 
 The first live P4 Memos run is negative and preserved. Independent checks first
 found the old target and sampled non-target once, and proposed replacement zero
 times, before and after reload. Learning then established CREATE, completed one
 READ trial, and stopped on the second with `Learned record editor form contract
 has changed` (16 actions, 8 possible writes, 15.538 s). No requested target read
-or update was performed. The implementation agent is comparing the two recorded
-rendered forms; no new application inspection is required for that diagnosis.
-The evaluator preserves this failure and its exact source alongside the first
-pre-state check. The next source revision and application run must use new
-snapshot identities.
+or update was performed. Recorded observations show that the sole form-contract
+difference is a per-record numeric label on an untouched dialog button. Its
+value is absent from the pre-edit record view, so a binding to an existing
+record slot is unsupported. The exact comparison is retained in
+`runs/product_menu_v1/forensics`. The evaluator preserved the failure and its
+exact source alongside the first pre-state check. The next source revision and
+application run must use new snapshot identities.
 
-A separate agent owns a bounded cached READ/UPDATE replay extension in
-`/tmp/semabi_cached_record_candidate`. Main's baseline already has a 60-second
-deadline including connection and authentication; 43 focused tests passed
-(exec `702ade`, actual exit zero). Vikunja remains unopened and reserved. Next:
+The bounded repair is being implemented in `/tmp/semabi_context_value_candidate`:
+learn one numeric context-label shape across two completed READ trials, preserve
+all separators and digit widths, and retain every other form constraint. The
+button must uniquely advertise a dialog throughout its editor. Its raw label,
+state and actual DOM element remain fixed within each call. This is an explicit
+syntactic generalization; amounts or status codes are not thereby proven
+semantically irrelevant. No application name or date-format special case is used.
+
+The bounded cached READ/UPDATE replay extension is adopted from
+`/tmp/semabi_cached_record_candidate`: **82 tests passed**, with all five imported
+compiler dependencies identical to main. The baseline returns structured cached
+reads or dispatches one update using globally unique fields; it does not verify
+effects or consume learned form contracts. Review fixed delayed-event deadline
+gaps, late cleanup reporting, and overlapping-credential redaction. Its
+60-second deadline includes connection and authentication. A separate agent is
+materializing the unchanged prospective development requests and fixture plan;
+no assessment results or setup actions exist yet. Vikunja remains unopened and reserved. Next:
 repair the demonstrated editor contract difference, verify the change, then
 repeat P4 through the same HTTP entry point. No fixed assessment has begun,
 and no native fits or full unchanged corpus runs are queued.

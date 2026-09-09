@@ -111,11 +111,18 @@ Use `semabi.baselines.cached_form`, a generic cached-form replay baseline. Both
 arms receive the same authorized origin, credentials, ordinary goals, initial
 fixture, and automatically learned operation artifact. The baseline consumes
 the artifact's argument schema, entry/navigation procedure, and visible field
-and submit descriptors. This is stronger assistance than a raw trace alone;
+and submit descriptors. For READ/UPDATE it also consumes the cached local
+selector, Edit/menu route, and update-argument bindings. Shared Surface parsing
+finds the exact current local target. This is stronger assistance than a raw trace alone;
 it is supplied equally and charged to both arms. The baseline substitutes fresh
-arguments and resolves descriptors with strict uniqueness. It preserves drafts
-and already filled values, but does not match the full learned form contract or
-verify the requested effect. `DISPATCHED` means only that submission completed.
+arguments and resolves descriptors with strict uniqueness. Record fields and
+submit controls must be globally unique and share their current native owner
+where present; an ambiguous unnamed creator/editor pair stops. Updates preserve
+captured field values and actual DOM elements before each next action. The
+baseline preserves argument drafts and already filled values, but does not
+match the full learned form contract, check unmodeled defaults, or verify the
+requested effect. `DISPATCHED` means only that cached reading or submission
+completed; returned values and saved effects require independent checking.
 Missing/ambiguous controls stop replay. There are no hand-authored selectors,
 manual demonstrations, semantic repairs, or evaluator feedback. Lack of a
 usable artifact is `UNSUPPORTED`, not an omitted request.
