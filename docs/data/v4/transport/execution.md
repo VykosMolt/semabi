@@ -10,7 +10,7 @@ current resource cap is **12 aggregate heavy-job CPUs**, superseding the previou
 24-CPU allowance. No paid runtime models, external accounts, public deployment
 or push are authorized.
 
-Active milestone P1 is a complete local operation: connect, observe/learn,
+Completed milestone P1 established a complete local operation: connect, observe/learn,
 publish a parameterized schema, invoke unseen arguments, verify a visible effect,
 and repeat after a fresh browser session and service restart. Reuse Playwright,
 restricted observations, primitive/evidence records and native learning utilities.
@@ -38,17 +38,22 @@ run. Browser observations alone enter learning and runtime verification.
 
 Rolling queue:
 
-1. Implement the thin service and observation-grounded learning/runtime together.
-   Complete the pending receiver-view control only to resolve its bounded naming
-   question; it is an identity-assisted diagnostic, not the product learning path.
-2. Deliver a local quickstart and real fresh-argument/session/restart demonstration
-   on the first disclosed independently developed application. Measure onboarding
-   actions/time, assistance, invocation outcomes and repeat cost.
-3. Freeze a predefined read/write workflow set and the common onboarding policy;
-   validate on at least three independently developed applications, reserving one
-   until code/protocol freeze. Compare a bounded generic automation baseline.
-4. Preserve failures, make general repairs and use new reserved evidence for new
-   transfer claims. Continue against the highest-value demonstrated limitation.
+1. P1/P2 complete: persisted HTTP creation and session/restart reuse; separate
+   independent checks on Memos and Linkding. The receiver-view control remains
+   an identity-assisted diagnostic; ordinary learned JOIN is still unestablished.
+2. P3 complete in working code: learned local READ/UPDATE, independent target
+   and non-target checks, and a successful read after service restart. Preserve
+   the final source, verification and demonstration in a coherent local commit.
+3. Active P4: generalize record editing through advertised menus, resolve an
+   unlabeled but uniquely observed field beside a blank creation form, and
+   support exact local replacement when the only text value is also the anchor.
+   Two observed trials and fresh state/effect checks remain required.
+4. Run the predefined development workflow set, align invocation limits with
+   the prospective budgets, and preserve every unsupported task. After general
+   repairs, freeze the common source/onboarding/baseline/protocol before opening
+   reserved Vikunja. Use equivalent reset fixtures for the paired comparison.
+5. Preserve failures and continue against the highest-value demonstrated
+   limitation, using newly reserved evidence for further transfer claims.
 
 Application setup is separate from learner implementation. Proposed disclosed
 development applications are linkding and Memos; Vikunja is reserved, subject to
@@ -106,19 +111,59 @@ combobox slots; none adopts the radio slot. See
 [ordinary projection evidence](development/radio_owner_projection_v1/README.md). The completed naming control remains supplied-binding
 evidence; ordinary learned JOIN and fresh transport remain unestablished.
 
-Active P3: derive useful READ and UPDATE calls from two successful creation
-trials and a uniquely resolved local edit action. Reads must use labeled form
-values; updates preserve the anchor and guard the evolving full editor state
-before each fill. Preserve established creation/read artifacts if a later stage
-is unsupported. This extension is being implemented in an isolated candidate;
-the running P2 source remains fixed for independent evaluation.
+P3 now completes real READ and UPDATE calls on Linkding through the external
+HTTP client. Learning used 40 actions, 25 possible writes and 23.747 s, with two
+successful trials for each of CREATE, READ and UPDATE and no failed candidates.
+Its read returned four current fields (3 actions, 1 possible write, 2.593 s).
+Its update changed title, description and tags of an older bookmark while keeping
+its URL (7 actions, 5 possible writes, 4.586 s). Independent ordinary-DOM checks
+captured the target and one sampled non-target before the update and after it:
+both appeared once before/after reload; target fields matched the request and
+sampled non-target fields were unchanged. A fresh-browser read after stopping
+and restarting the same service returned the changed values (3 actions,
+1 possible write, 2.579 s). Each reconnect's three authentication primitives are
+separate from phase costs. This remains development evidence, without a fixed
+task denominator or a claim about all unobserved side effects.
 
-Root owns integration and service exec 79582 (CPUs2–5). The implementation agent
-owns only `/tmp/semabi_record_candidate`; the evaluator completed and closed all independent P2 browsers; the native worker completed and reaped its single copied-source J1 fit. No other owned heavy jobs are active. Vikunja remains unopened
-and reserved. The learner/protocol are not yet frozen for the three-application
-assessment. Next: commit this coherent P2 product source, then validate the isolated
-read/update candidate against the disclosed applications. The native projection is ready for its separate commit with its ordinary
-fit result. The P2 product checkpoint is committed at `36174c5`.
+The final P3 runtime hash is `9547b4cb9c96146c7b7eccae1a83be4de7bc6a8555ef79833826a68ac60e4f1e`,
+surface `c87e8f0e9977d860e61d46279e30995a1d86dbeff27f55cdfc234becccabfaab`,
+and service `8152e9a337128f367ddbea57706658858b8fa5523d26aa208aaf96a5f0c70e25`.
+The integrated runtime/service/baseline/browser run passed **170 tests in 20 s**
+(exec 29143, actual exit zero). Two substantive review findings were fixed before
+live use: a sibling draft could be discarded by navigation/reload, and learning
+could continue to another candidate after an established family's failed stage
+left a draft. Fresh guards and immediate family termination now preserve those
+drafts; the reviewer accepted both fixes. Exact snapshots, public jobs and
+process/test receipts are in `runs/product_record_v1`; the independent evidence
+is in `runs/product_record_evaluator_v1` and the
+[record-operation checkpoint](product/record_operations_v1/README.md).
+
+Relearning explicitly withdrew the incompatible P2 versions on both applications.
+The service supplies its own active artifacts; source, policy or contract
+contradictions survive later exploration failures. A compatible operation omitted
+from a bounded scan remains active. On the same frozen P3 source, Memos again
+established creation (9 actions, 4 possible writes, 9.223 s), but its read stage
+stopped before a trial because the original text field has no explicit label.
+That negative result is retained. Earlier rendered evidence also shows its
+advertised record menu and simultaneous blank creator/populated editor. These
+observed gaps drive P4; no new application-specific integration is being written.
+
+The [cached-form smoke](product/cached_form_smoke_v1/README.md) is committed at
+`177bc44`. Both actual baseline replays dispatched and have independent matching
+records before and after reload. Their shared artifact/learning assistance and
+costs are explicit; accounts were not reset, so this is not the prospective
+paired comparison. The workflow possible-write budget was prospectively raised
+from 8 to 12, including authentication, before any fixed assessment began.
+
+Root owns service exec 46217 (CPUs 2–3), restarted with the same private data
+directory; the prior P3 service 60197 and all five client jobs are reaped. All
+independent P3 browsers and the 170-test process are closed. The implementation
+agent owns only `/tmp/semabi_menu_record_candidate` for P4; it must not change
+main or call applications. The evaluator is preserving P3 evidence without new
+browser calls. Vikunja remains unopened and reserved. Next: commit the coherent
+P3 source/evidence, review the isolated P4 mechanism and meaningful tests, then
+exercise it through the same HTTP entry point on Memos. No reserved assessment
+has begun, and no native fits or full unchanged corpus runs are queued.
 
 ## Paused for user review (2026-09-08 11:53 UTC)
 

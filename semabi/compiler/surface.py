@@ -156,7 +156,7 @@ def form_candidates(surface: Surface) -> list[dict]:
                                                         if index != submit and index not in auxiliary_buttons], key=digest),
                             "fields": sorted([{key: field[key] for key in
                                                ("argument", "descriptor", "required", "role", "input_type",
-                                                "min", "max", "max_length")}
+                                                "min", "max", "max_length", "options")}
                                               for field in fields], key=lambda value: value["argument"])}
                 candidates.append({"root": root, "submit_node": submit, "fields": fields,
                                    "descriptor": semantic, "signature": digest(semantic),
@@ -171,6 +171,29 @@ def form_candidates(surface: Surface) -> list[dict]:
 def matching_forms(surface: Surface, descriptor: dict) -> list[dict]:
     return [candidate for candidate in form_candidates(surface)
             if candidate["descriptor"] == descriptor]
+
+
+def form_state(surface: Surface, root: int) -> dict | None:
+    """Capture value controls by unique descriptors, including disabled defaults.
+
+    Node numbers and DOM order are observation-local. Ambiguous descriptors
+    cannot establish that the same field remained unchanged across observations.
+    """
+    states = {}
+    for node in surface.observation.subtree(root):
+        control = surface.controls.get(node, {})
+        if control.get("role") not in {"textbox", "combobox", "checkbox", "radio"}:
+            continue
+        descriptor = surface.descriptor(node)
+        key = digest(descriptor)
+        if key in states:
+            return None
+        field = surface.observation.node(node)
+        states[key] = {"descriptor": descriptor, "value": field.value,
+                       "checked": field.checked,
+                       **{name: control.get(name) for name in
+                          ("disabled", "readonly", "required", "min", "max", "max_length", "options")}}
+    return states
 
 
 def editor_scopes(surface: Surface) -> set[int]:

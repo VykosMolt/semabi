@@ -1,0 +1,208 @@
+{
+  "read": {
+    "all_four_fields_equal": true,
+    "before_result_sha256": "3d4a18478907559a9810a724a50768e1d126b7da82e3f0bd10fda7b8632a8bd8",
+    "independent_snapshot_ids": [
+      "eval_dom_775c526657d04fa8a5e26fd5ef7c8bc8",
+      "eval_dom_74586297bcfb4a39807fb763ecfda3f5"
+    ],
+    "independently_observed_values": {
+      "description": "Persisted schema reused with new arguments",
+      "tags": "semabi-reuse",
+      "title": "Fresh session learned bookmark",
+      "url": "https://example.invalid/semabi-fresh-session-20260909"
+    },
+    "input_log": "runs/product_record_v1/linkding_read.log",
+    "input_log_sha256": "489dbf995c31cf1d10dbdb4f02f7aa2f5163a316f91bfc850fa904c64cfe6572",
+    "job_id": "job_32bbff3e4d71458abe866c763bb8110f",
+    "method": "Compare the returned field dictionary with actual title-link text/destination, tag-link text, and description text selected in both independent BEFORE DOM captures. Runtime witness is not used.",
+    "returned_values": {
+      "description": "Persisted schema reused with new arguments",
+      "tags": "semabi-reuse",
+      "title": "Fresh session learned bookmark",
+      "url": "https://example.invalid/semabi-fresh-session-20260909"
+    },
+    "runtime_metrics": {
+      "actions": 3,
+      "elapsed_seconds": 2.593,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 1
+    },
+    "runtime_outcome": "CONFIRMED",
+    "verdict": "PASS"
+  },
+  "read_after_service_restart": {
+    "after_result_sha256": "cf55f0c4701bee0d8860a0ee04bec58f45e1688d4eaac5775041b1026455c342",
+    "all_four_fields_equal": true,
+    "independent_snapshot_ids": [
+      "eval_dom_0d1a9588f3ea45cd99d41de367701426",
+      "eval_dom_ada3d983adda4f889594dc1d4927d83d"
+    ],
+    "independently_observed_values": {
+      "description": "An existing bookmark changed after independent pre-state capture",
+      "tags": "semabi-update",
+      "title": "Updated through a learned HTTP operation",
+      "url": "https://example.invalid/semabi-fresh-session-20260909"
+    },
+    "input_log": "runs/product_record_v1/linkding_read_after_restart.log",
+    "input_log_sha256": "9f625414835ac4c50c35392c0517c757a200986f3f2a4260e722754ac833b081",
+    "job_id": "job_393c1dfea649432e9cb2235f4fe1c154",
+    "method": "Compare returned fields with actual title-link text/destination, tag-link text, and description text selected in both independent AFTER DOM captures. No new browser opened and runtime witness was not used.",
+    "returned_values": {
+      "description": "An existing bookmark changed after independent pre-state capture",
+      "tags": "semabi-update",
+      "title": "Updated through a learned HTTP operation",
+      "url": "https://example.invalid/semabi-fresh-session-20260909"
+    },
+    "runtime_metrics": {
+      "actions": 3,
+      "elapsed_seconds": 2.579,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 1
+    },
+    "runtime_outcome": "CONFIRMED",
+    "verdict": "PASS"
+  },
+  "schema": "record_operations_independent_comparisons.v1",
+  "update": {
+    "evidence_hashes": {
+      "after/result.json": "cf55f0c4701bee0d8860a0ee04bec58f45e1688d4eaac5775041b1026455c342",
+      "before/result.json": "3d4a18478907559a9810a724a50768e1d126b7da82e3f0bd10fda7b8632a8bd8",
+      "read_check.json": "4457592b5f7ada01dabdc33fbdcbd386dfa1db76df23e6419b25e812636b5ca1"
+    },
+    "expected_values_sha256": "9800a69a7bdc0c6856e8b3689856bac9eab02e43738ac419f70017e216306ff3",
+    "limitations": [
+      "One target and one sampled non-target in the inspected rendered views.",
+      "No claim of global uniqueness or absence of unobserved side effects.",
+      "This is a development READ/UPDATE pair, not the prospective task battery or third-application assessment."
+    ],
+    "observations": {
+      "after": [
+        {
+          "records": {
+            "sampled_non_target": {
+              "fields": {
+                "description": "Created through the same service as Memos",
+                "tags": "semabi-http-demo",
+                "title": "A learned HTTP bookmark",
+                "url": "https://example.invalid/semabi-http-20260909-1655"
+              },
+              "visible_anchor_record_count": 1
+            },
+            "target": {
+              "fields": {
+                "description": "An existing bookmark changed after independent pre-state capture",
+                "tags": "semabi-update",
+                "title": "Updated through a learned HTTP operation",
+                "url": "https://example.invalid/semabi-fresh-session-20260909"
+              },
+              "visible_anchor_record_count": 1
+            }
+          },
+          "snapshot_id": "eval_dom_0d1a9588f3ea45cd99d41de367701426",
+          "stage": "before_reload"
+        },
+        {
+          "records": {
+            "sampled_non_target": {
+              "fields": {
+                "description": "Created through the same service as Memos",
+                "tags": "semabi-http-demo",
+                "title": "A learned HTTP bookmark",
+                "url": "https://example.invalid/semabi-http-20260909-1655"
+              },
+              "visible_anchor_record_count": 1
+            },
+            "target": {
+              "fields": {
+                "description": "An existing bookmark changed after independent pre-state capture",
+                "tags": "semabi-update",
+                "title": "Updated through a learned HTTP operation",
+                "url": "https://example.invalid/semabi-fresh-session-20260909"
+              },
+              "visible_anchor_record_count": 1
+            }
+          },
+          "snapshot_id": "eval_dom_ada3d983adda4f889594dc1d4927d83d",
+          "stage": "after_reload"
+        }
+      ],
+      "before": [
+        {
+          "records": {
+            "sampled_non_target": {
+              "fields": {
+                "description": "Created through the same service as Memos",
+                "tags": "semabi-http-demo",
+                "title": "A learned HTTP bookmark",
+                "url": "https://example.invalid/semabi-http-20260909-1655"
+              },
+              "visible_anchor_record_count": 1
+            },
+            "target": {
+              "fields": {
+                "description": "Persisted schema reused with new arguments",
+                "tags": "semabi-reuse",
+                "title": "Fresh session learned bookmark",
+                "url": "https://example.invalid/semabi-fresh-session-20260909"
+              },
+              "visible_anchor_record_count": 1
+            }
+          },
+          "snapshot_id": "eval_dom_775c526657d04fa8a5e26fd5ef7c8bc8",
+          "stage": "before_reload"
+        },
+        {
+          "records": {
+            "sampled_non_target": {
+              "fields": {
+                "description": "Created through the same service as Memos",
+                "tags": "semabi-http-demo",
+                "title": "A learned HTTP bookmark",
+                "url": "https://example.invalid/semabi-http-20260909-1655"
+              },
+              "visible_anchor_record_count": 1
+            },
+            "target": {
+              "fields": {
+                "description": "Persisted schema reused with new arguments",
+                "tags": "semabi-reuse",
+                "title": "Fresh session learned bookmark",
+                "url": "https://example.invalid/semabi-fresh-session-20260909"
+              },
+              "visible_anchor_record_count": 1
+            }
+          },
+          "snapshot_id": "eval_dom_74586297bcfb4a39807fb763ecfda3f5",
+          "stage": "after_reload"
+        }
+      ]
+    },
+    "read_job_id": "job_32bbff3e4d71458abe866c763bb8110f",
+    "read_runtime_metrics": {
+      "actions": 3,
+      "elapsed_seconds": 2.593,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 1
+    },
+    "read_verdict": "PASS",
+    "sampled_non_target_unchanged": true,
+    "schema": "independent_linkding_read_update.v1",
+    "source_unchanged_across_before_after": true,
+    "target_url_unchanged": true,
+    "update_job_id": "job_61ab000370d648bf9a6b33fe896f9d25",
+    "update_log": "runs/product_record_v1/linkding_update.log",
+    "update_log_sha256": "0c3549677280c5e34f9daee89ef3e0cdf842915eee141b52ed406a7e04c4d3e9",
+    "update_runtime_metrics": {
+      "actions": 7,
+      "elapsed_seconds": 4.586,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 5
+    },
+    "update_verdict": "PASS"
+  }
+}

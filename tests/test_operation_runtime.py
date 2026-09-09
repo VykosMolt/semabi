@@ -496,7 +496,9 @@ def _runtime_with_operation(tmp_path, browser):
     candidate = form_candidates(browser.read())[0]
     defaults = {field['argument']: field.get('checked') if field['role'] == 'checkbox' else field.get('value')
                 for field in candidate['fields'] if field['argument'] not in {'first', 'second'}}
-    operation = {'argument_schema': argument_schema(candidate, ['first', 'second']),
+    operation = {'kind': 'create_visible_record', 'output_schema': {'type': 'object'},
+                 'prerequisites': [], 'effect_checks': [], 'scope': {},
+                 'argument_schema': argument_schema(candidate, ['first', 'second']),
                  'procedure': {'entry_url': connection['url'], 'navigation': [],
                                'readback_url': connection['url'], 'form': candidate['descriptor'],
                                'anchor': 'first', 'defaults': defaults,
@@ -506,7 +508,7 @@ def _runtime_with_operation(tmp_path, browser):
                             'source_sha256': runtime.source_sha256.copy(),
                             'procedure': deepcopy(operation['procedure']),
                             'argument_schema': deepcopy(operation['argument_schema'])}
-    operation['evidence_sha256'] = digest(operation['support'])
+    runtime_module.bind_contract(operation)
     return runtime, connection, operation
 
 
@@ -626,7 +628,8 @@ def test_synthetic_values_swapped_during_submit_do_not_confirm_argument_bindings
     assert sum(action.kind == 'click' for action in browser.actions) == 1
 
 
-@pytest.mark.parametrize('changed', ['evidence_digest', 'policy', 'source', 'procedure', 'argument_schema'])
+@pytest.mark.parametrize('changed', ['evidence_digest', 'policy', 'source', 'procedure', 'argument_schema',
+                                   'kind', 'output_schema', 'scope', 'prerequisites'])
 def test_synthetic_incompatible_operation_evidence_is_rejected_before_navigation(tmp_path, monkeypatch,
                                                                               changed):
     browser = _NavigationReloadBrowser()
@@ -640,8 +643,14 @@ def test_synthetic_incompatible_operation_evidence_is_rejected_before_navigation
         operation['evidence_sha256'] = digest(operation['support'])
     elif changed == 'procedure':
         operation['procedure']['entry_url'] = 'https://synthetic.invalid/different'
-    else:
+    elif changed == 'argument_schema':
         operation['argument_schema']['properties']['first']['maxLength'] = 17
+    elif changed == 'kind':
+        operation['kind'] = 'update_visible_record'
+    elif changed in {'output_schema', 'scope'}:
+        operation[changed]['changed'] = True
+    else:
+        operation['prerequisites'].append('changed')
 
     result = runtime.invoke(connection, operation,
                             {'first': 'Fresh alpha', 'second': 'Fresh beta'}, lambda event: None)
@@ -784,3 +793,510 @@ def test_wrong_link_target_or_form_preview_cannot_confirm_learned_fields(changed
     learned = record_witness(_linked_record_surface(), values, 'title')
     current = _linked_record_surface(**{changed: True})
     assert record_witness(current, values, 'title', learned['field_slots']) is None
+
+
+class _EditableRecordBrowser:
+    """Rendered list/edit states; all addresses and labels are invented fixtures."""
+    allowed_origin = 'https://synthetic.invalid'
+
+    def __init__(self, *, labels=('URL', 'Title', 'Description'), mode=None):
+        self.labels = list(labels)
+        self.order = list(labels)
+        self.mode = mode
+        self.rows = []
+        self.fields = dict.fromkeys(labels, '')
+        self.pinned = False
+        self.scene = 'list'
+        self.selected = None
+        self.actions = []
+        self.navigation_count = 0
+        self.reload_count = 0
+        self.edit_reads = 0
+        self.sibling_draft = ''
+        self.post_submit_reads = 0
+        self.watch_post_submit = False
+        self.required = False
+        self.surface = None
+
+    def read(self):
+        if self.scene == 'editor' and self.selected is not None:
+            self.edit_reads += 1
+            if self.mode in {'read_exit_changed', 'before_first_fill_changed'} and self.edit_reads == 2:
+                self.fields[self.labels[-1]] = 'Intervening draft'
+            if self.mode == 'before_save_changed' and self.edit_reads == 6:
+                self.fields[self.labels[-1]] = 'Intervening draft'
+            if self.mode in {'sibling_read_exit', 'sibling_before_fill', 'sibling_multi_candidate'} and self.edit_reads == 2:
+                self.sibling_draft = 'Keep this separate unsaved note'
+            if self.mode == 'sibling_before_save' and self.edit_reads == 6:
+                self.sibling_draft = 'Keep this separate unsaved note'
+        if self.watch_post_submit and self.scene == 'list':
+            self.post_submit_reads += 1
+            if self.mode == 'sibling_before_reload' and self.post_submit_reads == 2:
+                self.sibling_draft = 'Keep this separate unsaved note'
+        nodes = [Node(0, -1, 'group', '')]
+        properties = {}
+        forms = ()
+        if self.scene == 'list':
+            nodes.append(Node(1, 0, 'button', 'Add record'))
+            for row in self.rows:
+                root = len(nodes)
+                nodes.append(Node(root, 0, 'article', ''))
+                anchor = len(nodes)
+                nodes.append(Node(anchor, root, 'link', 'Open'))
+                properties[anchor] = {'destination': row[self.labels[0]]}
+                labels = self.labels[1:]
+                if self.mode == 'reordered_record_values':
+                    labels = list(reversed(labels))
+                for label in labels:
+                    nodes.append(Node(len(nodes), root, 'text', row[label]))
+                if self.mode != 'no_edit':
+                    nodes.append(Node(len(nodes), root, 'link', 'Edit'))
+                    if self.mode == 'duplicate_edit':
+                        nodes.append(Node(len(nodes), root, 'link', 'Edit'))
+        else:
+            nodes.append(Node(1, 0, 'group', 'Editor'))
+            forms = (1,)
+            for label in self.order:
+                node = len(nodes)
+                nodes.append(Node(node, 1, 'textbox', label, value=self.fields[label]))
+                properties[node] = {'form': 1, 'required': self.required,
+                                    'input_type': 'url' if label == self.labels[0] else 'text'}
+            nodes.append(Node(len(nodes), 1, 'checkbox', 'Pinned', checked=self.pinned))
+            properties[len(nodes) - 1] = {'form': 1, 'input_type': 'checkbox'}
+            nodes.append(Node(len(nodes), 1, 'button', 'Save'))
+            properties[len(nodes) - 1] = {'form': 1, 'submit': True}
+        if (self.sibling_draft or self.mode and self.mode.startswith('sibling_')
+                and (self.mode != 'sibling_multi_candidate' or self.scene == 'editor')):
+            root = len(nodes)
+            nodes.append(Node(root, 0, 'group', 'Separate editor'))
+            field = len(nodes)
+            nodes.append(Node(field, root, 'textbox', 'New note', value=self.sibling_draft))
+            properties[field] = {'form': root}
+            submit = len(nodes)
+            nodes.append(Node(submit, root, 'button', 'Create note'))
+            properties[submit] = {'form': root, 'submit': True}
+            forms = (*forms, root)
+        self.surface = _surface(nodes, properties, forms=forms)
+        return self.surface
+
+    def goto(self, _url):
+        self.navigation_count += 1
+        self.sibling_draft, self.watch_post_submit = '', False
+        self.scene, self.selected = 'list', None
+        return self.read().observation
+
+    def reload(self):
+        self.reload_count += 1
+        self.sibling_draft, self.watch_post_submit = '', False
+        return self.read()
+
+    def act(self, action):
+        self.actions.append(action)
+        node = self.surface.observation.node(action.target)
+        if action.kind == 'type':
+            self.fields[node.name] = action.text
+            if self.selected is not None and node.name == self.labels[1]:
+                if self.mode == 'later_field_changed':
+                    self.fields[self.labels[-1]] = 'Intervening draft'
+                elif self.mode == 'anchor_changed':
+                    self.fields[self.labels[0]] = 'https://synthetic.invalid/intervening'
+                elif self.mode == 'default_changed':
+                    self.pinned = True
+                elif self.mode == 'sibling_between_fills':
+                    self.sibling_draft = 'Keep this separate unsaved note'
+        elif node.name == 'Add record':
+            self.scene, self.selected = 'editor', None
+            self.fields, self.pinned = dict.fromkeys(self.labels, ''), False
+        elif node.name == 'Edit':
+            roots = [item.i for item in self.surface.observation.nodes if item.role == 'article']
+            self.selected = roots.index(node.parent)
+            if self.mode == 'wrong_editor':
+                self.selected = (self.selected + 1) % len(self.rows)
+            self.fields = {label: self.rows[self.selected][label] for label in self.labels}
+            self.pinned = self.rows[self.selected]['Pinned']
+            self.scene, self.edit_reads = 'editor', 0
+            if self.mode == 'swapped_editor_values':
+                self.fields[self.labels[1]], self.fields[self.labels[2]] = (
+                    self.fields[self.labels[2]], self.fields[self.labels[1]])
+        else:
+            assert node.name == 'Save'
+            updating = self.selected is not None
+            row = {**self.fields, 'Pinned': self.pinned}
+            if updating:
+                if self.mode == 'swapped_update_effect':
+                    row[self.labels[1]], row[self.labels[2]] = row[self.labels[2]], row[self.labels[1]]
+                self.rows[self.selected] = row
+            else:
+                self.rows.append(row)
+            self.scene, self.selected = 'list', None
+            if updating:
+                self.watch_post_submit, self.post_submit_reads = True, 0
+                if self.mode == 'sibling_after_submit':
+                    self.sibling_draft = 'Keep this separate unsaved note'
+            elif self.mode == 'sibling_after_create':
+                self.sibling_draft = 'Keep this separate unsaved note'
+            if updating and self.mode == 'lost_update_reply':
+                return ActionResult(False, 'Synthetic reply lost after update')
+        return ActionResult(True)
+
+
+def _learn_editable_records(tmp_path, monkeypatch, *, browser=None, settings=None):
+    ticks = count(0, 10)
+    monkeypatch.setattr(runtime_module, 'time', SimpleNamespace(
+        monotonic=lambda: next(ticks), sleep=lambda _seconds: None))
+    browser = browser or _EditableRecordBrowser()
+    runtime = Runtime(tmp_path)
+    connection = {'id': 'editable', 'url': browser.allowed_origin + '/',
+                  'scope': {'exploration_enabled': True, 'max_actions': 60, 'max_writes': 30}}
+    runtime.sessions[connection['id']] = browser
+    result = runtime.learn(connection, settings or {}, lambda event: None)
+    return runtime, connection, browser, result
+
+
+def _learned_kind(result, kind):
+    return next(operation for operation in result['operations'] if operation['kind'] == kind)
+
+
+def test_record_family_learns_two_distinct_labeled_reads_and_persistent_updates(tmp_path, monkeypatch):
+    runtime, _, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    assert learned['status'] == 'COMPLETED'
+    assert learned['attempts'] == []
+    assert [operation['kind'] for operation in learned['operations']] == [
+        'create_visible_record', 'read_visible_record', 'update_visible_record']
+    creation, reading, updating = learned['operations']
+    assert len({operation['id'] for operation in learned['operations']}) == 3
+    for operation in learned['operations']:
+        runtime._check_operation(operation)
+        assert len(operation['support']['trials']) == 2
+        assert len({trial['arguments'].get('target', trial['arguments'].get('url'))
+                    for trial in operation['support']['trials']}) == 2
+    for operation in (reading, updating):
+        assert operation['support']['parent_create_evidence_sha256'] == creation['evidence_sha256']
+    assert learned['metrics']['actions'] <= 60
+    assert learned['metrics']['possible_write_actions'] <= 30
+    assert [trial['values'] for trial in reading['support']['trials']] == [
+        trial['arguments'] for trial in creation['support']['trials']]
+    assert all(row['Title'] != created['arguments']['title'] for row, created in
+               zip(browser.rows, creation['support']['trials']))
+    schema = reading['output_schema']['properties']['effect']['properties']['values']
+    assert schema['required'] == list(reading['procedure']['read_fields'])
+    assert schema['properties']['title'] == {'type': 'string', 'description': 'Title'}
+
+
+def test_record_read_uses_current_labeled_values_and_tolerates_reordered_fields(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    operation = _learned_kind(learned, 'read_visible_record')
+    browser.rows[0]['Title'], browser.rows[0]['Description'] = 'Current title', 'Current description'
+    browser.order.reverse()
+    browser.mode = 'reordered_record_values'
+    before = len(browser.actions)
+    result = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL']}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED'
+    assert result['effect']['values'] == {'url': browser.rows[0]['URL'], 'title': 'Current title',
+                                         'description': 'Current description'}
+    assert len(browser.actions) == before + 1
+    assert browser.scene == 'list'
+
+
+def test_record_update_preserves_anchor_and_changes_all_required_fields_after_reload(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    operation = _learned_kind(learned, 'update_visible_record')
+    target = browser.rows[0]['URL']
+    untouched = deepcopy(browser.rows[1])
+    browser.order.reverse()
+    events = []
+    result = runtime.invoke(connection, operation, {'target': target, 'title': 'Fresh title',
+                                                    'description': 'Fresh description'}, events.append)
+    assert result['outcome'] == 'CONFIRMED'
+    assert browser.rows == [{'URL': target, 'Title': 'Fresh title', 'Description': 'Fresh description',
+                            'Pinned': False}, untouched]
+    fills = [event['action']['text'] for event in events if event['type'] == 'write_intent'
+             and event['action']['kind'] == 'type']
+    assert fills == ['Fresh title', 'Fresh description']
+    assert sum(event['type'] == 'reload' for event in events) == 1
+
+
+@pytest.mark.parametrize('mode', ['missing', 'duplicate', 'wrong_channel', 'missing_argument'])
+def test_record_selection_and_argument_failures_precede_every_click(tmp_path, monkeypatch, mode):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    operation = _learned_kind(learned, 'update_visible_record')
+    target = browser.rows[0]['URL']
+    arguments = {'target': target, 'title': 'Fresh title', 'description': 'Fresh description'}
+    if mode == 'missing':
+        arguments['target'] = 'https://synthetic.invalid/absent'
+    elif mode == 'duplicate':
+        browser.rows.append(deepcopy(browser.rows[0]))
+    elif mode == 'wrong_channel':
+        browser.rows[0]['URL'], browser.rows[0]['Title'] = 'https://synthetic.invalid/changed', target
+    else:
+        arguments.pop('description')
+    before = len(browser.actions)
+    result = runtime.invoke(connection, operation, arguments, lambda event: None)
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT'
+    assert len(browser.actions) == before
+    if mode == 'wrong_channel':
+        assert result['operation_status'] == 'STALE'
+
+
+@pytest.mark.parametrize('mode', ['duplicate_edit', 'wrong_editor', 'constraint_changed'])
+def test_record_edit_action_and_form_contract_fail_without_filling(tmp_path, monkeypatch, mode):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    operation = _learned_kind(learned, 'update_visible_record')
+    browser.mode = mode
+    browser.required = mode == 'constraint_changed'
+    before = len(browser.actions)
+    result = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL'], 'title': 'Fresh title',
+                                                    'description': 'Fresh description'}, lambda event: None)
+    assert result['outcome'] == ('FAILED_BEFORE_EFFECT' if mode == 'duplicate_edit' else 'UNCERTAIN')
+    assert all(action.kind != 'type' for action in browser.actions[before:])
+    assert result['operation_status'] == 'STALE'
+
+
+@pytest.mark.parametrize('mode, fills', [('before_first_fill_changed', 0), ('later_field_changed', 1),
+                                       ('anchor_changed', 1), ('default_changed', 1),
+                                       ('before_save_changed', 2)])
+def test_record_update_checks_every_evolving_field_state_before_the_next_write(tmp_path, monkeypatch, mode, fills):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    operation = _learned_kind(learned, 'update_visible_record')
+    before_rows = deepcopy(browser.rows)
+    before = len(browser.actions)
+    browser.mode = mode
+    result = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL'], 'title': 'Fresh title',
+                                                    'description': 'Fresh description'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert browser.rows == before_rows
+    actions = browser.actions[before:]
+    assert sum(action.kind == 'type' for action in actions) == fills
+    assert sum(action.kind == 'click' for action in actions) == 1
+    assert browser.scene == 'editor'
+    if 'changed' in mode and mode not in {'anchor_changed', 'default_changed'}:
+        assert browser.fields['Description'] == 'Intervening draft'
+
+
+def test_record_read_preserves_an_intervening_draft_instead_of_navigating_away(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    reading = _learned_kind(learned, 'read_visible_record')
+    browser.mode = 'read_exit_changed'
+    navigation = browser.navigation_count
+    result = runtime.invoke(connection, reading, {'target': browser.rows[0]['URL']}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert browser.navigation_count == navigation + 1
+    assert browser.scene == 'editor'
+    assert browser.fields['Description'] == 'Intervening draft'
+
+
+def test_record_read_preserves_a_new_sibling_editor_draft_before_exit(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    reading = _learned_kind(learned, 'read_visible_record')
+    browser.mode = 'sibling_read_exit'
+    navigation, before = browser.navigation_count, len(browser.actions)
+    result = runtime.invoke(connection, reading, {'target': browser.rows[0]['URL']}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert browser.navigation_count == navigation + 1
+    assert len(browser.actions) == before + 1
+    assert browser.scene == 'editor'
+    assert browser.sibling_draft == 'Keep this separate unsaved note'
+
+
+@pytest.mark.parametrize('mode, fills, saves', [('sibling_before_fill', 0, 0),
+                                              ('sibling_between_fills', 1, 0),
+                                              ('sibling_before_save', 2, 0),
+                                              ('sibling_after_submit', 2, 1),
+                                              ('sibling_before_reload', 2, 1)])
+def test_record_update_preserves_sibling_drafts_before_each_write_and_reload(tmp_path, monkeypatch, mode, fills, saves):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    updating = _learned_kind(learned, 'update_visible_record')
+    browser.mode = mode
+    before, reloads = len(browser.actions), browser.reload_count
+    before_rows = deepcopy(browser.rows)
+    result = runtime.invoke(connection, updating, {'target': browser.rows[0]['URL'], 'title': 'Fresh title',
+                                                   'description': 'Fresh description'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert sum(action.kind == 'type' for action in browser.actions[before:]) == fills
+    assert sum(action.kind == 'click' for action in browser.actions[before:]) == saves + 1
+    assert browser.reload_count == reloads
+    assert browser.sibling_draft == 'Keep this separate unsaved note'
+    if not saves:
+        assert browser.rows == before_rows
+    else:
+        assert browser.rows[0]['Title'] == 'Fresh title'
+
+
+def test_creation_preserves_a_sibling_draft_appearing_after_submission(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    creation = _learned_kind(learned, 'create_visible_record')
+    browser.mode = 'sibling_after_create'
+    reloads = browser.reload_count
+    result = runtime.invoke(connection, creation, {'url': 'https://synthetic.invalid/new-record',
+                                                   'title': 'Fresh title', 'description': 'Fresh description'},
+                            lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert browser.rows[-1]['Title'] == 'Fresh title'
+    assert browser.reload_count == reloads
+    assert browser.sibling_draft == 'Keep this separate unsaved note'
+
+
+def test_learning_stops_after_first_established_family_preserves_a_sibling_draft(tmp_path, monkeypatch):
+    _, _, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_EditableRecordBrowser(mode='sibling_multi_candidate'))
+    assert learned['status'] == 'COMPLETED'
+    assert [operation['kind'] for operation in learned['operations']] == ['create_visible_record']
+    assert len(learned['attempts']) == 1
+    assert learned['attempts'][0]['stage'] == 'read_visible_record'
+    assert len(browser.rows) == 2
+    assert browser.scene == 'editor'
+    assert browser.sibling_draft == 'Keep this separate unsaved note'
+
+
+def test_open_rechecks_current_draft_before_candidate_navigation(tmp_path):
+    browser = _NavigationReloadBrowser()
+    runtime, connection, operation = _runtime_with_operation(tmp_path, browser)
+    browser.fields['First'] = 'Preserve this failed candidate draft'
+    trace = runtime._trace(connection, lambda event: None, runtime_module.Budget(10, 5))
+    with pytest.raises(runtime_module.StopOperation, match='existing draft'):
+        runtime._open(browser, operation['procedure'], trace)
+    assert browser.navigation_count == 0
+    assert browser.fields['First'] == 'Preserve this failed candidate draft'
+
+
+@pytest.mark.parametrize('mode', ['lost_update_reply', 'swapped_update_effect'])
+def test_record_update_never_retries_or_confirms_an_unverified_effect(tmp_path, monkeypatch, mode):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    updating = _learned_kind(learned, 'update_visible_record')
+    browser.mode = mode
+    before = len(browser.actions)
+    result = runtime.invoke(connection, updating, {'target': browser.rows[0]['URL'], 'title': 'Fresh title',
+                                                   'description': 'Fresh description'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert sum(action.kind == 'click' for action in browser.actions[before:]) == 2
+
+
+@pytest.mark.parametrize('mode', ['no_edit', 'swapped_editor_values'])
+def test_unsupported_record_read_retains_the_established_creation_operation(tmp_path, monkeypatch, mode):
+    _, _, _, learned = _learn_editable_records(tmp_path, monkeypatch,
+                                              browser=_EditableRecordBrowser(mode=mode))
+    assert learned['status'] == 'COMPLETED'
+    assert [operation['kind'] for operation in learned['operations']] == ['create_visible_record']
+    assert learned['attempts'][0]['stage'] == 'read_visible_record'
+    assert learned['attempts'][0]['confirmed_trials'] == 0
+
+
+@pytest.mark.parametrize('writes, kinds', [(11, ['create_visible_record']),
+                                          (13, ['create_visible_record', 'read_visible_record'])])
+def test_record_learning_reserves_complete_trials_and_preserves_proved_stages(tmp_path, monkeypatch, writes, kinds):
+    _, _, _, learned = _learn_editable_records(tmp_path, monkeypatch, settings={'max_writes': writes})
+    assert learned['status'] == 'COMPLETED'
+    assert [operation['kind'] for operation in learned['operations']] == kinds
+    assert 'budget' in learned['attempts'][0]['reason']
+    assert learned['metrics']['possible_write_actions'] <= writes
+
+
+def test_record_selector_name_cannot_shadow_a_required_update_argument(tmp_path, monkeypatch):
+    _, _, _, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_EditableRecordBrowser(labels=('URL', 'Target', 'Description')))
+    operation = _learned_kind(learned, 'update_visible_record')
+    assert operation['procedure']['selector_argument'] == '_target'
+    assert set(operation['argument_schema']['required']) == {'_target', 'target', 'description'}
+
+
+def test_record_family_artifacts_round_trip_and_relearn_as_independent_versions(tmp_path, monkeypatch):
+    import json
+
+    runtime, connection, browser, first = _learn_editable_records(tmp_path, monkeypatch)
+    saved = json.loads(json.dumps(first['operations']))
+    versions = {operation['id']: operation['version'] for operation in saved}
+    second = runtime.learn(connection, {'_operation_versions': versions}, lambda event: None)
+    assert {operation['id'] for operation in second['operations']} == set(versions)
+    assert all(operation['version'] == 2 for operation in second['operations'])
+    for operation in second['operations'][1:]:
+        assert operation['support']['parent_create_version'] == 2
+    reading = next(operation for operation in saved if operation['kind'] == 'read_visible_record')
+    runtime._check_operation(reading)
+    result = runtime.invoke(connection, reading, {'target': browser.rows[0]['URL']}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED'
+    assert all(operation['version'] == 1 for operation in saved)
+
+
+@pytest.mark.parametrize('permanent', [False, True], ids=['loading_then_record', 'permanently_missing'])
+def test_record_selection_waits_read_only_for_loaded_records_with_a_bounded_deadline(tmp_path, monkeypatch, permanent):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    reading = _learned_kind(learned, 'read_visible_record')
+    ticks = count()
+    monkeypatch.setattr(runtime_module, 'time', SimpleNamespace(
+        monotonic=lambda: next(ticks) / 4, sleep=lambda _seconds: None))
+    original_goto, original_read = browser.goto, browser.read
+    loading = {'remaining': 0, 'observations': 0}
+
+    def goto(url):
+        result = original_goto(url)
+        loading['remaining'] = 2
+        return result
+
+    def read():
+        if loading['remaining']:
+            loading['observations'] += 1
+            if not permanent:
+                loading['remaining'] -= 1
+            browser.surface = _surface([Node(0, -1, 'group', ''), Node(1, 0, 'text', 'Loading')])
+            return browser.surface
+        return original_read()
+
+    monkeypatch.setattr(browser, 'goto', goto)
+    monkeypatch.setattr(browser, 'read', read)
+    before = len(browser.actions)
+    result = runtime.invoke(connection, reading, {'target': browser.rows[0]['URL']}, lambda event: None)
+    assert result['outcome'] == ('FAILED_BEFORE_EFFECT' if permanent else 'CONFIRMED')
+    assert 2 <= loading['observations'] <= 25
+    assert len(browser.actions) == before + (0 if permanent else 1)
+
+
+@pytest.mark.parametrize('incompatible', [True, False], ids=['stale_old_id_then_scan_failure', 'compatible_omitted'])
+def test_learning_invalidates_incompatible_old_ids_without_retiring_compatible_omissions(tmp_path, monkeypatch,
+                                                                                       incompatible):
+    from semabi.compiler.artifacts import ArtifactStore
+
+    browser = _RecordBrowser()
+    runtime, connection, _ = _runtime_with_operation(tmp_path / 'runtime', browser)
+    existing = runtime.learn(connection, {}, lambda event: None)['operations'][0]
+    existing['id'] = 'op_previous_form_shape'
+    if incompatible:
+        existing['support']['policy_version'] = 'local-form-v3'
+        existing['support']['source_sha256']['runtime.py'] = '0' * 64
+        existing['evidence_sha256'] = digest(existing['support'])
+    store = ArtifactStore(tmp_path / 'store')
+    try:
+        saved, job = store.create_connection({'url': connection['url'], 'scope': connection['scope']}, {})
+        store.start_job(job)
+        store.finish_job(job, {'status': 'CONNECTED'})
+        job = store.queue_job(saved['id'], 'learn', {})
+        store.start_job(job)
+        store.finish_job(job, {'status': 'COMPLETED'}, operations=[existing])
+        runtime.sessions[saved['id']] = browser
+
+        def empty_or_failed_read():
+            if incompatible:
+                raise OSError('Synthetic failure after compatibility checks')
+            return _surface([Node(0, -1, 'group', ''), Node(1, 0, 'text', 'No visible form here')])
+
+        monkeypatch.setattr(browser, 'read', empty_or_failed_read)
+        before = len(browser.actions)
+        result = runtime.learn(saved, {'_existing_operations': store.operations(saved['id'])}, lambda event: None)
+        assert result['operations'] == []
+        assert len(browser.actions) == before
+        assert result['status'] == ('INCOMPLETE' if incompatible else 'UNESTABLISHED')
+        job = store.queue_job(saved['id'], 'learn', {})
+        store.start_job(job)
+        store.finish_job(job, result, operations=result['operations'], invalidations=result['invalidations'])
+        retained = store.operation(saved['id'], existing['id'], 1)
+        if incompatible:
+            assert retained['status'] == 'STALE'
+            assert 'compatibility changed' in retained['status_reason']
+            assert store.operations(saved['id']) == []
+            assert result['invalidations'] == [{'id': existing['id'], 'version': 1, 'status': 'STALE',
+                                                'reason': retained['status_reason']}]
+        else:
+            assert result['invalidations'] == []
+            assert retained['status'] == 'ACTIVE'
+            assert store.operations(saved['id']) == [retained]
+    finally:
+        store.close()

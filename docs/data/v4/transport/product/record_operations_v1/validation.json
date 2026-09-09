@@ -1,0 +1,90 @@
+{
+  "classification": "Final P3 integrated verification and actual process receipts",
+  "source_sha256": {
+    "semabi/compiler/runtime.py": "9547b4cb9c96146c7b7eccae1a83be4de7bc6a8555ef79833826a68ac60e4f1e",
+    "semabi/compiler/surface.py": "c87e8f0e9977d860e61d46279e30995a1d86dbeff27f55cdfc234becccabfaab",
+    "semabi/compiler/browser_session.py": "64db1792650e7414a6dcceb07f5a74e9bdfa2a16906248e57d85995396fe3301",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/service.py": "8152e9a337128f367ddbea57706658858b8fa5523d26aa208aaf96a5f0c70e25",
+    "examples/client.py": "acf8485747ed76b6f6d9798cc80afb6a12555f80678c7936acd0c4c538a29ba7"
+  },
+  "source_still_matches_snapshot": true,
+  "focused_tests": {
+    "command": "taskset -c 8,9 env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -m pytest tests/test_operation_runtime.py tests/test_service.py tests/test_cached_form.py tests/test_v4_navigation_settling.py -q --disable-warnings",
+    "passed": 170,
+    "elapsed_seconds": 20.0,
+    "session_id": 29143,
+    "completion_chunk": "cc4b52",
+    "exit_code": 0,
+    "log_sha256": "a363adc664316d9673ee5c468cda8801337aa5dcb696c597d84efbb1137cd0e0",
+    "test_sha256": {
+      "tests/test_operation_runtime.py": "c947213e55dddfc74428ef878087baabe9960ac2230ddf9c431b4ab0aeb2f3cd",
+      "tests/test_service.py": "49119da6461a0bf552cebd37f299f9bd57b65170fe4b4e66ba8de398258bc7d3",
+      "tests/test_cached_form.py": "8b6b0d636eae799c87f75d4a5856486a96802ff0504a4d3d51045bbcb99344e4",
+      "tests/test_v4_navigation_settling.py": "a3b371c8f05b75b4b84e964d06fc2144f94ccbb04f4e6567b984492eaff08501"
+    }
+  },
+  "client_processes": [
+    {
+      "log": "linkding_learn.log",
+      "session_id": 43948,
+      "completion_chunk": "d4600f",
+      "exit_code": 0
+    },
+    {
+      "log": "linkding_read.log",
+      "session_id": 60581,
+      "completion_chunk": "08e72f",
+      "exit_code": 0
+    },
+    {
+      "log": "linkding_update.log",
+      "session_id": 9872,
+      "completion_chunk": "cf710f",
+      "exit_code": 0
+    },
+    {
+      "log": "linkding_read_after_restart.log",
+      "session_id": 80962,
+      "completion_chunk": "842a5a",
+      "exit_code": 0
+    },
+    {
+      "log": "memos_learn.log",
+      "session_id": 51709,
+      "completion_chunk": "c63184",
+      "exit_code": 0
+    }
+  ],
+  "service_processes": [
+    {
+      "phase": "P2 stopped before adoption",
+      "session_id": 79582,
+      "completion_chunk": "9dc394",
+      "exit_code": 0
+    },
+    {
+      "phase": "P3 learning/read/update then stopped for reuse test",
+      "session_id": 60197,
+      "start_chunk": "d5349b",
+      "completion_chunk": "4047cf",
+      "exit_code": 0
+    },
+    {
+      "phase": "P3 restarted with same data, currently serving",
+      "session_id": 46217,
+      "start_chunk": "049091",
+      "terminal": false,
+      "cpu_affinity": [
+        2,
+        3
+      ]
+    }
+  ],
+  "service_command": "taskset -c 2,3 env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -m semabi.service --data-dir runs/product_service_v1 --port 8860",
+  "model_calls": 0,
+  "paid_cost": 0,
+  "limits": "This development checkpoint has no prospective task denominator or paired reset fixtures. Service session receipts record process completion, not a separately sampled descendant inventory."
+}

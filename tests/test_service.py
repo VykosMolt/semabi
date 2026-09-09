@@ -247,9 +247,25 @@ def test_learning_requires_scope_and_cannot_inject_versions_or_expand_budgets(ap
     disabled = api.connect(exploration=False)
     assert api.request("POST", f"/v1/connections/{disabled}/learn", {})[0] == 409
     connection_id = api.connect()
-    for settings in ({"_operation_versions": {"create": 100}}, {"max_actions": 13}, {"max_writes": 4}, {"credentials": {}}):
+    for settings in ({"_operation_versions": {"create": 100}}, {"_existing_operations": [operation()]},
+                     {"max_actions": 13}, {"max_writes": 4}, {"credentials": {}}):
         assert api.request("POST", f"/v1/connections/{connection_id}/learn", {"settings": settings})[0] == 400
     assert api.fake.settings == []
+
+
+def test_learning_supplies_only_the_current_connections_active_artifacts_internally(api):
+    first, second = api.connect(), api.connect()
+    api.learn(first)
+    assert api.fake.settings[-1]['_existing_operations'] == []
+    api.learn(first)
+    assert [(item['id'], item['version']) for item in api.fake.settings[-1]['_existing_operations']] == [('create', 1)]
+    api.fake.empty_learning = True
+    api.learn(first)
+    supplied = api.fake.settings[-1]['_existing_operations']
+    assert [(item['id'], item['version'], item['status']) for item in supplied] == [('create', 2, 'ACTIVE')]
+    assert supplied == api.service.store.operations(first)
+    api.learn(second)
+    assert api.fake.settings[-1]['_existing_operations'] == []
 
 
 def test_invocations_bind_connection_and_require_explicit_active_version(api):

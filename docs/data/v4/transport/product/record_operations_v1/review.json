@@ -1,0 +1,29 @@
+{
+  "accepted_runtime_sha256": "9547b4cb9c96146c7b7eccae1a83be4de7bc6a8555ef79833826a68ac60e4f1e",
+  "findings": [
+    {
+      "acceptance": "Integration owner accepted the finding and implementation; reviewer inspected the frozen repaired source before independent captures.",
+      "accepted_fix": "Retain selected-form state checks; freshly guard other editor scopes before READ exit and each UPDATE fill/Save, exempting only the selected subtree. Fresh global editor guards precede post-submit reloads.",
+      "id": "P3-R1",
+      "mechanism": "The old evolving-state check covered only the selected form. A second native form with a newly nonempty New note field left that check unchanged; navigation then discarded it.",
+      "problem": "An intervening draft in a separate sibling editor could be discarded during READ exit or UPDATE submission/reload while the operation returned CONFIRMED.",
+      "reproduction": "Pure in-memory Surface with selected URL/Title form at root 1 and distinct New note composer at root 5. Only the composer changes from empty to nonempty; _checked_editor accepted the selected form. No app/browser calls or file writes were used for the reproduction.",
+      "status": "FIXED_AND_REVIEWED"
+    },
+    {
+      "acceptance": "Integration owner accepted the finding and implementation; reviewer inspected both control-flow changes in the frozen repaired source.",
+      "accepted_fix": "Stop candidate iteration immediately after the first established family returns, including failed extensions. _open also freshly guards current drafts before candidate navigation.",
+      "id": "P3-R2",
+      "mechanism": "_learn_record_family returned after stopping an experiment, but the outer candidate loop continued to _open for the next form; the first-family break occurred only after that candidate loop.",
+      "problem": "Learning could discard a preserved failed-experiment draft when another initial form candidate remained.",
+      "reproduction": "Two distinct creation candidates on the entry page; first CREATE establishes, its READ exit stops on a new sibling draft, then the second candidate initiates navigation.",
+      "status": "FIXED_AND_REVIEWED"
+    }
+  ],
+  "limits": "A bounded review and the disclosed development checks do not establish general correctness or the complete prospective task battery.",
+  "remaining_review_result": "No additional substantive defect identified in the bounded compatibility-invalidation, immutable version-publication, or READ/UPDATE output review.",
+  "review_scope": "Bounded adversarial read-only review of P3 versus P2; no application or browser calls during review.",
+  "reviewed_patch_sha256": "472aabb70fa21c4cf558a5fc7b9ecbad76bbf827614bbfbf65faf3c961335c82",
+  "reviewed_runtime_sha256": "404e993117cd528bfa81e9d702a8c9bcead08d76c78ae01163eafce3047f76ba",
+  "schema": "record_operations_source_review.v1"
+}

@@ -94,7 +94,8 @@ def main():
         wait(request("POST", prefix + "/learn", {"settings": {"max_actions": args.max_actions, "max_writes": args.max_writes}}))
     operations = request("GET", prefix + "/operations")["operations"]
     print(json.dumps({"operations": [{"id": operation["id"], "version": operation["version"],
-                                     "name": operation["name"], "argument_schema": operation["argument_schema"]}
+                                     "name": operation["name"], "kind": operation["kind"],
+                                     "argument_schema": operation["argument_schema"]}
                                     for operation in operations]}, indent=2), flush=True)
     if arguments is None:
         print("Schema discovery complete; no invocation submitted.")

@@ -11,63 +11,41 @@ remains reserved; its installer exposure is documented in
 [application setup](application_setup_v1/README.md). These are three independently
 maintained applications, but three-application competence has not been measured.
 
-The saved `runs/product_runtime_smoke_v1` evidence contains one Memos creation
-operation learned from two varied saves, each followed by reload. The saved
-`product_runtime_smoke_v2` script reuses that operation and invokes it in a new
-connection with a fresh argument. Its Memos `learn.json` repeats the earlier
-learning result and metrics; it is not another learning trial. Both retained
-linkding attempts report `UNESTABLISHED`, with no exposed operations. Those
-scripts call the Python runtime directly; they do not establish the HTTP path.
+The [first HTTP operation](first_operation_v1/README.md) establishes the initial
+Memos service path and reuse. The [two-application checkpoint](two_applications_v1/README.md)
+adds Linkding creation with URL, title, description and tags through the same
+service, followed by fresh-session reuse and continued Memos access. All four
+P2 HTTP calls have separate fresh-browser visible-DOM checks: each intended
+record appears once before and after reload. Source hashes, raw job IDs, action
+costs and matching limits are retained with those checks.
 
-| Development activity | Recorded result | Runtime-reported work |
-| --- | --- | --- |
-| Memos v1 learning | One operation; two supporting trials | 9 actions, 4 possible writes, 5.801 s |
-| Memos v2 invocation | Runtime `CONFIRMED` | 5 actions, 2 possible writes, 3.259 s |
-| linkding v1 learning | `UNESTABLISHED` | 9 actions, 4 possible writes, 4.294 s |
-| linkding v2 learning | `UNESTABLISHED` | 9 actions, 4 possible writes, 4.388 s |
-| Later external HTTP invocation | Runtime `CONFIRMED`; independent visible check passed | 5 actions, 2 possible writes, 3.424 s |
+These were development calls selected retrospectively, without a prospective
+task denominator, independently checked pre-invocation absence, or equivalent
+reset fixtures. Their successful creation effects do not establish read/update,
+relational work, global uniqueness, absence of unobserved effects, or overall
+product acceptance. Earlier failed Linkding learning attempts remain in the
+execution record with their source snapshots and original outcomes.
 
-These are phase metrics, not full connection/onboarding costs. Authentication
-and evaluator work must be counted separately. Model calls and paid cost are
-reported as zero. The smokes were run during development without a fixed
-prospective task denominator.
+The first two actual cached-form baseline replays also dispatched successfully;
+independent visible checks found each intended record once before and after
+reload. Their purpose is to establish baseline liveness with the same learned
+artifact assistance. They are not a paired assessment and do not support a
+comparative performance claim. The common acquisition expense is charged to
+both arms in the comparison, with physical execution recorded once.
 
-The independent check at `runs/product_evaluator_v1/memos_check_attempt1/result.json`
-found the recorded argument in exactly one visible saved-content article, both
-after fresh authentication and after reload. The fresh evaluator snapshots are
-`eval_obs_fb35afc3ea5c4a6383582668ef05361a` and
-`eval_obs_399d7bf700f64c1ea6719801b3136106`; each has its own saved capture and
-digest. The browser closed normally. The check used generic `BrowserSession`
-for access and separate visible-DOM matching, without calling the runtime's
-effect checker. It performed three authentication primitives, one navigation,
-and one reload in 3.688 s. This establishes persistence in the inspected view;
-it does not establish global uniqueness or absence of unobserved effects.
+The evaluator and root have inspected ordinary rendered Memos/Linkding UI and
+development outcomes. Memos exposes search, creation, tags, and local editing;
+opening an editor can leave a separate creation form visible. Some record actions
+and the memo text editor lack labels. Linkding exposes a separate creation form,
+record-local editing, tags, unread state, and closed disclosure panels. These
+observations select useful tasks, not supplied operation mappings. No application
+source, database, hidden endpoint response, or private client store entered
+learning or runtime verification. Evaluation uses separate DOM matching and
+shares only the generic browser/authentication adapter.
 
-The later external client record
-`runs/product_service_acceptance_v1/client_after_readback_wait.log` contains
-invocation `job_21c6753709de4715a163551a79c638ed` of operation
-`op_da6cd313fd7951e26d2c`. A separate fresh-browser check of its recorded argument
-also found exactly one saved-content article before and after reload. Evidence
-is in `runs/product_evaluator_v1/http_effect_attempt1/result.json`, with snapshots
-`eval_obs_39382affe7764cf183b0771e9ad7d4cd` and
-`eval_obs_e468a0d9973a421ab7edcb2c8bff41da`. That check took 3.745 s and closed
-normally. This verifies that recorded HTTP call's visible effect; the service
-remains under development review, so it is not an overall product milestone
-completion claim.
-
-The evaluator inspected ordinary rendered UI only. Memos exposes search,
-creation, tags, and record-local editing. Opening its editor leaves both the
-creation form and the populated record editor visible, with separate Save
-controls. linkding exposes search, a separate
-creation form, tags, bundles, and an unread flag. Its creation form visibly
-labels Notes while the captured editor name is empty. Memos record actions also
-include repeated unnamed controls. The inspected linkding account has no saved
-bookmarks, so existing-record editing has not been exercised. Form/menu
-inspection submits no saved changes. The five evaluator sessions used 25 UI
-actions, including 15 authentication primitives; 18 actions conservatively
-count as possible writes, with no business mutation submitted. These checks
-were not a paired comparison. These observations select useful tasks;
-they are not operation mappings supplied to SemABI.
+Read/update support is the active development milestone. The task families and
+acceptance criteria below remain unchanged; unsupported tasks will remain in
+the denominator. No fixed-source assessment has started.
 
 ## Requested workflows
 
@@ -164,9 +142,13 @@ arms sequentially. Record peak memory and stop an evaluation worker exceeding
 | --- | --- | --- | --- |
 | Evaluator fixture setup | 15 min | 60 | 20 |
 | Connection and onboarding | 15 min | 120 | 40 |
-| Each requested workflow | 60 s | 20 | 8 |
+| Each requested workflow | 60 s | 20 | 12 |
 | Independent verification per request | 30 s | 12 | 8 search/filter actions; no saved business changes |
 | Recovery for the interruption challenge | Additional 60 s | 10 | 2, only after justified read-back |
+
+The workflow possible-write limit was raised prospectively from 8 to 12 before
+any fixed assessment: ordinary four-field creation plus authentication already
+requires nine such primitives. Both arms use the revised limit.
 
 Count every attempted primitive, navigation, reload, and failed authentication
 action. Count typing, selection, checking, and clicks conservatively as possible

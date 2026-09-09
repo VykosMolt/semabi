@@ -284,7 +284,9 @@ class Service:
                     runtime.close(connection["id"])
                 result = runtime.connect(connection, self.store.credentials(connection["id"]))
             elif job["kind"] == "learn":
-                settings = {**request["settings"], "_operation_versions": self.store.operation_versions(connection["id"])}
+                settings = {**request["settings"],
+                            "_operation_versions": self.store.operation_versions(connection["id"]),
+                            "_existing_operations": self.store.operations(connection["id"])}
                 result = runtime.learn(connection, settings, emit)
                 _object(result, "Runtime result")
                 operations = self._operations(result)

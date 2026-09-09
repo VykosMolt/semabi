@@ -1,0 +1,492 @@
+{
+  "operations": [
+    {
+      "id": "op_1eb02be1584bb7b95076",
+      "version": 1,
+      "name": "read_record",
+      "kind": "read_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "target": {
+            "description": "Exact current local anchor: URL",
+            "format": "uri",
+            "format_basis": "visible_label_prior_validated_by_trials",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "target"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "id": "op_38448a42c110ce54c36e",
+      "version": 1,
+      "name": "save_record",
+      "kind": "create_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "description": "Description",
+            "minLength": 1,
+            "type": "string"
+          },
+          "tags": {
+            "description": "Tags",
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title",
+            "maxLength": 512,
+            "minLength": 1,
+            "type": "string"
+          },
+          "url": {
+            "description": "URL",
+            "format": "uri",
+            "format_basis": "visible_label_prior_validated_by_trials",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "tags",
+          "title",
+          "description"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "id": "op_49b6746003059735c383",
+      "version": 1,
+      "name": "update_record",
+      "kind": "update_visible_record",
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "description": "Description",
+            "minLength": 1,
+            "type": "string"
+          },
+          "tags": {
+            "description": "Tags",
+            "minLength": 1,
+            "type": "string"
+          },
+          "target": {
+            "description": "Exact current local anchor: URL",
+            "format": "uri",
+            "format_basis": "visible_label_prior_validated_by_trials",
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title",
+            "maxLength": 512,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "tags",
+          "title",
+          "description"
+        ],
+        "type": "object"
+      }
+    }
+  ]
+}
+{"execution_id": "job_61ab000370d648bf9a6b33fe896f9d25", "idempotency_key": "p3-update-old-bookmark-20260909"}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 0}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 1}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 2}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 4}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 6}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 10}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 12}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 14}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 16}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 18}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 20}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 22}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 24}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "RUNNING", "events": 26}
+{"job_id": "job_61ab000370d648bf9a6b33fe896f9d25", "status": "COMPLETED", "events": 28}
+{
+  "connection_id": "conn_69dde230fe564df8899a808d6cfd5d20",
+  "created_at": "2026-09-09T17:35:26.698590+00:00",
+  "events": [
+    {
+      "created_at": "2026-09-09T17:35:26.708405+00:00",
+      "kind": "invoke",
+      "sequence": 1,
+      "type": "job_started"
+    },
+    {
+      "created_at": "2026-09-09T17:35:27.033281+00:00",
+      "sequence": 2,
+      "settled": true,
+      "signature": "1d29b4d477df97aa",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T17:35:27.363184+00:00",
+      "sequence": 3,
+      "settled": true,
+      "signature": "1d29b4d477df97aa",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T17:35:27.369204+00:00",
+      "sequence": 4,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8851/bookmarks"
+    },
+    {
+      "created_at": "2026-09-09T17:35:28.039336+00:00",
+      "sequence": 5,
+      "settled": true,
+      "signature": "1d29b4d477df97aa",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 99
+      },
+      "created_at": "2026-09-09T17:35:28.056110+00:00",
+      "sequence": 6,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T17:35:28.484587+00:00",
+      "sequence": 7,
+      "settled": true,
+      "signature": "e446eeec9b93ff0d",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T17:35:28.492924+00:00",
+      "ok": true,
+      "sequence": 8,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T17:35:28.720165+00:00",
+      "sequence": 9,
+      "settled": true,
+      "signature": "e446eeec9b93ff0d",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "type",
+        "target": 32,
+        "text": "semabi-update"
+      },
+      "created_at": "2026-09-09T17:35:28.729354+00:00",
+      "sequence": 10,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T17:35:28.968568+00:00",
+      "sequence": 11,
+      "settled": true,
+      "signature": "86e7931604ed26da",
+      "type": "observation"
+    },
+    {
+      "action": "type",
+      "created_at": "2026-09-09T17:35:28.976447+00:00",
+      "ok": true,
+      "sequence": 12,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T17:35:29.208228+00:00",
+      "sequence": 13,
+      "settled": true,
+      "signature": "86e7931604ed26da",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "type",
+        "target": 42,
+        "text": "Updated through a learned HTTP operation"
+      },
+      "created_at": "2026-09-09T17:35:29.217211+00:00",
+      "sequence": 14,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T17:35:29.449494+00:00",
+      "sequence": 15,
+      "settled": true,
+      "signature": "69de2463edb8ec38",
+      "type": "observation"
+    },
+    {
+      "action": "type",
+      "created_at": "2026-09-09T17:35:29.457932+00:00",
+      "ok": true,
+      "sequence": 16,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T17:35:29.685781+00:00",
+      "sequence": 17,
+      "settled": true,
+      "signature": "69de2463edb8ec38",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "type",
+        "target": 48,
+        "text": "An existing bookmark changed after independent pre-state capture"
+      },
+      "created_at": "2026-09-09T17:35:29.694545+00:00",
+      "sequence": 18,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T17:35:29.928346+00:00",
+      "sequence": 19,
+      "settled": true,
+      "signature": "fa7bc84d5dca75ca",
+      "type": "observation"
+    },
+    {
+      "action": "type",
+      "created_at": "2026-09-09T17:35:29.936836+00:00",
+      "ok": true,
+      "sequence": 20,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T17:35:30.165669+00:00",
+      "sequence": 21,
+      "settled": true,
+      "signature": "fa7bc84d5dca75ca",
+      "type": "observation"
+    },
+    {
+      "action": {
+        "kind": "click",
+        "target": 60
+      },
+      "created_at": "2026-09-09T17:35:30.174541+00:00",
+      "sequence": 22,
+      "type": "write_intent"
+    },
+    {
+      "created_at": "2026-09-09T17:35:30.618224+00:00",
+      "sequence": 23,
+      "settled": true,
+      "signature": "e69419c83fe491cb",
+      "type": "observation"
+    },
+    {
+      "action": "click",
+      "created_at": "2026-09-09T17:35:30.626867+00:00",
+      "ok": true,
+      "sequence": 24,
+      "type": "action_result"
+    },
+    {
+      "created_at": "2026-09-09T17:35:30.920282+00:00",
+      "sequence": 25,
+      "settled": true,
+      "signature": "e69419c83fe491cb",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T17:35:30.925680+00:00",
+      "sequence": 26,
+      "type": "reload"
+    },
+    {
+      "created_at": "2026-09-09T17:35:31.283031+00:00",
+      "sequence": 27,
+      "settled": true,
+      "signature": "e69419c83fe491cb",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-09T17:35:31.295990+00:00",
+      "outcome": "CONFIRMED",
+      "sequence": 28,
+      "status": "COMPLETED",
+      "type": "job_finished"
+    }
+  ],
+  "id": "job_61ab000370d648bf9a6b33fe896f9d25",
+  "job_id": "job_61ab000370d648bf9a6b33fe896f9d25",
+  "kind": "invoke",
+  "request": {
+    "arguments": {
+      "description": "An existing bookmark changed after independent pre-state capture",
+      "tags": "semabi-update",
+      "target": "https://example.invalid/semabi-fresh-session-20260909",
+      "title": "Updated through a learned HTTP operation"
+    },
+    "operation_id": "op_49b6746003059735c383",
+    "version": 1
+  },
+  "result": {
+    "effect": {
+      "arguments": {
+        "description": "An existing bookmark changed after independent pre-state capture",
+        "tags": "semabi-update",
+        "title": "Updated through a learned HTTP operation",
+        "url": "https://example.invalid/semabi-fresh-session-20260909"
+      },
+      "before": {
+        "description": "Persisted schema reused with new arguments",
+        "tags": "semabi-reuse",
+        "title": "Fresh session learned bookmark",
+        "url": "https://example.invalid/semabi-fresh-session-20260909"
+      },
+      "kind": "visible_record_updated",
+      "scope": "Same local anchor and requested field values in learned slots, retained after reload",
+      "witness": {
+        "basis": "visible_local_record",
+        "field_slots": {
+          "description": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "text",
+                  1
+                ]
+              ]
+            }
+          ],
+          "tags": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  1
+                ],
+                [
+                  "text",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ]
+              ]
+            }
+          ],
+          "title": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ]
+              ]
+            }
+          ],
+          "url": [
+            {
+              "channel": "link_destination",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        "link_destinations": [
+          "https://example.invalid/semabi-fresh-session-20260909",
+          "http://127.0.0.1:8851/bookmarks?q=%23semabi-update",
+          "https://web.archive.org/web/20260909165950/https://example.invalid/semabi-fresh-session-20260909",
+          "http://127.0.0.1:8851/bookmarks?details=7",
+          "http://127.0.0.1:8851/bookmarks/7/edit?return_url=/bookmarks"
+        ],
+        "observation": "e69419c83fe491cb",
+        "role": "listitem",
+        "root": 86,
+        "texts": [
+          "Today",
+          "|",
+          "View",
+          "Edit",
+          "Archive",
+          "Remove",
+          "Updated through a learned HTTP operation semabi-update | An existing bookmark changed after independent pre-state capture Today | View Edit Archive Remove",
+          "Updated through a learned HTTP operation",
+          "Updated through a learned HTTP operation",
+          "|",
+          "semabi-update",
+          "semabi-update",
+          "An existing bookmark changed after independent pre-state capture"
+        ],
+        "value_node": 89
+      }
+    },
+    "metrics": {
+      "actions": 7,
+      "elapsed_seconds": 4.586,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 5
+    },
+    "outcome": "CONFIRMED"
+  },
+  "status": "COMPLETED",
+  "updated_at": "2026-09-09T17:35:31.296045+00:00",
+  "write_intent": true
+}

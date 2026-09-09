@@ -7,6 +7,7 @@ experiments establish the published, explicitly limited support.
 """
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass
 import json
 import hashlib
@@ -20,16 +21,25 @@ from playwright.sync_api import sync_playwright
 from semabi.compiler.browser import Primitive
 from semabi.compiler.browser_session import BrowserSession, origin_of
 from semabi.compiler.evidence import EvidenceLog
-from semabi.compiler.surface import (SUBMIT_WORDS, Surface, argument_name, digest, editor_scopes, form_candidates,
+from semabi.compiler.surface import (SUBMIT_WORDS, Surface, argument_name, digest, editor_scopes, form_candidates, form_state,
                                      local_regions, matching_forms, relative_value_slots,
                                      visible_record_matches)
 
 
-POLICY_VERSION = "local-form-v3"
+POLICY_VERSION = "local-record-v4"
 OPEN_WORDS = re.compile(r"\b(add|new|create|compose)\b", re.I)
+EDIT_WORDS = re.compile(r"\b(edit|modify|update)\b", re.I)
 EXCLUDED_WORDS = re.compile(r"\b(delete|remove|logout|log out|sign out|reset|purchase|pay|invite)\b", re.I)
 TEXT_TYPES = {"", "text", "textarea", "contenteditable", "url", "email", "search"}
 URL_LABEL = re.compile(r"^(url|uri|web\s*(address|link)|website(\s+address)?)$", re.I)
+OPERATION_KINDS = {"create_visible_record", "read_visible_record", "update_visible_record"}
+CONTRACT_FIELDS = ("kind", "procedure", "argument_schema", "output_schema",
+                   "prerequisites", "effect_checks", "scope")
+
+
+def bind_contract(operation: dict) -> None:
+    operation["support"].update({key: deepcopy(operation[key]) for key in CONTRACT_FIELDS})
+    operation["evidence_sha256"] = digest(operation["support"])
 
 
 def field_format(field: dict) -> str | None:
@@ -270,6 +280,7 @@ class Runtime:
         return Trace(self.data_dir / connection["id"] / "evidence" / uuid.uuid4().hex, emit, budget)
 
     def _open(self, browser, procedure: dict, trace: Trace) -> Surface:
+        self._guard_current_editor(trace.observe(browser.read()))
         surface = trace.navigate(browser, procedure["entry_url"])
         for descriptor in procedure.get("navigation", []):
             matches = surface.resolve(descriptor)
@@ -318,9 +329,12 @@ class Runtime:
                     raise StopOperation("An unparameterized control default has changed", stale=True)
 
     @staticmethod
-    def _guard_current_editor(surface: Surface) -> None:
+    def _guard_current_editor(surface: Surface, *, selected_root: int | None = None) -> None:
+        selected = set(surface.observation.subtree(selected_root)) if selected_root is not None else set()
         for root in editor_scopes(surface):
             for node in surface.observation.subtree(root):
+                if node in selected:
+                    continue
                 control = surface.controls.get(node, {})
                 if (control.get("role") == "textbox" and control.get("input_type") != "search"
                         and not control.get("readonly") and surface.observation.node(node).value):
@@ -331,9 +345,265 @@ class Runtime:
         if (not isinstance(support, dict) or digest(support) != operation.get("evidence_sha256")
                 or support.get("policy_version") != POLICY_VERSION
                 or support.get("source_sha256") != self.source_sha256
-                or support.get("procedure") != operation.get("procedure")
-                or support.get("argument_schema") != operation.get("argument_schema")):
+                or operation.get("kind") not in OPERATION_KINDS
+                or any(key not in support or key not in operation or support[key] != operation[key]
+                       for key in CONTRACT_FIELDS)):
             raise StopOperation("Operation evidence or runtime compatibility changed; relearn its contract", stale=True)
+
+    @staticmethod
+    def _selected_record(surface: Surface, procedure: dict, target: str) -> dict:
+        matches = visible_record_matches(surface, target)
+        if len(matches) != 1:
+            raise StopOperation("Target anchor record is absent or ambiguous in the current rendered view")
+        record = matches[0]
+        slots = relative_value_slots(surface, record["root"], target)
+        if slots != procedure["effect_slots"][procedure["anchor"]]:
+            raise StopOperation("Target anchor no longer occupies its learned field slots and channel", stale=True)
+        return record
+
+    def _wait_for_record(self, browser, surface: Surface, procedure: dict, target: str,
+                         trace: Trace) -> tuple[Surface, dict]:
+        deadline = time.monotonic() + 5
+        while True:
+            # A stable loading surface may precede the records. Any actual match
+            # is checked immediately, including duplicates or a changed channel.
+            if visible_record_matches(surface, target) or time.monotonic() >= deadline:
+                return surface, self._selected_record(surface, procedure, target)
+            time.sleep(0.1)
+            surface = trace.observe(browser.read())
+
+    @staticmethod
+    def _editor_state(surface: Surface, candidate: dict) -> dict:
+        state = form_state(surface, candidate["root"])
+        if state is None:
+            raise StopOperation("Editor field descriptors are ambiguous", stale=True)
+        return state
+
+    def _checked_editor(self, surface: Surface, procedure: dict, expected: dict) -> dict:
+        candidate = self._form(surface, procedure["form"])
+        if self._editor_state(surface, candidate) != expected:
+            raise StopOperation("Editor values or control state changed since capture; preserving the current draft")
+        return candidate
+
+    @staticmethod
+    def _read_values(surface: Surface, candidate: dict, procedure: dict) -> dict:
+        values = {}
+        for name, descriptor in procedure["read_fields"].items():
+            matches = surface.resolve(descriptor, within=candidate["root"])
+            if len(matches) != 1 or not descriptor["label"]:
+                raise StopOperation("Learned labeled field binding is absent or ambiguous", stale=True)
+            value = surface.observation.node(matches[0]).value
+            if not isinstance(value, str):
+                raise StopOperation("A learned text field no longer exposes a text value", stale=True)
+            values[name] = value
+        return values
+
+    def _record_editor(self, browser, procedure: dict, target: str, trace: Trace,
+                       *, expected_values: dict | None = None, discover: bool = False) -> tuple[Surface, dict, dict]:
+        if not discover and not {"edit", "form"} <= procedure.keys():
+            raise StopOperation("Learned record editor procedure is incomplete", stale=True)
+        self._guard_current_editor(trace.observe(browser.read()))
+        surface = trace.navigate(browser, procedure["readback_url"])
+        surface, record = self._wait_for_record(browser, surface, procedure, target, trace)
+        if expected_values is not None and record_witness(
+                surface, expected_values, procedure["anchor"], procedure["effect_slots"]) is None:
+            raise StopOperation("Creation trial values changed before its record experiment")
+        if "edit" not in procedure:
+            members = set(surface.observation.subtree(record["root"]))
+            edits = [node for node, control in surface.controls.items()
+                     if node in members and control["role"] in {"button", "link"}
+                     and not control["disabled"] and EDIT_WORDS.search(control["label"])
+                     and not EXCLUDED_WORDS.search(control["label"])]
+            if len(edits) != 1:
+                raise StopOperation("No unique direct record-local edit action was observed")
+            procedure["edit"] = surface.descriptor(edits[0])
+        edits = surface.resolve(procedure["edit"], within=record["root"])
+        if len(edits) != 1 or surface.controls[edits[0]]["disabled"]:
+            raise StopOperation("Learned record-local edit action is absent or ambiguous", stale=True)
+        surface = trace.act(browser, surface, Primitive("click", edits[0]))
+        if "form" not in procedure:
+            candidates = [candidate for candidate in form_candidates(surface)
+                          if all(sum(field["descriptor"] == descriptor for field in candidate["fields"]) == 1
+                                 for descriptor in procedure["read_fields"].values())]
+            if len(candidates) != 1:
+                raise StopOperation("No unique edit form retains the original labeled field descriptors")
+            procedure["form"] = candidates[0]["descriptor"]
+        candidate = self._form(surface, procedure["form"])
+        values = self._read_values(surface, candidate, procedure)
+        if values[procedure["anchor"]] != target:
+            raise StopOperation("Loaded editor does not retain the selected anchor", stale=True)
+        if expected_values is not None and values != expected_values:
+            raise StopOperation("Loaded labeled editor values do not match the creation trial")
+        return surface, record, values
+
+    def _leave_editor(self, browser, surface: Surface, procedure: dict, trace: Trace) -> dict:
+        candidate = self._form(surface, procedure["form"])
+        captured = self._editor_state(surface, candidate)
+        fresh = trace.observe(browser.read())
+        candidate = self._checked_editor(fresh, procedure, captured)
+        self._guard_current_editor(fresh, selected_root=candidate["root"])
+        trace.navigate(browser, procedure["readback_url"])
+        return captured
+
+    def _update_record(self, browser, surface: Surface, procedure: dict, values: dict,
+                       trace: Trace) -> tuple[dict, dict]:
+        candidate = self._form(surface, procedure["form"])
+        captured = self._editor_state(surface, candidate)
+        expected = deepcopy(captured)
+        for name in procedure["update_arguments"]:
+            surface = trace.observe(browser.read())
+            candidate = self._checked_editor(surface, procedure, expected)
+            self._guard_current_editor(surface, selected_root=candidate["root"])
+            descriptor = procedure["read_fields"][name]
+            nodes = surface.resolve(descriptor, within=candidate["root"])
+            if len(nodes) != 1:
+                raise StopOperation("Update field binding is ambiguous", stale=True)
+            surface = trace.act(browser, surface, Primitive("type", nodes[0], values[name]))
+            expected[digest(descriptor)]["value"] = values[name]
+        surface = trace.observe(browser.read())
+        candidate = self._checked_editor(surface, procedure, expected)
+        self._guard_current_editor(surface, selected_root=candidate["root"])
+        if surface.controls[candidate["submit_node"]]["disabled"]:
+            raise StopOperation("Application left the learned submit control disabled", refusal=True)
+        after = trace.act(browser, surface, Primitive("click", candidate["submit_node"]))
+        after, witness = self._witness(browser, after, values, procedure["anchor"], trace,
+                                       procedure["effect_slots"])
+        if witness is None:
+            raise StopOperation("Updated values lack the learned unique record witness")
+        self._guard_current_editor(trace.observe(browser.read()))
+        reloaded = trace.reload(browser)
+        _, witness = self._witness(browser, reloaded, values, procedure["anchor"], trace,
+                                  procedure["effect_slots"])
+        if witness is None:
+            raise StopOperation("Updated record values did not persist through reload")
+        return witness, captured
+
+    def _invoke_record(self, browser, operation: dict, arguments: dict, trace: Trace) -> dict:
+        procedure = operation["procedure"]
+        target = arguments[procedure["selector_argument"]]
+        surface, record, values = self._record_editor(browser, procedure, target, trace)
+        if operation["kind"] == "read_visible_record":
+            self._leave_editor(browser, surface, procedure, trace)
+            effect = {"kind": "visible_record_read", "values": values,
+                      "field_descriptors": procedure["read_fields"], "witness": record,
+                      "scope": "Current labeled edit-form values for one exact local anchor in the rendered view"}
+        else:
+            updated = {procedure["anchor"]: target,
+                       **{name: arguments[name] for name in procedure["update_arguments"]}}
+            witness, _ = self._update_record(browser, surface, procedure, updated, trace)
+            effect = {"kind": "visible_record_updated", "before": values,
+                      "arguments": updated, "witness": witness,
+                      "scope": "Same local anchor and requested field values in learned slots, retained after reload"}
+        return {"outcome": "CONFIRMED", "effect": effect, "metrics": trace.metrics()}
+
+    def _record_operation(self, creation: dict, kind: str, procedure: dict,
+                          trials: list[dict], settings: dict) -> dict:
+        if source_hashes() != self.source_sha256:
+            raise StopOperation("Runtime source changed during learning; restart before publishing")
+        selector, anchor = procedure["selector_argument"], procedure["anchor"]
+        if len(trials) != 2 or len({trial["arguments"][selector] for trial in trials}) != 2:
+            raise StopOperation("Record operations require two distinct selected-record trials")
+        fields = argument_schema({"fields": procedure["form"]["fields"]},
+                                 list(procedure["read_fields"]))["properties"]
+        properties = {selector: {**fields[anchor],
+                                "description": "Exact current local anchor: " + fields[anchor]["description"]}}
+        if kind == "update_visible_record":
+            properties.update({name: fields[name] for name in procedure["update_arguments"]})
+        schema = {"type": "object", "properties": properties,
+                  "required": list(properties), "additionalProperties": False}
+        value_schema = {"type": "object", "properties": {
+            name: {"type": "string", "description": descriptor["label"]}
+            for name, descriptor in procedure["read_fields"].items()},
+            "required": list(procedure["read_fields"]), "additionalProperties": False}
+        output = {"type": "object", "properties": {
+            "outcome": {"type": "string"}, "effect": {"type": "object", "properties": {
+                "values" if kind == "read_visible_record" else "arguments": value_schema}},
+            "metrics": {"type": "object"}}, "required": ["outcome", "effect", "metrics"]}
+        op_id = "op_" + digest({"parent_create_id": creation["id"], "kind": kind})[:20]
+        reading = kind == "read_visible_record"
+        operation = {"id": op_id, "version": settings.get("_operation_versions", {}).get(op_id, 0) + 1,
+                     "name": "read_record" if reading else "update_record", "kind": kind, "status": "ACTIVE",
+                     "argument_schema": schema, "output_schema": output, "procedure": deepcopy(procedure),
+                     "prerequisites": ["Authenticated session and no current editor draft before navigation",
+                                       "One rendered local record with the exact learned anchor slots and channel",
+                                       "Unique unchanged record-local edit action and labeled edit form contract",
+                                       "Loaded editor retains the selected anchor",
+                                       "All captured field values and defaults remain unchanged except requested fills"],
+                     "effect_checks": (["Values read from the original uniquely labeled field descriptors",
+                                        "Complete editor state rechecked before leaving"] if reading else
+                                       ["Selection anchor is never filled",
+                                        "Full evolving editor state checked before every fill and submission",
+                                        "All expected values occupy learned local record slots after submission and reload"]),
+                     "scope": {**deepcopy(creation["scope"]),
+                               "operation_family": "local record read" if reading else "local record update"},
+                     "support": {"policy_version": POLICY_VERSION,
+                                 "source_sha256": self.source_sha256.copy(),
+                                 "parent_create_id": creation["id"], "parent_create_version": creation["version"],
+                                 "parent_create_evidence_sha256": creation["evidence_sha256"],
+                                 "trials": deepcopy(trials)}}
+        bind_contract(operation)
+        return operation
+
+    def _learn_record_family(self, browser, creation: dict, trace: Trace, settings: dict,
+                             operations: list[dict], attempts: list[dict], emit) -> None:
+        original = creation["procedure"]
+        names = list(creation["argument_schema"]["properties"])
+        update_names = [name for name in names if name != original["anchor"]]
+        selector = "target"
+        while selector in update_names:
+            selector = "_" + selector
+        procedure = {"readback_url": original["readback_url"], "anchor": original["anchor"],
+                     "selector_argument": selector, "update_arguments": update_names,
+                     "effect_slots": deepcopy(original["effect_slots"]),
+                     "read_fields": {field["argument"]: deepcopy(field["descriptor"])
+                                     for field in original["form"]["fields"] if field["argument"] in names}}
+        for kind in ("read_visible_record", "update_visible_record"):
+            trials = []
+            try:
+                reading = kind == "read_visible_record"
+                created_trials = creation["support"]["trials"]
+                if (len(created_trials) != 2 or
+                        len({trial["arguments"][procedure["anchor"]] for trial in created_trials}) != 2):
+                    raise StopOperation("Record learning requires two distinct established creation trials")
+                if not reading and not update_names:
+                    raise StopOperation("No supported nonanchor text argument is available for update")
+                if any(not field["label"] for field in procedure["read_fields"].values()):
+                    raise StopOperation("Record reading requires explicit original field labels")
+                # Reserve enough actions for two complete experiments, including
+                # guarded read exit or update reload. Budget.take still guards each action.
+                actions = 6 if reading else 2 * (len(update_names) + 4)
+                writes = 2 if reading else 2 * (len(update_names) + 2)
+                if (trace.budget.actions + actions > trace.budget.max_actions
+                        or trace.budget.writes + writes > trace.budget.max_writes):
+                    raise StopOperation("Insufficient remaining interaction budget for two record experiments")
+                for trial_index, created in enumerate(created_trials):
+                    target = created["arguments"][procedure["anchor"]]
+                    surface, witness, before = self._record_editor(
+                        browser, procedure, target, trace, expected_values=created["arguments"], discover=True)
+                    arguments = {selector: target}
+                    if reading:
+                        captured = self._leave_editor(browser, surface, procedure, trace)
+                        values = before
+                    else:
+                        candidate = self._form(surface, procedure["form"])
+                        arguments.update(probe_arguments({"fields": [field for field in candidate["fields"]
+                                                                      if field["argument"] in update_names]},
+                                                         trial_index + 2))
+                        values = {procedure["anchor"]: target,
+                                  **{name: arguments[name] for name in update_names}}
+                        witness, captured = self._update_record(browser, surface, procedure, values, trace)
+                    trials.append({"arguments": arguments, "before": before, "values": values,
+                                   "editor_state": captured, "witness": witness})
+                operation = self._record_operation(creation, kind, procedure, trials, settings)
+                operations.append(operation)
+                emit({"type": "operation_learned", "id": operation["id"], "version": operation["version"]})
+            except Exception as error:
+                attempt = {"candidate": creation["id"], "stage": kind, "confirmed_trials": len(trials),
+                           "reason": str(error) if isinstance(error, StopOperation) else
+                           "Browser or evidence recording failed", "error_type": type(error).__name__}
+                attempts.append(attempt)
+                emit({"type": "candidate_unestablished", **attempt})
+                return  # Keep every already-established operation and preserve any current draft.
 
     @staticmethod
     def _witness(browser, surface: Surface, arguments: dict, anchor: str,
@@ -359,6 +629,8 @@ class Runtime:
             validate_arguments(operation["argument_schema"], arguments)
             browser = self._browser(connection)
             self._guard_current_editor(trace.observe(browser.read()))
+            if operation["kind"] != "create_visible_record":
+                return self._invoke_record(browser, operation, arguments, trace)
             procedure = operation["procedure"]
             before = trace.navigate(browser, procedure["readback_url"])
             anchor = procedure["anchor"]
@@ -370,6 +642,7 @@ class Runtime:
             after, first = self._witness(browser, after, arguments, anchor, trace, procedure["effect_slots"])
             if first is None:
                 raise StopOperation("Submitted values lack a unique visible record witness")
+            self._guard_current_editor(trace.observe(browser.read()))
             reloaded = trace.reload(browser)
             reloaded, persisted = self._witness(browser, reloaded, arguments, anchor, trace, procedure["effect_slots"])
             if persisted is None:
@@ -397,12 +670,26 @@ class Runtime:
         budget = Budget(min(settings.get("max_actions", 60), scope.get("max_actions", 60)),
                         min(settings.get("max_writes", 30), scope.get("max_writes", 30)))
         trace = self._trace(connection, emit, budget)
-        operations, attempts = [], []
+        operations, attempts, invalidations = [], [], []
         if not scope.get("exploration_enabled", False):
-            return {"status": "EXPLORATION_DISABLED", "operations": [], "metrics": trace.metrics()}
+            return {"status": "EXPLORATION_DISABLED", "operations": [], "invalidations": [],
+                    "metrics": trace.metrics()}
         try:
             if source_hashes() != self.source_sha256:
                 raise StopOperation("Runtime source changed; restart the service before learning")
+            # The service supplies active artifacts from this connection. An
+            # explicit compatibility contradiction survives any later scan failure;
+            # absence from a bounded scan never invalidates compatible support.
+            for existing in settings.get("_existing_operations", []):
+                try:
+                    self._check_operation(existing)
+                except StopOperation as error:
+                    if not error.stale:
+                        raise
+                    invalidation = {"id": existing["id"], "version": existing["version"],
+                                    "status": "STALE", "reason": str(error)}
+                    invalidations.append(invalidation)
+                    emit({"type": "operation_invalidated", **invalidation})
             browser = self._browser(connection)
             self._guard_current_editor(trace.observe(browser.read()))
             pending = [{"entry_url": connection["url"], "navigation": []}]
@@ -442,6 +729,7 @@ class Runtime:
                                 raise StopOperation("Probe values lack a unique visible record witness")
                             procedure["readback_url"] = after.observation.url
                             procedure["effect_slots"] = witness["field_slots"]
+                            self._guard_current_editor(trace.observe(browser.read()))
                             reloaded = trace.reload(browser)
                             reloaded, witness = self._witness(browser, reloaded, arguments, procedure["anchor"], trace,
                                                               procedure["effect_slots"])
@@ -476,8 +764,11 @@ class Runtime:
                                                "prior": "General English action vocabulary proposes exploration",
                                                "runtime_model": None},
                                      "evidence_sha256": digest(evidence)}
+                        bind_contract(operation)
                         operations.append(operation)
                         emit({"type": "operation_learned", "id": op_id, "version": operation["version"]})
+                        self._learn_record_family(browser, operation, trace, settings, operations, attempts, emit)
+                        break  # The first established family ends this bounded scan, including failed extensions.
                     except StopOperation as error:
                         attempts.append({"candidate": candidate["signature"], "reason": str(error),
                                          "confirmed_trials": len(trials)})
@@ -494,11 +785,12 @@ class Runtime:
                                 pending.append({"entry_url": location["entry_url"],
                                                 "navigation": [*location["navigation"], descriptor]})
             return {"status": "COMPLETED" if operations else "UNESTABLISHED", "operations": operations,
-                    "attempts": attempts, "metrics": trace.metrics()}
+                    "attempts": attempts, "invalidations": invalidations, "metrics": trace.metrics()}
         except StopOperation as error:
             return {"status": "LIMIT_REACHED" if "budget" in str(error) else "UNESTABLISHED",
                     "operations": operations, "reason": str(error), "attempts": attempts,
-                    "metrics": trace.metrics()}
+                    "invalidations": invalidations, "metrics": trace.metrics()}
         except Exception as error:
             return {"status": "INCOMPLETE", "operations": operations, "attempts": attempts,
-                    "error_type": type(error).__name__, "metrics": trace.metrics()}
+                    "error_type": type(error).__name__, "invalidations": invalidations,
+                    "metrics": trace.metrics()}

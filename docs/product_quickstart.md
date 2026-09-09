@@ -2,12 +2,13 @@
 
 SemABI connects to a browser application, learns a parameterized operation from
 authorized UI experiments, and exposes its schema and invocation through HTTP.
-The current product path supports local form creation with visible record
-read-back. It uses no runtime model or paid API. A general English action-word
-prior proposes exploration; visible URL labels can also propose URL arguments
+The current product path supports local form creation, reading a selected
+record, and updating its supported text fields with visible read-back. It uses
+no runtime model or paid API. A general English action-word prior proposes exploration; visible URL labels can also propose URL arguments
 when the interface omits an HTML input type. Repeated observed effects establish
-an operation's limited support. This path is separate from the relational
-research pipeline.
+an operation's limited support. Record reads and updates are proposed from a
+unique visible local Edit, Modify or Update action and tested on two created
+records. This path is separate from the relational research pipeline.
 
 ## Start
 
@@ -68,6 +69,27 @@ Add `--reuse-session` to use the connection's current browser for repeated calls
 The service can also be stopped and restarted with the same `--data-dir`; no
 relearning is needed for an unchanged supported contract.
 
+When learning exposes `read_record` and `update_record`, select their returned
+operation IDs. A read usually takes a `target` argument containing the complete
+current anchor, such as a URL. Its result contains structured current values in
+`result.effect.values`. An update takes that selector and all supported new field
+values. The selector stays unchanged; use the returned schema for the exact
+argument names and constraints. For example, **if the learned read schema has
+one `target` argument**:
+
+```sh
+.venv/bin/python examples/client.py \
+  --connection CONNECTION_ID --operation READ_OPERATION_ID \
+  --arguments '{"target":"https://example.invalid/a-record"}'
+```
+
+A read opens the selected record's editor and returns its current field values.
+An update rechecks the complete captured editor state before each fill and
+submission, then verifies the requested fields after saving and reloading.
+Separate editor drafts stop navigation or submission. The current selection
+scope is one exact, unique anchor in the rendered record view; search across
+pages and arbitrary filters are not established.
+
 The authenticated HTTP routes are:
 
 | Route | Purpose |
@@ -86,9 +108,10 @@ Send `Authorization: Bearer TOKEN` on every request. An invocation body is
 Writes return `202` and a durable job ID. HTTP acceptance and job completion do
 not mean the requested effect was confirmed.
 
-`CONFIRMED` requires all argument values together in one unique visible local
-record and again after reload. Text and inspectable link destinations have
-separate learned field bindings; displaying a URL as text cannot substitute for
+For creation and update, `CONFIRMED` requires all expected values together in
+one unique visible local record and again after reload. For a read it requires
+the selected labeled editor values and an unchanged editor state before exit.
+Text and inspectable link destinations have separate learned field bindings; displaying a URL as text cannot substitute for
 the saved destination of a link. `FAILED_BEFORE_EFFECT` means execution stopped
 before a potentially writing interaction. `UNCERTAIN` includes lost replies,
 partial actions, and missing or ambiguous read-back after a possible write.
@@ -108,14 +131,22 @@ procedure, prerequisites, effect checks, evidence hashes, source attribution,
 and explicit scope. Control indices are observation-local; execution resolves
 descriptors afresh. Existing draft values and changed defaults stop creation.
 Changed form contracts mark the affected operation version stale. Relearning
-can publish a new supported version while preserving the old evidence.
+withdraws explicitly incompatible saved versions and can publish new supported
+versions while preserving old evidence. An operation missing from a bounded
+scan retains its status unless its support is contradicted.
 
 The initial mechanism requires forms with discoverable text controls and
 record values that can be read back as complete visible text or rendered link
 destinations. It excludes hidden fields, including closed disclosure panels,
 and tolerates field-local controls such as a Clear button appearing during
-typing. It does not yet
-establish arbitrary workflows, global record identity, relational queries,
-unobserved side effects, rollback, or universal application support. Results on
+typing. Record reading currently requires labeled fields and a direct local
+edit action; updating also requires a separate anchor that remains unchanged.
+The observed Memos menu and unnamed editor are an active coverage limitation.
+This path does not yet establish arbitrary workflows, global record identity,
+relational queries, unobserved side effects, rollback, or universal application support. Results on
 independently developed applications are tracked in the
-[product execution record](data/v4/transport/execution.md).
+[product execution record](data/v4/transport/execution.md). The
+[record-operation demonstration](data/v4/transport/product/record_operations_v1/README.md)
+retains the HTTP calls, independent before/after checks and service-restart read.
+The [baseline smoke](data/v4/transport/product/cached_form_smoke_v1/README.md)
+is an unmatched development check; a prospective comparison remains pending.
