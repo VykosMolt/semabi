@@ -1,0 +1,264 @@
+{
+  "format": "product_assessment_service_owner.v1",
+  "started_at": "2026-09-09T21:14:20.951715+00:00",
+  "service_data_dir": "/home/moloch/semabi/runs/product_auth_development_v1/service",
+  "fresh_service_process": true,
+  "service_restart_reuses_persisted_artifacts": true,
+  "new_learning": false,
+  "accepted_jobs_terminal_before_close": true,
+  "service_pid": 1337760,
+  "service_startup_seconds": 0.1510006339958636,
+  "client_exit_code": 0,
+  "terminal_jobs": [
+    {
+      "connection_id": "conn_0bf3fce0d8f143498ad515861050e349",
+      "created_at": "2026-09-09T21:14:21.161979+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T21:14:21.164882+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T21:14:24.416640+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_8b09eab3990945498dde9bcea985b9d8",
+      "job_id": "job_8b09eab3990945498dde9bcea985b9d8",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8853",
+        "authentication_actions": 3,
+        "authentication_evidence": "same_origin_settled_password_form_absence",
+        "authentication_prior": "Whole normalized English label: Login, Log in, Sign in",
+        "elapsed_seconds": 2.835,
+        "login_selection_basis": "exact_english_login_label_prior",
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T21:14:24.416677+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_0bf3fce0d8f143498ad515861050e349",
+      "created_at": "2026-09-09T21:14:24.459943+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T21:14:24.464390+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T21:14:24.749561+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "ceebeda7a040eb79",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:14:24.759568+00:00",
+          "sequence": 3,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T21:14:25.943358+00:00",
+          "sequence": 4,
+          "settled": true,
+          "signature": "b4fc3b5ec9b125da",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:14:26.220946+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "b4fc3b5ec9b125da",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:14:26.230581+00:00",
+          "sequence": 6,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T21:14:27.465257+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "b4fc3b5ec9b125da",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 98,
+            "text": "sdcb66c52b handoff review"
+          },
+          "created_at": "2026-09-09T21:14:27.475357+00:00",
+          "sequence": 8,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:14:27.816321+00:00",
+          "sequence": 9,
+          "settled": true,
+          "signature": "3560f1a623c9cc75",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T21:14:27.825433+00:00",
+          "ok": true,
+          "sequence": 10,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 103
+          },
+          "created_at": "2026-09-09T21:14:27.827704+00:00",
+          "sequence": 11,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:14:28.413169+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "823bbb49eb389f23",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T21:14:28.421990+00:00",
+          "ok": true,
+          "sequence": 13,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T21:14:28.700267+00:00",
+          "sequence": 14,
+          "settled": true,
+          "signature": "823bbb49eb389f23",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:14:28.709654+00:00",
+          "sequence": 15,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T21:14:29.690057+00:00",
+          "sequence": 16,
+          "settled": true,
+          "signature": "823bbb49eb389f23",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:14:29.700324+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 17,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_9b865b8d5d7948348cf64d810bf0515d",
+      "job_id": "job_9b865b8d5d7948348cf64d810bf0515d",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "add_a_task": "sdcb66c52b handoff review"
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 56.589394169996375,
+          "max_writes": 9
+        },
+        "operation_id": "op_98cf711d3da577a6b7e6",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "add_a_task": "sdcb66c52b handoff review"
+          },
+          "kind": "visible_record_created",
+          "scope": "Unique local record in the current rendered view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "field_slots": {
+              "add_a_task": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "link",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "link_destinations": [
+              "http://127.0.0.1:8853/projects/1",
+              "http://127.0.0.1:8853/tasks/6"
+            ],
+            "observation": "823bbb49eb389f23",
+            "role": "listitem",
+            "root": 115,
+            "text_boundaries": {},
+            "texts": [
+              "sdcb66c52b handoff review",
+              "sdcb66c52b handoff review",
+              "Inboxsdcb66c52b handoff review Add to Favorites",
+              "Mark 'sdcb66c52b handoff review' as done",
+              "Inboxsdcb66c52b handoff review",
+              "Inbox"
+            ],
+            "value_node": 128
+          }
+        },
+        "metrics": {
+          "actions": 5,
+          "elapsed_seconds": 5.235,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 2
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T21:14:29.700381+00:00",
+      "write_intent": true
+    }
+  ],
+  "service_exit_code": 0,
+  "elapsed_seconds_including_startup_client_reconciliation_and_shutdown": 8.925645782001084,
+  "completed_at": "2026-09-09T21:14:29.877388+00:00"
+}

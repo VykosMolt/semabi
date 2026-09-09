@@ -1,0 +1,364 @@
+{
+  "format": "schema_selected_creation_call.v1",
+  "status": "ELIGIBLE",
+  "classification": "Direct learned-schema invocation; not natural-language planning or a rescue of fixed assessment goals",
+  "selection_basis": "Exactly one active creation operation with exactly one required string property; place supplied payload into that sole property without semantic renaming",
+  "call": {
+    "operation": {
+      "argument_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "add_a_task": {
+            "description": "Add a task\u2026",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "add_a_task"
+        ],
+        "type": "object"
+      },
+      "effect_checks": [
+        "All supplied values together in one unique local record",
+        "Values occupy the relative field slots learned across both trials",
+        "Same record values remain visible after reload"
+      ],
+      "evidence_sha256": "bf183435d2bf25590bca0131e0410df746b5294f34018bb485bb86b90e979c34",
+      "id": "op_98cf711d3da577a6b7e6",
+      "kind": "create_visible_record",
+      "name": "add_record",
+      "output_schema": {
+        "description": "Outcome, visible effect witness, and execution metrics",
+        "type": "object"
+      },
+      "prerequisites": [
+        "Authenticated session",
+        "Unchanged visible form contract",
+        "Empty argument controls and unchanged other control defaults",
+        "Anchor absent from the current read-back view"
+      ],
+      "procedure": {
+        "anchor": "add_a_task",
+        "defaults": {},
+        "effect_slots": {
+          "add_a_task": [
+            {
+              "channel": "text",
+              "path": [
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "group",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ],
+                [
+                  "text",
+                  0
+                ],
+                [
+                  "link",
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        "entry_url": "http://127.0.0.1:8853/",
+        "form": {
+          "context_controls": [],
+          "fields": [
+            {
+              "argument": "add_a_task",
+              "descriptor": {
+                "input_type": "textarea",
+                "label": "Add a task\u2026",
+                "role": "textbox"
+              },
+              "input_type": "textarea",
+              "max": null,
+              "max_length": null,
+              "min": null,
+              "options": [],
+              "required": false,
+              "role": "textbox"
+            }
+          ],
+          "submit": {
+            "input_type": "",
+            "label": "Add",
+            "role": "button"
+          }
+        },
+        "navigation": [],
+        "readback_url": "http://127.0.0.1:8853/"
+      },
+      "scope": {
+        "operation_family": "local form creation",
+        "origin": "http://127.0.0.1:8853",
+        "prior": "General English action vocabulary proposes exploration",
+        "runtime_model": null,
+        "unsupported": [
+          "global record uniqueness",
+          "rollback",
+          "exactly-once delivery",
+          "relational selection",
+          "unobserved side effects"
+        ]
+      },
+      "status": "ACTIVE",
+      "support": {
+        "argument_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "add_a_task": {
+              "description": "Add a task\u2026",
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "add_a_task"
+          ],
+          "type": "object"
+        },
+        "effect_checks": [
+          "All supplied values together in one unique local record",
+          "Values occupy the relative field slots learned across both trials",
+          "Same record values remain visible after reload"
+        ],
+        "kind": "create_visible_record",
+        "output_schema": {
+          "description": "Outcome, visible effect witness, and execution metrics",
+          "type": "object"
+        },
+        "policy_version": "local-record-v6",
+        "prerequisites": [
+          "Authenticated session",
+          "Unchanged visible form contract",
+          "Empty argument controls and unchanged other control defaults",
+          "Anchor absent from the current read-back view"
+        ],
+        "procedure": {
+          "anchor": "add_a_task",
+          "defaults": {},
+          "effect_slots": {
+            "add_a_task": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "entry_url": "http://127.0.0.1:8853/",
+          "form": {
+            "context_controls": [],
+            "fields": [
+              {
+                "argument": "add_a_task",
+                "descriptor": {
+                  "input_type": "textarea",
+                  "label": "Add a task\u2026",
+                  "role": "textbox"
+                },
+                "input_type": "textarea",
+                "max": null,
+                "max_length": null,
+                "min": null,
+                "options": [],
+                "required": false,
+                "role": "textbox"
+              }
+            ],
+            "submit": {
+              "input_type": "",
+              "label": "Add",
+              "role": "button"
+            }
+          },
+          "navigation": [],
+          "readback_url": "http://127.0.0.1:8853/"
+        },
+        "scope": {
+          "operation_family": "local form creation",
+          "origin": "http://127.0.0.1:8853",
+          "prior": "General English action vocabulary proposes exploration",
+          "runtime_model": null,
+          "unsupported": [
+            "global record uniqueness",
+            "rollback",
+            "exactly-once delivery",
+            "relational selection",
+            "unobserved side effects"
+          ]
+        },
+        "source_sha256": {
+          "browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+          "browser_session.py": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+          "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+          "observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+          "runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+          "surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4"
+        },
+        "trials": [
+          {
+            "arguments": {
+              "add_a_task": "semabi_31805e2484_0"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "add_a_task": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [
+                "http://127.0.0.1:8853/projects/1",
+                "http://127.0.0.1:8853/tasks/4"
+              ],
+              "observation": "0b8fe8b28345cacc",
+              "role": "listitem",
+              "root": 115,
+              "text_boundaries": {},
+              "texts": [
+                "semabi_31805e2484_0",
+                "semabi_31805e2484_0",
+                "Inboxsemabi_31805e2484_0 Add to Favorites",
+                "Mark 'semabi_31805e2484_0' as done",
+                "Inboxsemabi_31805e2484_0",
+                "Inbox"
+              ],
+              "value_node": 128
+            }
+          },
+          {
+            "arguments": {
+              "add_a_task": "semabi_0f5297aeec_1"
+            },
+            "witness": {
+              "basis": "visible_local_record",
+              "field_slots": {
+                "add_a_task": [
+                  {
+                    "channel": "text",
+                    "path": [
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "group",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "text",
+                        0
+                      ],
+                      [
+                        "link",
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "link_destinations": [
+                "http://127.0.0.1:8853/projects/1",
+                "http://127.0.0.1:8853/tasks/5"
+              ],
+              "observation": "edeec0f1f6588071",
+              "role": "listitem",
+              "root": 115,
+              "text_boundaries": {},
+              "texts": [
+                "semabi_0f5297aeec_1",
+                "semabi_0f5297aeec_1",
+                "Inboxsemabi_0f5297aeec_1 Add to Favorites",
+                "Mark 'semabi_0f5297aeec_1' as done",
+                "Inboxsemabi_0f5297aeec_1",
+                "Inbox"
+              ],
+              "value_node": 128
+            }
+          }
+        ]
+      },
+      "version": 1
+    },
+    "arguments": {
+      "add_a_task": "sdcb66c52b followup review"
+    }
+  },
+  "general_goal_planning": "UNESTABLISHED"
+}

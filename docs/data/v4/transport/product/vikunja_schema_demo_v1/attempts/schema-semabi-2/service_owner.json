@@ -1,0 +1,264 @@
+{
+  "format": "product_assessment_service_owner.v1",
+  "started_at": "2026-09-09T21:16:47.380493+00:00",
+  "service_data_dir": "/home/moloch/semabi/runs/product_auth_development_v1/service",
+  "fresh_service_process": true,
+  "service_restart_reuses_persisted_artifacts": true,
+  "new_learning": false,
+  "accepted_jobs_terminal_before_close": true,
+  "service_pid": 1343148,
+  "service_startup_seconds": 0.15118042600806803,
+  "client_exit_code": 0,
+  "terminal_jobs": [
+    {
+      "connection_id": "conn_0bf3fce0d8f143498ad515861050e349",
+      "created_at": "2026-09-09T21:16:47.594172+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T21:16:47.597019+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T21:16:50.854967+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_5b67ef14433f462f936bf5126a9c24a0",
+      "job_id": "job_5b67ef14433f462f936bf5126a9c24a0",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8853",
+        "authentication_actions": 3,
+        "authentication_evidence": "same_origin_settled_password_form_absence",
+        "authentication_prior": "Whole normalized English label: Login, Log in, Sign in",
+        "elapsed_seconds": 2.847,
+        "login_selection_basis": "exact_english_login_label_prior",
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T21:16:50.855002+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_0bf3fce0d8f143498ad515861050e349",
+      "created_at": "2026-09-09T21:16:50.868207+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T21:16:50.871164+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T21:16:51.151692+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "18554fb10860394b",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:51.161138+00:00",
+          "sequence": 3,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T21:16:52.423146+00:00",
+          "sequence": 4,
+          "settled": true,
+          "signature": "823bbb49eb389f23",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:52.699444+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "823bbb49eb389f23",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:52.708855+00:00",
+          "sequence": 6,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T21:16:53.953655+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "823bbb49eb389f23",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 98,
+            "text": "sdcb66c52b followup review"
+          },
+          "created_at": "2026-09-09T21:16:53.963378+00:00",
+          "sequence": 8,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:16:54.289460+00:00",
+          "sequence": 9,
+          "settled": true,
+          "signature": "794d4cfdc5020b41",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T21:16:54.297825+00:00",
+          "ok": true,
+          "sequence": 10,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 103
+          },
+          "created_at": "2026-09-09T21:16:54.298913+00:00",
+          "sequence": 11,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:16:54.882680+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "9338644804737997",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T21:16:54.891093+00:00",
+          "ok": true,
+          "sequence": 13,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T21:16:55.170736+00:00",
+          "sequence": 14,
+          "settled": true,
+          "signature": "9338644804737997",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:55.172993+00:00",
+          "sequence": 15,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T21:16:56.152079+00:00",
+          "sequence": 16,
+          "settled": true,
+          "signature": "9338644804737997",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:56.161814+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 17,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_2d3dccbe3ea0412691d96fe1e80b1c1e",
+      "job_id": "job_2d3dccbe3ea0412691d96fe1e80b1c1e",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "add_a_task": "sdcb66c52b followup review"
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 56.61684841898968,
+          "max_writes": 9
+        },
+        "operation_id": "op_98cf711d3da577a6b7e6",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "add_a_task": "sdcb66c52b followup review"
+          },
+          "kind": "visible_record_created",
+          "scope": "Unique local record in the current rendered view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "field_slots": {
+              "add_a_task": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "link",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "link_destinations": [
+              "http://127.0.0.1:8853/projects/1",
+              "http://127.0.0.1:8853/tasks/7"
+            ],
+            "observation": "9338644804737997",
+            "role": "listitem",
+            "root": 115,
+            "text_boundaries": {},
+            "texts": [
+              "sdcb66c52b followup review",
+              "sdcb66c52b followup review",
+              "Inboxsdcb66c52b followup review Add to Favorites",
+              "Mark 'sdcb66c52b followup review' as done",
+              "Inboxsdcb66c52b followup review",
+              "Inbox"
+            ],
+            "value_node": 128
+          }
+        },
+        "metrics": {
+          "actions": 5,
+          "elapsed_seconds": 5.289,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 2
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T21:16:56.161861+00:00",
+      "write_intent": true
+    }
+  ],
+  "service_exit_code": 0,
+  "elapsed_seconds_including_startup_client_reconciliation_and_shutdown": 8.956914684007643,
+  "completed_at": "2026-09-09T21:16:56.337434+00:00"
+}

@@ -116,6 +116,12 @@ the editor contract; the saved update remains unestablished. The original failed
 calls remain in the [workflow assessment](data/v4/transport/product/development_assessment_v1/README.md).
 The [first reserved assessment](data/v4/transport/product/reserved_assessment_v1/README.md)
 completed no workflows because authentication stopped before learning.
+After the authentication repair, a separate
+[Vikunja development demonstration](data/v4/transport/product/vikunja_schema_demo_v1/README.md)
+learned a creation schema through standard onboarding and persisted two fresh
+HTTP calls across service restarts. Independent UI checks confirmed both calls;
+matched cached replay also completed both. The original ordinary-language goals
+remain unsupported by the unchanged assessment binder.
 
 Two successful read trials can establish one varying numeric label on an
 untouched dialog button. This declared prior preserves digit widths, separators,

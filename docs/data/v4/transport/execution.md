@@ -82,13 +82,29 @@ Rolling queue:
    in `runs/product_auth_development_v1` and
    [the repair package](product/authentication_repair_v1/README.md).
    The unchanged ordinary-goal binder still rejects all 18 original requests.
-8. Active: separate direct-schema creation/reuse demonstration on Vikunja,
-   with identical mechanically selected one-string calls for both arms,
-   restored post-learning state and independent saved-task checks. Root owns
-   service/lifecycle; the evaluator prepares ordinary UI checks. A bounded
-   Memos autocomplete dismissal probe is being prepared independently; keep
-   normal strict form checks. Reassess transfer on newly reserved evidence
-   after repairs. The first product milestone remains unmet.
+8. Vikunja direct-schema development demonstration completed on the unchanged
+   authentication source: both SemABI and cached replay completed 2/2 calls.
+   Six independent checker phases confirmed matching five-row starting views,
+   then exactly one new row per call, retained after reload with prior rows
+   unchanged. Both SemABI calls restarted the service without relearning;
+   workflow times including authentication were 8.595 and 8.620 seconds, versus
+   6.240 and 6.281 for cached replay. This is separate from the original 18
+   ordinary goals, which remain unsupported by the unchanged binder.
+   `runs/product_auth_development_v1/schema_demo_summary_v1.json` binds all
+   four calls, six checks and eleven terminal process meters to the source.
+   The [public demonstration evidence](product/vikunja_schema_demo_v1/README.md)
+   retains the source, learned schemas, calls and independent accepted inventories.
+9. Active: general autocomplete repair in `/tmp/semabi_popup_candidate`, with
+   main source unchanged. One bounded Memos diagnostic found explicit visible
+   ARIA linkage from the focused textbox to its suggestion list. One retained
+   Escape restored the exact original form, typed value and control identities;
+   no Save was attempted. A separate fresh-browser check confirmed both saved
+   article bodies/tags still matched the prior fixture after reload. Evidence:
+   `runs/product_popup_probe_v1`. Next: implement guarded dismissal during
+   learning, require two popup-triggered update trials with persisted readback,
+   then test a newly learned operation through HTTP. Preserve ordinary strict
+   checks and reassess transfer on newly reserved evidence after repairs.
+   The first product milestone remains unmet.
 
 Application setup is separate from learner implementation. Proposed disclosed
 development applications are linkding and Memos; Vikunja is reserved, subject to

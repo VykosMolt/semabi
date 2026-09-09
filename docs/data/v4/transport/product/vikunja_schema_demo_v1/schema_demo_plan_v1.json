@@ -1,0 +1,42 @@
+{
+  "format": "vikunja_schema_demo.v1",
+  "frozen_at": "2026-09-09T20:55:10.682262+00:00",
+  "classification": "Development demonstration of direct schema-level API creation and fresh-session reuse, separate from all reserved/fixed ordinary-goal denominators",
+  "selection_algorithm": "Unique ACTIVE create_visible_record, closed object, sole required string property; no app labels, aliases, native IDs or supplied procedure",
+  "operation_id": "op_98cf711d3da577a6b7e6",
+  "operation_version": 1,
+  "learned_field": "add_a_task",
+  "calls": [
+    {
+      "number": 1,
+      "payload": "sdcb66c52b handoff review",
+      "call_path": "runs/product_auth_development_v1/schema_calls/call_1.json",
+      "call_sha256": "68f0285717de0a8ac9fa940d94e6213f9ff9094abc89d0a6ac865e5767fe8a3d"
+    },
+    {
+      "number": 2,
+      "payload": "sdcb66c52b followup review",
+      "call_path": "runs/product_auth_development_v1/schema_calls/call_2.json",
+      "call_sha256": "7fa16dfe4dd59a9d14b7411437606606fd812a296da848944584a48abd7708ac"
+    }
+  ],
+  "arms": [
+    "semabi",
+    "cached_form"
+  ],
+  "schedule": "Post-onboarding opaque snapshot; restore it before each arm, execute call1 then call2 without restoring between them. Each call starts a fresh browser/service for SemABI and browser for baseline. No relearning or write retries.",
+  "checks": "Independent ordinary UI before arm and after each call+reload: intended title appears once, previous created title retained, original three base fixture titles/labels/completion unchanged; complete visible task inventory scope captured if feasible",
+  "max_per_call": {
+    "seconds": 60,
+    "actions": 20,
+    "possible_writes": 12
+  },
+  "independent_verification_budget_per_phase": {
+    "seconds": 30,
+    "actions": 12,
+    "possible_writes": 8
+  },
+  "learning_cost": "Actual14.1278s owner/14a7w shared once per arm, physical once; use external meter for exact wall/CPU/RSS",
+  "no_general_language_binding_claim": true,
+  "next_action": "Freeze and take opaque post-learning snapshot, independently establish expected pre-state before actual call1"
+}

@@ -1,0 +1,1375 @@
+{
+  "accepted_captures": [
+    {
+      "check": {
+        "base_fixture_checks": {
+          "A": {
+            "Inbox_and_open": true,
+            "expected_label_visible_in_own_row": true,
+            "title_matches": 1
+          },
+          "B": {
+            "Inbox_and_open": true,
+            "expected_label_visible_in_own_row": true,
+            "title_matches": 1
+          },
+          "C": {
+            "Inbox_and_open": true,
+            "expected_label_visible_in_own_row": true,
+            "title_matches": 1
+          }
+        },
+        "expected_payload_counts": {
+          "sdcb66c52b followup review": 1,
+          "sdcb66c52b handoff review": 1
+        },
+        "expected_state_matches": true,
+        "expected_visible_task_count": 7,
+        "inventory_transition": {
+          "added": [
+            "{\"done\":false,\"project_names\":[\"Inbox\"],\"semantics\":[{\"checked\":false,\"name\":\"Mark 'sdcb66c52b followup review' as done\",\"options\":null,\"role\":\"checkbox\",\"value\":null},{\"checked\":null,\"destination\":\"http://127.0.0.1:8853/projects/1\",\"name\":\"Inbox\",\"options\":null,\"role\":\"link\",\"value\":null},{\"checked\":null,\"destination\":\"http://127.0.0.1:8853/tasks/7\",\"name\":\"sdcb66c52b followup review\",\"options\":null,\"role\":\"link\",\"value\":null},{\"checked\":null,\"name\":\"Inboxsdcb66c52b followup review\",\"options\":null,\"role\":\"text\",\"value\":null},{\"checked\":null,\"name\":\"sdcb66c52b followup review\",\"options\":null,\"role\":\"text\",\"value\":null}],\"title\":\"sdcb66c52b followup review\"}"
+          ],
+          "exact_expected_addition": true,
+          "removed": []
+        },
+        "other_visible_task_count": 2,
+        "other_visible_tasks": [
+          {
+            "done": false,
+            "project_names": [
+              "Inbox"
+            ],
+            "semantics": [
+              {
+                "checked": false,
+                "name": "Mark 'semabi_0f5297aeec_1' as done",
+                "options": null,
+                "role": "checkbox",
+                "value": null
+              },
+              {
+                "checked": null,
+                "destination": "http://127.0.0.1:8853/projects/1",
+                "name": "Inbox",
+                "options": null,
+                "role": "link",
+                "value": null
+              },
+              {
+                "checked": null,
+                "destination": "http://127.0.0.1:8853/tasks/5",
+                "name": "semabi_0f5297aeec_1",
+                "options": null,
+                "role": "link",
+                "value": null
+              },
+              {
+                "checked": null,
+                "name": "Inboxsemabi_0f5297aeec_1",
+                "options": null,
+                "role": "text",
+                "value": null
+              },
+              {
+                "checked": null,
+                "name": "semabi_0f5297aeec_1",
+                "options": null,
+                "role": "text",
+                "value": null
+              }
+            ],
+            "title": "semabi_0f5297aeec_1"
+          },
+          {
+            "done": false,
+            "project_names": [
+              "Inbox"
+            ],
+            "semantics": [
+              {
+                "checked": false,
+                "name": "Mark 'semabi_31805e2484_0' as done",
+                "options": null,
+                "role": "checkbox",
+                "value": null
+              },
+              {
+                "checked": null,
+                "destination": "http://127.0.0.1:8853/projects/1",
+                "name": "Inbox",
+                "options": null,
+                "role": "link",
+                "value": null
+              },
+              {
+                "checked": null,
+                "destination": "http://127.0.0.1:8853/tasks/4",
+                "name": "semabi_31805e2484_0",
+                "options": null,
+                "role": "link",
+                "value": null
+              },
+              {
+                "checked": null,
+                "name": "Inboxsemabi_31805e2484_0",
+                "options": null,
+                "role": "text",
+                "value": null
+              },
+              {
+                "checked": null,
+                "name": "semabi_31805e2484_0",
+                "options": null,
+                "role": "text",
+                "value": null
+              }
+            ],
+            "title": "semabi_31805e2484_0"
+          }
+        ],
+        "payload_counts": {
+          "sdcb66c52b followup review": 1,
+          "sdcb66c52b handoff review": 1
+        },
+        "reference_arm_before_matches": null,
+        "scope": "Current rendered task-list rows only; visible links are witnesses, not a global or hidden record identity claim",
+        "visible_task_count": 7
+      },
+      "inventory": [
+        {
+          "checkbox_node": 223,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxrvfpbrfgop release check alpha",
+            "Inboxrvfpbrfgop release check alpha rvfpbrfgopblue Add to Favorites",
+            "Mark 'rvfpbrfgop release check alpha' as done",
+            "rvfpbrfgop release check alpha",
+            "rvfpbrfgop release check alpha",
+            "rvfpbrfgopblue",
+            "rvfpbrfgopblue"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 217,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'rvfpbrfgop release check alpha' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/1",
+              "name": "rvfpbrfgop release check alpha",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxrvfpbrfgop release check alpha",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgop release check alpha",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopblue",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopblue",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "rvfpbrfgop release check alpha",
+          "title_node": 231
+        },
+        {
+          "checkbox_node": 204,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxrvfpbrfgop release check beta",
+            "Inboxrvfpbrfgop release check beta rvfpbrfgopamber Add to Favorites",
+            "Mark 'rvfpbrfgop release check beta' as done",
+            "rvfpbrfgop release check beta",
+            "rvfpbrfgop release check beta",
+            "rvfpbrfgopamber",
+            "rvfpbrfgopamber"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 198,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'rvfpbrfgop release check beta' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/2",
+              "name": "rvfpbrfgop release check beta",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxrvfpbrfgop release check beta",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgop release check beta",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopamber",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopamber",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "rvfpbrfgop release check beta",
+          "title_node": 212
+        },
+        {
+          "checkbox_node": 185,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxrvfpbrfgop unrelated record",
+            "Inboxrvfpbrfgop unrelated record rvfpbrfgopneutral Add to Favorites",
+            "Mark 'rvfpbrfgop unrelated record' as done",
+            "rvfpbrfgop unrelated record",
+            "rvfpbrfgop unrelated record",
+            "rvfpbrfgopneutral",
+            "rvfpbrfgopneutral"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 179,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'rvfpbrfgop unrelated record' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/3",
+              "name": "rvfpbrfgop unrelated record",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxrvfpbrfgop unrelated record",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgop unrelated record",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopneutral",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopneutral",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "rvfpbrfgop unrelated record",
+          "title_node": 193
+        },
+        {
+          "checkbox_node": 121,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxsdcb66c52b followup review",
+            "Inboxsdcb66c52b followup review Add to Favorites",
+            "Mark 'sdcb66c52b followup review' as done",
+            "sdcb66c52b followup review",
+            "sdcb66c52b followup review"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 115,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'sdcb66c52b followup review' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/7",
+              "name": "sdcb66c52b followup review",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxsdcb66c52b followup review",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "sdcb66c52b followup review",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "sdcb66c52b followup review",
+          "title_node": 129
+        },
+        {
+          "checkbox_node": 137,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxsdcb66c52b handoff review",
+            "Inboxsdcb66c52b handoff review Add to Favorites",
+            "Mark 'sdcb66c52b handoff review' as done",
+            "sdcb66c52b handoff review",
+            "sdcb66c52b handoff review"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 131,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'sdcb66c52b handoff review' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/6",
+              "name": "sdcb66c52b handoff review",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxsdcb66c52b handoff review",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "sdcb66c52b handoff review",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "sdcb66c52b handoff review",
+          "title_node": 145
+        },
+        {
+          "checkbox_node": 153,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxsemabi_0f5297aeec_1",
+            "Inboxsemabi_0f5297aeec_1 Add to Favorites",
+            "Mark 'semabi_0f5297aeec_1' as done",
+            "semabi_0f5297aeec_1",
+            "semabi_0f5297aeec_1"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 147,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'semabi_0f5297aeec_1' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/5",
+              "name": "semabi_0f5297aeec_1",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxsemabi_0f5297aeec_1",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "semabi_0f5297aeec_1",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "semabi_0f5297aeec_1",
+          "title_node": 161
+        },
+        {
+          "checkbox_node": 169,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxsemabi_31805e2484_0",
+            "Inboxsemabi_31805e2484_0 Add to Favorites",
+            "Mark 'semabi_31805e2484_0' as done",
+            "semabi_31805e2484_0",
+            "semabi_31805e2484_0"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 163,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'semabi_31805e2484_0' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/4",
+              "name": "semabi_31805e2484_0",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxsemabi_31805e2484_0",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "semabi_31805e2484_0",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "semabi_31805e2484_0",
+          "title_node": 177
+        }
+      ],
+      "label": "before_reload_read_2",
+      "settled": true,
+      "snapshot_file": "observation_006.json",
+      "snapshot_sha256": "71a3aaef5f4b59106ea24fe74218932dd1434519cb04afc9d3273aa5cc6769b5",
+      "stage": "before_reload"
+    },
+    {
+      "check": {
+        "base_fixture_checks": {
+          "A": {
+            "Inbox_and_open": true,
+            "expected_label_visible_in_own_row": true,
+            "title_matches": 1
+          },
+          "B": {
+            "Inbox_and_open": true,
+            "expected_label_visible_in_own_row": true,
+            "title_matches": 1
+          },
+          "C": {
+            "Inbox_and_open": true,
+            "expected_label_visible_in_own_row": true,
+            "title_matches": 1
+          }
+        },
+        "expected_payload_counts": {
+          "sdcb66c52b followup review": 1,
+          "sdcb66c52b handoff review": 1
+        },
+        "expected_state_matches": true,
+        "expected_visible_task_count": 7,
+        "inventory_transition": {
+          "added": [
+            "{\"done\":false,\"project_names\":[\"Inbox\"],\"semantics\":[{\"checked\":false,\"name\":\"Mark 'sdcb66c52b followup review' as done\",\"options\":null,\"role\":\"checkbox\",\"value\":null},{\"checked\":null,\"destination\":\"http://127.0.0.1:8853/projects/1\",\"name\":\"Inbox\",\"options\":null,\"role\":\"link\",\"value\":null},{\"checked\":null,\"destination\":\"http://127.0.0.1:8853/tasks/7\",\"name\":\"sdcb66c52b followup review\",\"options\":null,\"role\":\"link\",\"value\":null},{\"checked\":null,\"name\":\"Inboxsdcb66c52b followup review\",\"options\":null,\"role\":\"text\",\"value\":null},{\"checked\":null,\"name\":\"sdcb66c52b followup review\",\"options\":null,\"role\":\"text\",\"value\":null}],\"title\":\"sdcb66c52b followup review\"}"
+          ],
+          "exact_expected_addition": true,
+          "removed": []
+        },
+        "other_visible_task_count": 2,
+        "other_visible_tasks": [
+          {
+            "done": false,
+            "project_names": [
+              "Inbox"
+            ],
+            "semantics": [
+              {
+                "checked": false,
+                "name": "Mark 'semabi_0f5297aeec_1' as done",
+                "options": null,
+                "role": "checkbox",
+                "value": null
+              },
+              {
+                "checked": null,
+                "destination": "http://127.0.0.1:8853/projects/1",
+                "name": "Inbox",
+                "options": null,
+                "role": "link",
+                "value": null
+              },
+              {
+                "checked": null,
+                "destination": "http://127.0.0.1:8853/tasks/5",
+                "name": "semabi_0f5297aeec_1",
+                "options": null,
+                "role": "link",
+                "value": null
+              },
+              {
+                "checked": null,
+                "name": "Inboxsemabi_0f5297aeec_1",
+                "options": null,
+                "role": "text",
+                "value": null
+              },
+              {
+                "checked": null,
+                "name": "semabi_0f5297aeec_1",
+                "options": null,
+                "role": "text",
+                "value": null
+              }
+            ],
+            "title": "semabi_0f5297aeec_1"
+          },
+          {
+            "done": false,
+            "project_names": [
+              "Inbox"
+            ],
+            "semantics": [
+              {
+                "checked": false,
+                "name": "Mark 'semabi_31805e2484_0' as done",
+                "options": null,
+                "role": "checkbox",
+                "value": null
+              },
+              {
+                "checked": null,
+                "destination": "http://127.0.0.1:8853/projects/1",
+                "name": "Inbox",
+                "options": null,
+                "role": "link",
+                "value": null
+              },
+              {
+                "checked": null,
+                "destination": "http://127.0.0.1:8853/tasks/4",
+                "name": "semabi_31805e2484_0",
+                "options": null,
+                "role": "link",
+                "value": null
+              },
+              {
+                "checked": null,
+                "name": "Inboxsemabi_31805e2484_0",
+                "options": null,
+                "role": "text",
+                "value": null
+              },
+              {
+                "checked": null,
+                "name": "semabi_31805e2484_0",
+                "options": null,
+                "role": "text",
+                "value": null
+              }
+            ],
+            "title": "semabi_31805e2484_0"
+          }
+        ],
+        "payload_counts": {
+          "sdcb66c52b followup review": 1,
+          "sdcb66c52b handoff review": 1
+        },
+        "reference_arm_before_matches": null,
+        "scope": "Current rendered task-list rows only; visible links are witnesses, not a global or hidden record identity claim",
+        "visible_task_count": 7
+      },
+      "inventory": [
+        {
+          "checkbox_node": 223,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxrvfpbrfgop release check alpha",
+            "Inboxrvfpbrfgop release check alpha rvfpbrfgopblue Add to Favorites",
+            "Mark 'rvfpbrfgop release check alpha' as done",
+            "rvfpbrfgop release check alpha",
+            "rvfpbrfgop release check alpha",
+            "rvfpbrfgopblue",
+            "rvfpbrfgopblue"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 217,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'rvfpbrfgop release check alpha' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/1",
+              "name": "rvfpbrfgop release check alpha",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxrvfpbrfgop release check alpha",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgop release check alpha",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopblue",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopblue",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "rvfpbrfgop release check alpha",
+          "title_node": 231
+        },
+        {
+          "checkbox_node": 204,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxrvfpbrfgop release check beta",
+            "Inboxrvfpbrfgop release check beta rvfpbrfgopamber Add to Favorites",
+            "Mark 'rvfpbrfgop release check beta' as done",
+            "rvfpbrfgop release check beta",
+            "rvfpbrfgop release check beta",
+            "rvfpbrfgopamber",
+            "rvfpbrfgopamber"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 198,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'rvfpbrfgop release check beta' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/2",
+              "name": "rvfpbrfgop release check beta",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxrvfpbrfgop release check beta",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgop release check beta",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopamber",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopamber",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "rvfpbrfgop release check beta",
+          "title_node": 212
+        },
+        {
+          "checkbox_node": 185,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxrvfpbrfgop unrelated record",
+            "Inboxrvfpbrfgop unrelated record rvfpbrfgopneutral Add to Favorites",
+            "Mark 'rvfpbrfgop unrelated record' as done",
+            "rvfpbrfgop unrelated record",
+            "rvfpbrfgop unrelated record",
+            "rvfpbrfgopneutral",
+            "rvfpbrfgopneutral"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 179,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'rvfpbrfgop unrelated record' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/3",
+              "name": "rvfpbrfgop unrelated record",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxrvfpbrfgop unrelated record",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgop unrelated record",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopneutral",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "rvfpbrfgopneutral",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "rvfpbrfgop unrelated record",
+          "title_node": 193
+        },
+        {
+          "checkbox_node": 121,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxsdcb66c52b followup review",
+            "Inboxsdcb66c52b followup review Add to Favorites",
+            "Mark 'sdcb66c52b followup review' as done",
+            "sdcb66c52b followup review",
+            "sdcb66c52b followup review"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 115,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'sdcb66c52b followup review' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/7",
+              "name": "sdcb66c52b followup review",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxsdcb66c52b followup review",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "sdcb66c52b followup review",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "sdcb66c52b followup review",
+          "title_node": 129
+        },
+        {
+          "checkbox_node": 137,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxsdcb66c52b handoff review",
+            "Inboxsdcb66c52b handoff review Add to Favorites",
+            "Mark 'sdcb66c52b handoff review' as done",
+            "sdcb66c52b handoff review",
+            "sdcb66c52b handoff review"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 131,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'sdcb66c52b handoff review' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/6",
+              "name": "sdcb66c52b handoff review",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxsdcb66c52b handoff review",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "sdcb66c52b handoff review",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "sdcb66c52b handoff review",
+          "title_node": 145
+        },
+        {
+          "checkbox_node": 153,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxsemabi_0f5297aeec_1",
+            "Inboxsemabi_0f5297aeec_1 Add to Favorites",
+            "Mark 'semabi_0f5297aeec_1' as done",
+            "semabi_0f5297aeec_1",
+            "semabi_0f5297aeec_1"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 147,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'semabi_0f5297aeec_1' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/5",
+              "name": "semabi_0f5297aeec_1",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxsemabi_0f5297aeec_1",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "semabi_0f5297aeec_1",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "semabi_0f5297aeec_1",
+          "title_node": 161
+        },
+        {
+          "checkbox_node": 169,
+          "done": false,
+          "own_visible_names": [
+            "Inbox",
+            "Inboxsemabi_31805e2484_0",
+            "Inboxsemabi_31805e2484_0 Add to Favorites",
+            "Mark 'semabi_31805e2484_0' as done",
+            "semabi_31805e2484_0",
+            "semabi_31805e2484_0"
+          ],
+          "project_names": [
+            "Inbox"
+          ],
+          "row_node": 163,
+          "semantics": [
+            {
+              "checked": false,
+              "name": "Mark 'semabi_31805e2484_0' as done",
+              "options": null,
+              "role": "checkbox",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/projects/1",
+              "name": "Inbox",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "destination": "http://127.0.0.1:8853/tasks/4",
+              "name": "semabi_31805e2484_0",
+              "options": null,
+              "role": "link",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "Inboxsemabi_31805e2484_0",
+              "options": null,
+              "role": "text",
+              "value": null
+            },
+            {
+              "checked": null,
+              "name": "semabi_31805e2484_0",
+              "options": null,
+              "role": "text",
+              "value": null
+            }
+          ],
+          "title": "semabi_31805e2484_0",
+          "title_node": 177
+        }
+      ],
+      "label": "after_reload_read_2",
+      "settled": true,
+      "snapshot_file": "observation_008.json",
+      "snapshot_sha256": "aad40e4087c9f742ae823d47338c2d7baf1f3d3158e733d1f10441fa1e1fbed1",
+      "stage": "after_reload"
+    }
+  ],
+  "accepted_inventories_agree": true,
+  "accounting_helper_sha256": "9b22fd2b9fce11a3ad560f444733735082620d75f288c01f9209e4397c5e9c38",
+  "actions": 7,
+  "arm": "semabi",
+  "business_writes": 0,
+  "captures": [
+    {
+      "label": "before_authentication_type",
+      "settled": true,
+      "snapshot_file": "observation_001.json",
+      "snapshot_sha256": "9aea2904f0cd449c2c16f774f00a32ffe998d7efb35f0ec46ef227e9c4392eaf"
+    },
+    {
+      "label": "before_authentication_type",
+      "settled": true,
+      "snapshot_file": "observation_002.json",
+      "snapshot_sha256": "fc8ac71c6d56c1cc59af2d48c4881dbd029052cfffe4d8e10c2e080ac1f56ed0"
+    },
+    {
+      "label": "before_authentication_click",
+      "settled": true,
+      "snapshot_file": "observation_003.json",
+      "snapshot_sha256": "7bcd9f1fb72bd01289c11990df8c555ba36587c29cf1f38b79064be99129f703"
+    },
+    {
+      "label": "after_authentication",
+      "settled": true,
+      "snapshot_file": "observation_004.json",
+      "snapshot_sha256": "386a7c84c0c0dcffd268ff4b97ca3b8d654b79b09694085b74adc0e6f529fc6a"
+    },
+    {
+      "label": "before_reload_read_1",
+      "settled": true,
+      "snapshot_file": "observation_005.json",
+      "snapshot_sha256": "53bfe0b9aa2912efc11ed1b5b755f3d608e920c0b8256bde342a6660b060307a"
+    },
+    {
+      "label": "before_reload_read_2",
+      "settled": true,
+      "snapshot_file": "observation_006.json",
+      "snapshot_sha256": "71a3aaef5f4b59106ea24fe74218932dd1434519cb04afc9d3273aa5cc6769b5"
+    },
+    {
+      "label": "after_reload_read_1",
+      "settled": true,
+      "snapshot_file": "observation_007.json",
+      "snapshot_sha256": "cfd9ac4280e794792c099a63e840116dfe7324dae27cbf5b21f740a9fc8d95f2"
+    },
+    {
+      "label": "after_reload_read_2",
+      "settled": true,
+      "snapshot_file": "observation_008.json",
+      "snapshot_sha256": "aad40e4087c9f742ae823d47338c2d7baf1f3d3158e733d1f10441fa1e1fbed1"
+    }
+  ],
+  "checker_sha256": "0eb3569b1cdc20bcf52d706dab8840f8674a7ba0d19340ef8a2ea20aefda54b3",
+  "completed_at": "2026-09-09T21:18:56.994111+00:00",
+  "cpu_affinity": [
+    4
+  ],
+  "cpu_seconds": 2.691837,
+  "elapsed_seconds": 7.04071,
+  "events": [
+    {
+      "at": "2026-09-09T21:18:50.787502+00:00",
+      "kind": "set_viewport",
+      "possible_write": false
+    },
+    {
+      "at": "2026-09-09T21:18:50.792528+00:00",
+      "kind": "navigate",
+      "possible_write": false
+    },
+    {
+      "at": "2026-09-09T21:18:51.980334+00:00",
+      "kind": "authentication_type",
+      "possible_write": true
+    },
+    {
+      "at": "2026-09-09T21:18:52.368894+00:00",
+      "kind": "authentication_type",
+      "possible_write": true
+    },
+    {
+      "at": "2026-09-09T21:18:52.663671+00:00",
+      "kind": "authentication_click",
+      "possible_write": true
+    },
+    {
+      "at": "2026-09-09T21:18:54.011481+00:00",
+      "kind": "open_overview",
+      "possible_write": true
+    },
+    {
+      "at": "2026-09-09T21:18:55.000392+00:00",
+      "kind": "reload",
+      "possible_write": false
+    }
+  ],
+  "format": "vikunja_independent_schema_check.v1",
+  "independent_read_calls": 8,
+  "inputs": {
+    "runs/product_assessment_reserved_v1/setup/fixture_values_v1.json": "b923ede6d973353eb93d9d0df28ad3b2fc49246b8b7185accf69a4f81502bc73",
+    "runs/product_auth_development_v1/independent_schema_checks/semabi/after_call_1/result.json": "2d1f32c7d4a991227de7cd854de4e2d4e32e60290788559881bbb10d596b1798",
+    "runs/product_auth_development_v1/schema_demo_plan_v1.json": "9eb85e60755447bfaf62d30d150300adcded6061b4ad297f3dee04b8f210edca",
+    "runs/product_auth_development_v1/source_sha256.json": "c54749729288a3517bdad47ebdf3b06c91a5b192024fd57fb8a782cdbe957901"
+  },
+  "limits": {
+    "max_actions": 12,
+    "max_possible_writes": 8,
+    "max_seconds": 30
+  },
+  "manual_assistance": "Evaluator role/name login and task-row ownership procedure; no task recipe supplied to evaluated arm",
+  "observer_sha256": "5028170806fb9f661854c85e348a27cb07789927d817220ef8f798e8b5459157",
+  "paid_runtime_cost": 0,
+  "phase": "after_call_2",
+  "possible_writes": 4,
+  "raw_browser_reads": 37,
+  "retries": 0,
+  "runtime_model_calls": 0,
+  "sampled_peak_aggregate_rss_bytes": 839938048,
+  "scope": "Independent saved visible task rows; runtime effect matcher and private app state not used",
+  "source_after": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_before": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-09-09T21:18:50.040849+00:00",
+  "status": "TERMINAL",
+  "termination": {
+    "close_returned": true,
+    "live_owned_process_count": 0,
+    "observed_owned_processes": [
+      {
+        "pid": 1348108,
+        "start_ticks": 7765698,
+        "terminal_state": "absent"
+      },
+      {
+        "pid": 1348077,
+        "start_ticks": 7765688,
+        "terminal_state": "absent"
+      },
+      {
+        "pid": 1348016,
+        "start_ticks": 7765633,
+        "terminal_state": "absent"
+      },
+      {
+        "pid": 1348086,
+        "start_ticks": 7765689,
+        "terminal_state": "absent"
+      },
+      {
+        "pid": 1348057,
+        "start_ticks": 7765681,
+        "terminal_state": "absent"
+      },
+      {
+        "pid": 1348059,
+        "start_ticks": 7765683,
+        "terminal_state": "absent"
+      },
+      {
+        "pid": 1348060,
+        "start_ticks": 7765683,
+        "terminal_state": "absent"
+      }
+    ]
+  },
+  "verdict": "EXPECTED_STATE_OBSERVED"
+}

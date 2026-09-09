@@ -1,0 +1,331 @@
+"""Retrospective independent DOM check of two completed HTTP creations.
+
+No expected value is passed to BrowserSession or its effect-matching helpers.
+The browser is used only for ordinary password-form authentication and reads.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+from pathlib import Path
+import resource
+import threading
+import time
+import uuid
+from datetime import datetime, timezone
+
+from semabi.compiler.browser_session import BrowserSession
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = ROOT / "runs/product_evaluator_v3"
+SHARE = ROOT / "docs/data/v4/transport/product/two_applications_v1"
+SOURCE_PATHS = [
+    "semabi/compiler/browser.py", "semabi/compiler/browser_session.py",
+    "semabi/compiler/observation.py", "semabi/compiler/surface.py",
+    "semabi/compiler/runtime.py", "semabi/compiler/evidence.py", "semabi/service.py",
+]
+
+# Visible DOM only. No expected arguments, app state, hidden attributes, or
+# network responses are accessed by this script running in the browser.
+DOM_JS = r"""() => {
+  const nodes = [];
+  const norm = value => (value || '').replace(/\s+/g, ' ').trim();
+  const visible = e => {
+    const rect = e.getBoundingClientRect(), style = getComputedStyle(e);
+    return style.display !== 'none' && style.visibility !== 'hidden'
+      && style.visibility !== 'collapse'
+      && e.checkVisibility({checkOpacity:true, checkVisibilityCSS:true})
+      && (rect.width > 0 || rect.height > 0);
+  };
+  const walk = (e, parent) => {
+    if (!visible(e) || ['SCRIPT','STYLE','NOSCRIPT','TEMPLATE','HEAD'].includes(e.tagName)) return;
+    if (e.tagName === 'INPUT' && e.type === 'hidden') return;
+    const index = nodes.length;
+    const own = Array.from(e.childNodes).filter(n => n.nodeType === Node.TEXT_NODE)
+      .map(n => n.textContent).join(' ');
+    const rect = e.getBoundingClientRect();
+    const node = {index, parent, tag:e.tagName.toLowerCase(), role:e.getAttribute('role') || '',
+      own_text:norm(own), text:norm(e.innerText),
+      bbox:[rect.x,rect.y,rect.width,rect.height].map(Math.round)};
+    if (e.tagName === 'A' && e.hasAttribute('href')) node.destination = e.href;
+    nodes.push(node);
+    for (const child of e.children) walk(child, index);
+  };
+  walk(document.body, -1);
+  return {url:location.href, nodes};
+}"""
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def save(path, value):
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    Path(path).write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
+
+
+def source_hashes():
+    return {path: sha(ROOT / path) for path in SOURCE_PATHS}
+
+
+def completed_job(path):
+    # Logs contain adjacent JSON documents; only request arguments and public
+    # invocation metadata become checker input. Runtime witness is ignored.
+    text = path.read_text()
+    decoder, offset, jobs = json.JSONDecoder(), 0, []
+    while offset < len(text):
+        while offset < len(text) and text[offset].isspace():
+            offset += 1
+        if offset == len(text):
+            break
+        value, offset = decoder.raw_decode(text, offset)
+        if value.get("kind") == "invoke" and value.get("status") == "COMPLETED":
+            jobs.append(value)
+    assert len(jobs) == 1, "Expected one completed invocation in the selected client log"
+    job = jobs[0]
+    return {"job_id":job["id"], "connection_id":job["connection_id"],
+            "request":job["request"], "status":job["status"],
+            "runtime_reported_metrics":job["result"]["metrics"],
+            "runtime_reported_outcome":job["result"]["outcome"]}
+
+
+def process_table():
+    table = {}
+    for path in Path('/proc').iterdir():
+        if not path.name.isdecimal():
+            continue
+        try:
+            stat = (path / 'stat').read_text()
+            close = stat.rfind(')')
+            fields = stat[close + 2:].split()
+            table[int(path.name)] = {"pid":int(path.name), "name":stat[stat.find('(')+1:close],
+                "state":fields[0], "ppid":int(fields[1]), "start_ticks":int(fields[19]),
+                "rss_bytes":int(fields[21])*os.sysconf('SC_PAGE_SIZE')}
+        except (OSError, ValueError, IndexError):
+            continue
+    return table
+
+
+def descendants(table, root):
+    found = {root}
+    while True:
+        more = {pid for pid, proc in table.items() if proc['ppid'] in found}
+        if more <= found:
+            return found
+        found |= more
+
+
+class MeteredSession(BrowserSession):
+    def __init__(self, url):
+        self.phase = "startup"
+        self.read_calls = {}
+        self.raw_snapshot_calls = {}
+        self.primitives = []
+        self.main_frame_navigations = 0
+        super().__init__(url)
+        self._page.on('framenavigated', self.on_navigation)
+
+    def on_navigation(self, frame):
+        if frame == self._page.main_frame:
+            self.main_frame_navigations += 1
+
+    def read(self):
+        self.read_calls[self.phase] = self.read_calls.get(self.phase, 0) + 1
+        return super().read()
+
+    def _raw_snapshot(self):
+        self.raw_snapshot_calls[self.phase] = self.raw_snapshot_calls.get(self.phase, 0) + 1
+        return super()._raw_snapshot()
+
+    def act(self, primitive):
+        # Never record authentication text or node values.
+        self.primitives.append({"phase":self.phase, "kind":primitive.kind})
+        return super().act(primitive)
+
+
+def record_checks(app, snapshot, arguments):
+    nodes = snapshot['nodes']
+    children = {}
+    for node in nodes:
+        children.setdefault(node['parent'], []).append(node['index'])
+
+    def members(index):
+        result, pending = [], [index]
+        while pending:
+            current = pending.pop()
+            result.append(nodes[current])
+            pending.extend(reversed(children.get(current, [])))
+        return result
+
+    roots = [node for node in nodes if (node['tag'] == 'article' or node['role'] == 'article')]
+    if app == 'linkding':
+        roots = [node for node in nodes if node['tag'] == 'li' or node['role'] == 'listitem']
+    matches = []
+    for root in roots:
+        local = members(root['index'])
+        if app == 'memos':
+            # Exact leaf paragraph/body text within one rendered article. The
+            # selected record's aggregate text is captured for human review.
+            bodies = [node for node in local if node['tag'] in {'p', 'pre'}
+                      and node['text'] == arguments['value']]
+            if bodies:
+                matches.append({"root":root, "body_nodes":bodies})
+        else:
+            titles = [node for node in local if node['tag'] == 'a'
+                      and node['text'] == arguments['title']
+                      and node.get('destination') == arguments['url']]
+            tags = [node for node in local if node['tag'] == 'a'
+                    and node['text'] == arguments['tags']]
+            descriptions = [node for node in local if node['own_text'] == arguments['description']]
+            if titles and tags and descriptions:
+                matches.append({"root":root, "title_and_destination_nodes":titles,
+                                "tag_nodes":tags, "description_nodes":descriptions})
+    return {"visible_candidate_records":len(roots), "exact_matching_record_count":len(matches),
+            "selected_records":matches}
+
+
+def cpu_seconds():
+    own, child = resource.getrusage(resource.RUSAGE_SELF), resource.getrusage(resource.RUSAGE_CHILDREN)
+    return own.ru_utime + own.ru_stime + child.ru_utime + child.ru_stime
+
+
+def check(app, url):
+    log = ROOT / f'runs/product_development_v3/{app}_http_v3.log'
+    job = completed_job(log)
+    credentials = json.loads((ROOT / f'runs/product_apps_v1/{app}/private/credentials.json').read_text())
+    credentials = {key:credentials[key] for key in ('username', 'password')}
+    start, cpu_start, started_at = time.monotonic(), cpu_seconds(), now()
+    peak_rss = [0]
+    stop_monitor = threading.Event()
+
+    def monitor():
+        while not stop_monitor.is_set():
+            table = process_table()
+            ids = descendants(table, os.getpid())
+            peak_rss[0] = max(peak_rss[0], sum(table[p]['rss_bytes'] for p in ids if p in table))
+            stop_monitor.wait(0.05)
+
+    thread = threading.Thread(target=monitor, daemon=True)
+    thread.start()
+    session, snapshots, capture_meta, owned = None, [], [], []
+    result = {"application":app, "started_at":started_at, "origin":url, "client_job":job,
+              "input_log":str(log.relative_to(ROOT)), "input_log_sha256":sha(log)}
+    try:
+        session = MeteredSession(url)
+        session.phase = 'navigation'
+        session.goto()
+        session.phase = 'authentication'
+        auth = session.authenticate(credentials)
+        credentials.clear()
+        result['authentication'] = auth
+        assert auth == {'status':'CONNECTED', 'authentication_actions':3}, 'Fresh UI authentication failed'
+        for phase in ('before_reload', 'after_reload'):
+            session.phase = phase
+            if phase == 'after_reload':
+                session.reload()
+            else:
+                session.read()
+            snapshot = session._page.evaluate(DOM_JS)
+            snapshot['captured_at'] = now()
+            snapshot['id'] = 'eval_dom_' + uuid.uuid4().hex
+            private_path = OUT / app / (snapshot['id'] + '.json')
+            save(private_path, snapshot)
+            checked = record_checks(app, snapshot, job['request']['arguments'])
+            capture_meta.append({"phase":phase, "snapshot_id":snapshot['id'],
+                "snapshot_sha256":sha(private_path), "url":snapshot['url'],
+                "captured_at":snapshot['captured_at'], **checked})
+            snapshots.append(snapshot)
+        result['captures'] = capture_meta
+        result['verdict'] = ('PASS' if all(c['exact_matching_record_count'] == 1 for c in capture_meta)
+                             else 'UNESTABLISHED')
+    except Exception as exc:
+        # Exception type only: failed auth details must never expose values.
+        result['verdict'] = 'ERROR'
+        result['error_type'] = type(exc).__name__
+    finally:
+        if session is not None:
+            table = process_table()
+            owned = [table[pid] for pid in sorted(descendants(table, os.getpid()) - {os.getpid()})]
+            result['metrics'] = {
+                'authentication_primitives':len(session.primitives),
+                'primitive_kinds':session.primitives,
+                'requested_navigations':1, 'requested_reloads':int(len(capture_meta) == 2),
+                'main_frame_navigation_events':session.main_frame_navigations,
+                'business_write_primitives':0, 'conservative_possible_write_primitives':len(session.primitives),
+                'interaction_total_including_auth_navigation_reload':len(session.primitives)+1+int(len(capture_meta)==2),
+                'browser_session_read_calls_by_phase':session.read_calls,
+                'browser_session_raw_snapshot_reads_by_phase':session.raw_snapshot_calls,
+                'independent_dom_reads':len(capture_meta),
+                'model_calls':0, 'paid_cost':0, 'retries':0,
+                'fresh_browser_sessions':1, 'setup_resets':0,
+                'cpu_affinity':sorted(os.sched_getaffinity(0)),
+            }
+            close_started = now()
+            session.close()
+            deadline = time.monotonic() + 5
+            while True:
+                after = process_table()
+                live = [proc for proc in owned if (proc['pid'] in after
+                        and after[proc['pid']]['start_ticks'] == proc['start_ticks']
+                        and after[proc['pid']]['state'] != 'Z')]
+                if not live or time.monotonic() >= deadline:
+                    break
+                time.sleep(0.05)
+            receipt = []
+            for proc in owned:
+                current = after.get(proc['pid'])
+                state = ('absent' if current is None else 'pid_reused' if current['start_ticks'] != proc['start_ticks']
+                         else 'zombie_terminated' if current['state'] == 'Z' else 'still_live')
+                receipt.append({**{key:proc[key] for key in ('pid','ppid','name','start_ticks')}, 'after_close':state})
+            result['termination'] = {'close_started_at':close_started, 'checked_at':now(),
+                'close_returned':True, 'owned_processes':receipt, 'live_owned_process_count':len(live)}
+            if live:
+                result['verdict'] = 'ERROR_BROWSER_STILL_LIVE'
+        stop_monitor.set()
+        thread.join()
+        result.setdefault('metrics', {}).update(elapsed_seconds=round(time.monotonic()-start, 3),
+            cpu_seconds=round(cpu_seconds()-cpu_start, 3), peak_aggregate_rss_bytes=peak_rss[0])
+        result['completed_at'] = now()
+        save(OUT / app / 'result.json', result)
+    return result
+
+
+def main():
+    OUT.mkdir(parents=True, exist_ok=True)
+    SHARE.mkdir(parents=True, exist_ok=True)
+    before = source_hashes()
+    results = [check('memos', 'http://127.0.0.1:8852/'),
+               check('linkding', 'http://127.0.0.1:8851/')]
+    after = source_hashes()
+    report = {"schema":"two_creation_applications_independent_check.v1", "created_at":now(),
+        "scope":"Retrospective check of two completed development HTTP creation calls, one per application",
+        "results":results,
+        "independence":"Arguments came only from completed client-log requests. Matching uses separately written visible-DOM logic; runtime record_witness, visible_record_matches and relative_value_slots are not called. BrowserSession supplies ordinary authentication, navigation and settled reads only.",
+        "limitations":["Uniqueness is within the inspected rendered view, not the complete application database.",
+            "This is post-creation evidence; no independent pre-invocation absence snapshot was collected.",
+            "Other business effects were not independently inventoried.",
+            "This does not establish the prospective task battery, read/update workflows, a reserved third application, or a matched baseline comparison."]}
+    save(SHARE / 'results.json', report)
+    manifest = {"schema":"two_creation_applications_sources.v1", "created_at":now(),
+        "source_hashes_before":before, "source_hashes_after":after,
+        "source_hashes_unchanged":before == after,
+        "source_identity_note":"Hashes are the reader and current product source observed at evaluator execution; no service-process import identity is inferred from them.",
+        "evaluator_script":"runs/product_evaluator_v3/check_effects.py", "evaluator_script_sha256":sha(__file__),
+        "independent_dom_js_sha256":hashlib.sha256(DOM_JS.encode()).hexdigest(),
+        "input_log_sha256":{r['input_log']:r['input_log_sha256'] for r in results},
+        "results_sha256":sha(SHARE / 'results.json'),
+        "privacy":"Credentials were read only for ordinary UI authentication and never persisted or printed; full DOM captures remain under runs."}
+    save(SHARE / 'manifest.json', manifest)
+    print(json.dumps({"verdicts":{r['application']:r['verdict'] for r in results},
+                      "source_hashes_unchanged":before == after,
+                      "live_owned_processes":{r['application']:r.get('termination',{}).get('live_owned_process_count') for r in results}}))
+
+
+if __name__ == '__main__':
+    main()

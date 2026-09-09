@@ -1,0 +1,47 @@
+{
+  "baseline": "cached-form-v3",
+  "comparison_mode": "shared_acquisition",
+  "assistance": "SemABI learned operation artifact; charge acquisition to both arms",
+  "independent_onboarding": false,
+  "effect_verification": "NOT_PERFORMED",
+  "source_sha256": {
+    "baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "compiler/browser_session.py": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+    "compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+  },
+  "outcome": "DISPATCHED",
+  "limits": {
+    "max_actions": 20,
+    "max_writes": 12,
+    "max_seconds": 60.0
+  },
+  "allowed_origin": "http://127.0.0.1:8853",
+  "operation_id": "op_98cf711d3da577a6b7e6",
+  "operation_version": 1,
+  "arguments": {
+    "add_a_task": "sdcb66c52b handoff review"
+  },
+  "operation_sha256": "6affa49159ac5d3519a92f0cc09bc92faf449ccecdcc0c238479f36171806f24",
+  "browser_backend": "semabi.compiler.browser_session.BrowserSession",
+  "authentication_status": "CONNECTED",
+  "reason": "Cached submit action completed; business effect is unverified",
+  "browser_closed": true,
+  "stage": "submit",
+  "authenticated": true,
+  "possible_replay_action": true,
+  "submit_attempted": true,
+  "submit_returned_ok": true,
+  "failure_phase": null,
+  "metrics": {
+    "actions": 7,
+    "possible_write_actions": 5,
+    "authentication_actions": 3,
+    "surface_reads": 13,
+    "elapsed_seconds": 6.24,
+    "model_calls": 0,
+    "paid_cost": 0
+  }
+}

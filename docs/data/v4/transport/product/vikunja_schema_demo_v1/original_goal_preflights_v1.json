@@ -1,0 +1,578 @@
+{
+  "classification": "Development preflight on unchanged original18goals and newly learned catalog; no goal rescues or invocation",
+  "rows": [
+    {
+      "request_id": "vikunja-R1",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "18d61d8684dccfa6bdfcedf0fa7f307c0f7a36a6b64c95460a98fd4923aae46e",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "In Inbox, find the task with exact title \"rvfpbrfgop release check alpha\" and return its title, labels and completion state."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-R2",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "18d61d8684dccfa6bdfcedf0fa7f307c0f7a36a6b64c95460a98fd4923aae46e",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "In Inbox, find the task with exact title \"rvfpbrfgop release check alpha\" and return its title, labels and completion state."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-C1",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "ea34fe05a189dd53a0f3aa3c3334c43f8597413d84388da997c9b0fd4862434f",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "Create a task with this exact title: rvfpbrfgop review summary"
+        ],
+        "reasons": [
+          "No learned operation supports a complete argument bijection."
+        ],
+        "candidate_rejections": [
+          {
+            "operation_id": "op_98cf711d3da577a6b7e6",
+            "operation_version": 1,
+            "operation_sha256": "123910793c87d40f1e059907b8b10f10f935eb5c884368abcd3e12ba885daef2",
+            "reason": "No exact label/type/constraint-compatible binding for every argument."
+          }
+        ],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED",
+        "grammar": "literal_single_payload_creation"
+      }
+    },
+    {
+      "request_id": "vikunja-C2",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "903f66e0e6223abbec504d309a64e31a9f0b0e366fabbcebcffd04f618b4b6ea",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "Create a task in Inbox with exact title \"rvfpbrfgop release notes\" and label \"rvfpbrfgoppublish\"."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-U1",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "0d2e084a1b5d5ce31d15bc7fb6511c7cd5092b5b0026350dab3735f0204b423d",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "Replace the task whose exact title is \"rvfpbrfgop release check alpha\" with \"rvfpbrfgop release check alpha revised\"."
+        ],
+        "reasons": [
+          "No learned operation supports a complete argument bijection."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED",
+        "grammar": "literal_exact_value_replacement"
+      }
+    },
+    {
+      "request_id": "vikunja-U2",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "9ddca5428d960a3cc07aa5b13343aaadbc24e3666af91e070daa42d38e014cb6",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "Mark the task in Inbox with exact title \"rvfpbrfgop release check alpha\" as done. Keep its title, label and project unchanged."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-D1",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "e889d13e23f1a879fc74dc5af1cd423cf05ebdcef315e20908fe9cbfba987b29",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "In Inbox, find the task whose title contains \"rvfpbrfgop release check\" and whose label is \"rvfpbrfgopblue\". Return its exact title, labels and completion state."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-D2",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "3ba85085469293722ac3a9b52f50539a4cca1dcceca124e0af21a96fb68e738f",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "In Inbox, find the task whose title contains \"rvfpbrfgop release check\" and ends with \"beta\". Return its exact title, labels and completion state."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-REL0",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "26241072d7ca44b471692af5cceb3fdbf38d366fc78b32f478ded8a40d078293",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "For the task with exact title \"rvfpbrfgop release check alpha\", return the distinct titles listed through its Related Task relationship. Return an empty list if there are none."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-REL1",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "26241072d7ca44b471692af5cceb3fdbf38d366fc78b32f478ded8a40d078293",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "For the task with exact title \"rvfpbrfgop release check alpha\", return the distinct titles listed through its Related Task relationship. Return an empty list if there are none."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-RELM",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "26241072d7ca44b471692af5cceb3fdbf38d366fc78b32f478ded8a40d078293",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "For the task with exact title \"rvfpbrfgop release check alpha\", return the distinct titles listed through its Related Task relationship. Return an empty list if there are none."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-RELA",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "7d45162e3bdf4292e75376436cfb8bbc25764f7dbebe95b167014ebaebbb0436",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "For the task with exact title \"rvfpbrfgop release check alpha\", return the distinct project names of tasks listed through its Related Task relationship. Count repeated project names once."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-CH1",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "3f7bbded472761f2850876da25cea8e1b7aa3f686738b13e2db4dd2fbaa19275",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "In the prepared open tasks in Inbox, find tasks with exact title \"rvfpbrfgop absent task\". Return their titles, or an empty list when none match."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-CH2",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "d86ae9e152a07f83329ebba043bc2969838d3a7cfa886a3c7aad5650b1c65618",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "Mark the task in Inbox whose title contains \"rvfpbrfgop release check\" as done."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-CH3",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "b53f614d415870dad1a12dc1fa78d41c5f56efab851a20eb6823747efb1e41e9",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "Create a task with this exact title: rvfpbrfgop viewport check"
+        ],
+        "reasons": [
+          "No learned operation supports a complete argument bijection."
+        ],
+        "candidate_rejections": [
+          {
+            "operation_id": "op_98cf711d3da577a6b7e6",
+            "operation_version": 1,
+            "operation_sha256": "123910793c87d40f1e059907b8b10f10f935eb5c884368abcd3e12ba885daef2",
+            "reason": "No exact label/type/constraint-compatible binding for every argument."
+          }
+        ],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED",
+        "grammar": "literal_single_payload_creation"
+      }
+    },
+    {
+      "request_id": "vikunja-CH4",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "33958125327709db3e459b5c96cb9afcbf77077df259a1d2c9d4381868ebf287",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "Mark the open task in Inbox with exact title \"rvfpbrfgop release check beta\" as done."
+        ],
+        "reasons": [
+          "The entire goal and all arguments are outside the unambiguous limited grammar."
+        ],
+        "candidate_rejections": [],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED"
+      }
+    },
+    {
+      "request_id": "vikunja-CH5",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "6a40cfd0c08acff68d500d743ec4031af696d5f671c8d44de822d152e2f99428",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "Create a task with this exact title: rvfpbrfgop authentication check"
+        ],
+        "reasons": [
+          "No learned operation supports a complete argument bijection."
+        ],
+        "candidate_rejections": [
+          {
+            "operation_id": "op_98cf711d3da577a6b7e6",
+            "operation_version": 1,
+            "operation_sha256": "123910793c87d40f1e059907b8b10f10f935eb5c884368abcd3e12ba885daef2",
+            "reason": "No exact label/type/constraint-compatible binding for every argument."
+          }
+        ],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED",
+        "grammar": "literal_single_payload_creation"
+      }
+    },
+    {
+      "request_id": "vikunja-CH6",
+      "receipt": {
+        "format": "assessment_preflight.v1",
+        "status": "UNSUPPORTED",
+        "call": null,
+        "policy_version": "assessment-schema-bijection-v1",
+        "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+        "binder_source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+        "request_sha256": "c5cc6cf45fc539fcfb68e7fec4053a12b2c31b5a39af084084dc6db49152f6ed",
+        "operation_catalog_sha256": "3878b67db7bcff7f5238c846dfae34bad0c0cfd786540e78cacd0449dcbce315",
+        "operation_id": null,
+        "operation_version": null,
+        "operation_sha256": null,
+        "mapping": [],
+        "uncovered_clauses": [
+          "Create a task with this exact title: rvfpbrfgop interruption check"
+        ],
+        "reasons": [
+          "No learned operation supports a complete argument bijection."
+        ],
+        "candidate_rejections": [
+          {
+            "operation_id": "op_98cf711d3da577a6b7e6",
+            "operation_version": 1,
+            "operation_sha256": "123910793c87d40f1e059907b8b10f10f935eb5c884368abcd3e12ba885daef2",
+            "reason": "No exact label/type/constraint-compatible binding for every argument."
+          }
+        ],
+        "goal_support": "GOAL_PLANNING_UNESTABLISHED",
+        "general_goal_planning": "UNESTABLISHED",
+        "browser_started": false,
+        "browser_actions": 0,
+        "execution_result": "NOT_STARTED",
+        "coordinator_interventions": "NOT_ASSESSED",
+        "grammar": "literal_single_payload_creation"
+      }
+    }
+  ]
+}

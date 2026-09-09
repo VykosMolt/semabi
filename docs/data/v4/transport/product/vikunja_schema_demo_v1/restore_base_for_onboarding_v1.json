@@ -1,0 +1,25 @@
+{
+  "classification": "Authorized local installer opaque restore for development; no record interpretation",
+  "command": [
+    "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/python3.12",
+    "-B",
+    "/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py",
+    "restore",
+    "rvfpbrfgop-base"
+  ],
+  "helper_sha256": "3b49de19d8ed85f9d447a164d1a5b1e2d8ce50bef786b63e197f80ef633691a0",
+  "started_at": "2026-09-09T20:48:02.916465+00:00",
+  "exit_code": 0,
+  "stdout": "{\"account_state\": \"NOT_ASSESSED_BY_LIFECYCLE_ADAPTER\", \"action\": \"restore\", \"archive\": \"/home/moloch/semabi/runs/product_apps_v1/reserved/private/resets/1788986883033789699-726e38de3acc4954a674d47e515a66a2\", \"data_access\": \"OPAQUE_BYTES_ONLY\", \"http_called\": false, \"inventory_entries\": 5, \"manifest_sha256\": \"748712a0278247e25ee32a884458cbd964cf9d434c33e7a706e48a8fbebae25a\", \"name\": \"rvfpbrfgop-base\", \"path\": \"/home/moloch/semabi/runs/product_apps_v1/reserved/private/prepared/rvfpbrfgop-base\", \"ui_equivalence\": \"UNESTABLISHED\", \"was_running\": true}\n",
+  "stderr": "",
+  "elapsed_seconds": 0.5564217619976262,
+  "child_cpu_seconds": 0.150561,
+  "child_peak_rss_bytes": 86786048,
+  "cpu_affinity": [
+    2
+  ],
+  "metric_scope": "Waited lifecycle helper; excludes persistent application cost",
+  "ordinary_ui_actions": 0,
+  "business_write_actions": 0,
+  "completed_at": "2026-09-09T20:48:03.472895+00:00"
+}

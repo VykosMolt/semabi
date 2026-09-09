@@ -1,0 +1,235 @@
+{
+  "classification": "Development-only direct learned-schema creation and fresh-process reuse; separate from original ordinary-goal assessment",
+  "completed_at": "2026-09-09T21:27:05.782006+00:00",
+  "source_sha256": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_unchanged": true,
+  "all_jobs_terminal": true,
+  "ready_for_next_source_revision": true,
+  "rows": [
+    {
+      "arm": "semabi",
+      "call_number": 1,
+      "arguments": {
+        "add_a_task": "sdcb66c52b handoff review"
+      },
+      "outcome": "CONFIRMED",
+      "independently_completed": true,
+      "interaction_total": 9,
+      "possible_write_total": 5,
+      "execution_seconds_including_auth": 8.594535,
+      "attempt_path": "runs/product_auth_development_v1/attempts/schema-semabi-1/attempt.json",
+      "attempt_sha256": "d7815f63bab738d54202d7db8650919e51027ea091d375bbf8bdd00cc1e3fa20",
+      "independent_effect_receipt": "runs/product_auth_development_v1/independent_schema_checks/semabi/after_call_1/result.json"
+    },
+    {
+      "arm": "semabi",
+      "call_number": 2,
+      "arguments": {
+        "add_a_task": "sdcb66c52b followup review"
+      },
+      "outcome": "CONFIRMED",
+      "independently_completed": true,
+      "interaction_total": 9,
+      "possible_write_total": 5,
+      "execution_seconds_including_auth": 8.6196,
+      "attempt_path": "runs/product_auth_development_v1/attempts/schema-semabi-2/attempt.json",
+      "attempt_sha256": "658b4850b62385924cffcb61d669e43b8d9e7392944f2fcba2103a200db3ac5d",
+      "independent_effect_receipt": "runs/product_auth_development_v1/independent_schema_checks/semabi/after_call_2/result.json"
+    },
+    {
+      "arm": "cached_form",
+      "call_number": 1,
+      "arguments": {
+        "add_a_task": "sdcb66c52b handoff review"
+      },
+      "outcome": "DISPATCHED",
+      "independently_completed": true,
+      "interaction_total": 7,
+      "possible_write_total": 5,
+      "execution_seconds_including_auth": 6.24,
+      "attempt_path": "runs/product_auth_development_v1/attempts/schema-cached-1/baseline/result.json",
+      "attempt_sha256": "0631f95e7751c59f7e6f9e286168e79d1588cb2d0172892c7b89ab5f36d34764",
+      "independent_effect_receipt": "runs/product_auth_development_v1/independent_schema_checks/cached_form/after_call_1/result.json"
+    },
+    {
+      "arm": "cached_form",
+      "call_number": 2,
+      "arguments": {
+        "add_a_task": "sdcb66c52b followup review"
+      },
+      "outcome": "DISPATCHED",
+      "independently_completed": true,
+      "interaction_total": 7,
+      "possible_write_total": 5,
+      "execution_seconds_including_auth": 6.281,
+      "attempt_path": "runs/product_auth_development_v1/attempts/schema-cached-2/baseline/result.json",
+      "attempt_sha256": "01852f21f14ab352d4de6b7d2219eec63b3a2d5070880e40bae977251aa04558",
+      "independent_effect_receipt": "runs/product_auth_development_v1/independent_schema_checks/cached_form/after_call_2/result.json"
+    }
+  ],
+  "independent_checks": [
+    {
+      "path": "runs/product_auth_development_v1/independent_schema_checks/semabi/before/result.json",
+      "sha256": "c7c0b3eb73b60fcd07fb7cfb552a3c81a8e921439a1d6a0c6ea3a761b53732b6",
+      "verdict": "EXPECTED_STATE_OBSERVED",
+      "actions": 7,
+      "possible_writes": 4,
+      "elapsed_seconds": 7.289869
+    },
+    {
+      "path": "runs/product_auth_development_v1/independent_schema_checks/semabi/after_call_1/result.json",
+      "sha256": "2d1f32c7d4a991227de7cd854de4e2d4e32e60290788559881bbb10d596b1798",
+      "verdict": "EXPECTED_STATE_OBSERVED",
+      "actions": 7,
+      "possible_writes": 4,
+      "elapsed_seconds": 7.302724
+    },
+    {
+      "path": "runs/product_auth_development_v1/independent_schema_checks/semabi/after_call_2/result.json",
+      "sha256": "e23338d33e22b7cd07a60547c608ab80eb2f444c4ea9c5e603e865300d9a545b",
+      "verdict": "EXPECTED_STATE_OBSERVED",
+      "actions": 7,
+      "possible_writes": 4,
+      "elapsed_seconds": 7.04071
+    },
+    {
+      "path": "runs/product_auth_development_v1/independent_schema_checks/cached_form/before/result.json",
+      "sha256": "576094498c80871853502522f8e377a44481041a298f06b035bc075507119d8e",
+      "verdict": "EXPECTED_STATE_OBSERVED",
+      "actions": 7,
+      "possible_writes": 4,
+      "elapsed_seconds": 6.936427
+    },
+    {
+      "path": "runs/product_auth_development_v1/independent_schema_checks/cached_form/after_call_1/result.json",
+      "sha256": "779b342e5d3de01ea2ca1a5fc44e1a3655a2501999143ec88e6cfae435b757d3",
+      "verdict": "EXPECTED_STATE_OBSERVED",
+      "actions": 7,
+      "possible_writes": 4,
+      "elapsed_seconds": 7.029733
+    },
+    {
+      "path": "runs/product_auth_development_v1/independent_schema_checks/cached_form/after_call_2/result.json",
+      "sha256": "b7f41054700abfbf4f747f5df4f8b043c545f00dbfdda05a3f2359b08c007948",
+      "verdict": "EXPECTED_STATE_OBSERVED",
+      "actions": 7,
+      "possible_writes": 4,
+      "elapsed_seconds": 7.075878
+    }
+  ],
+  "process_meters": [
+    {
+      "path": "runs/product_auth_development_v1/meters/onboarding-v1/result.json",
+      "sha256": "b42b09d7cc6b87441c71925e5d7f77c7e6e4b5cddb13cc45addef44be87df53d",
+      "wall_seconds": 14.245727,
+      "child_rusage_cpu_seconds": 4.914457,
+      "sampled_peak_aggregate_rss_bytes": 1046802432,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/schema-semabi-1-v1/result.json",
+      "sha256": "69381205cd7d14a412611d0ca9b0c18157f178af9b7c65e3220f47073f76e78d",
+      "wall_seconds": 9.023551,
+      "child_rusage_cpu_seconds": 3.45997,
+      "sampled_peak_aggregate_rss_bytes": 971968512,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/schema-semabi-2-v1/result.json",
+      "sha256": "95a8086fd22fd87f5c6fb89b00612f6aa501f277dc1af10413606233c72de09d",
+      "wall_seconds": 9.020771,
+      "child_rusage_cpu_seconds": 3.467597,
+      "sampled_peak_aggregate_rss_bytes": 969052160,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/schema-cached-1-v1/result.json",
+      "sha256": "255b434617feacef3f7bb730f4deb70b7e49c4c2d6a7e182e4f7b5d5f56af4c4",
+      "wall_seconds": 6.415258,
+      "child_rusage_cpu_seconds": 2.250068,
+      "sampled_peak_aggregate_rss_bytes": 848277504,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/schema-cached-2-v1/result.json",
+      "sha256": "c7713b28e95fa94e475bfb101e8492511d47dbb747dc11cd9fe7a89d3a1ba818",
+      "wall_seconds": 6.449089,
+      "child_rusage_cpu_seconds": 2.262429,
+      "sampled_peak_aggregate_rss_bytes": 851255296,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/check-schema-semabi-before-v1/result.json",
+      "sha256": "d5038c3459170c6121c4899f0d1137a50e81ba50d16271ece0477ff1355a736d",
+      "wall_seconds": 7.415697,
+      "child_rusage_cpu_seconds": 2.924926,
+      "sampled_peak_aggregate_rss_bytes": 822173696,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/check-schema-semabi-after1-v1/result.json",
+      "sha256": "708c14830386280c222f92000d2ce9ccded66da4406e106cb73f9309f899f642",
+      "wall_seconds": 7.393701,
+      "child_rusage_cpu_seconds": 2.936562,
+      "sampled_peak_aggregate_rss_bytes": 842244096,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/check-schema-semabi-after2-v1/result.json",
+      "sha256": "32ff2bd98a5fbddf168cfb4e4d8f8592623403ccff1032393aca42e585401f9e",
+      "wall_seconds": 7.166445,
+      "child_rusage_cpu_seconds": 2.821328,
+      "sampled_peak_aggregate_rss_bytes": 842276864,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/check-schema-cached-form-before-v1/result.json",
+      "sha256": "459573e831e4c0f09f918ceb90effa1939cad540ee17a91d5883580da64b706b",
+      "wall_seconds": 7.034759,
+      "child_rusage_cpu_seconds": 2.78617,
+      "sampled_peak_aggregate_rss_bytes": 841515008,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/check-schema-cached-form-after1-v1/result.json",
+      "sha256": "0723d029e52d79e0f0db24ed9af1df37b9ddcfe12767757c74e391b935fd5a1e",
+      "wall_seconds": 7.141461,
+      "child_rusage_cpu_seconds": 2.847325,
+      "sampled_peak_aggregate_rss_bytes": 837623808,
+      "terminal_ownership_verified": true
+    },
+    {
+      "path": "runs/product_auth_development_v1/meters/check-schema-cached-form-after2-v1/result.json",
+      "sha256": "fe5b1f42a07fcced55a068fa612808a2bcc3d50c5aa35ceea4d25bcd433b8068",
+      "wall_seconds": 7.180999,
+      "child_rusage_cpu_seconds": 2.83869,
+      "sampled_peak_aggregate_rss_bytes": 848797696,
+      "terminal_ownership_verified": true
+    }
+  ],
+  "completion_by_arm": {
+    "semabi": "2/2",
+    "cached_form": "2/2"
+  },
+  "original_ordinary_goals": {
+    "count": 18,
+    "new_catalog_preflight_eligible": 0,
+    "first_reserved_result_unchanged": true
+  },
+  "assistance": "One mechanically selected closed one-string learned schema; both arms receive same learned operation and exact argument objects. No natural-language planning claim. Charge shared acquisition to both.",
+  "wrong_side_effect_scope": "All previously rendered task rows retained exact visible semantics before/after reload; unobserved state not measured",
+  "new_application_specific_learner_code": 0,
+  "runtime_model_calls": 0,
+  "paid_runtime_cost": 0
+}

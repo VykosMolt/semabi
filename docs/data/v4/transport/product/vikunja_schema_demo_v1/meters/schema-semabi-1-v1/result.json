@@ -1,0 +1,170 @@
+{
+  "format": "owned_command_meter.v1",
+  "argv": [
+    ".venv/bin/python",
+    "-B",
+    "runs/product_auth_development_v1/run_service_call.py",
+    "--binding-file",
+    "runs/product_auth_development_v1/schema_calls/call_1.json",
+    "--connection",
+    "conn_0bf3fce0d8f143498ad515861050e349",
+    "--output-dir",
+    "runs/product_auth_development_v1/attempts/schema-semabi-1"
+  ],
+  "exit_code": 0,
+  "source_sha256": "1fe5321916ec4ab4aabeb9e61c162b10b20a60ffa0eb3239b88f7482396ad385",
+  "started_at": "2026-09-09T21:14:20.908333+00:00",
+  "rss_limit_bytes": 4294967296,
+  "sample_interval_seconds": 0.05,
+  "sampled_peak_aggregate_rss_bytes": 971968512,
+  "samples": 181,
+  "inherited_cpu_affinity": [
+    2,
+    3
+  ],
+  "max_observed_affinity_count": 2,
+  "signals": [],
+  "stop_reason": "command_exit",
+  "ownership_scope": "Observed PID/start-matched descendants; unobserved detached descendants are not certified.",
+  "cpu_scope": "RUSAGE_CHILDREN delta after waiting; excludes CPU of descendants not reaped through the command.",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "wall_seconds": 9.023551,
+  "rss_limit_exceeded": false,
+  "child_rusage_cpu_seconds": 3.45997,
+  "completed_at": "2026-09-09T21:14:29.932035+00:00",
+  "owned_processes": [
+    {
+      "pid": 1337755,
+      "ppid": 1337754,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7738719,
+      "rss_bytes": 0,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1337760,
+      "ppid": 1337755,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7738723,
+      "rss_bytes": 14827520,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1337788,
+      "ppid": 1337755,
+      "name": "python",
+      "state": "R",
+      "start_ticks": 7738739,
+      "rss_bytes": 14061568,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1337792,
+      "ppid": 1337760,
+      "name": "MainThread",
+      "state": "R",
+      "start_ticks": 7738745,
+      "rss_bytes": 57184256,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1337810,
+      "ppid": 1337792,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7738775,
+      "rss_bytes": 86413312,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1337813,
+      "ppid": 1337810,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7738776,
+      "rss_bytes": 47632384,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1337814,
+      "ppid": 1337810,
+      "name": "chrome-headless",
+      "state": "S",
+      "start_ticks": 7738776,
+      "rss_bytes": 45293568,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1337828,
+      "ppid": 1337813,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 7738778,
+      "rss_bytes": 124477440,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1337832,
+      "ppid": 1337810,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 7738779,
+      "rss_bytes": 31899648,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    },
+    {
+      "pid": 1337848,
+      "ppid": 1337814,
+      "name": "chrome-headless",
+      "state": "R",
+      "start_ticks": 7738782,
+      "rss_bytes": 74149888,
+      "last_cpu_affinity": [
+        2,
+        3
+      ],
+      "terminal_state": "absent"
+    }
+  ],
+  "terminal_ownership_verified": true,
+  "status": "TERMINAL"
+}

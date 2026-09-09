@@ -1,0 +1,25 @@
+{
+  "classification": "Authorized installer opaque restore before schema development arm; no record interpretation",
+  "command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "-B",
+    "/home/moloch/semabi/runs/product_reserved_preparation_v1/lifecycle.py",
+    "restore",
+    "sdcb66c52b-postlearn"
+  ],
+  "helper_sha256": "3b49de19d8ed85f9d447a164d1a5b1e2d8ce50bef786b63e197f80ef633691a0",
+  "started_at": "2026-09-09T21:09:51.273477+00:00",
+  "ordinary_ui_actions": 0,
+  "business_write_actions": 0,
+  "cpu_affinity": [
+    2
+  ],
+  "exit_code": 0,
+  "stdout": "{\"account_state\": \"NOT_ASSESSED_BY_LIFECYCLE_ADAPTER\", \"action\": \"restore\", \"archive\": \"/home/moloch/semabi/runs/product_apps_v1/reserved/private/resets/1788988191404952227-0a9817b27724452dad5c97f8db627c00\", \"data_access\": \"OPAQUE_BYTES_ONLY\", \"http_called\": false, \"inventory_entries\": 5, \"manifest_sha256\": \"a5bb5b8a9300a9a2fd85bd81d0bb8e44fb409e8bec5a8013941dbd20479ad8cf\", \"name\": \"sdcb66c52b-postlearn\", \"path\": \"/home/moloch/semabi/runs/product_apps_v1/reserved/private/prepared/sdcb66c52b-postlearn\", \"ui_equivalence\": \"UNESTABLISHED\", \"was_running\": true}\n",
+  "stderr": "",
+  "elapsed_seconds": 0.5806653990002815,
+  "child_cpu_seconds": 0.15920800000000002,
+  "child_peak_rss_bytes": 86843392,
+  "metric_scope": "Waited lifecycle helper; excludes persistent application cost",
+  "completed_at": "2026-09-09T21:09:51.854172+00:00"
+}

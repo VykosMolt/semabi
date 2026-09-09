@@ -1,0 +1,562 @@
+{
+  "format": "product_assessment_http_attempt.v1",
+  "arm": "semabi",
+  "binding_sha256": "4efcc3662e8e3fca69207ff9da6ad53659166439bdd28080d0a81ef4a828779e",
+  "call_sha256": "7b7b2d1408bef9f16eb12f636d29dd63e1f1947c60296f1281c481468b5731d7",
+  "operation_id": "op_98cf711d3da577a6b7e6",
+  "operation_version": 1,
+  "arguments": {
+    "add_a_task": "sdcb66c52b followup review"
+  },
+  "source_before": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "started_at": "2026-09-09T21:16:47.582741+00:00",
+  "limits": {
+    "max_seconds": 60,
+    "max_actions": 20,
+    "max_possible_writes": 12
+  },
+  "jobs": [
+    {
+      "connection_id": "conn_0bf3fce0d8f143498ad515861050e349",
+      "created_at": "2026-09-09T21:16:47.594172+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T21:16:47.597019+00:00",
+          "kind": "reconnect",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T21:16:50.854967+00:00",
+          "sequence": 2,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_5b67ef14433f462f936bf5126a9c24a0",
+      "job_id": "job_5b67ef14433f462f936bf5126a9c24a0",
+      "kind": "reconnect",
+      "request": {},
+      "result": {
+        "allowed_origin": "http://127.0.0.1:8853",
+        "authentication_actions": 3,
+        "authentication_evidence": "same_origin_settled_password_form_absence",
+        "authentication_prior": "Whole normalized English label: Login, Log in, Sign in",
+        "elapsed_seconds": 2.847,
+        "login_selection_basis": "exact_english_login_label_prior",
+        "status": "CONNECTED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T21:16:50.855002+00:00",
+      "write_intent": false
+    },
+    {
+      "connection_id": "conn_0bf3fce0d8f143498ad515861050e349",
+      "created_at": "2026-09-09T21:16:50.868207+00:00",
+      "events": [
+        {
+          "created_at": "2026-09-09T21:16:50.871164+00:00",
+          "kind": "invoke",
+          "sequence": 1,
+          "type": "job_started"
+        },
+        {
+          "created_at": "2026-09-09T21:16:51.151692+00:00",
+          "sequence": 2,
+          "settled": true,
+          "signature": "18554fb10860394b",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:51.161138+00:00",
+          "sequence": 3,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T21:16:52.423146+00:00",
+          "sequence": 4,
+          "settled": true,
+          "signature": "823bbb49eb389f23",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:52.699444+00:00",
+          "sequence": 5,
+          "settled": true,
+          "signature": "823bbb49eb389f23",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:52.708855+00:00",
+          "sequence": 6,
+          "type": "navigation",
+          "url": "http://127.0.0.1:8853/"
+        },
+        {
+          "created_at": "2026-09-09T21:16:53.953655+00:00",
+          "sequence": 7,
+          "settled": true,
+          "signature": "823bbb49eb389f23",
+          "type": "observation"
+        },
+        {
+          "action": {
+            "kind": "type",
+            "target": 98,
+            "text": "sdcb66c52b followup review"
+          },
+          "created_at": "2026-09-09T21:16:53.963378+00:00",
+          "sequence": 8,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:16:54.289460+00:00",
+          "sequence": 9,
+          "settled": true,
+          "signature": "794d4cfdc5020b41",
+          "type": "observation"
+        },
+        {
+          "action": "type",
+          "created_at": "2026-09-09T21:16:54.297825+00:00",
+          "ok": true,
+          "sequence": 10,
+          "type": "action_result"
+        },
+        {
+          "action": {
+            "kind": "click",
+            "target": 103
+          },
+          "created_at": "2026-09-09T21:16:54.298913+00:00",
+          "sequence": 11,
+          "type": "write_intent"
+        },
+        {
+          "created_at": "2026-09-09T21:16:54.882680+00:00",
+          "sequence": 12,
+          "settled": true,
+          "signature": "9338644804737997",
+          "type": "observation"
+        },
+        {
+          "action": "click",
+          "created_at": "2026-09-09T21:16:54.891093+00:00",
+          "ok": true,
+          "sequence": 13,
+          "type": "action_result"
+        },
+        {
+          "created_at": "2026-09-09T21:16:55.170736+00:00",
+          "sequence": 14,
+          "settled": true,
+          "signature": "9338644804737997",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:55.172993+00:00",
+          "sequence": 15,
+          "type": "reload"
+        },
+        {
+          "created_at": "2026-09-09T21:16:56.152079+00:00",
+          "sequence": 16,
+          "settled": true,
+          "signature": "9338644804737997",
+          "type": "observation"
+        },
+        {
+          "created_at": "2026-09-09T21:16:56.161814+00:00",
+          "outcome": "CONFIRMED",
+          "sequence": 17,
+          "status": "COMPLETED",
+          "type": "job_finished"
+        }
+      ],
+      "id": "job_2d3dccbe3ea0412691d96fe1e80b1c1e",
+      "job_id": "job_2d3dccbe3ea0412691d96fe1e80b1c1e",
+      "kind": "invoke",
+      "request": {
+        "arguments": {
+          "add_a_task": "sdcb66c52b followup review"
+        },
+        "limits": {
+          "max_actions": 16,
+          "max_seconds": 56.61684841898968,
+          "max_writes": 9
+        },
+        "operation_id": "op_98cf711d3da577a6b7e6",
+        "version": 1
+      },
+      "result": {
+        "effect": {
+          "arguments": {
+            "add_a_task": "sdcb66c52b followup review"
+          },
+          "kind": "visible_record_created",
+          "scope": "Unique local record in the current rendered view, retained after reload",
+          "witness": {
+            "basis": "visible_local_record",
+            "field_slots": {
+              "add_a_task": [
+                {
+                  "channel": "text",
+                  "path": [
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "group",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "text",
+                      0
+                    ],
+                    [
+                      "link",
+                      0
+                    ]
+                  ]
+                }
+              ]
+            },
+            "link_destinations": [
+              "http://127.0.0.1:8853/projects/1",
+              "http://127.0.0.1:8853/tasks/7"
+            ],
+            "observation": "9338644804737997",
+            "role": "listitem",
+            "root": 115,
+            "text_boundaries": {},
+            "texts": [
+              "sdcb66c52b followup review",
+              "sdcb66c52b followup review",
+              "Inboxsdcb66c52b followup review Add to Favorites",
+              "Mark 'sdcb66c52b followup review' as done",
+              "Inboxsdcb66c52b followup review",
+              "Inbox"
+            ],
+            "value_node": 128
+          }
+        },
+        "metrics": {
+          "actions": 5,
+          "elapsed_seconds": 5.289,
+          "model_calls": 0,
+          "paid_cost": 0,
+          "possible_write_actions": 2
+        },
+        "outcome": "CONFIRMED"
+      },
+      "status": "COMPLETED",
+      "updated_at": "2026-09-09T21:16:56.161861+00:00",
+      "write_intent": true
+    }
+  ],
+  "accepted_jobs": [
+    {
+      "connection_id": "conn_0bf3fce0d8f143498ad515861050e349",
+      "id": "job_5b67ef14433f462f936bf5126a9c24a0",
+      "job_id": "job_5b67ef14433f462f936bf5126a9c24a0"
+    },
+    {
+      "connection_id": "conn_0bf3fce0d8f143498ad515861050e349",
+      "deduplicated": false,
+      "execution_id": "job_2d3dccbe3ea0412691d96fe1e80b1c1e",
+      "id": "job_2d3dccbe3ea0412691d96fe1e80b1c1e",
+      "job_id": "job_2d3dccbe3ea0412691d96fe1e80b1c1e"
+    }
+  ],
+  "http_requests": 170,
+  "write_retries": 0,
+  "browser_started": true,
+  "status": "RUNTIME_FINISHED",
+  "effect_verification": "INDEPENDENT_CHECK_PENDING",
+  "pending_http_request": {
+    "method": "POST",
+    "path": "/v1/connections/conn_0bf3fce0d8f143498ad515861050e349/operations/op_98cf711d3da577a6b7e6/invoke",
+    "body": {
+      "version": 1,
+      "arguments": {
+        "add_a_task": "sdcb66c52b followup review"
+      },
+      "limits": {
+        "max_actions": 16,
+        "max_writes": 9,
+        "max_seconds": 56.61684841898968
+      }
+    },
+    "idempotency_key": "assessment-d868afba1138684561270971c6957459930b71dc"
+  },
+  "last_observed_job": {
+    "connection_id": "conn_0bf3fce0d8f143498ad515861050e349",
+    "created_at": "2026-09-09T21:16:50.868207+00:00",
+    "events": [
+      {
+        "created_at": "2026-09-09T21:16:50.871164+00:00",
+        "kind": "invoke",
+        "sequence": 1,
+        "type": "job_started"
+      },
+      {
+        "created_at": "2026-09-09T21:16:51.151692+00:00",
+        "sequence": 2,
+        "settled": true,
+        "signature": "18554fb10860394b",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T21:16:51.161138+00:00",
+        "sequence": 3,
+        "type": "navigation",
+        "url": "http://127.0.0.1:8853/"
+      },
+      {
+        "created_at": "2026-09-09T21:16:52.423146+00:00",
+        "sequence": 4,
+        "settled": true,
+        "signature": "823bbb49eb389f23",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T21:16:52.699444+00:00",
+        "sequence": 5,
+        "settled": true,
+        "signature": "823bbb49eb389f23",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T21:16:52.708855+00:00",
+        "sequence": 6,
+        "type": "navigation",
+        "url": "http://127.0.0.1:8853/"
+      },
+      {
+        "created_at": "2026-09-09T21:16:53.953655+00:00",
+        "sequence": 7,
+        "settled": true,
+        "signature": "823bbb49eb389f23",
+        "type": "observation"
+      },
+      {
+        "action": {
+          "kind": "type",
+          "target": 98,
+          "text": "sdcb66c52b followup review"
+        },
+        "created_at": "2026-09-09T21:16:53.963378+00:00",
+        "sequence": 8,
+        "type": "write_intent"
+      },
+      {
+        "created_at": "2026-09-09T21:16:54.289460+00:00",
+        "sequence": 9,
+        "settled": true,
+        "signature": "794d4cfdc5020b41",
+        "type": "observation"
+      },
+      {
+        "action": "type",
+        "created_at": "2026-09-09T21:16:54.297825+00:00",
+        "ok": true,
+        "sequence": 10,
+        "type": "action_result"
+      },
+      {
+        "action": {
+          "kind": "click",
+          "target": 103
+        },
+        "created_at": "2026-09-09T21:16:54.298913+00:00",
+        "sequence": 11,
+        "type": "write_intent"
+      },
+      {
+        "created_at": "2026-09-09T21:16:54.882680+00:00",
+        "sequence": 12,
+        "settled": true,
+        "signature": "9338644804737997",
+        "type": "observation"
+      },
+      {
+        "action": "click",
+        "created_at": "2026-09-09T21:16:54.891093+00:00",
+        "ok": true,
+        "sequence": 13,
+        "type": "action_result"
+      },
+      {
+        "created_at": "2026-09-09T21:16:55.170736+00:00",
+        "sequence": 14,
+        "settled": true,
+        "signature": "9338644804737997",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T21:16:55.172993+00:00",
+        "sequence": 15,
+        "type": "reload"
+      },
+      {
+        "created_at": "2026-09-09T21:16:56.152079+00:00",
+        "sequence": 16,
+        "settled": true,
+        "signature": "9338644804737997",
+        "type": "observation"
+      },
+      {
+        "created_at": "2026-09-09T21:16:56.161814+00:00",
+        "outcome": "CONFIRMED",
+        "sequence": 17,
+        "status": "COMPLETED",
+        "type": "job_finished"
+      }
+    ],
+    "id": "job_2d3dccbe3ea0412691d96fe1e80b1c1e",
+    "job_id": "job_2d3dccbe3ea0412691d96fe1e80b1c1e",
+    "kind": "invoke",
+    "request": {
+      "arguments": {
+        "add_a_task": "sdcb66c52b followup review"
+      },
+      "limits": {
+        "max_actions": 16,
+        "max_seconds": 56.61684841898968,
+        "max_writes": 9
+      },
+      "operation_id": "op_98cf711d3da577a6b7e6",
+      "version": 1
+    },
+    "result": {
+      "effect": {
+        "arguments": {
+          "add_a_task": "sdcb66c52b followup review"
+        },
+        "kind": "visible_record_created",
+        "scope": "Unique local record in the current rendered view, retained after reload",
+        "witness": {
+          "basis": "visible_local_record",
+          "field_slots": {
+            "add_a_task": [
+              {
+                "channel": "text",
+                "path": [
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "group",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "text",
+                    0
+                  ],
+                  [
+                    "link",
+                    0
+                  ]
+                ]
+              }
+            ]
+          },
+          "link_destinations": [
+            "http://127.0.0.1:8853/projects/1",
+            "http://127.0.0.1:8853/tasks/7"
+          ],
+          "observation": "9338644804737997",
+          "role": "listitem",
+          "root": 115,
+          "text_boundaries": {},
+          "texts": [
+            "sdcb66c52b followup review",
+            "sdcb66c52b followup review",
+            "Inboxsdcb66c52b followup review Add to Favorites",
+            "Mark 'sdcb66c52b followup review' as done",
+            "Inboxsdcb66c52b followup review",
+            "Inbox"
+          ],
+          "value_node": 128
+        }
+      },
+      "metrics": {
+        "actions": 5,
+        "elapsed_seconds": 5.289,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "possible_write_actions": 2
+      },
+      "outcome": "CONFIRMED"
+    },
+    "status": "COMPLETED",
+    "updated_at": "2026-09-09T21:16:56.161861+00:00",
+    "write_intent": true
+  },
+  "connection_navigation_actions": 1,
+  "authentication_actions": 3,
+  "invocation_request": {
+    "version": 1,
+    "arguments": {
+      "add_a_task": "sdcb66c52b followup review"
+    },
+    "limits": {
+      "max_actions": 16,
+      "max_writes": 9,
+      "max_seconds": 56.61684841898968
+    }
+  },
+  "idempotency_key": "assessment-d868afba1138684561270971c6957459930b71dc",
+  "runtime_outcome": "CONFIRMED",
+  "interaction_total": 9,
+  "possible_write_total": 5,
+  "public_observation_events": 8,
+  "raw_dom_snapshot_count": null,
+  "raw_dom_snapshot_count_status": "Not exposed by this service version",
+  "elapsed_seconds_including_auth_http_polling": 8.6196,
+  "source_after": {
+    "examples/client.py": "f84508b0ea18b4bfc1f590546fafaef8ba2e504942adec3cf9e4f441465f3f07",
+    "semabi/baselines/cached_form.py": "f41d2cd15557a1c796806cc33cb885921201526effc1a71b3aa64ed720dc6971",
+    "semabi/compiler/artifacts.py": "5dc05dc6e9894ef161f448000835fec43c686764736ddae2fdf37e896b11c0b7",
+    "semabi/compiler/browser.py": "a47f2b05b21da4af9c53e63c600cca37a956a1c90d8b458ae920c28eaf6442a1",
+    "semabi/compiler/browser_session.py": "8180686aa8aee975045f168f19b8c594e7653a2e51d1b5171093178be4aa6048",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/runtime.py": "356dcb1c160e245aaad2d42a8e8c73f72fba32c40a89a1e383d5fee1c9ae6006",
+    "semabi/compiler/surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "semabi/service.py": "2e829c23bf0aab890ce8880654b249fea0768842d8be4b7323d13316138df500"
+  },
+  "source_unchanged": true,
+  "within_workflow_budget": true,
+  "completed_at": "2026-09-09T21:16:56.202673+00:00"
+}
