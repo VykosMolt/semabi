@@ -1463,8 +1463,10 @@ class Hypotheses:
         return False
 
     def _same_family(self, a: UnitHyp, b: UnitHyp) -> bool:
+        if a.template.split("[", 1)[0] != b.template.split("[", 1)[0]:
+            return False  # a row and a text are not variants of one thing, whatever parts they share
         if a.template in b.template or b.template in a.template:
-            return False  # a part and its container are not variants of one thing
+            return False  # nor are a part and its container
         pa = set(a.template.replace("(", ",").replace(")", ",").split(",")) - {""}
         pb = set(b.template.replace("(", ",").replace(")", ",").split(",")) - {""}
         ov = len(pa & pb) / min(len(pa), len(pb))

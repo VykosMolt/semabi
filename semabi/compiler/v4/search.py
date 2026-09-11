@@ -291,6 +291,14 @@ def _template_pairs(grouped: dict[str, list], fa: str, fb: str) -> set[frozenset
     return {frozenset((ua.template, ub.template)) for ua in grouped[fa] for ub in grouped[fb]}
 
 
+def family_templates(H: Hypotheses, name: str) -> list[str]:
+    """The templates of the family the search calls `name`: its variants merged by optional
+    parts, or, for a name the grouping does not produce here, the templates with that
+    erased-token name."""
+    grouped = _group_families(H)
+    return [u.template for u in grouped.get(name, [])] or [t for t in H.units if family_key(t) == name]
+
+
 def _reparse(Hx: Hypotheses) -> None:
     """A recurring template is a unit only if it has identity: the content of a part the
     search left without a key flows to the enclosing unit, as under the V2 fixpoint."""
@@ -554,8 +562,14 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
     # nobody judged.  Report what the hypotheses carry, marked as such, rather than the last
     # reading the search accepted (`docs/v4_frontier.md`).
     for name, units in grouped.items():
-        carried = next((base.units[u.template].key_slot for u in units if u.template in base.units), None)
         reported = result.chosen[units[0].template]
+        parts = reported.key_slot.split("|") if reported.key_slot else []
+        # judged among the templates that render the reading's slots: a variant that does
+        # not (a row without the cell) carries no key under the reading by `assign`, and
+        # that is the reading, not a harmonisation
+        carried = next((base.units[u.template].key_slot for u in units
+                        if u.template in base.units and all(part in base.units[u.template].slots for part in parts)
+                        and base.units[u.template].key_slot != reported.key_slot), reported.key_slot)
         if carried != reported.key_slot:
             harmonised = reading_for(_Family(name, units), tuple(carried.split("|")) if carried else (),
                                      reload_pairs, view_of, spoken=spoken, status="HARMONISED",

@@ -153,11 +153,14 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
     else:
         from semabi.compiler.v4.identity import family_key
         result = None
+        family_of = {u.template: name for name, units in v4_search._group_families(H).items() for u in units}
         for template, unit in H.units.items():
             if template in identity:
                 key_slot = identity[template]
             elif family_key(template) in identity:
                 key_slot = identity[family_key(template)]
+            elif family_of.get(template) in identity:
+                key_slot = identity[family_of[template]]
             else:
                 continue
             if key_slot and key_slot not in unit.slots and "|" not in key_slot:

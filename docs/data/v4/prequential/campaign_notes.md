@@ -2941,3 +2941,80 @@ join_score.py, search reading, dev-fitted, scored on the holdouts (scratchpad p4
     (`Length overall(owner)`) with the unheld condition spelled `no_children(selection)`
     where P25 had `ref_null(selection, rel:0)`.  P25's file predates P31/P34 (the vessel
     key); the true baseline is being scored under d0b1574 in a worktree (p42_ref_head_score).
+
+## Reservoir looked at (21:05), one defect in tonight's dl rule found, NOT fixed yet
+The review page's definition list (Water requested / 13 L / Water source / Copper cistern /
+Water available / 11 L) is not recognised: `_texts_at` is keyed by the indexed role path
+alone, and the source page's fieldset legend 'Stored water' stands at the same indexed path
+as the review page's first label, so 'Water requested' is not "constant wherever its position
+was seen".  The dl then becomes a unit keyed by the requested amount (numeric last resort).
+Fix (to make after the battery, since the working tree is what the running battery imports):
+key `_texts_at` by (view skeleton, indexed position) -- store the skeleton per sig in add()
+and use it in definition_pairs; test: a legend on one view and a dl label on another at one
+indexed path.  Beyond that the reservoir's request is a single unnamed record (one job,
+heading constant): no unit has identity, so the fields are page statics and Schedule
+watering has no owner -- a representational question of its own (a singleton record),
+left open.
+
+## Allocation holdout: HEAD baseline identical (21:14)
+harbour_ref_dev -> harbour_ref_hold scored under d0b1574 in a worktree: Allocate berth 16 /
+11 / 0, the same lists (vessel-keyed sheet, `no_children(selection)`), the same whole-holdout
+ledger 174/99/50/7/4, zero steps moved against the repaired learner.  So all three retained
+JOIN corpora are unchanged by P42: sep 15/15/0, pil 7/14/0, ref 16/11/0; P25's 21/3/3/0 was
+the call-keyed reading of 09-06, superseded by P31/P34 and never re-recorded in the notes.
+
+## Housekeeping (21:27), per HOUSEKEEPING.md (written tonight at the repo root)
+Removed, branches kept: worktrees runs/.g2_worktree (0afe36c, g2-frozen-section-prefix;
+clean) and runs/.b1_validation_worktree (b6f8c99, b1-validated; only an untracked .venv) --
+both lines adopted into main (4440a4f, d72335b).  Kept, not verifiably redundant: the eight
+other runs/.*_worktree checkouts (5.3 GB), whose untracked evidence directories differ from
+or are absent in main's copies (b1/, widget_persistence_v1 60-69 diffs, widget_observation_
+repair_v1, widget_key_revision_repair_v1) -- the user's call.  Removed the empty root dirs
+.agents/ and .codex/; byte-code caches outside semabi/ and tests/ (those two after the
+battery).  Deleted the superseded battery scratch (battery_run1..5,7,8, 3a, battery_prev,
+battery9_archive, battery6_*): every log is retained under docs/data/v4/prequential/
+battery_run*.log, battery #6's partial log copied there tonight as battery_run6_partial.log.
+Flagged for a decision, not touched: docs/data/v4 carries 870 MB of tracked evidence with
+six J1 predictor checkpoints of 66-72 MB (GitHub refuses >100 MB, warns >50 MB): the push
+is blocked until moved out or LFS'd; runs/v4 (98 files, 71 MB) is tracked although runs/ is
+ignored; runs/ holds 5.7 GB of untracked outputs (product_* private receipts, oracle*, v2_*,
+v3) whose campaigns are closed; ~/semabi-v0 and ~/semabi-v1 frozen checkouts are dirty.
+
+## Battery under 189a7fc, regen stage judged (21:54) -- stopped after it
+regen 21:03 -> 21:37 (rc=0).  harbour: selection, identification and holdout unchanged
+(the frontier's holdout verdicts show 27 SILENT -> NAVIGATION, change (h), nothing else);
+blend: unchanged.  vet: CHANGED -- selected reading group[_](heading[_],list=heading#0
+(SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS, holdout INCONCLUSIVE) -> cell[_]=None
+(BEHAVIOURALLY_DISTINGUISHED, holdout CONFIRMED); in the reading the appointment rows'
+three variants are now ONE family of ten templates (change (k)) reported HARMONISED with
+key None, where the combobox variant had been keyed cell@Patient#0|cell@Reason#0 and the
+plain variant cell@Reason#0|cell@Vet#0; the vets table is keyed cell@Name#0 (was
+NO_IDENTITY).  Traced: search.py's harmonisation report takes the FIRST template's carried
+key as the family's; in a merged family a variant that cannot render the reading's slots
+carries None (assign() gives it none), so the whole family is reported and CHOSEN as None
+-- a defect of (k)'s interplay with the report, not a judgement.  Stopped the battery at
+open_world (its regen comparison kept in scratchpad/battery_p42a_regen_compare.txt, the
+stage dir as battery_p42a_stopped); fixing the report with a test, re-running vet's
+search, then restarting the battery from scratch.
+
+## Vet traced further (22:22): two more defects of (k), both repaired with tests
+1. `_same_family`'s part-set overlap (min-denominator) let the appointment row's nested
+   form `text[_](combobox[_])` -- two parts, both among the row's -- count as a VARIANT of
+   the row; merged, the family took the form's label slot `text#0` as its key (V2's key on
+   the first-sorted template), 144 errors, no move accepted.  Rule added: variants of one
+   thing share a root role (a row and a text never are); a part and its container never are.
+2. Consumers grouped templates by their exact erased-token name -- pinned.apply/separation,
+   compile_v4's identity application, probe's family lookups -- so a merged family's other
+   variants kept V2's key (vet's rows: the REFUTED cell@Owner#0 in the compiled model).
+   They now group as the search does (`_group_families`, `family_templates`); a pinned
+   family is found under any member's name.
+With both: vet's search keys the merged appointment family cell@Patient#0|cell@Reason#0
+(rejecting Owner|Reason, Reason, Status, Vet, None and four other composites, as the
+retained reading did for the combobox variant); vets table None with Specialty / On duty
+open, as retained.  DIFFERENCE: the nested select form `text[_](combobox[_])` keeps V2's
+`text#0` (undecided: it explains 45 with 74 errors, None explains 14 with 0) where the
+retained search moved it to None (contradictions -95, visibility -147) -- under (j) an
+unkeyed nested unit's content flows to the row, which changes the row's slots and what
+its keyed reading explains, so None no longer dominates; path-dependent on the family
+order.  Left to the battery's ledgers to judge (vet outcome ledgers are the gate).
+Dispatch unchanged by these fixes (page heading#0 over the inherited depot, cards heading#0).

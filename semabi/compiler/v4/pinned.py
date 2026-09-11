@@ -226,14 +226,15 @@ def promoted_templates(H, G, reading: PinnedReading) -> tuple[set[str], list[str
 def apply(H, reading: PinnedReading, promoted_absent: list[str] | None = None) -> Transport:
     """Instantiate a frozen reading against a destination trace, and record what did not fit."""
     from semabi.compiler.v4.identity import family_key
-    from semabi.compiler.v4.search import _materialise
-    grouped: dict[str, list] = {}
-    for template, unit in sorted(H.units.items()):
-        grouped.setdefault(family_key(template), []).append(unit)
+    from semabi.compiler.v4.search import _group_families, _materialise
+    grouped = _group_families(H)
 
     transport = Transport(promoted_absent=list(promoted_absent or []))
     for family, units in grouped.items():
-        source = reading.families.get(family)
+        # the search names a merged family by one variant's erased-token name; the
+        # destination may render the variants in another order, so any member's name finds it
+        source = next((reading.families[name] for name in [family] + [family_key(u.template) for u in units]
+                       if name in reading.families), None)
         if source is None:
             # the source never claimed anything here, so neither does the transported
             # reading; leaving V2's own key in place would be refitting on the destination
@@ -380,12 +381,11 @@ def separation(H, reading: PinnedReading, transport: Transport) -> list[Separati
     emits no separation record; in particular it cannot be refuted by a denominator that
     was never valid for the claim.
     """
-    from semabi.compiler.v4.identity import _copresence_pairs, _value, family_key
+    from semabi.compiler.v4.identity import _copresence_pairs, _value
+    from semabi.compiler.v4.search import _group_families
     if not isinstance(transport, Transport):
         raise TypeError("separation requires the Transport produced by pinned.apply")
-    grouped: dict[str, list] = {}
-    for template, unit in sorted(H.units.items()):
-        grouped.setdefault(family_key(template), []).append(unit)
+    grouped = _group_families(H)
     # the keys every page shows, per family: what a view's value may correspond to
     keys_by_sig: dict[str, dict[str, set]] = {}
     for family, units in grouped.items():

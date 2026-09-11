@@ -174,3 +174,47 @@ def test_an_inherited_key_yields_to_a_proposed_reading_on_an_evidence_tie(monkey
     move = next(m for m in result.moves if m.get("family") == "a[_]" and m["move"] == "identity")
     assert move["decided_by"] == {"inherited": "p"}
     assert [(q.left.key_slot, q.right.key_slot) for q in result.open_questions if q.template == "a[_]"] == [("q", "p")]
+
+
+def test_a_variant_without_the_readings_slot_does_not_harmonise_its_family_to_none(monkeypatch):
+    # two variants of one family (a row with and without a cell), merged by optional parts;
+    # the reading is the composite "p|q", which the variant lacking q cannot render, so it
+    # carries no key under the reading.  The report used to take the first template's key
+    # as what the family carried and reported the whole family harmonised to None
+    class _Merging(_H):
+        def _same_family(self, a, b):
+            return a.template.startswith("a") and b.template.startswith("a")
+
+    H = _Merging({"a1[_]": None, "b[_]": None})
+    H.units["a1[_]"] = _Unit("a1[_]", None, slots=("p", "r"))
+    H.units["a2[_]"] = _Unit("a2[_]", None, slots=("p", "q", "r"))
+    monkeypatch.setattr(v4_search, "family_readings",
+                        lambda units, *a, **k: [_reading(units[0].template, "p|q"), _reading(units[0].template, None, "NO_IDENTITY")]
+                        if units[0].template.startswith("a") else [_reading(units[0].template, None, "NO_IDENTITY")])
+    monkeypatch.setattr(v4_search, "reading_for",
+                        lambda fam, slots, *a, **k: _reading(fam.template, "|".join(slots), k.get("status", "SUPPORTED")))
+    monkeypatch.setattr(v4_search, "_reload_pairs", lambda log: [])
+    monkeypatch.setattr(v4_search, "_view_of", lambda H: {})
+    monkeypatch.setattr(v4_search, "_build", lambda H, G, log: H)
+    monkeypatch.setattr(v4_search, "_materialise", lambda unit, key: None)
+    scores = {("p|q", None): (12, 0), (None, None): (5, 0)}
+    monkeypatch.setattr(v4_search.objective, "evaluate",
+                        lambda H, log, max_steps=None: Behaviour(explained=scores[(H.units["a2[_]"].key_slot, H.units["b[_]"].key_slot)][0], complexity=10))
+    result = v4_search.search(H, None, SimpleNamespace(steps=[]), refuted={})
+    assert list(result.families) == ["a1[_]", "b[_]"] and result.families["a1[_]"] == ["a1[_]", "a2[_]"]
+    assert result.hypotheses.units["a2[_]"].key_slot == "p|q"
+    assert result.hypotheses.units["a1[_]"].key_slot is None
+    assert result.chosen["a2[_]"].key_slot == "p|q" and result.chosen["a2[_]"].status != "HARMONISED"
+
+
+def test_units_with_different_root_roles_are_not_variants_of_one_family():
+    # vet's form (a text holding a select) shares both its parts with the appointment row,
+    # and the part-overlap test alone called them one family; the rows then took the form's
+    # label as their key
+    from semabi.compiler.v2.hypotheses import Hypotheses, UnitHyp
+    H = Hypotheses.__new__(Hypotheses)
+    row = UnitHyp("row[](cell@Actions[](combobox[_],button[Assign],text[_]),cell@Owner[_],cell@Patient[_])", [])
+    form = UnitHyp("text[_](combobox[_])", [])
+    with_status = UnitHyp("row[](cell@Actions[](combobox[_],button[Assign],text[_]),cell@Owner[_],cell@Patient[_],status[_])", [])
+    assert not H._same_family(row, form)
+    assert H._same_family(row, with_status)

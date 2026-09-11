@@ -52,8 +52,8 @@ def derive(question, H, G, typed_tokens: list[str] | None = None) -> Probe | Non
         return None
     templates = [t for t in H.units if t == question.template] or \
                 [t for t in H.units if t.startswith(question.template.split("[")[0])]
-    from semabi.compiler.v4.identity import family_key
-    templates = [t for t in H.units if family_key(t) == question.template] or templates
+    from semabi.compiler.v4.search import family_templates
+    templates = family_templates(H, question.template) or templates
     typed_tokens = typed_tokens or []
 
     best: Probe | None = None
@@ -118,7 +118,8 @@ def locate(question, H, G, obs, sig: str, typed_tokens: list[str] | None = None)
         return None
     if sig not in G.obs:
         G.add(sig, obs)
-    templates = {t for t in H.units if family_key(t) == question.template}
+    from semabi.compiler.v4.search import family_templates
+    templates = set(family_templates(H, question.template))
     typed_tokens = typed_tokens or []
     for instance in H.parse_units(sig):
         if instance.template not in templates:
@@ -183,7 +184,8 @@ def acquisition_for(family: str, missing: list[str]) -> Acquisition | None:
 
 def renders_family(H, G, obs, sig: str, family: str) -> bool:
     """Is this family on screen right now?"""
-    from semabi.compiler.v4.identity import family_key
+    from semabi.compiler.v4.search import family_templates
     if sig not in G.obs:
         G.add(sig, obs)
-    return any(family_key(i.template) == family for i in H.parse_units(sig))
+    members = set(family_templates(H, family))
+    return any(i.template in members for i in H.parse_units(sig))

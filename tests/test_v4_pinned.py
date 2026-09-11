@@ -79,3 +79,15 @@ def test_a_pinned_compile_never_searches(tmp_path, monkeypatch):
     H = _hypotheses([_unit("row[](cell[_])", ["cell#0"])])
     v4_pinned.apply(H, reading)
     assert H.units["row[](cell[_])"].key_slot is None
+
+
+def test_a_reading_pinned_under_one_variants_name_keys_every_variant_of_its_family():
+    # the search names a family merged by optional parts after one variant; a destination
+    # groups its variants the same way and finds the source's claim under any member's name
+    H = _hypotheses([_unit("row[](cell[_],text[_])", ["cell#0", "text#0"]), _unit("row[](cell[_])", ["cell#0"])])
+    H._same_family = lambda a, b: True
+    reading = PinnedReading({"row[_](cell[_])": FamilyReading("row[_](cell[_])", "cell#0", "SUPPORTED", 1.0)})
+    transport = v4_pinned.apply(H, reading)
+    assert H.units["row[](cell[_],text[_])"].key_slot == "cell#0"
+    assert H.units["row[](cell[_])"].key_slot == "cell#0"
+    assert transport.unseen_in_source == []

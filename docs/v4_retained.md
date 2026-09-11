@@ -1893,8 +1893,13 @@ new forced-wrong verdict on any retained ledger, a wrong being a finding against
 change that caused it; readings may move where a belief is now carried, a navigation no
 longer charged, a part dissolved, a variant family merged, a labelled text made a field, a
 widget mirrored or an inherited key replaced, each traced; the harbour joins of Parts XVII
-and XVIII learned with the same fields and no wrong holdout verdict.  The battery's
-verdict is recorded in the campaign notes and below when it completes.
+and XVIII learned with the same fields and no wrong holdout verdict.  The joins hold
+exactly: on the separating holdout `Book pilot` is 15 forced right, 15 several, none
+wrong, on the pilot holdout 7, 14 and none, and on the allocation holdout `Allocate
+berth` is 16, 11 and none -- the last identical to the unmodified tree scored in a
+worktree, step for step, the earlier 21/3/3 being the call-keyed reading of Part XVII
+that Part XVIII's vessel key superseded.  The battery's verdict is recorded in the
+campaign notes and below when it completes.
 
 ## What stands, and what is open
 
