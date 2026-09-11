@@ -48,6 +48,12 @@ def collapsed_template(G: ObsGraph, sig: str, i: int, memo: dict) -> str:
         heads = [next((h for x in obs.children(c) if (h := G.row_header(sig, x))), None) for c in kids]
         if all(heads):
             ch = [c for _, c in sorted(zip(heads, ch))]
+    pairs = G.definition_pairs(sig, i) if n.role == "group" else []
+    if pairs:
+        # a definition list's fields are named by their labels and listed in label order,
+        # as a key-value table's rows are
+        order = sorted(range(len(pairs)), key=lambda k: node_text(obs.node(pairs[k][0])))
+        ch = [t for k in order for t in (ch[2 * k], ch[2 * k + 1])]
     if not parts and not ch and n.role in ("cell", "text", "group", "listitem", "heading"):
         parts = ["_"]  # an empty data cell is a slot without a value
     txt = " ".join(parts)

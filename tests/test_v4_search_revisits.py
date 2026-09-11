@@ -159,3 +159,18 @@ def test_a_rival_the_evidence_rejects_is_recorded_with_what_decided_it(monkeypat
     assert [(m["key_slot"], m["against"], m["decided_by"]) for m in rejected] == \
         [("r", "p", {"explained": 2}), (None, "p", {"explained": 7})]
     assert result.open_questions == []
+
+
+def test_an_inherited_key_yields_to_a_proposed_reading_on_an_evidence_tie(monkeypatch):
+    # V2 keyed family a by "p", which the ranking never proposed; "q" it did propose ties
+    # "p" on evidence.  The carried key has no standing of its own: "q" takes the family
+    # and the question stays open (dispatch's run page: its depot word against its name)
+    H = _H({"a[_]": "p", "b[_]": None})
+    scores = {("p", None): (10, 0), ("q", None): (10, 0), (None, None): (5, 0)}
+    _install(monkeypatch, {"a[_]": ["q", None], "b[_]": [None]}, scores)
+    result = v4_search.search(H, None, SimpleNamespace(steps=[]), refuted={})
+    assert result.hypotheses.units["a[_]"].key_slot == "q"
+    assert result.chosen["a[_]"].key_slot == "q"
+    move = next(m for m in result.moves if m.get("family") == "a[_]" and m["move"] == "identity")
+    assert move["decided_by"] == {"inherited": "p"}
+    assert [(q.left.key_slot, q.right.key_slot) for q in result.open_questions if q.template == "a[_]"] == [("q", "p")]

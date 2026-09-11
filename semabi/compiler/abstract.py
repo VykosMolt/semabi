@@ -100,6 +100,7 @@ class AbsObj:
     ordinal: int = 0
     node: int = -1  # root node index in the observation (for grounding)
     positional: bool = False  # named by its position among siblings, not by its key
+    carried: frozenset = frozenset()  # attributes the rendering's family of templates can show
 
     @property
     def id(self) -> tuple[int, str]:
@@ -595,12 +596,14 @@ def diff(a: AbstractState, b: AbstractState) -> Diff:
                 if getattr(b, "unknown_is_none", False) and (va is None or vb is None):
                     continue  # attribute not observed before/after (other view): discovery, not a change
                 attr_changes.append((k, s, va, vb))
+        unknown = getattr(b, "unknown_is_none", False)
         if oa.parent != m(ob.parent):
-            rel_changes.append((k, "parent", oa.parent, m(ob.parent)))
+            if not (unknown and (oa.parent is None or ob.parent is None)):
+                rel_changes.append((k, "parent", oa.parent, m(ob.parent)))
         for s in set(oa.refs) | set(ob.refs):
             if oa.refs.get(s) != m(ob.refs.get(s)):
-                if getattr(b, "unknown_is_none", False) and s not in oa.refs:
-                    continue  # reference never observed before: discovery
+                if unknown and (oa.refs.get(s) is None or ob.refs.get(s) is None):
+                    continue  # reference not observed before or after (other view): discovery, as for attributes
                 rel_changes.append((k, s, oa.refs.get(s), m(ob.refs.get(s))))
     view_changes = {k: (a.view.get(k), b.view.get(k)) for k in set(a.view) | set(b.view) if a.view.get(k) != b.view.get(k)}
     return Diff(added, removed, attr_changes, rel_changes, view_changes)

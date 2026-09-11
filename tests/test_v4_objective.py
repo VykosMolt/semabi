@@ -719,3 +719,20 @@ def test_widget_observation_evidence_does_not_override_churn():
     result = evaluate(A, log)
     assert result.verdicts == {0: "CHURN"}
     assert (result.churn, result.explained, result.spurious, result.delta_atoms) == (1, 0, 0, 0)
+
+
+def test_a_step_that_only_re_keys_an_object_is_churn_not_explanation():
+    # a card keyed by its amount: editing the amount renames the object, which the
+    # abstractor repairs into one object under a new key; the objective's doctrine says a
+    # re-keying is churn, and must not be credited as behaviour the reading explains
+    before = _widget_page([("7", ("North", "7")), ("11", ("River", "11"))], roles=("text", "textbox"))
+    after = _widget_page([("24", ("North", "24")), ("11", ("River", "11"))], roles=("text", "textbox"))
+    A = _widget_abstractor(_widget_hypotheses(before, after, keys={"group": "heading#0"}, persistent=()))
+    result = evaluate(A, _widget_log(before, after))
+    assert result.verdicts == {0: "CHURN"}
+    assert (result.explained, result.churn, result.delta_atoms) == (0, 1, 0)
+    # the same edit under the key that does not change is an attribute change, explained
+    A = _widget_abstractor(_widget_hypotheses(before, after, keys={"group": "text#0"}, persistent=()))
+    result = evaluate(A, _widget_log(before, after))
+    assert result.verdicts == {0: "EXPLAINED"}
+    assert (result.explained, result.churn, result.delta_atoms) == (1, 0, 1)

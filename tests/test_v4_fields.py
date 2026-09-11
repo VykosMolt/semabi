@@ -271,7 +271,8 @@ def test_a_comparison_is_in_the_language_only_where_a_rule_justified_that_pair()
     every = fields.pair_literals({"vessel": v, "berth": b}, wide)
     justified = fields.pair_literals({"vessel": v, "berth": b}, wide, pairs)
     assert ("attr_cmp_ge", "vessel", "length", "berth", "takes") in justified
-    assert len(justified) == 2 and len(every) == 8
+    # every: the four cross-object pairs and the two same-object ones, each both ways
+    assert len(justified) == 2 and len(every) == 12
     assert not any(l[2] == "age" or l[4] == "depth" for l in justified)
     # and the model carries them from the second pass on
     fit = SimpleNamespace(inducer=FakeInducer())

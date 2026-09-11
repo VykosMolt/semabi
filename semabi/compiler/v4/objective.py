@@ -131,8 +131,10 @@ def _represented_widget_spans(A: V2Abstractor, obs) -> dict[tuple, str]:
                     or name not in owner.slots or owner.slots[name][1] != ui.slots[sid]):
                 continue
             # Compare this exact data span, not the widget's whole value: a
-            # persistent numeric span in '4 red' cannot explain '4 blue'.
-            result[(*witness, sid, name)] = ui.slots[sid]
+            # persistent numeric span in '4 red' cannot explain '4 blue'.  The span is
+            # the entity's, not the template's: a page variant that gains or loses its
+            # status line renders the same owner and the same field.
+            result[(et_id, witness[1], witness[2], sid, name)] = ui.slots[sid]
     return result
 
 
@@ -360,6 +362,12 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                                 and name in getattr(A, "verified_domain_controls", set()))
 
             churned = phantom = False
+            # the abstractor's identity repair reports a destroyed-and-created pair as one
+            # object under a new key; a step that registers nothing else is the re-keying
+            # the churn term is for, not an explanation
+            rekeyings = sum(1 for c in delta.attr_changes if c[1] == KEY_CHANGE)
+            merely_rekeyed = bool(rekeyings) and rekeyings == len(delta.attr_changes) and not (
+                delta.added or delta.removed or delta.rel_changes)
             if changed_domain and (delta.added or delta.removed) and not domain_certified:
                 if not _same_view(log.obs(step.before), log.obs(step.after)):
                     # the page is showing something else now; objects that stopped being
@@ -370,7 +378,7 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
             if changed_domain and not phantom:
                 added = Counter(o.tid for o in delta.added)
                 removed = Counter(o.tid for o in delta.removed)
-                if set(added) & set(removed):
+                if set(added) & set(removed) or merely_rekeyed:
                     churned = True
                     out.churn += 1
                     out.churn_steps.append(step.step)
@@ -394,7 +402,7 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                 if changed_domain and inside and not churned and not phantom:
                     out.explained += 1
                     out.delta_atoms += (len(delta.added) + len(delta.removed)
-                                        + len(delta.attr_changes) + len(delta.rel_changes))
+                                        + len(delta.attr_changes) - rekeyings + len(delta.rel_changes))
                     verdict = "EXPLAINED"
                 elif changed_domain and inside:
                     verdict = "CHURN" if churned else "VISIBILITY"
@@ -402,8 +410,13 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                     out.spurious += 1
                     verdict = "SPURIOUS"
                 elif inside and not changed_domain:
-                    out.unexplained += 1
-                    verdict = "SILENT"
+                    if _same_view(log.obs(step.before), log.obs(step.after)):
+                        out.unexplained += 1
+                        verdict = "SILENT"
+                    else:
+                        # the page is showing something else now: units that came and went
+                        # with the view are the navigation, not a change nothing registered
+                        verdict = "NAVIGATION"
             elif changed_domain and phantom:
                 verdict = "VISIBILITY"
             out.verdicts[step.step] = verdict

@@ -100,7 +100,9 @@ def literals(role: str, obj, ordered: dict[int, dict[str, list[str]]]) -> set[tu
 
 def pair_literals(binding: dict, ordered: dict[int, dict[str, list[str]]],
                   pairs: frozenset | None = None) -> set[tuple]:
-    """The comparisons true between the ordered fields of any two bound objects.
+    """The comparisons true between the ordered fields of any two bound objects, or
+    between two ordered fields of one (a job's required span against the work span of the
+    station its page shows).
 
     ``pairs`` restricts them to the comparisons a fitted rule justified (`adopted_pairs`):
     a field is ordered only where a rule ordered it, and a comparison between two fields is
@@ -116,7 +118,7 @@ def pair_literals(binding: dict, ordered: dict[int, dict[str, list[str]]],
                 fields_.append((role, tid, slot, x))
     return {(CMP_GE if xp >= xq else CMP_LT, p, sp, q, sq)
             for p, tp, sp, xp in fields_ for q, tq, sq, xq in fields_
-            if p != q and (pairs is None or frozenset(((tp, sp), (tq, sq))) in pairs)}
+            if (p != q or sp != sq) and (pairs is None or frozenset(((tp, sp), (tq, sq))) in pairs)}
 
 
 def holds(literal: tuple, obj) -> bool | None:

@@ -435,6 +435,7 @@ class V2Abstractor(Abstractor):
             parent_idx = idx_of_root.get(ui.parent_root) if ui.parent_root is not None else None
             inst = Instance(ui.root, tid, parent_idx, {}, {}, "v2")
             inst.positional = bool(getattr(ui, "positional", False))
+            inst.carried = self._carried(et, ui.template)
             inst.slots["id"] = ("", key if key is not None else "")
             record_spec = self.record_by_anchor.get(et_id)
             attr_slots = et.attr_slots[ui.template]
@@ -595,6 +596,22 @@ class V2Abstractor(Abstractor):
         return out
 
     # ---------------------------------------------------------------- abstraction
+    def _carried(self, et, template: str) -> frozenset:
+        """The attributes an entity's rendering by this template, or by a variant of it,
+        can show: a value carried from another rendering (the run's weight on its card,
+        while its page is open) is neither confirmed nor contradicted here."""
+        cache = self.__dict__.setdefault("_carried_cache", {})
+        key = (et.tid, template)
+        if key not in cache:
+            here = self.H.units.get(template)
+            out = set()
+            for t in et.units:
+                other = self.H.units.get(t)
+                if t == template or (here is not None and other is not None and self.H._same_family(here, other)):
+                    out |= {self.attr_name(et, t, sid) for sid in et.attr_slots[t]}
+            cache[key] = frozenset(out)
+        return cache[key]
+
     def abstract(self, obs: Observation) -> AbstractState:
         po = self.parsed(obs)
         objs: dict[tuple[int, str], AbsObj] = {}
@@ -622,7 +639,8 @@ class V2Abstractor(Abstractor):
                     v = inst.slots[k][1]
                     refs[k] = (tgt, v) if v is not None else None
             o = AbsObj(inst.tid, key, attrs, None, refs, 0, inst.root,
-                       positional=bool(getattr(inst, "positional", False)))
+                       positional=bool(getattr(inst, "positional", False)),
+                       carried=getattr(inst, "carried", frozenset()))
             inst_obj[idx] = o
             if o.id in objs:
                 if not self.merge_mentions:
@@ -979,6 +997,7 @@ class V2Tracker(Tracker):
                 if shown is not None:
                     for k, v in list(c.attrs.items()):
                         if (isinstance(v, str) and o.attrs.get(k) is None
+                                and (not o.carried or k in o.carried)
                                 and not _is_rendered(v, shown)):
                             c.attrs[k] = None
                 c.refs.update(o.refs)

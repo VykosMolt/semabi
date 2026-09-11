@@ -118,6 +118,7 @@ class Hypotheses:
         self.key_overrides: dict[tuple[str, str, str], str] = {}  # (observation, template, rendered key) -> associated key
         self.persistent_widgets: set[tuple[str, str]] = set()  # (template, slot) widget values shown to survive reloads
         self._reload_persistent_widgets: set[tuple[str, str]] = set()  # automatic claims, revocable under the current key
+        self._mirror_persistent_widgets: set[tuple[str, str]] = set()  # claims from a persistent slot following the widget
         self.slot_attachments: dict[tuple[str, str], str] = {}  # (source template, slot) -> sibling mention template
         self.contextual_identity: set[str] = set()  # mention templates keyed by (enclosing key, own key)
         self.mention_type_assignments: dict[tuple[str, str, str], str] = {}
@@ -129,6 +130,8 @@ class Hypotheses:
         # (observation, DOM node) -> (target entity template, entity key, rendered
         # heading/region context).  Populated only by a verified local intervention.
         self.record_splits: list[dict] = []
+        self.step_sigs: list[str] = []
+        self.frames: set[str] = set()  # unit templates whose content belongs to their one nested mention
         self._split_done = False
         self._context_key_materialization_error: str | None = None
         self.frozen = False
@@ -207,7 +210,7 @@ class Hypotheses:
                     sid = base
                 if sid in owner.slots:
                     base = f"{rel}#{k}@{i - owner.root}"
-                    sid = base + ("~" if transient else "")
+                    sid = base + ("~" if transient else ("!" if prose else ""))
                     # Re-check after disambiguating repeated widget positions.  Previously
                     # only the first combobox in a unit could consume persistence evidence;
                     # later siblings silently regained the transient suffix.
@@ -216,14 +219,22 @@ class Hypotheses:
                 owner.slots[sid] = tok
                 owner.slot_nodes[sid] = i
         # a unit whose only persistent content is one nested mention (a cell holding a tape
-        # button and a colour select) is that mention's frame: its slots belong to the mention
+        # button and a colour select) is that mention's frame: its slots belong to the mention.
+        # So is a unit whose only words are the mention's -- a list item holding a job's
+        # button and its measurement: the number no more names the item than a select does
         for ui in list(insts):
             own_persistent = [k for k in ui.slots if not k.endswith("~")]
-            if own_persistent or len(ui.nested) != 1:
+            unit = self.units.get(ui.template)
+            if unit is not None and unit.key_slot and own_persistent:
+                continue  # a unit a number identifies (blend's tickets) is not a frame
+            if any(not ui.slots[k][:1].isdigit() for k in own_persistent) or len(ui.nested) != 1:
                 continue
             child = by_root.get(ui.nested[0])
             if child is None or not ui.slots:
                 continue
+            if own_persistent and obs.node(child.root).role not in WIDGET:
+                continue  # a number's frame is a mention (a button naming the thing), not any nested unit
+            self.frames.add(ui.template)
             for k, v in ui.slots.items():
                 nk = f"^{k}"
                 if nk.endswith("~") and (child.template, nk[:-1]) in self.persistent_widgets:
@@ -330,6 +341,9 @@ class Hypotheses:
         n = obs.node(i)
         if n.role == "row":
             return any(self.G.row_header(sig, c) for c in obs.children(i))
+        if n.role == "group":
+            return (bool(self.G.definition_pairs(sig, i)) or self.G.is_definition_label(sig, i)
+                    or self.G.definition_label(sig, i) is not None)
         if n.role not in ("table", "rowgroup"):
             return False
         rows = [x for x in obs.subtree(i) if obs.node(x).role == "row"]
@@ -342,9 +356,10 @@ class Hypotheses:
         x = i
         while x != root and x >= 0:
             n = obs.node(x)
-            header = self.G.cell_header(sig, x) if sig is not None and n.role == "cell" else None
+            header = self.G.cell_header(sig, x) if sig is not None and n.role in ("cell", "group") else None
             # a cell under a declared column header is that column wherever it stands, so
-            # the slot is named by the header (`cell@Reason#0`) rather than by its offset
+            # the slot is named by the header (`cell@Reason#0`) rather than by its offset;
+            # a definition-list value is named by its label the same way
             parts.append(f"{n.role}@{header}" if header else n.role)
             x = n.parent
         return "/".join(reversed(parts)) or obs.node(i).role
@@ -364,7 +379,7 @@ class Hypotheses:
         for _ in range(rounds):
             self._fit_once()
             self._drop_transient()
-            keyed = {t for t, u in self.units.items() if u.key_slot}
+            keyed = self.unit_templates()
             if self.allowed == keyed:
                 break
             self.allowed = keyed
@@ -375,6 +390,12 @@ class Hypotheses:
         self._apply_key_associations()
         self._build_entity_types()
         self.frozen = True
+
+    def unit_templates(self) -> set[str]:
+        """The templates that are units: those with identity, and the frames whose content
+        belongs to the one mention they hold (a frame has no key and makes no object, but
+        dissolving it would hand its content to the enclosing unit instead)."""
+        return {t for t, u in self.units.items() if u.key_slot} | self.frames
 
     def _apply_key_associations(self) -> None:
         for u in self.units.values():
@@ -605,6 +626,7 @@ class Hypotheses:
             self._choose_key(uh, pool)
         self._family_keys()
         self._promote_persistent_widgets()
+        self._mirror_widgets()
 
     def _slot_stats(self, uh: UnitHyp) -> None:
         uh.slots = {}
@@ -728,6 +750,95 @@ class Hypotheses:
                             ui.slot_nodes[new] = ui.slot_nodes.pop(sid)
                     u.evidence.append(f"widget slot {sid} survives reloads ({kept}): attribute")
             self._slot_stats(u)
+
+    def _mirror_widgets(self) -> None:
+        """A widget whose value a persistent slot of a corresponding unit follows -- the
+        run's weight typed on its page, then shown on its card -- is that value's editor:
+        domain state shown in a widget, established without a reload.  Correspondence is
+        the one entity types are built on: the widget's unit keyed by the other unit's
+        key values, or naming them in one of its persistent slots."""
+        if not self.step_sigs:
+            return
+        families: dict[str, list[UnitHyp]] = {}
+        for f in self._families():
+            for u in f:
+                families[u.template] = f
+        keyed = [u for u in self.units.values() if u.key_slot]
+        for u in keyed:
+            for sid in [x for x in u.slots if x.endswith("~")]:
+                fam = [w for w in families.get(u.template, [u]) if sid in w.slots]
+                if any((w.template, sid[:-1]) in self.persistent_widgets for w in fam):
+                    continue
+                witness = self._mirror_witness(fam, sid, keyed)
+                if witness is None:
+                    continue
+                new = sid[:-1]
+                for w in fam:
+                    self.persistent_widgets.add((w.template, new))
+                    self._mirror_persistent_widgets.add((w.template, new))
+                    for ui in w.instances:
+                        if sid in ui.slots:
+                            ui.slots[new] = ui.slots.pop(sid)
+                            ui.slot_nodes[new] = ui.slot_nodes.pop(sid)
+                    w.evidence.append(f"widget slot {sid} mirrors {witness}: attribute")
+                    self._slot_stats(w)
+
+    def _mirror_witness(self, fam: list[UnitHyp], sid: str, keyed: list[UnitHyp]) -> str | None:
+        """The persistent slot of another unit that follows this widget over the history:
+        equal whenever the two are next observed for the same thing, never unequal, and at
+        least once equal to a value the widget had changed to."""
+        order: dict[str, int] = {}
+        for i, sig in enumerate(self.step_sigs):
+            order.setdefault(sig, i)
+        links = {x for w in fam for x in w.slots if not x.endswith("~") and not x.endswith("!") and "|" not in x}
+        best = None
+        for v in keyed:
+            if v in fam or not v.key_slot:
+                continue
+            vkeys = v.primary_key_values()
+            for link in links:
+                vals = {ui.slots[link] for w in fam for ui in w.instances if link in ui.slots}
+                if len(vals & vkeys) < 2:
+                    continue
+                widget = [(order[ui.sig], 0, ui.slots[link], "W", ui.slots[sid]) for w in fam for ui in w.instances
+                          if ui.sig in order and link in ui.slots and sid in ui.slots]
+                for s in v.slots:
+                    if s == v.key_slot or s.endswith("~") or s.endswith("!") or "|" in s:
+                        continue
+                    events = widget + [(order[vi.sig], 1, vi.slots[v.key_slot], "S", vi.slots[s]) for vi in v.instances
+                                       if vi.sig in order and s in vi.slots and v.key_slot in vi.slots]
+                    counts = self._mirror_counts(events)
+                    if counts[1] == 0 and counts[2] >= 1 and counts[0] >= 2 and (best is None or counts > best[0]):
+                        best = (counts, f"{s} of {v.template[:30]} (agreements {counts[0]}, propagated {counts[2]})")
+        return best[1] if best else None
+
+    @staticmethod
+    def _mirror_counts(events: list[tuple]) -> tuple[int, int, int]:
+        by_key: dict[str, list[tuple]] = defaultdict(list)
+        for e in events:
+            by_key[e[2]].append(e)
+        agreements = contradictions = propagated = 0
+        for es in by_key.values():
+            latest_w = prev_s = last = None
+            for _t, _o, _k, kind, value in sorted(es):
+                if kind == "W":
+                    if last == "S" and prev_s is not None:
+                        if value == prev_s:
+                            agreements += 1
+                        else:
+                            contradictions += 1
+                    latest_w = value
+                elif last == "W" and latest_w is not None:
+                    if value == latest_w:
+                        agreements += 1
+                        if prev_s is not None and prev_s != value:
+                            propagated += 1
+                    else:
+                        contradictions += 1
+                if kind == "S":
+                    prev_s = value
+                last = kind
+        return (agreements, contradictions, propagated)
 
     def _reload_widget_evidence(self, u: UnitHyp, sid: str, raw: dict) -> dict[str, int]:
         """Compare raw values under the current own key, never position-suffixed keys."""
@@ -860,10 +971,24 @@ class Hypotheses:
 
     def _revoke_unsupported_widgets(self) -> bool:
         owned = self._reload_persistent_widgets & self.persistent_widgets
-        if not owned:
+        mirrored = self._mirror_persistent_widgets & self.persistent_widgets
+        if not owned and not mirrored:
             return False
         raw = self._raw_unit_instances()
         rejected = []
+        if mirrored:
+            families: dict[str, list[UnitHyp]] = {}
+            for f in self._families():
+                for u in f:
+                    families[u.template] = f
+            keyed = [u for u in self.units.values() if u.key_slot]
+            for template, sid in sorted(mirrored):
+                u = self.units.get(template)
+                fam = [w for w in families.get(template, [u] if u else []) if sid in w.slots]
+                if u is None or not u.key_slot or self._mirror_witness(fam, sid, keyed) is None:
+                    if u is not None:
+                        u.evidence.append(f"widget persistence revoked: slot {sid} under key {u.key_slot}: no slot follows it")
+                    rejected.append((template, sid))
         for template, sid in sorted(owned):
             u = self.units.get(template)
             if u is None:
@@ -882,6 +1007,7 @@ class Hypotheses:
         for template, sid in rejected:
             self.persistent_widgets.discard((template, sid))
             self._reload_persistent_widgets.discard((template, sid))
+            self._mirror_persistent_widgets.discard((template, sid))
             u = self.units.get(template)
             if u is None:
                 continue
@@ -1031,6 +1157,10 @@ class Hypotheses:
                         if source == t:
                             self.persistent_widgets.add((nt, sid))
                             self._reload_persistent_widgets.add((nt, sid))
+                    for source, sid in self._mirror_persistent_widgets & self.persistent_widgets:
+                        if source == t:
+                            self.persistent_widgets.add((nt, sid))
+                            self._mirror_persistent_widgets.add((nt, sid))
                     for (source, key), canonical in list(self.alias_map.items()):
                         if source == t:
                             self.alias_map.setdefault((nt, key), canonical)
@@ -1333,6 +1463,8 @@ class Hypotheses:
         return False
 
     def _same_family(self, a: UnitHyp, b: UnitHyp) -> bool:
+        if a.template in b.template or b.template in a.template:
+            return False  # a part and its container are not variants of one thing
         pa = set(a.template.replace("(", ",").replace(")", ",").split(",")) - {""}
         pb = set(b.template.replace("(", ",").replace(")", ",").split(",")) - {""}
         ov = len(pa & pb) / min(len(pa), len(pb))

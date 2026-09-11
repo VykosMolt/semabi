@@ -1801,6 +1801,101 @@ no W3 native change has been adopted.
 P15's real conditional-base experiment, automatic link/union revision and
 whole-rival acquisition remain open questions.
 
+## Part XXIII -- the fresh interfaces, read layer by layer (2026-09-11)
+
+Parts XX to XXII left every target on the three generated interfaces unestablished after
+four repairs at the runtime, the chronology, the bounded search and the widget scoring,
+and named the remaining cause a representation or binding limitation without locating
+it.  This part locates it, on the disclosed dispatch history, by fitting the learner and
+reading its identity search's own moves; each cause below was verified on that history
+before its repair was written, each repair is general and carries a test, and the
+retained corpora are judged on the battery after it.  All three fixtures are development
+evidence now; nothing here is a transfer claim.
+
+**Where dispatch's reading went wrong.**  The never-opened card was a label template: the
+three cards stand under a plain `group`, and only the roles the accessibility tree
+declares (table, list, tree, ...) were collections, so a card's words were judged at their
+position over time and a card no click ever changed never varied.  A container whose
+structured children all share one shape is now a listing (a grid of cards), and its
+members are judged as a table's rows are.  The card family was then keyed by its
+packed-weight number: the objective credited a pure re-keying -- the card read as
+destroyed at 7 and created at 24 after a typed weight, which `diff` repairs into one
+`__key__` change -- as behaviour the reading explained, against its own doctrine that a
+re-keying is churn; it is churn now, and the key atom counts for nothing.  A silent step
+across a view change (opening a card, choosing a carrier, going back) charged a keyed
+listing an unexplained change; it is navigation now.  A reference or container going from
+unobserved to a value under the belief tracker counted as a relation change; it is a
+discovery now, as an attribute first observed already was.  The live region -- the outcome
+line itself -- counted as unit content when the unit was the whole page; it is the
+emission channel, not unit text.  Definition lists reach the snapshot as runs of leaf
+groups, and each became a unit keyed by whichever label word was a data token elsewhere
+(`Seal`, `Payload`); read by their structure -- leaves in pairs, every label constant
+wherever its position was seen, some value varying -- they are fields of the enclosing
+unit named by their labels, as a key-value table's rows are.  A colon-closed label phrase
+(`Payload limit: 8 kg`) counted as three constant words and so as prose; it names the
+value that follows.  A second prose text of a card had lost its prose marker on a
+slot-name collision, which is how the board card's weight had been an attribute by
+accident while the van card's payload was not.
+
+**What the search could not reach.**  A part the search left without a key stayed a unit
+and dropped its content to the view, so the carrier section's fields never reached the
+run's page even when the section was unkeyed; the search now re-parses when its keyed
+set changes, as V2's fixpoint always did, and so does the final compilation.  The page's
+four template variants (with or without its status line, with or without a carrier) were
+four search families, and identity evidence gathered per variant; variants differing by
+optional parts are one family now, as `_family_keys` already read them, with a guard
+that a part and its container are never variants.  A carried belief was vacated whenever
+the entity was rendered by a template that did not show it, so the run's weight was
+forgotten while its page was open and its change on the next board was a discovery; a
+value is now carried through a rendering by another family of templates, and vacated only
+by a variant of the rendering's own.  With those in place the run's page keyed by its
+name tied its depot word exactly; V2's key was carried as INHERITED, and on an evidence
+tie a reading the structure proposed now replaces a carried one, the question kept.
+
+**The weight.**  It lives only in a numeric input on the page, and the page is never
+reloaded, so reload persistence never speaks.  The card's weight text follows the widget:
+equal whenever the two are next observed for the same run, never unequal, and once equal
+to a value the widget was changed to.  That is the same evidence a reload gives, read from
+the interface's own rendering, and a widget with such a witness is promoted like a
+reload-persistent one, tracked separately, revalidated under the current keys, and copied
+on a context split.  W2's represented widget spans are keyed by the entity rather than
+the template, so a page variant that gains its status line is the same owner and field.
+On workshop the job's measurement sits beside its button in a list item the number would
+otherwise key; the frame rule -- a unit whose only content is one nested mention belongs
+to it -- extends to a unit whose only *words* are the mention's, guarded so that a unit a
+number identifies (blend's tickets) is not a frame and the mention is a widget-role node,
+and frames stay units through the fixpoint.  Finally a comparison may hold between two
+ordered fields of one object, under the same pair discipline.
+
+**What the learner now states.**  On dispatch's initial history the objective reads
+errors 0, explained 10 (five typed weights, four carrier selections, the board after
+Back), unexplained 0; the run page is keyed by its name, with its weight, its carrier's
+payload limit, its seal load and rating as attributes and references to its card and its
+van; every held-out click has a named owner.  Every dispatch target stays unestablished,
+for a reason the fixture's author declared: both operands only ever rise on that history
+(weights 7, 10, 17, 24 and 11, 15, 23; carriers chosen at 8, 14, 23), the acquisition arms
+typed only alphabetic tokens, and under Part XVIII's clock discipline a monotone history
+does not adopt an order -- the "select, then ready; type, then unavailable" rival is real
+there.  The fall has to be acquired, which the text-token policy cannot do on a numeric
+input.  On workshop, where the script typed 21, 29 and 9 and chose stations at 10, 18, 27
+and 10, `Start job` learns `required span(owner) < work span(owner) -> Job accepted`
+with `Job cannot start` as the default, both fields ordered and the pair adopted; on the
+held-out evaluation the version space forces five of the six ordinary targets right, none
+wrong, and leaves the equality case among several (the history had no equality, the rule
+is strict); the decision list has that case wrong.  Under Part XX's frozen learner all
+eight were unestablished.  The binding control still reports the owner unavailable: it
+wants the job's exact visible name, and the page's key is an open tie between its name
+and the category the registry's expand buttons are keyed by.  Reservoir binds no owner
+yet and was not opened further.
+
+**Retention.**  Pre-registered before the battery: every metamorphic invariant zero; no
+new forced-wrong verdict on any retained ledger, a wrong being a finding against the
+change that caused it; readings may move where a belief is now carried, a navigation no
+longer charged, a part dissolved, a variant family merged, a labelled text made a field, a
+widget mirrored or an inherited key replaced, each traced; the harbour joins of Parts XVII
+and XVIII learned with the same fields and no wrong holdout verdict.  The battery's
+verdict is recorded in the campaign notes and below when it completes.
+
 ## What stands, and what is open
 
 The following conclusions concern the earlier retained Harbour, Blend and Vet

@@ -25,6 +25,7 @@ from semabi.compiler.abstract import diff
 from semabi.compiler.observation import Node, Observation
 from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses, UnitHyp, UnitInstance
+from semabi.compiler.v2.units import find_unit_types
 from semabi.compiler.v4.abstractor import V4Abstractor
 
 
@@ -695,3 +696,60 @@ def test_missing_reload_or_widget_node_cannot_support_a_finalized_claim(missing_
     assert all("combobox#0" not in ui.slots for ui in unit.instances)
     if missing_evidence != "reload_pair":
         assert any("kept=3" in e and "mismatched=1" in e for e in unit.evidence)
+
+
+def board(*cards) -> Observation:
+    """A grid of cards under a plain group: a listing the accessibility tree does not declare."""
+    rows = [("group", "", -1), ("heading", "Dispatch board", 0), ("group", "", 0)]
+    for name, depot, kg in cards:
+        c = len(rows)
+        rows += [("group", "", 2), ("heading", f"{name} run", c),
+                 ("text", f"Destination: {depot} depot", c),
+                 ("text", f"Packed weight: {kg} kg", c), ("button", f"Open {name} run", c)]
+    return build(*rows)
+
+
+CARDS = [("Cedar", "North", 7), ("Rowan", "River", 11), ("Alder", "Hill", 20)]
+
+
+def test_cards_under_a_plain_group_are_members_of_one_listing():
+    G = ObsGraph()
+    pages = [board(*CARDS), board(("Cedar", "North", 10), *CARDS[1:])]
+    for page in pages:
+        G.add(page.structural_signature(), page)
+    page = pages[0]
+    sig = page.structural_signature()
+    for name, depot, _kg in CARDS:      # no card's name ever varies at its position over time
+        assert G.data_tokens(sig, _node(page, "heading", f"{name} run")) == [name]
+        assert G.data_tokens(sig, _node(page, "text", f"Destination: {depot} depot")) == [depot]
+    assert G.labels(sig, _node(page, "heading", "Alder run")) == {"run"}
+    assert G.labels(sig, _node(page, "text", "Packed weight: 20 kg")) == {"Packed", "weight", ":", "kg"}
+
+
+def test_one_card_is_a_subtree_not_a_listing():
+    G = ObsGraph()
+    pages = [board(CARDS[0]), board(("Cedar", "North", 10))]
+    for page in pages:
+        G.add(page.structural_signature(), page)
+    page = pages[0]
+    sig = page.structural_signature()
+    assert G.data_tokens(sig, _node(page, "heading", "Cedar run")) == []
+    assert G.data_tokens(sig, _node(page, "text", "Packed weight: 7 kg")) == ["7"]
+
+
+def test_a_colon_labelled_value_is_a_field_of_its_card_not_a_sentence_about_it():
+    # `Packed weight: 7 kg` names a value; it is not narration.  The second such text of a
+    # card used to lose its prose marker on a slot-name collision and so become an attribute
+    # by accident, while a card with one such text kept none.
+    G = ObsGraph()
+    pages = [board(*CARDS), board(("Cedar", "North", 10), *CARDS[1:])]
+    for page in pages:
+        G.add(page.structural_signature(), page)
+    page = pages[0]
+    sig = page.structural_signature()
+    assert not G.is_prose(sig, _node(page, "text", "Packed weight: 7 kg"))
+    assert not G.is_prose(sig, _node(page, "text", "Destination: North depot"))
+    H = Hypotheses(G)
+    H.unit_types = find_unit_types(G)
+    card = next(u for u in H.parse_units(sig) if u.root == 3)
+    assert card.slots == {"heading#0": "Cedar", "text#0": "North", "text#0@3": "7"}

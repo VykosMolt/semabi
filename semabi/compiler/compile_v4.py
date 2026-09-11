@@ -166,6 +166,7 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
             if key_slot and "|" in key_slot:
                 v4_search._materialise(unit, key_slot)
 
+    v4_search._reparse(H)
     H._build_entity_types()
     # An entity is the set of its mentions.  Off, a second mention of an object on a page
     # is dropped and the first -- in DOM order -- speaks for it; under a reading in which

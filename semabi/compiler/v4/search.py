@@ -14,6 +14,7 @@ question for `semabi.compiler.v4.probe` to put to the application.
 from __future__ import annotations
 
 import copy
+from collections import Counter, defaultdict
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -232,6 +233,43 @@ def _decided_by(before, after) -> dict[str, int]:
     return out
 
 
+def _refuted_in(refuted: dict[str, set[str | None]], units: list) -> set[str | None]:
+    """Refutations recorded against any of a family's erased-token names."""
+    out: set[str | None] = set()
+    for name in {family_key(u.template) for u in units}:
+        out |= refuted.get(name, set())
+    return out
+
+
+def _group_families(H: Hypotheses) -> dict[str, list]:
+    """Units by family: the structure with every rendered token erased, and then the
+    variants that differ only by optional parts (a page with or without its feedback line,
+    a card with or without an occupant) as one family, as V2's `_family_keys` reads them.
+    Split by an optional node, a detail page held identity only on the variants that
+    happened to show a status line."""
+    by_key: dict[str, list] = {}
+    for template, unit in sorted(H.units.items()):
+        by_key.setdefault(family_key(template), []).append(unit)
+    names = sorted(by_key)
+    parent = {name: name for name in names}
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    same = getattr(H, "_same_family", None)
+    for i, a in enumerate(names):
+        for b in names[i + 1:]:
+            if same is not None and find(a) != find(b) and all(same(ua, ub) for ua in by_key[a] for ub in by_key[b]):
+                parent[find(b)] = find(a)
+    grouped: dict[str, list] = {}
+    for name in names:
+        grouped.setdefault(find(name), []).extend(by_key[name])
+    return grouped
+
+
 def _cross_family_unions(H: Hypotheses, grouped: dict[str, list]) -> list[tuple[str, str]]:
     """Family pairs the built hypotheses read as one entity type."""
     tid_of = getattr(H, "tid_of_template", None) or {}
@@ -253,7 +291,27 @@ def _template_pairs(grouped: dict[str, list], fa: str, fb: str) -> set[frozenset
     return {frozenset((ua.template, ub.template)) for ua in grouped[fa] for ub in grouped[fb]}
 
 
+def _reparse(Hx: Hypotheses) -> None:
+    """A recurring template is a unit only if it has identity: the content of a part the
+    search left without a key flows to the enclosing unit, as under the V2 fixpoint."""
+    keyed = Hx.unit_templates()
+    if Hx.allowed == keyed:
+        return
+    Hx.allowed = keyed
+    Hx._page_instances = {}
+    grouped: dict[str, list] = defaultdict(list)
+    for sig in Hx.G.obs:
+        for ui in Hx.parse_units(sig):
+            grouped[ui.template].append(ui)
+    for t, u in Hx.units.items():
+        u.instances = grouped.get(t, [])
+        if u.instances:
+            u.max_per_obs = max(Counter(ui.sig for ui in u.instances).values())
+            Hx._slot_stats(u)
+
+
 def _build(Hx: Hypotheses, G: ObsGraph, log: EvidenceLog) -> V4Abstractor:
+    _reparse(Hx)
     Hx._build_entity_types()
     A = V4Abstractor(Hx.G, Hx)
     A.fit_view_controls(log)
@@ -280,9 +338,7 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
     result = SearchResult()
     result.stale_refutations = stale
 
-    grouped: dict[str, list] = {}
-    for template, unit in sorted(H.units.items()):
-        grouped.setdefault(family_key(template), []).append(unit)
+    grouped = _group_families(H)
     result.families = {name: [u.template for u in units] for name, units in grouped.items()}
     family_reading: dict[str, list[Reading]] = {}
     for name, units in grouped.items():
@@ -290,8 +346,8 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
         # text; a compound unit may not use its narration as its name
         leaf_family = bool(H.promoted) and all(u.template in H.promoted for u in units)
         candidates = family_readings(units, reload_pairs, view_of, allow_prose=leaf_family,
-                                     spoken=spoken, shared=other_key_values(H, name))
-        gone = refuted.get(name, set())
+                                     spoken=spoken, shared=other_key_values(H, {u.template for u in units}))
+        gone = _refuted_in(refuted, units)
         if gone:
             kept = [r for r in candidates if r.key_slot not in gone]
             for reading in candidates:
@@ -349,7 +405,7 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
             # evidence, and the alternatives are judged against it as they always were.
             v2_key = H.units[grouped[name][0].template].key_slot
             inherited = next((r for r in family_reading[name] if r.key_slot == v2_key), None)
-            if inherited is None and v2_key in refuted.get(name, set()):
+            if inherited is None and v2_key in _refuted_in(refuted, grouped[name]):
                 # V2's key was refuted by an executed experiment: it is not inherited, and
                 # the hypotheses are moved off it to the best surviving reading (a refuted
                 # key must not reach a frozen manifest by this door either)
@@ -423,6 +479,23 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                                          "status": reading.status, "decided_by": {"unearned": here.key_slot},
                                          "score": trial_score.to_json()})
                     log_fn(f"v4 {name}: key {here.key_slot!r} -> None, unearned on an exact tie")
+                    equal.append((here, score))
+                    base, score, here = candidate, trial_score, reading
+                    for unit in grouped[name]:
+                        result.chosen[unit.template] = reading
+                    moved = True
+                elif (here.status == "INHERITED" and reading.status != "INHERITED"
+                      and _evidence_tie(trial_score, score) and not score.better_than(trial_score)):
+                    # V2's key was carried, not proposed: on an evidence tie a reading the
+                    # structure did propose replaces it (dispatch's run page keyed by its
+                    # depot word, where its name is what its cards are keyed by), and the
+                    # question is kept
+                    result.moves.append({"move": "identity", "round": round_no, "family": name,
+                                         "templates": len(grouped[name]),
+                                         "key_slot": reading.key_slot, "status": reading.status,
+                                         "decided_by": {"inherited": here.key_slot},
+                                         "score": trial_score.to_json()})
+                    log_fn(f"v4 {name}: key {here.key_slot!r} -> {reading.key_slot!r}, inherited on an exact tie")
                     equal.append((here, score))
                     base, score, here = candidate, trial_score, reading
                     for unit in grouped[name]:

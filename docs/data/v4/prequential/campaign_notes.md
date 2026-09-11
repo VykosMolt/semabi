@@ -2745,323 +2745,199 @@ conjunction with the outcome "already booked" -- P40's replay at such a state wi
 substitute who is booked elsewhere, which 519 was, and which left "booked" admissible
 there through yet another conjunction.  Recorded.
 
-## Battery #9 closeout (2026-09-07)
+09:10 battery #9 open_world 07:30 -> 09:10 rc=0: all sixteen invariants zero -- as
+pre-registered.  identity running.
 
-The continuation in `/home/moloch/semabi-scratch/preq/NOTES.md` outlived the last
-commit.  It records open_world complete at 09:10 with all sixteen invariants zero,
-and identity complete at 09:18 with every admissible, inadequacy and claim-substance
-count unchanged.  The two differing leaves it recorded were equivalent spellings of
-one blend vouch (`Gallons left < 3` versus `< 4`, covering the same six occasions),
-not changed verdicts.  It ends at 10:32 with the outcome stage complete and
-"judged below", with no judgement following.
+09:18 battery #9 identity stage 09:10 -> 09:18 rc=0: judged below.
 
-The detached battery finished admissible at 10:41:05.  All five stages report rc=0;
-the completion log is now retained as `battery_run9.log`.  The unfinished review is
-closed against the actual outputs, not the completion marker alone:
+09:18 battery #9 identity stage judged: every admissible / inadequacy / claim-substance
+count identical to 4fe56e1's; the only two differing leaves are the spelling of one
+blend forced-wrong vouch's condition -- Gallons left(owner) < 3 in one file, < 4 in the
+other, the same six occasions either way: two adjacent thresholds with the same cover,
+and the generalisation's drop order picks one or the other as the bit order shifts.
+Not a verdict.  outcome stage running.
 
-* Outcome emitted all 20 expected JSON reports, with modification times inside its
-  stage interval (09:18:17--10:32:22).
-* Admissible emitted all 8 expected JSON reports, with modification times inside its
-  stage interval (10:32:22--10:41:05).
-* All 28 parse and their complete JSON equals both `b95dccb` (battery #8's retained
-  state) and `4fe56e1` (the clock change).  No final-stage verdict or payload changed.
-* All sixteen metamorphic reports have zero differences, including durable-ledger
-  differences where reported and the column-refit family comparison.  This is
-  agreement over each instrument's reported exposure, not a new coverage claim.
-* The current checkout passes the focused closeout checks:
-  `.venv/bin/python -m pytest -q tests/test_v4_fields.py tests/test_v4_retained_frontier.py`
-  -- 18 passed in 5.67s.  The last full-suite result remains 566 passed, 3 skipped,
-  1 xfailed at 05:22 on `5c6d02b` with battery #8's state; it predates the clock
-  change, whose original focused run reported 40 passed.  No full suite was rerun.
+10:32 battery #9 outcome stage 09:18 -> 10:32 rc=0: judged below.
 
-`battery_run9_outcome.txt` and `battery_run9_admissible.txt` retain the write
-confirmations.  `battery_run9_review.json` records every output's hash and baseline
-comparison, the invariant hashes and the closeout test result.  This is an audit of
-existing development results, not a new execution attestation or evidence of
-prospective collection chronology.  The harbour prequential log that finished at
-09:10 is retained too; its JSON already matched the committed result.
+# 2026-09-11 -- resumed after the user's 09-07..09-10 work (49 commits, 0add9d9..d0b1574)
 
-The campaign ends with P41's correction: the remaining rivals are pure conjunctions
-the evidence does not contradict, not an ordering ambiguity that LIST removes.
-P40b narrowed one pilot-holdout state without widening any, but it used that
-holdout's states and seeds to design its acquisitions; the result addresses
-identifiability on this development corpus, not fresh transfer generalization.
-Further acquisition must contradict the rival's whole shared conjunction while
-preserving the relevant context; the existing instruments and skipped replay
-targets are retained, and no next experiment is claimed to have run.
+Reviewed: battery #9 closed for me (Part XIX); the fresh-interface campaign (Parts XX-XXII:
+T1 dispatch/workshop, R1 reservoir, J1 bridge) is negative everywhere -- every target
+unestablished, no owners/roles/fields/comparisons -- and the repairs made (G1 graph ownership,
+G2 chronology, B1 bounded search, W1-W3 widgets) established none; the product line
+(runtime.py + service) is a separate learner, closed with a stop on 09-10.  Assumption: "the
+work" is the research line.  All three fixtures are disclosed development evidence now.
 
-## P42 / T1: frozen fresh-interface first pass preserved (2026-09-07)
+## P42 pre-diagnosis: where dispatch's reading goes wrong (fit of the disclosed initial history)
+Fitted the current learner (d0b1574) on first_pass/dispatch/initial_v2 (32 steps, 27 obs).
+Reading: T0 = board card keyed by the packed-weight NUMBER (text#0@3), only 2 of 3 cards
+are instances; T3 = the detail page (4 template variants, heading key earned on 2); T1 =
+the seal-review dl keyed by the label word 'Seal'; T2 = the carrier dl keyed by 'Payload';
+the textbox is transient (view); 'Check dispatch' has a singleton role on T3 and no rule.
+Causes seen so far, upstream first:
+ (a) the third card's heading/depot/button words are labels: template
+     group[](heading[Alder run],text[Destination Hill depot],...) -- Alder was never opened
+     so its words never vary at their position; the per-collection label/value judgement
+     did not apply to sibling groups under a plain group (cards), only to rows/lists?  (to verify)
+ (b) the search re-keys the card family from heading#0 to the number on `explained` (+2);
+ (c) with the cards numeric, the page's heading#0 is `unearned` on the variants without a
+     status line (never-two-at-once family keyed only by correspondence -- and the
+     correspondence is gone);
+ (d) definition lists render as group[label], group[value] pairs; `_property_list` knows
+     only rows/tables with row headers, so each dl is a unit keyed by a label word;
+ (e) the weight on the detail page lives only in the textbox (transient); no reload of the
+     page, so no promotion.  Candidate general evidence: the typed value reappears in the
+     same entity's persistent slot (the card's 'Packed weight') on the next board -- a
+     widget that mirrors a persistent slot of its entity.
+Plan: fix (a) first, refit, then (d), refit, then judge (b)/(c), then (e); invariance on the
+retained corpora after each; pre-register each before measuring dispatch/workshop/reservoir.
 
-The new campaign begins from the exact reviewed `9bc371c`. Baseline validation and
-five dedicated fits are retained at `../transport/baseline/`: 564 full-run passes
-plus three socket-permission-control passes, 3 skipped/1 xfailed of 571; pilot and
-extended separating exactly reproduce P38 and residual failures remain. No learner
-or expectations changed. Baseline checkpoint: `0283151`.
+## P42 findings so far (19:50) -- each verified on the dispatch initial history
+(a) VERIFIED: COLLECTIONS (table/list/...) were the only collections; a grid of cards under a
+    plain group was judged per position over time, so the never-opened card was a label
+    template.  Repair in graph.py: a container whose structured children all share one shape
+    is a listing (`_listing`, `listings[sig]`); tests in test_v2_collection_variation.py.
+    After it: 3 cards, heading values 3.
+(b) VERIFIED: the card family was keyed by the weight NUMBER because the objective credited
+    a pure re-keying (7 -> 24 after typing, repaired by `diff` into one `__key__` attr change)
+    as EXPLAINED (+1 at step 17) -- against its own doctrine ("not merely a re-keying"; churn).
+    Repair in objective.evaluate: a step whose only registered change is key changes is churn
+    and key changes never count as atoms; test in test_v4_objective.py.  After it: the number
+    key loses (churn 1); heading#0 ties None on behaviour and loses on complexity (30 vs 24)
+    -- the cards are behaviourally idle because the weight edit is invisible (see e/f).
+(c) VERIFIED: the page's no-status variant is unkeyed because None explains one step more
+    (step 21 Check dispatch: a containment/reference slot that was None becomes a value when
+    the page becomes an object -> counted as a rel change).  Candidate repair (g): a
+    reference slot that was None before is a discovery, as attrs already are (abstract.diff).
+(d) TO DO: definition lists (dt/dd rendered as leaf `group` pairs) as property lists named
+    by their labels (graph.definition_label + hypotheses._property_list + _relpath).
+(e) TO DO: the weight textbox as the run's attribute: a widget mirrors a persistent slot of
+    its own entity (the card's 'Packed weight' text follows the typed value).
+(f) NOTED: the tracker vacates a carried attribute when the entity is rendered by a template
+    that does not show it; the weight is therefore None on the page and its change on the
+    next board is a discovery.  Not touched yet.
+Battery pre-registration for (a)+(b): the retained corpora have no undeclared listings of
+same-shaped structured siblings (to check by counting `listings` on their observations) and
+no accepted move decided by a pure re-keying (to check from the identity search logs).
 
-T1 preregistration is `../transport/protocol_v2.md`, with implementation freeze
-374038ab8a2e3ce5046cba31bbd17e95c7c8458e0c8cb380c703e29cd1155a30 and final
-initial-evidence/candidate freeze `54e8d96c27a9d8e4b8b46b04db0eb3a9697cb3d5177d79dfe82260073adf7b23`.
-V1's empty unobserved reset sentinel failed real preparation; its traces and
-source remain at `795d073` before any acquisition/evaluation. V2 adds a genuine
-charged reload and explicit learner-runtime-failure accounting, reviewed/frozen
-at `152d875`. The core remains `9bc371c`.
+## P42 continued (~19:55): the coupled decisions, and what the search does now
+Further verified defects, each repaired with a test:
+ (g) abstract.diff: a reference/container going None->value (or back) under the belief
+     tracker is a discovery, as attributes already were (tests/test_v4_navigation.py).
+ (h) objective: a SILENT step across a view change is NAVIGATION, not unexplained -- a keyed
+     listing paid 4 unexplained for the four navigations on dispatch (same file).
+ (i) v2/score._changed_inside_units: the live region (role=status) is the emission channel,
+     not unit text -- the whole-page unit counted every outcome line as an unexplained
+     change inside it.
+ (j) search._build re-parses when the keyed set changes: a family the search leaves without
+     a key is a PART whose content flows to the enclosing unit (V2's fixpoint doctrine); the
+     search had kept it a unit and dropped its content to view, so the carrier section's
+     dl fields never reached the page even when the section was unkeyed.
+ (k) search._group_families: variants differing by optional parts (status line, carrier
+     placeholder) are one family, as V2's _family_keys reads them; other_key_values and
+     refutation lookup follow the merged family (refutations recorded by variant name
+     still bind).  Guard added to _same_family: a part and its container are never
+     variants (the part's template parts are a subset of the container's).
+Search on dispatch now: cards keyed heading#0 (SUPPORTED, over None by explained 1 and
+over the number by churn); carrier section a part (None); review section None with an
+open question vs the seal-load number; the page family (4 variants) keyed text#0 (the
+DEPOT word, INHERITED from V2) over heading#0 by explained 1 -- being measured.
+Suite on HEAD before my edits: 1195 passed, 10 failed = 9 browser tests (Playwright's
+chromium_headless_shell-1234 missing from ~/.cache -- reinstalling) + kanban smoke (same).
 
-Four paired comparisons on generated dispatch/workshop interfaces, seeds 1701/1702,
-are complete: all eight arms spend 60 primitives, all 32 scheduled fits complete,
-and no policy-targeted intervention occurs. Action/result/observation histories
-are identical in every pair. World failures: 100/480; treatment recognition errors:
-296 button queries. Both common evaluations complete without action failures,
-with 10/8 task targets. All ten scores, each with eight readings and complete
-denominators, are preserved at `8dc28ba`. The first-pass manifest
-`5f1646f95d52971510cf6f4e5385b678af0d0bb0ea14ddd1c9e78f8f69c90a23` binds 127 files.
-Every owned process has terminated; loopback server shutdown was intentional.
+## P42 continued (~20:05): the weight reaches the page
+ (l) is_prose: a label phrase closed by a colon names the value that follows ("Payload
+     limit: 8 kg" is a field, not a sentence); and _parse_units kept the prose marker off a
+     second prose text on a slot-name collision (the board card's weight had been an
+     attribute by that accident, the van card's payload prose by the rule).
+ (m) compile_v4's final build now re-parses like the search's (_reparse) so the parts the
+     search left unkeyed flow to their unit in the compiled model too.
+ (e) IMPLEMENTED: hypotheses._mirror_widgets / _mirror_witness / _mirror_counts: a transient
+     widget of a keyed unit family whose value a persistent non-key slot of a corresponding
+     unit (key overlap >= 2 through the widget unit's key or a persistent slot) follows --
+     agreements >= 2, contradictions 0, at least one propagated change -- is promoted like a
+     reload-persistent widget; tracked in _mirror_persistent_widgets, revalidated in
+     _revoke_unsupported_widgets under the current keys, copied on context splits.
+     tests/test_v2_widget_mirror.py (3).  On dispatch the page object now carries the typed
+     weight (attr:group/text/textbox#0) beside Payload limit, seal load/rating and refs to
+     the run card and the van.
+Open on dispatch: the search now reports 5 errors on every reading (the five type steps,
+presumably SPURIOUS because W2's _represented_widget_spans does not know mirror claims);
+the page key is an open tie text#0 (depot) vs heading#0 (name), the cards heading#0 vs
+depot; Check dispatch has no roles yet under the compiled model.  8 focused tests failing
+after the mirror change (test_v4_search_revisits among them) -- being listed.
 
-RULE/LIST leave every target unestablished. Current-inferred parsing fails at
-all target states; seven graph-coherent initial readings per fixture still have
-no corroborated task bindings/comparisons. Independent visible-state checks
-pass 18/18 tasks per reading/stage. Node-keyed identity surfaces are empty; common
-slot surfaces have zero supported coverage/contradictions. Greedy lists differ:
-fixed readings guess the two review targets right or wrong by seed while RULE/LIST
-continue to abstain. No whole rival outcome support is removed in paired arms.
-The report `../transport/report_v1.md`, acquisition summary and independent
-controls preserve the exact scopes; repeated model scorings are not independent
-interactions. `../transport/first_pass_review_v2.md` independently accepts phase
-closure with no blocker. The reviewed analysis is sealed before G1 implementation.
+## P42 (~20:12): dispatch bound; the comparison is a clock question; workshop next
+Objective on dispatch's settled reading: errors 0, explained 10 (5 typed weights, 4 carrier
+selections, the board after Back), unexplained 0 -- after keying W2's represented widget
+spans by entity rather than by template (a page variant gaining/losing its status line is
+the same owner and field).  Held-out evaluation (score_model, unfrozen): every click has a
+named owner (the run page keyed by its depot word, the card, the van), 12 literals at Check
+dispatch; all 36 clicks unestablished because no rule/order is adopted: BOTH candidate
+fields (typed weight, Payload limit) are CLOCKS on this history -- the initial script only
+ever raised the weight (7,10,17,24 / 11,15,23) and chose carriers in rising order (8,14,23),
+and the acquisition arms typed only alphabetic tokens (all failed).  Under P38 a monotone
+history does not adopt an order; the alternating "select -> ready, type -> unavailable"
+rival is real here.  This is the fixture's declared clock attack, not a learner defect; the
+fall has to be acquired (H3), which the text-token policy cannot do on a numeric input.
+Workshop: Start job owner = the job page; candidate field Work span (station capacity) only:
+the Required span textbox is not mirrored -- tracing.
+Stale: the 8 search-revisits failures in focused_tests.log predate the _group_families fix;
+the file passes alone now.
 
-The T1-only sealed fixture review/control specification is now disclosed after
-first-pass preservation. Ordinary operand variation and numerical holdout
-separation pass the raw design audit. Review-rule alternatives agree over all
-reachable histories, but unavailable learner predictions do not show that the
-learner represented those alternatives. Evaluation varies quantities/capacities
-on familiar identities; generated workflows share backend/detail machinery.
-The reserved third interface remains sealed from root's repair design; shared source
-is not opened merely to diagnose T1.
+## P42 (~20:18): the first fresh-interface outcome established -- workshop's Start job
+ (n) fields.pair_literals: comparisons between two ordered fields of ONE bound object (the
+     job's required span against the work span of the station its page shows); the pair
+     doctrine (justified on both sides, adopted only with its fields) applies unchanged.
+ (o) hypotheses: the mention-frame rule extended to a unit whose only words are its one
+     nested mention's (a list item: button 'Open Reed frame' + 'Required span: 12 cm'), the
+     numeric measurement then belongs to the named thing; guarded: a unit a number
+     identifies is not a frame, and the mention must be a widget-role node; frames are kept
+     as units through the fixpoint (`unit_templates()` = keyed | frames) in fit and in the
+     search's re-parse.
+ (p) _property_list: a definition-list label or value is never a unit (the search had
+     promoted `group[_ cm]` leaves to objects on trial and they swallowed the fields).
+ (q) search: on an evidence tie an INHERITED (V2-carried, structurally unproposed) key
+     yields to the proposed reading; the question stays open (dispatch's page: name over
+     depot; test added).
+Workshop initial history (37 steps): Start job = owner the job page (keyed by category vs
+name: open tie); rule `required span(owner) < Work span(owner) -> Job accepted`, default
+`Job cannot start`; both fields ORDERED, the pair adopted, no clocks (the script typed 21,
+29, 9 and chose stations 10, 18, 27, 10).  Dispatch stays a clock question (fixture design).
+Reservoir: no literals (the wizard pages' owner is not bound) -- not yet looked at.
 
-The next G1 mechanism is bounded: chosen H carries its own graph through compile_v4
-and search._build. Current code pairs copied H with earlier G, so ensure adds new
-signatures to one graph while parse_units reads the other. No V2/global policy change,
-field prior, normalization repair or frozen result mutation belongs to G1. Verify
-real unseen observation reading, frozen statistics and candidate isolation, then
-retained/dedicated/full checks and a new reserved freeze. Separate later tests
-must establish causes for unrecovered view fields and any normalization boundary
-issue. P15/automatic link-union revision remain open; non-unique relational
-composition with oracle identity versus inferred identity is the next competence
-branch after the demonstrated transport blockers are investigated.
+## P42 held-out (~20:22): workshop evaluation_v2 under the repaired learner (unfrozen fit)
+Start job, 6 ordinary targets: RULE/LIST 5 forced correct, 0 forced wrong, 1 several (the
+equality case: the history had no occasion with required == work span, the rule is strict);
+decision list 5 correct / 1 wrong (that case).  Under T1 (9bc371c) all 8 targets were
+unestablished.  Review targets stay unestablished (no review occasions in training).
+Dispatch: all unestablished, both fields clocks (by fixture design; see above).
 
-## P43 / G1: graph ownership and retained regression closed (2026-09-07)
+## Pre-registration for the retained-corpora battery under P42 (before running it)
+Sixteen changes (a)-(q) touch the observation model, the objective, the tracker, the search
+and the field theory; I cannot claim the retained readings are unchanged and do not.
+Expected: (1) every metamorphic invariant zero (nothing changed is positional);
+(2) harbour_transfer/blend/cellar/vet outcome ledgers: no NEW forced-wrong verdict on any
+suffix or cross-trace ledger; a forced-wrong that appears is a finding against whichever of
+(a)-(q) caused it and that change is withdrawn or repaired, not the gate; (3) identity
+readings may move where (f) carries a belief through another family's rendering, (h)
+stops charging navigations, (j)/(k) dissolve unkeyed parts or merge variant families, (l)
+turns a colon-labelled text into a field, (e) promotes a mirrored widget, (q) replaces an
+inherited key; every moved reading is traced to its change and judged by the retained
+doctrine; (4) the P25/P26/P32b/P38 joins on harbour_ref/pil/sep corpora still learned with
+the same fields adopted and no wrong holdout verdict.
 
-The two V4 construction sites now carry the chosen hypothesis's own graph,
-source checkpoint `5ac0e11`. No V2 or structural/field/acquisition policy changes
-belong to G1. Focused integration: 22 passes. One full authorized run: 573 passed,
-3 skipped, 1 expected failure in 1,725.93 seconds. The first invocation's six
-archive module collisions and the separate collection guard are preserved.
-
-Six disclosed T1 histories, eight readings each, reuse the frozen scorer and
-fixed evaluation surfaces. All 48 training models and 42 complete pinned score
-records are unchanged. Current inference has 204 fewer state failures and
-54 fewer task-query failures, reaching zero. RULE/LIST remain all unestablished
-on 10 dispatch/8 workshop targets per reading/history. Numeric singleton
-fragments exist but do not recover the intended task pair or comparison.
-Raw-node and emission identity surfaces are 0/0; the slot-fallback shared surface
-still has zero covered claims and contradictions. No semantic transport or
-acquisition improvement is claimed.
-
-All five dedicated corpora preserve reported outcomes, roles and bindings; all
-906 visible checks on 302 development/holdout targets match. Known wrong and
-abstaining answers remain. The exact comparisons retain 780 recursive differences
-in vouch conditions/explanations and pair display, including 116 changed
-conditions, five witness pairs and a support-count change from 9 to 8. Baseline's
-randomized Python hash seed versus G1's zero is a concrete ordering confound;
-unchanged verdicts do not establish logical equivalence of those vouches.
-
-The report, independent transport review, corpus/full review, source/data freeze
-and all completed/reaped jobs are under `../transport/development/g1/`.
-The exact report revision reviewed for transport is preserved before the final
-corpus addition. Original T1, baseline and corrected analysis manifests stay
-immutable. No reserved interface or shared fixture implementation was opened.
-
-Next: integrate the isolated G2 prefix-statistics freeze and run its own full
-and dedicated regressions. The T1 section control changes no observed page, so
-that live normalization omission does not explain these binding losses. Proceed
-with J1's common-intermediate composition question: the supplied native conjunction
-passes the 12-case micro-control; normal learning and identity remain untested.
-Its separate bounded-search diagnostic reproduces false uniqueness after one
-of two assignments is retained. Review a minimal soundness repair and preserve
-all controls separately from the eventual learned JOIN assessment.
-
-## P44 / G2: prefix chronology and regression closed (recorded 2026-09-08)
-
-Integrated source `4440a4f` freezes prefix section-normalization statistics before
-future descriptors. Full validation: 577 passed, 3 skipped, 1 expected failure.
-All five dedicated corpora exactly match all six declared G1 components, including
-residual mistakes and ambiguity. The direct chronology witness learns zero
-operators; it establishes the prefix-representation boundary. Reused separating
-holdouts remain identified as reused evidence.
-
-The final report and independent review are
-`../transport/development/g2/integrated_report_v1.md` and `integrated_review_v1.md`.
-Checkpoint `38f1f08` preserves 135 files and nine terminated jobs in
-`results_manifest_v1.json`, SHA-256
-`481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e`.
-
-## P45 / reserved-interface R1: preserved negative transfer result (recorded 2026-09-08)
-
-This R1 is the reserved generated interface measured on `38f1f08`, before B1;
-the earlier comparator named R1 retains its own historical identity. Collection
-retains 328 charged attempts, 322 paired Steps, six unpaired resets and 56 failures.
-Four acquisition arms spend 60 attempts each, select zero contested targets and
-produce byte-identical raw observations and Steps within each seed pair. Five
-model readings leave eight ordinary targets undetermined; both review predictions are wrong after
-seed 1701 and correct after seed 1702 under both policies. RULE/LIST remain
-unestablished on all ten targets. Shared and union identity surfaces are empty.
-
-The 295-file/13-job first pass is preserved in
-`../transport/reserved_v1/first_pass_manifest_v1.json`, SHA-256
-`2dd83ed7914798f13e6c7a0cd1b5ccbd718bab7182df12e08a854223cf423678`.
-Five later oracle controls corroborate raw actions/fields while learned owner,
-operand, reference and comparison checks remain unavailable. The accepted
-`analysis/review_v1.md` finds H1–H3 unmet and establishes restricted-interface
-equivalence under H4; learner recognition of those rivals is unestablished.
-Analysis seal SHA-256
-`ea297ccc676116d86721511803846ddf6df4eb8aa8f25ea67e9b025e2c7f4e54`.
-R1 is now disclosed development evidence. No wrong-identity diagnosis or effective
-contested-acquisition comparison follows from these unavailable bindings and zero
-targeted interventions.
-
-## P46 / B1: incomplete search retains uncertainty (recorded 2026-09-08)
-
-The two guards preserve uncertainty for a truncated one-assignment binding and
-an incomplete consequence enumeration after value aggregation. The same focused
-cases change from 22 passes/32 intended failures to 54 passes. Clean validation
-passes 621 tests with 3 skips and 1 expected failure, and exactly matches all six
-G2 components across all five dedicated corpora. The final validation seal at
-`../transport/development/b1_validation/results_manifest_v1.json` binds 83 files
-and seven terminated jobs, SHA-256
-`af3c7131375798bbf0cc0f4050617cc8ebea901a6313d7be7879f23409597e8d`.
-
-Candidate `96b2d1f` and validation `b6f8c99` were adopted as `c9dd06d`/`d72335b`
-after reserved-interface R1 checkpoint `9a141f0`. `adoption_v1.json` verifies 226
-source/test files and all 83 artifacts against the tested worktree, SHA-256
-`4b0f9b9809cb20a2b71de0c171400ef324d6b7de0fd6d1c8b5370b533d30ddf4`.
-No unchanged full/corpus checks were repeated. The guards add no existential
-witness proposal or outcome query. J1's frozen normal-learner composition
-measurement, separate supplied-formula controls and exposure/process status are
-tracked in `../transport/development/j1/protocol_v1.md` and
-`../transport/execution.md`. P15, structural revision and whole-rival acquisition
-remain open; the next repair must follow the demonstrated layer of failure.
-
-A later W1 audit qualifies B1's five corpus source associations: the unchanged
-`link_probe.py` prepends main before native imports, and those historical jobs
-have no loaded-module ledger. The copied-file attestations and exact numerical
-B1/G2 comparison remain preserved, but production by the intended B1 source is
-unestablished. G2's intended root was main. The W1 verification preparation
-records this boundary and explicit package anchoring for the candidate runs.
-
-## P47 / J1: preserved composition measurement (recorded 2026-09-08)
-
-Both phases complete 313 charges, 312 Steps and 24 designated targets with zero
-action failures. Decision lists remain UNDETERMINED at every target; RULE/LIST
-have no admissible event, leaving all 24 unestablished rather than resolved.
-The event-argument comparison surface is empty. The separately recorded 28
-naming-query literals per target have unavailable independent semantics.
-
-The 705-file V2 first pass, original invalid score, corrected offline score,
-post-preservation controls and matching training replay are separately sealed.
-The [measurement report](../transport/development/j1/analysis/measurement_summary_v2/report_v1.md)
-gives hashes, denominators, exposure limits and causal findings. The original
-path-reference defect and earlier invalid cache attempt remain preserved.
-Root opened the actual summaries/diagnostics after their seals. These generated
-cases are disclosed development evidence. Final independent review passes 167
-measurement/replay and 19 training-field checks with 912 final bindings verified.
-Root accepted the 22-file review seal `f052ac74…` and checked unchanged native
-source in `../transport/development/j1/root_closeout_v1.json` (`66095786…`).
-The review's corrected helpers and preparation-authentication order remain explicit.
-
-Raw premise, primitive, visibility and observed effects pass 24/24 per phase.
-The model supports page-level transmitter/receiver anchors, but has no unique
-patch objects and no endpoint references. Action owners are available; receiver
-roles, query-literal correctness and learned state consequences are unavailable.
-The matching training replay records exact evidential ties that demote patch
-and inner-field identities, with alternatives retained in open questions.
-No qualifying reload pair promotes endpoint widgets. The raw-change score also
-excludes promoted widgets, and the shared inner field template can choose only
-one reference target type. Persistence alone is not an established repair.
-
-The next isolated source checkpoint W1 (`284d80c`) addresses a separately
-demonstrated soundness defect in reload correspondence. Duplicated child keys
-can no longer overwrite a reversion and establish slot-wide persistence.
-The same focused file moves from 3 failures/13 passes to 16 passes; independent
-review covers source, multiple pairs/slots and unaffected templates. Five dedicated
-allocation-positive/refusals, pilot and separating runs preserve all six retained
-components, including wrong, ambiguous, unestablished and abstaining rows. The full
-suite passes 631 tests with three skips and one expected failure, but its wrapper
-fails on directories left by intentional manifest-test cache fixtures. The
-121-file attempt seal `47518651…` remains failed and immutable; an isolated
-test-only cache repair and new full-suite validation precede adoption. The
-test repair is now isolated source commit `a1c0bc96`, with five affected tests
-passing and wrapper postflight verified under the `98a0fe11…` focused seal.
-Its canonical full-suite retry now passes with 631 passes, three skips, one
-expected failure, actual outer code zero and VERIFIED postflight. The 56-file
-seal `3a3a3a2e…` and independent/root reviews are accepted, retaining the explicit
-parent-origin, installed-dependency and root `.pytest_cache` provenance limits.
-Main adopts the native guard and test repair at `cc04636a` and `2025ee5b`;
-[adoption evidence](../transport/development/widget_persistence_v1/main_adoption_v2.json)
-verifies exact tested native/test/config/runtime bytes. The five original corpus
-runs are reused because their inputs and native/measurement dependencies match.
-
-## P48 / W2: observation evidence for promoted widgets (recorded 2026-09-08)
-
-The reviewed [native diagnostic](../transport/development/widget_observation_v1/report_v1.md)
-uses eight fresh abstractors on identical invented observations: keyed or absent
-identity, transient or promoted widget, and current or diagnostic observation
-predicate. The keyed/promoted red-to-blue attribute delta is identical across
-scorer arms, but changes from SPURIOUS (zero explained, one error) to EXPLAINED
-(one explained, zero errors) when the raw widget value is admitted. The other
-three conditions remain NOTHING. All 133 controls pass, with all 64 native
-preference comparisons retained. The 37-file attempt seal is `d32f9fa3…`; root
-opens the outcomes only afterward. Independent result review and root acceptance
-preserve the causal limits.
-
-The native promotion method runs on supplied keys and invented distinct-observation
-reload pairs; no normal fit, browser or fresh transfer evaluation runs in W2.
-This diagnoses a score omission for an already represented attribute. It does
-not establish J1's missing identities, endpoint references, receiver naming or
-JOIN competence. Production observation evidence must handle owner/field swaps,
-active attachment and raw key witnesses without treating key reassignment as
-widget value change.
-
-## P49 / W3: persistence after key revision (recorded 2026-09-08)
-
-The [saved diagnostic](../transport/development/widget_key_revision_v1/report_v1.md)
-executes two actual default fits at W1 source `284d80c` on identical invented
-observations. CONTROL retains two same-key reload values and loses none. A
-supplied after-only Alpha/Beta bijection keeps keys unique and non-positional
-but changes those counts to zero kept/two lost, while widget persistence remains
-asserted. The tracker emits two opposite attribute changes under those final
-identities. All 14 predictions match. The read-only trace records the initial
-promotion, the final key rewrite and the unchanged persistent marker.
-
-The 26-file result seal `4c51d398…` precedes root's semantic inspection and has
-6,228 passing custody checks. Independent review accepts the bounded evidence;
-its `9593ab7e…` three-file seal preserves an initially mistaken direct input/native
-serialization comparison and the corrected checks. Root acceptance `4be6a031…`
-requires native repair but grants no adoption. The key mapping and reload meaning
-are diagnostic inputs, not independently validated identities or application
-truth. No action objective or JOIN measurement ran here.
-
-The [repair contract](../transport/development/widget_key_revision_v1/repair_contract_v1.md)
-tracks internally reload-owned claims, revalidates after entity-builder key and
-context changes, and preserves separately configured evidence. Unsupported
-fields demote coherently; a dependent selected key makes the candidate fail
-explicitly rather than silently changing identity. The implementation is being
-prepared in a new worktree based on `a1c0bc96`, with tests in existing files.
-
-The first focused baseline is preserved before analysis at `0a22d2e2…`: 37
-passes and 16 failures across 53 cases. Fifteen failures exercise the target
-semantic defects; one out-of-range parent fixture raises an earlier IndexError
-and must be corrected without changing its intended assertion. A failed
-preserver attempt and its correction for pytest scratch symlinks are retained.
-Candidate_v3 was not executed: independent source review found an additional
-context-driven key-selection mismatch between fitted and fresh parsed values.
-The next source/test version adds that control and corrects the malformed
-parent fixture; no W3 native repair is adopted yet.
+## P42 retained JOIN corpora under the repaired learner (21:01)
+join_score.py, search reading, dev-fitted, scored on the holdouts (scratchpad p42_*_score.json):
+  harbour_sep2_dev -> harbour_sep_hold, Book pilot: 15 forced right / 15 several / 0 wrong --
+    identical to P38's 15/15/0; join `Ticket to(selection) < Length overall(owner)` with the
+    pair adopted, whole-holdout ledger 172/98/53/7/0 wrong.
+  harbour_pil_dev -> harbour_pil_hold, Book pilot: 7 / 14 / 0 -- identical to P38's 7/14/0.
+  harbour_ref_dev -> harbour_ref_hold, Allocate berth: 16 forced right / 11 several / 0 wrong /
+    0 unestablished against P25's file (09-06, call-keyed sheet) 21 / 3 / 3 / 0: three
+    unestablished states are now bound (477, 502 forced right; 509 several) and five forced
+    rights are several (512, 515, 528, 531 'held by' with 'allocated' admissible; 548
+    'already alongside' likewise).  The reading is the vessel-keyed sheet
+    (`Length overall(owner)`) with the unheld condition spelled `no_children(selection)`
+    where P25 had `ref_null(selection, rel:0)`.  P25's file predates P31/P34 (the vessel
+    key); the true baseline is being scored under d0b1574 in a worktree (p42_ref_head_score).

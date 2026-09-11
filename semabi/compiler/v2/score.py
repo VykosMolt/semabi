@@ -121,8 +121,9 @@ def _changed_inside_units(A: V2Abstractor, log: EvidenceLog, s) -> bool:
     def unit_texts(obs, po):
         out = Counter()
         for n in obs.nodes:
-            if n.role in ("combobox", "textbox", "checkbox", "radio"):
-                continue  # widget state is not domain text
+            if n.role in ("combobox", "textbox", "checkbox", "radio", "status"):
+                continue  # widget state is not domain text; a live region is what the
+                # interface says (the emission channel), not what it is
             if n.i in po.node_instance and n.name:
                 out[(po.instances[po.node_instance[n.i]].tid, n.role, n.name)] += 1
         return out

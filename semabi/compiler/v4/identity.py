@@ -153,11 +153,12 @@ def spoken_values(log) -> set[str]:
     return out
 
 
-def other_key_values(H, family: str) -> set[str]:
-    """The key values of every unit outside `family` under the hypotheses as they stand."""
+def other_key_values(H, family: set[str]) -> set[str]:
+    """The key values of every unit outside the family's templates under the hypotheses
+    as they stand."""
     out: set[str] = set()
     for template, unit in H.units.items():
-        if family_key(template) == family or not unit.key_slot:
+        if template in family or not unit.key_slot:
             continue
         stat = unit.slots.get(unit.key_slot)
         if stat is not None:

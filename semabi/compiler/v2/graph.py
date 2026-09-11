@@ -114,6 +114,8 @@ class ObsGraph:
         self._data: set[str] | None = None
         self._listed_only: set[str] = set()   # values by collection variation alone
         self._declared_headers: set[str] = set()  # texts of header rows in a row group of their own
+        self.listings: dict[str, frozenset[int]] = {}  # undeclared collections: containers of same-shaped children
+        self._texts_at: dict[tuple, Counter] = defaultdict(Counter)  # leaf texts by indexed position
         self._pooled_views: dict[tuple, TextTemplate] = {}
         self._seen: set[str] = set()   # every token the corpus read anywhere, headers and options included
         self._value_paths: set[str] | None = None
@@ -201,20 +203,31 @@ class ObsGraph:
                 merged.n += tt.n
         return self._data
 
-    def _is_member(self, obs, i: int) -> bool:
-        """Is this node a member of a declared collection -- a row of a table, an item of a
-        list -- directly or through the grouping containers `sections.normalise` inserts?"""
+    @staticmethod
+    def _listing(obs, p: int, shapes: dict[int, str]) -> bool:
+        """A container whose structured children all share one shape is a listing the
+        accessibility tree did not declare: a grid of cards.  Leaf children (a heading
+        above the cards) do not count, and one structured child is a subtree, not a listing."""
+        if obs.node(p).role in COLLECTIONS:
+            return False
+        kids = [c for c in obs.children(p) if obs.children(c)]
+        return len(kids) >= 2 and len({shapes[c] for c in kids}) == 1
+
+    def _is_member(self, obs, i: int, listings: frozenset[int] = frozenset()) -> bool:
+        """Is this node a member of a collection -- a row of a table, an item of a list, a
+        card of a grid -- directly or through the grouping containers `sections.normalise`
+        inserts?"""
         n = obs.node(i)
         while n.parent >= 0:
             p = obs.node(n.parent)
-            if p.role in COLLECTIONS:
+            if p.role in COLLECTIONS or n.parent in listings:
                 return True
             if p.role != "group":
                 return False
             n = p
         return False
 
-    def position_pooled(self, obs, i: int) -> tuple:
+    def position_pooled(self, obs, i: int, listings: frozenset[int] = frozenset()) -> tuple:
         """Indexed role path in which a member of a declared collection is unindexed.
 
         The rows of a table are one listing: what differs between them at the same cell is
@@ -227,7 +240,7 @@ class ObsGraph:
             n = obs.node(x)
             if n.parent >= 0:
                 leaf = not obs.children(x)
-                if self._is_member(obs, x):
+                if self._is_member(obs, x, listings):
                     out.append((n.role, "*"))
                 else:
                     sibs = [c for c in obs.children(n.parent)
@@ -343,6 +356,8 @@ class ObsGraph:
         for n in obs.nodes:
             shapes.setdefault(n.i, n.role)
         skel = hash(frozenset(paths.values()))  # which view this is (set of role paths)
+        listings = frozenset(x for x in shapes if self._listing(obs, x, shapes))
+        self.listings[sig] = listings
         for n in obs.nodes:
             d = NodeDesc(sig, n.i, n.role, paths[n.i], shapes[n.i], tokens(node_text(n)), depth[n.i], list(obs.children(n.i)), n.parent)
             self.nodes[(sig, n.i)] = d
@@ -358,8 +373,8 @@ class ObsGraph:
             if n.parent < 0:
                 ppos: tuple = ()
             elif self.judge_by_collection:
-                ppos = self.position_pooled(obs, n.parent)
-                if self._is_member(obs, n.parent):
+                ppos = self.position_pooled(obs, n.parent, listings)
+                if self._is_member(obs, n.parent, listings):
                     # A member's fields are its slots, by their place among its children --
                     # the column -- whatever shape a value takes.  Keyed by token pattern
                     # as well, blend's `Ticket 4` (a labelled number) was one position with
@@ -394,6 +409,8 @@ class ObsGraph:
             self.variation_key[(sig, n.i)] = (key_pos, ppos, skel_key)
             if not self.learning:
                 continue
+            if not obs.children(n.i):
+                self._texts_at[self.position_idx(obs, n.i)][node_text(n)] += 1
             tt = self.templates.setdefault(pos, TextTemplate(pos))
             tv = self.templates_v.setdefault((key_pos, ppos, skel_key), TextTemplate(key_pos))
             self._seen.update(tokens(node_text(n)))
@@ -518,7 +535,7 @@ class ObsGraph:
 
     def data_tokens(self, sig: str, i: int) -> list[str]:
         """Data *spans*: maximal runs of consecutive data tokens ("Ines Halli", "Two Sisters")."""
-        if self.is_header(sig, i):
+        if self.is_header(sig, i) or self.is_definition_label(sig, i):
             return []
         n = self.obs[sig].node(i)
         out: list[str] = []
@@ -544,6 +561,13 @@ class ObsGraph:
         (feedback lines), or this string alone carries >= 3 constant words."""
         n = self.obs[sig].node(i)
         lab = self.labels(sig, i)
+        toks = tokens(node_text(n))
+        if ":" in toks:
+            # a label phrase closed by a colon names the value that follows (`Payload
+            # limit: 8 kg`): the words before it are the field's name, not a sentence
+            head = toks[:toks.index(":")]
+            if head and all(t in lab for t in head):
+                lab = lab - set(head) - {":"}
         if len(lab) >= 3:
             return True
         if not lab:
@@ -564,7 +588,7 @@ class ObsGraph:
 
     def labels(self, sig: str, i: int) -> set[str]:
         n = self.obs[sig].node(i)
-        if self.is_header(sig, i):
+        if self.is_header(sig, i) or self.is_definition_label(sig, i):
             return set(tokens(node_text(n)))
         return {t for t in tokens(node_text(n)) if not self.is_data_at(sig, i, t)}
 
@@ -623,8 +647,51 @@ class ObsGraph:
         return text or None
 
     def cell_header(self, sig: str, i: int) -> str | None:
-        """The interface's own name for a cell: its row header, else its column header."""
-        return self.row_header(sig, i) or self.column_header(sig, i)
+        """The interface's own name for a value: its row header, else its column header,
+        else the label it is paired with in a definition list."""
+        return self.row_header(sig, i) or self.column_header(sig, i) or self.definition_label(sig, i)
+
+    def definition_pairs(self, sig: str, i: int) -> list[tuple[int, int]]:
+        """The (label, value) pairs of a definition list rooted at node i, or none.
+
+        A `dl` reaches the snapshot as a run of leaf siblings with no role of their own, so
+        the pairing is read from the structure: an even number of leaves of one role, in
+        which every even one carries the same text wherever this position was seen and at
+        least one odd one has carried different texts.  The labels then name the values,
+        as a key-value table's row headers name its cells."""
+        cache = self.__dict__.setdefault("_definition_cache", {})
+        if (sig, i) in cache:
+            return cache[(sig, i)]
+        obs = self.obs[sig]
+        kids = obs.children(i)
+        out: list[tuple[int, int]] = []
+        if (len(kids) >= 2 and len(kids) % 2 == 0
+                and len({obs.node(c).role for c in kids}) == 1
+                and obs.node(kids[0]).role not in WIDGET_ROLES
+                and not any(obs.children(c) for c in kids)):
+            texts = [self._texts_at.get(self.position_idx(obs, c), {}) for c in kids]
+            labels = all(len(texts[k]) == 1 and node_text(obs.node(kids[k])).strip() for k in range(0, len(kids), 2))
+            varies = any(len(texts[k]) >= 2 for k in range(1, len(kids), 2))
+            if labels and varies:
+                out = list(zip(kids[0::2], kids[1::2]))
+        cache[(sig, i)] = out
+        return out
+
+    def definition_label(self, sig: str, i: int) -> str | None:
+        """The label a definition-list value is paired with, or None."""
+        obs = self.obs[sig]
+        n = obs.node(i)
+        if n.parent < 0:
+            return None
+        for label, value in self.definition_pairs(sig, n.parent):
+            if value == i:
+                return node_text(obs.node(label)).strip()
+        return None
+
+    def is_definition_label(self, sig: str, i: int) -> bool:
+        obs = self.obs[sig]
+        n = obs.node(i)
+        return n.parent >= 0 and any(label == i for label, _ in self.definition_pairs(sig, n.parent))
 
     # ------------------------------------------------------------------ subtree template
     def subtree_template(self, sig: str, i: int) -> str:
