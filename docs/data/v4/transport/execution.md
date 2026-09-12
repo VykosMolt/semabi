@@ -4,11 +4,13 @@
 
 - Active checkpoint: frozen productec71cb7 runs on8860, seed8/CPU0-7,
   from `runs/.product-return-cache-ec71cb7`, owned service PID952650/exec13743.
-  Ordinary workshop refit `job_08b0326a0c4a4c509c19d52fa6b19979` started22:32:56UTC
-  with1action/0write budget, reusing prior training; clientexec40026/output
+  Ordinary workshop refit `job_08b0326a0c4a4c509c19d52fa6b19979` COMPLETED22:41:34UTC
+  with0actions/0writes,2053reusedsteps and4version2operations;515.324s fit,
+  519.597s HTTP learning. Output
   `runs/product_semantic_workshop_v2/return_cache_refit_ec71cb7.json`.
-  Hard owned fit deadline23:02:56UTC (30minutes); stop this owned job if exceeded,
-  preserving raw training and reporting interruption. No concurrent heavy jobs.
+  It completed within its30minute budget; no active fit or client remains.
+  Source and hash seed differed from the1641s predecessor; do not attribute this
+  whole timing difference to the cache. No concurrent heavy jobs.
   ec71cb7 adds bounded exact rendered-value derivation reuse, not belief/effect
   caching. All2053-step Behavior results equal in ABBA fixed-reading comparisons:
   uncached build+score1.294/1.261s, cached0.982/0.963s,12169→68 derivations perarm.
@@ -21,6 +23,21 @@
   While fit runs, isolated populated-view exit repair remains under review:
   initial20controlledcases passed, then review exposed omitted row/scope owner
   context and link destination fidelity; these are not accepted as preservation.
+  Candidateb8b8840 now repairs these plus sibling completeness, original creator
+  draft protection and external native-form reference fidelity (unsupported).
+  37focused/125affected non-native checks passed; independent ordinaryHTTP3/3
+  passed onb8b8840, tests82035bd awaiting integration. Original false preservation
+  acceptance is retained; setup-only sandbox/key-format failures remain separate.
+  Root budget repair permits explicit64actions/48writes within connection scope,
+  preserving40/25defaults and request idempotency/isolation. Guarded operations
+  expose and reserve a conservative four-return verification envelope before
+  filling; prior selection may already be write-capable.25focused then177affected
+  semantic/HTTP checks passed; independent review found no concrete regression.
+  An initial test incorrectly expected no effect despite the selection prefix;
+  corrected to UNCERTAIN with zero field/final writes, without status changes.
+  Shared relmodel.py now participates in operation source invalidation.
+  Next: real workshop checks (currentec71 service), integrate exit/budget repairs,
+  and future exact-fit reuse. No retrospective fitted-artifact provenance repair.
   main46da49d additionally separates unused completion capability from typed READ
   (74 affected popup/checkbox tests passed/5.29s). Dispatch v6 raw refit reused559
   steps with0newactions/writes,44.011s fit. Exact Quartz run/Cobalt van10 write

@@ -20,6 +20,7 @@ import uuid
 
 from playwright.sync_api import sync_playwright
 
+from semabi.compiler.artifacts import DEFAULT_INVOKE_ACTIONS, DEFAULT_INVOKE_WRITES, invocation_limits
 from semabi.compiler.browser import Primitive
 from semabi.compiler.browser_session import BrowserSession, origin_of
 from semabi.compiler.evidence import EvidenceLog
@@ -103,6 +104,8 @@ def source_hashes() -> dict:
     shared = {str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest()
               for path in sorted(root.rglob("*.py")) if path not in paths}
     result["semantic_language"] = digest(shared)
+    # Induction consumes these shared relational structures outside compiler/.
+    result["relmodel.py"] = hashlib.sha256((root.parent / "relmodel.py").read_bytes()).hexdigest()
     return result
 
 
@@ -1771,12 +1774,17 @@ class Runtime:
 
     def invoke(self, connection: dict, operation: dict, arguments: dict, emit) -> dict:
         scope = connection.get("scope", {})
+        # Only explicit, scope-validated per-call limits expand legacy defaults.
+        # The service passes this on a private copy, never into persistent scope.
+        limits = (invocation_limits(connection["_invocation_limits"], scope)
+                  if "_invocation_limits" in connection else {
+                      "max_actions": min(DEFAULT_INVOKE_ACTIONS, scope.get("max_actions", DEFAULT_INVOKE_ACTIONS)),
+                      "max_writes": min(DEFAULT_INVOKE_WRITES, scope.get("max_writes", DEFAULT_INVOKE_WRITES))})
         # The optional deadline starts here, after service queueing and authentication.
         # Browser calls are synchronous: a late return is detected, not cancelled.
-        seconds = scope.get("max_seconds")
+        seconds = limits.get("max_seconds", scope.get("max_seconds"))
         deadline = time.monotonic() + seconds if seconds is not None else None
-        trace = self._trace(connection, emit, Budget(min(40, scope.get("max_actions", 40)),
-                                                    min(25, scope.get("max_writes", 25)),
+        trace = self._trace(connection, emit, Budget(limits["max_actions"], limits["max_writes"],
                                                     deadline=deadline))
         browser = self.sessions.get(connection["id"])
         try:

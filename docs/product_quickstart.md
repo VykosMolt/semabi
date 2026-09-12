@@ -32,6 +32,14 @@ across those calls; exhaustion is not complete application coverage. Clean budge
 stops can resume before the next fit. An unresolved dispatched action blocks
 further exploration until reconciliation, rather than silently retrying a write.
 
+Guarded operations expose `scope.verification_budget`: a conservative allowance
+for the verification tail and its learned returns, in addition to the selection
+prefix. Runtime reserves it before filling. Complex routes may need explicit
+`--invoke-max-actions 64 --invoke-max-writes 48`, within connection scope.
+This allowance covers recorded return policies, not unseen transitions, changed
+controls, or guaranteed completion within a time limit. A budget refusal after
+a write-capable selection prefix can be `UNCERTAIN` even though the field was not filled.
+
 For a returned guarded schema with `target`, `selection_2`, `value` and `expect`,
 the first two arguments identify exact observed anchors within learned local rows;
 `value` supplies the new field value and `expect` selects a returned response
@@ -297,7 +305,10 @@ Send `Authorization: Bearer TOKEN` on every request. An invocation body is
 `{"version":1,"arguments":{"value":"..."}}`, using the learned schema.
 An optional `limits` object accepts `max_actions`, `max_writes`, and
 `max_seconds`. Action and write limits cannot exceed the connection scope or
-runtime caps (40 actions, 25 possible writes); writes cannot exceed actions.
+runtime ceilings (64 actions, 48 possible writes); writes cannot exceed actions.
+Defaults remain at most 40 actions and 25 possible writes, including calls that
+omit limits entirely. Higher limits must be explicit and remain within the
+connection's authorized scope.
 Seconds must be a positive finite number at most 600. Omitting `limits`
 preserves the previous default execution behavior.
 Writes return `202` and a durable job ID. HTTP acceptance and job completion do

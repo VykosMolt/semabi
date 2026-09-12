@@ -437,7 +437,8 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
                          response_names_owner=False, prediction_status='supported',
                          additional_known_event=None, guarded=False, counterfactual_status='supported',
                          counterfactual_event='Recorded', predecessor_category=False,
-                         nested_category=False, argument_overrides=None, scope_limits=None, **browser_options):
+                         nested_category=False, argument_overrides=None, scope_limits=None,
+                         return_rank=0, invocation_limits=None, **browser_options):
     """Supply a fitted prediction contract; exercise real routing, tracing and response readback.
 
     No fitting claim is made by this diagnostic. The rendered application deliberately can
@@ -538,6 +539,14 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
                 group, operation['procedure']['owner_binding']))
             arguments.update(target='Expand Workspace', selection_2='Open A')
     arguments.update(argument_overrides or {})
+    if return_rank:
+        context = operation['procedure']['return_context']
+        context['returns'] = [{'before': 'observed-return-' + str(rank),
+                              'after': 'observed-return-' + str(rank - 1) if rank > 1 else context['entry_shape'],
+                              'descriptor': {'role': 'button', 'label': 'Return', 'input_type': ''}}
+                             for rank in range(1, return_rank + 1)]
+    if invocation_limits is not None:
+        connection['_invocation_limits'] = invocation_limits
     bind_contract(operation)
     result = runtime.invoke(connection, operation, arguments, lambda event: None)
     return result, browser
@@ -617,6 +626,25 @@ def test_semantic_guarded_write_reserves_its_terminal_verification_budget(tmp_pa
         assert browser.values == {'A': '7', 'B': '9'}
     else:
         assert result['outcome'] != 'CONFIRMED', result
+        assert 'mandatory guarded verification' in result['effect']['reason']
+        assert browser.fills == browser.final_actions == 0
+        assert browser.values == {'A': '3', 'B': '9'}
+
+
+@pytest.mark.parametrize('explicit', [False, True])
+def test_semantic_guarded_tail_reserves_observed_returns_and_expands_only_explicit_budget(tmp_path, monkeypatch, explicit):
+    # Supplied graph isolates budget composition, not learned navigation. The
+    # replay can return directly here, but its declared envelope must be funded.
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True, return_rank=7,
+        scope_limits={'max_actions': 100, 'max_writes': 80},
+        invocation_limits={'max_actions': 64, 'max_writes': 48} if explicit else None)
+    if explicit:
+        assert result['outcome'] == 'CONFIRMED', result
+        assert browser.fills == browser.final_actions == 1
+    else:
+        # The learned selection prefix was already write-capable. Only the
+        # guarded field write and final action are known not to have happened.
+        assert result['outcome'] == 'UNCERTAIN', result
         assert 'mandatory guarded verification' in result['effect']['reason']
         assert browser.fills == browser.final_actions == 0
         assert browser.values == {'A': '3', 'B': '9'}
@@ -2562,7 +2590,7 @@ def test_synthetic_incompatible_operation_evidence_is_rejected_before_navigation
 
 
 @pytest.mark.parametrize('dependency', [
-    'semantic.py', 'semantic_runtime.py', 'observation.py',
+    'semantic.py', 'semantic_runtime.py', 'observation.py', '../relmodel.py',
     'v2/hypotheses.py', 'v2/graph.py', 'v2/sections.py',
     'v4/abstractor.py', 'v4/consequence.py', 'v4/fields.py',
     'v4/outcome.py', 'v4/emission.py', 'v4/referring.py',
@@ -2572,18 +2600,19 @@ def test_shared_semantic_source_change_invalidates_persisted_operation_on_restar
     browser = _NavigationReloadBrowser()
     runtime, connection, operation = _runtime_with_operation(tmp_path, browser)
     before = runtime_module.source_hashes()
-    source = runtime_module.Path(runtime_module.__file__).parent / dependency
+    source = (runtime_module.Path(runtime_module.__file__).parent / dependency).resolve()
     original_read = runtime_module.Path.read_bytes
 
     # Model an edited dependency without changing the running service's files.
     def changed_read(path):
         content = original_read(path)
-        return content + b'\n# changed semantic dependency\n' if path == source else content
+        return content + b'\n# changed semantic dependency\n' if path.resolve() == source else content
 
     monkeypatch.setattr(runtime_module.Path, 'read_bytes', changed_read)
     after = runtime_module.source_hashes()
     changed_keys = {key for key in before if before[key] != after[key]}
-    assert changed_keys == {dependency if '/' not in dependency else 'semantic_language'}
+    expected_key = 'relmodel.py' if dependency == '../relmodel.py' else dependency if '/' not in dependency else 'semantic_language'
+    assert changed_keys == {expected_key}
     assert runtime.source_sha256 == before
 
     # A restart loads the new language, but an old artifact remains an old

@@ -13,6 +13,11 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
+DEFAULT_INVOKE_ACTIONS = 40
+DEFAULT_INVOKE_WRITES = 25
+MAX_INVOKE_ACTIONS = 64
+MAX_INVOKE_WRITES = 48
+
 
 class StoreError(ValueError):
     def __init__(self, message: str, status: int = 400):
@@ -28,12 +33,12 @@ def invocation_limits(value: dict, scope: dict) -> dict:
     """Normalize execution-only limits without changing the connection's scope."""
     if not isinstance(value, dict) or set(value) - {"max_actions", "max_writes", "max_seconds"}:
         raise StoreError("limits must be an object containing only max_actions, max_writes and max_seconds")
-    action_cap = min(40, scope.get("max_actions", 40))
-    actions = value.get("max_actions", action_cap)
+    action_cap = min(MAX_INVOKE_ACTIONS, scope.get("max_actions", DEFAULT_INVOKE_ACTIONS))
+    actions = value.get("max_actions", min(DEFAULT_INVOKE_ACTIONS, action_cap))
     if type(actions) is not int or not 1 <= actions <= action_cap:
         raise StoreError(f"limits.max_actions must be an integer between 1 and {action_cap}")
-    write_cap = min(25, scope.get("max_writes", 25), actions)
-    writes = value.get("max_writes", write_cap)
+    write_cap = min(MAX_INVOKE_WRITES, scope.get("max_writes", DEFAULT_INVOKE_WRITES), actions)
+    writes = value.get("max_writes", min(DEFAULT_INVOKE_WRITES, write_cap))
     if type(writes) is not int or not 0 <= writes <= write_cap:
         raise StoreError(f"limits.max_writes must be an integer between 0 and {write_cap}")
     limits = {"max_actions": actions, "max_writes": writes}

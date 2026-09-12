@@ -324,8 +324,8 @@ def test_authentication_openapi_and_body_validation(api):
     assert description["components"]["schemas"]["Invocation"]["required"] == ["arguments", "version"]
     limits = description["components"]["schemas"]["InvocationLimits"]
     assert limits["additionalProperties"] is False and limits["required"] == []
-    assert limits["properties"]["max_actions"]["maximum"] == 40
-    assert limits["properties"]["max_writes"]["maximum"] == 25
+    assert limits["properties"]["max_actions"]["maximum"] == 64
+    assert limits["properties"]["max_writes"]["maximum"] == 48
     assert limits["properties"]["max_seconds"]["exclusiveMinimum"] == 0
     assert limits["properties"]["max_seconds"]["maximum"] == 600
     assert set(description["components"]["schemas"]["InvocationResult"]["properties"]["outcome"]["enum"]) == {
@@ -444,14 +444,18 @@ def test_invocation_limits_apply_runtime_hard_caps_and_default_writes_to_actions
     assert code == 202 and api.completed(connected)["status"] == "COMPLETED"
     connection_id = connected["id"]
     api.learn(connection_id)
-    for limits in ({"max_actions": 41}, {"max_writes": 26}, {"max_actions": 2, "max_writes": 3}):
+    for limits in ({"max_actions": 65}, {"max_actions": 64, "max_writes": 49},
+                   {"max_actions": 2, "max_writes": 3}):
         assert api.invoke(connection_id, limits=limits)[0] == 400
     for limits, expected in (({}, {"max_actions": 40, "max_writes": 25}),
+                             ({"max_actions": 64, "max_writes": 48}, {"max_actions": 64, "max_writes": 48}),
+                             ({"max_actions": 64}, {"max_actions": 64, "max_writes": 25}),
                              ({"max_actions": 2}, {"max_actions": 2, "max_writes": 2}),
                              ({"max_writes": 0, "max_seconds": 600},
                               {"max_actions": 40, "max_writes": 0, "max_seconds": 600.0})):
         code, accepted = api.invoke(connection_id, limits=limits)
         assert code == 202 and api.completed(accepted)["request"]["limits"] == expected
+        assert api.fake.invocation_connections[-1]['_invocation_limits'] == expected
     assert api.service.store.connection(connection_id)["scope"] == {
         "exploration_enabled": True, "max_actions": 100, "max_writes": 80}
 

@@ -33,9 +33,9 @@ def main():
     parser.add_argument("--max-actions", type=int, default=40)
     parser.add_argument("--max-writes", type=int, default=4)
     parser.add_argument("--invoke-max-actions", type=int,
-                        help="Limit actions for this invocation within the connection scope (at most 40)")
+                        help="Limit actions for this invocation within the connection scope (at most 64; default at most 40)")
     parser.add_argument("--invoke-max-writes", type=int,
-                        help="Limit possible writes for this invocation within its actions and scope (at most 25)")
+                        help="Limit possible writes within this invocation's actions and scope (at most 48; default at most 25)")
     parser.add_argument("--invoke-max-seconds", type=float,
                         help="Runtime elapsed limit up to 600 seconds, excluding queueing/authentication; in-flight work can overrun")
     parser.add_argument("--operation")

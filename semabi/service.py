@@ -17,7 +17,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlsplit, urlunsplit
 
-from semabi.compiler.artifacts import ArtifactStore, StoreError, canonical
+from semabi.compiler.artifacts import (ArtifactStore, StoreError, canonical,
+                                      MAX_INVOKE_ACTIONS, MAX_INVOKE_WRITES)
 
 OUTCOMES = ("CONFIRMED", "APPLICATION_REFUSAL", "FAILED_BEFORE_EFFECT", "UNCERTAIN",
             "PREDICTED_REFUSAL", "PREDICTION_UNAVAILABLE")
@@ -354,7 +355,8 @@ class Service:
                 if "limits" in request:
                     # This copy is only for this Runtime call; queueing and authentication
                     # precede its elapsed deadline, and durable connection scope is unchanged.
-                    connection = {**connection, "scope": {**connection["scope"], **request["limits"]}}
+                    connection = {**connection, "scope": {**connection["scope"], **request["limits"]},
+                                  "_invocation_limits": request["limits"]}
                 result = runtime.invoke(connection, operation, request["arguments"], emit)
                 _object(result, "Runtime result")
                 if result.get("outcome") not in OUTCOMES:
@@ -404,10 +406,10 @@ def openapi() -> dict:
         "LearnInput": obj({"settings": obj({"max_actions": integer, "max_writes": {"type": "integer", "minimum": 0}}),
                            "repair_execution_id": {"type": "string", "description": "Optional same-connection unavailable guarded prediction to investigate during explicitly authorized learning. May write disposable application data within the connection budgets; never retries an uncertain write."}}),
         "InvocationLimits": {**obj({
-            "max_actions": {"type": "integer", "minimum": 1, "maximum": 40,
-                            "description": "Cannot exceed connection scope. Omitted values use its effective runtime cap."},
-            "max_writes": {"type": "integer", "minimum": 0, "maximum": 25,
-                           "description": "Cannot exceed connection scope or max_actions; defaults to their effective cap."},
+            "max_actions": {"type": "integer", "minimum": 1, "maximum": MAX_INVOKE_ACTIONS,
+                            "description": "Cannot exceed connection scope. Defaults to at most 40; larger budgets require an explicit value."},
+            "max_writes": {"type": "integer", "minimum": 0, "maximum": MAX_INVOKE_WRITES,
+                           "description": "Cannot exceed connection scope or max_actions. Defaults to at most 25; larger budgets require an explicit value."},
             "max_seconds": {"type": "number", "exclusiveMinimum": 0, "maximum": 600,
                             "description": "Optional finite Runtime elapsed limit in seconds; excludes queueing and authentication."}}),
             "description": "Limits apply only to this invocation and participate in idempotency. Deadline checks bracket browser work and polling; an in-flight primitive can finish late. Expiry after a possible write is UNCERTAIN, with no automatic retry. Omitting limits retains legacy execution behavior."},

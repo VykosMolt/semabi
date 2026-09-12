@@ -201,6 +201,17 @@ def _return_policy(context, blocked):
     return policy
 
 
+def guarded_verification_budget(procedure):
+    """Conservative observed-route envelope, counted after the selection prefix."""
+    route_actions = 2 * (len(owner_collection_prefix(procedure)) + len(procedure["navigation"]))
+    policy = _return_policy(procedure["return_context"], set())
+    return_bound = max((choice["rank"] for choice in policy.values()), default=0)
+    return {"actions": 8 + route_actions + 4 * return_bound,
+            "possible_writes": 2 + route_actions + 4 * return_bound,
+            "return_bound_per_replay": return_bound,
+            "scope": "Reserved after preflight; selection prefix costs extra. Conservative across recorded return contexts, not a completion guarantee"}
+
+
 def _return_choices(surface):
     from semabi.compiler.runtime import EXCLUDED_WORDS
     choices = []
@@ -1110,6 +1121,7 @@ def publish_operations(runtime, browser, connection, settings, trace, artifact, 
                 guarded["argument_schema"]["required"] += ["value", "expect"]
                 guarded["support"]["persisted_edits"] = persisted
                 guarded["scope"]["guard"] = "Caller-requested empirical prediction agreement, not a necessary/sufficient application guarantee"
+                guarded["scope"]["verification_budget"] = guarded_verification_budget(guarded["procedure"])
                 guarded["effect_checks"] += ["Requested field and empirical condition on intended owner after terminal reopening and reload",
                                               "Detail persistence witness bracketed by matching rendered entry inventories",
                                               "Observed sibling rows unchanged before terminal target verification; no simultaneous global-state guarantee"]
@@ -1271,13 +1283,15 @@ def invoke(runtime, browser, operation, arguments, trace):
                     "effect": {"field_write_attempted": False, "reason": "Supported response excludes caller's requested response"},
                     "metrics": trace.metrics()}
         _check_owner(proposed, procedure, arguments)
-        # The supplied guarded wrapper has a finite mandatory tail: fill/check,
-        # two collection replays, two detail replays, and two reloads. Refuse a
-        # knowingly unaffordable write; additional learned return edges still
-        # consume the ordinary budget and are not promised by this lower bound.
-        route_actions = 2 * (len(collection_prefix) + len(procedure["navigation"]))
-        if (trace.budget.actions + 8 + route_actions > trace.budget.max_actions
-                or trace.budget.writes + 2 + route_actions > trace.budget.max_writes):
+        # Reserve the supplied tail plus the observed return-policy envelope for
+        # each of its four replays. Previously only the direct route was counted:
+        # a multi-view operation could fill despite a known unaffordable return.
+        # This is conservative across the recorded contexts, not a promise about
+        # unseen transitions, future unavailable controls, or elapsed time.
+        tail = guarded_verification_budget(procedure)
+        trace.emit({"type": "semantic_verification_budget", **tail})
+        if (trace.budget.actions + tail["actions"] > trace.budget.max_actions
+                or trace.budget.writes + tail["possible_writes"] > trace.budget.max_writes):
             _stop("Remaining interaction budget cannot cover the mandatory guarded verification procedure")
     current = trace.read(browser)
     if _live_signature(current) != _live_signature(surface):
