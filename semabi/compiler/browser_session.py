@@ -9,7 +9,7 @@ from __future__ import annotations
 import time
 from urllib.parse import urlsplit
 
-from semabi.compiler.browser import ActionResult, Browser, Primitive, SCOPE_STATE_JS
+from semabi.compiler.browser import ActionResult, Browser, Primitive, SCOPE_STATE_JS, CHECKED_STATE_JS
 from semabi.compiler.observation import Node, Observation
 from semabi.compiler.surface import Surface, digest
 
@@ -17,11 +17,22 @@ from semabi.compiler.surface import Surface, digest
 SURFACE_JS = r"""() => {
   const nodes = [], handles = [], controls = {}, forms = {}, text_boundaries = {};
   const text = s => (s || '').replace(/\s+/g, ' ').trim();
-  const visible = e => {
+  const painted = e => {
     const s = getComputedStyle(e), r = e.getBoundingClientRect();
     return s.display !== 'none' && s.visibility !== 'hidden' && s.visibility !== 'collapse'
       && e.checkVisibility({checkOpacity:true, checkVisibilityCSS:true})
       && (r.width > 0 || r.height > 0);
+  };
+  const visible = e => {
+    if (painted(e)) return true;
+    // A transparent native choice can be the clickable part of a rendered
+    // associated label. Preserve its native state, not arbitrary hidden inputs.
+    // It still needs its own non-collapsed layout box and CSS visibility.
+    if (e.tagName !== 'INPUT' || !['checkbox', 'radio'].includes(e.type)) return false;
+    const s = getComputedStyle(e), r = e.getBoundingClientRect();
+    return s.opacity === '0' && s.display !== 'none' && s.visibility === 'visible'
+      && e.checkVisibility({checkOpacity:false, checkVisibilityCSS:true})
+      && r.width > 0 && r.height > 0 && Array.from(e.labels || []).some(painted);
   };
   const ownText = e => text(Array.from(e.childNodes).filter(c => c.nodeType === 3).map(c => c.textContent).join(' '));
   const editableText = e => {
@@ -123,7 +134,7 @@ SURFACE_JS = r"""() => {
       n.value = type === 'password' ? '[REDACTED]' : e.isContentEditable ? editableText(e) : (e.value || '');
       if (e.placeholder) n.placeholder = e.placeholder;
     }
-    if (['checkbox','radio'].includes(role)) n.checked = !!e.checked || e.getAttribute('aria-checked') === 'true';
+    /* CHECKED_STATE */
     if (role === 'combobox' && tag === 'select') {
       n.options = Array.from(e.options).map(o => text(o.textContent));
       n.value = e.selectedIndex >= 0 ? text(e.options[e.selectedIndex].textContent) : '';
@@ -150,7 +161,7 @@ SURFACE_JS = r"""() => {
   }
   window.__semabi_nodes = handles;
   return {nodes, controls, forms, text_boundaries};
-}""".replace('/* OBSERVATION_SCOPE */', SCOPE_STATE_JS)
+}""".replace('/* OBSERVATION_SCOPE */', SCOPE_STATE_JS).replace('/* CHECKED_STATE */', CHECKED_STATE_JS)
 
 
 def origin_of(url: str) -> str:

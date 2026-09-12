@@ -44,6 +44,17 @@ SCOPE_STATE_JS = r"""
     }
 """
 
+CHECKED_STATE_JS = r"""
+    if (['checkbox', 'radio'].includes(role)) {
+      if (e.tagName === 'INPUT' && ['checkbox', 'radio'].includes(e.type)) {
+        if (!e.indeterminate) n.checked = !!e.checked;
+      } else {
+        const checked = e.getAttribute('aria-checked');
+        if (checked === 'true' || checked === 'false') n.checked = checked === 'true';
+      }
+    }
+"""
+
 SNAPSHOT_JS = r"""
 () => {
   const roleOf = (e) => {
@@ -80,7 +91,8 @@ SNAPSHOT_JS = r"""
     }
     const n = { i: nodes.length, parent, role, name };
     const r = e.getBoundingClientRect(); n.bbox = [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)];
-    if (t === 'input' || t === 'textarea') { if (role==='checkbox'||role==='radio') n.checked = !!e.checked; else n.value = e.value; if (e.placeholder) n.placeholder = e.placeholder; }
+    if (t === 'input' || t === 'textarea') { if (!['checkbox','radio'].includes(role)) n.value = e.value; if (e.placeholder) n.placeholder = e.placeholder; }
+    /* CHECKED_STATE */
     if (t === 'select') { n.options = Array.from(e.options).map(o=>o.textContent.trim()); n.value = e.selectedIndex>=0 ? e.options[e.selectedIndex].textContent.trim() : ''; }
     if (e.getAttribute('aria-current')) n.current = true;
     /* OBSERVATION_SCOPE */
@@ -93,7 +105,7 @@ SNAPSHOT_JS = r"""
   window.__semabi_nodes = handles;
   return nodes;
 }
-""".replace('/* OBSERVATION_SCOPE */', SCOPE_STATE_JS)
+""".replace('/* OBSERVATION_SCOPE */', SCOPE_STATE_JS).replace('/* CHECKED_STATE */', CHECKED_STATE_JS)
 
 
 _NAVIGATION_SIGNATURES = (

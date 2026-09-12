@@ -282,6 +282,21 @@ def reload_observed(browser, trace):
     return after
 
 
+def acquisition_priority_context(surface, route):
+    """Search priority only, never an assertion of world-state equivalence.
+
+    The most recent scoped target and native selection distinguish identical
+    chooser/detail views reached for different arguments. Alternate histories
+    remain queued with their full bindings even when this small priority key ties.
+    """
+    latest = {}
+    for step in route:
+        if "selector" in step:
+            kind = "native_selection" if step.get("postcondition") else "target"
+            latest[kind] = step["selector"]
+    return digest([surface.observation.structural_signature(), latest])
+
+
 def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
     """Bounded graph traversal. Observed view changes supply composition edges.
 
@@ -290,15 +305,16 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
     the field language's minimum distinct examples for subsequent selectors.
     All replays, failed candidates and fills charge the ordinary Trace budget.
     """
-    pending = deque([([], ())])
-    seen, queued = set(), set()
-    while pending and len(seen) < 48:
-        route, ancestors = pending.popleft()
+    pending, deferred = deque([([], ())]), deque()
+    seen, queued, observed_destinations = set(), set(), set()
+    while (pending or deferred) and len(seen) < 48:
+        route, ancestors = (pending if pending else deferred).popleft()
         key = digest(route)
         if key in seen:
             continue
         seen.add(key)
         surface = replay(browser, trace, entry, route, context=context, acquiring=True)
+        observed_destinations.add(acquisition_priority_context(surface, route))
         initial_shape = procedure_context(surface)
         buttons = []
         selector_counts = {}
@@ -332,7 +348,15 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
                 candidate = digest(new_route)
                 if candidate not in queued:
                     queued.add(candidate)
-                    pending.append((new_route, (*ancestors, before_context)))
+                    signature = acquisition_priority_context(after, new_route)
+                    # Rank reachable new observations before alternate paths to
+                    # an already seen view. Do not equate observation with state:
+                    # deferred paths keep their complete argument/selection history.
+                    # In particular a radio/commit round trip may return to the
+                    # same displayed detail while binding a different resource.
+                    frontier = pending if signature not in observed_destinations else deferred
+                    observed_destinations.add(signature)
+                    frontier.append((new_route, (*ancestors, before_context)))
         if stable_buttons:
             surface = replay(browser, trace, entry, route, context=context, acquiring=True)
             numeric = [(surface.descriptor(node), numeric_probes(surface, node))
@@ -371,8 +395,10 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
                     hits = restored.resolve(descriptor)
                     if len(hits) == 1 and restored.observation.node(hits[0]).value == value:
                         numeric_trials[-1]["persisted"] = restored.observation.structural_signature()
-    emit({"type": "acquisition_frontier", "visited_contexts": len(seen), "pending_contexts": len(pending),
-          "context_limit": 48, "depth_limit": 6, "bounded_frontier_exhausted": not pending,
+    emit({"type": "acquisition_frontier", "visited_contexts": len(seen),
+          "pending_contexts": len(pending) + len(deferred), "deferred_contexts": len(deferred),
+          "priority": "new rendered observations before retained alternate paths",
+          "context_limit": 48, "depth_limit": 6, "bounded_frontier_exhausted": not pending and not deferred,
           "scope": "Bounded sampled routes; not complete application enumeration"})
     return trials, numeric_trials
 

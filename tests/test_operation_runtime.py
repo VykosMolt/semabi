@@ -1058,6 +1058,81 @@ def test_semantic_acquisition_composes_selection_return_and_check_with_finite_bu
     assert trace.budget.actions < 2500 and trace.budget.writes < 1600
 
 
+def test_semantic_acquisition_reaches_selection_commit_amid_reversible_view_cycles(tmp_path):
+    from semabi.compiler.browser import ActionResult
+    from semabi.compiler.runtime import Budget, Trace, StopOperation
+    from semabi.compiler.semantic_runtime import acquire
+
+    class Browser:
+        def __init__(self):
+            self.expanded = set()
+            self.selected = {}
+            self.surface = self.registry()
+
+        def registry(self):
+            nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'heading', 'Registry')]
+            for category, owners in [('Left', ('A', 'B')), ('Right', ('C',))]:
+                root = len(nodes)
+                nodes.append(Node(root, 0, 'listitem', ''))
+                nodes.append(Node(len(nodes), root, 'button',
+                                  ('Fold ' if category in self.expanded else 'Expand ') + category))
+                if category in self.expanded:
+                    for owner in owners:
+                        row = len(nodes)
+                        nodes.append(Node(row, root, 'listitem', ''))
+                        nodes.append(Node(len(nodes), row, 'heading', owner))
+                        nodes.append(Node(len(nodes), row, 'button', 'Open ' + owner))
+            return _surface(nodes)
+
+        def detail(self, checked=False):
+            # Deliberately no visible related-object echo: selection history
+            # must survive a return to this otherwise identical detail.
+            return _surface([Node(0, -1, 'group', ''), Node(1, 0, 'heading', self.owner),
+                             Node(2, 0, 'button', 'Back'), Node(3, 0, 'button', 'Choose resource'),
+                             Node(4, 0, 'button', 'Check'),
+                             Node(5, 0, 'status', 'Recorded' if checked else 'Waiting')])
+
+        def goto(self, url):
+            self.surface = self.registry()
+
+        def read(self):
+            return self.surface
+
+        def act(self, action):
+            label = self.surface.observation.node(action.target).name
+            if label.startswith(('Expand ', 'Fold ')):
+                category = label.split(' ', 1)[1]
+                self.expanded.symmetric_difference_update({category})
+                self.surface = self.registry()
+            elif label.startswith('Open '):
+                self.owner = label[5:]
+                self.surface = self.detail()
+            elif label == 'Back':
+                self.surface = self.registry()
+            elif label == 'Choose resource':
+                self.surface = _semantic_radio_rows(selected=self.selected.get(self.owner))
+            elif label in ('Choose Alpha', 'Choose Beta'):
+                self.selected[self.owner] = label[7:]
+                self.surface = _semantic_radio_rows(selected=self.selected[self.owner])
+            elif label == 'Apply selection':
+                self.surface = self.detail()
+            elif label == 'Check':
+                self.surface = self.detail(checked=True)
+            return ActionResult(True)
+
+    browser, trials, edits = Browser(), [], []
+    trace = Trace(tmp_path / 'selection-with-folders', lambda event: None, Budget(800, 600))
+    try:
+        acquire(browser, trace, 'entry', lambda event: None, trials, edits, {})
+    except StopOperation as error:
+        assert str(error) == 'Interaction budget exhausted'
+    completed = [trial for trial in trials if trial['action'].get('descriptor', {}).get('label') == 'Check'
+                 and trial['route'][-1].get('descriptor', {}).get('label') == 'Apply selection'
+                 and any(step.get('postcondition') == {'checked': True} for step in trial['route'])]
+    assert len({trace.log.observations[trial['before']].node(1).name for trial in completed}) >= 2
+    assert trace.budget.actions <= 800 and trace.budget.writes <= 600
+
+
 @pytest.mark.parametrize('predecessor_category', [False, True])
 @pytest.mark.parametrize('post_owner_changed', [False, True])
 @pytest.mark.parametrize('control_only', [False, True])
@@ -2206,6 +2281,57 @@ def test_rendered_closed_disclosure_fields_are_absent_until_opened():
         assert browser.act(Primitive('click', toggle)).ok
         after = browser.read()
         assert {field['descriptor']['label'] for field in form_candidates(after)[0]['fields']} == {'Caption', 'Detail'}
+    finally:
+        browser.close()
+
+
+@pytest.mark.slow
+def test_rendered_transparent_native_choice_requires_visible_associated_label():
+    from semabi.compiler.browser import Primitive
+    browser = BrowserSession('https://synthetic.invalid/')
+    try:
+        browser._page.set_content('''<form><label>Caption <input></label>
+          <label>Visible choice <input type="checkbox" style="opacity:0" checked></label>
+          <input type="checkbox" style="opacity:0" aria-label="Unrendered choice">
+          <label style="opacity:0">Invisible label <input type="checkbox"></label>
+          <label>Hidden control <input type="checkbox" style="display:none"></label>
+          <details><summary>Options</summary><label>Collapsed choice <input type="checkbox"></label></details>
+          <button type="submit">Save</button></form>''')
+        surface = browser.read()
+        choices = [(node, control) for node, control in surface.controls.items()
+                   if control['role'] == 'checkbox']
+        assert [control['label'] for _, control in choices] == ['Visible choice']
+        node = choices[0][0]
+        assert surface.observation.node(node).checked is True
+        assert browser.act(Primitive('click', node)).ok
+        after = browser.read()
+        current = after.resolve(surface.descriptor(node))
+        assert len(current) == 1 and after.observation.node(current[0]).checked is False
+    finally:
+        browser.close()
+
+
+@pytest.mark.slow
+def test_rendered_choice_unknown_mixed_and_native_state_agree_across_snapshots():
+    from semabi.compiler.browser import SNAPSHOT_JS
+    browser = BrowserSession('https://synthetic.invalid/')
+    try:
+        browser._page.set_content('''
+          <div role="checkbox" aria-label="Unknown">Unknown</div>
+          <div role="checkbox" aria-label="Mixed" aria-checked="mixed">Mixed</div>
+          <div role="checkbox" aria-label="False" aria-checked="false">False</div>
+          <div role="radio" aria-label="True" aria-checked="true">True</div>
+          <input type="checkbox" aria-label="Native false" aria-checked="true">
+          <input id="indeterminate" type="checkbox" aria-label="Native mixed" checked>
+          <script>document.getElementById('indeterminate').indeterminate=true</script>''')
+        surface = browser.read()
+        rich = {node.name: node.checked for node in surface.observation.nodes
+                if node.role in {'checkbox', 'radio'}}
+        ordinary = {node['name']: node.get('checked') for node in browser._page.evaluate(SNAPSHOT_JS)
+                    if node['role'] in {'checkbox', 'radio'}}
+        expected = {'Unknown': None, 'Mixed': None, 'False': False, 'True': True,
+                    'Native false': False, 'Native mixed': None}
+        assert rich == ordinary == expected
     finally:
         browser.close()
 

@@ -306,3 +306,11 @@ retains every requested case: SemABI completed 2/10 Memos core tasks; the
 baseline completed 1/10. A separate coordinator-caused startup failure is
 retained in the request denominator. Linkding fixture setup was unestablished. The product criterion has
 not been met, and general goal planning remains unsupported.
+
+A later development rerun on `f1fd5a5` completed 4/16 original Memos requests
+(4/10 core), with independently checked creation/replacement and a service/browser
+restart. Eight requests were outside the unchanged caller grammar; three
+intervention cases remained unestablished, and one absent-target case supplied
+only a partial check. This does not revise the original assessment or establish
+a baseline advantage. The rolling execution record retains all setup-invalid
+attempts and their costs separately from the successful rerun.

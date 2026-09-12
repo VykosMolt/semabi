@@ -5,7 +5,8 @@
 - Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
   `d0b1574` and research `bbd56ef` are ancestors. No cherry-pick or reset.
 - Current milestone: integrated API checkpoint `956b72b`, authorized repair
-  checkpoint `4c6a8f7`; now control-contained selection and real workshop
+  checkpoint `4c6a8f7`, control labels `f1fd5a5`, bounded resume `a417aca`;
+  now control-contained selection and real workshop
   composition, followed by original-app reruns and the reserved assessment.
   Acceptance: standard HTTP discovery/fit/schema/invoke, shared frozen/live
   language, fresh owner/resource arguments, persistent checked write, restart,
@@ -75,8 +76,10 @@
   shared field/key/definition23 passed; real P43 fit/artifact/live parity gate
   passed. Original whole-repository run was interrupted at reported88% after
   new concrete defects, 19m32s elapsed; retained journal is NOT a whole-suite
-  pass. Next broad gate will run on a committed isolated snapshot while main
-  continues, under the aggregate12-CPU cap. Historical counts are not combined.
+  pass. The isolated `956b72b` broad gate subsequently completed:1334 passed,
+  3 skipped,1 xfailed in2093.04s,621.1MiB peak. Evidence is
+  `/tmp/semabi-retention-956b72b-9pza6H/retention.xml` and its retained unit journal.
+  This does not validate later source changes; historical counts are not combined.
 - Vet attribution: retained transfer frontier reports205 contradictions,
   288 visibility and83 explained/897 steps;45 explained belongs to a separate
   403-step local diagnostic. All205 contradiction verdicts are verified-view
@@ -108,9 +111,10 @@
 - Jobs/ownership: root API/acquisition; semantic_bridge shared artifact;
   observation_review workshop composition; fixture_evaluation independent checks.
   Root owns API8860, dispatch8877, workshop8878, presentation variant8879;
-  unrelated dispatch8910 untouched. Broad retention runs fixed956b72b in owned
+  unrelated dispatch8910 untouched. Broad retention completed fixed956b72b in owned
   `/tmp/semabi-retention-956b72b-9pza6H`, unit `semabi-retention-956b72b.service`,
-  eight-core/20GiB cap; remaining concurrent work at mostfourcores.
+  eight-core/20GiB cap. Current workshop learning uses frozen a417aca; one
+  separately owned bounded pilot diagnostic is authorized. Aggregate cap12cores.
 - Workshop candidate gate588 passed/32.29s. Control-contained labels now require
   learned owner-wrapper constraints before any action; other such prerequisites
   remain observed enums. Nested inventory retains parent-owned state and checks
@@ -122,20 +126,60 @@
   after opening Shelves. No semantic operation was published. Current repair
   searches observed return paths, avoids repeated acquisition edges, and resumes
   unpublished acquisition once if an initial raw refit still cannot publish.
-  Combined affected product gate597 passed/31.26s. Both fit costs and all
-  continued actions count. A positive persisted-field
+  Combined affected product gate597 passed/31.26s. Actual resumed a417aca run
+  remained UNESTABLISHED:1066actions/900writes/1077totalsteps (11reused),748.666s,
+  two fits totaling307.324s. Twenty-five visited routes supplied only eight
+  distinct entry observations and no recorded check after a radio/commit path.
+  Start job had owner0 but all28 responses were negative and no ordered/pair
+  language. Other navigation controls' null owners are not that failure.
+  New bounded test: FIFO reached zero complete owner/selection procedures;
+  raw-observation priority reached one; including latest scoped target/native
+  selection reached two within the same800/600 budget. Alternate paths remain
+  queued, not asserted equivalent or discarded. This isolates search starvation,
+  not a claim of field-learning success or application acquisition advantage.
+  Integrated observation/frontier product gate600 passed/33.28s. Read-only artifact
+  diagnosis: all19 assigned-detail visits immediately returned, with no Start,
+  field edit or reload; numeric candidates existed, clocks were empty. Therefore
+  assigned-detail input persistence was unproved and all actual Start outcomes
+  lacked a related station. Next acquisition must establish those joint occasions,
+  not force a comparison or add a field-parser special case.
+  A positive persisted-field
   readback contradiction now suspends only its guarded operation; ambiguity or
   unattributed inventory change does not blanket-suspend checking procedures.
   Memos f1fd5a5 learned create/read/update in31actions/18writes/25.019s; evaluator
   readiness and checker-process ownership failures prevented first task calls.
   All16 rows and setup failures remain in separate execution phases, not learner
   failures. Corrected evaluator runs use owned frozen f1fd5a5 worktree
-  `/tmp/semabi-memos-f1fd5a5-assessment`, service8864, allowing main to advance.
-- Next executable actions: finish control-label safety/scoped nested inventory
-  repair; fresh workshop HTTP onboarding at1200actions/900possiblewrites ceiling.
-  Memos8852 original base is restored; new evaluator wrapper repairs obsolete auth
-  return-shape assertion while preserving that setup failure. Then remeasure
-  original application task denominators and freeze
+  `/tmp/semabi-memos-f1fd5a5-assessment`, allowing main to advance.
+  Full corrected Memos `execution_phase_v4` completed4/16 requested (4/10core):
+  C1,C2,U1,U2 independently checked, including actual service/browser restart C2.
+  Eight requests remain outside frozen caller grammar; three intervention cases
+  unestablished; CH4 only confirmed unchanged inventory for an absent target, not
+  its complete requested intervention. Five invocations, no wrong effects or false
+  confirmations within checked visible body/seed fields. Workflow45actions/
+  29possiblewrites/37.969s; independent checks60actions/30authwrites/39.418s.
+  V4 reused V3 artifacts without another fit. Cumulative setup-invalid phases
+  retain three physical fits93actions/54writes/74.593s,9connect-auth actions,
+  19checks113actions/57authwrites/98.684s,16restore receipts and separate preflight
+  in `runs/product_integrated_memos_v1/cumulative_costs_after_v4.json`.
+  Service8864 closed; Memos8852 remains at final changed fixture. Original
+  assessment unchanged. Linkding original fixture setup is being repaired;
+  all16 original goals exceed that same caller grammar before catalog inspection,
+  which is not evidence that the learner cannot support them.
+  New Linkding base/changed setup passed37actions/20possiblewrites/11.811s;
+  original setup failure remains. Frozen a417aca onboarding used26actions/
+  15writes/13.697s (+3authactions), published create and exact-URL read, and
+  reserved too little remaining budget for two update experiments. No task calls.
+  The native checkbox had an on-screen layout box and visible associated label,
+  but opacity0 removed it from all14 raw observations. New rendered tests expose
+  that loss and false coercion of unknown/mixed states; shared checked-state
+  extraction now preserves unknown and native/ARIA precedence, while the product
+  retains transparent native choices only with a visible associated label.
+  Hidden, collapsed and unlabeled transparent controls remain excluded.
+- Next executable actions: finish actual resumed workshop HTTP onboarding at
+  1200actions/900possiblewrites ceiling, then independent scoped invocation checks.
+  Identify shared caller/runtime gaps for original Linkding requests without
+  dropping qualifiers; remeasure original application task denominators and freeze
   an independently developed reserved-application assessment.
 
 ## Product development resumed (2026-09-09)
