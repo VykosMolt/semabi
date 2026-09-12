@@ -98,7 +98,9 @@ def test_stalled_rendering_is_unsettled_and_requires_a_fresh_observation():
         assert browser._page.locator('button').inner_text() == 'Apply'
         assert browser.n_primitives == 1
 
-        browser.render_ready_ms = 3000
+        # This arm tests recovery, not a three-second browser startup guarantee.
+        # The production default still refuses safely when its budget expires.
+        browser.render_ready_ms = 10000
         fresh = browser.read()
         assert fresh.settled
         button = next(n for n in fresh.observation.nodes if n.role == 'button')

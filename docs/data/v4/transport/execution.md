@@ -257,6 +257,20 @@
   coincided with zero animation frames in500ms;2s actionability timed out. A fresh
   stalled first page passed a10s-budget click after1.979s. This identifies startup
   frame delivery, not hidden geometry; native actionability remains required.
+  Readinessa49829d→7ffd0e1 waits for two frames once per driver-owned document
+  handle, bounded3s; warm observations do not wait again. Failed readiness leaves
+  observations unsettled and blocks action IDs until a fresh ready read. Original
+  disclosure now passes. Integrated gate698passed/1failed65.61s: restored frames
+  exceeded the new test's3s positive-recovery allowance; a focused rerun passed
+  3.25s total. Positive test now explicitly allows10s, without changing production
+  deadline, failed80ms arm, stale-ID refusal or native actionability.
+  Frontierc3442fc→a3725e6 retains queues/cursors, native selection history and
+  global48-context/depth6 bounds; clean budget stops resume before one fit.
+  Every exploratory primitive (including replays) carries an unresolved-dispatch
+  fence. Failed/unknown dispatches prohibit new exploration; raw-validated numeric
+  receipts support cursor progress. Isolated533product,95semantic tests pass;
+  actual workshop raw recovery17completed+42pending/partial,29deferred. Legacy
+  recorded failures are fenced; unrecorded historical dispatches remain unknown.
 - Next executable actions: integrate reviewed RULE/typed-field/language-qualification
   repairs, validate the resumable frontier and browser-readiness candidates, then
   resume workshop's saved pending work through HTTP. Exercise typed Linkding updates

@@ -4,7 +4,7 @@ SemABI connects to a browser application, learns a parameterized operation from
 authorized UI experiments, and exposes its schema and invocation through HTTP.
 The current product path supports local form creation, reading a selected
 record, and updating supported text/native-checkbox fields with checked read-back. It uses
-no runtime model or paid API. A general English action-word prior proposes exploration; visible URL labels can also propose URL arguments
+no runtime LLM or paid API. A general English action-word prior proposes exploration; visible URL labels can also propose URL arguments
 when the interface omits an HTML input type. Repeated observed effects establish
 an operation's limited support. Record reads and updates use a unique local
 Edit, Modify or Update action, directly or through a record control advertising
@@ -26,6 +26,11 @@ All navigation replays, selections, attempted edits and reloads count. Fitting
 time and reused evidence steps are reported separately; explicit relearning can
 refit this connection's prior onboarding after a code repair without repeating
 its exploratory writes. Loading a published artifact after restart does not fit.
+Unpublished semantic onboarding retains its pending routes, argument bindings,
+and partial progress across explicit learning calls. The route/depth limits apply
+across those calls; exhaustion is not complete application coverage. Clean budget
+stops can resume before the next fit. An unresolved dispatched action blocks
+further exploration until reconciliation, rather than silently retrying a write.
 
 For a returned guarded schema with `target`, `selection_2`, `value` and `expect`,
 the first two arguments identify exact observed anchors within learned local rows;
