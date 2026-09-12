@@ -61,7 +61,15 @@
   the same terminal persistence witness, without demanding agreement on an
   intentionally ambiguous acquisition outcome. Focused actual-source gate:
   154 passed/4.24s, including real HTTP reset rejection and independent mutable
-  application state. Typed clean-editor continuation is being repaired separately.
+  application state. Numeric repair retained at3a6cc9c; typed repair integrated
+  atec0da13. Typed operations finish in a checked editor, with driver-owned
+  full-state/element receipts authorizing only a later compatible learned exit.
+  Both values on two owners must survive exit/reload/reopen during onboarding;
+  next-call navigation is charged as a possible write. Changed drafts, remounts,
+  incompatible versions and reconnects invalidate receipts. Ordinary induced
+  HTTP tests exercise repeated same/different targets and next-exit reset→stale.
+  Actual integratedec0da13 runtime/service/outcome/admissible gate:620 passed
+  in60.02s, including native browser tests. This is not a whole-repository count.
   Confirmation brackets an earlier detail witness with equal full observed local
   inventories including siblings; these precede terminal target verification.
   This is timed observational evidence, not atomicity, a global collection,

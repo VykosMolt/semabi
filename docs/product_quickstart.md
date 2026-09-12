@@ -191,9 +191,13 @@ one `target` argument**:
 Some forms additionally publish `_with_checkbox_fields` read/update variants.
 Use actual JSON booleans (`false`, not `"false"`) for their returned boolean
 arguments. These variants require both values to persist on two distinct
-onboarding records; they do not infer a checkbox's business meaning. Updates
-reopen the intended record after reload to check requested and preserved values,
-then follow the learned exit. Checks also compare rendered non-target state;
+onboarding records, including an exit/reload/reopen contrast; they do not infer a
+checkbox's business meaning. Updates reopen the intended record after reload to
+check requested and preserved values and finish in that checked editor.
+A later compatible call may leave it only with unchanged retained-element and
+full-state evidence through the learned exit, charged as a possible write. Edits,
+remounts, incompatible versions or reconnects invalidate that session-local receipt.
+Checks compare rendered non-target state before the final editor navigation;
 hidden sibling fields and atomicity are not established. Unknown or mixed
 checkbox state cannot authorize a toggle. Learning reserves the complete contrast
 budget before starting this optional extension; an unproved extension keeps the
