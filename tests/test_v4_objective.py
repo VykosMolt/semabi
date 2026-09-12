@@ -736,3 +736,48 @@ def test_a_step_that_only_re_keys_an_object_is_churn_not_explanation():
     result = evaluate(A, _widget_log(before, after))
     assert result.verdicts == {0: "EXPLAINED"}
     assert (result.explained, result.churn, result.delta_atoms) == (1, 0, 1)
+
+
+def _view_pages(value_before, value_after):
+    """A keyed thing on one view, a second view without it, the first view again."""
+    def keyed(value):
+        return Observation([Node(0, -1, "document", ""), Node(1, 0, "list", ""),
+                            Node(2, 1, "group", ""), Node(3, 2, "heading", "Cedar"), Node(4, 2, "text", value),
+                            Node(5, 1, "group", ""), Node(6, 5, "heading", "Rowan"), Node(7, 5, "text", "11"),
+                            Node(8, 0, "button", "Go"), Node(9, 0, "status", "Ready")])
+    other = Observation([Node(0, -1, "document", ""), Node(1, 0, "heading", "Elsewhere"),
+                         Node(2, 0, "button", "Back"), Node(3, 0, "status", "Ready")])
+    return keyed(value_before), other, keyed(value_after)
+
+
+def _view_log(*pages, names):
+    log = EvidenceLog.__new__(EvidenceLog)
+    log.dir = log.obs_path = log.steps_path = None
+    log.observations = {page.structural_signature(): page for page in pages}
+    log.typed_tokens = []
+    log.steps = []
+    for i, (before, after, name) in enumerate(zip(pages[:-1], pages[1:], names, strict=True)):
+        target = next(n for n in before.nodes if n.name == name)
+        primitive = Primitive("click", target.i, None, {"role": "button", "name": name})
+        log.steps.append(Step(i, 0, primitive, True, None, before.structural_signature(),
+                              after.structural_signature(), []))
+    return log
+
+
+def test_a_belief_revised_when_a_thing_returns_to_view_is_not_an_explained_change():
+    # Cedar shows 7, the page moves elsewhere, and Cedar shows 10 on the way back: the
+    # change was formed while Cedar was out of view, so the click that brought it back is
+    # not credited with it -- a reading that fragments one page into a singleton per
+    # variant would otherwise be paid for the stale beliefs its fragments diff against
+    first, other, again = _view_pages("7", "10")
+    H = _widget_hypotheses(first, other, again, keys={"group": "heading#0"}, persistent=())
+    A = _widget_abstractor(H)
+    result = evaluate(A, _view_log(first, other, again, names=("Go", "Back")))
+    assert result.verdicts == {0: "NAVIGATION", 1: "NAVIGATION"}
+    assert (result.explained, result.delta_atoms) == (0, 0)
+    # the same change with Cedar in view throughout is an effect of the step
+    unchanged, _, changed = _view_pages("7", "10")
+    H = _widget_hypotheses(unchanged, changed, keys={"group": "heading#0"}, persistent=())
+    result = evaluate(_widget_abstractor(H), _view_log(unchanged, changed, names=("Go",)))
+    assert result.verdicts == {0: "EXPLAINED"}
+    assert (result.explained, result.delta_atoms) == (1, 1)

@@ -323,6 +323,19 @@ def _named_arguments(A, log, step, before_state, after_state) -> int:
     return sum(1 for a in event.args if a in values)
 
 
+def _drop_revisions(delta, prev) -> None:
+    """A change on an object the before-state did not render is a belief revised, not an
+    effect of this step: the value was formed while the object was out of view, and what
+    the action did to the page cannot be read off a comparison with it.  Under a reading
+    that splits one page into a singleton per variant, every return of a variant would
+    otherwise diff its stale belief against the page and hand the reading changes that a
+    learned operator then 'explains' -- churn the fragmentation itself manufactures."""
+    out_of_view = {oid for oid, o in prev.objs.items() if o.node is None or o.node < 0}
+    if out_of_view:
+        delta.attr_changes = [c for c in delta.attr_changes if c[0] not in out_of_view]
+        delta.rel_changes = [c for c in delta.rel_changes if c[0] not in out_of_view]
+
+
 def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) -> Behaviour:
     """Score a reading on the evidence there is.
 
@@ -353,6 +366,7 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
             name = (step.action.target_desc or {}).get("name") if step.action.target_desc else None
             delta.added = [o for o in delta.added
                            if o.id not in discovered and not brought_into_view(o, step.action.kind, name)]
+            _drop_revisions(delta, prev)
             changed_domain = delta.domain_changed
             sensing = step.action.kind in SENSING_KINDS or (
                 step.action.kind == "click" and name in A.verified_view_controls)

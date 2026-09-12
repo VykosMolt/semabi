@@ -835,6 +835,43 @@ def structural_selects(A, obs, button_node) -> tuple[str, ...]:
     return tuple(k for k in (po.node_key.get(b) for b in _lists_with(obs, button_node)) if k)
 
 
+def relation_roles(A, owner_tid) -> dict[str, Role]:
+    """The objects the reading itself relates to the acting owner: what the owner's reference
+    slots point at, and what its page contains.
+
+    `roles_of` names an object only where some operator had a variable for it, and a control
+    whose whole answer is a message has no effect, so no variable beyond its owner.  Dispatch's
+    run page shows its carrier as the van it is, by containment, and the check turns on the
+    run's weight against that van's limit; harbour's joins reached the vessel the same way,
+    through variables the booking's effects happened to supply.  The kind and denotation are
+    the language's own RELATION query anchored on the owner: nothing new names an object, and
+    a rule over such a role is justified or not exactly as any other.
+    """
+    out: dict[str, Role] = {}
+    if owner_tid is None:
+        return out
+
+    def add(direction, slot, tid):
+        role = Role(f"{referring.RELATION}{[direction, slot]}:{tid}<{OWNER}", referring.RELATION,
+                    (direction, slot), tid, OWNER)
+        out.setdefault(role.name, role)
+
+    types = getattr(A, "types", {})
+    for tid, ti in types.items():
+        if tid == owner_tid:
+            continue
+        for slot, target in ti.refs.items():
+            if target == owner_tid:
+                add("backward", slot, tid)      # contained in the owner (`in:`), or referring to it
+        if ti.parent_tids.get(owner_tid):
+            add("parent", "", tid)
+    owner = types.get(owner_tid)
+    for slot, tid in (owner.refs if owner is not None else {}).items():
+        if tid != owner_tid:
+            add("forward", slot, tid)
+    return out
+
+
 def roles_of(inducer, operators) -> dict[str, Role]:
     out: dict[str, Role] = {}
     for op in operators:
@@ -1264,6 +1301,7 @@ def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out
                     permute, subject_restricted, structural, touched, about, simplest) -> None:
     for control, rows in by_control.items():
         roles = roles_of(inducer, ops_by_control.get(control, []))
+        roles = {**relation_roles(A, roles[OWNER].tid if OWNER in roles else None), **roles}
         defaults: dict = {}
         if rows and (structural or touched):
             _tr, _s, _obs, _e = rows[0]

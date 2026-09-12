@@ -115,3 +115,38 @@ def test_a_value_absent_from_a_variant_of_the_same_family_is_vacated():
     result = evaluate(A, _log(pages, ["Open Cedar", "Open Cedar"]))
     assert result.delta_signatures[0][3] == ()      # 7 -> absent: vacated, nothing registered
     assert result.delta_signatures[1][3] == ()      # absent -> 24: a discovery
+
+
+def _run_with_carrier(name, van, limit):
+    nodes = [Node(0, -1, "document", ""), Node(1, 0, "group", ""), Node(2, 1, "heading", name),
+             Node(3, 1, "text", "North")]
+    if van is not None:
+        nodes += [Node(4, 1, "group", ""), Node(5, 4, "heading", van), Node(6, 4, "text", f"Payload limit {limit} kg")]
+    nodes.append(Node(len(nodes), 1, "button", "Choose carrier"))
+    return Observation(nodes)
+
+
+def _chooser(*vans):
+    nodes = [Node(0, -1, "document", ""), Node(1, 0, "list", "")]
+    for van, limit in vans:
+        root = len(nodes)
+        nodes += [Node(root, 1, "group", ""), Node(root + 1, root, "heading", van),
+                  Node(root + 2, root, "text", f"Payload limit {limit} kg"), Node(root + 3, root, "button", f"Select {van}")]
+    return Observation(nodes)
+
+
+def test_a_member_a_rendering_of_its_holder_could_show_and_does_not_is_no_longer_in_it():
+    # Cedar's page shows Swift as its carrier, then the chooser, then Cedar with Panel: the
+    # chooser shows no run and contradicts nothing, so Swift stays Cedar's carrier there; the
+    # page that shows Panel in Cedar is a rendering that could show Swift and does not
+    pages = [_run_with_carrier("Cedar", "Swift", 8), _chooser(("Swift", 8), ("Panel", 14)),
+             _run_with_carrier("Cedar", "Panel", 14), _run_with_carrier("Rowan", "Swift", 8)]
+    A = _widget_abstractor(_widget_hypotheses(*pages, keys={"group": "heading#0"}, persistent=()))
+    holder, van_tid, slot = next((t, tid, k) for tid, ti in A.types.items() for k, t in ti.refs.items() if k.startswith("in:"))
+    tracker = A.make_tracker()
+    tracker.observe(pages[0], "reset")
+    state, _ = tracker.observe(pages[1], "click")
+    assert state.objs[(van_tid, "Swift")].refs[slot] == (holder, "Cedar")
+    state, _ = tracker.observe(pages[2], "click")
+    assert state.objs[(van_tid, "Swift")].refs[slot] is None
+    assert state.objs[(van_tid, "Panel")].refs[slot] == (holder, "Cedar")

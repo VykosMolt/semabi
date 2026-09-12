@@ -101,6 +101,7 @@ class AbsObj:
     node: int = -1  # root node index in the observation (for grounding)
     positional: bool = False  # named by its position among siblings, not by its key
     carried: frozenset = frozenset()  # attributes the rendering's family of templates can show
+    contains: frozenset = frozenset()  # types the rendering's family of templates can show inside it
 
     @property
     def id(self) -> tuple[int, str]:

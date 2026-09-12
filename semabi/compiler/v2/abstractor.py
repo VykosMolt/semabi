@@ -436,6 +436,7 @@ class V2Abstractor(Abstractor):
             inst = Instance(ui.root, tid, parent_idx, {}, {}, "v2")
             inst.positional = bool(getattr(ui, "positional", False))
             inst.carried = self._carried(et, ui.template)
+            inst.contains = self._contains(et, ui.template)
             inst.slots["id"] = ("", key if key is not None else "")
             record_spec = self.record_by_anchor.get(et_id)
             attr_slots = et.attr_slots[ui.template]
@@ -612,6 +613,25 @@ class V2Abstractor(Abstractor):
             cache[key] = frozenset(out)
         return cache[key]
 
+    def _contains(self, et, template: str) -> frozenset:
+        """The types an entity's rendering by this template, or by a variant of it, can show
+        inside it: a member believed to be in the entity that such a rendering does not show
+        is no longer in it -- the run's carrier once another van is chosen, or none."""
+        cache = self.__dict__.setdefault("_contains_cache", {})
+        key = (et.tid, template)
+        if key not in cache:
+            here = self.H.units.get(template)
+            family = [t for t in et.units if t == template or (
+                here is not None and self.H.units.get(t) is not None and self.H._same_family(here, self.H.units[t]))]
+            out = set()
+            for other in self.H.entity_types.values():
+                if other.tid == et.tid or other.tid not in self.tid_map:
+                    continue
+                if any(inside == et.tid and any(t2 in t for t in family) for t2, inside in other.contain.items()):
+                    out.add(self.tid_map[other.tid])
+            cache[key] = frozenset(out)
+        return cache[key]
+
     def abstract(self, obs: Observation) -> AbstractState:
         po = self.parsed(obs)
         objs: dict[tuple[int, str], AbsObj] = {}
@@ -640,7 +660,8 @@ class V2Abstractor(Abstractor):
                     refs[k] = (tgt, v) if v is not None else None
             o = AbsObj(inst.tid, key, attrs, None, refs, 0, inst.root,
                        positional=bool(getattr(inst, "positional", False)),
-                       carried=getattr(inst, "carried", frozenset()))
+                       carried=getattr(inst, "carried", frozenset()),
+                       contains=getattr(inst, "contains", frozenset()))
             inst_obj[idx] = o
             if o.id in objs:
                 if not self.merge_mentions:
@@ -1014,6 +1035,16 @@ class V2Tracker(Tracker):
                     self._confirm(oid, "reference", k, v, sig)
                 if action_kind in ("click", "reload") and o.tid not in {x.tid for x in self.prev_visible.values()}:
                     discovered.add(oid)  # first listing of this type since the last view of it: not an effect
+        # A member believed inside a thing that is rendered here by a family able to show
+        # such members, and does not show this one, is no longer in it.
+        for c in new.objs.values():
+            if c.node is not None and c.node >= 0:
+                continue
+            for k, v in list(c.refs.items()):
+                if k.startswith("in:") and v is not None:
+                    holder = raw.objs.get(v)
+                    if holder is not None and c.tid in holder.contains:
+                        c.refs[k] = None
         self.belief = new
         self.prev_visible = {o.id: o for o in raw.objs.values()}
         return new, discovered

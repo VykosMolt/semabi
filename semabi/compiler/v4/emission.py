@@ -228,6 +228,14 @@ def observed(before: Observation, after: Observation,
     a, b = live_text(before), live_text(after)
     if b is None or a == b:
         return None
+    if a is not None and ("\n" in a or "\n" in b):
+        # Several live regions: what this interaction said is the line that was not standing
+        # before it -- dispatch's seal verdict stays on the page while the check answers
+        # beside it, and "Dispatch ready" is the output, not "Dispatch ready Seal held".
+        said = [line for line in b.split("\n") if line not in a.split("\n")]
+        if not said:
+            return None
+        b = "\n".join(said)
     return lift_event(b, after, before, vocabulary=vocabulary)
 
 

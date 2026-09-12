@@ -64,3 +64,19 @@ def test_a_frozen_vocabulary_stops_learning_but_keeps_reading():
 def test_rendering_a_frame_back_puts_the_arguments_where_they_were():
     assert em.render("<> is already <> .", ["Festival White", "bottled"]) == \
         "Festival White is already bottled ."
+
+
+def test_with_several_live_regions_the_output_is_the_line_newly_said():
+    def regions(*lines):
+        nodes = [Node(0, -1, "group", "")] + [Node(i + 1, 0, "status", line) for i, line in enumerate(lines)]
+        return Observation(nodes)
+    standing = regions("Seal held")
+    assert em.observed(standing, regions("Dispatch ready", "Seal held")).text == "Dispatch ready"
+    assert em.observed(regions("Dispatch unavailable", "Seal held"),
+                       regions("Dispatch ready", "Seal held")).text == "Dispatch ready"
+    assert em.observed(regions("Dispatch ready"), regions("Dispatch ready", "Seal held")).text == "Seal held"
+    # a line that only went away is not something the interaction said
+    assert em.observed(regions("Dispatch ready", "Seal held"), standing) is None
+    # one region keeps its whole text, an emptied one included
+    assert em.observed(regions("Seal held"), regions("Dispatch ready")).text == "Dispatch ready"
+    assert em.observed(regions("Seal held"), regions("")).text == ""

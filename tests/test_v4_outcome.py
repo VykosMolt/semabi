@@ -121,3 +121,20 @@ def test_arguments_are_roles_and_not_the_values_they_took_while_fitting():
     state = State({(1, "w"): Obj(1, "w", {"gate": "closed"})})
     bound, _ = got.bind(state, None)
     assert got.arguments("refused <>", bound) == {0: "w"}
+
+
+def test_the_owners_own_relations_are_roles_even_where_no_effect_named_them():
+    # a run page (type 0) contains its carrier (type 2) and refers to a depot (type 5); a
+    # control whose only answer is a message has no operator variable for either, and the
+    # reading's own relations supply them, anchored on the owner
+    from collections import Counter
+    from semabi.compiler.abstract import TypeInfo
+    types = {0: TypeInfo(0, refs={"rel:5": 5}), 2: TypeInfo(2, refs={"in:0": 0}),
+             5: TypeInfo(5), 7: TypeInfo(7, refs={"in:2": 2}), 8: TypeInfo(8, parent_tids=Counter({0: 2}))}
+    A = type("A", (), {"types": types})()
+    roles = oc.relation_roles(A, 0)
+    assert sorted(roles) == ["relation['backward', 'in:0']:2<owner", "relation['forward', 'rel:5']:5<owner",
+                             "relation['parent', '']:8<owner"]
+    assert all(r.anchor == oc.OWNER and r.kind == "relation" for r in roles.values())
+    assert roles["relation['backward', 'in:0']:2<owner"].form == ("backward", "in:0")
+    assert oc.relation_roles(A, None) == {}
