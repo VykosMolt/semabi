@@ -259,17 +259,20 @@ class Evidence:
     checks its guards in an order.  That is a second hypothesis class, ``LIST``, and
     :meth:`admissible` answers for whichever is named.  What "forced" means depends on it:
     under ``RULE`` it is *the only event a globally pure rule vouches for here*, under ``LIST``
-    it is *the only event any consistent ordering of fired guards could return here*.  The
-    second is the class the learner declares, and it is what :meth:`ControlOutcome.answer`
-    reports.
+    it is the only event admitted by the ordered-guard language below. The latter restricts
+    residual guards to maximal shared witness conjunctions; it is not all consistent
+    decision lists. Adding a categorical field can change that language without refuting
+    an old explanation. :meth:`ControlOutcome.answer` reports this restricted class.
 
-    The search is exact and quadratic, not a heuristic, and the argument is short.  A
+    The uncorroborated globally pure search is exact and quadratic. A
     conjunction this state satisfies is a subset of its literals; its cover is the intersection
     of the occasions of its literals, so covers shrink as conjunctions grow.  For a witness set
     ``S`` the most specific conjunction available is ``L(state) & ⋂_{i∈S} L(i)``, which has the
     *smallest* cover and therefore the best chance of purity.  Adding a third witness can only
     shrink the conjunction and so enlarge the cover: if every pair fails purity, every larger
-    set fails too.  So enumerating pairs of same-event occasions decides the question.
+    set fails too. So enumerating pairs of same-event occasions decides that question.
+    Requiring a third supporting occasion needs the triple fallback in :meth:`admissible`;
+    greedy pair generalisation alone is not complete for corroborated support.
 
     Literals are held as bitmasks over one interned vocabulary, which is what makes 3750 pairs
     against 150 occasions a fraction of a second rather than a minute.

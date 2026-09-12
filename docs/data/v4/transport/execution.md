@@ -7,8 +7,8 @@
 - Current milestone: integrated API checkpoint `956b72b`, authorized repair
   checkpoint `4c6a8f7`, control labels `f1fd5a5`, bounded resume `a417aca`,
   scoped frontier/native observations `09c1ad0`, partial text updates `992b358`;
-  now control-contained selection and real workshop
-  composition, followed by original-app reruns and the reserved assessment.
+  now resumable workshop composition and typed Linkding operations after the
+  original-app reruns and first reserved Kanboard assessment.
   Acceptance: standard HTTP discovery/fit/schema/invoke, shared frozen/live
   language, fresh owner/resource arguments, persistent checked write, restart,
   relational boundary cases, meaningful learned-binding/condition ablation.
@@ -115,7 +115,11 @@
   Root owns API8860, dispatch8877, workshop8878, presentation variant8879;
   unrelated dispatch8910 untouched. Broad retention completed fixed956b72b in owned
   `/tmp/semabi-retention-956b72b-9pza6H`, unit `semabi-retention-956b72b.service`,
-  eight-core/20GiB cap. Workshop992b358 learning is terminal; no heavy fit active.
+  eight-core/20GiB cap. Workshop992b358 learning is terminal. New broad retention
+  unit `semabi-retention-75d80eb` runs fixed75d80eb in `runs/.retention-75d80eb`,
+  eight CPUs/8GiB; no concurrent heavy fit. Root moved inactive retention956 and
+  observationa417 worktrees to disk-backed `runs/.retention-956b72b-9pza6H` and
+  `runs/.observation-a417aca`, preserving original/tmp paths as symlinks and all data.
   Isolated agents own frontier continuation, browser readiness, and the Kanboard
   generic-probe development experiment. Aggregate cap12cores.
 - Workshop candidate gate588 passed/32.29s. Control-contained labels now require
@@ -241,6 +245,13 @@
   new board, not the submitted form. This exposes projection/default-scope barriers;
   it does not establish safe retry or justify ignoring arbitrary populated editors.
   First reserved assessment and all16 caller outcomes remain unchanged.
+- Linkding frozen769f616240/160 development onboarding:32actions/20writes/21.681s,
+  create/read only. First base update persisted but lacked the all-values witness;
+  checkbox contrasts therefore never began. The punctuation probe's two words
+  became two rendered links in one collection-valued field. Independent native
+  reconciliation found only the intended probe record changed; seed siblings and
+  other probe stayed unchanged. No retry. Projection/probe-policy diagnosis is
+  next; the16 original caller receipts remain distinct from schema diagnostics.
 - Browser diagnostic: retained closed-disclosure click failed on clean992b358
   and pure Playwright1.62.0/Chromium151.0.7922.34. Visible, unchanged geometry
   coincided with zero animation frames in500ms;2s actionability timed out. A fresh
