@@ -234,6 +234,18 @@ def completion_probe_tokens(surface: Surface) -> list[dict]:
             for value in sorted(found)[:8]]
 
 
+def creation_variants(candidate: dict) -> list[dict]:
+    """Keep the full proposal first; requiredness may propose a narrower trial."""
+    text = [field for field in candidate["fields"]
+            if field["role"] == "textbox" and field["input_type"] in TEXT_TYPES]
+    required = [field["argument"] for field in text if field["required"]]
+    if not required or len(required) == len(text):
+        return [candidate]
+    return [candidate, {**candidate, "argument_names": required,
+                        "signature": digest([candidate["signature"], required]),
+                        "proposal_basis": candidate["proposal_basis"] + "; required text controls only"}]
+
+
 def probe_arguments(candidate: dict, trial: int, *, punctuation_fields: set[str] | frozenset[str] = frozenset(),
                     completion_token: str | None = None) -> dict:
     values = {}
@@ -241,6 +253,8 @@ def probe_arguments(candidate: dict, trial: int, *, punctuation_fields: set[str]
         if field["role"] != "textbox" or field["input_type"] not in TEXT_TYPES:
             if field["required"] and not field.get("value") and not field.get("checked"):
                 raise StopOperation("A required control has no supported argument generator")
+            continue
+        if "argument_names" in candidate and field["argument"] not in candidate["argument_names"]:
             continue
         token = f"semabi{uuid.uuid4().hex[:10]}{trial}"
         if field_format(field) == "uri":
@@ -1862,7 +1876,7 @@ class Runtime:
                 candidates = [candidate for candidate in form_candidates(surface)
                               if SUBMIT_WORDS.search(candidate["descriptor"]["submit"]["label"])
                               and not EXCLUDED_WORDS.search(candidate["descriptor"]["submit"]["label"])]
-                for candidate in candidates:
+                for candidate in [variant for proposal in candidates for variant in creation_variants(proposal)]:
                     emit({"type": "candidate", "signature": candidate["signature"],
                           "proposal_basis": candidate["proposal_basis"],
                           "prior": "General English form action words; not observed support"})
@@ -1892,8 +1906,13 @@ class Runtime:
                                                               procedure["effect_slots"])
                             if witness is None:
                                 raise StopOperation("Probe record did not persist through reload")
-                            trials.append({"arguments": arguments, "witness": witness})
-                        op_id = "op_" + digest({"location": location, "form": candidate["descriptor"]})[:20]
+                            trials.append({"arguments": arguments, "witness": witness,
+                                           "checked_defaults": deepcopy(procedure["defaults"]),
+                                           "precondition_observation": current.observation.structural_signature()})
+                        identity = {"location": location, "form": candidate["descriptor"]}
+                        if "argument_names" in candidate:
+                            identity["argument_names"] = candidate["argument_names"]
+                        op_id = "op_" + digest(identity)[:20]
                         if source_hashes() != self.source_sha256:
                             raise StopOperation("Runtime source changed during learning; restart before publishing")
                         schema = argument_schema(candidate, list(arguments))
@@ -1921,6 +1940,10 @@ class Runtime:
                                                "prior": "General English action vocabulary proposes exploration",
                                                "runtime_model": None},
                                      "evidence_sha256": digest(evidence)}
+                        if "argument_names" in candidate:
+                            operation["name"] += "_required_fields"
+                            operation["scope"]["argument_policy"] = "Observed required text controls only; omitted controls retain checked pre-submit defaults"
+                            operation["scope"]["unsupported"].append("Post-submit persistence or effects of omitted control values")
                         bind_contract(operation)
                         operations.append(operation)
                         emit({"type": "operation_learned", "id": op_id, "version": operation["version"]})

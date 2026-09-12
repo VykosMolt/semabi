@@ -1964,6 +1964,116 @@ class _RecordBrowser:
         return ActionResult(True)
 
 
+class _OptionalProjectionBrowser(_RecordBrowser):
+    """Optional input is accepted but has no persistent rendered projection."""
+    def __init__(self, *, project_optional=False):
+        super().__init__()
+        self.fields = {'Name': '', 'Identifier': ''}
+        self.order = list(self.fields)
+        self.project_optional = project_optional
+        self.optional_required = False
+        self.fault = None
+        self.navigation_count = 0
+
+    def read(self):
+        surface = super().read()
+        for control in surface.controls.values():
+            if control['role'] == 'textbox':
+                control['required'] = control['label'] == 'Name' or self.optional_required
+        return surface
+
+    def goto(self, url):
+        self.navigation_count += 1
+        return super().goto(url)
+
+    def act(self, action):
+        result = super().act(action)
+        if action.kind == 'type' and self.fault == 'default_after_fill':
+            self.fields['Identifier'] = 'Intervening draft'
+        if action.kind == 'click' and not self.project_optional:
+            self.rows[-1]['Identifier'] = ''
+        if action.kind == 'click' and self.fault == 'default_after_first_minimal' and len(self.rows) == 2:
+            self.fields['Identifier'] = 'Intervening draft'
+        return result
+
+
+def test_required_only_creation_retains_full_failure_and_checks_supplied_witnesses(tmp_path, monkeypatch):
+    with monkeypatch.context() as baseline:
+        baseline.setattr(runtime_module, 'creation_variants', lambda candidate: [candidate])
+        _, _, original, unsupported = _learn_editable_records(
+            tmp_path / 'full_only', baseline, browser=_OptionalProjectionBrowser())
+        assert not unsupported['operations']
+        assert len(original.rows) == 1
+        assert 'unique visible record witness' in unsupported['attempts'][0]['reason']
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path / 'required_variant', monkeypatch, browser=_OptionalProjectionBrowser())
+    operation = _learned_kind(learned, 'create_visible_record')
+    assert learned['attempts'][0]['confirmed_trials'] == 0
+    assert 'unique visible record witness' in learned['attempts'][0]['reason']
+    assert list(operation['argument_schema']['properties']) == ['name']
+    assert operation['argument_schema']['required'] == ['name']
+    assert operation['argument_schema']['additionalProperties'] is False
+    assert operation['procedure']['defaults'] == {'identifier': ''}
+    assert len(operation['support']['trials']) == 2
+    assert all(trial['checked_defaults'] == {'identifier': ''}
+               and set(trial['witness']['field_slots']) == {'name'}
+               for trial in operation['support']['trials'])
+    assert len(browser.rows) == 3  # The failed full write is not erased or relabeled successful.
+    result = runtime.invoke(connection, operation, {'name': 'Fresh required value'}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED'
+    assert browser.rows[-1] == {'Name': 'Fresh required value', 'Identifier': ''}
+    assert set(result['effect']['witness']['field_slots']) == {'name'}
+
+
+def test_full_creation_remains_first_when_optional_projection_is_supported(tmp_path, monkeypatch):
+    _, _, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_OptionalProjectionBrowser(project_optional=True))
+    operation = _learned_kind(learned, 'create_visible_record')
+    assert set(operation['argument_schema']['required']) == {'name', 'identifier'}
+    assert len(browser.rows) == 2
+    assert 'argument_policy' not in operation['scope']
+    assert operation['id'] == 'op_' + digest({
+        'location': {'entry_url': browser.allowed_origin + '/', 'navigation': []},
+        'form': operation['procedure']['form']})[:20]
+
+
+@pytest.mark.parametrize('fault', ['extra_argument', 'requiredness', 'default_before_call', 'default_after_fill'])
+def test_required_only_creation_rejects_contract_drift_without_submitting(tmp_path, monkeypatch, fault):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_OptionalProjectionBrowser())
+    operation = _learned_kind(learned, 'create_visible_record')
+    arguments = {'name': 'Fresh required value'}
+    if fault == 'extra_argument':
+        arguments['identifier'] = 'Not a published argument'
+    elif fault == 'requiredness':
+        browser.optional_required = True
+    elif fault == 'default_before_call':
+        browser.fields['Identifier'] = 'Existing draft'
+    else:
+        browser.fault = fault
+    before = (len(browser.rows), len(browser.actions), browser.navigation_count)
+    result = runtime.invoke(connection, operation, arguments, lambda event: None)
+    assert result['outcome'] != 'CONFIRMED'
+    assert len(browser.rows) == before[0]
+    dispatched = browser.actions[before[1]:]
+    assert all(action.kind == 'type' for action in dispatched)
+    assert len(dispatched) == (1 if fault == 'default_after_fill' else 0)
+    if fault in {'extra_argument', 'default_before_call'}:
+        assert browser.navigation_count == before[2]
+    if fault.startswith('default_'):
+        assert browser.fields['Identifier'] == ('Existing draft' if fault == 'default_before_call' else 'Intervening draft')
+
+
+def test_required_only_creation_does_not_clear_default_drift_to_publish(tmp_path, monkeypatch):
+    browser = _OptionalProjectionBrowser()
+    browser.fault = 'default_after_first_minimal'
+    _, _, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=browser)
+    assert not learned['operations']
+    assert len(browser.rows) == 2
+    assert browser.fields['Identifier'] == 'Intervening draft'
+    assert 'draft' in learned['reason']
+
+
 class _NavigationReloadBrowser(_RecordBrowser):
     """Ordinary navigation loses an unsaved draft, as a page reload can."""
     def __init__(self):
