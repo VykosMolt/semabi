@@ -40,8 +40,10 @@ def main():
     report = json.loads(args.report.read_text())
     job = report["invocation_job"]
     request = job["request"]
-    guarded = "counterfactual" in job["result"]
-    original = job["result"]["counterfactual"] if guarded else job["result"]["prediction"]
+    result = job["result"]
+    original = result.get("counterfactual") or result["prediction"]
+    guarded = "prediction_before" in original and "field" in original
+    refused_before_field_write = (guarded and result.get("effect", {}).get("field_write_attempted") is False)
     prediction = original["prediction_before"] if guarded else original
     control, signature, node = prediction["control"], prediction["observation"], prediction["node"]
     field = original["field"]["node"] if guarded else None
@@ -55,6 +57,8 @@ def main():
     evidence_root = args.database.parent / "connections" / job["connection_id"] / "evidence"
     observed_sequence = [event["signature"] for event in job.get("events", [])
                          if event.get("type") == "observation"]
+    if refused_before_field_write and not observed_sequence:
+        raise ValueError("A pre-write refusal requires its complete recorded observation sequence")
     matches = []
     for folder in sorted(evidence_root.iterdir()):
         if not (folder / "observations.jsonl").is_file():
@@ -65,14 +69,19 @@ def main():
                     for line in surfaces.read_text().splitlines()] != observed_sequence:
                 continue
         log = EvidenceLog(folder)
-        if any(s.before == signature and (
+        matching_transition = any(s.before == signature and (
                 s.action.kind == "type" and s.action.target == field
                 and s.action.text == request["arguments"]["value"] if guarded else
                 s.action.kind == "click" and s.action.target == node
-                and s.after == job["result"]["effect"]["after"]) for s in log.steps):
+                and s.after == result["effect"]["after"]) for s in log.steps)
+        if matching_transition or (refused_before_field_write and signature in observed_sequence):
             matches.append((folder, log.obs(signature)))
-    if len(matches) != 1:
-        raise ValueError(f"Expected one actual matching execution trace, found {len(matches)}")
+    if not matches:
+        raise ValueError("No recorded trace matches the HTTP observation sequence")
+    if any(obs.to_json() != matches[0][1].to_json() for _, obs in matches[1:]):
+        raise ValueError("Matching traces disagree on the exact inference input")
+    # Repeated calls can have identical recorded sequences. That establishes the
+    # inference input, not a unique occurrence-to-directory correspondence.
     folder, observation = matches[0]
     baseline = SemanticArtifact.from_json(frozen)
     model = baseline.outcomes[control]
@@ -117,7 +126,11 @@ def main():
     output = {"boundary": __doc__.strip(), "report": str(args.report), "operation": request,
               "pythonhashseed": os.environ.get("PYTHONHASHSEED", "random"),
               "actual_http_outcome": job["result"]["outcome"],
-              "raw_before": {"directory": str(folder), "signature": signature},
+              "field_write_attempted": result.get("effect", {}).get("field_write_attempted"),
+              "raw_before": {"directory": str(folder), "signature": signature,
+                             "matching_directories": [str(path) for path, _ in matches],
+                             "unique_trace_correspondence": len(matches) == 1,
+                             "matching_inference_inputs_identical": True},
               "source_sha256": operation["support"]["source_sha256"],
               "representation_revision": frozen["metadata"]["representation_revision"],
               "relevant_comparison_roles": relevant,
