@@ -824,6 +824,55 @@ def test_text_source_recovery_does_not_collapse_distinct_occurrences_or_enrich_m
     assert len((trace.log.dir / 'surfaces.jsonl').read_text().splitlines()) == 4
 
 
+@pytest.mark.parametrize('published', [False, True])
+def test_ordinary_learning_rejects_text_occurrence_conflicts_before_fitting_or_cache(tmp_path, monkeypatch, published):
+    """Real tiny initial fit; supplied artifact history isolates admission, not operation success."""
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler.runtime import Budget
+    from semabi.compiler import semantic, semantic_runtime as procedures
+    runtime = Runtime(tmp_path)
+    connection = {'id': 'text-occurrence-admission', 'url': 'https://synthetic.invalid/',
+                  'scope': {'exploration_enabled': True}}
+    runtime.sessions[connection['id']] = SimpleNamespace(allowed_origin='https://synthetic.invalid')
+    entry = _semantic_diagnostic_entry()
+    entry.text_sources = {3: {'own_text': 'Earlier visible text', 'name_from_descendants': False}}
+    detail = _semantic_diagnostic_detail('A', ('Waiting',))
+    old = runtime._trace(connection, lambda event: None, Budget(10, 0))
+    old.observe(entry)
+    old.observe(detail)
+    old.log.add_step(0, Primitive('navigate', text=connection['url']), True, None,
+                     entry.observation, entry.observation)
+    old.log.add_step(0, Primitive('click', 3), True, None, entry.observation, detail.observation)
+    artifact = semantic.fit_semantics(old.log.dir).to_json()
+    trials, edits, context = procedures.recover_learning(old.log)
+    (old.log.dir / 'semantic.json').write_text(json.dumps(artifact))
+    # An intermediate occurrence lacking metadata must not erase knowledge of
+    # the earlier value and hide the later same-signature conflict.
+    missing = deepcopy(entry)
+    missing.text_sources = {}
+    old.observe(missing)
+    changed = deepcopy(entry)
+    changed.text_sources[3]['own_text'] = 'Different visible text'
+    old.observe(changed)
+    assert entry.observation.structural_signature() == changed.observation.structural_signature()
+    raw = (old.log.dir / 'surfaces.jsonl').read_bytes()
+    settings = {}
+    if published:
+        settings['_semantic_training_operations'] = [{'kind': 'semantic_check', 'version': 1,
+            'support': {'semantic_artifact': artifact, 'trials': trials, 'edits': edits},
+            'procedure': {'return_context': context}}]
+    monkeypatch.setattr(semantic, 'fit_semantics', lambda *_: pytest.fail('conflicting evidence reached refit'))
+    monkeypatch.setattr(semantic, 'reuse_semantics', lambda *_: pytest.fail('conflicting evidence reached cache'))
+    monkeypatch.setattr(procedures, 'acquire', lambda *_: pytest.fail('conflict caused exploration'))
+    events = []
+    result = runtime.learn(connection, settings, events.append)
+    assert result['status'] == 'UNESTABLISHED' and result['operations'] == [], result
+    assert 'conflicting rendered text occurrences' in result['reason']
+    assert result['metrics']['actions'] == result['metrics']['possible_write_actions'] == 0
+    assert (old.log.dir / 'surfaces.jsonl').read_bytes() == raw
+    assert len(raw.splitlines()) == 4
+
+
 @pytest.mark.parametrize('arguments', [{'selection_2': 'Delete A'}, {'selection_2': 'Stop A'},
                                       {'target': 'Delete Workspace'}, {'target': 'Expand Fresh category'}])
 def test_semantic_full_control_label_constraints_refuse_before_navigation(tmp_path, monkeypatch, arguments):
