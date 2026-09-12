@@ -42,6 +42,7 @@ from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass, field, replace
+from itertools import combinations
 from typing import Any
 
 from semabi.compiler.v4 import emission as emit_mod
@@ -379,10 +380,13 @@ class Evidence:
         Empty means *not established*.  With ``corroborated`` the rule must additionally reach
         an occasion beyond the two that built it: a condition covering only its own witnesses
         is indistinguishable from naming them, which is the same refusal ``learn_pre`` makes
-        about a constant seen once.  Pairs decide the uncorroborated question exactly; with
-        corroboration they are a sound seed and the search is completed by generalisation, so
-        that answer is conservative -- it can miss an admissible event, never invent one.
-        (Measured against a triple enumeration on blend, harbour and cellar it misses none.)
+        about a constant seen once.  Pairs decide the uncorroborated question exactly. With
+        corroboration, pair generalisation is a fast path; if it finds no three-occasion
+        condition, triples complete the search. A pure condition reaching three occasions
+        is contained in their shared literals and in the query. Their intersection is
+        therefore pure too, and generalising it cannot lose those three witnesses. This
+        decides RULE outcome existence independently of greedy literal-removal order;
+        the representative condition need not be order-independent or globally optimal.
 
         ``hypothesis`` names the class the question is asked of, and the two classes give
         different answers.  ``RULE`` is a single conjunction pure over *all* the evidence --
@@ -438,6 +442,22 @@ class Evidence:
                     if not corroborated:
                         break
                 if best is not None and not simplest and (not corroborated or best.covers > 2):
+                    break
+            if corroborated and (best is None or best.covers <= 2):
+                # A pair can generalise towards a pure two-occasion correlate and miss a
+                # different pure guard covering three occasions. Seed the required support
+                # directly before generalisation, rather than letting bit order decide
+                # whether this event exists in the admissible set. The pair fast path is
+                # retained; this fallback changes neither the literals nor the rule class.
+                for witnesses in combinations(idxs, 3):
+                    cond = here & keep
+                    for i in witnesses:
+                        cond &= self.masks[i]
+                    if any(cond & self.masks[j] == cond for j in other):
+                        continue
+                    cond = self._generalise(cond, other)
+                    covers = sum(1 for i in idxs if cond & self.masks[i] == cond)
+                    best = Vouch(event, witnesses, self._condition(cond), covers)
                     break
             if best is not None and (not corroborated or best.covers > 2):
                 out[event] = replace(best, sole=len(self.by_event) < 2)

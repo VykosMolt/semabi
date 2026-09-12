@@ -7,6 +7,9 @@ because it is the difference between a model that knows something and a model th
 """
 from __future__ import annotations
 
+from itertools import combinations
+import random
+
 from semabi.compiler.v4 import outcome as oc
 
 
@@ -18,6 +21,70 @@ def rows(*specs):
 
 def lits(**kw):
     return {("attr", "r", k, v) for k, v in kw.items()}
+
+
+def test_corroborated_rule_survives_pair_correlates_and_literal_interning_order():
+    """Every pair has a pure two-witness correlate, but the old guard covers three.
+
+    Greedily keeping a pair correlate must not hide that admissible old guard.
+    All added categorical fields have explicit values on every occasion.
+    """
+    def literal(field, value):
+        return ("attr", "r", field, value)
+
+    p, not_p = literal("enabled", "yes"), literal("enabled", "no")
+    q, not_q = literal("armed", "yes"), literal("armed", "no")
+    tags = [literal(field, "x") for field in "abc"]
+    other_tags = [literal(field, "y") for field in "abc"]
+    original = [([p, not_q], "yes", frozenset())] * 3 + [([not_p, q], "no", frozenset())] * 3
+    expanded = [([p, not_q, *[tags[j] if j != i else other_tags[j] for j in range(3)]],
+                 "yes", frozenset()) for i in range(3)]
+    expanded += [([not_p, q, *other_tags], "no", frozenset())] * 3
+    question = [p, q, *tags]
+    assert all(set(old[0]) < set(new[0]) and old[1:] == new[1:]
+               for old, new in zip(original, expanded))
+    assert sum(p in state for state, _, _ in expanded) == 3
+    assert all(event == "yes" for state, event, _ in expanded if p in state)
+    for reverse_rows in (False, True):
+        for reverse_literals in (False, True):
+            arranged = [(list(reversed(state)) if reverse_literals else state, event, roles)
+                        for state, event, roles in expanded]
+            if reverse_rows:
+                arranged.reverse()
+            evidence = oc.Evidence(arranged)
+            for grammar in (oc.RULE, oc.LIST):
+                for simplest in (False, True):
+                    got = evidence.admissible(question, corroborated=True,
+                                              hypothesis=grammar, simplest=simplest)
+                    assert set(got) == {"yes", "no"}
+                    assert all(vouch.covers >= 3 for vouch in got.values())
+
+
+def test_rule_outcomes_match_finite_conjunction_oracle_under_evidence_permutations():
+    """Exact outcome existence, not a promise of the same representative condition."""
+    rng = random.Random(42043)
+    for _ in range(32):
+        facts = [({("attr", "r", str(j), str(rng.randrange(2))) for j in range(5)},
+                  str(rng.randrange(2)), frozenset()) for _ in range(9)]
+        for _ in range(3):
+            question = {("attr", "r", str(j), str(rng.randrange(2))) for j in range(5)}
+            for corroborated, minimum in ((False, 2), (True, 3)):
+                expected = set()
+                for size in range(len(question) + 1):
+                    for clause in combinations(question, size):
+                        cover = [event for state, event, _ in facts if set(clause) <= state]
+                        if len(cover) >= minimum and len(set(cover)) == 1:
+                            expected.add(cover[0])
+                for _ in range(3):
+                    permuted = list(facts)
+                    rng.shuffle(permuted)
+                    arranged = []
+                    for state, event, roles in permuted:
+                        state = sorted(state)
+                        rng.shuffle(state)
+                        arranged.append((state, event, roles))
+                    evidence = oc.Evidence(arranged)
+                    assert set(evidence.admissible(question, corroborated=corroborated)) == expected
 
 
 def test_a_state_matching_a_separated_guard_is_forced():
