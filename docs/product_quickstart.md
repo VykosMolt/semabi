@@ -206,6 +206,16 @@ checkbox state cannot authorize a toggle. Learning reserves the complete contras
 budget before starting this optional extension; an unproved extension keeps the
 already established text operations.
 
+On the disclosed Linkding development application, frozen `f2c110f` published
+five operations in 91 onboarding actions (56 possible writes), taking 54.066s;
+authentication took a separate three actions and 4.182s. Eight schema-selected
+calls passed independent checks, covering partial updates, both boolean values,
+duplicate titles resolved by URL, fresh creation, typed read, and a service/browser
+restart. Calls took 42.138s in total, excluding reconnect authentication. These
+are API capability checks, not completion of the original 16 requested tasks:
+the unchanged assessment caller rejected all 16 before invocation. Search,
+collection-wide reads, and automatic composition remain separate limitations.
+
 A read opens the selected record's editor and returns its current field values.
 An update rechecks the complete captured editor state before each fill and
 submission, then verifies the requested fields after saving and reloading.
@@ -342,3 +352,10 @@ intervention cases remained unestablished, and one absent-target case supplied
 only a partial check. This does not revise the original assessment or establish
 a baseline advantage. The rolling execution record retains all setup-invalid
 attempts and their costs separately from the successful rerun.
+
+For semantic learning, inspect the job result's `attempts[].publication` when
+the catalog is empty or lacks a guarded update. It identifies the current
+publication restriction, unsupported owner correspondence, insufficient
+owner-retaining response evidence, or missing persisted-edit contrasts. Counts
+describe observed support under the selected learned representation, not a
+guarantee that the application has no other behavior.

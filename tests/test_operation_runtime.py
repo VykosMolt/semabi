@@ -1394,11 +1394,20 @@ def test_semantic_publication_learns_which_selector_supplied_action_owner(
 
     monkeypatch.setattr(procedures, 'acquire', acquire)
     learned = procedures.learn(runtime, connection, {}, trace, lambda event: None)
+    publication = learned['attempts'][0]['publication']
+    assert len(publication) == 1
     if post_owner_changed:
         assert learned['operations'] == [], 'an anonymous response on another owner is not completion support'
+        assert publication[0]['stage'] == 'confirmation'
+        assert publication[0]['retained_owner_trials'] == 0
+        assert publication[0]['recognized_response_trials'] == 0
     else:
         assert len(learned['operations']) == 1
         operation = learned['operations'][0]
+        assert publication[0]['operation_id'] == operation['id']
+        assert publication[0]['retained_owner_trials'] == 2
+        assert publication[0]['recognized_response_trials'] == 2
+        assert publication[0]['response_path_owner_counts'] == [2]
         argument = 'selection_2' if predecessor_category else 'target'
         assert operation['procedure']['owner_binding']['argument'] == argument
         if control_only:

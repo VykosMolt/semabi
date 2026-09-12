@@ -956,9 +956,11 @@ def learn(runtime, connection, settings, trace, emit):
     emit({"type": "semantic_fit_completed", "controls": len(artifact.operations()), "fit_pass": 1})
     if source_hashes() != runtime.source_sha256:
         _stop("Source changed during learning; evidence retained, restart and refit before publication")
+    publication = []
     operations = publish_operations(runtime, browser, connection, settings, trace, artifact,
-                                    frozen, trials, edits, context)
-    attempts = [{"semantic_controls": artifact.operations(), "procedure_trials": len(trials), "fit_pass": 1}]
+                                    frozen, trials, edits, context, publication)
+    attempts = [{"semantic_controls": artifact.operations(), "procedure_trials": len(trials), "fit_pass": 1,
+                 "publication": publication}]
     if repair_witness is not None:
         old_artifact, before, after, node = repair_witness
         repair_report["predictive_change"] = artifact.acquisition_change(old_artifact, before, after, node)
@@ -972,12 +974,16 @@ def learn(runtime, connection, settings, trace, emit):
             "invalidations": [], "repair": repair_report}
 
 
-def publish_operations(runtime, browser, connection, settings, trace, artifact, frozen, trials, edits, context):
+def publish_operations(runtime, browser, connection, settings, trace, artifact, frozen, trials, edits, context,
+                       diagnostics=None):
     """Publish only observed procedures with shared learned semantic support."""
     from semabi.compiler.runtime import POLICY_VERSION, bind_contract
     operations = []
+    diagnostics = [] if diagnostics is None else diagnostics
     for learned in artifact.operations():
         if not learned["comparison"]:
+            diagnostics.append({"control": learned["control"], "status": "UNESTABLISHED",
+                                "stage": "language", "reason": "Current semantic publication requires a learned comparison"})
             continue
         control = learned["control"]
         matches = []
@@ -988,16 +994,25 @@ def publish_operations(runtime, browser, connection, settings, trace, artifact, 
                     and prediction["owner"].get("identity") == "learned_key"):
                 trial = {**trial, "owner": prediction["owner"], "prediction_status": prediction["status"]}
                 matches.append(trial)
+        if not matches:
+            diagnostics.append({"control": control, "status": "UNESTABLISHED", "stage": "binding",
+                                "reason": "No observed procedure trial resolves this control to a learned-key owner",
+                                "examined_trials": len(trials)})
         groups = {}
         for trial in matches:
             groups.setdefault(route_key([*trial["route"], trial["action"]]), []).append(trial)
         for group in groups.values():
             route = group[0]["route"]
             selectors = [step for step in route if "selector" in step]
+            diagnostic = {"control": control, "route": digest(route_key(route)), "trials": len(group),
+                          "status": "UNESTABLISHED"}
+            diagnostics.append(diagnostic)
             owner_binding = owner_correspondence(group)
             if owner_binding is None:
+                diagnostic.update(stage="binding", reason="No supported route-argument to action-owner correspondence")
                 continue
             response_owners, response_paths = {}, {}
+            retained_owner_trials, recognized_response_trials = 0, 0
             for trial in group:
                 # This slice learns a response while its action owner remains
                 # observable. Navigational completion needs a different learned
@@ -1007,15 +1022,22 @@ def publish_operations(runtime, browser, connection, settings, trace, artifact, 
                         or any(post[0]["owner"].get(key) != trial["owner"].get(key)
                                for key in ("type", "key", "identity"))):
                     continue
+                retained_owner_trials += 1
                 observed = artifact.observe(trace.log.observations[trial["before"]],
                                             trace.log.observations[trial["after"]], control)
                 event = observed.get("event")
                 if event and event.get("path") is not None and event["frame"] in learned["outcomes"]:
+                    recognized_response_trials += 1
                     path_key = digest(event["path"])
                     response_owners.setdefault(path_key, set()).add(trial["owner"]["key"])
                     response_paths[path_key] = event["path"]
             supported_paths = [response_paths[key] for key, owners in response_owners.items() if len(owners) >= 2]
+            diagnostic.update(retained_owner_trials=retained_owner_trials,
+                              recognized_response_trials=recognized_response_trials,
+                              response_path_owner_counts=sorted(len(owners) for owners in response_owners.values()))
             if not supported_paths:
+                diagnostic.update(stage="confirmation",
+                                  reason="No recognized response path with the intended owner retained on two distinct owners")
                 continue
             procedure = {"entry_url": connection["url"], "navigation": route, "return_context": context,
                          "action": group[0]["action"], "control": control, "owner_binding": owner_binding}
@@ -1041,6 +1063,7 @@ def publish_operations(runtime, browser, connection, settings, trace, artifact, 
                                      "trials": group, "edits": edits, "response_paths": supported_paths}}
             bind_contract(operation)
             operations.append(operation)
+            diagnostic.update(status="PUBLISHED", stage="publication", operation_id=op_id, guarded_fields=[])
             relevant = {}
             for trial in group:
                 for field in artifact.relevant_editables(trace.log.observations[trial["before"]], trial["node"]):
@@ -1050,9 +1073,13 @@ def publish_operations(runtime, browser, connection, settings, trace, artifact, 
                 persisted = [edit for edit in edits if edit.get("persisted")
                              and route_key(edit["route"]) == route_key(route)
                              and edit["descriptor"]["label"] == label]
-                if (len({_argument_value(edit["route"], owner_binding["argument"]) for edit in persisted}
-                        - {None}) < 2
-                        or len({edit["value"] for edit in persisted}) < 2):
+                owners = len({_argument_value(edit["route"], owner_binding["argument"]) for edit in persisted} - {None})
+                values = len({edit["value"] for edit in persisted})
+                field_diagnostic = {"slot": slot, "persisted_owners": owners, "persisted_values": values,
+                                    "status": "UNESTABLISHED"}
+                diagnostic["guarded_fields"].append(field_diagnostic)
+                if owners < 2 or values < 2:
+                    field_diagnostic["reason"] = "Guarded editing requires persisted edits on two owners and two values"
                     continue
                 guarded = deepcopy(operation)
                 guarded_id = "op_" + digest([op_id, slot, "guarded_update"])[:20]
@@ -1071,6 +1098,7 @@ def publish_operations(runtime, browser, connection, settings, trace, artifact, 
                                               "Observed sibling rows unchanged before terminal target verification; no simultaneous global-state guarantee"]
                 bind_contract(guarded)
                 operations.append(guarded)
+                field_diagnostic.update(status="PUBLISHED", operation_id=guarded_id)
     return operations
 
 
