@@ -45,6 +45,12 @@ used during learning. A requested response supported by all empirical alternativ
 can permit the fill; a point prediction alone cannot. This is an empirical guard
 requested by the caller, not a universal application prerequisite.
 
+Predictions expose `alternatives_complete` and search work. Exhausting the
+bounded ordered-guard search leaves prediction unavailable, even if one outcome
+has been found. Completeness means exhaustive alternatives within the declared
+guard language—not a complete model of the application. `ordered_witnesses`
+shows the supporting programs and the training rows they leave unexplained.
+
 `PREDICTED_REFUSAL` means the supported alternatives exclude the requested
 response. `PREDICTION_UNAVAILABLE` includes ambiguity and unavailable bindings;
 neither performs the guarded field fill. The learned navigation/selection prefix
@@ -205,6 +211,15 @@ hidden sibling fields and atomicity are not established. Unknown or mixed
 checkbox state cannot authorize a toggle. Learning reserves the complete contrast
 budget before starting this optional extension; an unproved extension keeps the
 already established text operations.
+
+Creation first tests the full supported text-field proposal. If that cannot be
+established, a form with a nonempty strict subset of required text controls can
+also yield a `_required_fields` operation. This still requires two complete,
+reloaded record witnesses for every supplied value. Omitted controls must match
+their observed defaults before filling and submission; their post-submit effects
+are not established. Failed full-form probes remain in the learning record. A
+successful full-field proposal still ends the current bounded scan, so this is
+not general optional-argument support for every published creation operation.
 
 On the disclosed Linkding development application, frozen `f2c110f` published
 five operations in 91 onboarding actions (56 possible writes), taking 54.066s;

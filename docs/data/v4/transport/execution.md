@@ -39,7 +39,25 @@
   for language, binding, confirmation and persisted-edit barriers. Gates:
   12 publication/resume tests;56 semantic HTTP tests passed/1.36s. Initial
   combined115pass/12fail/32errors was socket-denied, not combined with these counts.
-  Active isolated candidates: retained-language LIST ordering and required-only CREATE.
+  Required-only CREATE integrated as7595718: full proposal/failures retained,
+  narrower native-required text subset keeps all supplied-value witness checks
+  and pre-submit omitted-default guards. Seven new mechanism cases and37affected
+  creation checks passed onb0e95ec; actual merge19creation/publication checks
+  passed/0.56s. No post-submit omitted-default, general optional-argument, or
+  Kanboard navigation-success claim. Learned exact-state view-exit implementation
+  is active in isolation; required-only CREATE's independent HTTP check is pending.
+  LIST ordering integrated ataa3001e: residual search preserves founding query
+  witnesses/source events and reports bounded incompleteness. Retained pilot
+  21queries/45alternatives unchanged (max537 of100000new-search work units,
+  legacy RULE call separately unbudgeted);52focused tests and P43artifact/live
+  parity passed on33b0381. Independent2048-query oracle/1248program proofs and
+  all148cutoffs passed. Returned programs expose omitted rows; exact alternatives
+  do not mean complete response models or collections. Actual merged HTTP gate
+  9passed/0.37s, including an actual finite-artifact exhausted singleton refusing
+  before field write. Two setup-only failures corrected diagnostic grounding;
+  no production fix was needed. No broader subset/categorical language enabled.
+  Patch-helper synthetic /tmp/.git quota failures are intermittent; code already
+  written is retained. No workspace cleanup or sandbox-policy changes were made.
 - Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
   `d0b1574` and research `bbd56ef` are ancestors. No cherry-pick or reset.
 - Current milestone: integrated API checkpoint `956b72b`, authorized repair

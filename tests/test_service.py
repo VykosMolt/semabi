@@ -1146,7 +1146,7 @@ def test_http_partial_text_patch_preserves_schema_and_uses_real_runtime(tmp_path
 
 @pytest.mark.parametrize('fault', [None, 'wrong_owner', 'sibling_changed', 'stale_operation',
                                  'postaction_owner_changed', 'verification_reload_sibling_changed',
-                                 'transient_draft', 'detail_only_final_return_reset'])
+                                 'transient_draft', 'detail_only_final_return_reset', 'incomplete_search'])
 def test_http_semantic_invocation_uses_real_runtime_and_independent_application_state(tmp_path, monkeypatch, fault):
     """Supplied artifact setup; actual HTTP queue, Runtime invocation and verification.
 
@@ -1178,6 +1178,36 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
             owner='B' if fault == 'wrong_owner' else None,
             fault=fault if fault in {'sibling_changed', 'transient_draft'} else None)
     browser.close = lambda: None
+    if fault == 'incomplete_search':
+        from semabi.compiler.semantic import SemanticArtifact
+        from semabi.compiler.v4 import consequence, outcome
+        import test_v4_outcome as finite
+        # Actual finite evidence search; supplied grounding isolates its HTTP
+        # preflight consequence, not discovery or a learned relational task.
+        model = finite._acquisition_artifact([({'p'}, 'Recorded')] * 3 + [({'q'}, 'Declined')] * 3)
+        owner = SimpleNamespace(id=(1, 'A'), tid=1, key='A', node=0,
+                                positional=False, attrs={}, refs={})
+        state = SimpleNamespace(objs={owner.id: owner}, view={})
+        model.prepare = lambda obs: obs
+        model.abstract = lambda obs: state
+        model.abstractor.parsed = lambda obs: None
+        with monkeypatch.context() as grounding:
+            grounding.setattr(consequence, '_owner_object', lambda *args: owner)
+            grounding.setattr(outcome, 'query_literals', lambda *args: {('feature', 'p')})
+            prediction = SemanticArtifact.predict(model, finite._acquisition_page({'p'}), 2, search_budget=0)
+        assert prediction['status'] == 'unavailable'
+        assert set(prediction['alternatives']) == {'Recorded'}
+        assert prediction['alternatives_complete'] is False
+        fitted = SemanticArtifact.from_json({})  # Existing diagnostic loader supplies this instance.
+        simulate = fitted.simulate_edit
+
+        def exhausted_counterfactual(*args):
+            proposed = simulate(*args)
+            proposed['prediction'].update({key: prediction[key] for key in
+                ('status', 'alternatives', 'alternatives_complete', 'search', 'reason')})
+            return proposed
+
+        fitted.simulate_edit = exhausted_counterfactual
     if fault == 'postaction_owner_changed':
         original_act = browser.act
 
@@ -1247,6 +1277,14 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
             assert result['outcome'] == 'CONFIRMED', result
             assert browser.values == {'A': '7', 'B': '9'}
             assert browser.fills == browser.final_actions == 1
+        elif fault == 'incomplete_search':
+            assert result['outcome'] == 'PREDICTION_UNAVAILABLE', result
+            proposed = result['prediction']['prediction']
+            assert set(proposed['alternatives']) == {'Recorded'} and not proposed['alternatives_complete']
+            assert proposed['search']['checks'] == 0
+            assert browser.values == {'A': '3', 'B': '9'}
+            assert browser.fills == browser.final_actions == 0
+            assert api.service.store.operation(connection['id'], artifact['id'])['status'] == 'ACTIVE'
         elif fault in {'sibling_changed', 'verification_reload_sibling_changed'}:
             assert result['outcome'] == 'UNCERTAIN', result
             assert browser.values == {'A': '7', 'B': '7'}
