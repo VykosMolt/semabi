@@ -1192,10 +1192,12 @@ class Runtime:
         procedure = operation["procedure"]
         if procedure.get("boolean_fields") and operation["kind"] == "update_visible_record":
             requested = sum(name in arguments for name in procedure["update_arguments"])
+            completions = sum(name in arguments for name in procedure.get("textbox_popups", {}))
             menu = int("menu_trigger" in procedure)
             # Reserve the worst case including changed checkboxes, commit,
-            # reload, selected-owner reopening and the already learned exit.
-            self._reserve_record_actions(trace, 7 + requested + 2 * menu, 3 + requested + 2 * menu)
+            # learned optional completion, reload, selected-owner reopening and exit.
+            self._reserve_record_actions(trace, 7 + requested + completions + 2 * menu,
+                                         3 + requested + completions + 2 * menu)
         target = arguments[procedure["selector_argument"]]
         replacing = (operation["kind"] == "update_visible_record" and
                      procedure["anchor_mode"] == "replace_value")

@@ -212,8 +212,9 @@
   Absent witness followed application refusal, not an established matching defect;
   preserving the populated draft was appropriate. Evidence under
   `runs/product_kanboard_preparation_v1/assessment_992b358`; first run unchanged.
-- Pending isolated work: native boolean read/update variants, resumable acquisition
-  frontier, and corroborated RULE existence repair. Pair-seed greedy generalization
+- Reviewed integration: native boolean variants18130f4→769f616; RULE repair
+  bac20e7→babe5cc; fitted-language qualificationcf1dd57. Resumable frontier and
+  browser-readiness work remain isolated. Pair-seed greedy generalization
   lost a valid three-witness outcome under literal reordering. Triple fallback
   restores existence;55 focused tests pass, cached21 pilot outcome sets unchanged
   under RULE/LIST for base/narrow/full-fixed-field arms. Pilot fit815.21s; first880s
@@ -225,6 +226,21 @@
   but ordered thresholds gained10, so fixed-language elimination is withheld.
   Original report retained; `repair_language_qualification.json` records this
   correction. Independent Quartz/Indigo12 confirmed writes remain valid.
+  Actual769f616 affected gate588passed/1failed48.10s: the retained disclosure
+  failure below, not a clean gate. Root review found typed updates omitted learned
+  optional Escape from their upfront reservation. Two action/write-boundary tests
+  failed before correction; affected typed/completion/HTTP66passed4.24s afterward.
+  One non-escalated attempt had browser/socket permission failures and is not a
+  semantic result. No compiler service was running a fit during these edits.
+- Kanboard disclosed developmentbc564f9 uses a generic alphanumeric probe instead
+  of underscore-bearing text: actual validation refusal disappears, one project
+  created, still no operation.9actions/5writes/10.653s. The submitted Identifier
+  is absent from the rendered result; independent native evaluation sees uppercase
+  persistence. All account-visible projects3→4/tasks6→6, no existing project/task
+  changes or removals. Next guard blocks a populated default Filter control on the
+  new board, not the submitted form. This exposes projection/default-scope barriers;
+  it does not establish safe retry or justify ignoring arbitrary populated editors.
+  First reserved assessment and all16 caller outcomes remain unchanged.
 - Browser diagnostic: retained closed-disclosure click failed on clean992b358
   and pure Playwright1.62.0/Chromium151.0.7922.34. Visible, unchanged geometry
   coincided with zero animation frames in500ms;2s actionability timed out. A fresh

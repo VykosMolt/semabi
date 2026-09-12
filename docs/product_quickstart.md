@@ -3,7 +3,7 @@
 SemABI connects to a browser application, learns a parameterized operation from
 authorized UI experiments, and exposes its schema and invocation through HTTP.
 The current product path supports local form creation, reading a selected
-record, and updating its supported text fields with visible read-back. It uses
+record, and updating supported text/native-checkbox fields with checked read-back. It uses
 no runtime model or paid API. A general English action-word prior proposes exploration; visible URL labels can also propose URL arguments
 when the interface omits an HTML input type. Repeated observed effects establish
 an operation's limited support. Record reads and updates use a unique local
@@ -180,6 +180,17 @@ one `target` argument**:
   --connection CONNECTION_ID --operation READ_OPERATION_ID \
   --arguments '{"target":"https://example.invalid/a-record"}'
 ```
+
+Some forms additionally publish `_with_checkbox_fields` read/update variants.
+Use actual JSON booleans (`false`, not `"false"`) for their returned boolean
+arguments. These variants require both values to persist on two distinct
+onboarding records; they do not infer a checkbox's business meaning. Updates
+reopen the intended record after reload to check requested and preserved values,
+then follow the learned exit. Checks also compare rendered non-target state;
+hidden sibling fields and atomicity are not established. Unknown or mixed
+checkbox state cannot authorize a toggle. Learning reserves the complete contrast
+budget before starting this optional extension; an unproved extension keeps the
+already established text operations.
 
 A read opens the selected record's editor and returns its current field values.
 An update rechecks the complete captured editor state before each fill and

@@ -2913,6 +2913,24 @@ def test_checkbox_update_reserves_reopen_verification_before_selection(tmp_path,
     assert (len(browser.actions), browser.navigation_count) == before
 
 
+@pytest.mark.parametrize('limit,value', [('max_actions', 8), ('max_writes', 4)])
+def test_checkbox_mixed_procedure_reserves_declared_completion_before_selection(tmp_path, monkeypatch, limit, value):
+    runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    # A supplied completion contract isolates composition budgeting; this is not
+    # an additional claim that this fixture discovered a completion widget.
+    operation['procedure']['textbox_popups'] = {'description': {
+        'kind': 'explicit_aria_listbox_escape_v1',
+        'field': deepcopy(operation['procedure']['read_fields']['description']), 'autocomplete': 'list'}}
+    runtime_module.bind_contract(operation)
+    connection['scope'][limit] = value  # Base typed path fits; its optional Escape does not.
+    before = len(browser.actions), browser.navigation_count
+    result = runtime.invoke(connection, operation,
+                            {'target': browser.rows[0]['URL'], 'description': 'New completion #'}, lambda event: None)
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT', result
+    assert (len(browser.actions), browser.navigation_count) == before
+
+
 @pytest.mark.parametrize('phase', ['reopen_owner', 'reload_neighbor', 'exit_neighbor', 'omitted_text'])
 def test_checkbox_verification_checks_reopen_owner_and_late_visible_state(tmp_path, monkeypatch, phase):
     runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
