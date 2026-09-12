@@ -505,6 +505,81 @@ def test_acquisition_distinguishes_competing_outcomes_from_other_barriers():
     assert artifact.acquisition_opportunity(page, 2)['kind'] == 'AGREED_OUTCOME'
 
 
+@pytest.mark.parametrize('features,expected', [({'p'}, {'Ready'}), ({'fresh'}, set())])
+def test_incomplete_search_propagates_through_actual_prediction_answer_and_offline_score(monkeypatch, features, expected):
+    from types import SimpleNamespace
+    from semabi.compiler.semantic import SemanticArtifact
+    from semabi.compiler.v4 import consequence
+    artifact = _acquisition_artifact([({'p'}, 'Ready')] * 3 + [({'q'}, 'Unavailable')] * 3)
+    page, after = _acquisition_page(features), _acquisition_page(features, 'Ready')
+    owner = SimpleNamespace(id=(1, 'Target'), tid=1, key='Target', node=0,
+                            positional=False, attrs={}, refs={})
+    state = SimpleNamespace(objs={owner.id: owner}, view={})
+    artifact.prepare = lambda obs: obs
+    artifact.abstract = lambda obs: state
+    artifact.abstractor.parsed = lambda obs: None
+    artifact.abstractor.abstract = lambda obs: state
+    artifact.predict = SemanticArtifact.predict.__get__(artifact)
+    monkeypatch.setattr(consequence, '_owner_object', lambda *args: owner)
+    monkeypatch.setattr(consequence, 'clicked_control', lambda *args: 'act')
+    query = {('feature', feature) for feature in features}
+    monkeypatch.setattr(oc, 'query_literals', lambda *args: query)
+    monkeypatch.setattr(oc, '_pending_literals', lambda *args: query)
+    monkeypatch.setattr(oc, 'LIST_SEARCH_BUDGET', 0)
+    predicted = artifact.predict(page, 2)
+    assert predicted['status'] == 'unavailable'
+    assert predicted['alternatives_complete'] is False
+    assert set(predicted['alternatives']) == expected
+    got = artifact.outcomes['act']
+    answered = got.answer(state, owner)
+    assert answered.status == oc.SEARCH_INCOMPLETE and set(answered.outcomes) == expected
+    assert not answered.search.complete
+    opportunity = artifact.acquisition_opportunity(page, 2)
+    assert opportunity['kind'] == 'SEARCH_INCOMPLETE' and not opportunity['eligible']
+    model = SimpleNamespace(abstractor=artifact.abstractor, outcomes=artifact.outcomes,
+                            log=SimpleNamespace(obs=lambda key: page if key == 'pre' else after))
+    step = SimpleNamespace(step=0, before='pre', after='post', action=SimpleNamespace(target=2))
+    score = oc.score_step_admissible(model, step, corroborated=True, hypothesis=oc.LIST)
+    assert score['verdict'] == oc.SEARCH_INCOMPLETE
+    assert set(score['admissible']) == expected and score['alternatives_complete'] is False
+    model.log.obs = lambda key: after
+    repeated = oc.score_step_admissible(model, step, corroborated=True, hypothesis=oc.LIST)
+    assert repeated['verdict'] == oc.SEARCH_INCOMPLETE
+    assert repeated['response_changed'] is False
+    assert 'no distinguishable response effect' in repeated['response_observation']
+
+
+def test_incomplete_acquisition_comparison_reports_found_sets_not_eliminated_rivals(monkeypatch):
+    from copy import deepcopy
+    page, after = _acquisition_page({'p', 'q'}), _acquisition_page({'p', 'q'}, 'Ready')
+    old = _acquisition_artifact([({'p'}, 'Ready')] * 3 + [({'q'}, 'Unavailable')] * 3)
+    new = _acquisition_artifact([({'p'}, 'Ready')] * 3)
+    previous_prediction = old.predict(page, 2)
+    previous_prediction['alternatives_complete'] = True
+    current_prediction = deepcopy(previous_prediction)
+    current_prediction.update(status='unavailable', alternatives_complete=False)
+    current_prediction['alternatives'].pop('Unavailable')
+    old.predict = lambda *args: previous_prediction
+    new.predict = lambda *args: current_prediction
+    changed = new.acquisition_change(old, page, after, 2)
+    assert not changed['searches_complete'] and not changed['rival_outcome_elimination']
+    assert changed['removed_outcomes'] is None and changed['added_outcomes'] is None
+    assert changed['found_set_differences']['missing_after'] == ['Unavailable']
+    assert changed['no_admissible_interpretation'] is None
+    assert changed['remaining_ambiguity'] is None
+    assert not changed['predictive_alternatives_reduced'] and not changed['false_certainty']
+
+
+def test_inadequacy_does_not_call_an_unsearched_ordered_outcome_inseparable():
+    from semabi.eval.v4_inadequacy import classify
+    g, h, j, c = [('attr', 'r', key, 'yes') for key in 'ghjc']
+    facts = [({g, j}, 'X', frozenset()), ({g, h}, 'X', frozenset()),
+             ({h, c}, 'X', frozenset()), ({j}, 'X', frozenset())] + [({c}, 'Y', frozenset())] * 3
+    got = oc.ControlOutcome('act', evidence=oc.Evidence(facts))
+    kind, detail = classify(got, got.evidence._mask({c}), 'Y', search_budget=0)
+    assert kind == oc.SEARCH_INCOMPLETE and detail['search']['checks'] == 0
+
+
 def test_acquisition_does_not_count_a_changed_short_clause_as_rival_elimination():
     rows = [({'p'}, 'Ready')] * 3 + [({'q', 'r'}, 'Unavailable')] * 3
     previous = _acquisition_artifact(rows)

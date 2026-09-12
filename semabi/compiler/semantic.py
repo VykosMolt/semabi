@@ -335,6 +335,8 @@ class SemanticArtifact:
             kind = "UNSUPPORTED_CONTROL"
         elif prediction.get("owner") is None:
             kind = "UNBOUND_TARGET"
+        elif prediction.get("alternatives_complete") is False:
+            kind = "SEARCH_INCOMPLETE"
         elif len(alternatives) > 1:
             kind = "RIVAL_OUTCOMES"
         elif not alternatives:
@@ -362,6 +364,8 @@ class SemanticArtifact:
         prior = previous.acquisition_opportunity(question, question_node)
         current = self.acquisition_opportunity(question, question_node)
         old, new = set(prior["outcomes"]), set(current["outcomes"])
+        searches_complete = (prior["prediction"].get("alternatives_complete", True)
+                             and current["prediction"].get("alternatives_complete", True))
 
         def local_owner(opportunity):
             owner = opportunity["prediction"].get("owner")
@@ -375,7 +379,8 @@ class SemanticArtifact:
         old_model = previous.outcomes.get(prior_control)
         same_question = (question.structural_signature() == before.structural_signature()
                          and question_node == node)
-        consistent = event["frame"] in new if event is not None and same_question else None
+        consistent = (event["frame"] in new if event is not None and same_question
+                      and current["prediction"].get("alternatives_complete", True) else None)
         question_matches_action = (prior["prediction"].get("control") == prior_control
                                    and current["prediction"].get("control") == current_control)
         same_control = (prior_control is not None and prior_control == current_control
@@ -396,14 +401,17 @@ class SemanticArtifact:
                             if _public(getattr(old_model, component, None)) !=
                                _public(getattr(current_model, component, None))]
         return {"before": prior, "after": current,
-                "removed_outcomes": sorted(old - new), "added_outcomes": sorted(new - old),
-                "remaining_ambiguity": len(new) > 1,
-                "no_admissible_interpretation": not new,
-                "rival_outcome_elimination": bool(len(old) > 1 and new and new < old
+                "removed_outcomes": sorted(old - new) if searches_complete else None,
+                "added_outcomes": sorted(new - old) if searches_complete else None,
+                "found_set_differences": {"missing_after": sorted(old - new), "newly_found": sorted(new - old)},
+                "remaining_ambiguity": True if len(new) > 1 else False if searches_complete else None,
+                "no_admissible_interpretation": not new if searches_complete else None,
+                "searches_complete": searches_complete,
+                "rival_outcome_elimination": bool(searches_complete and len(old) > 1 and new and new < old
                                                    and not owner_changed and same_control
                                                    and not response_changed and not language_changes),
                 "fitted_language_changes": language_changes,
-                "predictive_alternatives_reduced": bool(new and new < old),
+                "predictive_alternatives_reduced": bool(searches_complete and new and new < old),
                 "owner_interpretation_changed": owner_changed,
                 "representation_changed": prior["representation_revision"] != current["representation_revision"],
                 "same_control": same_control,
@@ -414,9 +422,9 @@ class SemanticArtifact:
                     old_model is None or old_event["frame"] not in old_model.events)),
                 "observation_consistent_with_current_prediction": consistent,
                 "false_certainty": current["kind"] == "AGREED_OUTCOME" and consistent is False,
-                "scope": "changed predictive alternatives at one raw question; fixed-language elimination is withheld when declared primitives change; not a count of syntactic clauses or proof of targeting advantage"}
+                "scope": "locally supported retained guard-prefix alternatives at one raw question, not globally complete response models; fixed-language elimination is withheld on incomplete search or changed primitives; not a count of syntactic clauses or proof of targeting advantage"}
 
-    def predict(self, obs, node, control=None):
+    def predict(self, obs, node, control=None, *, search_budget=None):
         obs = self.prepare(obs)
         actual = self.control_at(obs, node)
         control = control or actual
@@ -430,7 +438,9 @@ class SemanticArtifact:
         literals = outcome.query_literals(self, got, state, bound, binding_status)
         point = got.predict(literals)
         # Match ControlOutcome.answer's declared language and corroboration policy.
-        options = got.admissible(literals, corroborated=True, hypothesis=outcome.LIST)
+        result = got.admissibility(literals, corroborated=True, hypothesis=outcome.LIST,
+                                   search_budget=search_budget)
+        options = result.options
         alternatives = {}
         for event, witness in sorted(options.items()):
             shape, how = got.delta(event)
@@ -438,15 +448,20 @@ class SemanticArtifact:
                                    "sole": witness.sole, "ordered_after": list(witness.preceded_by),
                                    "delta": _public(shape), "delta_status": how,
                                    "arguments": _public(got.arguments(event, bound))}
-        return {**base, "status": "supported" if len(options) == 1 and not next(iter(options.values())).sole
+        return {**base, "status": "unavailable" if not result.complete else
+                "supported" if len(options) == 1 and not next(iter(options.values())).sole
                 else "ambiguous" if options else "unavailable", "point": point,
                 "owner": _owner_record(owner, state),
                 "hypothesis": outcome.LIST, "alternatives": alternatives,
+                "alternatives_complete": result.complete,
+                "search": {"reason": result.reason, "scope": result.scope, **result.work},
+                "ordered_witnesses": _public(result.witnesses),
                 "bindings": {name: {"type": obj.tid, "key": obj.key, "node": obj.node,
                                      "attributes": dict(obj.attrs), "references": _public(obj.refs)}
                              for name, obj in bound.items()},
                 "binding_status": binding_status, "literals": _public(literals),
-                "reason": "one empirical alternative" if len(options) == 1 else
+                "reason": "LIST search incomplete" if not result.complete else
+                          "one empirical alternative" if len(options) == 1 else
                           "several supported alternatives" if options else "no supported interpretation here"}
 
     def observe(self, before, after, control):

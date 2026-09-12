@@ -7,8 +7,11 @@ because it is the difference between a model that knows something and a model th
 """
 from __future__ import annotations
 
-from itertools import combinations
+from itertools import combinations, product
+from functools import lru_cache
+from time import monotonic
 import random
+import pytest
 
 from semabi.compiler.v4 import outcome as oc
 
@@ -21,6 +24,139 @@ def rows(*specs):
 
 def lits(**kw):
     return {("attr", "r", k, v) for k, v in kw.items()}
+
+
+def _ordering_rows():
+    g, h, j, c = [("attr", "owner", key, "yes") for key in "ghjc"]
+    facts = [({g, j}, "X", frozenset()), ({g, h}, "X", frozenset()),
+             ({h, c}, "X", frozenset()), ({j}, "X", frozenset())]
+    return facts + [({c}, "Y", frozenset())] * 3, {c}
+
+
+def _check_ordered_witnesses(facts, query, result):
+    for answer, witness in result.witnesses.items():
+        residual = set(range(len(facts)))
+        for rule in witness['program']:
+            condition, event = set(rule['condition']), rule['event']
+            taken = {i for i in residual if condition <= facts[i][0]}
+            assert len(taken) >= oc.MIN_COVER
+            assert all(facts[i][1] == event for i in taken)
+            if condition <= query:
+                assert event == answer
+                assert set(witness['query_founders']) <= taken
+                assert len(taken) == witness['residual_support']
+            residual -= taken
+        assert residual == set(witness['omitted'])
+        assert set(witness['covered']) == set(range(len(facts))) - residual
+
+
+def test_retained_list_search_preserves_witness_support_across_guard_orders():
+    facts, query = _ordering_rows()
+    for order in (range(7), reversed(range(7)), (1, 2, 0, 3, 4, 5, 6)):
+        arranged = [facts[i] for i in order]
+        result = oc.Evidence(arranged).admissibility(query, corroborated=True, hypothesis=oc.LIST)
+        assert result.complete and set(result.options) == {'Y'}
+        _check_ordered_witnesses(arranged, query, result)
+        # The prefix answers its witnessed surface and leaves the rest unknown.
+        # Search completeness is not a whole-row completion requirement.
+        assert result.witnesses['Y']['omitted']
+
+
+def test_retained_list_query_guard_cannot_replace_its_consumed_founder():
+    c, h, j, z = [("attr", "r", key, "yes") for key in "chjz"]
+    facts = [({c, h, j}, 'Y', frozenset())] + [({c, z}, 'Y', frozenset())] * 3
+    facts += [({h}, 'Y', frozenset()), ({c, j}, 'X', frozenset()), ({j}, 'X', frozenset())]
+    # h->Y,j->X would consume the only Y founder without z. Surviving Y
+    # witnesses share c AND z, which the query does not satisfy.
+    result = oc.Evidence(facts).admissibility({c}, corroborated=True, hypothesis=oc.LIST)
+    assert result.complete and not result.options
+
+
+@pytest.mark.parametrize('question,expected', [('open', {'Y'}), ('fresh', set())])
+def test_list_budget_exhaustion_is_neither_uniqueness_nor_empty_language(question, expected):
+    evidence = oc.Evidence(rows(*[({'g': 'open'}, 'Y')] * 3,
+                                *[({'g': 'closed'}, 'X')] * 3))
+    query = lits(g=question)
+    result = evidence.admissibility(query, corroborated=True, hypothesis=oc.LIST, search_budget=0)
+    assert not result.complete and set(result.options) == expected
+    assert result.work['checks'] == 0 and not result.work['rule_budgeted']
+    with pytest.raises(oc.IncompleteAdmissibility) as caught:
+        evidence.admissible(query, corroborated=True, hypothesis=oc.LIST, search_budget=0)
+    assert not caught.value.result.complete
+    for budget in (1, 5, 20, 100):
+        bounded = evidence.admissibility(query, corroborated=True, hypothesis=oc.LIST,
+                                        search_budget=budget)
+        assert bounded.work['checks'] <= budget
+    exact = evidence.admissibility(query, corroborated=True, hypothesis=oc.LIST)
+    assert exact.complete and set(exact.options) == expected
+
+
+def _retained_oracle(rows, query):
+    rows = [(frozenset(state), event, bound) for state, event, bound in rows]
+    query = frozenset(query)
+    answers, full = set(), frozenset(range(len(rows)))
+    # Every conjunction of query literals: corroborated, globally pure RULE.
+    for count in range(len(query) + 1):
+        for condition in combinations(query, count):
+            labels = [event for state, event, _ in rows if set(condition) <= state]
+            if len(labels) >= 3 and len(set(labels)) == 1:
+                answers.add(labels[0])
+    # Earlier guards retain their founding event, even if other labels could
+    # become pure on a later residual. Their actual residual support is >=2.
+    guards = {(rows[a][0] & rows[b][0], rows[a][1])
+              for a, b in combinations(range(len(rows)), 2) if rows[a][1] == rows[b][1]}
+    for event in {event for _, event, _ in rows} - answers:
+        founders = [i for i, (_, label, _) in enumerate(rows) if label == event]
+        for witnesses in combinations(founders, 3):
+            condition = frozenset.intersection(*(rows[i][0] for i in witnesses))
+            if not condition <= query:
+                continue
+            protected = frozenset(witnesses)
+
+            @lru_cache(None)
+            def visit(residual):
+                if all(rows[i][1] == event for i in residual if condition <= rows[i][0]):
+                    return True
+                for earlier, label in guards:
+                    if earlier <= query:
+                        continue
+                    taken = frozenset(i for i in residual if earlier <= rows[i][0])
+                    if (len(taken) >= 2 and not taken & protected
+                            and all(rows[i][1] == label for i in taken)
+                            and visit(residual - taken)):
+                        return True
+                return False
+
+            if visit(full):
+                answers.add(event)
+                break
+    return answers
+
+
+def _exhaustive_binary_cube(actual, *, seconds=50):
+    """actual(rows, query) returns an exact event set or raises if incomplete."""
+    patterns = [frozenset(('attr', 'r', str(i), str(v)) for i, v in enumerate(values))
+                for values in product((0, 1), repeat=3)]
+    began, checked = monotonic(), 0
+    for labels in product(('X', 'Y'), repeat=8):
+        rows = [(state, event, frozenset()) for state, event in zip(patterns, labels)]
+        for query in patterns:
+            if monotonic() - began > seconds:
+                raise RuntimeError(('oracle time budget exhausted', checked))
+            expected = _retained_oracle(rows, query)
+            observed = actual(rows, query)
+            assert set(observed) == expected, (labels, query, expected, observed)
+            checked += 1
+    return {'queries': checked, 'labelings': 256, 'rows': 8, 'seconds': monotonic() - began}
+
+
+def test_retained_language_matches_independent_eight_row_cube():
+    def actual(facts, query):
+        result = oc.Evidence(facts).admissibility(query, corroborated=True, hypothesis=oc.LIST)
+        assert result.complete
+        _check_ordered_witnesses(facts, query, result)
+        return result.options
+    assert _exhaustive_binary_cube(actual)['queries'] == 2048
 
 
 def test_corroborated_rule_survives_pair_correlates_and_literal_interning_order():

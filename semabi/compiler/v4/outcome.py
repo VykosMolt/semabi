@@ -40,7 +40,7 @@ depends on names nothing makes the model abstain rather than guess.
 """
 from __future__ import annotations
 
-from collections import Counter
+from collections import Counter, deque
 from dataclasses import dataclass, field, replace
 from itertools import combinations
 from typing import Any
@@ -79,6 +79,26 @@ COUNT_LITERALS = False
 # The same principle is already in `memorises_the_fitting_instance` and in `learn_pre`'s
 # refusal to explain isolated failures, and it is the only count in this module.
 MIN_COVER = 2
+LIST_SEARCH_BUDGET = 100_000
+
+
+@dataclass(frozen=True)
+class Admissibility:
+    """Found alternatives and whether their search, not the world, is complete."""
+    options: dict
+    complete: bool = True
+    reason: str = "exact alternative set"
+    work: dict = field(default_factory=dict)
+    witnesses: dict = field(default_factory=dict)
+    scope: str = ("locally supported retained guard-prefix programs; exact alternative enumeration "
+                  "does not establish a complete response model or collection; omitted rows remain unknown")
+
+
+class IncompleteAdmissibility(RuntimeError):
+    """A legacy dict caller must not confuse partial search with uniqueness."""
+    def __init__(self, result):
+        self.result = result
+        super().__init__(result.reason)
 
 
 def _describe_role(role) -> str:
@@ -377,7 +397,8 @@ class Evidence:
         return cond
 
     def admissible(self, literals, *, corroborated: bool = False,
-                   simplest: bool = False, hypothesis: str = RULE) -> dict[str, Vouch]:
+                   simplest: bool = False, hypothesis: str = RULE,
+                   search_budget: int | None = None) -> dict[str, Vouch]:
         """Event -> the widest justified rule this state satisfies, or nothing.
 
         Empty means *not established*.  With ``corroborated`` the rule must additionally reach
@@ -403,11 +424,17 @@ class Evidence:
         only *after* earlier guards, and no globally pure rule for ``e`` need exist.  On blend
         63 of 93 states the rule class calls forced are open under the list class, and 6 of
         its confident errors are states where a consistent list answered correctly.  See
-        :meth:`_in_some_list`.
+        :meth:`_search_lists`. Exhausted LIST search raises
+        :class:`IncompleteAdmissibility`; use :meth:`admissibility` to retain
+        partial witnesses without making an exact-set claim.
         """
         if hypothesis == LIST:
-            return self._admissible_in_lists(literals, corroborated=corroborated,
-                                             simplest=simplest)
+            result = self.admissibility(literals, corroborated=corroborated,
+                                       simplest=simplest, hypothesis=LIST,
+                                       search_budget=search_budget)
+            if not result.complete:
+                raise IncompleteAdmissibility(result)
+            return result.options
         if hypothesis != RULE:
             raise ValueError(f"unknown hypothesis class {hypothesis!r}")
         here = self._mask(literals)
@@ -466,16 +493,187 @@ class Evidence:
                 out[event] = replace(best, sole=len(self.by_event) < 2)
         return out
 
+    def admissibility(self, literals, *, corroborated=False, simplest=False,
+                      hypothesis=RULE, search_budget=None):
+        if hypothesis != LIST:
+            return Admissibility(self.admissible(literals, corroborated=corroborated,
+                                                simplest=simplest, hypothesis=hypothesis))
+        return self._search_lists(literals, corroborated=corroborated,
+                                  simplest=simplest, search_budget=search_budget)
+
+    def _search_lists(self, literals, *, corroborated, simplest, search_budget):
+        """Search retained pair-guard orders, protecting each query's founders.
+
+        Purity increases when rows disappear, but minimum support can decrease.
+        Consequently greedy closure is not a sound impossibility test. Prefixes
+        merge only at equal residual row sets; all their guards are query-false.
+        Omitted rows remain visible: this is not whole-model completion search.
+        """
+        budget = LIST_SEARCH_BUDGET if search_budget is None else search_budget
+        if not isinstance(budget, int) or isinstance(budget, bool) or budget < 0:
+            raise ValueError("search_budget must be a nonnegative integer")
+        out = dict(self.admissible(literals, corroborated=corroborated, simplest=simplest))
+        here, full = self._mask(literals), (1 << len(self.events)) - 1
+        need = 3 if corroborated else MIN_COVER
+        used, states = 0, 0
+        proofs = {}
+
+        class Exhausted(Exception):
+            pass
+
+        def spend(amount=1):
+            nonlocal used
+            if used + amount > budget:
+                raise Exhausted
+            used += amount
+
+        def cover(condition):
+            result = 0
+            for i, mask in enumerate(self.masks):
+                spend()
+                if condition & mask == condition:
+                    result |= 1 << i
+            return result
+
+        def proof(program, founders, support):
+            covered, omitted = [], []
+            for i, mask in enumerate(self.masks):
+                answer = None
+                for condition, event in program:
+                    spend()
+                    if condition & mask == condition:
+                        answer = event
+                        break
+                if answer is None:
+                    omitted.append(i)
+                else:
+                    assert answer == self.events[i]
+                    covered.append(i)
+            decoded = []
+            for condition, event in program:
+                spend(len(self.index) + 1)
+                decoded.append({"condition": self._condition(condition), "event": event})
+            return {"program": decoded, "query_founders": founders,
+                    "residual_support": support, "covered": covered, "omitted": omitted}
+
+        complete = False
+        try:
+            bits = {}
+            for event, indices in self.by_event.items():
+                value = 0
+                for i in indices:
+                    spend()
+                    value |= 1 << i
+                bits[event] = value
+            # RULE is unchanged and its cost is separate. New witness materializing
+            # work is charged; known RULE alternatives survive even if it exhausts.
+            for event, vouch in out.items():
+                spend(len(vouch.condition) + 1)
+                condition = self._mask(vouch.condition)
+                proofs[event] = proof(((condition, event),), vouch.witnesses, vouch.covers)
+            goals = {}
+            for event, indices in self.by_event.items():
+                spend()
+                if event in out or len(indices) < need:
+                    continue
+                candidates = set()
+                for founders in combinations(indices, need):
+                    spend()
+                    condition, protected = self._keep(event), 0
+                    for i in founders:
+                        spend()
+                        condition &= self.masks[i]
+                        protected |= 1 << i
+                    if condition & here == condition:
+                        candidates.add((condition, cover(condition), protected, founders))
+                if candidates:
+                    goals[event] = candidates
+            if not goals:
+                complete = True
+            else:
+                previous = set()
+                for event, indices in self.by_event.items():
+                    for a, b in combinations(indices, 2):
+                        spend()
+                        condition = self.masks[a] & self.masks[b]
+                        if condition & here != condition:
+                            previous.add((condition, cover(condition), event))
+                # Necessary bound only: ignore purity when overestimating which
+                # rows an earlier rule might remove, never consume them greedily.
+                removable = 0
+                for condition, taken, event in previous:
+                    spend()
+                    possible = taken & bits[event]
+                    if possible.bit_count() >= MIN_COVER:
+                        removable |= possible
+                mandatory = full & ~removable
+                for event in list(goals):
+                    allowed = set()
+                    for candidate in goals[event]:
+                        spend()
+                        if not candidate[1] & mandatory & ~bits[event]:
+                            allowed.add(candidate)
+                    if allowed:
+                        goals[event] = allowed
+                    else:
+                        del goals[event]
+                queue, seen = deque([(full, ())]), {full}
+                while queue and goals:
+                    spend()
+                    residual, prefix = queue.popleft()
+                    states += 1
+                    viable = False
+                    for event in list(goals):
+                        for condition, covered, protected, founders in goals[event]:
+                            spend()
+                            if residual & protected != protected:
+                                continue
+                            viable = True
+                            taken = covered & residual
+                            if taken & ~bits[event]:
+                                continue
+                            program = prefix + ((condition, event),)
+                            witness = proof(program, founders, taken.bit_count())
+                            spend(len(self.index) + len(prefix) + 1)
+                            out[event] = Vouch(event, founders, self._condition(condition),
+                                               (covered & bits[event]).bit_count(),
+                                               sole=len(self.by_event) < 2,
+                                               preceded_by=tuple(sorted({e for _, e in prefix})))
+                            proofs[event] = witness
+                            del goals[event]
+                            break
+                    if not goals:
+                        break
+                    if not viable:
+                        continue
+                    for condition, covered, event in previous:
+                        spend()
+                        taken = covered & residual
+                        if taken.bit_count() < MIN_COVER or taken & ~bits[event]:
+                            continue
+                        after = residual & ~taken
+                        if after not in seen:
+                            # Prefix tuple creation is proportional to its length.
+                            spend(len(prefix) + 1)
+                            seen.add(after)
+                            queue.append((after, prefix + ((condition, event),)))
+                complete = not goals or not queue
+        except Exhausted:
+            pass
+        return Admissibility(out, complete,
+                             "exact alternative set" if complete else "LIST search budget exhausted",
+                             {"checks": used, "budget": budget, "states": states,
+                              "rule_calls": 1, "rule_budgeted": False}, proofs)
+
     # ------------------------------------------------------------ the decision-list class
 
     def _pair_blocks(self) -> list[tuple[int, int, str]]:
         """Every rule a pair of same-event occasions can found: (condition, cover, event).
 
-        A rule that is pure on some residual and covers a set ``S`` of occasions covers, for
-        every pair in ``S``, that pair's own most specific conjunction -- so the pair blocks
-        remove everything any legal earlier rule could remove, and each of them is itself a
-        legal rule.  Enumerating them is therefore exact for what a list can take away before
-        a later rule is judged.  Covers are bitsets over occasions.
+        These are the retained language's earlier-guard candidates, not a proof
+        of what arbitrary decision lists can remove. Reachability also requires
+        an order preserving residual purity and minimum support. Covers are
+        bitsets over occasions; their founding event remains part of the guard.
         """
         if self._blocks is None:
             n = len(self.events)
@@ -494,110 +692,6 @@ class Evidence:
 
     def _event_bits(self, event: str) -> int:
         return sum(1 << i for i in self.by_event[event])
-
-    def _closure(self, here: int, protect: int) -> tuple[int, frozenset]:
-        """The occasions no consistent list could have taken before answering at ``here``.
-
-        Removes, to a fixpoint, every pair block that is pure on the residual, does not fire
-        at the query state (it would answer there itself), reaches ``MIN_COVER`` occasions,
-        and touches nothing in ``protect``.  Removal is monotone -- taking occasions away only
-        makes further blocks pure -- so the fixpoint is the maximal residual any ordering can
-        reach, and purity on it is the easiest purity a later rule can be asked for.  Returns
-        the residual and the events of the guards that had to fire first.
-        """
-        residual = (1 << len(self.events)) - 1
-        preceded: set[str] = set()
-        changed = True
-        while changed:
-            changed = False
-            for cond, cover, event in self._pair_blocks():
-                if cond & here == cond:
-                    continue
-                taken = cover & residual
-                if not taken or taken & protect or taken & ~self._event_bits(event):
-                    continue
-                if _bits(taken) < MIN_COVER:
-                    continue
-                residual &= ~taken
-                preceded.add(event)
-                changed = True
-        return residual, frozenset(preceded)
-
-    def _pure_on(self, cond: int, event: str, residual: int) -> bool:
-        return self._cover(cond) & residual & ~self._event_bits(event) == 0
-
-    def _admissible_in_lists(self, literals, *, corroborated: bool = False,
-                             simplest: bool = False) -> dict[str, Vouch]:
-        """Events some decision list consistent with every occasion could answer here.
-
-        A rule pure over all the evidence is one such list's head, so the rule class is a
-        subset and is taken first.  For every other event the question is whether a witness
-        set induces a guard that fires at this state and is pure on the residual that the
-        guards above it could leave -- the closure above, protecting the witnesses themselves,
-        which an earlier rule may not take.  Purity on the unprotected closure is necessary
-        and cheap, and prunes the candidates before the protected closure is computed.
-
-        What is *not* admitted is a default.  A list ends in one, and on the residual every
-        other guard leaves, the empty condition is pure; admitting it would answer every
-        state no guard reaches with whatever was left over, which is what `docs/v4_admissibility.md`
-        measured a decision list doing and being wrong 69 times in 79.  So an ordered rule
-        is the guard its witnesses share, satisfied here in full, and nothing wider.
-        """
-        out = dict(self.admissible(literals, corroborated=corroborated, simplest=simplest))
-        here = self._mask(literals)
-        need = 3 if corroborated else MIN_COVER
-        unprotected: tuple[int, frozenset] | None = None
-        for event, idxs in self.by_event.items():
-            if event in out:
-                continue
-            keep = self._keep(event)
-            n = len(idxs)
-            if n < need:
-                continue
-            if unprotected is None:
-                unprotected = self._closure(here, 0)
-            # Purity on the unprotected residual is necessary -- the protected one is larger --
-            # and cheap.  Whether this event's *own* occasions survive it is irrelevant: the
-            # protected closure keeps the witnesses, and blocks of the same event never block.
-            r0, _ = unprotected
-            combos = ([(a, b) for a in range(n) for b in range(a + 1, n)] if need == 2 else
-                      [(a, b, c) for a in range(n) for b in range(a + 1, n)
-                       for c in range(b + 1, n)])
-            for combo in combos:
-                witnesses = tuple(idxs[k] for k in combo)
-                guard = keep
-                protect = 0
-                for w in witnesses:
-                    guard &= self.masks[w]
-                    protect |= 1 << w
-                # The guard the witnesses induce must *fire* here: the state satisfies all of
-                # what they share, not a part of it.  The rule class may widen a pair's
-                # conjunction to whatever this state satisfies, because global purity then
-                # vouches for the wider claim; on a residual, purity vouches for nothing
-                # beyond the guard itself.  Without this, the empty conjunction is pure once
-                # every other event's guards are taken away, and a state unlike anything
-                # seen is answered by the list's default -- the two-occasion universal law
-                # this instrument exists to refuse.
-                if guard & here != guard:
-                    continue
-                if not self._pure_on(guard, event, r0):
-                    continue
-                residual, _ = self._closure(here, protect)
-                if not self._pure_on(guard, event, residual):
-                    continue
-                cover = self._cover(guard)
-                covers = _bits(cover & self._event_bits(event))
-                # The guards that had to fire first: those of the occasions this guard
-                # reaches and does not own.  The closure removes more than that, and what
-                # it removed for no reason is not part of the justification.
-                taken = cover & ~self._event_bits(event)
-                preceded = {self.events[j] for j in range(len(self.events)) if taken >> j & 1}
-                out[event] = Vouch(event, witnesses, self._condition(guard), covers,
-                                   sole=len(self.by_event) < 2,
-                                   preceded_by=tuple(sorted(preceded)))
-                break
-        return out
-
 
 @dataclass(frozen=True)
 class Rule:
@@ -692,7 +786,7 @@ class ControlOutcome:
         return self.default
 
     def admissible(self, literals: set, *, corroborated: bool = False,
-                   hypothesis: str = RULE) -> dict[str, "Vouch"]:
+                   hypothesis: str = RULE, search_budget=None) -> dict[str, "Vouch"]:
         """Every event some *justified* rule could assign to this state, with its witness.
 
         This is the model's answer when the question is what the evidence establishes rather
@@ -702,7 +796,15 @@ class ControlOutcome:
         if self.evidence is None:
             return {}
         return self.evidence.admissible(literals, corroborated=corroborated,
-                                        simplest=self.simplest, hypothesis=hypothesis)
+                                        simplest=self.simplest, hypothesis=hypothesis,
+                                        search_budget=search_budget)
+
+    def admissibility(self, literals, *, corroborated=False, hypothesis=RULE, search_budget=None):
+        if self.evidence is None:
+            return Admissibility({})
+        return self.evidence.admissibility(literals, corroborated=corroborated,
+                                          simplest=self.simplest, hypothesis=hypothesis,
+                                          search_budget=search_budget)
 
     def delta(self, event: str) -> tuple[frozenset, str]:
         """The durable change this event implies, and how well the evidence pins it.
@@ -719,7 +821,7 @@ class ControlOutcome:
             return frozenset(next(iter(shapes))), "settled"
         return frozenset(frozenset(k) for k in shapes), "several shapes"
 
-    def answer(self, state, owner) -> "Answer":
+    def answer(self, state, owner, *, search_budget=None) -> "Answer":
         """The semantic ABI call: what does this control do, in this grounded pre-state?
 
         Reads only the pre-state.  Nothing about how the action turns out enters here, which is
@@ -732,16 +834,19 @@ class ControlOutcome:
         # the events a globally pure rule vouches for are reported inside it as the guards
         # that need no ordering to be justified.  A set of one under the rule class is not
         # "forced": it is the one event a list could *head* with here.
-        options = self.admissible(literals, corroborated=True, hypothesis=LIST)
-        if not options:
-            return Answer(NOTHING_ESTABLISHED)
+        result = self.admissibility(literals, corroborated=True, hypothesis=LIST,
+                                    search_budget=search_budget)
+        options = result.options
+        if not options and result.complete:
+            return Answer(NOTHING_ESTABLISHED, search=result)
         events = tuple(sorted(options))
-        return Answer(FORCED_ONE if len(events) == 1 else SEVERAL_OPEN, events,
+        return Answer(SEARCH_INCOMPLETE if not result.complete else
+                      FORCED_ONE if len(events) == 1 else SEVERAL_OPEN, events,
                       sole=len(events) == 1 and options[events[0]].sole,
                       delta={e: self.delta(e) for e in events},
                       arguments={e: self.arguments(e, bound) for e in events},
                       why={e: str(v) for e, v in options.items()},
-                      unordered=tuple(e for e in events if not options[e].ordered))
+                      unordered=tuple(e for e in events if not options[e].ordered), search=result)
 
     def arguments(self, event: str, bound: dict) -> dict[int, str]:
         """The values the predicted event's argument positions take in this state."""
@@ -1436,11 +1541,14 @@ def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out
 class Answer:
     """What the interface does, as the semantic ABI is now able to say it.
 
-    Three kinds of answer and they are not degrees of one confidence.  ``FORCED`` means every
+    Distinct answers, not degrees of confidence. ``FORCED`` means every
     justified rule over the completed evidence agrees; ``SEVERAL`` means the evidence leaves
     more than one behaviour open and both are returned, because the structure of an ambiguity
     is more useful than erasing it; ``NOTHING`` means no rule is justified here at all, which
-    is what a default was quietly answering over before.
+    is what a default was quietly answering over before. ``SEARCH_INCOMPLETE``
+    retains witnessed outcomes without claiming the set is exhaustive. These
+    concern locally supported retained guard-prefix programs, not complete
+    world models; each search witness exposes omitted fitting occasions.
 
     ``sole`` marks the degenerate case where unanimity is vacuous because the control has never
     been seen to do anything else.  ``delta`` is what the branch says it durably changes, and
@@ -1457,10 +1565,13 @@ class Answer:
     # without any guard having to be checked first.  Where several outcomes are open this
     # is the version space's own preference, and it is reported as one.
     unordered: tuple = ()
+    search: Admissibility | None = None
 
     def __str__(self) -> str:
         if self.status == NOTHING_ESTABLISHED:
             return "not established here"
+        if self.status == SEARCH_INCOMPLETE:
+            return "search incomplete; witnessed alternatives: " + " | ".join(map(describe, self.outcomes))
         parts = []
         for e in self.outcomes:
             shape, how = (self.delta or {}).get(e, (frozenset(), "unobserved"))
@@ -1481,6 +1592,7 @@ class Answer:
 FORCED_ONE = "forced"
 SEVERAL_OPEN = "several"
 NOTHING_ESTABLISHED = "nothing established"
+SEARCH_INCOMPLETE = "search incomplete"
 
 
 def delta_shape(tr) -> tuple:
@@ -1680,7 +1792,7 @@ def score_step(model, step, *, with_arguments: bool = True) -> dict:
 
 
 def score_step_admissible(model, step, *, corroborated: bool = False,
-                          hypothesis: str = RULE) -> dict:
+                          hypothesis: str = RULE, search_budget=None) -> dict:
     """The same held-out click, asked of the evidence rather than of the chosen list.
 
     Four answers instead of two.  The list either fires or falls to its default; the evidence
@@ -1706,13 +1818,24 @@ def score_step_admissible(model, step, *, corroborated: bool = False,
     state = A.abstract(pre)
     owner = _owner_object(A, A.parsed(pre), state, step.action.target)
     bound, status = got.bind(state, owner)
-    options = got.admissible(query_literals(model, got, state, bound, status),
-                             corroborated=corroborated, hypothesis=hypothesis)
+    result = got.admissibility(query_literals(model, got, state, bound, status),
+                               corroborated=corroborated, hypothesis=hypothesis,
+                               search_budget=search_budget)
+    options = result.options
     out["admissible"] = sorted(options)
     out["hypothesis"] = hypothesis
     out["unordered"] = sorted(e for e, v in options.items() if not v.ordered)
     out["observed"] = None if observed is None else observed.frame
     out["returned"] = after_text
+    out["response_changed"] = after_text != before_text
+    out["response_observation"] = ("unchanged; no distinguishable response effect"
+                                   if after_text == before_text else
+                                   "changed rendered response; causal attribution unestablished")
+    out["alternatives_complete"] = result.complete
+    out["search"] = {"reason": result.reason, "scope": result.scope, **result.work}
+    if not result.complete:
+        return {**out, "verdict": SEARCH_INCOMPLETE,
+                "detail": "found alternatives are a lower bound, not an exact outcome set"}
     if not options:
         return {**out, "verdict": NOT_ESTABLISHED,
                 "detail": f"{got.fitted} occasions of this control vouch for no rule here"}

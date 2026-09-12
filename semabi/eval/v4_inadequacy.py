@@ -129,7 +129,7 @@ def _least_blocked(ev, here: int, event: str) -> tuple[tuple, list[int]]:
     return best if best is not None else ((), [])
 
 
-def classify(got, here: int, actual: str) -> tuple[str, dict]:
+def classify(got, here: int, actual: str, *, search_budget=None) -> tuple[str, dict]:
     """Which defect a forced-wrong prediction is evidence for, with what it rests on."""
     ev = got.evidence
     seen = len(ev.by_event.get(actual, ()))
@@ -140,10 +140,14 @@ def classify(got, here: int, actual: str) -> tuple[str, dict]:
     literals = {ev.of_bit[b] for b in range(here.bit_length()) if here >> b & 1}
     if actual in ev.admissible(literals, corroborated=False):
         return UNCORROBORATED, {"seen": seen}
-    listed = ev.admissible(literals, corroborated=True, hypothesis=oc.LIST)
+    result = ev.admissibility(literals, corroborated=True, hypothesis=oc.LIST,
+                              search_budget=search_budget)
+    listed = result.options
     if actual in listed:
         v = listed[actual]
         return ORDERED, {"seen": seen, "after": list(v.preceded_by), "guard": str(v)}
+    if not result.complete:
+        return oc.SEARCH_INCOMPLETE, {"seen": seen, "search": result.work}
     witnesses, blockers = _least_blocked(ev, here, actual)
     return INSEPARABLE, {"seen": seen, "witnesses": list(witnesses),
                          "blockers": len(blockers),
