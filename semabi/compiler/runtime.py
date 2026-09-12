@@ -978,14 +978,18 @@ class Runtime:
         return {"root": root, "descriptor": descriptor, "submit_node": None}
 
     @staticmethod
-    def _observed_node(surface: Surface, node: int, indices: dict, *, source_binding: bool = False) -> dict:
+    def _observed_node(surface: Surface, node: int, indices: dict, *, source_binding: bool = False,
+                       reference_scopes: dict | None = None) -> dict:
         observed = surface.observation.node(node)
         control = deepcopy(surface.controls.get(node))
         if control is not None:
             owner = control.pop("form", None)
             if owner is not None and owner not in indices:
-                raise StopOperation("Compared control has an external native form owner without supported correspondence", stale=True)
-            control["native_owner"] = indices[owner] if owner is not None else None
+                if owner not in (reference_scopes or {}):
+                    raise StopOperation("Compared control has an external native form owner without supported correspondence", stale=True)
+                control["native_owner"] = deepcopy(reference_scopes[owner])
+            else:
+                control["native_owner"] = indices[owner] if owner is not None else None
             destination = control.get("destination")
             if source_binding and isinstance(destination, str):
                 document, marker, fragment = destination.partition("#")
@@ -1000,16 +1004,40 @@ class Runtime:
                 **({"text_boundary": surface.text_boundaries[node]} if node in surface.text_boundaries else {})}
 
     @staticmethod
-    def _observed_subtree(surface: Surface, root: int, *, source_binding: bool = False) -> list:
+    def _observed_subtree(surface: Surface, root: int, *, source_binding: bool = False,
+                          reference_scopes: dict | None = None) -> list:
         nodes = list(surface.observation.subtree(root))
         indices = {node: index for index, node in enumerate(nodes)}
         return [{"parent": indices.get(surface.observation.node(node).parent, -1),
-                 **Runtime._observed_node(surface, node, indices, source_binding=source_binding)} for node in nodes]
+                 **Runtime._observed_node(surface, node, indices, source_binding=source_binding,
+                                          reference_scopes=reference_scopes)} for node in nodes]
 
     def _occurrence_context(self, surface: Surface, root: int, record_roots: set[int],
-                            *, source_binding: bool = False) -> list:
+                            *, source_binding: bool = False, reference_scopes: dict | None = None) -> list:
         """Preserve containment and observed owner labels, without assigning a business identity."""
         obs = surface.observation
+        # Apply the same structural evidence to every possible containing owner.
+        # In particular, the chosen witness/scope does not create a unique anchor.
+        # Values and labels remain checked in the full compared subtrees; this
+        # additional channel only distinguishes observed control/layout shapes.
+        anchors = ({region["root"] for region in local_regions(obs)} | set(surface.forms)
+                   | set(editor_scopes(surface)) | set(surface.controls)
+                   | {node.i for node in obs.nodes if node.role == "heading"})
+        full_shapes, owner_shapes = {}, {}
+
+        def shape(node):
+            children = obs.children(node)
+            for child in children:
+                shape(child)
+            prefix = [obs.node(node).role, surface.controls.get(node, {}).get("input_type")]
+            full_shapes[node] = [*prefix, [full_shapes[child] for child in children]]
+            selected = [owner_shapes[child] for child in children if owner_shapes[child] is not None]
+            owner_shapes[node] = (full_shapes[node] if node in anchors else
+                                  [*prefix, selected] if selected else None)
+
+        for node in obs.nodes:
+            if node.parent < 0:
+                shape(node.i)
 
         def headings(owner, branch=None):
             pending, result = list(obs.children(owner)), []
@@ -1018,22 +1046,26 @@ class Runtime:
                 if node == branch or node in record_roots:
                     continue
                 if obs.node(node).role == "heading":
-                    result.append(self._observed_subtree(surface, node, source_binding=source_binding))
+                    result.append(self._observed_subtree(surface, node, source_binding=source_binding,
+                                                         reference_scopes=reference_scopes))
                 else:
                     pending.extend(obs.children(node))
             return result
 
         context, branch = [], root
         for owner in obs.ancestors(root):
-            item = {"node": self._observed_node(surface, owner, {owner: 0}, source_binding=source_binding),
-                    "headings": headings(owner, branch)}
+            item = {"node": self._observed_node(surface, owner, {owner: 0}, source_binding=source_binding,
+                                                reference_scopes=reference_scopes),
+                    "headings": headings(owner, branch), "observed_structure": owner_shapes[owner]}
             # Two indistinguishable containing owners cannot establish which
             # holder retained an occurrence. Do not turn their positions into IDs.
             siblings = obs.children(obs.node(owner).parent) if obs.node(owner).parent >= 0 else []
             rivals = [sibling for sibling in siblings if sibling != owner
                       and any(region in obs.subtree(sibling) for region in record_roots)
-                      and self._observed_node(surface, sibling, {sibling: 0}, source_binding=source_binding) == item["node"]
-                      and headings(sibling) == item["headings"]]
+                      and self._observed_node(surface, sibling, {sibling: 0}, source_binding=source_binding,
+                                              reference_scopes=reference_scopes) == item["node"]
+                      and headings(sibling) == item["headings"]
+                      and owner_shapes[sibling] == item["observed_structure"]]
             if rivals:
                 raise StopOperation("Containing owner context is observationally ambiguous", stale=True)
             context.append(item)
@@ -1050,13 +1082,24 @@ class Runtime:
         # a promise about non-row notices, hidden state, or exclusive causation.
         observed_regions = local_regions(surface.observation)
         roots = {region["root"] for region in observed_regions} | {witness["root"]}
+        candidate = self._populated_scope(surface)
+        # This symbol refers only to the uniquely resolved scope in this very
+        # observation. Its full state is part of the compared evidence below;
+        # a later observation must independently resolve and check it again.
+        # Arbitrary external form owners remain unsupported.
+        scope_state = self._exit_scope_state(surface, candidate, witness) if candidate else None
+        reference_scopes = ({candidate["root"]: {"kind": "observed_form_owner", "binding": "checked_populated_scope"}}
+                            if candidate else {})
         regions = [{"role": region["role"], "basis": region["basis"],
-                    "nodes": self._observed_subtree(surface, region["root"]),
-                    "context": self._occurrence_context(surface, region["root"], roots)}
+                    "nodes": self._observed_subtree(surface, region["root"], reference_scopes=reference_scopes),
+                    "context": self._occurrence_context(surface, region["root"], roots,
+                                                         reference_scopes=reference_scopes)}
                    for region in observed_regions]
-        return {"target": self._observed_subtree(surface, witness["root"]),
-                "target_context": self._occurrence_context(surface, witness["root"], roots),
-                "local_regions": regions}
+        return {"target": self._observed_subtree(surface, witness["root"], reference_scopes=reference_scopes),
+                "target_context": self._occurrence_context(surface, witness["root"], roots,
+                                                            reference_scopes=reference_scopes),
+                "local_regions": regions,
+                **({"reference_scopes": {"checked_populated_scope": scope_state}} if candidate else {})}
 
     def _scope_receipt(self, browser, surface: Surface, procedure: dict, arguments: dict,
                        witness: dict, trace: Trace, *, contract: dict | None = None) -> dict:

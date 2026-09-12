@@ -2578,6 +2578,62 @@ def test_populated_exit_does_not_invent_identity_for_indistinguishable_holders(t
     assert 'ambiguous' in learned['reason']
 
 
+class _StructuralContextBrowser(_PopulatedContextBrowser):
+    """Identically named holders have different visible control/layout shapes."""
+    def __init__(self):
+        super().__init__('ambiguous_owners')
+        self.extra_control_role = 'button'
+
+    def read(self):
+        surface = super().read()
+        if self.scene != 'source':
+            return surface
+        owners = [node.parent for node in surface.observation.nodes
+                  if node.role == 'heading' and node.name == 'Same owner']
+        nodes = deepcopy(surface.observation.nodes)
+        index = len(nodes)
+        nodes.append(Node(index, owners[1], self.extra_control_role, 'Independent action'))
+        extra = _surface([Node(0, -1, self.extra_control_role, 'Independent action')]).controls[0]
+        surface.controls[index] = extra
+        surface.observation = Observation(nodes, self.current_url)
+        self.surface = surface
+        return surface
+
+
+def test_populated_exit_uses_symmetric_observed_layout_not_requested_value_as_owner_identity(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_StructuralContextBrowser())
+    operation = _learned_kind(learned, 'create_visible_record')
+    result = runtime.invoke(connection, operation, {'name': 'Fresh structurally owned record'}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED', result
+    assert browser.rows[-1]['Name'] == 'Fresh structurally owned record'
+    assert browser.route_actions[-1][0] == 'reload'
+    # A later observation must retain the discriminating structural evidence.
+    # Having the requested string on exactly one record does not rescue it.
+    browser.extra_control_role = 'textbox'
+    before = len(browser.actions)
+    stopped = runtime.invoke(connection, operation, {'name': 'Do not create'}, lambda event: None)
+    assert stopped['outcome'] == 'FAILED_BEFORE_EFFECT'
+    assert len(browser.actions) == before
+
+
+def test_populated_exit_shape_evidence_is_equal_for_duplicate_owners_despite_unique_requested_string(tmp_path):
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'region', ''),
+             Node(2, 1, 'article', ''), Node(3, 2, 'text', 'Requested target'),
+             Node(4, 0, 'region', ''), Node(5, 4, 'article', ''),
+             Node(6, 5, 'text', 'Different neighbor')]
+    surface = _surface(nodes)
+    witness = runtime_module.record_witness(surface, {'name': 'Requested target'}, 'name')
+    assert witness and witness['root'] == 2
+    with pytest.raises(runtime_module.StopOperation, match='Containing owner context is observationally ambiguous'):
+        Runtime(tmp_path)._scope_preservation(surface, witness)
+    # Changing which occurrence is requested must give the symmetric refusal.
+    witness = runtime_module.record_witness(surface, {'name': 'Different neighbor'}, 'name')
+    assert witness and witness['root'] == 5
+    with pytest.raises(runtime_module.StopOperation, match='Containing owner context is observationally ambiguous'):
+        Runtime(tmp_path)._scope_preservation(surface, witness)
+
+
 @pytest.mark.parametrize('fault', ['other_document', 'fragment', 'no_fragment', 'query', 'prior_record'])
 def test_populated_exit_full_control_state_preserves_destination_binding(tmp_path, monkeypatch, fault):
     browser = _PopulatedExitBrowser()
@@ -2608,6 +2664,69 @@ def test_populated_exit_never_collapses_external_native_form_references(tmp_path
     # correspondence is established, even the unchanged case is unsupported.
     with pytest.raises(runtime_module.StopOperation, match='external native form owner'):
         Runtime(tmp_path)._scope_preservation(surface, witness)
+
+
+class _ScopeReferenceBrowser(_PopulatedExitBrowser):
+    def read(self):
+        surface = super().read()
+        if self.scene == 'source':
+            nodes = deepcopy(surface.observation.nodes)
+            link = next(node.i for node in nodes if node.role == 'link' and node.name == 'Preset')
+            region = len(nodes)
+            nodes.append(Node(region, 1, 'article', ''))
+            nodes[link].parent = region  # Its observed owner remains the containing form, outside this row.
+            surface.observation = Observation(nodes, self.current_url)
+        self.surface = surface
+        return surface
+
+
+def test_populated_exit_learns_and_rechecks_reference_to_current_unique_scope(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_ScopeReferenceBrowser())
+    operation = _learned_kind(learned, 'create_visible_record')
+    for name in ('Fresh scoped reference', 'Another scoped reference'):
+        result = runtime.invoke(connection, operation, {'name': name}, lambda event: None)
+        assert result['outcome'] == 'CONFIRMED', result
+        assert browser.rows[-1]['Name'] == name
+        assert browser.route_actions[-1][0] == 'reload'
+        receipt = runtime._verified_editors[browser]
+        referenced = [node['control']['native_owner'] for region in receipt['preservation']['local_regions']
+                      for node in region['nodes'] if node['control'] and node['role'] == 'link']
+        assert {'kind': 'observed_form_owner', 'binding': 'checked_populated_scope'} in referenced
+
+
+def _scope_reference_surface(*, owner=6, value='Observed state', other_value='', prefix=False):
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'article', ''), Node(2, 1, 'text', 'Target'),
+             Node(3, 0, 'article', ''), Node(4, 3, 'text', 'Neighbor'), Node(5, 3, 'link', 'Related control'),
+             Node(6, 0, 'group', 'Scope A'), Node(7, 6, 'textbox', 'Display value', value=value),
+             Node(8, 0, 'group', 'Scope B'), Node(9, 8, 'textbox', 'Display value', value=other_value)]
+    properties = {5: {'form': owner}, 7: {'form': 6}, 9: {'form': 8}}
+    forms = [6, 8]
+    if prefix:
+        # Same rendered evidence with fresh node numbers; not a persistent key.
+        mapping = {node.i: node.i + (node.i > 0) for node in nodes}
+        nodes = [Node.from_json({**node.to_json(), 'i': mapping[node.i],
+                                'parent': mapping.get(node.parent, -1)}) for node in nodes]
+        nodes.insert(1, Node(1, 0, 'text', 'Uncompared non-row notice'))
+        properties = {mapping[index]: {**control, 'form': mapping.get(control['form'], control['form'])}
+                      for index, control in properties.items()}
+        forms = [mapping[root] for root in forms]
+    return _surface(nodes, properties, forms=forms)
+
+
+def test_populated_exit_scope_reference_requires_same_checked_state_not_same_node_number(tmp_path):
+    runtime = Runtime(tmp_path)
+    def preservation(surface):
+        witness = runtime_module.record_witness(surface, {'name': 'Target'}, 'name')
+        return runtime._scope_preservation(surface, witness)
+    original = preservation(_scope_reference_surface())
+    assert preservation(_scope_reference_surface(prefix=True)) == original
+    assert preservation(_scope_reference_surface(value='Different observed state')) != original
+    for changed in (_scope_reference_surface(owner=8), _scope_reference_surface(owner=999)):
+        with pytest.raises(runtime_module.StopOperation, match='external native form owner'):
+            preservation(changed)
+    with pytest.raises(runtime_module.StopOperation, match='Populated exit scope is ambiguous'):
+        preservation(_scope_reference_surface(other_value='Observed state'))
 
 
 def test_populated_exit_restart_can_use_contract_from_clean_entry_but_not_a_preexisting_draft(tmp_path, monkeypatch):
