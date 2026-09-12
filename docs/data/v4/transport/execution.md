@@ -19,6 +19,8 @@
   Acquisition stopped cleanly at2053 cumulative recorded actions/1800 writes,
   29 completed contexts,143 trials/32 edits;14 Start trials now follow attachment.
   No in-flight fence remains. One fit started21:48:44UTC on2053 raw steps.
+  Raw inspection found7 accepted/7 refused Start responses after attachment;
+  all14 retained an unrelated Release approved notice. This is not a fit claim.
   Owned fit budget30minutes (22:18:44UTC); inspect before that deadline and stop
   the owned job if exceeded, retaining raw evidence rather than allowing an
   unbounded quiet-machine run. HTTP client timeout2400s is not a job-cancel claim.
@@ -31,8 +33,13 @@
   OriginalU1/U2 have available update procedures but unsupported caller grammar;
   C1/C2 also need optional/default/create→boolean composition, R1/R2 need search
   and collection scope. Do not reclassify these all as learner failures.
-  Next: inspect workshop continuation's actual evidence/barrier and complete
-  Linkding's independent checks; no overlapping heavy fit or source changes in service.
+  Next: inspect workshop continuation's fit and actual evidence/barrier.
+  Linkding checks are complete and owned8864 is closed; no overlapping heavy
+  fit or source changes in service. Main7fd791e adds publication diagnostics
+  for language, binding, confirmation and persisted-edit barriers. Gates:
+  12 publication/resume tests;56 semantic HTTP tests passed/1.36s. Initial
+  combined115pass/12fail/32errors was socket-denied, not combined with these counts.
+  Active isolated candidates: retained-language LIST ordering and required-only CREATE.
 - Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
   `d0b1574` and research `bbd56ef` are ancestors. No cherry-pick or reset.
 - Current milestone: integrated API checkpoint `956b72b`, authorized repair
