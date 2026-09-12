@@ -1648,6 +1648,10 @@ class Runtime:
         indices = {node.i: index for index, node in enumerate(kept)}
         return [{"parent": indices.get(node.parent, -1),
                  **{key: value for key, value in node.to_json().items() if key not in {"i", "parent", "bbox"}},
+                 # Only observed, fully accounted descendant-text repetitions
+                 # can be separated from the selected record's changed values.
+                 "name": surface.state_key(node.i, separate_descendant_text=bool(
+                     omitted.intersection(surface.observation.subtree(node.i))))[1],
                  "text_complete": surface.text_is_complete(node.i),
                  **({"text_boundary": surface.text_boundaries[node.i]} if node.i in surface.text_boundaries else {}),
                  **({"text_source": deepcopy(surface.text_sources[node.i])} if node.i in surface.text_sources else {}),

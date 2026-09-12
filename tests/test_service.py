@@ -470,7 +470,7 @@ def test_http_delayed_creation_samples_once_without_retrying_save(tmp_path, monk
         api.close()
 
 
-@pytest.mark.parametrize('phase', ['save', 'reload', 'completeness'])
+@pytest.mark.parametrize('phase', ['save', 'reload', 'completeness', 'nested_remainder'])
 def test_http_learned_partial_text_update_checks_observed_siblings(tmp_path, monkeypatch, phase):
     """Diagnostic browser/setup only; schema, procedure and witnesses are learned."""
     from itertools import count
@@ -481,6 +481,7 @@ def test_http_learned_partial_text_update_checks_observed_siblings(tmp_path, mon
     from semabi.compiler.runtime import Runtime
     class Browser(diagnostics._TextNeighborBrowser):
         partial_neighbor = False
+        parent_remainder = 'Stable'
 
         def act(self, action):
             updating = (self.selected is not None and action.kind == 'click'
@@ -488,10 +489,31 @@ def test_http_learned_partial_text_update_checks_observed_siblings(tmp_path, mon
             result = super().act(action)
             if updating and self.neighbor_fault == 'completeness':
                 self.partial_neighbor = True
+            if updating and self.neighbor_fault == 'nested_remainder':
+                self.parent_remainder = 'Changed parent state'
             return result
 
         def read(self):
             surface = super().read()
+            if self.scene == 'list' and phase == 'nested_remainder':
+                from semabi.compiler.observation import Node, Observation
+                from semabi.compiler.semantic_runtime import _inventory
+                nodes = surface.observation.nodes
+                root = len(nodes)
+                articles = [node for node in nodes if node.role == 'article']
+                article_members = {i for node in articles for i in surface.observation.subtree(node.i)}
+                for node in articles:
+                    node.parent = root
+                name = 'Group ' + ' '.join(node.name for node in nodes if node.i in article_members) + ' ' + self.parent_remainder
+                nodes.extend([Node(root, 0, 'listitem', name), Node(root + 1, root, 'button', 'Group'),
+                              Node(root + 2, root, 'text', self.parent_remainder)])
+                surface.observation = Observation(nodes, surface.observation.url)
+                surface.controls[root + 1] = {'role': 'button', 'label': 'Group', 'input_type': '',
+                                             'disabled': False, 'readonly': False, 'submit': False}
+                surface.text_sources = {node.i: {'own_text': node.name, 'name_from_descendants': False,
+                                                'descendant_text_complete': True} for node in nodes}
+                surface.text_sources[root].update(own_text='', name_from_descendants=True)
+                assert 'Group' in _inventory(surface), 'parent must actually be checked'
             if self.scene == 'list' and len(self.rows) > 1:
                 value = self.rows[1]['Description']
                 for node in surface.observation.nodes:
@@ -552,6 +574,8 @@ def test_http_learned_partial_text_update_checks_observed_siblings(tmp_path, mon
         assert browser.rows[0] == {**before[0], 'Title': 'Fresh requested HTTP title'}
         if phase == 'completeness':
             assert browser.rows[1] == before[1] and browser.partial_neighbor
+        elif phase == 'nested_remainder':
+            assert browser.rows[1] == before[1] and browser.parent_remainder == 'Changed parent state'
         else:
             assert browser.rows[1]['Description'] != before[1]['Description']
         assert browser.rows[1]['URL'] == before[1]['URL']

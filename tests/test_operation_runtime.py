@@ -801,6 +801,43 @@ def test_native_nested_inventory_accounts_for_observed_text_sources(tmp_path, fa
         browser.close()
 
 
+@pytest.mark.parametrize('fault', [None, 'remainder', 'sibling', 'explicit_label', 'missing_provenance'])
+def test_native_direct_neighbor_projection_preserves_parent_remainder(tmp_path, fault):
+    from semabi.compiler.semantic_runtime import _inventory
+    browser = BrowserSession('https://synthetic.invalid/')
+    html = '''<ul><li id="holder"><button aria-label="Group">Group</button><ul>
+      <li><h3>Alpha</h3><span id="target">12</span><button>Edit</button></li>
+      <li><h3>Beta</h3><span id="sibling">9</span><button>Edit</button></li>
+      </ul><div><span id="remainder">Stable</span></div></li></ul>'''
+    try:
+        browser._page.route('https://synthetic.invalid/**', lambda route: route.fulfill(
+            content_type='text/html', body=html))
+        browser.goto()
+        if fault == 'explicit_label':
+            browser._page.locator('#holder').evaluate('(e) => e.setAttribute("aria-label", e.innerText)')
+        before = browser.read()
+        browser._page.locator('#target').evaluate('(e) => e.textContent="10"')
+        if fault in {'remainder', 'sibling'}:
+            browser._page.locator('#' + fault).evaluate('(e) => e.textContent="Changed"')
+        if fault == 'explicit_label':
+            browser._page.locator('#holder').evaluate('(e) => e.setAttribute("aria-label", e.innerText)')
+        after = browser.read()
+        assert before.settled and after.settled
+        if fault == 'missing_provenance':
+            for surface in (before, after):
+                surface.text_sources.pop(next(n.i for n in surface.observation.nodes if n.name == 'Alpha'))
+        old, = visible_record_matches(before, 'Alpha')
+        new, = visible_record_matches(after, 'Alpha')
+        first, second = Runtime._record_neighbors(before, old), Runtime._record_neighbors(after, new)
+        assert 'Group' in _inventory(before) and 'Group' in _inventory(after)
+        assert sum(row['role'] == 'listitem' for row in first) == 2, 'parent and sibling must both be checked'
+        parent = next(n for n in before.observation.nodes if n.role == 'listitem')
+        assert parent.name != after.observation.node(parent.i).name, 'raw descendant name really changed'
+        assert (first == second) is (fault is None)
+    finally:
+        browser.close()
+
+
 def test_text_source_recovery_does_not_collapse_distinct_occurrences_or_enrich_missing_evidence(tmp_path):
     from semabi.compiler.semantic_runtime import _learning_surfaces
     from semabi.compiler.runtime import Trace, Budget, StopOperation
