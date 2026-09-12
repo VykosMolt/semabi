@@ -16,9 +16,21 @@
   Workshopv2 continuation job `job_b99bb111b38248678aa1eff4fb2fb542` is RUNNING
   under1200/900, same saved frontier/no reset, output
   `runs/product_semantic_workshop_v2/continued_frontier_f2c110f.json`.
+  Acquisition stopped cleanly at2053 cumulative recorded actions/1800 writes,
+  29 completed contexts,143 trials/32 edits;14 Start trials now follow attachment.
+  No in-flight fence remains. One fit started21:48:44UTC on2053 raw steps.
+  Owned fit budget30minutes (22:18:44UTC); inspect before that deadline and stop
+  the owned job if exceeded, retaining raw evidence rather than allowing an
+  unbounded quiet-machine run. HTTP client timeout2400s is not a job-cancel claim.
   Linkdingv3 ordinary onboarding published5ops in91actions/56possiblewrites/
   54.066s (authentication separate); unchanged caller still preflights0/16 eligible.
-  Separate schema-selected partial/boolean/duplicate-title/restart checks are active.
+  Separate schema-selected partial/boolean/duplicate-title/restart/fresh/read
+  checks completed8/8 with independent native all-record and UI checks. Calls
+  64actions/42possiblewrites/42.138s;3reconnects9authactions/5.452s;UI9checks/
+  54actions including27auth,11native read-only snapshots. No uncertain retries.
+  OriginalU1/U2 have available update procedures but unsupported caller grammar;
+  C1/C2 also need optional/default/create→boolean composition, R1/R2 need search
+  and collection scope. Do not reclassify these all as learner failures.
   Next: inspect workshop continuation's actual evidence/barrier and complete
   Linkding's independent checks; no overlapping heavy fit or source changes in service.
 - Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
