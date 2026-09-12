@@ -48,7 +48,9 @@ LINKED_VALUE_PRIOR = ("A unique visible local link carrying a created value may 
                       "one exact-value textbox in a small form-less parent scope, independently matched in two created records. "
                       "A fill, one retained-focused Tab and navigation to the learned list is a proposed commit sequence; "
                       "only two persisted update trials establish it, without identifying which step saves or asserting global identity")
-TEXT_PROBE_PRIOR = ("Free-form update trials reuse complete #/@-prefixed tokens from current rendered text, "
+TEXT_PROBE_PRIOR = ("Only fields advertising aria-autocomplete=list in two selected-record read trials receive "
+                    "completion stimuli; other fields receive distinct plain text. Completion trials reuse "
+                    "complete #/@-prefixed tokens from current rendered text, "
                     "choosing among the first eight in lexical order, or a bare # when none are observed. "
                     "This lexical completion stimulus is a prior, not a business identity or reference assertion")
 
@@ -226,7 +228,7 @@ def completion_probe_tokens(surface: Surface) -> list[dict]:
             for value in sorted(found)[:8]]
 
 
-def probe_arguments(candidate: dict, trial: int, *, punctuation: bool = False,
+def probe_arguments(candidate: dict, trial: int, *, punctuation_fields: set[str] | frozenset[str] = frozenset(),
                     completion_token: str | None = None) -> dict:
     values = {}
     for field in candidate["fields"]:
@@ -239,7 +241,7 @@ def probe_arguments(candidate: dict, trial: int, *, punctuation: bool = False,
             token = "https://example.invalid/" + token
         elif field_format(field) == "email":
             token += "@example.invalid"
-        elif punctuation:
+        elif field["argument"] in punctuation_fields:
             token += " " + (completion_token or "#")
         if field["max_length"] is not None and len(token) > field["max_length"]:
             raise StopOperation("Visible input limit is too short for a distinct probe")
@@ -1415,6 +1417,7 @@ class Runtime:
                      "effect_slots": deepcopy(original["effect_slots"]),
                      "read_fields": {field["argument"]: deepcopy(field["descriptor"])
                                      for field in original["form"]["fields"] if field["argument"] in names}}
+        completion_reads = []
         for kind in ("read_visible_record", "update_visible_record"):
             trials = []
             try:
@@ -1436,8 +1439,10 @@ class Runtime:
                 writes = 2 if reading else 2 * (
                     len(update_names) + completion_actions + 2 + menu)
                 self._reserve_record_actions(trace, actions, writes)
+                completion_fields = (set.intersection(*(set(read["advertised_fields"]) for read in completion_reads))
+                                     if len(completion_reads) == 2 else set())
                 completion_tokens = (completion_probe_tokens(trace.read(browser))
-                                     if not reading and not procedure.get("linked_value_editor") else [])
+                                     if not reading and completion_fields else [])
                 for trial_index, created in enumerate(created_trials):
                     # A second-read comparison may propose a numeric binding,
                     # but it cannot alter the retained procedure until that
@@ -1451,7 +1456,7 @@ class Runtime:
                     if not reading:
                         arguments.update(probe_arguments({"fields": [field for field in procedure["form"]["fields"]
                                                                       if field["argument"] in update_names]},
-                                                         trial_index + 2, punctuation=not bool(procedure.get("linked_value_editor")),
+                                                         trial_index + 2, punctuation_fields=completion_fields,
                                                          completion_token=stimulus["value"] if stimulus else None))
                     surface, witness, before = self._record_editor(
                         browser, trial_procedure, target, trace, expected_values=created["arguments"], discover=True,
@@ -1461,9 +1466,23 @@ class Runtime:
                         completion_actions_per_trial=completion_actions,
                         context_trial=trials[0] if reading and trial_index == 1 else None)
                     selected_witness = witness
+                    completion_observations = {}
                     if reading:
+                        if (not trial_procedure.get("linked_value_editor") and
+                                callable(getattr(browser, "textbox_popup_context", None))):
+                            candidate = self._record_form(surface, trial_procedure, target)
+                            for name in update_names:
+                                nodes = surface.resolve(trial_procedure["read_fields"][name], within=candidate["root"])
+                                if len(nodes) != 1:
+                                    raise StopOperation("Completion proposal field is absent or ambiguous")
+                                completion_observations[name] = self._popup_metadata(browser, surface, nodes[0], trace)
                         captured = self._leave_editor(browser, surface, trial_procedure, before, trace)
                         values = before
+                        completion_reads.append({"target": target,
+                            "observation": surface.observation.structural_signature(),
+                            "metadata": deepcopy(completion_observations),
+                            "advertised_fields": sorted(name for name, metadata in completion_observations.items()
+                                                        if metadata.get("aria_autocomplete") == "list")})
                     else:
                         values = {**({procedure["anchor"]: target} if not replacing else {}),
                                   **{name: arguments[name] for name in update_names}}
@@ -1475,6 +1494,9 @@ class Runtime:
                                    "witness": witness,
                                    **({"popup_dismissals": popup_events, "completion_stimulus": stimulus}
                                       if not reading else {}),
+                                   **({"completion_proposals": deepcopy(completion_reads[-1])} if reading else
+                                      {"completion_probe_fields": sorted(completion_fields),
+                                       "completion_read_evidence": deepcopy(completion_reads)}),
                                    **({"linked_commits": commit_events} if not reading and procedure.get("linked_value_editor") else {}),
                                    **({"before_witness": selected_witness} if replacing and not reading else {})})
                     if reading and trial_index == 1:

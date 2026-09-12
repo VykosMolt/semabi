@@ -4334,6 +4334,105 @@ def test_completion_learning_requires_two_triggered_trials_and_reuses_without_pu
     assert browser.reload_count >= 5
 
 
+class _MixedCompletionRecordBrowser(_EditableRecordBrowser):
+    """One whitespace-splitting value and one explicitly advertised completion.
+
+    The list intentionally never restates the complete split value. A global
+    punctuation probe therefore destroys the original single-value witness.
+    """
+    popup_mode = None
+    retained_node_indices = _CompletionRecordBrowser.retained_node_indices
+
+    def __init__(self, *, second_owner_advertises=True):
+        super().__init__()
+        self.popup_open = False
+        self.escapes = 0
+        self.second_owner_advertises = second_owner_advertises
+
+    def read(self):
+        surface = super().read()
+        nodes, properties = deepcopy(surface.observation.nodes), deepcopy(surface.controls)
+        if self.scene == 'list':
+            values = {row['Title'] for row in self.rows}
+            for node in list(nodes):
+                if node.role == 'text' and node.name in values:
+                    words = node.name.split()
+                    node.role, node.name = 'group', ''
+                    for word in words:
+                        nodes.append(Node(len(nodes), node.i, 'link', word))
+        else:
+            self.popup_field = next(node.i for node in nodes if node.role == 'textbox' and node.name == 'Description')
+            self.popup_root = len(nodes)
+            nodes.append(Node(self.popup_root, 1, 'group', 'Completion region'))
+            nodes[self.popup_field].parent = self.popup_root
+            if self.popup_open:
+                properties[self.popup_field]['has_popup'] = 'listbox'
+                self.popup_node = len(nodes)
+                nodes.append(Node(self.popup_node, self.popup_root, 'listbox', ''))
+                nodes.append(Node(len(nodes), self.popup_node, 'option', 'Suggestion'))
+        self.surface = _surface(nodes, properties, forms=tuple(surface.forms))
+        self.element_tokens = {node.i: (node.role, node.name) for node in nodes}
+        return self.surface
+
+    def textbox_popup_context(self, node):
+        metadata = _CompletionRecordBrowser.textbox_popup_context(self, node)
+        if node != self.popup_field or self.selected == 1 and not self.second_owner_advertises:
+            metadata['aria_autocomplete'] = None
+        return metadata
+
+    def act(self, action):
+        completion_fill = (self.scene == 'editor' and self.selected is not None and action.kind == 'type'
+                           and self.surface.observation.node(action.target).name == 'Description')
+        result = super().act(action)
+        if completion_fill:
+            self.popup_open = action.text.endswith('#')
+        if self.scene != 'editor':
+            self.popup_open = False
+        return result
+
+    def press_retained(self, primitive, retained, offset, timeout_ms):
+        assert primitive.text == 'Escape' and self.retained_node_indices(retained)[offset] == self.popup_field
+        self.actions.append(primitive)
+        self.escapes += 1
+        self.popup_open = False
+        return ActionResult(True)
+
+
+def test_completion_probes_are_scoped_to_two_owner_advertisements_in_a_mixed_form(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MixedCompletionRecordBrowser())
+    assert learned['attempts'] == []
+    update = _learned_kind(learned, 'update_visible_record')
+    assert browser.escapes == 2
+    assert set(update['procedure']['textbox_popups']) == {'description'}
+    for trial in update['support']['trials']:
+        assert trial['completion_probe_fields'] == ['description']
+        assert len(trial['values']['title'].split()) == 1
+        assert trial['values']['description'].endswith(' #')
+        evidence = trial['completion_read_evidence']
+        assert len({item['target'] for item in evidence}) == 2
+        assert all(item['metadata']['title']['aria_autocomplete'] is None for item in evidence)
+        assert all(item['metadata']['description']['aria_autocomplete'] == 'list' for item in evidence)
+        assert all(not item['metadata']['description']['listboxes'] for item in evidence)
+    sibling = deepcopy(browser.rows[1])
+    result = runtime.invoke(connection, update,
+                            {'target': browser.rows[0]['URL'], 'description': 'Fresh completion #'}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED'
+    assert browser.rows[1] == sibling and browser.escapes == 3
+
+
+def test_one_owner_completion_advertisement_does_not_propose_or_publish_a_popup_action(tmp_path, monkeypatch):
+    _, _, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MixedCompletionRecordBrowser(second_owner_advertises=False))
+    assert learned['attempts'] == []
+    update = _learned_kind(learned, 'update_visible_record')
+    assert 'textbox_popups' not in update['procedure'] and browser.escapes == 0
+    for trial in update['support']['trials']:
+        assert trial['completion_probe_fields'] == []
+        assert len(trial['values']['description'].split()) == 1
+        assert [item['advertised_fields'] for item in trial['completion_read_evidence']] == [['description'], []]
+
+
 @pytest.mark.parametrize('mode,expected_escapes', [
     ('missing_reference', 0), ('unresolved_reference', 0), ('wrong_reference', 0),
     ('lost_focus', 0), ('second_listbox', 0), ('outside_scope', 0),
@@ -4396,10 +4495,10 @@ def test_punctuation_probe_respects_formats_and_declared_length_limits():
     candidate = form_candidates(_form_surface())[0]
     field = deepcopy(candidate['fields'][0])
     field['argument'] = 'value'
-    assert runtime_module.probe_arguments({'fields': [field]}, 2, punctuation=True)['value'].endswith(' #')
+    assert runtime_module.probe_arguments({'fields': [field]}, 2, punctuation_fields={'value'})['value'].endswith(' #')
     field['max_length'] = 2
     with pytest.raises(runtime_module.StopOperation, match='too short'):
-        runtime_module.probe_arguments({'fields': [field]}, 2, punctuation=True)
+        runtime_module.probe_arguments({'fields': [field]}, 2, punctuation_fields={'value'})
 
 
 @pytest.mark.slow
