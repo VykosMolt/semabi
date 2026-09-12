@@ -133,6 +133,7 @@ class Role:
     form: tuple
     tid: Any
     anchor: str | None = None
+    path: bool = False   # supplied by the reading's relations: a path for comparisons, nothing nominal
 
     def denotation(self, state, bound: dict) -> list:
         here = [o for o in state.objs.values() if o.tid == self.tid]
@@ -844,8 +845,13 @@ def relation_roles(A, owner_tid) -> dict[str, Role]:
     run page shows its carrier as the van it is, by containment, and the check turns on the
     run's weight against that van's limit; harbour's joins reached the vessel the same way,
     through variables the booking's effects happened to supply.  The kind and denotation are
-    the language's own RELATION query anchored on the owner: nothing new names an object, and
-    a rule over such a role is justified or not exactly as any other.
+    the language's own RELATION query anchored on the owner: nothing new names an object.  Such
+    a role is a *path*: it enters the language only through comparisons between its fields
+    and another role's, adopted under the pair discipline like any other.  Whether it names
+    anything, and what its attributes equal, are not conditions -- blend measured what offering
+    a page-shaped role as a referent does (`structural_roles`), and harbour's pilot corpus
+    showed it again here: a coincidence refuted under one name of the vessel returned pure
+    under a second.
     """
     out: dict[str, Role] = {}
     if owner_tid is None:
@@ -853,7 +859,7 @@ def relation_roles(A, owner_tid) -> dict[str, Role]:
 
     def add(direction, slot, tid):
         role = Role(f"{referring.RELATION}{[direction, slot]}:{tid}<{OWNER}", referring.RELATION,
-                    (direction, slot), tid, OWNER)
+                    (direction, slot), tid, OWNER, path=True)
         out.setdefault(role.name, role)
 
     types = getattr(A, "types", {})
@@ -903,15 +909,22 @@ def bind_language(inducer) -> None:
 def _pending_literals(model, state, bound, status) -> set:
     if _INDUCER is None:
         raise RuntimeError("call outcome.bind_language(inducer) before asking a model")
-    return _literals(_INDUCER, state, bound, status, model.defaults, model.ordered, model.pairs)
+    return _literals(_INDUCER, state, bound, status, model.defaults, model.ordered, model.pairs,
+                     _paths(model.roles))
+
+
+def _paths(roles: dict) -> frozenset:
+    return frozenset(name for name, role in roles.items() if getattr(role, "path", False))
 
 
 def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None = None,
-              ordered: dict | None = None, pairs: frozenset | None = None) -> set:
+              ordered: dict | None = None, pairs: frozenset | None = None,
+              paths: frozenset = frozenset()) -> set:
     """The inducer's own literal language, over role names instead of operator parameters.
 
     Plus two families it does not have: whether each role names anything here at all, and
-    whether each list this control sits with has been chosen into.
+    whether each list this control sits with has been chosen into.  A path role (`Role.path`)
+    contributes comparisons with other roles' fields and nothing else.
     """
     from semabi.compiler.induce import Transition
 
@@ -920,16 +933,27 @@ def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None
     lits = inducer._literals(None, fake)
     for role, how in status.items():
         lits.add((how, role))
+    if paths:
+        lits = {l for l in lits if not any(x in paths for x in l[1:] if isinstance(x, str))}
     if ordered:
         # a field whose theory is ORDERED is also compared against the thresholds the
         # history rendered; nominal fields get nothing here (`semabi.compiler.v4.fields`)
         from semabi.compiler.v4 import fields as field_theory
         for role, obj in binding.items():
-            lits |= field_theory.literals(role, obj, ordered)
+            if role not in paths:
+                lits |= field_theory.literals(role, obj, ordered)
+            else:
+                # the values a path's ordered fields take, which is what justifying a
+                # comparison over them reads (`fields._justified`); no threshold of its own
+                for slot in ordered.get(getattr(obj, "tid", None), {}):
+                    value = getattr(obj, "attrs", {}).get(slot)
+                    if field_theory.numeric(value) is not None:
+                        lits.add(("attr", role, slot, value))
         # the owner too: it is a role with a type wherever an operator binds it, its
         # thresholds are adopted like any other's, and under a reading that keys the sheet
         # by its vessel the length a ticket is measured against is the acted-on object's
-        lits |= field_theory.pair_literals(binding, ordered, pairs)
+        lits |= {l for l in field_theory.pair_literals(binding, ordered, pairs)
+                 if l[1] not in paths or l[3] not in paths}
     if COUNT_LITERALS:
         # How many objects of each type the state holds.  Every type the model knows, so
         # that an empty collection is a count of nought and not a missing fact.
@@ -1116,7 +1140,7 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
         state, owner, event, _args = occ[:4]
         seen[event] = seen.get(event, 0) + 1
         bound, status = out.bind(state, owner)
-        rows.append((_literals(inducer, state, bound, status, defaults, out.ordered, out.pairs), event,
+        rows.append((_literals(inducer, state, bound, status, defaults, out.ordered, out.pairs, _paths(out.roles)), event,
                      frozenset(bound) | {OWNER}))
     out.fitted = len(rows)
     out.events = dict(sorted(seen.items(), key=lambda kv: -kv[1]))
@@ -1334,7 +1358,7 @@ def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out
             silent_rows = []
             for tr, s_, obs_, _event in rows:
                 bound, status = model.bind(tr.before, _owner(A, obs_, s_))
-                silent_rows.append((_literals(inducer, tr.before, bound, status, defaults, ordered, pairs),
+                silent_rows.append((_literals(inducer, tr.before, bound, status, defaults, ordered, pairs, _paths(model.roles)),
                                     SILENT, frozenset(bound) | {OWNER}))
             model.evidence = Evidence(silent_rows)
             model.fitted = len(silent_rows)
@@ -1561,7 +1585,7 @@ def query_literals(model, got: ControlOutcome, state, bound: dict, status: dict)
     so no ordered rule could fire at a held-out state and the version space vouched by
     whatever nominal literals the witnesses shared (harbour's pilot bookings, blend's
     bottling; `docs/v4_retained.md`)."""
-    return _literals(model.inducer, state, bound, status, got.defaults, got.ordered, got.pairs)
+    return _literals(model.inducer, state, bound, status, got.defaults, got.ordered, got.pairs, _paths(got.roles))
 
 
 def score_step(model, step, *, with_arguments: bool = True) -> dict:

@@ -135,6 +135,30 @@ def test_the_owners_own_relations_are_roles_even_where_no_effect_named_them():
     roles = oc.relation_roles(A, 0)
     assert sorted(roles) == ["relation['backward', 'in:0']:2<owner", "relation['forward', 'rel:5']:5<owner",
                              "relation['parent', '']:8<owner"]
-    assert all(r.anchor == oc.OWNER and r.kind == "relation" for r in roles.values())
+    assert all(r.anchor == oc.OWNER and r.kind == "relation" and r.path for r in roles.values())
     assert roles["relation['backward', 'in:0']:2<owner"].form == ("backward", "in:0")
     assert oc.relation_roles(A, None) == {}
+
+
+def test_a_path_role_enters_the_language_only_through_comparisons():
+    from semabi.compiler.abstract import AbsObj, AbstractState
+    owner = AbsObj(0, "Cedar", {"attr:weight#0": "10"}, node=1)
+    van = AbsObj(2, "Panel", {"attr:limit#0": "14", "attr:colour#0": "white"}, refs={"in:0": owner.id}, node=4)
+    state = AbstractState({owner.id: owner, van.id: van}, {})
+
+    class Inducer:
+        A = type("A", (), {"types": {}})()
+
+        def _literals(self, op, tr):
+            return {("attr", "owner", "attr:weight#0", "10"), ("attr", "van", "attr:colour#0", "white"),
+                    ("ref", "van", "in:0", "owner"), ("ref_set", "van", "in:0")}
+
+    binding, status = {"owner": owner, "van": van}, {"owner": "named", "van": "named"}
+    ordered = {0: {"attr:weight#0": ["7", "10"]}, 2: {"attr:limit#0": ["8", "14"]}}
+    every = oc._literals(Inducer(), state, binding, status, None, ordered, None)
+    paths = oc._literals(Inducer(), state, binding, status, None, ordered, None, frozenset({"van"}))
+    assert ("attr", "van", "attr:colour#0", "white") in every and ("named", "van") in every
+    assert not any("van" in lit[1:] and lit[0] not in ("attr_cmp_ge", "attr_cmp_lt", "attr") for lit in paths)
+    assert {lit for lit in paths if lit[0] == "attr" and lit[1] == "van"} == {("attr", "van", "attr:limit#0", "14")}
+    assert ("attr_cmp_ge", "van", "attr:limit#0", "owner", "attr:weight#0") in paths
+    assert ("attr", "owner", "attr:weight#0", "10") in paths and ("named", "owner") in paths
