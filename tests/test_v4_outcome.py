@@ -45,6 +45,80 @@ class FakeInducer:
         return lits
 
 
+@pytest.mark.parametrize("silent", [False, True])
+def test_response_fitting_uses_the_observed_state_without_revising_effect_beliefs(monkeypatch, silent):
+    """One named object has different local and maintained values before acting.
+
+    This supplies a small reading, not learned ontology evidence. Both ordinary
+    fields and related ordered fields must agree with a fresh query; the prior
+    belief and delayed-effect record must remain intact.
+    """
+    from copy import deepcopy
+    from types import SimpleNamespace
+    from semabi.compiler.abstract import Diff, TypeInfo
+
+    inducer = FakeInducer()
+    inducer.A = SimpleNamespace(types={0: TypeInfo(0, key_slot="id"),
+                                      1: TypeInfo(1, key_slot="id", refs={"in:0": 0})})
+    rows, local = [], {}
+    for index, (quantity, capacity, event) in enumerate([
+            (3, 5, "accepted"), (4, 6, "accepted"),
+            (8, 5, "refused"), (9, 6, "refused")]):
+        owner = Obj(0, "same target", {"quantity": str(quantity), "response": None})
+        related = Obj(1, "same resource", {"capacity": str(capacity)}, {"in:0": owner.id})
+        state = State({owner.id: owner, related.id: related})
+        local[index] = state
+        belief = deepcopy(state)
+        belief.objs[owner.id].attrs["response"] = "old response" if event == "accepted" else None
+        belief.objs[related.id].attrs["capacity"] = "100"
+        effect = Diff([], [], [(owner.id, "quantity", "2", "3")], [], {},
+                      attr_revisions=[(owner.id, "response", "old", None)])
+        transition = SimpleNamespace(before=belief, d=effect, emission=SimpleNamespace(args=()))
+        step = SimpleNamespace(before=index, action=SimpleNamespace(target=0))
+        rows.append((transition, step, state, None if silent else event))
+    original_beliefs = deepcopy([row[0].before for row in rows])
+    original_effects = deepcopy([row[0].d for row in rows])
+    inducer.state = local.__getitem__
+    monkeypatch.setattr(oc, "_owner", lambda _a, obs, _step: obs.objs[(0, "same target")])
+    monkeypatch.setattr(oc, "roles_of", lambda *_: {oc.OWNER: oc.Role(oc.OWNER, "action", (), 0)})
+    models = {}
+    oc._learn_controls(inducer, inducer.A, None, {"button:Act": rows}, {}, {}, models,
+                       {0: {"quantity": ["3", "4", "8", "9"]},
+                        1: {"capacity": ["5", "6"]}}, None,
+                       permute=None, subject_restricted=False, structural=False,
+                       touched=False, about=False, simplest=False)
+    got = models["button:Act"]
+    for index, state in local.items():
+        owner = state.objs[(0, "same target")]
+        bound, status = got.bind(state, owner)
+        query = oc.query_literals(SimpleNamespace(inducer=inducer), got, state, bound, status)
+        fitted = {literal for literal, bit in got.evidence.index.items()
+                  if got.evidence.masks[index] & (1 << bit)}
+        assert fitted == {literal for literal in query
+                          if got.evidence.refuse is None or not got.evidence.refuse(literal)}
+        assert ("attr", oc.OWNER, "response", None) in query
+        assert not any("old response" in literal or "100" in literal for literal in query)
+    assert [row[0].before for row in rows] == original_beliefs
+    assert [row[0].d for row in rows] == original_effects
+    if not silent:
+        assert all(set(shapes) == {(("set", "quantity"),)} for shapes in got.deltas.values())
+
+
+@pytest.mark.parametrize("partial", [False, True])
+def test_response_language_distinguishes_global_emptiness_from_observed_null_reference(partial):
+    from types import SimpleNamespace
+    from semabi.compiler.abstract import AbstractState, AbsObj, TypeInfo
+    from semabi.compiler.induce import Inducer
+
+    owner = AbsObj(0, "target", {"state": "available"}, refs={"resource": None})
+    state = AbstractState({owner.id: owner}, {}, partial=partial)
+    inducer = Inducer(SimpleNamespace(types={0: TypeInfo(0, key_slot="id")}), None)
+    literals = oc._literals(inducer, state, {oc.OWNER: owner}, {oc.OWNER: "named"})
+    assert (("empty", oc.OWNER) in literals) is not partial
+    assert ("ref_null", oc.OWNER, "resource") in literals
+    assert ("attr", oc.OWNER, "state", "available") in literals
+
+
 def test_semantic_training_input_digest_rejects_same_length_evidence_substitution():
     from copy import deepcopy
     from types import SimpleNamespace
@@ -501,8 +575,25 @@ def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monk
     restored = SemanticArtifact.from_json(json.loads(json.dumps(reused.to_json())))
     operation = next(op for op in restored.operations() if op["comparison"])
     control = operation["control"]
+    training_model = original.outcomes[control]
+    evidence = training_model.evidence
+    assert len(evidence.occasion_obs) == len(evidence.events) == 15
+    for index, page in evidence.occasion_obs.items():
+        controls = [node.i for node in page.nodes if original.control_at(page, node.i) == control]
+        assert len(controls) == 1
+        prepared = original.prepare(page)
+        state = original.abstract(prepared)
+        owner = consequence._owner_object(original.abstractor, original.abstractor.parsed(prepared),
+                                          state, controls[0])
+        bound, status = training_model.bind(state, owner)
+        query = oc.query_literals(original, training_model, state, bound, status)
+        allowed = {literal for literal in query if evidence.refuse is None or not evidence.refuse(literal)}
+        fitted = {literal for literal, bit in evidence.index.items()
+                  if evidence.masks[index] & (1 << bit)}
+        assert fitted == allowed, f"occasion {index} used features unavailable in its own raw observation"
     log = EvidenceLog(evaluation)
     calls, supported, changed = 0, 0, 0
+    ambiguous_steps = []
     simulated = False
     for step in log.steps:
         if step.action.kind != "click" or step.action.target is None:
@@ -515,6 +606,11 @@ def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monk
         actual = restored.predict(page, step.action.target)
         assert actual == expected
         supported += actual["status"] == "supported"
+        if actual["status"] == "supported":
+            observed = original.observe(page, log.obs(step.after), control)["event"]
+            assert observed is not None and set(actual["alternatives"]) == {observed["frame"]}
+        elif actual["status"] == "ambiguous":
+            ambiguous_steps.append(step.step)
         if not simulated:
             editables = restored.relevant_editables(page, step.action.target)
             assert editables, "the learned comparison must expose its actual editable source"
@@ -546,7 +642,12 @@ def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monk
             actual["point"], actual["alternatives"])
         # Repeated notices are not fresh evidence of a response, even if predicted.
         assert restored.observe(page, page, control)["changed"] is False
-    assert calls == 8 and supported == 7
+    # Retained 411189b measurement: 7 correct supported / 0 wrong / 1 ambiguous.
+    # Local-feature parity removes carried list-only attributes from ALL fifteen
+    # training rows. Two additional rival outcomes survive; accept that disclosed
+    # coverage regression, not restored certainty from unseen prior beliefs.
+    assert calls == 8 and supported == 5
+    assert ambiguous_steps == [14, 24, 29]
     assert changed > 0, "the learned comparison must change an operational prediction"
     assert simulated
     assert {key: value for key, value in restored.metadata.items() if key != 'fit_reuse_seconds'} == original.metadata

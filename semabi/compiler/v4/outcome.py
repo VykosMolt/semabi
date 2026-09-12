@@ -1074,6 +1074,13 @@ def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None
     fake = Transition(0, [], [], state, state, None,
                       binding={k: o.id for k, o in binding.items()})
     lits = inducer._literals(None, fake)
+    if getattr(state, "partial", False):
+        # This inherited literal asserts that no object points at the owner,
+        # not merely that this view shows no members. Even a complete visible
+        # collection does not enumerate all incoming references in the world.
+        # Explicit observed null references and scoped membership evidence are
+        # separate; neither is discarded here.
+        lits = {literal for literal in lits if literal[0] != "empty"}
     for role, how in status.items():
         lits.add((how, role))
     if paths:
@@ -1376,6 +1383,12 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     for this whole layer.  A learner that can fit permuted labels and still score on held-out
     actions is fitting the shape of the evidence rather than the application, and the only way
     to know is to run it.
+
+    Response conditions use each observation's own abstract pre-state, just as
+    live prediction and held-out scoring do. The transition's maintained belief
+    remains evidence for effects, but is not an extra predictive input that a
+    fresh caller never observed. In particular, do not mix a local bound owner's
+    ordered fields with nominal fields looked up in its older tracked identity.
     """
     from semabi.compiler.v4.consequence import clicked_control, control_of
 
@@ -1403,7 +1416,8 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     first_view: dict = {}
     for tr in sorted((t for t in list(inducer.transitions) + list(inducer.noops) if t.steps),
                      key=lambda t: t.steps[0]):
-        for slot, value in (getattr(tr.before, "view", None) or {}).items():
+        state = inducer.state(steps[tr.steps[0]].before)
+        for slot, value in (getattr(state, "view", None) or {}).items():
             first_view.setdefault(slot, value)
     # Field theories.  ORDERED is proposed for every numeric field the fitting states render
     # (`semabi.compiler.v4.fields`), the controls are learned with those literals available,
@@ -1412,7 +1426,7 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     # the frozen model orders nothing the evidence did not.
     from semabi.compiler.v4 import fields as field_theory
     proposed = field_theory.candidates(
-        [tr.before for rows in by_control.values() for tr, _s, _o, _e in rows],
+        [inducer.state(s.before) for rows in by_control.values() for _tr, s, _o, _e in rows],
         getattr(A, "types", {}))
     # what a retained intervention already corroborated, beside the history: a candidate
     # field is named by its attribute, as the sidecar names it
@@ -1422,7 +1436,8 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     sequences: dict = {}
     for tr in sorted((t for t in list(inducer.transitions) + list(inducer.noops) if t.steps),
                      key=lambda t: t.steps[0]):
-        sequences.setdefault(episode_of.get(tr.steps[0]), []).append(tr.before)
+        sequences.setdefault(episode_of.get(tr.steps[0]), []).append(
+            inducer.state(steps[tr.steps[0]].before))
     clocks = field_theory.clocks(list(sequences.values()), proposed) if proposed else set()
     theory = {"candidates": proposed, "adopted": {}, "adopted_pairs": [],
               "corroborated": sorted(corroborated), "clocks": sorted(clocks)}
@@ -1500,8 +1515,9 @@ def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out
             # silence (see `emission.observed`) and must not be labelled as an event.
             silent_rows = []
             for tr, s_, obs_, _event in rows:
-                bound, status = model.bind(tr.before, _owner(A, obs_, s_))
-                silent_rows.append((_literals(inducer, tr.before, bound, status, defaults, ordered, pairs, _paths(model.roles)),
+                state = inducer.state(s_.before)
+                bound, status = model.bind(state, _owner(A, obs_, s_))
+                silent_rows.append((_literals(inducer, state, bound, status, defaults, ordered, pairs, _paths(model.roles)),
                                     SILENT, frozenset(bound) | {OWNER}))
             model.evidence = Evidence(silent_rows)
             model.fitted = len(silent_rows)
@@ -1515,7 +1531,7 @@ def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out
                 continue      # the live region did not move: re-emission or silence, unknown
             made = frozenset((o.tid, name) for o in (tr.d.added if tr.d is not None else ())
                              if o.key not in (None, "") for name in _names_of(o))
-            occasions.append((tr.before, _owner(A, obs, s), event, tr.emission.args, made))
+            occasions.append((inducer.state(s.before), _owner(A, obs, s), event, tr.emission.args, made))
             pages.append(obs)
             shape = delta_shape(tr)
             deltas.setdefault(event, {})[shape] = deltas.setdefault(event, {}).get(shape, 0) + 1

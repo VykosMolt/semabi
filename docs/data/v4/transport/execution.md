@@ -3,13 +3,26 @@
 ## Integrated semantic product — active 2026-09-12
 
 - Active checkpoint: frozen product411189b runs on8860, seed8/CPU0-7,
-  from `runs/.product-fit-reuse-411189b`, owned service PID980745/exec41566.
+  from `runs/.product-fit-reuse-411189b`, restarted service PID998539/exec28629.
   Ordinary Workshop provenance refit `job_ebbf76e33fab4fc188410eafc4d9af27`
-  started23:01:08UTC with2053reusedsteps; clientexec68519 has1800s budget.
-  Output `runs/product_semantic_workshop_v2/provenance_refit_411189b.json` pending.
+  started23:01:08UTC, completed23:10:04UTC:533.872s fit,2053reusedsteps,
+  0newactions/writes,4version3ops. Output workshopv2/provenance_refit_411189b.json.
+  Ordinary HTTP relearning then hit exact fit:0fitpasses/0actions/writes,
+  0.534s reuse,5.084s HTTP,4rebuiltversion4ops (exact_fit_reuse_411189b.json).
+  Guarded Cedar/Iron value10expectaccepted stopped PREDICTION_UNAVAILABLE,
+  12actions/10possiblewrites butzero fieldwrites; independent11checks retain12
+  and unchangedsiblings (guarded_iron_preflight_411189b{,_independent}.json).
+  Service/browser restart completed; ordinaryreuse again0fitpasses/actions,
+  0.051s reuse/6.003s HTTP; IroncheckCONFIRMED13actions11writes/6.572s HTTP.
+  Output restarted_fit_reuse_check_411189b.json; independentcheckexec5530pending.
+  PriorPID980745 exitedcleanly. Noactivefit orclient remains.
   Prior ec71 service exited cleanly with no active jobs. No concurrent heavy fits;
   agents own bounded Kanboard development onfrozen1dd28c5 and evaluator-only
-  FreshRSS setup (preselected16tasks, no reserved learner attempt yet).
+  FreshRSS reservedassessment frozen411189b (preselected16tasks, existingcaller,
+  one600action/400write learningjob1800s, calls64/48/180s, norescues/secondlearn).
+  Independent app1.30.0 setupverified; evaluatornative/UI exposure disclosed, not
+  blindsharedcontext. Originalcalleronlyexpresses literalCREATE/REPLACE; grammar
+  refusals remain in16taskdenominator, separatefromAPIprocedure availability.
   Exact-fit reuse411189b requires captured bytes/presence of all5fitting files,
   fitting recipe and shared-source equality, otherwise ordinary refit. Every fit
   reads a private snapshot and checks source/origin afterward. Legacy artifacts
@@ -64,8 +77,31 @@
   Offline Iron ablation exactly reproduces HTTP inference. Removing the learned
   related role or all ordered features removes acceptance, leaving a wrong sole
   refusal; removing comparisons alone retains acceptance through resource18 and
-  span<19. This exposes partial-program support/omitted-row uncertainty, not a
-  unique rule. Ordinary checking execution itself is prediction-independent.
+  span<19. Initial attribution to partial-program/omitted-row uncertainty was
+  superseded by a concrete parity defect: stored accepted occasion32 has EXACT
+  live signature939f9f343d7a2c76, but fitting used carried status='Job' while
+  fresh prediction observes status=None. Encoded rows30refused(None),7accepted+
+  5refused(Job) therefore make the false status-null refusal globally pure.
+  No LIST-language change is justified by this case. Root candidate uses existing
+  Inducer.state(raw-before) consistently for outcome conditions/field theory,
+  preserving transition belief/delta/emission.37nonartifact outcome checks pass,
+  including2new spoken/silent raw-vs-belief parity/countereffect controls.
+  Fixed42-occasion feature replay0.274s (0ontologyfits,1responserefit,0induction,
+  0appactions) resolvesIron toaccepted-only; rawstatusNone refusalnowcovers7opposite
+  acceptedrows. Fullfixed-reading induction attempt hit120s budget with redundant
+  queryrelearning and23.25s sharedCPUtime; noresult, notlearnerfailure.
+  P43same-seedpairedordinaryfits: old4117correctsupported/0wrong/1ambiguous10.817s;
+  candidate5/0/3 (v110.779s, v2globalemptyrestriction10.249s). Steps14/24gainrival
+  refusal. ALL15trainingrows previouslycarriedlist-onlyvalues absentatlivequery.
+  This is an explicitly accepted support/coverage regression for feature parity,
+  not invalidation ofoldmeasurement orcompetencegain. ExistingP43gatefirstfailed
+  supportedcount7→5; strengthenedtoexactall15raw-queryrowparity,zero-wrongsupported
+  andexplicit5/0/3 expectation. Fullaffectedgate790passed117.25s, includingnative
+  runtime/HTTP, outcome/admissible, membership andchronology controls. Global 'empty'
+  is excludedfrompartialpredictionstates; observednullrefs/scopedmembershipfacts
+  andTrackereffects unchanged.39nonartifactoutcomechecks passed0.29s. Sharedrepair
+  readyforordinaryrefit; no candidate deployment orliveWorkshoprepairclaim yet.
+  Ordinary checking execution itself remains prediction-independent.
   Generic existing ablation runner now supports checking traces and correlates
   the complete observation-event sequence; its initial one-transition match
   found3 traces (reused training included) and correctly failed before output.

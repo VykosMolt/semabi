@@ -107,6 +107,13 @@ the conditional fill-and-check wrapper is supplied, while its relational field
 bindings, response alternatives and numeric conditions come from V4. Neither
 path claims unrestricted program induction.
 
+Response fitting and live prediction use the same observation-local pre-state.
+Maintained beliefs still support effect analysis, but do not silently supply
+fields absent from a fresh caller's view. A partial observation cannot establish
+global emptiness. This repair deliberately reduces supported predictions on the
+disclosed P43 Dispatch set from seven to five of eight (zero wrong supported
+predictions in either measurement); the remaining three are ambiguous.
+
 An unavailable guarded prediction can become an explicit learning objective:
 
 ```sh
