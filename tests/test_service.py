@@ -1325,3 +1325,100 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
             assert status == 409
     finally:
         api.close()
+
+
+def test_http_required_only_creation_is_induced_and_guards_omitted_fields(tmp_path, monkeypatch):
+    """Actual HTTP learn/catalog/invoke; only browser and connection setup are supplied.
+
+    The failed full-form write remains in independent mutable application rows.
+    No operation schema, procedure, or learning result is supplied by this test.
+    This controlled service evidence is not independently authored-app transport.
+    """
+    from itertools import count
+    from types import SimpleNamespace
+    import test_operation_runtime as diagnostics
+    from semabi.compiler import runtime as runtime_module
+    from semabi.compiler.runtime import Runtime
+
+    browser = diagnostics._OptionalProjectionBrowser()
+    browser.close = lambda: None
+    runtimes = []
+
+    def factory(directory):
+        runtime = Runtime(directory)
+        runtimes.append(runtime)
+        return runtime
+
+    api = HTTPHarness.__new__(HTTPHarness)
+    api.fake = SimpleNamespace(release=threading.Event())  # Harness close coordination only.
+    api.service = Service(tmp_path/'service', runtime_factory=factory)
+    try:
+        api.server = make_server(api.service, port=0)
+    except BaseException:
+        api.service.close(timeout=5)
+        raise
+    api.base = 'http://127.0.0.1:' + str(api.server.server_port)
+    api.thread = threading.Thread(target=api.server.serve_forever, kwargs={'poll_interval': 0.01}, daemon=True)
+    api.thread.start()
+    try:
+        connection, connecting = api.service.store.create_connection(
+            {'url': browser.allowed_origin+'/', 'scope': {'exploration_enabled': True,
+                                                       'max_actions': 60, 'max_writes': 30}}, {})
+        assert api.service.store.start_job(connecting)
+        api.service.store.finish_job(connecting, {'status': 'CONNECTED'})
+        runtimes[0].sessions[connection['id']] = browser
+        prefix = '/v1/connections/'+connection['id']
+        with monkeypatch.context() as learning_clock:
+            ticks = count(0, 10)
+            learning_clock.setattr(runtime_module, 'time', SimpleNamespace(
+                monotonic=lambda: next(ticks), sleep=lambda _: None))
+            status, accepted = api.request('POST', prefix+'/learn', {'settings': {'max_actions': 60, 'max_writes': 30}})
+            assert status == 202
+            learned = api.completed(accepted)
+        assert learned['status'] == 'COMPLETED', learned
+        assert learned['result']['attempts'][0]['confirmed_trials'] == 0
+        assert 'unique visible record witness' in learned['result']['attempts'][0]['reason']
+        status, catalog = api.request('GET', prefix+'/operations')
+        assert status == 200
+        operation, = catalog['operations']
+        assert operation['kind'] == 'create_visible_record'
+        assert operation['argument_schema']['required'] == ['name']
+        assert set(operation['argument_schema']['properties']) == {'name'}
+        assert operation['argument_schema']['additionalProperties'] is False
+        assert operation['procedure']['defaults'] == {'identifier': ''}
+        assert len(operation['support']['trials']) == 2
+        assert len(browser.rows) == 3, 'failed full-form write and both required-only trials must remain'
+        assert all(row['Identifier'] == '' for row in browser.rows)
+        trial_names = [trial['arguments']['name'] for trial in operation['support']['trials']]
+        assert [row['Name'] for row in browser.rows[1:]] == trial_names
+        assert browser.rows[0]['Name'] not in trial_names, 'the failed full write is not reused as a successful trial'
+        before = deepcopy(browser.rows)
+        invocation = prefix+'/operations/'+operation['id']+'/invoke'
+        status, accepted = api.request('POST', invocation, {'version': operation['version'],
+            'arguments': {'name': 'Fresh HTTP required argument'}}, headers={'Idempotency-Key': 'required-only-fresh'})
+        assert status == 202 and api.completed(accepted)['status'] == 'COMPLETED'
+        status, execution = api.request('GET', '/v1/executions/'+accepted['execution_id'])
+        assert status == 200 and execution['result']['outcome'] == 'CONFIRMED', execution
+        assert browser.rows == before + [{'Name': 'Fresh HTTP required argument', 'Identifier': ''}]
+        assert set(execution['result']['effect']['witness']['field_slots']) == {'name'}
+
+        # An input omitted from the published contract cannot be smuggled back in.
+        before = deepcopy(browser.rows), len(browser.actions), browser.navigation_count
+        status, rejected = api.request('POST', invocation, {'version': operation['version'],
+            'arguments': {'name': 'Must not be created', 'identifier': 'Not a published argument'}})
+        assert status == 202 and api.completed(rejected)['status'] == 'COMPLETED'
+        status, execution = api.request('GET', '/v1/executions/'+rejected['execution_id'])
+        assert status == 200 and execution['result']['outcome'] == 'FAILED_BEFORE_EFFECT', execution
+        assert (browser.rows, len(browser.actions), browser.navigation_count) == before
+
+        # A fresh observed default/draft must be preserved, not cleared to replay.
+        browser.fields['Identifier'] = 'Preserve this intervening default'
+        status, accepted = api.request('POST', invocation, {'version': operation['version'],
+            'arguments': {'name': 'Must also not be created'}}, headers={'Idempotency-Key': 'changed-default'})
+        assert status == 202 and api.completed(accepted)['status'] == 'COMPLETED'
+        status, execution = api.request('GET', '/v1/executions/'+accepted['execution_id'])
+        assert status == 200 and execution['result']['outcome'] == 'FAILED_BEFORE_EFFECT', execution
+        assert (browser.rows, len(browser.actions), browser.navigation_count) == before
+        assert browser.fields['Identifier'] == 'Preserve this intervening default'
+    finally:
+        api.close()
