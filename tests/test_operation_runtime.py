@@ -4612,6 +4612,65 @@ class _MixedCompletionRecordBrowser(_EditableRecordBrowser):
         return ActionResult(True)
 
 
+class _CompletionCheckboxRecordBrowser(_MixedCompletionRecordBrowser):
+    checkbox_clicks = 0
+
+    def act(self, action):
+        node = self.surface.observation.node(action.target)
+        if action.kind == 'click' and node.role == 'checkbox':
+            self.actions.append(action)
+            self.checkbox_clicks += 1
+            self.pinned = not self.pinned
+            return ActionResult(True)
+        return super().act(action)
+
+
+def test_completion_capability_does_not_prevent_typed_read_update_read_composition(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_checkbox_records(
+        tmp_path, monkeypatch, browser=_CompletionCheckboxRecordBrowser())
+    assert learned['attempts'] == [], learned['attempts']
+    assert len(learned['operations']) == 5
+    reading = _checkbox_kind(learned, 'read_visible_record')
+    update = _checkbox_kind(learned, 'update_visible_record')
+    assert 'textbox_popups' not in reading['procedure']
+    assert 'textbox_completion' not in reading['scope']
+    assert set(update['procedure']['textbox_popups']) == {'description'}
+    assert [len(trial['popup_dismissals']) for trial in update['support']['trials']] == [1, 1]
+    target, before = browser.rows[0]['URL'], deepcopy(browser.rows)
+    first = runtime.invoke(connection, reading, {'target': target}, lambda _: None)
+    assert first['outcome'] == 'CONFIRMED' and first['effect']['values']['pinned'] is False
+    escapes = browser.escapes
+    updated = runtime.invoke(connection, update,
+        {'target': target, 'pinned': True, 'description': 'Fresh explicitly completed value #'}, lambda _: None)
+    assert updated['outcome'] == 'CONFIRMED', updated
+    final = runtime.invoke(connection, reading, {'target': target}, lambda _: None)
+    assert final['outcome'] == 'CONFIRMED', final
+    assert final['effect']['values']['pinned'] is True
+    assert final['effect']['values']['description'] == 'Fresh explicitly completed value #'
+    assert browser.rows[1] == before[1] and browser.escapes == escapes + 1
+    assert browser.rows[0]['Pinned'] is True and browser.scene == 'editor'
+
+
+@pytest.mark.parametrize('change', ['field_binding', 'exit_policy', 'version'])
+def test_completion_read_receipt_equivalence_preserves_every_other_binding(tmp_path, monkeypatch, change):
+    runtime, connection, browser, learned = _learn_checkbox_records(
+        tmp_path, monkeypatch, browser=_CompletionCheckboxRecordBrowser())
+    reading = deepcopy(_checkbox_kind(learned, 'read_visible_record'))
+    # Supplied changed contracts isolate receipt equivalence, not new learning.
+    if change == 'field_binding':
+        reading['procedure']['read_fields']['description'] = deepcopy(reading['procedure']['read_fields']['title'])
+    elif change == 'exit_policy':
+        reading['procedure']['checkbox_exit_preservation'] = 'different_unestablished_exit'
+    else:
+        reading['version'] += 1
+    runtime_module.bind_contract(reading)
+    before = len(browser.actions), browser.navigation_count, deepcopy(browser.rows)
+    result = runtime.invoke(connection, reading, {'target': browser.rows[0]['URL']}, lambda _: None)
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT', result
+    assert result['operation_status'] == 'STALE'
+    assert (len(browser.actions), browser.navigation_count, browser.rows) == before
+
+
 def test_completion_probes_are_scoped_to_two_owner_advertisements_in_a_mixed_form(tmp_path, monkeypatch):
     runtime, connection, browser, learned = _learn_editable_records(
         tmp_path, monkeypatch, browser=_MixedCompletionRecordBrowser())

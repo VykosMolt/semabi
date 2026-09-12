@@ -971,13 +971,21 @@ class Runtime:
             self._release_verified_editor(browser)
             raise
 
+    @staticmethod
+    def _editor_continuation_contract(procedure: dict) -> dict:
+        # Escape is an update-only capability; it is never executed by the
+        # guarded clean exit. All owner/field/route/exit bindings remain exact.
+        return {key: value for key, value in procedure.items() if key != "textbox_popups"}
+
     def _continue_verified_editor(self, browser, trace: Trace, *, operation: dict | None = None) -> dict | None:
         receipt = self._verified_editors.get(browser)
         if receipt is None:
             return
         try:
-            if operation is not None and (receipt["procedure"] != operation["procedure"] or
-                                           receipt["version"] != operation["version"]):
+            if operation is not None and (
+                    self._editor_continuation_contract(receipt["procedure"]) !=
+                    self._editor_continuation_contract(operation["procedure"]) or
+                    receipt["version"] != operation["version"]):
                 raise StopOperation("Verified editor belongs to a different operation contract or version", stale=True)
             if not receipt["procedure"].get("checkbox_exit_preservation"):
                 raise StopOperation("Clean-editor navigation has no learned typed-state preservation support")
@@ -1369,6 +1377,9 @@ class Runtime:
                           trials: list[dict], settings: dict) -> dict:
         if source_hashes() != self.source_sha256:
             raise StopOperation("Runtime source changed during learning; restart before publishing")
+        if kind == "read_visible_record":
+            procedure = deepcopy(procedure)
+            procedure.pop("textbox_popups", None)
         selector, anchor = procedure["selector_argument"], procedure["anchor"]
         boolean_fields = procedure.get("boolean_fields", {})
         if boolean_fields:
