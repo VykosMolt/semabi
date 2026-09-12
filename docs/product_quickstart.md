@@ -33,6 +33,11 @@ All navigation replays, selections, attempted edits and reloads count. Fitting
 time and reused evidence steps are reported separately; explicit relearning can
 refit this connection's prior onboarding after a code repair without repeating
 its exploratory writes. Loading a published artifact after restart does not fit.
+New fits retain the exact input and fitting-code provenance. Explicit relearning
+can reuse that fit when its raw observations, probe/field sidecars, recipe and
+shared fitting code are unchanged; it still rebuilds operation publication.
+Legacy artifacts and changed inputs require a fit. Metrics distinguish current
+`fit_seconds`, `fit_passes`, `fit_reuse_seconds` and `original_fit_seconds`.
 Unpublished semantic onboarding retains its pending routes, argument bindings,
 and partial progress across explicit learning calls. The route/depth limits apply
 across those calls; exhaustion is not complete application coverage. Clean budget

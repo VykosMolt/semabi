@@ -2,8 +2,23 @@
 
 ## Integrated semantic product — active 2026-09-12
 
-- Active checkpoint: frozen productec71cb7 runs on8860, seed8/CPU0-7,
-  from `runs/.product-return-cache-ec71cb7`, owned service PID952650/exec13743.
+- Active checkpoint: frozen product411189b runs on8860, seed8/CPU0-7,
+  from `runs/.product-fit-reuse-411189b`, owned service PID980745/exec41566.
+  Ordinary Workshop provenance refit `job_ebbf76e33fab4fc188410eafc4d9af27`
+  started23:01:08UTC with2053reusedsteps; clientexec68519 has1800s budget.
+  Output `runs/product_semantic_workshop_v2/provenance_refit_411189b.json` pending.
+  Prior ec71 service exited cleanly with no active jobs. No concurrent heavy fits;
+  agents own bounded Kanboard development onfrozen1dd28c5 and evaluator-only
+  FreshRSS setup (preselected16tasks, no reserved learner attempt yet).
+  Exact-fit reuse411189b requires captured bytes/presence of all5fitting files,
+  fitting recipe and shared-source equality, otherwise ordinary refit. Every fit
+  reads a private snapshot and checks source/origin afterward. Legacy artifacts
+  cannot be retrospectively blessed. Publication always rebuilt; original fit
+  cost and current reuse cost/passcount separate. Independent review and5input/
+  source mutation probes passed;129candidate checks including real P43 parity,
+  actualmerged49fit/reuse/budget checks passed13.71s. Next after fullfit: ordinary
+  HTTP cache hit, guarded write, restart, independent checks and live ablation.
+  Previous frozenec71cb7 (runs/.product-return-cache-ec71cb7):
   Ordinary workshop refit `job_08b0326a0c4a4c509c19d52fa6b19979` COMPLETED22:41:34UTC
   with0actions/0writes,2053reusedsteps and4version2operations;515.324s fit,
   519.597s HTTP learning. Output
