@@ -2,8 +2,22 @@
 
 ## Integrated semantic product — active 2026-09-12
 
-- Active checkpoint: frozen product411189b runs on8860, seed8/CPU0-7,
-  from `runs/.product-fit-reuse-411189b`, restarted service PID998539/exec28629.
+- Active checkpoint: frozen product763f660 runs on8860, seed8/CPU0-7,
+  from `runs/.product-local-prediction-763f660`, service PID1004117/exec29688.
+  NewordinaryWorkshoprefit job_6ebf69bdcdab46e8affb78fff4782cd6 started23:17:56UTC,
+  same2053rawsteps; clientexec18766 has1800sbudget, output
+  workshopv2/local_prediction_refit_763f660.json pending. Sourcechangedsofitcache
+  correctlymisses. Priorsemanticopinvocationfailedbeforeeffect0actions/0writes/
+  0.026s (stale_prior_operation_763f660.json). Noartifact/sourcehashrewrite.
+  Main7591f90 additionallyintegrates reviewed symmetriclocalownerstructure and
+  explicitreferences to theunique fullycheckedpopulatedscope; notyetdeployed.
+  Candidate651affectedchecks passed; finalretainedKanboardpreservation replay
+  passes. Live6b35ded rerun0ops9actions5writes/5.577s stoppedonunstablepostSave
+  observation BEFOREnewchecks; nextreadsettledbutnoacquiredreceipt. Nativeone
+  newprobeproject,allprior5projects/6tasks unchanged;0/16 unchanged (13caller/
+  3inputunestablished), noinvokes/retry/reset. Earlier1dd run0ops9/5/10.521s,
+  oneprobeproject,containingownerfalseambiguity retained. Browserdiagnosisactive.
+  Previous frozen411189b exactfit/cache checkpoint:
   Ordinary Workshop provenance refit `job_ebbf76e33fab4fc188410eafc4d9af27`
   started23:01:08UTC, completed23:10:04UTC:533.872s fit,2053reusedsteps,
   0newactions/writes,4version3ops. Output workshopv2/provenance_refit_411189b.json.
@@ -14,14 +28,21 @@
   and unchangedsiblings (guarded_iron_preflight_411189b{,_independent}.json).
   Service/browser restart completed; ordinaryreuse again0fitpasses/actions,
   0.051s reuse/6.003s HTTP; IroncheckCONFIRMED13actions11writes/6.572s HTTP.
-  Output restarted_fit_reuse_check_411189b.json; independentcheckexec5530pending.
+  Output restarted_fit_reuse_check_411189b.json; independent13checks passed.
   PriorPID980745 exitedcleanly. Noactivefit orclient remains.
   Prior ec71 service exited cleanly with no active jobs. No concurrent heavy fits;
   agents own bounded Kanboard development onfrozen1dd28c5 and evaluator-only
   FreshRSS reservedassessment frozen411189b (preselected16tasks, existingcaller,
   one600action/400write learningjob1800s, calls64/48/180s, norescues/secondlearn).
   Independent app1.30.0 setupverified; evaluatornative/UI exposure disclosed, not
-  blindsharedcontext. Originalcalleronlyexpresses literalCREATE/REPLACE; grammar
+  blindsharedcontext. ReservedFreshRSSrunCOMPLETED: auth3actions/5.03s,
+  learnUNESTABLISHED4actions/0writes/7.60s/0fits/0ops. All16requests outsidefrozen
+  callergrammar,0invokes/completions; nativecategory/feed/articleinventories
+  unchanged. Wrongtaskeffects unmeasuredwithoutinvocations, notsuccess. Onboarding
+  barrierseparate: firstanonymouslinkhasmultiplematches andabortswholeacquisition
+  despite lateruniquelynamedqueuednavigation. Norescues/secondlearn; nextshared
+  developmentcandidate keepssafe localproposalrefusals fromcancelingotherwork.
+  Originalcalleronlyexpresses literalCREATE/REPLACE; grammar
   refusals remain in16taskdenominator, separatefromAPIprocedure availability.
   Exact-fit reuse411189b requires captured bytes/presence of all5fitting files,
   fitting recipe and shared-source equality, otherwise ordinary refit. Every fit
