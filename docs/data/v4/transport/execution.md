@@ -5,7 +5,8 @@
 - Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
   `d0b1574` and research `bbd56ef` are ancestors. No cherry-pick or reset.
 - Current milestone: integrated API checkpoint `956b72b`, authorized repair
-  checkpoint `4c6a8f7`, control labels `f1fd5a5`, bounded resume `a417aca`;
+  checkpoint `4c6a8f7`, control labels `f1fd5a5`, bounded resume `a417aca`,
+  scoped frontier/native observations `09c1ad0`, partial text updates `992b358`;
   now control-contained selection and real workshop
   composition, followed by original-app reruns and the reserved assessment.
   Acceptance: standard HTTP discovery/fit/schema/invoke, shared frozen/live
@@ -22,7 +23,8 @@
   Kanboard1.2.46 at8881 with a16-task plan selected before startup/UI/learner,
   under `runs/product_kanboard_preparation_v1`. Evaluator saw official setup/API
   docs, native seed state and login/dashboard; two evaluator assertion failures
-  retained. Root has not inspected its task/seed/UI contents; no learner run.
+  retained. Root had not inspected task/seed/UI contents before the reserved run;
+  afterward root read its raw learner failure trace. Kanboard is now development.
   This is disclosed evaluator exposure, not blindness. P43 both-arm fall is
   useful acquisition, not targeting advantage.
   Learned JOIN, reservoir persistence and review-seal observability remain separate.
@@ -72,7 +74,7 @@
   changes, final-navigation collateral effects, target resets and stale policies.
   HTTP diagnostic tests use supplied fitted artifacts and do not count as new
   onboarding evidence.
-- Validation of current source: product composition 523 passed/30.52s; focused
+- Validation of `956b72b`: product composition 523 passed/30.52s; focused
   shared field/key/definition23 passed; real P43 fit/artifact/live parity gate
   passed. Original whole-repository run was interrupted at reported88% after
   new concrete defects, 19m32s elapsed; retained journal is NOT a whole-suite
@@ -113,8 +115,9 @@
   Root owns API8860, dispatch8877, workshop8878, presentation variant8879;
   unrelated dispatch8910 untouched. Broad retention completed fixed956b72b in owned
   `/tmp/semabi-retention-956b72b-9pza6H`, unit `semabi-retention-956b72b.service`,
-  eight-core/20GiB cap. Current workshop learning uses frozen a417aca; one
-  separately owned bounded pilot diagnostic is authorized. Aggregate cap12cores.
+  eight-core/20GiB cap. Workshop992b358 learning is terminal; no heavy fit active.
+  Isolated agents own frontier continuation, browser readiness, and the Kanboard
+  generic-probe development experiment. Aggregate cap12cores.
 - Workshop candidate gate588 passed/32.29s. Control-contained labels now require
   learned owner-wrapper constraints before any action; other such prerequisites
   remain observed enums. Nested inventory retains parent-owned state and checks
@@ -176,11 +179,62 @@
   extraction now preserves unknown and native/ARIA precedence, while the product
   retains transparent native choices only with a visible associated label.
   Hidden, collapsed and unlabeled transparent controls remain excluded.
-- Next executable actions: finish actual resumed workshop HTTP onboarding at
-  1200actions/900possiblewrites ceiling, then independent scoped invocation checks.
-  Identify shared caller/runtime gaps for original Linkding requests without
-  dropping qualifiers; remeasure original application task denominators and freeze
-  an independently developed reserved-application assessment.
+  Reviewed isolated partial-text commit99e0746 integrated as992b358, not duplicated.
+  Update selector stays required with at least one supplied learned field;
+  omitted values come from the current selected editor, remain in every evolving
+  editor guard, and are verified in full record-local slots after submit/reload.
+  New results separate requested changes and preserved values. No new boolean
+  parameter, search scope, or reopen-editor procedure is claimed. Isolated gate
+  612passed/32.06s; actual combined992b358 gate615passed/33.72s. Historical frozen
+  caller/baseline retain their narrower all-fields grammar; no comparison win.
+  Fresh workshop v2 HTTP onboarding now runs992b358 with1200/900 limits after
+  evaluator-only reset to original renamed initial seed; previous evidence intact.
+  Terminal v2 result UNESTABLISHED:1033actions/900writes/1031rawsteps,
+  949.536s including one536.668s fit. Twenty-two routes/80trials/12edits reached
+  radio contexts for two owners but no post-attachment Start; all16Start outcomes
+  remain negative. Pending routes were lost at the job boundary. Resume must
+  reconstruct only validated observed trial paths, not restart the same root search.
+  Vikunja992b358 completed1/18 (1/12core): U1 exact-title rename independently
+  checked across reload, including observed siblings/project/labels/done. Fourteen
+  caller-unsupported, three intervention-unestablished; one invocation10actions/
+  6writes/9.029s including auth. Fit27/12/26.567s plus3initial auth actions; setup
+  56actions/41writes/45.786s includes explicit5-write extension and failed relation-
+  Add assumption reconciled before retry. Original assessments unchanged.
+  Linkding all16 caller receipts are retained, zero invocations, not16 runtime failures.
+- Reserved Kanboard992b358 first assessment:0/16, zero task calls, no operations;
+  13 caller-unsupported,3 incomplete inputs. Policy120actions/80writes, no automatic
+  repair, unchanged literal caller. Before onboarding, explicit literal arguments
+  were transcribed from13 original goals; no goal rewrite or schema mapping.
+  Auth3actions; onboarding9actions/5writes/10.385s. Evaluator checked six seeded
+  records before/after (12native reads), not a complete inventory or wrong-effect
+  metric. Raw Save adds an adjacent alphanumeric validation error for the generated
+  underscore-bearing Identifier; visible help already stated the restriction.
+  Absent witness followed application refusal, not an established matching defect;
+  preserving the populated draft was appropriate. Evidence under
+  `runs/product_kanboard_preparation_v1/assessment_992b358`; first run unchanged.
+- Pending isolated work: native boolean read/update variants, resumable acquisition
+  frontier, and corroborated RULE existence repair. Pair-seed greedy generalization
+  lost a valid three-witness outcome under literal reordering. Triple fallback
+  restores existence;55 focused tests pass, cached21 pilot outcome sets unchanged
+  under RULE/LIST for base/narrow/full-fixed-field arms. Pilot fit815.21s; first880s
+  job timed out after16changed-response queries; later cached21 includes five
+  unchanged displayed-response comparisons, not effects. No categorical admission
+  or speed/transport advantage; separate maximal-shared LIST negative remains.
+  Isolated semantic metadata gate8passed qualifies reductions across changed
+  roles/ordered/pairs/defaults. Real dispatch repair replay still reduces to ready,
+  but ordered thresholds gained10, so fixed-language elimination is withheld.
+  Original report retained; `repair_language_qualification.json` records this
+  correction. Independent Quartz/Indigo12 confirmed writes remain valid.
+- Browser diagnostic: retained closed-disclosure click failed on clean992b358
+  and pure Playwright1.62.0/Chromium151.0.7922.34. Visible, unchanged geometry
+  coincided with zero animation frames in500ms;2s actionability timed out. A fresh
+  stalled first page passed a10s-budget click after1.979s. This identifies startup
+  frame delivery, not hidden geometry; native actionability remains required.
+- Next executable actions: integrate reviewed RULE/typed-field/language-qualification
+  repairs, validate the resumable frontier and browser-readiness candidates, then
+  resume workshop's saved pending work through HTTP. Exercise typed Linkding updates
+  with independent checks and inspect Kanboard's generic alphanumeric probe trial.
+  Keep the completed reserved0/16 result and all original task denominators intact.
 
 ## Product development resumed (2026-09-09)
 

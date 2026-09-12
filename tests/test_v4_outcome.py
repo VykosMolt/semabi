@@ -4,6 +4,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+import pytest
+
 from semabi.compiler.v4 import outcome as oc
 
 
@@ -571,3 +573,25 @@ def test_acquisition_qualifies_changed_control_or_response_interpretation():
     change = current.acquisition_change(previous, before, after, 2)
     assert change['same_control'] and change['response_interpretation_changed']
     assert not change['rival_outcome_elimination']
+
+
+@pytest.mark.parametrize('component', ['roles', 'ordered', 'pairs', 'defaults'])
+def test_acquisition_qualifies_fitted_primitive_changes_separately_from_reduced_predictions(component):
+    rows = [({'p'}, 'Ready')] * 3 + [({'q', 'r'}, 'Unavailable')] * 3
+    features = {'p', 'q', 'r'}
+    before, after = _acquisition_page(features), _acquisition_page(features, 'Ready')
+    previous = _acquisition_artifact(rows)
+    current = _acquisition_artifact(rows + [(features, 'Ready')])
+    changes = {'roles': {'related': oc.Role('related', 'singleton', (), 1)},
+               'ordered': {0: {'attr:load': ('1', '2', '3')}},
+               'pairs': frozenset(), 'defaults': {'selection': 'Initial'}}
+    setattr(current.outcomes['act'], component, changes[component])
+    # The fixture supplies finite feature observations; this tests bookkeeping
+    # at the artifact boundary, not discovery of the supplied extra primitives.
+    change = current.acquisition_change(previous, before, after, 2)
+    assert change['before']['outcomes'] == ['Ready', 'Unavailable']
+    assert change['after']['outcomes'] == ['Ready']
+    assert change['predictive_alternatives_reduced']
+    assert change['fitted_language_changes'] == [component]
+    assert not change['rival_outcome_elimination']
+    assert change['observation_consistent_with_current_prediction'] is True

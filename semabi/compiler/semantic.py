@@ -387,13 +387,23 @@ class SemanticArtifact:
             return None if observed_event is None else (observed_event["frame"], observed_event["args"])
 
         response_changed = event_meaning(old_event) != event_meaning(event)
+        # Fitting can change the available primitives, not just reject models
+        # with new evidence. Even additive fields can change the admitted LIST
+        # surface. Report that joint change without calling it rival elimination
+        # in a fixed language. Point rules are intentionally not grammar here.
+        current_model = self.outcomes.get(current_control)
+        language_changes = [component for component in ("roles", "ordered", "pairs", "defaults")
+                            if _public(getattr(old_model, component, None)) !=
+                               _public(getattr(current_model, component, None))]
         return {"before": prior, "after": current,
                 "removed_outcomes": sorted(old - new), "added_outcomes": sorted(new - old),
                 "remaining_ambiguity": len(new) > 1,
                 "no_admissible_interpretation": not new,
                 "rival_outcome_elimination": bool(len(old) > 1 and new and new < old
                                                    and not owner_changed and same_control
-                                                   and not response_changed),
+                                                   and not response_changed and not language_changes),
+                "fitted_language_changes": language_changes,
+                "predictive_alternatives_reduced": bool(new and new < old),
                 "owner_interpretation_changed": owner_changed,
                 "representation_changed": prior["representation_revision"] != current["representation_revision"],
                 "same_control": same_control,
@@ -404,7 +414,7 @@ class SemanticArtifact:
                     old_model is None or old_event["frame"] not in old_model.events)),
                 "observation_consistent_with_current_prediction": consistent,
                 "false_certainty": current["kind"] == "AGREED_OUTCOME" and consistent is False,
-                "scope": "changed predictive alternatives at one raw question, not a count of syntactic clauses or proof of targeting advantage"}
+                "scope": "changed predictive alternatives at one raw question; fixed-language elimination is withheld when declared primitives change; not a count of syntactic clauses or proof of targeting advantage"}
 
     def predict(self, obs, node, control=None):
         obs = self.prepare(obs)

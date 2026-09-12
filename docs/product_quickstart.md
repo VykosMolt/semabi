@@ -165,8 +165,11 @@ a complete workflow budget.
 When learning exposes `read_record` and `update_record`, select their returned
 operation IDs. A read usually takes a `target` argument containing the complete
 current anchor, such as a URL. Its result contains structured current values in
-`result.effect.values`. An update takes that selector and all supported new field
-values. With several text arguments, the anchor stays unchanged. With exactly
+`result.effect.values`. A multi-field update takes that selector and at least one
+supported new field value. Omitted fields retain values captured from the current
+selected editor; these are rechecked before writes and verified with the requested
+values after submission and reload. Results distinguish `requested_changes` and
+`preserved_values`. With several text arguments, the anchor stays unchanged. With exactly
 one, the selector identifies the old value and the text argument supplies its
 replacement. Use the returned schema for the exact argument names and
 constraints. For example, **if the learned read schema has
