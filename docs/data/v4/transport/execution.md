@@ -10,7 +10,8 @@
   and neighbors, restart/revision behavior, and consequential binding/condition
   ablation. Prediction, application response, observed effect and exclusive cause
   stay distinct; neither ambiguity nor lost coverage is hidden.
-- Current main: 89f5806 plus a focused archived-sampling test awaiting commit.
+- Current main includes 5a0db7a's archived-sampling boundary test and 37f9377's
+  text-provenance inventory candidate (independent review pending).
   763f660 is the validated shared prediction-state repair; 7591f90 adds reviewed
   symmetric local-owner structure and checked-scope references. The latter has
   controlled/retained evidence but no successful live Kanboard operation yet.
@@ -23,31 +24,50 @@
   research tests passed0.25s on equivalent research source. P43 is now5 correct
   supported/0wrong/3ambiguous versus retained4117/0/1; all15 raw training/query
   rows now agree. This is a disclosed coverage regression, not a competence gain.
-  Fixed42-occasion Workshop feature replay removes the stale-response refusal;
-  full ordinary Workshop validation is the active job below.
+  Ordinary Workshop refit on763 completed512.279s,2053steps/71observations/4v6ops.
+  Guarded Iron/value10 still refuses: a genuine6<=value<12 refusal rival remains
+  against relational acceptance; the old stale-response rival is gone. Before
+  editing, value12 also exhausted100k LIST checks; a found singleton is not proof.
+  37f9377 passes7native text-provenance cases and33affected checks, not a full gate.
 - Operational evidence: frozen411 fullfit533.872s; ordinaryHTTP cachehit5.084s,
   zero actions/fits, then actual service/browser restart cachehit6.003s. Ironcheck
   confirmed after restart with13 independent checks. Guarded value10 stopped
   PREDICTION_UNAVAILABLE without a field write;11 independent checks retain12.
   Old operation on763 failedbeforeeffect0actions/0writes after source revision.
+  New763 guard stopped before field write,12actions/10possiblewrites/5.558s;
+  11independent checks retain12. Its offline ablation changes the point and
+  removes representability with all ordered features absent, but not the guard's
+  unavailable decision. Removing comparisons alone still leaves an acceptance
+  rival; no unique-rule or guard-dependency claim for this case.
+  Authorized repair then wrote10 and recorded Start's response, but stopped at
+  the neighbor check: parent innerText repeats the child's changed value despite
+  child nodes being excluded. Follow-up independently checks persisted10 and
+  siblings (9checks). Initial evaluator incorrectly expected a detail endpoint;
+  its failed8detail checks are retained, not erased or counted as a confirmed
+  repair. Response/resource persistence remains unconfirmed for that repair.
 - Exposure: Dispatch/Workshop/generated fixtures/Memos/linkding/Vikunja/Kanboard
   are development. FreshRSS1.30.0 independently developed,16tasks selected before
   setup; reserved411 run is complete0/16,0ops,0invokes. Caller grammar and first
   ambiguous navigation proposal are separate barriers; no rescue/secondlearn.
   FreshRSS is now development, not still reserved. Evaluatornative/UI and shared
   agent context exposure are disclosed; there is no blind assessment claim.
-- Owned active job: Workshop job_6ebf69bdcdab46e8affb78fff4782cd6, started23:17:56UTC,
-  2053reusedrawsteps, clientexec18766/1800s budget. Frozen763 service8860,
+- Owned active job: Workshop repair job_c7f07d76039142179d615121d8505ce5,
+  clientexec8337/1800s budget,2071rawsteps after the stopped experiment.
+  Frozen763 service8860,
   runs/.product-local-prediction-763f660, PID1004117/exec29688, CPU0-7.
-  Output workshopv2/local_prediction_refit_763f660.json pending. No other heavyfit.
+  Output workshopv2/targeted_repair_763f660.json pending. Agent pilot exec7281
+  usesCPU10-11,900s/8GiB cap, unique product_retained_pilot_763_v1 output.
   Respect unrelated8910; owned application/service processes remain documented
   in retained details. Agent candidates use remainingCPU8-11 within12core cap.
 - Separable work: semantic_bridge owns safe pre-action ambiguous-proposal skips
   in acquisition; observation_review owns one budgeted read-only resample after
   a successful write's unsettled observation; fixture_evaluation owns independent
   review and the queued retained pilot check. No automatic write retry permitted.
-- Next: inspect ordinary Workshop fit, invoke supported guarded write and check
-  independently, then restart/ablate. Integrate agent repairs only after their
+- Next: inspect repair refit without claiming completed acquisition; integrate
+  independently reviewed text-provenance, delayed-sampling and acquisition
+  cursor repairs, then ordinary cache-republication and guarded execution.
+  Preserve the failed repair and evaluate fresh arguments/restarts. Integrate
+  agent repairs only after their
   discriminating tests; replay original development denominators unchanged.
 
 ## Retained integrated checkpoint details — through 2026-09-12 23:20 UTC
