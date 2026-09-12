@@ -400,10 +400,42 @@ class _CategoryGuardedSemanticDiagnosticBrowser(_GuardedSemanticDiagnosticBrowse
         return super().act(action)
 
 
+class _NestedCategoryGuardedSemanticDiagnosticBrowser(_CategoryGuardedSemanticDiagnosticBrowser):
+    @staticmethod
+    def categories():
+        return _surface([Node(0, -1, 'group', ''), Node(1, 0, 'list', ''),
+                         Node(2, 1, 'listitem', ''), Node(3, 2, 'button', 'Expand Workspace')])
+
+    def __init__(self, **kwargs):
+        self.category_state = 'Stable'
+        super().__init__(**kwargs)
+
+    def entry(self):
+        nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'list', ''), Node(2, 1, 'listitem', ''),
+                 Node(3, 2, 'button', 'Collapse Workspace'), Node(4, 2, 'text', self.category_state),
+                 Node(5, 2, 'list', '')]
+        for name in self.names:
+            root = len(nodes)
+            nodes += [Node(root, 5, 'listitem', ''), Node(root + 1, root, 'button', 'Open ' + name),
+                      Node(root + 2, root, 'text', 'Amount ' + self.values[name])]
+        return _surface(nodes)
+
+    def act(self, action):
+        if self.surface.observation.node(action.target).name == 'Expand Workspace':
+            self.actions.append('Expand Workspace')
+            self.surface = self.entry()
+            return ActionResult(True)
+        result = super().act(action)
+        if action.kind == 'type' and self.fault == 'parent_changed':
+            self.category_state = 'Changed'
+        return result
+
+
 def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, intervening=False,
                          response_names_owner=False, prediction_status='supported',
                          additional_known_event=None, guarded=False, counterfactual_status='supported',
-                         counterfactual_event='Recorded', predecessor_category=False, **browser_options):
+                         counterfactual_event='Recorded', predecessor_category=False,
+                         nested_category=False, argument_overrides=None, **browser_options):
     """Supply a fitted prediction contract; exercise real routing, tracing and response readback.
 
     No fitting claim is made by this diagnostic. The rendered application deliberately can
@@ -413,7 +445,8 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
     from semabi.compiler.semantic_runtime import shape, step_for
     from semabi.compiler.v4 import emission, outcome
     from semabi.compiler.runtime import POLICY_VERSION, bind_contract
-    browser = (_CategoryGuardedSemanticDiagnosticBrowser(**browser_options) if predecessor_category else
+    browser = (_NestedCategoryGuardedSemanticDiagnosticBrowser(**browser_options) if nested_category else
+               _CategoryGuardedSemanticDiagnosticBrowser(**browser_options) if predecessor_category else
                _GuardedSemanticDiagnosticBrowser(**browser_options) if guarded
                else _SemanticDiagnosticBrowser(**browser_options))
     runtime = Runtime(tmp_path)
@@ -463,12 +496,13 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
         artifact.simulate_edit = simulate_edit
     monkeypatch.setattr(SemanticArtifact, 'from_json', classmethod(lambda cls, data: artifact))
     entry = browser.entry() if guarded else _semantic_diagnostic_entry()
+    owner_node = next(node for node, control in entry.controls.items() if control['label'] == 'Open A')
     operation = {'id': 'op-semantic-diagnostic', 'version': 1, 'name': 'check',
                  'kind': 'semantic_action', 'status': 'ACTIVE',
                  'argument_schema': {'type': 'object', 'properties': {'target': {'type': 'string'}},
                                      'required': ['target'], 'additionalProperties': False},
                  'output_schema': {'type': 'object'}, 'prerequisites': [], 'effect_checks': [], 'scope': {},
-                 'procedure': {'entry_url': connection['url'], 'navigation': [step_for(entry, 3, [])],
+                 'procedure': {'entry_url': connection['url'], 'navigation': [step_for(entry, owner_node, [])],
                                'return_context': {'entry_shape': shape(entry), 'returns': []},
                                'action': {'kind': 'click', 'descriptor': _semantic_diagnostic_detail('A', []).descriptor(2)},
                                'control': control,
@@ -487,12 +521,21 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
         arguments.update(value='7', expect='Recorded')
     if predecessor_category:
         prefix = step_for(browser.categories(), 3, [])
-        operation['procedure']['navigation'] = [prefix, step_for(entry, 3, [prefix])]
+        operation['procedure']['navigation'] = [prefix, step_for(entry, owner_node, [prefix])]
         operation['procedure']['owner_binding']['argument'] = 'selection_2'
         operation['procedure']['return_context']['entry_shape'] = shape(browser.categories())
         operation['argument_schema']['properties']['selection_2'] = {'type': 'string'}
         operation['argument_schema']['required'].append('selection_2')
         arguments.update(target='Workspace', selection_2='A')
+        if nested_category:
+            from semabi.compiler.semantic_runtime import selector_argument_properties
+            operation['procedure']['owner_binding']['prefix'] = 'Open '
+            group = [{'route': [prefix, step_for(entry, node, [prefix])]} for node, control in entry.controls.items()
+                     if control['label'] in ('Open A', 'Open B')]
+            operation['argument_schema']['properties'].update(selector_argument_properties(
+                group, operation['procedure']['owner_binding']))
+            arguments.update(target='Expand Workspace', selection_2='Open A')
+    arguments.update(argument_overrides or {})
     bind_contract(operation)
     result = runtime.invoke(connection, operation, arguments, lambda event: None)
     return result, browser
@@ -620,6 +663,29 @@ def test_semantic_guarded_update_brackets_the_owner_collection_after_prerequisit
         assert not any(node.name == 'Open Workspace' for node in browser.surface.observation.nodes)
 
 
+@pytest.mark.parametrize('fault', [None, 'parent_changed', 'sibling_changed'])
+def test_semantic_nested_collection_keeps_parent_state_separate_from_intended_child_edit(tmp_path, monkeypatch, fault):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True,
+                                          predecessor_category=True, nested_category=True, fault=fault)
+    assert browser.values['A'] == '7'
+    if fault:
+        assert result['outcome'] == 'UNCERTAIN', result
+    else:
+        assert result['outcome'] == 'CONFIRMED', result
+        assert result['effect']['checked_neighbors'] == ['Collapse Workspace', 'Open B']
+        assert browser.values['B'] == '9' and browser.category_state == 'Stable'
+
+
+@pytest.mark.parametrize('arguments', [{'selection_2': 'Delete A'}, {'selection_2': 'Stop A'},
+                                      {'target': 'Delete Workspace'}, {'target': 'Expand Fresh category'}])
+def test_semantic_full_control_label_constraints_refuse_before_navigation(tmp_path, monkeypatch, arguments):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True, predecessor_category=True,
+                                          nested_category=True, argument_overrides=arguments)
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT', result
+    assert result['metrics']['actions'] == result['metrics']['possible_write_actions'] == 0
+    assert browser.actions == [] and browser.values == {'A': '3', 'B': '9'}
+
+
 def _semantic_radio_rows(names=('Alpha', 'Beta'), selected=None):
     nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'table', '')]
     for name in names:
@@ -702,6 +768,62 @@ def test_semantic_owner_correspondence_rejects_two_equally_supported_source_argu
         group.append({'route': [first, step_for(board, node, [first])],
                       'owner': {'type': 1, 'key': name}, 'prediction_status': 'supported'})
     assert owner_correspondence(group) is None
+
+
+def _semantic_control_label_rows(labels):
+    nodes = [Node(0, -1, 'group', '')]
+    for label in labels:
+        root = len(nodes)
+        nodes += [Node(root, 0, 'listitem', ''), Node(root + 1, root, 'button', label),
+                  Node(root + 2, root, 'text', 'Amount 3')]
+    return _surface(nodes)
+
+
+@pytest.mark.parametrize('requested,expected', [('Open Fresh', 2), ('Missing', 'no match'),
+                                               ('Open A', 'multiple matches')])
+def test_semantic_full_control_anchor_resolves_without_promoting_label_to_persistent_key(requested, expected):
+    from semabi.compiler.runtime import StopOperation
+    from semabi.compiler.semantic_runtime import resolve_step, step_for
+    step = step_for(_semantic_control_label_rows(('Open A', 'Open B')), 2, [])
+    assert step['selector']['full_control_label'] and step['selector']['value'] == 'Open A'
+    fresh = _semantic_control_label_rows(('Open Fresh', 'Open A', 'Open A'))
+    if isinstance(expected, int):
+        assert resolve_step(fresh, step, {'target': requested}) == expected
+    else:
+        with pytest.raises(StopOperation, match=expected):
+            resolve_step(fresh, step, {'target': requested})
+
+
+def test_semantic_full_control_correspondence_preserves_changing_action_remainders():
+    from semabi.compiler.semantic_runtime import owner_correspondence, selector_argument_properties, step_for, validate
+    from semabi.compiler.runtime import StopOperation
+    group = []
+    for key, label in [('A', 'Start A'), ('B', 'Stop B')]:
+        step = step_for(_semantic_control_label_rows((label,)), 2, [])
+        group.append({'route': [step], 'owner': {'type': 1, 'key': key}, 'prediction_status': 'supported'})
+    assert owner_correspondence(group) is None, 'removing names must not erase a changing action'
+    for trial, key in zip(group, ('A', 'B')):
+        trial['route'] = [step_for(_semantic_control_label_rows(('Review ' + key + ' now',)), 2, [])]
+    binding = owner_correspondence(group)
+    properties = selector_argument_properties(group, binding)
+    schema = {'properties': properties}
+    validate(schema, {'target': 'Review Fresh now'})
+    assert properties['target']['pattern'] == '^Review .+ now$'
+    for malicious in ('Delete A now', 'Review A later', 'Review  now'):
+        with pytest.raises(StopOperation):
+            validate(schema, {'target': malicious})
+
+
+def test_semantic_repair_checks_generated_label_constraints_before_browser_access():
+    from semabi.compiler.runtime import StopOperation
+    from semabi.compiler.semantic_runtime import acquire_repair, owner_correspondence, selector_argument_properties, step_for
+    group = [{'route': [step_for(_semantic_control_label_rows(('Review ' + key,)), 2, [])],
+              'owner': {'type': 1, 'key': key}, 'prediction_status': 'supported'} for key in ('A', 'B')]
+    operation = {'argument_schema': {'properties': selector_argument_properties(group, owner_correspondence(group))}}
+    runtime = SimpleNamespace(_check_operation=lambda op: None)
+    with pytest.raises(StopOperation, match='control-label'):
+        acquire_repair(runtime, object(), object(), {'operation': operation, 'arguments': {'target': 'Delete A'}},
+                       [], [], {})
 
 
 def test_semantic_sibling_anchor_does_not_choose_between_competing_label_values():
@@ -799,8 +921,9 @@ def test_semantic_acquisition_composes_selection_return_and_check_with_finite_bu
 
 @pytest.mark.parametrize('predecessor_category', [False, True])
 @pytest.mark.parametrize('post_owner_changed', [False, True])
+@pytest.mark.parametrize('control_only', [False, True])
 def test_semantic_publication_learns_which_selector_supplied_action_owner(
-        tmp_path, monkeypatch, predecessor_category, post_owner_changed):
+        tmp_path, monkeypatch, predecessor_category, post_owner_changed, control_only):
     """Isolate publication from fitting: a predecessor must not hide the actual owner.
 
     Predictions and response observations are identical in the two arms. Only the earlier
@@ -827,12 +950,14 @@ def test_semantic_publication_learns_which_selector_supplied_action_owner(
     monkeypatch.setattr(semantic, 'fit_semantics', lambda directory: artifact)
 
     def acquire(browser, trace, entry, emit, trials, edits, context):
-        board = _semantic_diagnostic_entry()
+        board = (_semantic_control_label_rows(('Open A', 'Open B')) if control_only
+                 else _semantic_diagnostic_entry())
         prefix = [procedures.step_for(_semantic_diagnostic_entry(('Collection', 'Other collection')), 3, [])]
         if not predecessor_category:
             prefix = []
         context.update(entry_shape=procedures.shape(board), returns=[])
-        for i, (owner, target_node) in enumerate((('A', 3), ('B', 6))):
+        for i, owner in enumerate(('A', 'B')):
+            target_node = next(node for node, control in board.controls.items() if control['label'] == 'Open ' + owner)
             route = [*prefix, procedures.step_for(board, target_node, prefix)]
             before = _semantic_diagnostic_detail(owner, ('Waiting',))
             after = _semantic_diagnostic_detail('Other' if post_owner_changed else owner, ('Recorded',))
@@ -846,8 +971,14 @@ def test_semantic_publication_learns_which_selector_supplied_action_owner(
         assert learned['operations'] == [], 'an anonymous response on another owner is not completion support'
     else:
         assert len(learned['operations']) == 1
-        assert learned['operations'][0]['procedure']['owner_binding']['argument'] == (
-            'selection_2' if predecessor_category else 'target')
+        operation = learned['operations'][0]
+        argument = 'selection_2' if predecessor_category else 'target'
+        assert operation['procedure']['owner_binding']['argument'] == argument
+        if control_only:
+            assert operation['argument_schema']['properties'][argument]['pattern'] == '^Open .+$'
+            arguments = {step['argument']: step['selector']['value'] for step in operation['procedure']['navigation']}
+            arguments[argument] = 'Open Fresh'
+            procedures.validate(operation['argument_schema'], arguments)
 
 
 _AUTH_CREDENTIALS = {'username': 'synthetic-private-user', 'password': 'synthetic-private-password'}

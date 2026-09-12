@@ -4,9 +4,9 @@
 
 - Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
   `d0b1574` and research `bbd56ef` are ancestors. No cherry-pick or reset.
-- Current milestone: checkpoint `956b72b` committed; normal authorized acquisition
-  of complete predictive rivals and workshop composition now implemented for
-  actual HTTP evaluation (not yet successful acquisition/transport claims).
+- Current milestone: integrated API checkpoint `956b72b`, authorized repair
+  checkpoint `4c6a8f7`; now control-contained selection and real workshop
+  composition, followed by original-app reruns and the reserved assessment.
   Acceptance: standard HTTP discovery/fit/schema/invoke, shared frozen/live
   language, fresh owner/resource arguments, persistent checked write, restart,
   relational boundary cases, meaningful learned-binding/condition ablation.
@@ -17,8 +17,13 @@
   remain. Supplied primitives are bounded clicks/fills and a guarded-edit wrapper;
   observed routes, selectors and semantic conditions are learned, not adapters.
 - Evidence boundary: dispatch/workshop/reservoir, generated fixtures, Memos,
-  linkding and Vikunja remain disclosed development. No new reserved application
-  opened. P43 both-arm fall is useful acquisition, not targeting advantage.
+  linkding and Vikunja remain disclosed development. An evaluator prepared
+  Kanboard1.2.46 at8881 with a16-task plan selected before startup/UI/learner,
+  under `runs/product_kanboard_preparation_v1`. Evaluator saw official setup/API
+  docs, native seed state and login/dashboard; two evaluator assertion failures
+  retained. Root has not inspected its task/seed/UI contents; no learner run.
+  This is disclosed evaluator exposure, not blindness. P43 both-arm fall is
+  useful acquisition, not targeting advantage.
   Learned JOIN, reservoir persistence and review-seal observability remain separate.
   Original failed assessments, rate-limit confound and snapshot test totals stand.
 - Current real HTTP evidence: `runs/product_semantic_development_v3`.
@@ -106,10 +111,17 @@
   unrelated dispatch8910 untouched. Broad retention runs fixed956b72b in owned
   `/tmp/semabi-retention-956b72b-9pza6H`, unit `semabi-retention-956b72b.service`,
   eight-core/20GiB cap; remaining concurrent work at mostfourcores.
-- Next executable actions: restart candidate service, raw-evidence refit, then
-  explicit repair of `job_3b8a9cd424824fc789158aeb1dc0c5ad` (quantity12/Cobalt).
-  Independently check actual edit and refitted predictions; run bounded workshop
-  onboarding through HTTP. Then remeasure original application task denominators and freeze
+- Workshop candidate gate588 passed/32.29s. Control-contained labels now require
+  learned owner-wrapper constraints before any action; other such prerequisites
+  remain observed enums. Nested inventory retains parent-owned state and checks
+  child rows separately. Independent workshop baseline captured after expanding
+  categories, then ownedfixture reset to its collapsed initial view with the same
+  seed data. One omitted --capture CLI attempt performed no browser actions.
+- Next executable actions: finish control-label safety/scoped nested inventory
+  repair; fresh workshop HTTP onboarding at1200actions/900possiblewrites ceiling.
+  Memos8852 original base is restored; new evaluator wrapper repairs obsolete auth
+  return-shape assertion while preserving that setup failure. Then remeasure
+  original application task denominators and freeze
   an independently developed reserved-application assessment.
 
 ## Product development resumed (2026-09-09)

@@ -31,6 +31,10 @@ For a returned guarded schema with `target`, `selection_2`, `value` and `expect`
 the first two arguments identify exact observed anchors within learned local rows;
 `value` supplies the new field value and `expect` selects a returned response
 alternative. Use the names and enum values actually returned by your connection.
+When a record name appears only inside its control, the argument is the full
+observed label. Its learned owner-label constraint is checked before navigation;
+prerequisite control-label arguments without such correspondence are restricted
+to their observed enum. This does not establish fresh-category generalization.
 The operation simulates that value with the same fitted field/binding language
 used during learning. A requested response supported by all empirical alternatives
 can permit the fill; a point prediction alone cannot. This is an empirical guard

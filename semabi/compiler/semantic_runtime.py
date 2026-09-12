@@ -28,15 +28,27 @@ def has_onboarding_history(runtime, connection):
                for path in root.glob("*/steps.jsonl") for line in path.read_text().splitlines())
 
 
+def _owned_region_nodes(surface, root):
+    obs = surface.observation
+    members = set(obs.subtree(root))
+    nested = {region["root"] for region in local_regions(obs)
+              if region["root"] != root and region["root"] in members}
+    excluded = {i for child in nested for i in obs.subtree(child)}
+    return [obs.node(i) for i in obs.subtree(root) if i not in excluded]
+
+
 def local_anchor(surface, root, control_node=None):
     """A unique observed row anchor, not a persistent identity or complete listing.
 
     Heading anchors also work beside constant controls. Otherwise a leaf's value
-    must be repeated by a control label; neither column order nor word shape names
-    the record. Competing anchors remain unresolved.
+    may be repeated by a control label. A lone row-owned control can itself supply
+    its full label, but this is only a proposal: publication must constrain what
+    labels callers may execute. Descendant rows own their own controls.
     """
     obs = surface.observation
-    nodes = [obs.node(i) for i in obs.subtree(root)]
+    nodes = _owned_region_nodes(surface, root)
+    if control_node is not None and control_node not in {n.i for n in nodes}:
+        return None
     headings = [n for n in nodes if n.role == "heading" and n.name]
     if len(headings) == 1:
         return headings[0]
@@ -45,7 +57,14 @@ def local_anchor(surface, root, control_node=None):
     candidates = [n for n in nodes if n.role in {"cell", "text"} and n.name
                   and not obs.children(n.i) and n.i not in surface.controls
                   and any(surface.controls[i]["label"].count(n.name) == 1 for i in controls)]
-    return candidates[0] if len(candidates) == 1 else None
+    if candidates:
+        return candidates[0] if len(candidates) == 1 else None
+    own_controls = [n for n in nodes if n.i in surface.controls]
+    if (len(own_controls) == 1 and own_controls[0].role in {"button", "link", "radio"}
+            and own_controls[0].name and
+            (control_node is None or own_controls[0].i == control_node)):
+        return own_controls[0]
+    return None
 
 
 def selector(surface, node):
@@ -66,8 +85,11 @@ def selector(surface, node):
         if label.count(value) == 1:
             prefix, suffix = label.split(value)
             descriptor["label"] = {"prefix": prefix, "suffix": suffix}
-        return {"descriptor": descriptor, "region_role": obs.node(root).role,
+        spec = {"descriptor": descriptor, "region_role": obs.node(root).role,
                 "anchor_role": anchor.role, "value": value}
+        if anchor.i in surface.controls:
+            spec["full_control_label"] = True
+        return spec
     return None
 
 
@@ -96,8 +118,10 @@ def resolve_step(surface, step, arguments=None):
         obs = surface.observation
         roots = [region["root"] for region in local_regions(obs)
                  if region["role"] == spec["region_role"] and
-                 sum(obs.node(i).role == spec["anchor_role"] and obs.node(i).name == value
-                     for i in obs.subtree(region["root"])) == 1]
+                 sum(n.role == spec["anchor_role"] and n.name == value
+                     for n in (_owned_region_nodes(surface, region["root"])
+                               if spec.get("full_control_label") else
+                               [obs.node(i) for i in obs.subtree(region["root"])])) == 1]
         hits = sorted({node for root in roots for node in surface.resolve(descriptor, within=root)})
     if len(hits) != 1:
         _stop("Scoped target has no match" if not hits else "Scoped target has multiple matches")
@@ -424,6 +448,30 @@ def _argument_value(route, argument):
     return values[0] if len(values) == 1 else None
 
 
+def selector_argument_properties(group, owner_binding):
+    """Constrain control-label proposals before any invocation or repair action."""
+    properties = {}
+    for step in group[0]["route"]:
+        if "selector" not in step:
+            continue
+        argument = step["argument"]
+        prop = {"type": "string", "minLength": 1,
+                "description": "Exact observed anchor in one uniquely resolved local collection row"}
+        if step["selector"].get("full_control_label"):
+            prefix, suffix = owner_binding["prefix"], owner_binding["suffix"]
+            if argument == owner_binding["argument"] and (prefix or suffix):
+                prop.update(pattern="^" + re.escape(prefix).replace(r"\ ", " ") + ".+"
+                            + re.escape(suffix).replace(r"\ ", " ") + "$",
+                            minLength=len(prefix) + len(suffix) + 1,
+                            description="Full observed control label, constrained by its learned owner correspondence")
+            else:
+                prop.update(enum=sorted({_argument_value(trial["route"], argument) for trial in group}
+                                        - {None}),
+                            description="Full observed control label; only choices observed in supporting trials")
+        properties[argument] = prop
+    return properties
+
+
 def learn(runtime, connection, settings, trace, emit):
     from semabi.compiler.semantic import fit_semantics, training_evidence_digest
     from semabi.compiler.runtime import POLICY_VERSION, bind_contract, source_hashes
@@ -588,9 +636,7 @@ def learn(runtime, connection, settings, trace, emit):
                 continue
             procedure = {"entry_url": connection["url"], "navigation": route, "return_context": context,
                          "action": group[0]["action"], "control": control, "owner_binding": owner_binding}
-            props = {step["argument"]: {"type": "string", "minLength": 1,
-                     "description": "Exact observed anchor in one uniquely resolved local collection row"}
-                     for step in selectors}
+            props = selector_argument_properties(group, owner_binding)
             schema = {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}
             op_id = "op_" + digest([procedure["entry_url"], control, route_key(route)])[:20]
             operation = {"id": op_id, "version": settings.get("_operation_versions", {}).get(op_id, 0) + 1,
@@ -658,7 +704,11 @@ def validate(schema, arguments):
             _stop("Arguments require nonempty normalized text")
         if len(value) > prop.get("maxLength", 10000):
             _stop("Argument exceeds its supported length")
-        if prop.get("enum") and value not in prop["enum"]:
+        if len(value) < prop.get("minLength", 1):
+            _stop("Argument is shorter than its learned anchor constraint")
+        if prop.get("pattern") and re.fullmatch(prop["pattern"], value) is None:
+            _stop("Argument does not satisfy its learned control-label constraint")
+        if "enum" in prop and value not in prop["enum"]:
             _stop("Argument is outside the learned alternatives")
 
 
@@ -678,13 +728,16 @@ def _check_owner(prediction, procedure, arguments):
 def _inventory(surface):
     obs = surface.observation
     result = {}
-    for region in local_regions(obs):
-        if region["role"] not in {"article", "row", "listitem"}:
-            continue
-        nodes = [obs.node(i) for i in obs.subtree(region["root"])]
-        anchor = local_anchor(surface, region["root"])
-        if anchor is None:
-            continue
+    anchors = {region["root"]: anchor for region in local_regions(obs)
+               if region["role"] in {"article", "row", "listitem"}
+               and (anchor := local_anchor(surface, region["root"])) is not None}
+    for root, anchor in anchors.items():
+        members = set(obs.subtree(root))
+        # Nested anchored rows have their own inventory entries. Keep the parent's
+        # own state and intermediate groups; do not double-count its children's
+        # changes as a collateral effect on the parent. Unanchored content stays.
+        excluded = {i for child in anchors if child != root and child in members for i in obs.subtree(child)}
+        nodes = [obs.node(i) for i in obs.subtree(root) if i not in excluded]
         positions = {n.i: index for index, n in enumerate(nodes)}
         # A node's own visible text/state does not disappear when it contains
         # a control. Relative containment survives fresh observation indices.
@@ -908,6 +961,7 @@ def acquire_repair(runtime, browser, trace, repair, trials, edits, report):
     trace.budget.check_deadline()
     if trace.budget.writes >= trace.budget.max_writes or trace.budget.actions >= trace.budget.max_actions:
         _stop("Repair budget cannot admit the experimental field write")
+    report["targeting_attempted"] = True
     report["field_write_attempted"] = True
     filled = trace.act(browser, current, Primitive("type", field, arguments["value"]))
     field = resolve_step(filled, {"descriptor": guard["descriptor"]})
@@ -919,6 +973,7 @@ def acquire_repair(runtime, browser, trace, repair, trials, edits, report):
     _check_owner(actual["prediction"], procedure, arguments)
     if not actual["eligible"]:
         _stop("The actual edited view does not retain the predicted rival outcomes")
+    report["targeting_engaged"] = True
     before = trace.read(browser)
     if _live_signature(before) != _live_signature(filled):
         _stop("Interface changed before the repair response action")
