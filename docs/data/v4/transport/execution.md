@@ -117,6 +117,20 @@
   child rows separately. Independent workshop baseline captured after expanding
   categories, then ownedfixture reset to its collapsed initial view with the same
   seed data. One omitted --capture CLI attempt performed no browser actions.
+  Actual f1fd5a5 workshop onboarding stopped UNESTABLISHED at13actions/7writes,
+  11raw steps,7.645s: return selected ExpandFrames/CollapseFrames cyclically
+  after opening Shelves. No semantic operation was published. Current repair
+  searches observed return paths, avoids repeated acquisition edges, and resumes
+  unpublished acquisition once if an initial raw refit still cannot publish.
+  Combined affected product gate597 passed/31.26s. Both fit costs and all
+  continued actions count. A positive persisted-field
+  readback contradiction now suspends only its guarded operation; ambiguity or
+  unattributed inventory change does not blanket-suspend checking procedures.
+  Memos f1fd5a5 learned create/read/update in31actions/18writes/25.019s; evaluator
+  readiness and checker-process ownership failures prevented first task calls.
+  All16 rows and setup failures remain in separate execution phases, not learner
+  failures. Corrected evaluator runs use owned frozen f1fd5a5 worktree
+  `/tmp/semabi-memos-f1fd5a5-assessment`, service8864, allowing main to advance.
 - Next executable actions: finish control-label safety/scoped nested inventory
   repair; fresh workshop HTTP onboarding at1200actions/900possiblewrites ceiling.
   Memos8852 original base is restored; new evaluator wrapper repairs obsolete auth

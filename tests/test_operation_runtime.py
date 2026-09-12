@@ -614,6 +614,7 @@ def test_semantic_guarded_preflight_refusals_do_not_write_fields(tmp_path, monke
     assert browser.fills == browser.final_actions == 0
     assert browser.values == {'A': '3', 'B': '9'}
     assert result['effect']['field_write_attempted'] is False
+    assert result.get('operation_status') != 'STALE', 'prediction ambiguity/refusal does not refute the operation'
 
 
 @pytest.mark.parametrize(('fault', 'fills', 'final_actions'), [
@@ -633,8 +634,10 @@ def test_semantic_guarded_update_detects_partial_wrong_neighbor_and_stale_relate
     assert browser.final_actions == final_actions
     if fault == 'transient_draft':
         assert browser.values['A'] == '3', 'a field value shown in a draft must not count as a durable write'
+        assert result['operation_status'] == 'STALE', 'contradicted persistence suspends this guarded version'
     if fault == 'sibling_changed':
         assert browser.values['B'] == '7', 'independent application state establishes the unintended sibling effect'
+        assert result.get('operation_status') != 'STALE', 'observed collateral alone does not prove its cause'
     if fault == 'duplicate_sibling_changed':
         assert browser.values['B'] == '9' and browser.extra_sibling_value == '7'
 
@@ -864,6 +867,142 @@ def test_semantic_radio_replay_checks_actual_selected_state(tmp_path, ignores_se
         assert after.observation.node(9).checked is False
 
 
+class _StatefulReturnBrowser:
+    """Navigation preserves expanded collections, as a stateful application may."""
+    def __init__(self, left=False, right=False):
+        self.left, self.right = left, right
+        self.actions = []
+
+    def read(self):
+        nodes = [Node(0, -1, 'group', '')]
+        for name, expanded in [('Left', self.left), ('Right', self.right)]:
+            row = len(nodes)
+            nodes.append(Node(row, 0, 'listitem', ''))
+            nodes.append(Node(len(nodes), row, 'button', ('Fold ' if expanded else 'Reveal ') + name))
+            if expanded:
+                nodes.append(Node(len(nodes), row, 'group', name + ' contents'))
+        return _surface(nodes)
+
+    def goto(self, url):
+        pass
+
+    def act(self, action):
+        from semabi.compiler.semantic_runtime import procedure_context
+        surface = self.read()
+        label = surface.observation.node(action.target).name
+        self.actions.append((procedure_context(surface), label))
+        if label.endswith('Left'):
+            self.left = not self.left
+        else:
+            self.right = not self.right
+        return SimpleNamespace(ok=True, error=None)
+
+
+def test_semantic_return_acquisition_escapes_first_choice_cycle_with_stateful_navigation(tmp_path):
+    """Old four-turn fallback repeatedly toggled Left without trying Fold Right."""
+    from semabi.compiler.runtime import Budget, Trace
+    from semabi.compiler.semantic_runtime import procedure_context, replay
+    browser = _StatefulReturnBrowser()
+    entry = procedure_context(browser.read())
+    browser.left = True
+    prior = browser.read()
+    left_return = {'before': procedure_context(prior), 'after': entry,
+                   'descriptor': prior.descriptor(2)}
+    browser.left, browser.right = False, True
+    context = {'return_context_version': 2, 'entry_shape': entry, 'returns': [left_return]}
+    trace = Trace(tmp_path / 'return-cycle', lambda event: None, Budget(20, 19))
+
+    result = replay(browser, trace, 'https://synthetic.invalid/', [], context=context, acquiring=True)
+
+    assert procedure_context(result) == entry
+    assert [label for _, label in browser.actions] == ['Reveal Left', 'Fold Left', 'Fold Right']
+    assert len(set(browser.actions)) == len(browser.actions), 'no repeated failed context/action pair'
+    assert trace.metrics()['actions'] == 4 and trace.metrics()['possible_write_actions'] == 3
+    assert any(edge['after'] == entry and edge['descriptor']['label'] == 'Fold Right'
+               for edge in context['returns'])
+
+
+def test_semantic_runtime_return_uses_observed_entry_path_not_first_outgoing_edge(tmp_path):
+    from semabi.compiler.runtime import Budget, Trace
+    from semabi.compiler.semantic_runtime import procedure_context, replay
+    browser = _StatefulReturnBrowser()
+    entry = procedure_context(browser.read())
+    browser.right = True
+    right = browser.read()
+    browser.left = True
+    both = browser.read()
+    browser.left = False
+    context = {'return_context_version': 2, 'entry_shape': entry, 'returns': [
+        {'before': procedure_context(right), 'after': procedure_context(both), 'descriptor': right.descriptor(2)},
+        {'before': procedure_context(both), 'after': procedure_context(right), 'descriptor': both.descriptor(2)},
+        {'before': procedure_context(right), 'after': entry, 'descriptor': right.descriptor(4)},
+    ]}
+    trace = Trace(tmp_path / 'known-return', lambda event: None, Budget(4, 2))
+
+    result = replay(browser, trace, 'https://synthetic.invalid/', [], context=context)
+
+    assert procedure_context(result) == entry
+    assert [label for _, label in browser.actions] == ['Fold Right']
+
+
+@pytest.mark.parametrize('ambiguous', [False, True])
+def test_semantic_runtime_return_never_explores_unestablished_exit(tmp_path, ambiguous):
+    from semabi.compiler.runtime import Budget, Trace, StopOperation
+    from semabi.compiler.semantic_runtime import procedure_context, replay
+    browser = _StatefulReturnBrowser()
+    entry = procedure_context(browser.read())
+    browser.right = True
+    right = browser.read()
+    transitions = []
+    if ambiguous:
+        transitions = [{'before': procedure_context(right), 'after': destination,
+                        'descriptor': right.descriptor(4)} for destination in [entry, 'other-observed-view']]
+    context = {'return_context_version': 2, 'entry_shape': entry, 'returns': transitions}
+    trace = Trace(tmp_path / 'no-guessed-return', lambda event: None, Budget(4, 2))
+
+    with pytest.raises(StopOperation, match='No supported return path'):
+        replay(browser, trace, 'https://synthetic.invalid/', [], context=context)
+
+    assert browser.actions == [] and trace.metrics()['possible_write_actions'] == 0
+
+
+def test_semantic_return_context_keeps_native_selection_transition_without_layout_change(tmp_path):
+    from semabi.compiler.runtime import Budget, Trace
+    from semabi.compiler.semantic_runtime import procedure_context, replay, shape
+
+    class RadioBrowser:
+        checked = True
+        actions = 0
+
+        def read(self):
+            return _surface([Node(0, -1, 'group', ''),
+                             Node(1, 0, 'radio', 'First resource', checked=self.checked),
+                             Node(2, 0, 'radio', 'Second resource', checked=not self.checked)])
+
+        def goto(self, url):
+            pass
+
+        def act(self, action):
+            assert action.target == 2
+            self.checked = False
+            self.actions += 1
+            return SimpleNamespace(ok=True, error=None)
+
+    browser = RadioBrowser()
+    selected = browser.read()
+    browser.checked = False
+    entry = browser.read()
+    browser.checked = True
+    assert shape(entry) == shape(selected) and procedure_context(entry) != procedure_context(selected)
+    context = {'return_context_version': 2, 'entry_shape': procedure_context(entry), 'returns': [
+        {'before': procedure_context(selected), 'after': procedure_context(entry), 'descriptor': selected.descriptor(2)}]}
+    trace = Trace(tmp_path / 'radio-return', lambda event: None, Budget(3, 1))
+
+    result = replay(browser, trace, 'https://synthetic.invalid/', [], context=context)
+
+    assert not result.observation.node(1).checked and browser.actions == 1
+
+
 def test_semantic_acquisition_composes_selection_return_and_check_with_finite_budget(tmp_path):
     from semabi.compiler.runtime import Budget, Trace
     from semabi.compiler.semantic_runtime import acquire, recover_learning
@@ -979,6 +1118,55 @@ def test_semantic_publication_learns_which_selector_supplied_action_owner(
             arguments = {step['argument']: step['selector']['value'] for step in operation['procedure']['navigation']}
             arguments[argument] = 'Open Fresh'
             procedures.validate(operation['argument_schema'], arguments)
+
+
+@pytest.mark.parametrize('case', ['resume', 'refit_suffices', 'no_write_budget'])
+def test_semantic_unpublished_learning_resumes_only_when_refit_cannot_publish(tmp_path, monkeypatch, case):
+    """Real trace reuse/budgets; supplied fitter/publication isolate continuation policy."""
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler.runtime import Budget
+    from semabi.compiler import semantic, semantic_runtime as procedures
+    from semabi.compiler.evidence import EvidenceLog
+    runtime = Runtime(tmp_path)
+    connection = {'id': 'resume-diagnostic', 'url': 'https://synthetic.invalid/', 'scope': {}}
+    entry = _semantic_diagnostic_entry()
+    before = _semantic_diagnostic_detail('A', ('Waiting',))
+    after = _semantic_diagnostic_detail('A', ('Recorded',))
+    browser = SimpleNamespace(allowed_origin='https://synthetic.invalid', read=lambda: after,
+                              act=lambda action: SimpleNamespace(ok=True, error=None))
+    runtime.sessions[connection['id']] = browser
+    old = runtime._trace(connection, lambda event: None, Budget(10, 5))
+    old.observe(entry)
+    old.observe(before)
+    old.log.add_step(0, Primitive('navigate', text=connection['url']), True, None,
+                     entry.observation, entry.observation)
+    old.log.add_step(0, Primitive('click', 3), True, None, entry.observation, before.observation)
+    events, fits, acquired = [], [], []
+    trace = runtime._trace(connection, events.append, Budget(10, 0 if case == 'no_write_budget' else 5))
+    artifact = SimpleNamespace(metadata={'fit_seconds': 2.5}, operations=lambda: [], to_json=lambda: {})
+
+    def fit(directory):
+        fits.append(len(EvidenceLog(directory).steps))
+        return artifact
+
+    def acquire(browser, trace, entry, emit, trials, edits, context):
+        acquired.append(True)
+        trace.act(browser, before, Primitive('click', 2))
+
+    monkeypatch.setattr(semantic, 'fit_semantics', fit)
+    monkeypatch.setattr(procedures, 'acquire', acquire)
+    monkeypatch.setattr(procedures, 'publish_operations', lambda *args:
+                        [{'id': 'diagnostic-only'}] if case == 'refit_suffices' or len(fits) == 2 else [])
+    result = procedures.learn(runtime, connection, {}, trace, events.append)
+    resumed = case == 'resume'
+    assert acquired == ([True] if resumed else [])
+    assert fits == ([2, 3] if resumed else [2])
+    assert result['metrics']['fit_seconds'] == (5.0 if resumed else 2.5)
+    assert result['metrics']['reused_training_steps'] == 2
+    assert result['metrics']['possible_write_actions'] == int(resumed)
+    assert result['metrics']['actions'] == int(resumed)
+    assert result['status'] == ('UNESTABLISHED' if case == 'no_write_budget' else 'COMPLETED')
+    assert (trace.log.dir / 'semantic_initial.json').exists() is resumed
 
 
 _AUTH_CREDENTIALS = {'username': 'synthetic-private-user', 'password': 'synthetic-private-password'}

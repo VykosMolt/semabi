@@ -10,6 +10,7 @@ import time
 import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
+from copy import deepcopy
 
 import pytest
 
@@ -983,7 +984,8 @@ def test_example_client_sends_optional_invocation_limits_only_when_requested(tmp
 
 
 @pytest.mark.parametrize('fault', [None, 'wrong_owner', 'sibling_changed', 'stale_operation',
-                                 'postaction_owner_changed', 'verification_reload_sibling_changed'])
+                                 'postaction_owner_changed', 'verification_reload_sibling_changed',
+                                 'transient_draft'])
 def test_http_semantic_invocation_uses_real_runtime_and_independent_application_state(tmp_path, monkeypatch, fault):
     """Supplied artifact setup; actual HTTP queue, Runtime invocation and verification.
 
@@ -1007,7 +1009,7 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
         _, browser = diagnostics._semantic_diagnostic(
             tmp_path / 'artifact_setup', monkeypatch, guarded=True,
             owner='B' if fault == 'wrong_owner' else None,
-            fault='sibling_changed' if fault == 'sibling_changed' else None)
+            fault=fault if fault in {'sibling_changed', 'transient_draft'} else None)
     browser.close = lambda: None
     if fault == 'postaction_owner_changed':
         original_act = browser.act
@@ -1061,7 +1063,10 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
         runtimes[0].sessions[connection['id']] = browser
         learn_job = api.service.store.queue_job(connection['id'], 'learn', {})
         assert api.service.store.start_job(learn_job)
-        api.service.store.finish_job(learn_job, {'status': 'COMPLETED'}, operations=[artifact])
+        unrelated = deepcopy(artifact)
+        unrelated['id'] = 'unrelated-supported-operation'
+        bind_contract(unrelated)
+        api.service.store.finish_job(learn_job, {'status': 'COMPLETED'}, operations=[artifact, unrelated])
         status, accepted = api.request('POST', f"/v1/connections/{connection['id']}/operations/{artifact['id']}/invoke",
                                        {'version': artifact['version'], 'arguments': captured['arguments']},
                                        headers={'Idempotency-Key': 'real-semantic-diagnostic'})
@@ -1079,6 +1084,19 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
             assert result['outcome'] == 'UNCERTAIN', result
             assert browser.values == {'A': '7', 'B': '7'}
             assert browser.fills == 1
+            assert api.service.store.operation(connection['id'], artifact['id'])['status'] == 'ACTIVE'
+        elif fault == 'transient_draft':
+            assert result['outcome'] == 'UNCERTAIN', result
+            assert browser.values == {'A': '3', 'B': '9'}, 'independent application state refutes persistence'
+            assert browser.fills == browser.final_actions == 1
+            assert result['operation_status'] == 'STALE'
+            assert api.service.store.operation(connection['id'], artifact['id'])['status'] == 'STALE'
+            assert api.service.store.operation(connection['id'], unrelated['id'])['status'] == 'ACTIVE'
+            writes_before = browser.fills, browser.final_actions
+            status, _ = api.request('POST', f"/v1/connections/{connection['id']}/operations/{artifact['id']}/invoke",
+                                    {'version': artifact['version'], 'arguments': captured['arguments']},
+                                    headers={'Idempotency-Key': 'new-request-after-persistence-refutation'})
+            assert status == 409 and (browser.fills, browser.final_actions) == writes_before
         elif fault == 'postaction_owner_changed':
             assert result['outcome'] == 'UNCERTAIN', result
             assert browser.values == {'A': '7', 'B': '9'}

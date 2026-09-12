@@ -166,49 +166,86 @@ def act_step(browser, trace, surface, step, arguments=None):
     return after
 
 
+def _return_context(surface, context):
+    return procedure_context(surface) if context.get("return_context_version") == 2 else shape(surface)
+
+
+def _return_path(context, start, blocked):
+    """Shortest observed path to entry; ambiguous outgoing transitions supply none."""
+    outcomes = {}
+    for edge in context["returns"]:
+        outcomes.setdefault((edge["before"], digest(edge["descriptor"])), set()).add(edge["after"])
+    pending, seen = deque([(start, [])]), {start}
+    while pending:
+        current, path = pending.popleft()
+        if current == context["entry_shape"]:
+            return path
+        for edge in context["returns"]:
+            key = (edge["before"], digest(edge["descriptor"]))
+            if (edge["before"] != current or key in blocked or len(outcomes[key]) != 1
+                    or edge["after"] in seen):
+                continue
+            seen.add(edge["after"])
+            pending.append((edge["after"], [*path, edge]))
+    return None
+
+
+def _return_choices(surface):
+    from semabi.compiler.runtime import EXCLUDED_WORDS
+    choices = []
+    for node, control in surface.controls.items():
+        if (control["role"] not in {"button", "link", "radio"} or control["disabled"]
+                or EXCLUDED_WORDS.search(control["label"])):
+            continue
+        descriptor = surface.descriptor(node)
+        if len(surface.resolve(descriptor)) != 1:
+            continue
+        # English navigation words are only an acquisition ranking prior. A
+        # forward choice or unlabeled-purpose commit can also reveal an exit.
+        rank = (0 if re.search(r"\b(back|return|close|cancel)\b", control["label"], re.I)
+                else 1 if selector(surface, node) else 2)
+        choices.append((rank, node, descriptor))
+    return sorted(choices, key=lambda choice: choice[:2])
+
+
 def replay(browser, trace, entry, route, arguments=None, *, context=None, acquiring=False):
     before = trace.read(browser)
     surface = trace.navigate(browser, entry)
     trace.log.add_step(0, Primitive("navigate", text=entry), True, None,
                        before.observation, surface.observation)
     if context is not None:
-        context.setdefault("entry_shape", shape(surface))
+        if "entry_shape" not in context:
+            context["return_context_version"] = 2
+            context["entry_shape"] = procedure_context(surface)
         context.setdefault("returns", [])
-        for _ in range(4):
-            if shape(surface) == context["entry_shape"]:
-                break
-            candidates = [edge for edge in context["returns"] if edge["before"] == shape(surface)]
-            if candidates:
-                descriptor = candidates[0]["descriptor"]
-                hits = surface.resolve(descriptor)
+        attempted = set()
+        # Finite edge exploration, not a retry loop. The ordinary Trace budget
+        # also charges every navigation/selection, including unsuccessful exits.
+        while _return_context(surface, context) != context["entry_shape"] and len(attempted) < 48:
+            old_shape = _return_context(surface, context)
+            path = _return_path(context, old_shape, attempted)
+            if path:
+                descriptor = path[0]["descriptor"]
             elif acquiring:
-                # Navigation words propose an experiment. Only the actual
-                # observed edge is retained for execution, with its endpoints.
-                hits = [node for node, control in surface.controls.items()
-                        if control["role"] in {"button", "link"} and not control["disabled"]
-                        and re.search(r"\b(back|return|close|cancel)\b", control["label"], re.I)]
-                if not hits:
-                    from semabi.compiler.runtime import EXCLUDED_WORDS
-                    # A dialog may expose only forward selection. Explore an
-                    # enabled local choice to discover its outgoing edge.
-                    choices = [node for node, control in surface.controls.items()
-                               if control["role"] in {"button", "link"} and not control["disabled"]
-                               and not EXCLUDED_WORDS.search(control["label"])
-                               and selector(surface, node)]
-                    hits = choices[:1]
-                descriptor = surface.descriptor(hits[0]) if len(hits) == 1 else None
+                choices = [(node, descriptor) for _, node, descriptor in _return_choices(surface)
+                           if (old_shape, digest(descriptor)) not in attempted]
+                if not choices:
+                    _stop("No untried observable return edge within the acquired context")
+                descriptor = choices[0][1]
             else:
-                hits, descriptor = [], None
-            if len(hits) != 1:
-                _stop("No unique learned return path to the entry view")
-            old_shape = shape(surface)
+                _stop("No supported return path to the entry view")
+            attempted.add((old_shape, digest(descriptor)))
+            hits = surface.resolve(descriptor)
+            if len(hits) != 1 or surface.controls[hits[0]]["disabled"]:
+                # A different already observed path may still be available.
+                continue
             surface = trace.act(browser, surface, Primitive("click", hits[0]))
-            edge = {"before": old_shape, "after": shape(surface), "descriptor": descriptor}
+            edge = {"before": old_shape, "after": _return_context(surface, context), "descriptor": descriptor}
             if acquiring and edge not in context["returns"]:
                 context["returns"].append(edge)
             elif not acquiring and edge not in context["returns"]:
                 _stop("Learned return transition changed", stale=True)
-        if shape(surface) != context["entry_shape"]:
+        if _return_context(surface, context) != context["entry_shape"]:
             _stop("Return procedure did not reach its observed entry view")
     for step in route:
         surface = act_step(browser, trace, surface, step, arguments)
@@ -357,7 +394,8 @@ def recover_learning(log):
                                     {int(k): v for k, v in item.get("text_boundaries", {}).items()})
     if not log.steps or log.steps[0].before not in surfaces:
         return [], [], {}
-    context = {"entry_shape": shape(surfaces[log.steps[0].before]), "returns": []}
+    context = {"entry_shape": procedure_context(surfaces[log.steps[0].before]), "returns": [],
+               "return_context_version": 2}
     entry_context = procedure_context(surfaces[log.steps[0].before])
     trials, edits, route = [], [], []
     for step in log.steps:
@@ -370,8 +408,8 @@ def recover_learning(log):
             action = step_for(before, step.action.target, route)
             trials.append({"route": deepcopy(route), "action": action, "node": step.action.target,
                            "before": step.before, "after": step.after})
-            if re.search(r"\b(back|return|close|cancel)\b", before.controls[step.action.target]["label"], re.I):
-                edge = {"before": shape(before), "after": shape(after),
+            if step.ok and procedure_context(before) != procedure_context(after):
+                edge = {"before": procedure_context(before), "after": procedure_context(after),
                         "descriptor": before.descriptor(step.action.target)}
                 if edge not in context["returns"]:
                     context["returns"].append(edge)
@@ -474,7 +512,7 @@ def selector_argument_properties(group, owner_binding):
 
 def learn(runtime, connection, settings, trace, emit):
     from semabi.compiler.semantic import fit_semantics, training_evidence_digest
-    from semabi.compiler.runtime import POLICY_VERSION, bind_contract, source_hashes
+    from semabi.compiler.runtime import source_hashes
     browser = runtime._browser(connection)
     from semabi.compiler.runtime import StopOperation
     trials, edits, context = [], [], {}
@@ -581,17 +619,56 @@ def learn(runtime, connection, settings, trace, emit):
     if not trials:
         return {"status": "UNESTABLISHED", "operations": [], "attempts": [],
                 "metrics": trace.metrics(), "invalidations": [], "repair": repair_report}
-    emit({"type": "semantic_fit_started", "steps": len(trace.log.steps)})
-    artifact = fit_semantics(trace.log.dir)
+    attempts = []
+    fit_seconds = 0.0
+    for fit_pass in range(1, 3):
+        emit({"type": "semantic_fit_started", "steps": len(trace.log.steps), "fit_pass": fit_pass})
+        artifact = fit_semantics(trace.log.dir)
+        fit_seconds += artifact.metadata["fit_seconds"]
+        frozen = artifact.to_json()
+        emit({"type": "semantic_fit_completed", "controls": len(artifact.operations()), "fit_pass": fit_pass})
+        if source_hashes() != runtime.source_sha256:
+            _stop("Source changed during learning; evidence retained, restart and refit before publication")
+        operations = publish_operations(runtime, browser, connection, settings, trace, artifact,
+                                        frozen, trials, edits, context)
+        attempts.append({"semantic_controls": artifact.operations(), "procedure_trials": len(trials),
+                         "fit_pass": fit_pass})
+        # An unpublished interrupted traversal is not repaired by refitting the
+        # same short prefix forever. First try the retained data (a source-only
+        # repair may suffice), then permit one ordinary bounded continuation.
+        # Published artifacts and explicit targeted repairs never take this path.
+        if (fit_pass == 1 and reused and not existing and not repair and not operations
+                and trace.budget.actions < trace.budget.max_actions
+                and trace.budget.writes < trace.budget.max_writes):
+            (trace.log.dir / "semantic_initial.json").write_text(json.dumps(frozen))
+            emit({"type": "semantic_acquisition_resumed", "reason": "Retained unpublished evidence supplies no operation"})
+            previous_steps = len(trace.log.steps)
+            previous_observations = len(trace.log.observations)
+            try:
+                acquire(browser, trace, connection["url"], emit, trials, edits, context)
+            except StopOperation as error:
+                emit({"type": "acquisition_stopped", "reason": str(error)})
+            (trace.log.dir / "learning.json").write_text(json.dumps(
+                {"trials": trials, "edits": edits, "context": context}))
+            if (len(trace.log.steps) > previous_steps
+                    or len(trace.log.observations) > previous_observations):
+                continue
+        break
     if repair_witness is not None:
         old_artifact, before, after, node = repair_witness
         repair_report["predictive_change"] = artifact.acquisition_change(old_artifact, before, after, node)
         emit({"type": "semantic_repair_refitted", **repair_report})
-    frozen = artifact.to_json()
     (trace.log.dir / "semantic.json").write_text(json.dumps(frozen))
-    emit({"type": "semantic_fit_completed", "controls": len(artifact.operations())})
-    if source_hashes() != runtime.source_sha256:
-        _stop("Source changed during learning; evidence retained, restart and refit before publication")
+    return {"status": "COMPLETED" if operations else "UNESTABLISHED", "operations": operations,
+            "attempts": attempts,
+            "metrics": {**trace.metrics(), "reused_training_steps": reused,
+                        "fit_seconds": fit_seconds, "fit_passes": len(attempts)},
+            "invalidations": [], "repair": repair_report}
+
+
+def publish_operations(runtime, browser, connection, settings, trace, artifact, frozen, trials, edits, context):
+    """Publish only observed procedures with shared learned semantic support."""
+    from semabi.compiler.runtime import POLICY_VERSION, bind_contract
     operations = []
     for learned in artifact.operations():
         if not learned["comparison"]:
@@ -688,11 +765,7 @@ def learn(runtime, connection, settings, trace, emit):
                                               "Observed sibling rows unchanged; no simultaneous global-state guarantee"]
                 bind_contract(guarded)
                 operations.append(guarded)
-    return {"status": "COMPLETED" if operations else "UNESTABLISHED", "operations": operations,
-            "attempts": [{"semantic_controls": artifact.operations(), "procedure_trials": len(trials)}],
-            "metrics": {**trace.metrics(), "reused_training_steps": reused,
-                        "fit_seconds": artifact.metadata["fit_seconds"]}, "invalidations": [],
-            "repair": repair_report}
+    return operations
 
 
 def validate(schema, arguments):
@@ -871,7 +944,7 @@ def invoke(runtime, browser, operation, arguments, trace):
         _check_owner(restored_prediction, procedure, arguments)
         field_node = resolve_step(restored, {"descriptor": guard["descriptor"]})
         if restored.observation.node(field_node).value != arguments["value"]:
-            _stop("Requested target field did not persist through reopening and reload")
+            _stop("Requested target field did not persist through reopening and reload", stale=True)
         persisted = restored.observation.structural_signature()
         final_entry = replay(browser, trace, procedure["entry_url"], collection_prefix, arguments,
                              context=procedure["return_context"])
