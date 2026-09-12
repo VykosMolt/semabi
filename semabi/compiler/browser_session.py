@@ -15,7 +15,7 @@ from semabi.compiler.surface import Surface, digest
 
 
 SURFACE_JS = r"""() => {
-  const nodes = [], handles = [], controls = {}, forms = {}, text_boundaries = {};
+  const nodes = [], handles = [], controls = {}, forms = {}, text_boundaries = {}, text_sources = {};
   const text = s => (s || '').replace(/\s+/g, ' ').trim();
   const painted = e => {
     const s = getComputedStyle(e), r = e.getBoundingClientRect();
@@ -122,12 +122,17 @@ SURFACE_JS = r"""() => {
     const role = roleOf(e), interactive = ['button','link','textbox','combobox','checkbox','radio','menu','menuitem'].includes(role);
     const paragraph = ['p', 'pre'].includes(tag) && !e.isContentEditable;
     const completeText = paragraph ? paragraphText(e) : null;
-    let name = interactive ? label(e) : (label(e) || (completeText ?? ownText(e)));
-    if (!name && !paragraph && ['button','link','menuitem','heading','text','cell','alert','status','listitem'].includes(role))
+    const directText = ownText(e);
+    let name = interactive ? label(e) : (label(e) || (completeText ?? directText));
+    let nameFromDescendants = false;
+    if (!name && !paragraph && ['button','link','menuitem','heading','text','cell','alert','status','listitem'].includes(role)) {
       name = text(e.innerText);
+      nameFromDescendants = !interactive && !directText;
+    }
     if (!name && role === 'button' && tag === 'input') name = text(e.value);
     const i = nodes.length, r = e.getBoundingClientRect();
     if (paragraph) text_boundaries[i] = completeText;
+    text_sources[i] = {own_text:directText, name_from_descendants:nameFromDescendants};
     const n = {i, parent, role, name, bbox:[Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]};
     const type = tag === 'input' ? (e.type || 'text') : role === 'textbox' && e.isContentEditable ? 'contenteditable' : tag === 'textarea' ? 'textarea' : '';
     if (role === 'textbox') {
@@ -160,7 +165,7 @@ SURFACE_JS = r"""() => {
     if (formIndex >= 0) control.form = formIndex;
   }
   window.__semabi_nodes = handles;
-  return {nodes, controls, forms, text_boundaries};
+  return {nodes, controls, forms, text_boundaries, text_sources};
 }""".replace('/* OBSERVATION_SCOPE */', SCOPE_STATE_JS).replace('/* CHECKED_STATE */', CHECKED_STATE_JS)
 
 
@@ -260,7 +265,8 @@ class BrowserSession(Browser):
         obs = Observation([Node.from_json(node) for node in raw["nodes"]], self._page.url)
         self.surface = Surface(obs, {int(key): value for key, value in raw["controls"].items()},
                                {int(key): value for key, value in raw["forms"].items()},
-                               text_boundaries={int(key): value for key, value in raw["text_boundaries"].items()})
+                               text_boundaries={int(key): value for key, value in raw["text_boundaries"].items()},
+                               text_sources={int(key): value for key, value in raw["text_sources"].items()})
         return obs
 
     def read(self) -> Surface:
@@ -275,7 +281,7 @@ class BrowserSession(Browser):
             if deadline is None:
                 deadline = time.monotonic() + self.max_settle_ms / 1000
             signature = digest([obs.structural_signature(), self.surface.controls, self.surface.forms,
-                                self.surface.text_boundaries])
+                                self.surface.text_boundaries, self.surface.text_sources])
             agreements = agreements + 1 if signature == previous else 0
             if agreements >= 2 or time.monotonic() >= deadline:
                 break

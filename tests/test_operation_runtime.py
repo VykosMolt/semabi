@@ -727,6 +727,62 @@ def test_semantic_nested_collection_keeps_parent_state_separate_from_intended_ch
         assert browser.values['B'] == '9' and browser.category_state == 'Stable'
 
 
+@pytest.mark.parametrize('fault', [None, 'sibling', 'remainder', 'control_text', 'explicit_label',
+                                  'missing_provenance', 'legacy'])
+def test_native_nested_inventory_accounts_for_observed_text_sources(tmp_path, fault):
+    from semabi.compiler.semantic_runtime import _inventory, _learning_surfaces
+    from semabi.compiler.runtime import Trace, Budget
+
+    browser = BrowserSession('https://synthetic.invalid/')
+    browser.settle_ms, browser.max_settle_ms = 1, 100
+    html = '''<ul><li id="holder"><button aria-label="Group" id="state">Group</button><ul>
+      <li><button>Open A</button><span id="target">12</span></li>
+      <li><button>Open B</button><span id="sibling">9</span></li>
+      </ul><div><span id="remainder">12</span></div>
+      </li></ul>'''
+    try:
+        browser._page.route('https://synthetic.invalid/**', lambda route: route.fulfill(
+            content_type='text/html', body=html))
+        browser.goto()
+        if fault == 'explicit_label':
+            browser._page.locator('#holder').evaluate('(e) => e.setAttribute("aria-label", e.innerText)')
+        before = browser.read()
+        browser._page.locator('#target').evaluate('(e) => e.textContent = "10"')
+        if fault in {'sibling', 'remainder'}:
+            browser._page.locator('#' + fault).evaluate('(e) => e.textContent = "7"')
+        if fault == 'control_text':
+            browser._page.locator('#state').evaluate('(e) => e.textContent = "Unlocked"')
+        if fault == 'explicit_label':
+            browser._page.locator('#holder').evaluate('(e) => e.setAttribute("aria-label", e.innerText)')
+        after = browser.read()
+        if fault == 'missing_provenance':
+            for surface in (before, after):
+                target = next(n.i for n in surface.observation.nodes if n.name == 'Open A')
+                surface.text_sources.pop(target)
+        if fault == 'legacy':
+            before.text_sources.clear()
+            after.text_sources.clear()
+        first, second = _inventory(before), _inventory(after)
+        assert 'Group' in first and 'Group' in second, 'the parent must actually be in the checked surface'
+        assert first['Open A'] != second['Open A']
+        left = {k: v for k, v in first.items() if k != 'Open A'}
+        right = {k: v for k, v in second.items() if k != 'Open A'}
+        assert (left == right) is (fault is None)
+        if fault is None:
+            # These raw parent names really did change; this is not a synthetic
+            # parent whose label omitted its children from the outset.
+            old = next(n for n in before.observation.nodes if n.role == 'listitem')
+            new = after.observation.node(old.i)
+            assert old.name != new.name
+            trace = Trace(tmp_path / 'trace', lambda event: None, Budget(10, 0))
+            trace.observe(before)
+            trace.observe(after)
+            restored = _learning_surfaces(trace.log)
+            assert _inventory(restored[after.observation.structural_signature()]) == second
+    finally:
+        browser.close()
+
+
 @pytest.mark.parametrize('arguments', [{'selection_2': 'Delete A'}, {'selection_2': 'Stop A'},
                                       {'target': 'Delete Workspace'}, {'target': 'Expand Fresh category'}])
 def test_semantic_full_control_label_constraints_refuse_before_navigation(tmp_path, monkeypatch, arguments):

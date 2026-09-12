@@ -33,6 +33,25 @@ class Surface:
     forms: dict[int, dict]
     settled: bool = True
     text_boundaries: dict[int, str | None] = field(default_factory=dict)
+    text_sources: dict[int, dict] = field(default_factory=dict)
+
+    def state_key(self, node: int, *, separate_descendant_text: bool = False) -> tuple:
+        """Visible node state with explicitly observed text provenance.
+
+        A browser-generated descendant-text name repeats its children's text.
+        It may be compared separately only when every descendant's own text was
+        captured. Explicit labels, paragraph values and legacy names stay exact.
+        This is local observation accounting, not an identity or effect claim.
+        """
+        key = self.observation.node(node).key()
+        source = self.text_sources.get(node)
+        if source is None:
+            return key
+        if (separate_descendant_text and source.get("name_from_descendants") is True
+                and all(isinstance(self.text_sources.get(i, {}).get("own_text"), str)
+                        for i in self.observation.subtree(node))):
+            key = (key[0], "", *key[2:])
+        return (*key, ("rendered_text_source", source))
 
     def text_is_complete(self, node: int) -> bool:
         """A text witness must equal every containing paragraph's whole value.

@@ -154,6 +154,7 @@ class Trace:
             stream.write(json.dumps({"observation": sig, "settled": surface.settled,
                                      "controls": surface.controls, "forms": surface.forms,
                                      "text_boundaries": surface.text_boundaries,
+                                     "text_sources": surface.text_sources,
                                      "local_regions": local_regions(surface.observation)}) + "\n")
         self.emit({"type": "observation", "signature": sig, "settled": surface.settled})
         if not surface.settled:
@@ -1001,7 +1002,8 @@ class Runtime:
         return {"control": control, "text_complete": surface.text_is_complete(node),
                 **{key: value for key, value in observed.to_json().items()
                                         if key not in {"i", "parent", "bbox"}},
-                **({"text_boundary": surface.text_boundaries[node]} if node in surface.text_boundaries else {})}
+                **({"text_boundary": surface.text_boundaries[node]} if node in surface.text_boundaries else {}),
+                **({"text_source": deepcopy(surface.text_sources[node])} if node in surface.text_sources else {})}
 
     @staticmethod
     def _observed_subtree(surface: Surface, root: int, *, source_binding: bool = False,

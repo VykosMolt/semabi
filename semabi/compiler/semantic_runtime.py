@@ -551,7 +551,8 @@ def _learning_surfaces(log):
             surfaces[sig] = Surface(log.observations[sig],
                                     {int(k): v for k, v in item["controls"].items()}, {},
                                     item.get("settled", True),
-                                    {int(k): v for k, v in item.get("text_boundaries", {}).items()})
+                                    {int(k): v for k, v in item.get("text_boundaries", {}).items()},
+                                    text_sources={int(k): v for k, v in item.get("text_sources", {}).items()})
     return surfaces
 
 
@@ -1224,14 +1225,17 @@ def _inventory(surface):
             return control
 
         result.setdefault(anchor.name, []).append([
-            (positions.get(n.parent, -1), n.key(), control_state(n.i)) for n in nodes])
+            (positions.get(n.parent, -1), surface.state_key(n.i,
+                separate_descendant_text=bool(excluded.intersection(obs.subtree(n.i)))),
+             control_state(n.i)) for n in nodes])
     return {key: sorted(occurrences, key=digest) for key, occurrences in result.items()}
 
 
 def _live_signature(surface):
     # Control state such as readonly, bounds and destinations is visible evidence
     # retained beside the node tree; comparing only Node keys drops that evidence.
-    return digest([surface.observation.structural_signature(), surface.controls, surface.forms])
+    return digest([surface.observation.structural_signature(), surface.controls, surface.forms,
+                   surface.text_sources])
 
 
 def _terminal_guarded_witness(browser, trace, artifact, procedure, arguments, *, expected_response=None):
