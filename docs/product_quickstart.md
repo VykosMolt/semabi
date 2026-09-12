@@ -191,9 +191,12 @@ one `target` argument**:
 Some forms additionally publish `_with_checkbox_fields` read/update variants.
 Use actual JSON booleans (`false`, not `"false"`) for their returned boolean
 arguments. These variants require both values to persist on two distinct
-onboarding records, including an exit/reload/reopen contrast; they do not infer a
+onboarding records, including an exit/reload/reopen contrast and a direct editor
+reload; they do not infer a
 checkbox's business meaning. Updates reopen the intended record after reload to
-check requested and preserved values and finish in that checked editor.
+check requested and preserved values, reload the intended editor itself, and
+finish in that checked editor. If reload loses the editor or its owner, the current
+typed procedure is unestablished; it does not reopen a potentially stale draft.
 A later compatible call may leave it only with unchanged retained-element and
 full-state evidence through the learned exit, charged as a possible write. Edits,
 remounts, incompatible versions or reconnects invalidate that session-local receipt.

@@ -75,7 +75,13 @@
   editor draft. Three expected-safety tests fail (learning/runtime/actual HTTP),
   retained in `runs/.checkbox-draft-a372-review`; the earlier620 pass did not test
   this mechanism. Final-editor reload repair is active; Linkding rerun remains
-  held. Different-target continuation can lose a previously observed hidden bit;
+  held until repair. Direct-editor reload repair integratedf2c110f requires the
+  intended owner and complete typed state after reloading that editor itself;
+  lost editors do not trigger another reopen. Actual merged runtime/service
+  gate586 passed/40.63s including native and independent false-confirmation tests.
+  Controlled typed learning87actions/52possiblewrites, four contrasts/two owners;
+  subsequent typedTrue call9/6, not a measured application latency claim.
+  Different-target continuation can lose a previously observed hidden bit;
   existing scope discloses that collateral limit, not simultaneous preservation.
   Confirmation brackets an earlier detail witness with equal full observed local
   inventories including siblings; these precede terminal target verification.
@@ -143,12 +149,21 @@
   unrelated dispatch8910 untouched. Broad retention completed fixed956b72b in owned
   `/tmp/semabi-retention-956b72b-9pza6H`, unit `semabi-retention-956b72b.service`,
   eight-core/20GiB cap. Workshop992b358 learning is terminal. New broad retention
-  unit `semabi-retention-75d80eb` runs fixed75d80eb in `runs/.retention-75d80eb`,
-  eight CPUs/8GiB; no concurrent heavy fit. Root moved inactive retention956 and
+  unit `semabi-retention-75d80eb` completed fixed75d80eb in `runs/.retention-75d80eb`:
+  1460 passed,3 skipped,1 xfailed,1 failed in2002.79s;659.9MiB peak.
+  The sole failure was the retained native closed-disclosure actionability case,
+  before the rendering-readiness repair. XML/journal remain; this is not a
+  whole-suite pass or validation of later code. Eight CPUs/8GiB, no concurrent
+  heavy fit; now terminal. Root moved inactive retention956 and
   observationa417 worktrees to disk-backed `runs/.retention-956b72b-9pza6H` and
   `runs/.observation-a417aca`, preserving original/tmp paths as symlinks and all data.
-  Root API8860 currently runs frozenfebe835 from `runs/.semantic-frontier-febe835`,
-  with existing service data; no new acquisition/invocation has run on that source.
+  Root API8860 frozenfebe835 was stopped cleanly after no new acquisition/invocation.
+  It now runs frozenf2c110f from disk-backed `runs/.product-terminal-f2c110f` with
+  preserved service data, seed6/CPU0-7. Standard HTTP dispatch raw refit is active;
+  independent baselineLumen7/Quartz12/Indigo12 captured with3navigationactions,
+  no fills/resets. Evaluator owns Linkdingv3 restoration/onboarding240/160 on
+  CPU8-9/port8864; bounded LIST diagnostic uses10-11. Root's next executable
+  action is dispatch invocation/check, then workshopv2 continuation from frontier.
   Workshopv2 frontier recovery is read-only:17 completed/42 pending routes,
   no in-flight fence; legacy raw evidence retains1031 actions/900writes.
   Next: integrate typed terminal repair, freeze service, resume that same connection
