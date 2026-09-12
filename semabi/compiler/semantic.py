@@ -12,6 +12,7 @@ from dataclasses import fields, is_dataclass
 import hashlib
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from time import monotonic
 from types import SimpleNamespace
 
@@ -29,6 +30,78 @@ from semabi.compiler.v4 import consequence, emission, outcome
 from semabi.compiler.v4.abstractor import V4Abstractor
 
 VERSION = 1
+FIT_INPUT_FILES = ("observations.jsonl", "steps.jsonl", "probes.jsonl",
+                   "probes.acquired.jsonl", "field_theories_v4.json")
+FIT_RECIPE = {"version": 1, "reading": None, "min_support": 2,
+              "regime": consequence.FROZEN_PREFIX, "read_outputs": True,
+              "permute_outcomes": None, "subject_restricted": False,
+              "cut": "all_recorded_steps"}
+
+
+def fit_source_hashes(root: Path | None = None) -> dict:
+    """Conservative loaded fitting/serialization boundary, not workflow policy.
+
+    Keep whole shared files, including inference used after deserialization. Only
+    these four browser workflow modules are outside the ordinary fitting closure.
+    A change in a caller that starts using them invalidates its own shared hash.
+    """
+    root = Path(__file__).parent if root is None else Path(root)
+    excluded = {"runtime.py", "semantic_runtime.py", "surface.py", "browser_session.py"}
+    paths = [path for path in sorted(root.rglob("*.py"))
+             if str(path.relative_to(root)) not in excluded]
+    paths.append(root.parent / "relmodel.py")
+    return {str(path.relative_to(root.parent)): hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in paths}
+
+
+LOADED_FIT_SOURCE = fit_source_hashes()
+
+
+def capture_fit_inputs(directory: Path) -> dict[str, bytes | None]:
+    """Capture all filesystem inputs to the ordinary fit, including absence."""
+    captured = {}
+    for name in FIT_INPUT_FILES:
+        try:
+            captured[name] = (Path(directory) / name).read_bytes()
+        except FileNotFoundError:
+            captured[name] = None
+    return captured
+
+
+def _fit_provenance(captured: dict, recipe: dict) -> dict:
+    return {"version": 1, "recipe": deepcopy(recipe),
+            "source": dict(LOADED_FIT_SOURCE),
+            "inputs": {name: None if raw is None else hashlib.sha256(raw).hexdigest()
+                       for name, raw in captured.items()}}
+
+
+def _check_fit_inputs(directory: Path, captured: dict) -> None:
+    if capture_fit_inputs(directory) != captured:
+        raise ValueError("Fitting inputs changed; retained observations must be reconciled before publication")
+    if fit_source_hashes() != LOADED_FIT_SOURCE:
+        raise ValueError("Fitting source changed; restart before fitting or reusing semantics")
+
+
+def reuse_semantics(run_dir: Path, candidate: dict | None, *, recipe: dict | None = None):
+    """Reuse only a newly provenance-bound fit; publication remains a separate step."""
+    started = monotonic()
+    recipe = FIT_RECIPE if recipe is None else recipe
+    captured = capture_fit_inputs(run_dir)
+    _check_fit_inputs(run_dir, captured)
+    if (not isinstance(candidate, dict) or not isinstance(candidate.get("metadata"), dict)
+            or candidate["metadata"].get("fit_provenance")
+            != _fit_provenance(captured, recipe)):
+        return None
+    artifact = SemanticArtifact.from_json(candidate)
+    _check_fit_inputs(run_dir, captured)
+    # Input equality, not a retroactive source-hash rewrite, supports this new
+    # directory reference. Original fitting cost and provenance stay unchanged.
+    artifact.metadata = deepcopy(artifact.metadata)
+    artifact.metadata["training_evidence"]["directory"] = Path(run_dir).name
+    artifact.metadata["fit_reuse_seconds"] = round(monotonic() - started, 6)
+    return artifact
+
+
 _CLASSES = {cls.__name__: cls for cls in (
     SlotInfo, TypeInfo, Node, Observation, ControlDescriptor, ControlFamily,
     ControlFamilies, NodeDesc, TextTemplate, EntityType, SlotStat, UnitHyp,
@@ -540,10 +613,29 @@ def training_evidence_digest(log: EvidenceLog) -> str:
                                      separators=(",", ":")).encode()).hexdigest()
 
 
-def fit_semantics(run_dir: Path) -> SemanticArtifact:
+def fit_semantics(run_dir: Path, *, recipe: dict | None = None) -> SemanticArtifact:
     started = monotonic()
-    log = EvidenceLog(Path(run_dir))
-    fitted = consequence.fit(Path(run_dir), None, at=len(log.steps))
+    run_dir = Path(run_dir)
+    recipe = deepcopy(FIT_RECIPE if recipe is None else recipe)
+    if set(recipe) != set(FIT_RECIPE) or recipe["version"] != 1 or recipe["cut"] != "all_recorded_steps":
+        raise ValueError("unsupported semantic fitting recipe")
+    if recipe["reading"] is not None:
+        raise ValueError("ordinary semantic fitting does not accept supplied readings")
+    captured = capture_fit_inputs(run_dir)
+    _check_fit_inputs(run_dir, captured)
+    # Legacy fit helpers reopen their EvidenceLog and three sidecars. Give every
+    # read the same private byte snapshot, not a mutable source directory. This
+    # does not change probe parsing, prefix semantics, or outcome field policy.
+    with TemporaryDirectory(prefix="semabi-fit-") as temporary:
+        frozen_dir = Path(temporary)
+        for name, raw in captured.items():
+            if raw is not None:
+                (frozen_dir / name).write_bytes(raw)
+        log = EvidenceLog(frozen_dir)
+        options = {key: value for key, value in recipe.items()
+                   if key not in ("version", "reading", "cut")}
+        fitted = consequence.fit(frozen_dir, None, at=len(log.steps), **options)
+    _check_fit_inputs(run_dir, captured)
     H = fitted.abstractor.H
     representation = {"entities": H.entity_types, "keys": {k: u.key_slot for k, u in H.units.items()},
                       "response_independent_structure": fitted.abstractor.G.response_independent_structure,
@@ -554,7 +646,8 @@ def fit_semantics(run_dir: Path) -> SemanticArtifact:
                       "context_assignments": H.raw_context_assignments}
     revision = hashlib.sha256(json.dumps(_pack(representation), sort_keys=True).encode()).hexdigest()[:16]
     metadata = {"fitted_steps": len(log.steps), "fitted_observations": len(log.observations),
-                "training_evidence": {"directory": log.dir.name, "digest": training_evidence_digest(log)},
+                "training_evidence": {"directory": run_dir.name, "digest": training_evidence_digest(log)},
+                "fit_provenance": _fit_provenance(captured, recipe),
                 "fit_seconds": round(monotonic() - started, 6), "regime": fitted.regime,
                 "representation_revision": revision,
                 "language_version": VERSION, "source": "ordinary rendered EvidenceLog"}

@@ -69,6 +69,115 @@ def test_semantic_training_input_digest_rejects_same_length_evidence_substitutio
         assert len(different.steps) == len(log.steps)
         assert training_evidence_digest(different) != digest
 
+def _fit_cache_log(tmp_path):
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler.evidence import EvidenceLog
+    from semabi.compiler.observation import Node, Observation
+    log = EvidenceLog(tmp_path / 'training')
+    before = Observation([Node(0, -1, 'group', ''), Node(1, 0, 'button', 'Inspect')])
+    log.add_step(0, Primitive('click', 1), True, None, before, before)
+    return log
+
+
+def test_semantic_fit_cache_roundtrip_uses_exact_inputs_and_keeps_original_cost(tmp_path, monkeypatch):
+    import json
+    from semabi.compiler import semantic
+    log = _fit_cache_log(tmp_path)
+    original = semantic.fit_semantics(log.dir)
+    frozen = json.loads(json.dumps(original.to_json()))
+    monkeypatch.setattr(semantic.consequence, 'fit', lambda *args, **kwargs:
+                        pytest.fail('exact cache hit must not fit'))
+    restored = semantic.reuse_semantics(log.dir, frozen)
+    assert restored is not None
+    assert restored.operations() == original.operations()
+    assert restored.metadata['fit_seconds'] == original.metadata['fit_seconds']
+    assert restored.metadata['fit_provenance'] == original.metadata['fit_provenance']
+    assert restored.metadata['fit_reuse_seconds'] >= 0
+    assert 'fit_reuse_seconds' not in original.metadata
+    assert semantic.reuse_semantics(log.dir, {**frozen, 'metadata': {
+        key: value for key, value in frozen['metadata'].items() if key != 'fit_provenance'}}) is None
+    assert semantic.reuse_semantics(log.dir, frozen, recipe={**semantic.FIT_RECIPE, 'min_support': 3}) is None
+    # A new standalone observation is input even if actions and their count agree.
+    from semabi.compiler.observation import Node, Observation
+    log.add_observation(Observation([Node(0, -1, 'heading', 'New evidence')]))
+    assert semantic.reuse_semantics(log.dir, frozen) is None
+
+
+@pytest.mark.parametrize('sidecar', ['probes.jsonl', 'probes.acquired.jsonl', 'field_theories_v4.json'])
+def test_semantic_fit_cache_sidecar_content_and_absence_are_inputs(tmp_path, sidecar):
+    import json
+    from semabi.compiler import semantic
+    log = _fit_cache_log(tmp_path)
+    original = semantic.fit_semantics(log.dir).to_json()
+    path = log.dir / sidecar
+    path.write_text('{}\n' if sidecar.endswith('jsonl') else '{"theories": []}')
+    assert semantic.reuse_semantics(log.dir, original) is None
+    present = semantic.fit_semantics(log.dir).to_json()
+    assert semantic.reuse_semantics(log.dir, json.loads(json.dumps(present))) is not None
+    path.write_text(path.read_text() + '\n')
+    assert semantic.reuse_semantics(log.dir, present) is None
+    path.unlink()
+    assert semantic.reuse_semantics(log.dir, present) is None
+    assert semantic.reuse_semantics(log.dir, original) is not None
+
+
+@pytest.mark.parametrize('mutated', ['steps.jsonl', 'observations.jsonl', 'probes.jsonl',
+                                    'probes.acquired.jsonl', 'field_theories_v4.json'])
+def test_semantic_fit_uses_private_snapshot_and_rejects_changed_origin(tmp_path, monkeypatch, mutated):
+    from pathlib import Path
+    from semabi.compiler import semantic
+    log = _fit_cache_log(tmp_path)
+    for name in semantic.FIT_INPUT_FILES[2:]:
+        (log.dir / name).write_text('{}\n')
+    captured = semantic.capture_fit_inputs(log.dir)
+    actual_fit = semantic.consequence.fit
+    bundles = []
+
+    def change_origin(directory, *args, **kwargs):
+        bundles.append(Path(directory))
+        assert Path(directory) != log.dir
+        assert semantic.capture_fit_inputs(directory) == captured
+        (log.dir / mutated).write_bytes((captured[mutated] or b'') + b'\n')
+        assert semantic.capture_fit_inputs(directory) == captured
+        return actual_fit(directory, *args, **kwargs)
+
+    monkeypatch.setattr(semantic.consequence, 'fit', change_origin)
+    with pytest.raises(ValueError, match='inputs changed'):
+        semantic.fit_semantics(log.dir)
+    assert bundles and all(not directory.exists() for directory in bundles)
+
+
+def test_semantic_fit_code_boundary_excludes_only_workflow_and_includes_relmodel(tmp_path, monkeypatch):
+    from semabi.compiler import semantic
+    root = tmp_path / 'semabi' / 'compiler'
+    root.mkdir(parents=True)
+    for name in ['runtime.py', 'semantic_runtime.py', 'surface.py', 'browser_session.py',
+                 'semantic.py', 'browser.py', 'observation.py', 'evidence.py']:
+        (root / name).write_text('original')
+    (root / 'v4').mkdir()
+    for name in ['fields.py', 'binding.py']:
+        (root / 'v4' / name).write_text('original')
+    (root.parent / 'relmodel.py').write_text('original')
+    original = semantic.fit_source_hashes(root)
+    for name in ['runtime.py', 'semantic_runtime.py', 'surface.py', 'browser_session.py']:
+        (root / name).write_text('changed procedure')
+        assert semantic.fit_source_hashes(root) == original
+    for path in [root / 'v4' / 'fields.py', root / 'v4' / 'binding.py',
+                 root / 'semantic.py', root.parent / 'relmodel.py']:
+        path.write_text('changed semantics')
+        assert semantic.fit_source_hashes(root) != original
+        path.write_text('original')
+    log = _fit_cache_log(tmp_path)
+    artifact = semantic.fit_semantics(log.dir).to_json()
+    changed = {**semantic.LOADED_FIT_SOURCE, 'compiler/v4/fields.py': 'new process source'}
+    monkeypatch.setattr(semantic, 'LOADED_FIT_SOURCE', changed)
+    monkeypatch.setattr(semantic, 'fit_source_hashes', lambda: changed)
+    assert semantic.reuse_semantics(log.dir, artifact) is None
+    monkeypatch.setattr(semantic, 'fit_source_hashes', lambda: {})
+    with pytest.raises(ValueError, match='source changed'):
+        semantic.reuse_semantics(log.dir, artifact)
+
+
 def _state(**vats):
     return State({(1, k): Obj(1, k, dict(a)) for k, a in vats.items()})
 
@@ -374,7 +483,7 @@ def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monk
     import json
     from pathlib import Path
     from semabi.compiler.evidence import EvidenceLog
-    from semabi.compiler.semantic import SemanticArtifact, fit_semantics
+    from semabi.compiler.semantic import SemanticArtifact, fit_semantics, reuse_semantics
     from semabi.compiler.v4 import consequence
 
     root = Path(__file__).resolve().parents[1]
@@ -386,7 +495,10 @@ def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monk
         raise AssertionError("loading/invocation must not refit")
 
     monkeypatch.setattr(consequence, "fit", forbidden)
-    restored = SemanticArtifact.from_json(json.loads(json.dumps(original.to_json())))
+    reused = reuse_semantics(training, json.loads(json.dumps(original.to_json())))
+    assert reused is not None, "ordinary cache reuse must preserve the fitted relational language"
+    assert reused.metadata['fit_provenance'] == original.metadata['fit_provenance']
+    restored = SemanticArtifact.from_json(json.loads(json.dumps(reused.to_json())))
     operation = next(op for op in restored.operations() if op["comparison"])
     control = operation["control"]
     log = EvidenceLog(evaluation)
@@ -437,7 +549,8 @@ def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monk
     assert calls == 8 and supported == 7
     assert changed > 0, "the learned comparison must change an operational prediction"
     assert simulated
-    assert restored.metadata == original.metadata
+    assert {key: value for key, value in restored.metadata.items() if key != 'fit_reuse_seconds'} == original.metadata
+    assert restored.metadata['fit_reuse_seconds'] >= 0
 
 
 def _acquisition_page(features, response=None):

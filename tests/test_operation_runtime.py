@@ -1571,6 +1571,105 @@ def test_semantic_unpublished_frontier_resumes_before_one_fit_and_raw_only_logs_
     assert not (trace.log.dir / 'semantic_initial.json').exists()
 
 
+@pytest.mark.parametrize('case', ['procedure_only', 'legacy', 'changed_sidecar'])
+@pytest.mark.parametrize('published', [False, True])
+def test_semantic_ordinary_relearning_reuses_exact_fit_but_rebuilds_publication(tmp_path, monkeypatch, case, published):
+    """Real raw fitting and ordinary trace reuse; publication is a separate observed step."""
+    import json
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler.runtime import Budget
+    from semabi.compiler import runtime as runtime_module, semantic, semantic_runtime as procedures
+    runtime = Runtime(tmp_path)
+    connection = {'id': 'fit-cache-diagnostic', 'url': 'https://synthetic.invalid/', 'scope': {}}
+    entry = _semantic_diagnostic_entry()
+    before = _semantic_diagnostic_detail('A', ('Waiting',))
+    runtime.sessions[connection['id']] = SimpleNamespace(allowed_origin='https://synthetic.invalid')
+    old = runtime._trace(connection, lambda event: None, Budget(10, 0))
+    old.observe(entry)
+    old.observe(before)
+    old.log.add_step(0, Primitive('navigate', text=connection['url']), True, None,
+                     entry.observation, entry.observation)
+    old.log.add_step(0, Primitive('click', 3), True, None, entry.observation, before.observation)
+    (old.log.dir / 'probes.acquired.jsonl').write_text('{}\n')
+    artifact = semantic.fit_semantics(old.log.dir)
+    frozen = artifact.to_json()
+    if case == 'legacy':
+        frozen['metadata'].pop('fit_provenance')
+    (old.log.dir / 'semantic.json').write_text(json.dumps(frozen))
+    if case == 'changed_sidecar':
+        (old.log.dir / 'probes.acquired.jsonl').write_text('{"note": "new evidence"}\n')
+    settings = {}
+    if published:
+        trials, edits, context = procedures.recover_learning(old.log)
+        settings['_existing_operations'] = [{
+            'kind': 'semantic_check', 'version': 1,
+            'support': {'semantic_artifact': frozen, 'trials': trials, 'edits': edits},
+            'procedure': {'return_context': context}}]
+    # A changed procedure fingerprint cannot authorize the old operation. It
+    # does not change the separate, conservative fitting dependency boundary.
+    runtime.source_sha256 = {**runtime.source_sha256, 'semantic_runtime.py': 'new procedure version'}
+    monkeypatch.setattr(runtime_module, 'source_hashes', lambda: runtime.source_sha256.copy())
+    fits, publications, events = [], [], []
+    actual_fit = semantic.consequence.fit
+
+    def counted_fit(*args, **kwargs):
+        fits.append(True)
+        return actual_fit(*args, **kwargs)
+
+    def publish(runtime, browser, connection, settings, trace, fitted, saved, trials, edits, context, diagnostics):
+        publications.append((trials, saved['metadata']['fit_provenance']))
+        assert len(trials) == 1
+        assert (trace.log.dir / 'probes.acquired.jsonl').read_bytes() == (old.log.dir / 'probes.acquired.jsonl').read_bytes()
+        return [{'id': 'newly-published', 'support': {'source_sha256': runtime.source_sha256.copy()}}]
+
+    monkeypatch.setattr(semantic.consequence, 'fit', counted_fit)
+    monkeypatch.setattr(procedures, 'acquire', lambda *args: pytest.fail('source-only relearning must not explore'))
+    monkeypatch.setattr(procedures, 'publish_operations', publish)
+    trace = runtime._trace(connection, events.append, Budget(1, 0))
+    learned = procedures.learn(runtime, connection, settings, trace, events.append)
+    reused = case == 'procedure_only'
+    assert fits == ([] if reused else [True])
+    assert len(publications) == 1
+    assert learned['metrics']['fit_passes'] == int(not reused)
+    assert learned['metrics']['fit_seconds'] == (0 if reused else learned['metrics']['original_fit_seconds'])
+    assert learned['metrics']['fit_reuse_seconds'] >= 0
+    assert learned['metrics']['actions'] == learned['metrics']['possible_write_actions'] == 0
+    assert learned['metrics']['reused_training_steps'] == 2
+    assert [event['type'] for event in events if event['type'].startswith('semantic_fit_')] == (
+        ['semantic_fit_reused'] if reused else ['semantic_fit_started', 'semantic_fit_completed'])
+    assert learned['operations'][0]['support']['source_sha256']['semantic_runtime.py'] == 'new procedure version'
+    if reused:
+        assert publications[0][1] == frozen['metadata']['fit_provenance']
+        assert learned['metrics']['original_fit_seconds'] == artifact.metadata['fit_seconds']
+
+
+def test_semantic_reused_training_does_not_silently_drop_sidecars_or_changed_raw(tmp_path):
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler.runtime import Budget, StopOperation
+    from semabi.compiler import semantic_runtime as procedures
+    runtime = Runtime(tmp_path)
+    connection = {'id': 'raw-copy-diagnostic', 'url': 'https://synthetic.invalid/', 'scope': {}}
+    old = runtime._trace(connection, lambda event: None, Budget(10, 0))
+    surface = _semantic_diagnostic_entry()
+    old.observe(surface)
+    old.log.add_step(0, Primitive('navigate', text=connection['url']), True, None,
+                     surface.observation, surface.observation)
+    names = ['probes.jsonl', 'probes.acquired.jsonl', 'field_theories_v4.json']
+    for name in names:
+        (old.log.dir / name).write_text('{}\n')
+    trace = runtime._trace(connection, lambda event: None, Budget(10, 0))
+    procedures._reuse_training(old.log, trace)
+    assert all((trace.log.dir / name).read_bytes() == b'{}\n' for name in names)
+    # A caller holding an earlier parsed log cannot copy it and label it as a
+    # later on-disk training revision.
+    old.log.add_observation(Observation([Node(0, -1, 'heading', 'Later observation')]))
+    old.log.observations.popitem()
+    another = runtime._trace(connection, lambda event: None, Budget(10, 0))
+    with pytest.raises(StopOperation, match='raw training changed'):
+        procedures._reuse_training(old.log, another)
+    assert not another.log.steps
+
+
 _AUTH_CREDENTIALS = {'username': 'synthetic-private-user', 'password': 'synthetic-private-password'}
 
 

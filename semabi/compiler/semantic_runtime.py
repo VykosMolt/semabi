@@ -782,6 +782,11 @@ def recover_learning(log):
 
 
 def _reuse_training(log, trace):
+    from semabi.compiler.evidence import EvidenceLog
+    from semabi.compiler.semantic import capture_fit_inputs, training_evidence_digest
+    captured = capture_fit_inputs(log.dir)
+    if training_evidence_digest(EvidenceLog(log.dir)) != training_evidence_digest(log):
+        _stop("Prior raw training changed before reuse")
     for observation in log.observations.values():
         trace.log.add_observation(observation)
     for step in log.steps:
@@ -790,6 +795,16 @@ def _reuse_training(log, trace):
     if (log.dir / "surfaces.jsonl").exists():
         with (trace.log.dir / "surfaces.jsonl").open("a") as stream:
             stream.write((log.dir / "surfaces.jsonl").read_text())
+    for name, raw in captured.items():
+        if name in ("observations.jsonl", "steps.jsonl"):
+            continue
+        destination = trace.log.dir / name
+        if destination.exists() and destination.read_bytes() != raw:
+            _stop("Conflicting fitting sidecar in reused training")
+        if raw is not None:
+            destination.write_bytes(raw)
+    if capture_fit_inputs(log.dir) != captured:
+        _stop("Prior fitting inputs changed during reuse")
 
 
 def owner_correspondence(group):
@@ -866,7 +881,7 @@ def selector_argument_properties(group, owner_binding):
 
 
 def learn(runtime, connection, settings, trace, emit):
-    from semabi.compiler.semantic import fit_semantics, training_evidence_digest
+    from semabi.compiler.semantic import fit_semantics, reuse_semantics, training_evidence_digest
     from semabi.compiler.runtime import source_hashes
     browser = runtime._browser(connection)
     from semabi.compiler.runtime import StopOperation
@@ -874,6 +889,7 @@ def learn(runtime, connection, settings, trace, emit):
     existing = [op for op in settings.get("_semantic_training_operations", settings.get("_existing_operations", []))
                 if op.get("kind", "").startswith("semantic_") and op.get("support", {}).get("semantic_artifact")]
     reused = 0
+    fit_candidate = None
     repair = settings.get("_semantic_repair")
     repair_report = {"execution_id": repair["execution_id"], "status": "NOT_STARTED",
                      "field_write_attempted": False} if repair else None
@@ -892,6 +908,12 @@ def learn(runtime, connection, settings, trace, emit):
                 continue
             _reuse_training(old, trace)
             trials, edits, context, reused = recovered, recovered_edits, recovered_context, len(old.steps)
+            saved_fit = directory / "semantic.json"
+            if saved_fit.exists():
+                try:
+                    fit_candidate = json.loads(saved_fit.read_text())
+                except (ValueError, TypeError):
+                    fit_candidate = None  # retained raw evidence still supports a new fit
             break
     if existing:
         from semabi.compiler.evidence import EvidenceLog
@@ -928,6 +950,7 @@ def learn(runtime, connection, settings, trace, emit):
             trials = list(inherited_trials.values())
             edits = list({digest(edit): edit for op in compatible for edit in op["support"].get("edits", [])}.values())
             context = deepcopy(previous["procedure"]["return_context"])
+            fit_candidate = previous["support"]["semantic_artifact"]
         else:
             emit({"type": "semantic_training_unavailable", "matching_histories": len(candidates),
                   "reason": "Prior raw training is absent, changed, or not uniquely identified"})
@@ -977,17 +1000,24 @@ def learn(runtime, connection, settings, trace, emit):
     if not trials:
         return {"status": "UNESTABLISHED", "operations": [], "attempts": [],
                 "metrics": trace.metrics(), "invalidations": [], "repair": repair_report}
-    emit({"type": "semantic_fit_started", "steps": len(trace.log.steps), "fit_pass": 1})
-    artifact = fit_semantics(trace.log.dir)
-    fit_seconds = artifact.metadata["fit_seconds"]
+    artifact = reuse_semantics(trace.log.dir, fit_candidate) if fit_candidate else None
+    fit_passes = 0 if artifact is not None else 1
+    if artifact is None:
+        emit({"type": "semantic_fit_started", "steps": len(trace.log.steps), "fit_pass": 1})
+        artifact = fit_semantics(trace.log.dir)
+        emit({"type": "semantic_fit_completed", "controls": len(artifact.operations()), "fit_pass": 1})
+    else:
+        emit({"type": "semantic_fit_reused", "controls": len(artifact.operations()), "fit_pass": 0,
+              "scope": "Exact fitting inputs, recipe and shared code; publication rebuilt"})
+    fit_seconds = artifact.metadata["fit_seconds"] if fit_passes else 0.0
+    fit_reuse_seconds = artifact.metadata.get("fit_reuse_seconds", 0.0) if not fit_passes else 0.0
     frozen = artifact.to_json()
-    emit({"type": "semantic_fit_completed", "controls": len(artifact.operations()), "fit_pass": 1})
     if source_hashes() != runtime.source_sha256:
         _stop("Source changed during learning; evidence retained, restart and refit before publication")
     publication = []
     operations = publish_operations(runtime, browser, connection, settings, trace, artifact,
                                     frozen, trials, edits, context, publication)
-    attempts = [{"semantic_controls": artifact.operations(), "procedure_trials": len(trials), "fit_pass": 1,
+    attempts = [{"semantic_controls": artifact.operations(), "procedure_trials": len(trials), "fit_pass": fit_passes,
                  "publication": publication}]
     if repair_witness is not None:
         old_artifact, before, after, node = repair_witness
@@ -997,7 +1027,9 @@ def learn(runtime, connection, settings, trace, emit):
     return {"status": "COMPLETED" if operations else "UNESTABLISHED", "operations": operations,
             "attempts": attempts,
             "metrics": {**trace.metrics(), "reused_training_steps": reused,
-                        "fit_seconds": fit_seconds, "fit_passes": len(attempts),
+                        "fit_seconds": fit_seconds, "fit_passes": fit_passes,
+                        "fit_reuse_seconds": fit_reuse_seconds,
+                        "original_fit_seconds": artifact.metadata["fit_seconds"],
                         "acquisition": _frontier_report(context["acquisition_frontier"]) if context.get("acquisition_frontier") else None},
             "invalidations": [], "repair": repair_report}
 
