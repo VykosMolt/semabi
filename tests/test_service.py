@@ -373,6 +373,103 @@ def test_http_populated_exit_is_learned_and_checks_terminal_scope(tmp_path, monk
         api.close()
 
 
+@pytest.mark.parametrize('fault', ['unsettled', 'budget'])
+def test_http_delayed_creation_samples_once_without_retrying_save(tmp_path, monkeypatch, fault):
+    """Actual HTTP Runtime learning; only browser/connection setup is diagnostic.
+
+    No schema or procedure is supplied. Independent mutable rows distinguish a
+    dispatched-but-unconfirmed creation from a claimed completed operation.
+    """
+    from itertools import count
+    from types import SimpleNamespace
+    import sys
+    import test_operation_runtime as diagnostics
+    from semabi.compiler import runtime as runtime_module
+    from semabi.compiler.runtime import Runtime
+
+    class Browser(diagnostics._DelayedPopulatedExitBrowser):
+        remain_unsettled = False
+
+        def read(self):
+            second = self.pending_read == 2
+            surface = super().read()
+            if second and self.remain_unsettled:
+                surface.settled = False
+                surface.settling_reason = 'snapshot_agreement_deadline'
+            return surface
+
+    browser = Browser()
+    def factory(directory):
+        runtime = Runtime(directory)
+        runtime.release = threading.Event()
+        return runtime
+    monkeypatch.setattr(sys.modules[__name__], 'FakeRuntime', factory)
+    api = HTTPHarness(tmp_path / 'service')
+    try:
+        connection, connecting = api.service.store.create_connection(
+            {'url': browser.allowed_origin + '/', 'scope': {'exploration_enabled': True,
+                                                          'max_actions': 60, 'max_writes': 30}}, {})
+        assert api.service.store.start_job(connecting)
+        api.service.store.finish_job(connecting, {'status': 'CONNECTED'})
+        api.fake.sessions[connection['id']] = browser
+        prefix = '/v1/connections/' + connection['id']
+        with monkeypatch.context() as clock:
+            ticks = count(0, 10)
+            clock.setattr(runtime_module, 'time', SimpleNamespace(monotonic=lambda: next(ticks), sleep=lambda _: None))
+            code, accepted = api.request('POST', prefix + '/learn', {'settings': {'max_actions': 60, 'max_writes': 30}})
+            assert code == 202
+            learned = api.completed(accepted)
+        code, catalog = api.request('GET', prefix + '/operations')
+        assert code == 200
+        operation, = catalog['operations']
+        assert operation['kind'] == 'create_visible_record'
+        assert set(operation['argument_schema']['properties']) == {'name'}
+        assert len(operation['support']['trials']) == 2
+        assert any(event['type'] == 'observation_reconciliation_result' for event in learned['events'])
+
+        def invoke(name, limits=None):
+            body = {'version': operation['version'], 'arguments': {'name': name}}
+            if limits is not None:
+                body['limits'] = limits
+            code, accepted = api.request('POST', prefix + '/operations/' + operation['id'] + '/invoke', body)
+            assert code == 202, accepted
+            return api.completed(accepted)
+
+        prior, actions = deepcopy(browser.rows), len(browser.actions)
+        successful = invoke('First delayed HTTP record')
+        assert successful['result']['outcome'] == 'CONFIRMED', successful
+        assert browser.rows == prior + [{'Name': 'First delayed HTTP record', 'Identifier': ''}]
+        assert sum(action.kind == 'click' for action in browser.actions[actions:]) == 1
+        reconciled = [event for event in successful['events'] if event['type'] == 'observation_reconciliation_result']
+        assert len(reconciled) == 1 and reconciled[0]['settled']
+        # Count actual charged actions through the observed native Save, excluding
+        # its later sample. The second call receives precisely this public budget.
+        save_budget = 0
+        for event in successful['events']:
+            kind = event['type']
+            action = event.get('action', {})
+            primitive = kind == 'write_intent' and action.get('kind') in {'click', 'type', 'press'}
+            save_budget += int(kind in {'navigation', 'reload', 'observation_reconciliation_pending'} or primitive)
+            if primitive and action['kind'] == 'click':
+                break
+        browser.remain_unsettled = fault == 'unsettled'
+        limits = {'max_actions': save_budget, 'max_writes': save_budget} if fault == 'budget' else None
+        prior, actions = deepcopy(browser.rows), len(browser.actions)
+        uncertain = invoke('Second delayed HTTP record', limits)
+        assert uncertain['result']['outcome'] == 'UNCERTAIN', uncertain
+        assert browser.rows == prior + [{'Name': 'Second delayed HTTP record', 'Identifier': ''}]
+        assert sum(action.kind == 'click' for action in browser.actions[actions:]) == 1
+        events = uncertain['events']
+        assert len([event for event in events if event['type'] == 'observation_reconciliation_pending']) == 1
+        samples = [event for event in events if event['type'] == 'observation' and event.get('action_sample')]
+        assert not samples[-1]['settled']
+        final = [event for event in events if event['type'] == 'observation_reconciliation_result']
+        assert len(final) == (1 if fault == 'unsettled' else 0)
+        assert browser not in api.fake._verified_editors
+    finally:
+        api.close()
+
+
 @pytest.fixture
 def api(tmp_path):
     harness = HTTPHarness(tmp_path / "service")
