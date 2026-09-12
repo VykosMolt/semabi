@@ -10,8 +10,10 @@
   and neighbors, restart/revision behavior, and consequential binding/condition
   ablation. Prediction, application response, observed effect and exclusive cause
   stay distinct; neither ambiguity nor lost coverage is hidden.
-- Current main includes 5a0db7a's archived-sampling boundary test and 37f9377's
-  text-provenance inventory candidate (independent review pending).
+- Current main and frozen service: 17e1bb0. Integrated one-read resampling,
+  covered descendant-text projection, conflicting-occurrence admission, atomic
+  acquisition cursor/fences and direct-text neighbor brackets. 6b18df8 adds
+  independently reviewed per-query condition-cover reuse, not a larger budget.
   763f660 is the validated shared prediction-state repair; 7591f90 adds reviewed
   symmetric local-owner structure and checked-scope references. The latter has
   controlled/retained evidence but no successful live Kanboard operation yet.
@@ -28,13 +30,15 @@
   Guarded Iron/value10 still refuses: a genuine6<=value<12 refusal rival remains
   against relational acceptance; the old stale-response rival is gone. Before
   editing, value12 also exhausted100k LIST checks; a found singleton is not proof.
-  37f9377 passes7native text-provenance cases and33affected checks, not a full gate.
-- Operational evidence: frozen411 fullfit533.872s; ordinaryHTTP cachehit5.084s,
-  zero actions/fits, then actual service/browser restart cachehit6.003s. Ironcheck
-  confirmed after restart with13 independent checks. Guarded value10 stopped
-  PREDICTION_UNAVAILABLE without a field write;11 independent checks retain12.
-  Old operation on763 failedbeforeeffect0actions/0writes after source revision.
-  New763 guard stopped before field write,12actions/10possiblewrites/5.558s;
+  37f9377's first projection failed independent display:contents and same-signature
+  text-occurrence probes;07185e0 retains incomplete aggregates and rejects known
+  conflicting text sidecars. Missing metadata is not filled by later occurrences.
+  Initial integrated gate071:672pass/11fail (missing historical sidecar handling);
+  corrected61 gate685passed47.87s. Merged acquisition/resample35passed3.51s.
+  Memoized-cover research69passed10.19s includes independent2048-query oracle.
+  Exact17 runtime/HTTP/outcome/admissibility gate777passed61.52s.
+- Operational evidence: new763 guard stopped before field write,
+  12actions/10possiblewrites/5.558s;
   11independent checks retain12. Its offline ablation changes the point and
   removes representability with all ordered features absent, but not the guard's
   unavailable decision. Removing comparisons alone still leaves an acceptance
@@ -45,30 +49,48 @@
   siblings (9checks). Initial evaluator incorrectly expected a detail endpoint;
   its failed8detail checks are retained, not erased or counted as a confirmed
   repair. Response/resource persistence remains unconfirmed for that repair.
+  Repair refit583.483s,18actions/15possiblewrites,2071steps,4v7ops; repair remains
+  UNCERTAIN despite completed fitting. Actual61 service/browser restart withseed9
+  then ordinary publication reuse:6.601sHTTP,0actions/0fit,0.054sreuse,4v8ops.
+  Fresh11 stoppedbeforefieldwrite at100kLISTchecks;11independent checks retain10.
+  Diagnostic-only1m budget completes the old query at108168checks;6b18's unchanged
+  100kbudget completes at37483 with identical alternatives/fullorderedwitnesses.
+  This removes redundant cover scans, not founders, conditions or support tests;
+  no wall-time performance advantage claimed. New ordinary fit/API check pending.
 - Exposure: Dispatch/Workshop/generated fixtures/Memos/linkding/Vikunja/Kanboard
   are development. FreshRSS1.30.0 independently developed,16tasks selected before
   setup; reserved411 run is complete0/16,0ops,0invokes. Caller grammar and first
   ambiguous navigation proposal are separate barriers; no rescue/secondlearn.
   FreshRSS is now development, not still reserved. Evaluatornative/UI and shared
   agent context exposure are disclosed; there is no blind assessment claim.
-- Owned active job: Workshop repair job_c7f07d76039142179d615121d8505ce5,
-  clientexec8337/1800s budget,2071rawsteps after the stopped experiment.
-  Frozen763 service8860,
-  runs/.product-local-prediction-763f660, PID1004117/exec29688, CPU0-7.
-  Output workshopv2/targeted_repair_763f660.json pending. Agent pilot exec7281
-  usesCPU10-11,900s/8GiB cap, unique product_retained_pilot_763_v1 output.
+- Owned service8860: frozen17e1bb0, runs/.product-integrated-17e1bb0,
+  PID1064614/exec24486,CPU0-7,seed9. Workshopordinaryfit job742ceb37024f43cbaad52a7685679466
+  (prefix job_),client87371,2071reusedrawsteps,0newexploration,1800sclientbudget.
+  Output workshopv2/integrated_refit_17e1bb0.json pending. Previous61 service
+  stopped gracefully after completed jobs; no artifact hash rewriting.
+  FreshRSS development frozen cbcf933 service8866/exec2324,client50003,
+  job_e0614b315d2449329b4bec1469ec2763,CPU8-9:230acquisitionactions/147writeintents,
+  37candidate skips,2settled resamples, then password-bearing-view stop (auth loss
+  unestablished);228rawstepfit active. One600/400/1800s onboarding; nosecondlearn.
+  Pilot fresh-search900s and supplied-ontology-fit120s both RESOURCE_INCOMPLETE,
+  0/21scored; original21-click denominator retained, no retention verdict. Both
+  ownedjobsclosed; outputs product_retained_pilot_763_{v1,conditional_v1}.
   Respect unrelated8910; owned application/service processes remain documented
   in retained details. Agent candidates use remainingCPU8-11 within12core cap.
-- Separable work: semantic_bridge owns safe pre-action ambiguous-proposal skips
-  in acquisition; observation_review owns one budgeted read-only resample after
-  a successful write's unsettled observation; fixture_evaluation owns independent
-  review and the queued retained pilot check. No automatic write retry permitted.
-- Next: inspect repair refit without claiming completed acquisition; integrate
-  independently reviewed text-provenance, delayed-sampling and acquisition
-  cursor repairs, then ordinary cache-republication and guarded execution.
-  Preserve the failed repair and evaluate fresh arguments/restarts. Integrate
-  agent repairs only after their
-  discriminating tests; replay original development denominators unchanged.
+- Separable work: semantic_bridge owns frozen FreshRSS development run;
+  Kanboard17 full16-task run terminal0/16,0ops,0invocations: auth3acts/4.313s,
+  learn37acts/24possiblewrites/38.061s,0fit. Two first-Save resamples settled;
+  new failure is required-only form resolution/return. Native6→8projects, all
+  existingprojects/6tasks unchanged,43evaluatorreads0writes. Service8865closed.
+  fixture_evaluation diagnoses retained form failure; observation_review repairs
+  direct-text descendant-name parity using shared Surface projection (native
+  positive+4negatives confirmed; candidate not yet integrated).
+  Original2x180/120 acquisition continuation now blocks mid-replay (job2zeroacts),
+  while completed-unit resume passes; unfinished write-bearing units need
+  reconciliation. No silent retry. CREATE/linked neighbor brackets remain separate.
+- Next: ordinaryWorkshop refit and fresh guardedwrite,
+  independent checks and ablation; carry general repairs through Kanboard and
+  FreshRSS with original denominators and all setup/unsupported failures retained.
 
 ## Retained integrated checkpoint details — through 2026-09-12 23:20 UTC
 
