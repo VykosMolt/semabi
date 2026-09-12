@@ -147,22 +147,35 @@ class Trace:
         self.possible_effect = False
         self.started = time.monotonic()
 
-    def observe(self, surface: Surface) -> Surface:
-        self.budget.check_deadline()
+    def _record_observation(self, surface: Surface, *, action_sample: dict | None = None) -> str:
+        # Once a read has returned, preserve that evidence even if its deadline
+        # expired. Recording an unsettled sample never licenses an action.
         sig = self.log.add_observation(surface.observation)
         with (self.log.dir / "surfaces.jsonl").open("a") as stream:
             stream.write(json.dumps({"observation": sig, "settled": surface.settled,
                                      "controls": surface.controls, "forms": surface.forms,
                                      "text_boundaries": surface.text_boundaries,
                                      "text_sources": surface.text_sources,
+                                     "settling_reason": surface.settling_reason,
+                                     **({"action_sample": action_sample} if action_sample is not None else {}),
                                      "local_regions": local_regions(surface.observation)}) + "\n")
-        self.emit({"type": "observation", "signature": sig, "settled": surface.settled})
+        self.emit({"type": "observation", "signature": sig, "settled": surface.settled,
+                   **({"action_sample": action_sample} if action_sample is not None else {}),
+                   "settling_reason": surface.settling_reason})
+        return sig
+
+    def _check_observation(self, surface: Surface) -> Surface:
+        self.budget.check_deadline()
         if not surface.settled:
             raise StopOperation("Rendered observation did not stabilize")
         if any(control["input_type"] == "password" for control in surface.controls.values()):
             raise StopOperation("Session requires authentication; reconnect before invoking")
         self.budget.check_deadline()
         return surface
+
+    def observe(self, surface: Surface) -> Surface:
+        self._record_observation(surface)
+        return self._check_observation(surface)
 
     def read(self, browser) -> Surface:
         self.budget.check_deadline()
@@ -209,10 +222,35 @@ class Trace:
             result = browser.press_retained(primitive, retained, retained_offset, timeout)
         self.budget.check_deadline()
         after = browser.read()
-        self.budget.check_deadline()
-        self.log.add_step(0, primitive, result.ok, result.error,
-                          surface.observation, after.observation)
-        self.observe(after)
+        try:
+            sample = {"step": len(self.log.steps), "before": surface.observation.structural_signature(),
+                      "source_settled": surface.settled, "source_settling_reason": surface.settling_reason,
+                      "action": primitive.to_json(), "phase": "initial_after"}
+            initial = self._record_observation(after, action_sample=sample)
+            if not after.settled and result.ok:
+                association = {"step": len(self.log.steps), "action": primitive.to_json(),
+                               "before": surface.observation.structural_signature(), "initial_after": initial,
+                               "scope": "Later observation after one native dispatch; exclusive causal attribution unestablished"}
+                self.emit({"type": "observation_reconciliation_pending", **association,
+                           "read_only_resamples": 1, "primitive_retries": 0})
+                try:
+                    self.budget.take(writing=False)
+                    after = browser.read()
+                    final = self._record_observation(after, action_sample={**sample, "phase": "reconciled_after"})
+                    self.emit({"type": "observation_reconciliation_result", **association,
+                               "after": final, "settled": after.settled,
+                               "settling_reason": after.settling_reason})
+                except BaseException:
+                    self.emit({"type": "observation_reconciliation_stopped", **association,
+                               "outcome": "UNCERTAIN", "primitive_retries": 0})
+                    raise
+            self._check_observation(after)
+        finally:
+            # Acquisition trials and the ordinary Step share the final observed
+            # endpoint. The initial unsettled sample remains independently raw;
+            # a read-only resample is not fabricated as another action/effect.
+            self.log.add_step(0, primitive, result.ok, result.error,
+                              surface.observation, after.observation)
         self.emit({"type": "action_result", "ok": result.ok, "action": primitive.kind})
         if not result.ok:
             raise StopOperation("Browser interaction did not complete; effect requires reconciliation")

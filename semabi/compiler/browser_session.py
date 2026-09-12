@@ -290,6 +290,12 @@ class BrowserSession(Browser):
         if self.surface is None:
             raise RuntimeError("No rendered observation is available")
         self.surface.settled = self._render_observation_ready and agreements >= 2
+        # This separates the document/rendering guard from local snapshot
+        # agreement. The guard alone does not identify frame timeout versus a
+        # document replacement during snapshotting.
+        self.surface.settling_reason = ("snapshot_agreement" if self.surface.settled else
+                                        "render_guard_unavailable" if not self._render_observation_ready else
+                                        "snapshot_agreement_deadline")
         self._last_obs = self.surface.observation if self.surface.settled else None
         return self.surface
 

@@ -552,8 +552,45 @@ def _learning_surfaces(log):
                                     {int(k): v for k, v in item["controls"].items()}, {},
                                     item.get("settled", True),
                                     {int(k): v for k, v in item.get("text_boundaries", {}).items()},
-                                    text_sources={int(k): v for k, v in item.get("text_sources", {}).items()})
+                                    text_sources={int(k): v for k, v in item.get("text_sources", {}).items()},
+                                    settling_reason=item.get("settling_reason"))
     return surfaces
+
+
+def _require_settled_step_endpoints(log, emit=None):
+    """Product admission only; keep raw evidence and native action results intact."""
+    path = log.dir / "surfaces.jsonl"
+    if not path.exists():
+        return  # Historical missing surface metadata is outside this guarantee.
+    latest, endpoints = {}, {}
+    for line in path.read_text().splitlines():
+        item = json.loads(line)
+        latest[item["observation"]] = item
+        if sample := item.get("action_sample"):
+            endpoints[sample["step"]] = item
+    blocked = []
+    for step in log.steps:
+        linked = endpoints.get(step.step)
+        if linked is not None:
+            sample = linked["action_sample"]
+            if (sample["before"] != step.before or sample["action"] != step.action.to_json()
+                    or linked["observation"] != step.after):
+                _stop("Recorded action sample does not match its Step endpoint")
+        source = ({"observation": step.before, "settled": linked["action_sample"]["source_settled"],
+                   "settling_reason": linked["action_sample"].get("source_settling_reason")}
+                  if linked is not None else latest.get(step.before))
+        for side, item in (("before", source),
+                           ("after", linked if linked is not None else latest.get(step.after))):
+            if item is not None and item.get("settled") is False:
+                blocked.append({"step": step.step, "side": side, "observation": item["observation"],
+                                "settling_reason": item.get("settling_reason"),
+                                "occurrence_linked": linked is not None})
+    if blocked:
+        if emit:
+            emit({"type": "semantic_observation_admission_blocked", "outcome": "UNCERTAIN",
+                  "unsettled_endpoints": blocked, "count": len(blocked),
+                  "scope": "Raw/native results retained; no fitting, cache reuse or exploratory retry. Historical missing metadata unestablished."})
+        _stop(f"{len(blocked)} explicitly unsettled action endpoints prevent product recovery or fitting; raw evidence retained")
 
 
 def _validate_learning_trials(log, surfaces, trials):
@@ -562,6 +599,8 @@ def _validate_learning_trials(log, surfaces, trials):
     edges = {}
     for trial in trials:
         before, after = surfaces[trial["before"]], surfaces[trial["after"]]
+        if not before.settled or not after.settled:
+            raise ValueError("Acquisition trial endpoint is not a settled rendered view")
         step = trial["action"]
         if ((trial["before"], trial["after"], step["kind"], trial["node"], step.get("text")) not in observed
                 or resolve_step(before, step) != trial["node"]):
@@ -722,6 +761,7 @@ def recover_learning(log):
     target names or procedure steps that were absent from ordinary onboarding.
     """
     from semabi.compiler.runtime import StopOperation
+    _require_settled_step_endpoints(log)
     surfaces = _learning_surfaces(log)
     saved = log.dir / "learning.json"
     recovery_error = None
@@ -1001,6 +1041,7 @@ def learn(runtime, connection, settings, trace, emit):
     if not trials:
         return {"status": "UNESTABLISHED", "operations": [], "attempts": [],
                 "metrics": trace.metrics(), "invalidations": [], "repair": repair_report}
+    _require_settled_step_endpoints(trace.log, emit)
     artifact = reuse_semantics(trace.log.dir, fit_candidate) if fit_candidate else None
     fit_passes = 0 if artifact is not None else 1
     if artifact is None:

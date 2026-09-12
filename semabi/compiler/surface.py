@@ -34,6 +34,7 @@ class Surface:
     settled: bool = True
     text_boundaries: dict[int, str | None] = field(default_factory=dict)
     text_sources: dict[int, dict] = field(default_factory=dict)
+    settling_reason: str | None = None
 
     def state_key(self, node: int, *, separate_descendant_text: bool = False) -> tuple:
         """Visible node state with explicitly observed text provenance.

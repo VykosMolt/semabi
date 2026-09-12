@@ -213,6 +213,7 @@ def test_synthetic_browser_read_requires_repeated_snapshot_agreement(monkeypatch
 
     assert len(calls) == 3
     assert result is surfaces[-1] and result.settled
+    assert result.settling_reason == 'snapshot_agreement'
     assert session._last_obs is result.observation
 
 
@@ -229,6 +230,16 @@ def test_synthetic_browser_read_does_not_settle_while_form_contract_changes(monk
 
     assert len(calls) == 3
     assert not result.settled
+    assert result.settling_reason == 'snapshot_agreement_deadline'
+
+
+def test_synthetic_browser_read_reports_render_guard_without_claiming_specific_subcause(monkeypatch):
+    session, calls = _snapshot_session(monkeypatch, [_form_surface()])
+    session._render_observation_ready = False
+    result = session.read()
+    assert len(calls) == 1 and not result.settled
+    assert result.settling_reason == 'render_guard_unavailable'
+    assert session._last_obs is None
 
 
 def test_synthetic_browser_read_does_not_settle_while_paragraph_eligibility_changes(monkeypatch):
@@ -3605,6 +3616,217 @@ def test_runtime_surface_trace_preserves_complete_and_declined_paragraph_boundar
     saved, = [json.loads(line) for line in (trace.log.dir / 'surfaces.jsonl').read_text().splitlines()]
     assert saved['text_boundaries'] == {'1': 'Saved value', '2': None}
     assert saved['observation'] == surface.observation.structural_signature()
+
+
+class _PendingObservationBrowser:
+    def __init__(self, replies, *, ok=True, on_read=None):
+        self.replies, self.ok, self.on_read = iter(replies), ok, on_read
+        self.actions, self.reads = [], 0
+
+    def act(self, action):
+        self.actions.append(action)
+        return SimpleNamespace(ok=self.ok, error=None if self.ok else 'Native dispatch failed')
+
+    def read(self):
+        self.reads += 1
+        if self.on_read:
+            self.on_read(self.reads)
+        reply = next(self.replies)
+        if isinstance(reply, BaseException):
+            raise reply
+        return reply
+
+
+def _pending_surface(label, *, settled=True):
+    surface = _surface([Node(0, -1, 'group', ''), Node(1, 0, 'button', 'Apply'),
+                        Node(2, 0, 'article', ''), Node(3, 2, 'text', label)])
+    surface.settled = settled
+    surface.settling_reason = 'snapshot_agreement' if settled else 'render_guard_unavailable'
+    return surface
+
+
+def test_trace_reconciles_one_successful_action_with_one_charged_read_and_final_step(tmp_path):
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler import semantic_runtime
+    before, pending, final = (_pending_surface('Before'), _pending_surface('Pending', settled=False),
+                              _pending_surface('Observed result'))
+    events = []
+    trace = runtime_module.Trace(tmp_path / 'trace', events.append, runtime_module.Budget(2, 1))
+    trace.observe(before)
+    browser = _PendingObservationBrowser([pending, final])
+    assert trace.act(browser, before, Primitive('click', 1)) is final
+    assert len(browser.actions) == 1 and browser.reads == 2
+    assert trace.budget.actions == 2 and trace.budget.writes == 1
+    step, = trace.log.steps
+    assert step.before == before.observation.structural_signature()
+    assert step.after == final.observation.structural_signature() and step.ok
+    assert pending.observation.structural_signature() in trace.log.observations
+    assert pending.observation.structural_signature() not in trace.log.through(1).observations
+    samples = [json.loads(line) for line in (trace.log.dir / 'surfaces.jsonl').read_text().splitlines()]
+    assert [sample['settled'] for sample in samples] == [True, False, True]
+    associated, = [event for event in events if event['type'] == 'observation_reconciliation_result']
+    assert associated['initial_after'] == pending.observation.structural_signature()
+    assert associated['after'] == step.after and associated['step'] == step.step
+    assert 'exclusive causal attribution unestablished' in associated['scope']
+    trial = {'route': [], 'action': semantic_runtime.step_for(before, 1, []), 'node': 1,
+             'before': step.before, 'after': step.after}
+    semantic_runtime._validate_learning_trials(trace.log, semantic_runtime._learning_surfaces(trace.log), [trial])
+
+
+@pytest.mark.parametrize('failure', ['unsettled', 'native', 'budget', 'deadline', 'interrupted'])
+def test_trace_pending_observation_never_retries_write_or_loses_known_sample(tmp_path, failure):
+    from semabi.compiler.browser import Primitive
+    pending = _pending_surface('Pending', settled=False)
+    second = RuntimeError('Read interrupted') if failure == 'interrupted' else _pending_surface('Still pending', settled=False)
+    budget = runtime_module.Budget(1 if failure == 'budget' else 2, 1)
+    def expire(read):
+        if failure == 'deadline' and read == 1:
+            budget.deadline = 0
+    browser = _PendingObservationBrowser([pending, second], ok=failure != 'native', on_read=expire)
+    events = []
+    trace = runtime_module.Trace(tmp_path / 'trace', events.append, budget)
+    with pytest.raises((runtime_module.StopOperation, RuntimeError)):
+        trace.act(browser, _pending_surface('Before'), Primitive('click', 1))
+    assert len(browser.actions) == 1 and budget.writes == 1 and trace.possible_effect
+    assert browser.reads == (1 if failure in {'native', 'budget', 'deadline'} else 2)
+    assert pending.observation.structural_signature() in trace.log.observations
+    samples = [json.loads(line) for line in (trace.log.dir / 'surfaces.jsonl').read_text().splitlines()]
+    assert samples[0]['settled'] is False
+    assert samples[0]['settling_reason'] == 'render_guard_unavailable'
+    assert len(trace.log.steps) == 1 and trace.log.steps[0].ok == (failure != 'native')
+    assert sum(event['type'] == 'write_intent' for event in events) == 1
+    assert sum(event['type'] == 'observation_reconciliation_pending' for event in events) == (failure != 'native')
+
+
+def test_unsettled_endpoint_cannot_be_rehabilitated_by_unrelated_later_same_signature(tmp_path):
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler import semantic_runtime
+    pending = _pending_surface('Same displayed content', settled=False)
+    trace = runtime_module.Trace(tmp_path / 'blocked', lambda event: None, runtime_module.Budget(2, 1))
+    with pytest.raises(runtime_module.StopOperation):
+        trace.act(_PendingObservationBrowser([pending, deepcopy(pending)]), _pending_surface('Before'), Primitive('click', 1))
+    later = deepcopy(pending)
+    later.settled, later.settling_reason = True, 'snapshot_agreement'
+    trace.observe(later)  # A separate observation, not the failed action's endpoint.
+    with pytest.raises(runtime_module.StopOperation, match='explicitly unsettled action endpoints'):
+        semantic_runtime.recover_learning(trace.log)
+    resolved = runtime_module.Trace(tmp_path / 'resolved', lambda event: None, runtime_module.Budget(2, 1))
+    resolved.act(_PendingObservationBrowser([pending, later]), _pending_surface('Before'), Primitive('click', 1))
+    with pytest.raises(runtime_module.StopOperation):
+        resolved.observe(_pending_surface('Before', settled=False))  # Later unrelated source lookalike.
+    semantic_runtime._require_settled_step_endpoints(resolved.log)  # Same-signature resample really did become stable.
+
+
+def test_semantic_learning_does_not_fit_or_reuse_after_unsettled_final_action(tmp_path, monkeypatch):
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler import semantic, semantic_runtime
+    runtime = Runtime(tmp_path)
+    connection = {'id': 'pending-training', 'url': 'https://synthetic.invalid/', 'scope': {}}
+    before, valid = _pending_surface('Before'), _pending_surface('Valid first result')
+    pending = _pending_surface('Unsettled later result', settled=False)
+    browser = _PendingObservationBrowser([valid, pending, deepcopy(pending)])
+    runtime.sessions[connection['id']] = browser
+    events = []
+    trace = runtime._trace(connection, events.append, runtime_module.Budget(3, 2))
+    def acquire(browser, trace, entry, emit, trials, edits, context):
+        trace.observe(before)
+        after = trace.act(browser, before, Primitive('click', 1))
+        trials.append({'route': [], 'action': semantic_runtime.step_for(before, 1, []), 'node': 1,
+                       'before': before.observation.structural_signature(), 'after': after.observation.structural_signature()})
+        trace.act(browser, after, Primitive('click', 1))
+    monkeypatch.setattr(semantic_runtime, 'acquire', acquire)
+    monkeypatch.setattr(semantic, 'fit_semantics', lambda *args: pytest.fail('Unsettled Step must not enter fitting'))
+    monkeypatch.setattr(semantic, 'reuse_semantics', lambda *args: pytest.fail('Unsettled Step must not enter cache reuse'))
+    with pytest.raises(runtime_module.StopOperation, match='explicitly unsettled action endpoints'):
+        semantic_runtime.learn(runtime, connection, {}, trace, events.append)
+    blocked, = [event for event in events if event['type'] == 'semantic_observation_admission_blocked']
+    assert blocked['count'] == 1 and blocked['outcome'] == 'UNCERTAIN'
+    assert len(browser.actions) == 2 and browser.reads == 3
+    assert len(trace.log.steps) == 2 and trace.log.steps[-1].ok
+    with pytest.raises(runtime_module.StopOperation, match='explicitly unsettled action endpoints'):
+        semantic_runtime.recover_learning(trace.log)
+
+
+class _DelayedPopulatedExitBrowser(_PopulatedExitBrowser):
+    def __init__(self):
+        super().__init__()
+        self.pending_read = 0
+        self.late_fault = None
+
+    def act(self, action):
+        result = super().act(action)
+        if action.kind == 'click':
+            self.pending_read = 1
+        return result
+
+    def read(self):
+        if self.pending_read == 2:
+            self.pending_read = 0
+            if self.late_fault == 'target':
+                self.rows[self.selected]['Name'] = 'Different target'
+            elif self.late_fault == 'sibling':
+                self.neighbor = 'Changed sibling'
+        surface = super().read()
+        if self.pending_read == 1:
+            self.pending_read = 2
+            surface.settled = False
+            surface.settling_reason = 'render_guard_unavailable'
+        return surface
+
+
+@pytest.mark.parametrize('fault', [None, 'target'])
+def test_delayed_creation_observation_still_requires_intended_target(tmp_path, monkeypatch, fault):
+    events = []
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_DelayedPopulatedExitBrowser(), emit=events.append)
+    operation = _learned_kind(learned, 'create_visible_record')
+    assert any(event['type'] == 'observation_reconciliation_result' for event in events)
+    before = len(browser.actions)
+    browser.late_fault = fault
+    result = runtime.invoke(connection, operation, {'name': 'Fresh delayed record'}, lambda event: None)
+    assert sum(action.kind == 'click' for action in browser.actions[before:]) == 1
+    assert (result['outcome'] == 'CONFIRMED') == (fault is None), result
+    if fault is None:
+        assert browser.rows[-1]['Name'] == 'Fresh delayed record'
+        assert browser.route_actions[-1][0] == 'reload'
+
+
+def test_delayed_update_cannot_accept_a_changed_previously_observed_sibling(tmp_path, monkeypatch):
+    class DelayedUpdateBrowser(_CheckboxRecordBrowser):
+        pending_read = 0
+        corrupt_sibling = False
+
+        def act(self, action):
+            updating = (self.selected is not None and action.kind == 'click'
+                        and self.surface.observation.node(action.target).name == 'Save')
+            result = super().act(action)
+            if updating:
+                self.pending_read = 1
+            return result
+
+        def read(self):
+            if self.pending_read == 2:
+                self.pending_read = 0
+                if self.corrupt_sibling:
+                    self.rows[1]['Title'] = 'Changed previously observed sibling'
+            surface = super().read()
+            if self.pending_read == 1:
+                self.pending_read = 2
+                surface.settled = False
+                surface.settling_reason = 'render_guard_unavailable'
+            return surface
+
+    runtime, connection, browser, learned = _learn_checkbox_records(
+        tmp_path, monkeypatch, browser=DelayedUpdateBrowser())
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    browser.corrupt_sibling = True
+    before = len(browser.actions)
+    result = runtime.invoke(connection, operation,
+        {'target': browser.rows[0]['URL'], 'title': 'Fresh requested title'}, lambda event: None)
+    assert browser.rows[0]['Title'] == 'Fresh requested title'
+    assert browser.rows[1]['Title'] == 'Changed previously observed sibling'
+    assert result['outcome'] != 'CONFIRMED', result
+    assert sum(action.kind == 'click' for action in browser.actions[before:]) == 2  # Open editor, one Save.
 
 
 @pytest.mark.slow
