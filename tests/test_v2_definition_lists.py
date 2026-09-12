@@ -91,3 +91,28 @@ def test_the_template_lists_pairs_in_label_order():
         G2.add(obs.structural_signature(), obs)
     sig2 = next(iter(G2.obs))
     assert collapsed_template(G2, sig2, 1, {}) == "group[](group[Carrier],group[_ van],group[Payload limit],group[_ kg])"
+
+
+def test_a_label_is_judged_constant_within_its_own_view():
+    # the reservoir wizard: a fieldset legend on the source page stands at the same indexed
+    # path as the review page's first definition label; pooled across views the label was
+    # not constant and the list was missed
+    def source(chosen):
+        rows = [("group", "", -1), ("group", "", 0), ("heading", "Choose a water source", 1),
+                ("group", "", 1), ("group", "Stored water", 3),
+                ("text", f"{chosen} cistern - Water available: 20 L", 3), ("button", "Review", 1)]
+        return Observation([Node(i, parent, role, text) for i, (role, text, parent) in enumerate(rows)])
+
+    def review(amount, cistern):
+        rows = [("group", "", -1), ("group", "", 0), ("heading", "Review watering request", 1),
+                ("group", "", 1), ("group", "Water requested", 3), ("group", f"{amount} L", 3),
+                ("group", "Water source", 3), ("group", f"{cistern} cistern", 3), ("button", "Schedule", 1)]
+        return Observation([Node(i, parent, role, text) for i, (role, text, parent) in enumerate(rows)])
+
+    G = ObsGraph()
+    pages = [source("Copper"), review(13, "Copper"), source("Slate"), review(23, "Slate")]
+    for page in pages:
+        G.add(page.structural_signature(), page)
+    sig = pages[1].structural_signature()
+    assert G.definition_pairs(sig, 3) == [(4, 5), (6, 7)]
+    assert G.definition_label(sig, 5) == "Water requested"

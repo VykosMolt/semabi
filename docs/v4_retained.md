@@ -1888,6 +1888,49 @@ wants the job's exact visible name, and the page's key is an open tie between it
 and the category the registry's expand buttons are keyed by.  Reservoir binds no owner
 yet and was not opened further.
 
+**What the first battery caught.**  Regenerated under the repairs, harbour and blend kept
+their selections and holdout verdicts (harbour's holdout showed 27 silent steps become
+navigation and nothing else), but vet's frontier moved: its appointment rows' three
+variants had become one family of ten templates and were reported and chosen with no
+key, where the combobox variant had been keyed by patient and reason.  Traced, the
+family merge had leaked into every place that still looked a family up by its exact
+erased-token name -- the harmonisation report, which took the first template's carried
+key as the family's and found none on a variant that cannot render the composite; the
+pinned reading's application, the identity application at compilation and the probe's
+family lookups, which left the other variants with V2's own key, on vet the refuted
+owner -- and the merge criterion itself let the row's nested select form, whose two parts
+are both among the row's, count as a variant of the row, so the merged family took the
+form's label as its key.  The battery was stopped after its regeneration stage and its
+comparison kept; the three are repaired with tests: variants of one thing share a root
+role and are never a part and its container; harmonisation is judged among the templates
+that render the reading's slots; the consumers group templates as the search does and
+find a pinned family under any member's name.  Vet's search then keys the merged
+appointment family by patient and reason, rejecting owner, reason, status, vet, no
+identity and four other composites, as the retained reading did; its nested select form
+keeps V2's label key where the retained search had moved it to no identity -- under the
+re-parse an unkeyed nested unit's content flows to the row and changes what the row's
+reading explains, so no identity no longer dominates there, and the question is open.
+Dispatch is unchanged by these repairs.
+
+**What the second battery caught.**  Under the repairs the fourteen structural invariants
+held and every admissible verdict count on harbour and blend was identical to the
+retained one, but the renaming attack on blend broke: 76 differences under fresh names,
+68 under permuted ones, all at `Record draw` and `Close`, a rival vouch holding on the
+original pages and gone on the renamed ones.  Traced on the attack's own fitting history:
+the vat rows carried the vat's name as an attribute called `Close`, the blend rows theirs
+as `Bottle` and `Disgorge` -- the rows' own buttons, mention units the search leaves
+without identity, dissolved by the re-parse into their rows, where the button's data
+token is the row's own key and the version space vouches with its spelling.  Dispatch
+showed the same junk on its cards (`Open run` = the run's name).  The repair is at the
+entity type: a slot whose values are the unit's own key values restates its name and is
+not an attribute -- the reference rule already skipped a unit's own type, and this is
+its counterpart for equality.  A second, smaller repair from the reservoir wizard: a
+definition label is judged constant within its own view, where a legend on another view
+standing at the same indexed path had made the review page's list invisible; that page
+is then keyed by the requested amount, the numeric last resort for a single request with
+no name, which leaves the operand that should be compared as the key and no rule, an
+open question about singleton records.  The battery runs again under both.
+
 **Retention.**  Pre-registered before the battery: every metamorphic invariant zero; no
 new forced-wrong verdict on any retained ledger, a wrong being a finding against the
 change that caused it; readings may move where a belief is now carried, a navigation no

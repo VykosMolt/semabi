@@ -1289,7 +1289,7 @@ class Hypotheses:
                         u.evidence.append(f"composite key {comp} adopted from a sibling template")
             et = EntityType(tid, [u.template for u in us], {u.template: u.key_slot for u in us})
             for u in us:
-                et.attr_slots[u.template] = {s for s in u.slots if s != u.key_slot and not s.endswith("~") and not s.endswith("!") and "|" not in s}
+                et.attr_slots[u.template] = {s for s in u.slots if self._is_attribute(u, s)}
                 self.tid_of_template[u.template] = tid
                 et.evidence += u.evidence
             self.entity_types[tid] = et
@@ -1304,7 +1304,7 @@ class Hypotheses:
             while other in links and hops < 5:  # the borrowed keys may themselves be borrowed
                 other = links[other]
                 hops += 1
-            et.attr_slots[t] = {s for s in u.slots if s != u.key_slot and not s.endswith("~") and not s.endswith("!") and "|" not in s}
+            et.attr_slots[t] = {s for s in u.slots if self._is_attribute(u, s)}
             et.ref_slots[(t, u.key_slot)] = self.tid_of_template.get(other, -1)
             et.evidence += u.evidence
             self.tid_of_template[t] = tid
@@ -1378,6 +1378,18 @@ class Hypotheses:
                         else:
                             et.contain[t] = ptid
                         et.evidence.append(f"{t[:30]} nested in T{ptid} ({c}/{len(self.units[t].instances)})")
+
+    def _is_attribute(self, u: UnitHyp, sid: str) -> bool:
+        """An own persistent slot that is not the key and does not restate it.  A slot whose
+        values are the unit's own key values -- a row's `Open Orchard` button, dissolved
+        into the row -- is the name said again, and an equality on it would be the spelling
+        memorised (`docs/v4_behaviour.md`)."""
+        if sid == u.key_slot or sid.endswith("~") or sid.endswith("!") or "|" in sid:
+            return False
+        if not u.key_slot:
+            return True
+        values = set(u.slots[sid].values)
+        return not values or len(values & u.primary_key_values()) / len(values) < 0.8
 
     def _slot_labels(self, t: str, sid: str) -> set[str]:
         """The label tokens of the node holding this slot, lower-cased: `Ticket 4` -> {ticket}."""

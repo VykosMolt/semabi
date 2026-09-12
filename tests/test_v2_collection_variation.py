@@ -753,3 +753,20 @@ def test_a_colon_labelled_value_is_a_field_of_its_card_not_a_sentence_about_it()
     H.unit_types = find_unit_types(G)
     card = next(u for u in H.parse_units(sig) if u.root == 3)
     assert card.slots == {"heading#0": "Cedar", "text#0": "North", "text#0@3": "7"}
+
+
+def test_a_slot_that_restates_the_units_own_key_is_not_an_attribute():
+    # the card's button "Open Cedar run", read as content of the card, carries the card's
+    # own name: an equality on it would memorise the spelling the renaming attack changes
+    from semabi.compiler.v2.hypotheses import SlotStat
+    H = Hypotheses.__new__(Hypotheses)
+    u = UnitHyp("group[](heading[_ run],text[_ depot],button[Open _ run])", [], key_slot="heading#0")
+    for sid, values in (("heading#0", ["Cedar", "Rowan", "Alder"]), ("button#0", ["Cedar", "Rowan", "Alder"]),
+                        ("text#0", ["North", "River", "Hill"]), ("text#0@3", ["7", "11", "20"])):
+        st = SlotStat(sid)
+        for v in values:
+            st.values[v] += 1
+        u.slots[sid] = st
+    assert not H._is_attribute(u, "button#0")
+    assert not H._is_attribute(u, "heading#0")
+    assert H._is_attribute(u, "text#0") and H._is_attribute(u, "text#0@3")

@@ -3018,3 +3018,111 @@ unkeyed nested unit's content flows to the row, which changes the row's slots an
 its keyed reading explains, so None no longer dominates; path-dependent on the family
 order.  Left to the battery's ledgers to judge (vet outcome ledgers are the gate).
 Dispatch unchanged by these fixes (page heading#0 over the inherited depot, cards heading#0).
+
+22:24 compiled vet model (csq.fit, the battery's path) now keys all four
+combobox-variant appointment units cell@Patient#0|cell@Reason#0; the refuted Owner key is
+gone from the compiled model.  Committed 9a11be1; full suite running, the battery
+(preq-battery-p42b-*) launches from the same script when it passes; Part XXIII carries the
+first battery's catch and the repairs.
+
+23:06 full suite under 9a11be1: 1225 passed, 3 skipped, 1 xfailed (2342 s).  Battery
+launched 23:01:53 as preq-battery-p42b-1789160513.service at 800% (regen running); stages
+judged as they land against 9a11be1.
+
+## Battery under 9a11be1, regen judged (23:45) -- NOT stopped
+harbour, blend: selection, identification, holdout unchanged.  vet: identification
+SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS -> AMBIGUOUS_SURVIVORS_BEHAVIOURALLY_DISTINCT,
+holdout INCONCLUSIVE -> AMBIGUOUS_SURVIVOR_SET, selected None (two survivor classes:
+{group heading#0, vets cell@Name#0} and {promote listitem}); the appointment rows keyed
+cell@Patient#0|cell@Reason#0 as retained; the vets table keyed cell@Name#0 is a new source
+candidate; the plain-row Reason candidate is gone (merged).  Holdout evidence: the group
+reading explains 99 with 286 visibility errors (was 62 with 4; silent 362 -> 1 by (h)).
+Traced (identity_rivals on the dev trace, scratchpad/vet_form_rivals.json): the schedule
+form's field units `text[_](combobox[_])` (label 'Owner'/'Vet' + select) keep V2's key
+text#0 -- 45 explained / 74 errors (30 contradictions + 44 visibility at the Appointments/
+Clients tabs) against no identity's 14 / 0: undecided under the Pareto rule (the retained
+doctrine: test_representing_nothing_does_not_beat_a_reading_that_explains), so the
+incumbent stays and the question is open.  The retained search had moved it to None
+(v4_frontier.md: 95 contradictions, 147 visibility, explained unchanged) because the keyed
+field explained nothing extra then: W2's represented spans were keyed by template, so a
+select going from empty (combobox[]) to chosen (combobox[_]) never counted; keyed by the
+entity (P42, needed for dispatch's status-line variants) the field's first choices count,
+31 of them.  Not a defect: a wrongly-keyed form field now honestly explains its own
+draft changes and is an open question for a live experiment rather than a decision.
+Gate for retention stays the ledgers: no new forced-wrong on vet's outcome ledgers.
+
+## PAUSED for the user's reboot (01:18)
+Battery preq-battery-p42b (under 9a11be1) stopped during open_world (started 23:35).
+regen.done is kept, so the relaunch skips regen and restarts open_world from scratch:
+  systemd-run --user --slice=preq.slice --unit=preq-battery-p42c-$(date +%s) -p MemoryMax=20G \
+    -p CPUQuota=800% --working-directory=/home/moloch/semabi bash /home/moloch/semabi-scratch/preq/run_battery.sh
+Before that, restart the harbour fixture app the live stages use:
+  cd ~/semabi-gauntlet-v3/authors/B_claude_opus/apps/01_harbour && nohup python3 app.py --port 8910 &
+Working tree: 9a11be1 plus the regen stage's regenerated state files (uncommitted, expected).
+Then: judge open_world/identity/outcome/admissible against 9a11be1, retention commit, Part
+XXIII retention paragraph, caches under semabi/ and tests/, reservoir dl fix (own commit).
+
+## Resumed (02:38); the machine had not rebooted (uptime continuous)
+Harbour fixture app restarted on 8910; battery relaunched as preq-battery-p42c-1789173460
+(regen skipped by its marker, open_world restarted 02:37:40).  Expected: open_world ~04:20,
+identity ~04:30, outcome ~05:45, admissible ~05:55.
+Planned after retention (no code edits while the battery imports the tree):
+ 1. reservoir: key `_texts_at` by (view skeleton, indexed position) -- own commit with a test;
+ 2. dispatch's clock question: an acquisition step that types a value BELOW the current one
+    on the numeric input (the text-token policy cannot), so the history holds a fall and the
+    clock discipline can adopt the order -- the P39/P40 value-seeking line, on the live
+    fixture server (experiments/transport_v1/server.py --port 8767), pre-registered;
+ 3. the page-key ties (dispatch name vs depot, workshop name vs category) -- P27 live
+    experiments with frozen predictions if the fixture allows an intervention that separates
+    them (renaming a run is not offered; opening two runs of one category is).
+
+## Rebooted (03:58); relaunched
+The machine rebooted at ~03:57 (kernel 7.2.4-3); battery p42c died in open_world.  Harbour
+app restarted on 8910; battery relaunched as preq-battery-p42d (regen skipped, open_world
+restarted).  Expected: open_world ~05:40, identity ~05:50, outcome ~07:05, admissible ~07:15.
+
+## Battery p42d, open_world and identity judged (05:27) -- GATE FAILED at open_world
+open_world 03:58 -> 05:18: fourteen invariants zero; renaming_blend_book FRESH 76 differences,
+PERMUTE 68 (pre-registered zero): all at Record draw (36 several -> one admissible, 28
+several with different admissible sets, 7 several-none) and Close (5 forced-wrong ->
+unestablished): a rival vouch (the single-varietal refusal; the Close wrong) holds on the
+original pages and not on renamed ones, so some fitted vouch now reads a name's spelling.
+identity 05:18 -> 05:24: every admissible verdict count identical (harbour, blend, frozen
+prefix / list / holdout / prequential); inadequacy_blend_book_transfer_on_holdout: 'once:
+seen, but not enough to found a rule' 11 -> 16; search finals unchanged.  So the un-renamed
+verdicts did not move; the spelling dependence is new and silent on the original pages.
+The state is NOT retainable under the pre-registration whatever the ledgers say; tracing the
+name-valued literal (p42_nominal.py on blend_book_transfer, the attack's fitting history).
+
+## Renaming gate traced (05:34): a row's own name restated by its buttons
+p42_nominal.py on blend_book_transfer: the vat rows carry `attr:Close#0` = the vat names
+(Block, Chapel Row, Orchard, ...) and `attr:cell/button#0@7` = 'Open Orchard' etc.; the
+blend rows carry `attr:Bottle#0` / `attr:Disgorge#0` = the blend names.  These are the
+rows' own buttons ("Close Orchard", "Bottle Festival White"), mention units the search
+leaves unkeyed; under (j) an unkeyed part now dissolves into its row, so the button's data
+token -- the row's own key -- becomes a nominal attribute, and the version space vouches
+with `attr:Close == 'Orchard'`: a memorised spelling, silent on the original pages and
+gone under fresh names (the 36 several -> one, the 5 Close wrongs).  Dispatch shows the
+same junk (`attr:Open run#0` = 'Cedar' on the cards).  Repair (r): a non-key slot whose
+values are the unit's own key values restates its name and is not an attribute
+(entity-type construction excludes it; refs already skip the unit's own type).  Battery
+p42d stopped in outcome (05:24 -> ), dir archived as battery_p42d_stopped.
+
+## Repairs (r) and the reservoir dl fix (05:36)
+(r) hypotheses._is_attribute: a non-key slot whose values are (>= 0.8) the unit's own primary
+key values restates its name and is excluded from the entity type's attributes (regular and
+link types); test in test_v2_collection_variation.py.  Dispatch: `attr:Open run#0` gone,
+reading and outcomes unchanged (the union of cards and page keyed by name); workshop's rule
+unchanged.  Blend: being confirmed (p42_nominal on blend_book_transfer).
+(s) graph: `_texts_at` keyed by (view skeleton, indexed position); a definition label is
+constant within its own view; test with the reservoir shape in test_v2_definition_lists.py.
+Next: commit, suite, battery from scratch (regen again: the graph changed).
+
+Reservoir under (s) (05:36): the review page's definition list is read (fields
+@Water requested / @Water source / @Water available); the page unit is then keyed by the
+REQUESTED AMOUNT (numeric last resort: the one request has no name -- 'Orchard watering' is
+constant), so the operand that should be compared is the key and not a field, and the only
+candidate field, Water available, is a clock (cisterns chosen in rising order).  A
+singleton record with no name is a representational question of its own (a constant key
+"names no instance in particular" under the identity doctrine, but for a singleton it
+names the only one); left open, stated in Part XXIII.

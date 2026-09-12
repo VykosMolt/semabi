@@ -115,7 +115,8 @@ class ObsGraph:
         self._listed_only: set[str] = set()   # values by collection variation alone
         self._declared_headers: set[str] = set()  # texts of header rows in a row group of their own
         self.listings: dict[str, frozenset[int]] = {}  # undeclared collections: containers of same-shaped children
-        self._texts_at: dict[tuple, Counter] = defaultdict(Counter)  # leaf texts by indexed position
+        self._texts_at: dict[tuple, Counter] = defaultdict(Counter)  # leaf texts by (view, indexed position)
+        self._skeleton: dict[str, int] = {}  # observation -> its view skeleton
         self._pooled_views: dict[tuple, TextTemplate] = {}
         self._seen: set[str] = set()   # every token the corpus read anywhere, headers and options included
         self._value_paths: set[str] | None = None
@@ -358,6 +359,7 @@ class ObsGraph:
         skel = hash(frozenset(paths.values()))  # which view this is (set of role paths)
         listings = frozenset(x for x in shapes if self._listing(obs, x, shapes))
         self.listings[sig] = listings
+        self._skeleton[sig] = skel
         for n in obs.nodes:
             d = NodeDesc(sig, n.i, n.role, paths[n.i], shapes[n.i], tokens(node_text(n)), depth[n.i], list(obs.children(n.i)), n.parent)
             self.nodes[(sig, n.i)] = d
@@ -410,7 +412,7 @@ class ObsGraph:
             if not self.learning:
                 continue
             if not obs.children(n.i):
-                self._texts_at[self.position_idx(obs, n.i)][node_text(n)] += 1
+                self._texts_at[(skel, self.position_idx(obs, n.i))][node_text(n)] += 1
             tt = self.templates.setdefault(pos, TextTemplate(pos))
             tv = self.templates_v.setdefault((key_pos, ppos, skel_key), TextTemplate(key_pos))
             self._seen.update(tokens(node_text(n)))
@@ -669,7 +671,8 @@ class ObsGraph:
                 and len({obs.node(c).role for c in kids}) == 1
                 and obs.node(kids[0]).role not in WIDGET_ROLES
                 and not any(obs.children(c) for c in kids)):
-            texts = [self._texts_at.get(self.position_idx(obs, c), {}) for c in kids]
+            skel = self._skeleton.get(sig)
+            texts = [self._texts_at.get((skel, self.position_idx(obs, c)), {}) for c in kids]
             labels = all(len(texts[k]) == 1 and node_text(obs.node(kids[k])).strip() for k in range(0, len(kids), 2))
             varies = any(len(texts[k]) >= 2 for k in range(1, len(kids), 2))
             if labels and varies:
