@@ -2172,6 +2172,366 @@ def test_required_only_creation_does_not_clear_default_drift_to_publish(tmp_path
     assert 'draft' in learned['reason']
 
 
+class _PopulatedExitBrowser(_OptionalProjectionBrowser):
+    """Rendered-only create/result routes with a populated, semantically unnamed scope."""
+    def __init__(self, *, fault=None):
+        super().__init__()
+        self.scene, self.selected = 'entry', None
+        self.scope_value = 'phase:ready'
+        self.route_fault = fault
+        self.generation = 0
+        self.routes = {}
+        self.current_url = self.allowed_origin + '/'
+        self.route_actions = []
+        self.notice = False
+        self.neighbor = 'Neighbor stable'
+        self.scope_caption = 'Current options'
+        self.mode_pressed = False
+        self.source_query = ''
+        self.destination_override = None
+        self.boundary_incomplete = False
+        self.boundary_owner = 'node'
+
+    def read(self):
+        if self.scene == 'entry':
+            surface = super().read()
+        else:
+            nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'group', ''),
+                     Node(2, 1, 'textbox', 'Display value', value=self.scope_value),
+                     Node(3, 1, 'text', self.scope_caption), Node(4, 1, 'button', 'Mode', pressed=self.mode_pressed),
+                     Node(5, 0, 'article', ''), Node(6, 5, 'text', self.rows[self.selected]['Name']),
+                     Node(7, 0, 'article', ''), Node(8, 7, 'text', self.neighbor)]
+            properties = {2: {'form': 1}, 4: {'form': 1}}
+            forms = [1]
+            if self.notice:
+                nodes.append(Node(len(nodes), 0, 'group', 'Transient non-row announcement'))
+            if self.route_fault == 'extra_scope':
+                root = len(nodes)
+                nodes.extend([Node(root, 0, 'group', ''), Node(root + 1, root, 'textbox', 'Another value', value='Keep this draft')])
+                properties[root + 1] = {'form': root}
+                forms.append(root)
+            if self.route_fault == 'duplicate_control':
+                node = len(nodes)
+                nodes.append(Node(node, 1, 'textbox', 'Display value', value=self.scope_value))
+                properties[node] = {'form': 1}
+            link = len(nodes)
+            nodes.append(Node(link, 1, 'link', 'Preset'))
+            properties[link] = {'form': 1, 'destination': self.destination_override or self.current_url + '#'}
+            surface = _surface(nodes, properties, forms=forms)
+            boundary = 7 if self.boundary_owner == 'ancestor' else 8
+            surface.text_boundaries[boundary] = None if self.boundary_incomplete else self.neighbor
+        surface.observation.url = self.current_url
+        self.surface = surface
+        return surface
+
+    def act(self, action):
+        result = super().act(action)
+        if action.kind == 'click':
+            self.scene, self.selected = 'source', len(self.rows) - 1
+            self.current_url = self.allowed_origin + '/observed-view-' + str(len(self.rows)) + self.source_query
+            self.routes[self.current_url] = self.selected
+            self.scope_value, self.notice = 'phase:ready', True
+            self.destination_override = None
+            self.generation += 1
+        return result
+
+    def goto(self, url):
+        self.route_actions.append(('goto', url))
+        self.generation += 1
+        self.current_url = url
+        if url == self.allowed_origin + '/':
+            self.scene, self.selected = 'entry', None
+            if self.route_fault == 'interrupted_exit':
+                raise RuntimeError('Lost navigation reply after leaving populated source')
+        else:
+            self.scene, self.selected = 'source', self.routes[url]
+            self.notice = False
+            if self.route_fault == 'lost_draft':
+                self.scope_value = 'previous value'
+            if self.route_fault == 'scope_changed':
+                self.scope_caption = 'Meaningfully changed options'
+            if self.route_fault == 'row_changed':
+                self.neighbor = 'Neighbor corrupted'
+            if self.route_fault == 'pressed_changed':
+                self.mode_pressed = True
+        return self.read().observation
+
+    def reload(self):
+        self.route_actions.append(('reload', self.current_url))
+        self.generation += 1
+        self.notice = False
+        if self.scene == 'source':
+            if self.route_fault == 'cached_draft':
+                self.scope_value = 'previous value'
+            if self.route_fault == 'wrong_owner':
+                self.rows[self.selected]['Name'] = 'Wrong target'
+            if self.route_fault in {'sibling_boundary', 'ancestor_boundary'}:
+                self.boundary_incomplete = True
+            destinations = {'other_document': self.allowed_origin + '/different',
+                            'fragment': self.current_url + '#changed',
+                            'no_fragment': self.current_url,
+                            'query': self.current_url + '?different=1',
+                            'prior_record': next(iter(self.routes)) + '#'}
+            if self.route_fault in destinations:
+                self.destination_override = destinations[self.route_fault]
+        return self.read()
+
+    def retain_nodes(self, nodes):
+        return (self.generation, tuple(nodes))
+
+    def nodes_retained(self, retained, nodes):
+        return retained == (self.generation, tuple(nodes))
+
+    def release_nodes(self, retained):
+        pass
+
+    def close(self):
+        self.generation += 1
+
+
+class _PopulatedContextBrowser(_PopulatedExitBrowser):
+    def __init__(self, context_fault):
+        super().__init__()
+        self.context_fault, self.changed = context_fault, False
+
+    def read(self):
+        surface = super().read()
+        if self.scene != 'source':
+            return surface
+        nodes = deepcopy(surface.observation.nodes)
+        owner_a, owner_b = len(nodes), len(nodes) + 1
+        anonymous = self.context_fault in {'anonymous_heading', 'ambiguous_owners'}
+        nodes.extend([Node(owner_a, 0, 'region', '' if anonymous else 'Owner A'),
+                      Node(owner_b, 0, 'region', '' if anonymous else 'Owner B')])
+        if anonymous:
+            nodes.extend([Node(len(nodes), owner_a, 'heading', 'Same owner' if self.context_fault == 'ambiguous_owners' else 'Owner A'),
+                          Node(len(nodes) + 1, owner_b, 'heading', 'Same owner' if self.context_fault == 'ambiguous_owners' else 'Owner B')])
+        if self.context_fault == 'move_scope':
+            nodes[1].parent = owner_b if self.changed else owner_a
+        else:
+            swap = self.changed and self.context_fault in {'move_target', 'anonymous_heading'}
+            nodes[5].parent, nodes[7].parent = (owner_b, owner_a) if swap else (owner_a, owner_b)
+            if self.context_fault == 'ancestor_state':
+                nodes[owner_a].busy = self.changed
+            if self.context_fault == 'row_order':
+                nodes[5].parent = nodes[7].parent = owner_a
+        # Produce ordinary preorder indices after reparenting. Indices themselves
+        # never provide the owner identity asserted by these counterexamples.
+        observation = Observation(nodes, self.current_url)
+        def visit(node):
+            children = observation.children(node)
+            if self.changed and ((self.context_fault == 'row_order' and node == owner_a)
+                                 or (self.context_fault == 'control_order' and node == 1)):
+                children = list(reversed(children))
+            return [node, *(descendant for child in children for descendant in visit(child))]
+        ordered = visit(0)
+        mapping = {node: index for index, node in enumerate(ordered)}
+        rebuilt = [Node.from_json({**observation.node(node).to_json(), 'i': mapping[node],
+                                   'parent': mapping.get(observation.node(node).parent, -1)}) for node in ordered]
+        properties = {}
+        for node, control in surface.controls.items():
+            properties[mapping[node]] = {**control, 'form': mapping.get(control.get('form'))}
+        self.surface = _surface(rebuilt, properties, forms=[mapping[root] for root in surface.forms],
+                                text_boundaries={mapping[node]: value for node, value in surface.text_boundaries.items()})
+        self.surface.observation.url = self.current_url
+        return self.surface
+
+    def reload(self):
+        if self.scene == 'source' and self.route_fault == 'context_change':
+            self.changed = True
+        return super().reload()
+
+
+def test_populated_exit_learns_two_real_trials_then_uses_fresh_source_without_final_navigation(tmp_path, monkeypatch):
+    learning_events = []
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_PopulatedExitBrowser(), emit=learning_events.append)
+    operation = _learned_kind(learned, 'create_visible_record')
+    assert 'unique visible record witness' in learned['attempts'][0]['reason']
+    assert learned['attempts'][0]['confirmed_trials'] == 0
+    assert len(browser.rows) == 3
+    trials = operation['support']['trials']
+    assert len(trials) == 2 and all(trial['exit_preservation']['route_contrast'] for trial in trials)
+    assert len({trial['arguments']['name'] for trial in trials}) == 2
+    assert sum(event['type'] == 'populated_scope_bootstrap' for event in learning_events) == 1
+    assert sum(event['type'] == 'populated_scope_preservation' for event in learning_events) == 3
+    assert any('Transient non-row announcement' in path.read_text()
+               for path in runtime.data_dir.rglob('observations.jsonl'))  # Never remove raw notices.
+    assert 'observed-view-' not in json.dumps(operation['procedure'])
+    assert operation['procedure']['populated_exit']['return_binding'] == 'captured_same_origin_source_url'
+    for fresh in ('Fresh first record', 'Fresh second record'):
+        events = []
+        result = runtime.invoke(connection, operation, {'name': fresh}, events.append)
+        assert result['outcome'] == 'CONFIRMED', result
+        assert browser.rows[-1]['Name'] == fresh
+        assert browser.route_actions[-1] == ('reload', browser.current_url)
+        assert browser.current_url not in {browser.allowed_origin + '/observed-view-' + str(i) for i in (1, 2, 3)}
+        assert not result['effect']['exit_preservation']['route_contrast']  # Runtime does not acquire.
+        assert 'non-record surface' in result['effect']['exit_preservation']['scope']
+        assert sum(event['type'] == 'write_intent' for event in events) == 4  # prior exit, fill, Save, terminal reload
+
+
+@pytest.mark.parametrize('fault', ['lost_draft', 'cached_draft', 'wrong_owner', 'extra_scope',
+                                   'duplicate_control', 'scope_changed', 'row_changed', 'pressed_changed', 'interrupted_exit'])
+def test_populated_exit_contradictions_stop_bootstrap_without_repeating_business_write(tmp_path, monkeypatch, fault):
+    browser = _PopulatedExitBrowser(fault=fault)
+    # An interrupted exit is activated only once the learner has submitted;
+    # initial route setup remains an ordinary successful observation.
+    if fault == 'interrupted_exit':
+        original = browser.act
+        browser.route_fault = None
+        def act(action):
+            result = original(action)
+            if action.kind == 'click':
+                browser.route_fault = fault
+            return result
+        browser.act = act
+    events = []
+    _, _, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=browser, emit=events.append)
+    assert not learned['operations']
+    assert len(browser.rows) == 1
+    assert sum(action.kind == 'click' for action in browser.actions) == 1
+    assert learned['attempts'][0]['confirmed_trials'] == 0
+    assert not any(action.kind == 'type' and action.text == 'previous value' for action in browser.actions)
+    if fault == 'interrupted_exit':
+        failed = [event for event in events if event['type'] == 'populated_scope_preservation_failed']
+        assert len(failed) == 1 and failed[0]['outcome'] == 'UNCERTAIN'
+
+
+@pytest.mark.parametrize('fault', ['changed_value', 'remount', 'extra_scope', 'version', 'restart'])
+def test_populated_exit_runtime_requires_current_receipt_state_and_version_before_actions(tmp_path, monkeypatch, fault):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_PopulatedExitBrowser())
+    operation = deepcopy(_learned_kind(learned, 'create_visible_record'))
+    if fault == 'changed_value':
+        browser.scope_value = 'Keep this newly changed draft'
+    elif fault == 'remount':
+        browser.generation += 1
+    elif fault == 'extra_scope':
+        browser.route_fault = fault
+    elif fault == 'version':
+        operation['version'] += 1
+    else:
+        runtime = Runtime(tmp_path / 'restarted')
+        runtime.sessions[connection['id']] = browser
+    before = (len(browser.actions), len(browser.route_actions))
+    result = runtime.invoke(connection, operation, {'name': 'Must not be created'}, lambda event: None)
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT'
+    assert before == (len(browser.actions), len(browser.route_actions))
+    assert len(browser.rows) == 3
+
+
+def test_populated_exit_bootstrap_does_not_count_as_a_required_creation_trial(tmp_path, monkeypatch):
+    _, _, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_PopulatedExitBrowser(), settings={'max_writes': 13})
+    assert not learned['operations']
+    assert any(attempt['confirmed_trials'] == 1 for attempt in learned['attempts'])
+    assert len(browser.rows) == 2
+
+
+def test_populated_exit_reserves_whole_contrast_before_first_navigation(tmp_path, monkeypatch):
+    _, _, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_PopulatedExitBrowser(), settings={'max_writes': 5})
+    assert not learned['operations']
+    assert len(browser.rows) == 1
+    assert browser.scene == 'source'  # No first exit when the three-action contrast cannot finish in budget.
+    assert learned['metrics']['possible_write_actions'] == 3
+    assert 'budget' in learned['reason']
+
+
+@pytest.mark.parametrize('fault', ['cached_draft', 'wrong_owner', 'sibling_boundary', 'ancestor_boundary'])
+def test_populated_exit_runtime_rejects_bad_terminal_reload_without_acquisition(tmp_path, monkeypatch, fault):
+    browser = _PopulatedExitBrowser()
+    if fault == 'ancestor_boundary':
+        browser.boundary_owner = 'ancestor'
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=browser)
+    operation = _learned_kind(learned, 'create_visible_record')
+    browser.route_fault = fault
+    events = []
+    result = runtime.invoke(connection, operation, {'name': 'Fresh terminal target'}, events.append)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert result['operation_status'] == 'STALE'
+    assert len(browser.rows) == 4
+    assert browser.route_actions[-1] == ('reload', browser.current_url)
+    assert not any(event['type'] == 'populated_scope_bootstrap' for event in events)
+    assert browser not in runtime._verified_editors
+
+
+@pytest.mark.parametrize('fault', ['move_target', 'move_scope', 'anonymous_heading', 'ancestor_state', 'row_order', 'control_order'])
+def test_populated_exit_preserves_containing_owner_and_its_observed_state(tmp_path, monkeypatch, fault):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_PopulatedContextBrowser(fault))
+    operation = _learned_kind(learned, 'create_visible_record')
+    browser.route_fault = 'context_change'
+    result = runtime.invoke(connection, operation, {'name': 'Fresh owned target'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert result['operation_status'] == 'STALE'
+    assert browser.rows[-1]['Name'] == 'Fresh owned target'  # Target value alone is insufficient.
+    assert browser.route_actions[-1][0] == 'reload'
+
+
+def test_populated_exit_does_not_invent_identity_for_indistinguishable_holders(tmp_path, monkeypatch):
+    _, _, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_PopulatedContextBrowser('ambiguous_owners'))
+    assert not learned['operations']
+    assert len(browser.rows) == 1
+    assert 'ambiguous' in learned['reason']
+
+
+@pytest.mark.parametrize('fault', ['other_document', 'fragment', 'no_fragment', 'query', 'prior_record'])
+def test_populated_exit_full_control_state_preserves_destination_binding(tmp_path, monkeypatch, fault):
+    browser = _PopulatedExitBrowser()
+    browser.source_query = '?q=%2f&state=1'
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=browser)
+    operation = _learned_kind(learned, 'create_visible_record')
+    assert 'observed-view-' not in json.dumps(operation['procedure'])
+    destinations = [node['control']['destination']
+                    for node in operation['procedure']['populated_exit']['state']['raw_form']['structure']
+                    if node['control'] and 'destination' in node['control']]
+    assert destinations == [{'binding': 'captured_source_document', 'has_fragment': True, 'fragment': ''}]
+    browser.route_fault = fault
+    result = runtime.invoke(connection, operation, {'name': 'Fresh destination target'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN'
+    assert result['operation_status'] == 'STALE'
+    assert browser.rows[-1]['Name'] == 'Fresh destination target'
+
+
+@pytest.mark.parametrize('owner', [6, 8])
+def test_populated_exit_never_collapses_external_native_form_references(tmp_path, owner):
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'article', ''), Node(2, 1, 'text', 'Target'),
+             Node(3, 0, 'article', ''), Node(4, 3, 'text', 'Neighbor'), Node(5, 3, 'button', 'Apply'),
+             Node(6, 0, 'group', 'First form'), Node(7, 6, 'textbox', 'First value', value=''),
+             Node(8, 0, 'group', 'Second form'), Node(9, 8, 'textbox', 'Second value', value='')]
+    surface = _surface(nodes, {5: {'form': owner}, 7: {'form': 6}, 9: {'form': 8}}, forms=(6, 8))
+    witness = runtime_module.record_witness(surface, {'name': 'Target'}, 'name')
+    # Previously either association became the same "outside" marker. Until a
+    # correspondence is established, even the unchanged case is unsupported.
+    with pytest.raises(runtime_module.StopOperation, match='external native form owner'):
+        Runtime(tmp_path)._scope_preservation(surface, witness)
+
+
+def test_populated_exit_restart_can_use_contract_from_clean_entry_but_not_a_preexisting_draft(tmp_path, monkeypatch):
+    _, connection, original, learned = _learn_editable_records(
+        tmp_path / 'learning', monkeypatch, browser=_PopulatedExitBrowser())
+    operation = _learned_kind(learned, 'create_visible_record')
+    browser = _PopulatedExitBrowser()
+    browser.rows = deepcopy(original.rows)
+    browser.routes = deepcopy(original.routes)
+    runtime = Runtime(tmp_path / 'restart')
+    runtime.sessions[connection['id']] = browser
+    result = runtime.invoke(connection, operation, {'name': 'Created after restart'}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED'
+    assert browser.rows[-1]['Name'] == 'Created after restart'
+    assert browser.route_actions[-1] == ('reload', browser.current_url)
+    no_receipt = Runtime(tmp_path / 'preexisting')
+    no_receipt.sessions[connection['id']] = browser
+    before = (len(browser.actions), len(browser.route_actions))
+    stopped = no_receipt.learn(connection, {}, lambda event: None)
+    assert not stopped['operations'] and 'draft' in stopped['reason']
+    assert before == (len(browser.actions), len(browser.route_actions))
+
+
 class _NavigationReloadBrowser(_RecordBrowser):
     """Ordinary navigation loses an unsaved draft, as a page reload can."""
     def __init__(self):
@@ -3208,7 +3568,7 @@ class _EditableRecordBrowser(_SyntheticElementContinuity):
         return ActionResult(True)
 
 
-def _learn_editable_records(tmp_path, monkeypatch, *, browser=None, settings=None):
+def _learn_editable_records(tmp_path, monkeypatch, *, browser=None, settings=None, emit=None):
     ticks = count(0, 10)
     monkeypatch.setattr(runtime_module, 'time', SimpleNamespace(
         monotonic=lambda: next(ticks), sleep=lambda _seconds: None))
@@ -3217,7 +3577,7 @@ def _learn_editable_records(tmp_path, monkeypatch, *, browser=None, settings=Non
     connection = {'id': 'editable', 'url': browser.allowed_origin + '/',
                   'scope': {'exploration_enabled': True, 'max_actions': 60, 'max_writes': 30}}
     runtime.sessions[connection['id']] = browser
-    result = runtime.learn(connection, settings or {}, lambda event: None)
+    result = runtime.learn(connection, settings or {}, emit or (lambda event: None))
     return runtime, connection, browser, result
 
 

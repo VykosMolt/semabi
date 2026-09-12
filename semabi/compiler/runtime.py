@@ -410,7 +410,9 @@ class Runtime:
     def _trace(self, connection: dict, emit, budget: Budget) -> Trace:
         return Trace(self.data_dir / connection["id"] / "evidence" / uuid.uuid4().hex, emit, budget)
 
-    def _open(self, browser, procedure: dict, trace: Trace) -> Surface:
+    def _open(self, browser, procedure: dict, trace: Trace, *, onboarding_exit: bool = False) -> Surface:
+        if onboarding_exit and self._verified_editors.get(browser, {}).get("kind") == "populated_scope":
+            self._continue_scope_exit(browser, procedure, trace)
         self._guard_current_editor(trace.read(browser))
         surface = trace.navigate(browser, procedure["entry_url"])
         for descriptor in procedure.get("navigation", []):
@@ -621,14 +623,10 @@ class Runtime:
 
     @contextmanager
     def _capture_editor(self, browser, surface: Surface, procedure: dict, values: dict, trace: Trace):
-        if not all(callable(getattr(browser, method, None)) for method in
-                   ("retain_nodes", "nodes_retained", "release_nodes")):
-            raise StopOperation("Observed editor element continuity is unavailable", stale=True)
         candidate = self._record_form(surface, procedure, values[procedure["anchor"]])
         captured = self._editor_state(surface, candidate)
         nodes = self._editor_nodes(surface, candidate, procedure)
-        trace.budget.check_deadline()
-        retained = browser.retain_nodes(nodes)
+        retained = self._retain_editor_elements(browser, nodes, trace)
         try:
             trace.budget.check_deadline()
             if not browser.nodes_retained(retained, nodes):
@@ -934,6 +932,235 @@ class Runtime:
         return [candidate["root"], *(node for node in surface.observation.subtree(candidate["root"])
                                      if node in surface.controls)]
 
+    @staticmethod
+    def _retain_editor_elements(browser, nodes: list[int], trace: Trace):
+        if not all(callable(getattr(browser, method, None)) for method in
+                   ("retain_nodes", "nodes_retained", "release_nodes")):
+            raise StopOperation("Observed editor element continuity is unavailable", stale=True)
+        trace.budget.check_deadline()
+        retained = browser.retain_nodes(nodes)
+        try:
+            trace.budget.check_deadline()
+            if not browser.nodes_retained(retained, nodes):
+                raise StopOperation("Observed editor elements changed before capture", stale=True)
+            return retained
+        except Exception:
+            browser.release_nodes(retained)
+            raise
+
+    @staticmethod
+    def _populated_scope(surface: Surface) -> dict | None:
+        """One exact observed scope, without interpreting its values as a query or saved data."""
+        roots = [root for root in editor_scopes(surface) if any(
+            surface.controls.get(node, {}).get("role") == "textbox"
+            and surface.controls[node].get("input_type") != "search"
+            and not surface.controls[node].get("readonly") and surface.observation.node(node).value
+            for node in surface.observation.subtree(root))]
+        if not roots:
+            return None
+        if len(roots) != 1:
+            raise StopOperation("Populated exit scope is ambiguous or another draft is present", stale=True)
+        root = roots[0]
+        Runtime._guard_current_editor(surface, selected_root=root)
+        controls = []
+        for node in surface.observation.subtree(root):
+            if node not in surface.controls:
+                continue
+            control = surface.controls[node]
+            if control.get("form") not in (None, root):
+                raise StopOperation("Populated scope contains a different native control owner", stale=True)
+            controls.append(surface.descriptor(node))
+        if len({digest(control) for control in controls}) != len(controls):
+            raise StopOperation("Populated scope control descriptors are ambiguous", stale=True)
+        descriptor = {"scope_role": surface.observation.node(root).role, "native_form": root in surface.forms,
+                      "context_controls": [],
+                      "structure": Runtime._observed_subtree(surface, root, source_binding=True)}
+        return {"root": root, "descriptor": descriptor, "submit_node": None}
+
+    @staticmethod
+    def _observed_node(surface: Surface, node: int, indices: dict, *, source_binding: bool = False) -> dict:
+        observed = surface.observation.node(node)
+        control = deepcopy(surface.controls.get(node))
+        if control is not None:
+            owner = control.pop("form", None)
+            if owner is not None and owner not in indices:
+                raise StopOperation("Compared control has an external native form owner without supported correspondence", stale=True)
+            control["native_owner"] = indices[owner] if owner is not None else None
+            destination = control.get("destination")
+            if source_binding and isinstance(destination, str):
+                document, marker, fragment = destination.partition("#")
+                if document == surface.observation.url.partition("#")[0]:
+                    # Exact byte equality only: no decoded IDs, path templates,
+                    # query omission, prefix matching, or fragment conflation.
+                    control["destination"] = {"binding": "captured_source_document",
+                                              "has_fragment": bool(marker), "fragment": fragment}
+        return {"control": control, "text_complete": surface.text_is_complete(node),
+                **{key: value for key, value in observed.to_json().items()
+                                        if key not in {"i", "parent", "bbox"}},
+                **({"text_boundary": surface.text_boundaries[node]} if node in surface.text_boundaries else {})}
+
+    @staticmethod
+    def _observed_subtree(surface: Surface, root: int, *, source_binding: bool = False) -> list:
+        nodes = list(surface.observation.subtree(root))
+        indices = {node: index for index, node in enumerate(nodes)}
+        return [{"parent": indices.get(surface.observation.node(node).parent, -1),
+                 **Runtime._observed_node(surface, node, indices, source_binding=source_binding)} for node in nodes]
+
+    def _occurrence_context(self, surface: Surface, root: int, record_roots: set[int],
+                            *, source_binding: bool = False) -> list:
+        """Preserve containment and observed owner labels, without assigning a business identity."""
+        obs = surface.observation
+
+        def headings(owner, branch=None):
+            pending, result = list(obs.children(owner)), []
+            while pending:
+                node = pending.pop(0)
+                if node == branch or node in record_roots:
+                    continue
+                if obs.node(node).role == "heading":
+                    result.append(self._observed_subtree(surface, node, source_binding=source_binding))
+                else:
+                    pending.extend(obs.children(node))
+            return result
+
+        context, branch = [], root
+        for owner in obs.ancestors(root):
+            item = {"node": self._observed_node(surface, owner, {owner: 0}, source_binding=source_binding),
+                    "headings": headings(owner, branch)}
+            # Two indistinguishable containing owners cannot establish which
+            # holder retained an occurrence. Do not turn their positions into IDs.
+            siblings = obs.children(obs.node(owner).parent) if obs.node(owner).parent >= 0 else []
+            rivals = [sibling for sibling in siblings if sibling != owner
+                      and any(region in obs.subtree(sibling) for region in record_roots)
+                      and self._observed_node(surface, sibling, {sibling: 0}, source_binding=source_binding) == item["node"]
+                      and headings(sibling) == item["headings"]]
+            if rivals:
+                raise StopOperation("Containing owner context is observationally ambiguous", stale=True)
+            context.append(item)
+            branch = owner
+        return context
+
+    def _exit_scope_state(self, surface: Surface, candidate: dict, witness: dict) -> dict:
+        roots = {region["root"] for region in local_regions(surface.observation)} | {witness["root"]}
+        return {**self._editor_state(surface, candidate),
+                "owner_context": self._occurrence_context(surface, candidate["root"], roots, source_binding=True)}
+
+    def _scope_preservation(self, surface: Surface, witness: dict) -> dict:
+        # These are observation-local occurrences, not a complete collection or
+        # a promise about non-row notices, hidden state, or exclusive causation.
+        observed_regions = local_regions(surface.observation)
+        roots = {region["root"] for region in observed_regions} | {witness["root"]}
+        regions = [{"role": region["role"], "basis": region["basis"],
+                    "nodes": self._observed_subtree(surface, region["root"]),
+                    "context": self._occurrence_context(surface, region["root"], roots)}
+                   for region in observed_regions]
+        return {"target": self._observed_subtree(surface, witness["root"]),
+                "target_context": self._occurrence_context(surface, witness["root"], roots),
+                "local_regions": regions}
+
+    def _scope_receipt(self, browser, surface: Surface, procedure: dict, arguments: dict,
+                       witness: dict, trace: Trace, *, contract: dict | None = None) -> dict:
+        candidate = self._populated_scope(surface)
+        if candidate is None:
+            raise StopOperation("Expected populated exit scope is absent", stale=True)
+        source_url = surface.observation.url
+        if origin_of(source_url) != browser.allowed_origin or origin_of(procedure["entry_url"]) != browser.allowed_origin:
+            raise StopOperation("Populated exit source or route is not same-origin", stale=True)
+        state = self._exit_scope_state(surface, candidate, witness)
+        proposed = {"kind": "exact_populated_scope_exit_v1", "return_binding": "captured_same_origin_source_url",
+                    "source_reference_policy": "exact_document_bytes_with_fragment_presence_v1",
+                    "entry_url": procedure["entry_url"], "state": state}
+        if contract is not None and proposed != contract:
+            raise StopOperation("Learned populated scope state or exit route changed", stale=True)
+        self._release_verified_editor(browser)
+        receipt = {"kind": "populated_scope", "contract": proposed, "source_url": source_url,
+                   "arguments": deepcopy(arguments), "anchor": procedure["anchor"],
+                   "slots": deepcopy(witness["field_slots"]), "preservation": self._scope_preservation(surface, witness),
+                   "state": state, "observation": surface.observation.structural_signature(), "version": None,
+                   "retained": self._retain_editor_elements(browser, self._verified_editor_nodes(surface, candidate), trace)}
+        self._verified_editors[browser] = receipt
+        try:
+            self._check_scope_receipt(browser, trace.read(browser), receipt, trace)
+        except Exception:
+            self._release_verified_editor(browser)
+            raise
+        return receipt
+
+    def _check_scope_receipt(self, browser, surface: Surface, receipt: dict, trace: Trace,
+                             *, continuity: bool = True) -> dict:
+        candidate = self._populated_scope(surface)
+        witness = record_witness(surface, receipt["arguments"], receipt["anchor"], receipt["slots"])
+        if (candidate is None or surface.observation.url != receipt["source_url"]
+                or witness is None or self._exit_scope_state(surface, candidate, witness) != receipt["state"]):
+            raise StopOperation("Populated scope or source changed; preserving the current draft", stale=True)
+        if witness is None or self._scope_preservation(surface, witness) != receipt["preservation"]:
+            raise StopOperation("Protected target or observed local regions changed during populated exit", stale=True)
+        if continuity and not browser.nodes_retained(receipt["retained"], self._verified_editor_nodes(surface, candidate)):
+            raise StopOperation("Populated scope elements no longer retain observed continuity", stale=True)
+        trace.budget.check_deadline()
+        return witness
+
+    def _continue_scope_exit(self, browser, procedure: dict, trace: Trace, *, version: int | None = None) -> None:
+        receipt = self._verified_editors.get(browser)
+        if not receipt or receipt.get("kind") != "populated_scope":
+            raise StopOperation("Populated exit requires a current guarded receipt")
+        try:
+            if (procedure["entry_url"] != receipt["contract"]["entry_url"] or
+                    version is not None and (receipt["version"] != version or
+                    procedure.get("populated_exit") != receipt["contract"])):
+                raise StopOperation("Populated exit belongs to a different operation contract or version", stale=True)
+            self._check_scope_receipt(browser, trace.read(browser), receipt, trace)
+            trace.emit({"type": "populated_scope_continuation", "from_observation": receipt["observation"],
+                        "scope": "New call's learned exit; hidden prior state and non-record surface preservation unestablished"})
+            trace.navigate(browser, procedure["entry_url"], possible_write=True)
+        finally:
+            self._release_verified_editor(browser)
+
+    def _preserve_populated_exit(self, browser, surface: Surface, procedure: dict, arguments: dict,
+                                 witness: dict, trace: Trace, *, acquire: bool) -> tuple[Surface, dict, dict]:
+        populated = self._populated_scope(surface)
+        if populated is not None and any(
+                populated["root"] in surface.observation.subtree(candidate["root"])
+                or candidate["root"] in surface.observation.subtree(populated["root"])
+                for candidate in matching_forms(surface, procedure["form"])):
+            self._guard_current_editor(surface)  # Own submission did not establish that a changed input default is disposable.
+        self._reserve_record_actions(trace, 3 if acquire else 1, 3 if acquire else 1)
+        contract = procedure.get("populated_exit")
+        if not acquire and contract is None:
+            raise StopOperation("Populated exit has no learned preservation contract", stale=True)
+        receipt = self._scope_receipt(browser, surface, procedure, arguments, witness, trace, contract=contract)
+        before = receipt["observation"]
+        writes_before = trace.budget.writes
+        try:
+            if acquire:
+                trace.navigate(browser, procedure["entry_url"], possible_write=True)
+                self._guard_current_editor(trace.read(browser))
+                returned = trace.navigate(browser, receipt["source_url"], possible_write=True)
+                returned_witness = self._check_scope_receipt(browser, returned, receipt, trace, continuity=False)
+                # Reacquire the returned document, rather than pretending the
+                # old DOM handles persisted through navigation.
+                receipt = self._scope_receipt(browser, returned, procedure, arguments, returned_witness, trace,
+                                              contract=receipt["contract"])
+            self._check_scope_receipt(browser, trace.read(browser), receipt, trace)
+            reloaded = trace.reload(browser, possible_write=True)
+            persisted = self._check_scope_receipt(browser, reloaded, receipt, trace, continuity=False)
+            receipt = self._scope_receipt(browser, reloaded, procedure, arguments, persisted, trace,
+                                          contract=receipt["contract"])
+            evidence = {"before": before, "after": receipt["observation"],
+                        "target": deepcopy(arguments), "compared_regions": len(receipt["preservation"]["local_regions"]),
+                        "incomplete_text_occurrences": sum(bool(node["name"]) and not node["text_complete"]
+                            for region in receipt["preservation"]["local_regions"] for node in region["nodes"]),
+                        "scope": "Exact target/local-region occurrences, order, containment, ancestor state, owned headings and text completeness; other non-record surface and hidden state omitted",
+                        "route_contrast": acquire, "direct_reload": True}
+            trace.emit({"type": "populated_scope_preservation", **evidence})
+            return reloaded, persisted, evidence
+        except Exception:
+            self._release_verified_editor(browser)
+            trace.emit({"type": "populated_scope_preservation_failed", "before": before,
+                        "outcome": "UNCERTAIN" if trace.budget.writes > writes_before else "FAILED_BEFORE_EXIT",
+                        "retry": "No automatic repetition of exit or business write"})
+            raise
+
     def _check_verified_editor(self, browser, surface: Surface, receipt: dict, trace: Trace) -> dict:
         procedure, values = receipt["procedure"], receipt["values"]
         candidate = self._record_form(surface, procedure, values[procedure["anchor"]])
@@ -998,6 +1225,8 @@ class Runtime:
         receipt = self._verified_editors.get(browser)
         if receipt is None:
             return
+        if receipt.get("kind") == "populated_scope":
+            raise StopOperation("Record editing has no learned continuation from this populated scope")
         try:
             if operation is not None and (
                     self._editor_continuation_contract(receipt["procedure"]) !=
@@ -1795,6 +2024,9 @@ class Runtime:
                 return invoke(self, self._browser(connection), operation, arguments, trace)
             validate_arguments(operation["argument_schema"], arguments)
             browser = self._browser(connection)
+            if (operation["kind"] == "create_visible_record" and
+                    self._verified_editors.get(browser, {}).get("kind") == "populated_scope"):
+                self._continue_scope_exit(browser, operation["procedure"], trace, version=operation["version"])
             if browser not in self._verified_editors or operation["kind"] == "create_visible_record":
                 self._guard_current_editor(trace.read(browser))
             if operation["kind"] != "create_visible_record":
@@ -1810,13 +2042,20 @@ class Runtime:
             after, first = self._witness(browser, after, arguments, anchor, trace, procedure["effect_slots"])
             if first is None:
                 raise StopOperation("Submitted values lack a unique visible record witness")
-            self._guard_current_editor(trace.read(browser))
-            reloaded = trace.reload(browser)
-            reloaded, persisted = self._witness(browser, reloaded, arguments, anchor, trace, procedure["effect_slots"])
+            preservation = None
+            if procedure.get("populated_exit"):
+                reloaded, persisted, preservation = self._preserve_populated_exit(
+                    browser, after, procedure, arguments, first, trace, acquire=False)
+                self._verified_editors[browser]["version"] = operation["version"]
+            else:
+                self._guard_current_editor(trace.read(browser))
+                reloaded = trace.reload(browser)
+                reloaded, persisted = self._witness(browser, reloaded, arguments, anchor, trace, procedure["effect_slots"])
             if persisted is None:
                 raise StopOperation("Record witness did not persist through reload")
             return {"outcome": "CONFIRMED", "effect": {"kind": "visible_record_created",
                     "arguments": arguments, "witness": persisted,
+                    **({"exit_preservation": preservation} if preservation is not None else {}),
                     "scope": "Unique local record in the current rendered view, retained after reload"},
                     "metrics": trace.metrics()}
         except StopOperation as error:
@@ -1890,6 +2129,8 @@ class Runtime:
                           "prior": "General English form action words; not observed support"})
                     procedure = {**location, "form": candidate["descriptor"]}
                     trials = []
+                    missing_witness_surface = None
+                    exit_started = False
                     try:
                         for trial in range(2):
                             arguments = probe_arguments(candidate, trial)
@@ -1897,7 +2138,7 @@ class Runtime:
                             procedure["defaults"] = {field["argument"]:
                                     field.get("checked") if field["role"] == "checkbox" else field.get("value")
                                     for field in candidate["fields"] if field["argument"] not in arguments}
-                            current = self._open(browser, procedure, trace)
+                            current = self._open(browser, procedure, trace, onboarding_exit=True)
                             self._preconditions(current, procedure, arguments)
                             if any(visible_record_matches(current, value) for value in arguments.values()):
                                 raise StopOperation("Probe values already appear in rendered records")
@@ -1905,18 +2146,35 @@ class Runtime:
                             after, witness = self._witness(browser, after, arguments, procedure["anchor"], trace,
                                                            procedure.get("effect_slots"))
                             if witness is None:
+                                missing_witness_surface = after
                                 raise StopOperation("Probe values lack a unique visible record witness")
                             procedure["readback_url"] = after.observation.url
                             procedure["effect_slots"] = witness["field_slots"]
-                            self._guard_current_editor(trace.read(browser))
-                            reloaded = trace.reload(browser)
-                            reloaded, witness = self._witness(browser, reloaded, arguments, procedure["anchor"], trace,
-                                                              procedure["effect_slots"])
+                            exit_evidence = None
+                            if "argument_names" in candidate and self._populated_scope(after) is not None:
+                                exit_started = True
+                                reloaded, witness, exit_evidence = self._preserve_populated_exit(
+                                    browser, after, procedure, arguments, witness, trace, acquire=True)
+                                procedure["populated_exit"] = deepcopy(self._verified_editors[browser]["contract"])
+                                # The invocation's source URL is captured anew; it
+                                # must not become a persistent record locator.
+                                procedure["readback_url"] = procedure["entry_url"]
+                            else:
+                                self._guard_current_editor(trace.read(browser))
+                                reloaded = trace.reload(browser)
+                                reloaded, witness = self._witness(browser, reloaded, arguments, procedure["anchor"], trace,
+                                                                  procedure["effect_slots"])
                             if witness is None:
                                 raise StopOperation("Probe record did not persist through reload")
                             trials.append({"arguments": arguments, "witness": witness,
                                            "checked_defaults": deepcopy(procedure["defaults"]),
-                                           "precondition_observation": current.observation.structural_signature()})
+                                           "precondition_observation": current.observation.structural_signature(),
+                                           **({"exit_preservation": exit_evidence} if exit_evidence is not None else {})})
+                        if procedure.get("populated_exit") and (len(trials) != 2 or
+                                len({trial["arguments"][procedure["anchor"]] for trial in trials}) != 2 or
+                                any(not trial.get("exit_preservation", {}).get("route_contrast")
+                                    or not trial["exit_preservation"].get("direct_reload") for trial in trials)):
+                            raise StopOperation("Populated exit publication requires two distinct completed creation contrasts")
                         identity = {"location": location, "form": candidate["descriptor"]}
                         if "argument_names" in candidate:
                             identity["argument_names"] = candidate["argument_names"]
@@ -1952,8 +2210,16 @@ class Runtime:
                             operation["name"] += "_required_fields"
                             operation["scope"]["argument_policy"] = "Observed required text controls only; omitted controls retain checked pre-submit defaults"
                             operation["scope"]["unsupported"].append("Post-submit persistence or effects of omitted control values")
+                        if procedure.get("populated_exit"):
+                            operation["prerequisites"].append("Exact observed populated-scope state and two-context tested entry/return/reload procedure")
+                            operation["scope"]["populated_exit"] = (
+                                "Empirical exact-state preservation, not a saved/filter classification. Return URL is captured "
+                                "from the current same-origin observation; receipts and DOM continuity are session-local. "
+                                "Checks cover target subtree and exposed local-region occurrences, not hidden or non-record state.")
                         bind_contract(operation)
                         operations.append(operation)
+                        if self._verified_editors.get(browser, {}).get("kind") == "populated_scope":
+                            self._verified_editors[browser]["version"] = operation["version"]
                         emit({"type": "operation_learned", "id": op_id, "version": operation["version"]})
                         self._learn_record_family(browser, operation, trace, settings, operations, attempts, emit)
                         break  # The first established family ends this bounded scan, including failed extensions.
@@ -1961,9 +2227,25 @@ class Runtime:
                         attempts.append({"candidate": candidate["signature"], "reason": str(error),
                                          "confirmed_trials": len(trials)})
                         emit({"type": "candidate_unestablished", **attempts[-1]})
+                        if exit_started:
+                            self._release_verified_editor(browser)
+                            raise  # An interrupted contrast must not be retried by another proposal.
+                        variants = creation_variants(candidate)
+                        if missing_witness_surface is not None and len(variants) == 2:
+                            names = variants[1]["argument_names"]
+                            subset = {name: arguments[name] for name in names}
+                            partial = record_witness(missing_witness_surface, subset, names[0])
+                            if partial is not None and self._populated_scope(missing_witness_surface) is not None:
+                                # This supports an acquisition observation only.
+                                # The original full write remains unconfirmed and
+                                # neither of the narrowed operation's trials exists yet.
+                                trace.emit({"type": "populated_scope_bootstrap", "arguments": subset,
+                                            "basis": "Partial supplied-value occurrence; not a confirmed full write or publication trial"})
+                                self._preserve_populated_exit(browser, missing_witness_surface,
+                                    {**procedure, "anchor": names[0]}, subset, partial, trace, acquire=True)
                 if operations:
                     break  # Bounded first operation; absence of others never invalidates them.
-                surface = self._open(browser, location, trace)
+                surface = self._open(browser, location, trace, onboarding_exit=True)
                 if len(location["navigation"]) < 2:
                     for node, control in surface.controls.items():
                         if control["role"] in {"button", "link"} and not control["disabled"] \
