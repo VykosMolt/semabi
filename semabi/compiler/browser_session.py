@@ -266,10 +266,14 @@ class BrowserSession(Browser):
     def read(self) -> Surface:
         # Long-lived event streams need not prevent a stable rendered read.
         # Stability is local snapshot agreement, not network or business quiescence.
-        deadline = time.monotonic() + self.max_settle_ms / 1000
+        deadline = None
         previous, agreements = None, 0
         while True:
-            obs = self._snapshot(time.time() + self.navigation_ms / 1000)
+            obs = self._snapshot(time.time() + (self.navigation_ms + self.render_ready_ms) / 1000)
+            if not self._render_observation_ready:
+                break
+            if deadline is None:
+                deadline = time.monotonic() + self.max_settle_ms / 1000
             signature = digest([obs.structural_signature(), self.surface.controls, self.surface.forms,
                                 self.surface.text_boundaries])
             agreements = agreements + 1 if signature == previous else 0
@@ -279,8 +283,8 @@ class BrowserSession(Browser):
             time.sleep(self.settle_ms / 1000)
         if self.surface is None:
             raise RuntimeError("No rendered observation is available")
-        self.surface.settled = agreements >= 2
-        self._last_obs = self.surface.observation
+        self.surface.settled = self._render_observation_ready and agreements >= 2
+        self._last_obs = self.surface.observation if self.surface.settled else None
         return self.surface
 
     def goto(self, url: str | None = None):
@@ -322,6 +326,8 @@ class BrowserSession(Browser):
         """Dispatch one learned Escape or Tab to an already focused retained textbox."""
         result, handle = ActionResult(False, "Retained textbox key target is unavailable"), None
         try:
+            if not self._render_observation_ready:
+                raise ValueError("Document rendering readiness is unavailable")
             if (primitive.kind != "press" or primitive.text not in {"Escape", "Tab"}
                     or origin_of(self._page.url) != self.allowed_origin):
                 raise ValueError("Only Escape and Tab are supported by this retained action")

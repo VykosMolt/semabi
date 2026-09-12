@@ -188,6 +188,8 @@ def _snapshot_session(monkeypatch, surfaces):
     session.max_settle_ms = 3000
     session.navigation_ms = 1000
     session.settle_ms = 0
+    session.render_ready_ms = 0
+    session._render_observation_ready = True
     snapshots = iter(surfaces)
     calls = []
 

@@ -157,19 +157,39 @@ class Primitive:
         return f"{self.kind}({t})" if t else f"{self.kind}()"
 
 
+RENDER_READY_JS = """({root, timeout}) => new Promise(resolve => {
+  let first, second, timer, finished = false;
+  const finish = ready => {
+    if (finished) return;
+    finished = true;
+    clearTimeout(timer);
+    if (first !== undefined) cancelAnimationFrame(first);
+    if (second !== undefined) cancelAnimationFrame(second);
+    resolve(ready && root === document.documentElement);
+  };
+  timer = setTimeout(() => finish(false), timeout);
+  first = requestAnimationFrame(t1 => {
+    second = requestAnimationFrame(t2 => finish(t2 > t1));
+  });
+})"""
+
+
 class Browser:
     """Primitive interface. `hooks` (evaluator-side) may be attached to observe
     step boundaries; the compiler never reads from them."""
 
     def __init__(self, url: str, reset_url: str, headless: bool = True, settle_ms: int = 150,
                  max_settle_ms: int = 3000, navigation_ms: int = 5000, max_navigations: int = 4,
-                 *, playwright=None):
+                 *, playwright=None, render_ready_ms: int = 3000):
         self.url = url
         self.reset_url = reset_url
         self.settle_ms = settle_ms
         self.max_settle_ms = max_settle_ms
         self.navigation_ms = navigation_ms
         self.max_navigations = max_navigations
+        self.render_ready_ms = render_ready_ms
+        self._render_root = None
+        self._render_observation_ready = False
         self._owns_playwright = playwright is None
         self._pw = playwright
         self._browser = None
@@ -216,6 +236,7 @@ class Browser:
             return
         self._closed = True
         try:
+            self._release_render_root()
             if self._browser is not None:
                 self._browser.close()
         finally:
@@ -223,6 +244,46 @@ class Browser:
                 self._pw.stop()
 
     # -------------------------------------------------------------- observe
+    def _release_render_root(self):
+        root, self._render_root = self._render_root, None
+        if root is not None:
+            try:
+                root.dispose()
+            except Exception:
+                pass  # A destroyed document must not replace the primary failure.
+
+    def _wait_for_render(self, timeout_ms: float) -> bool:
+        """Once per document rendering: two delivered frames, not a fixed delay.
+
+        The cache is a driver-owned element handle, never an application-writable
+        window flag. Replacing documentElement invalidates it, including set_content.
+        Readiness is availability evidence only; native actionability still checks
+        visibility, enabled state, geometry and hit targets for each actual action.
+        """
+        if self._render_root is not None:
+            try:
+                if self._render_root.evaluate("root => root === document.documentElement"):
+                    return True
+            except Exception as error:
+                if not _is_navigation_error(error):
+                    raise
+            self._release_render_root()
+        if timeout_ms <= 0:
+            return False
+        root = self._page.evaluate_handle("document.documentElement")
+        try:
+            ready = self._page.evaluate(RENDER_READY_JS, {"root": root, "timeout": timeout_ms})
+            if ready is True:
+                self._render_root = root
+                return True
+        finally:
+            if self._render_root is not root:
+                try:
+                    root.dispose()
+                except Exception:
+                    pass  # Context destruction must not mask the readiness failure.
+        return False
+
     def _raw_snapshot(self) -> Observation:
         raw = self._page.evaluate(SNAPSHOT_JS)
         nodes = [Node(d["i"], d["parent"], d["role"], d["name"], d.get("value"), d.get("checked"),
@@ -239,7 +300,13 @@ class Browser:
         permanent failure is never silently turned into an observation."""
         while True:
             try:
-                return self._raw_snapshot()
+                self._render_observation_ready = False
+                ready = self._wait_for_render(min(self.render_ready_ms, max(0, deadline - time.time()) * 1000))
+                observation = self._raw_snapshot()
+                # Never attach an old document's readiness to a replacement
+                # snapshot. A failed check does not retry an action against its IDs.
+                self._render_observation_ready = ready and self._wait_for_render(0)
+                return observation
             except Exception as exc:  # noqa: BLE001 - re-raised unless it is a document swap
                 if not _is_navigation_error(exc) or time.time() >= deadline:
                     raise
@@ -261,15 +328,23 @@ class Browser:
         observed while snapshotting restarts the agreement count and extends the budget once,
         up to `max_navigations` times, because the page that has to settle is a new one."""
         t0 = time.time()
-        hard_deadline = t0 + (self.max_settle_ms + self.navigation_ms * self.max_navigations) / 1000
-        settle_deadline = t0 + self.max_settle_ms / 1000
+        hard_deadline = t0 + (self.render_ready_ms + self.max_settle_ms + self.navigation_ms * self.max_navigations) / 1000
         waits = self.n_navigation_waits
         grants = 0
         prev = self._snapshot(hard_deadline)
+        if not self._render_observation_ready:
+            self.n_settle_timeouts += 1
+            self._last_obs = None
+            raise RuntimeError("Observation unsettled: document rendering did not become ready")
+        settle_deadline = time.time() + self.max_settle_ms / 1000
         stable = 0
         while True:
             time.sleep(self.settle_ms / 1000)
             cur = self._snapshot(hard_deadline)
+            if not self._render_observation_ready:
+                self.n_settle_timeouts += 1
+                self._last_obs = None
+                raise RuntimeError("Observation unsettled: document rendering did not become ready")
             if self.n_navigation_waits > waits:
                 # the document was replaced under the snapshot: a different page now has to
                 # settle, so agreement restarts and the budget is extended once per swap
@@ -311,6 +386,8 @@ class Browser:
             p.target_desc = {"role": n.role, "name": n.name, "placeholder": n.placeholder}
         res = ActionResult(True)
         try:
+            if p.kind in {"click", "type", "press", "select"} and not self._render_observation_ready:
+                raise RuntimeError("Observation unsettled: document rendering readiness is unavailable")
             if p.kind == "click":
                 self._handle(p.target).click(timeout=2000)
             elif p.kind == "type":

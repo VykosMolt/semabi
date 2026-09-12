@@ -18,6 +18,7 @@ import pytest
 from semabi.compiler.browser import Browser, Primitive, _is_navigation_error
 from semabi.compiler import browser as browser_module
 from semabi.compiler.runtime import Runtime
+from semabi.compiler.browser_session import BrowserSession
 
 PAGE = """<!doctype html><html><body>
 <h1>step %d</h1>
@@ -72,6 +73,82 @@ def test_navigation_error_recognised_but_permanent_errors_are_not():
     assert not _is_navigation_error(RuntimeError("TypeError: e.getAttribute is not a function"))
 
 
+@pytest.mark.slow
+def test_stalled_rendering_is_unsettled_and_requires_a_fresh_observation():
+    browser = BrowserSession('https://synthetic.invalid/')
+    browser.render_ready_ms = 80
+    try:
+        browser._page.set_content('''<button onclick="this.textContent='Changed'">Apply</button>
+          <script>
+            window.savedRAF = requestAnimationFrame;
+            window.requestAnimationFrame = () => 1;
+            window.__semabi_render_ready = true;
+            document.__semabi_render_ready = true;
+          </script>''')
+        surface = browser.read()
+        button = next(n for n in surface.observation.nodes if n.role == 'button')
+        assert not surface.settled
+        assert browser._last_obs is None and browser._render_root is None
+        assert browser.n_primitives == 0
+
+        # Frame delivery returning does not license a retry with the unsettled IDs.
+        browser._page.evaluate('() => { requestAnimationFrame = savedRAF; }')
+        result = browser.act(Primitive('click', target=button.i))
+        assert not result.ok and 'unsettled' in result.error
+        assert browser._page.locator('button').inner_text() == 'Apply'
+        assert browser.n_primitives == 1
+
+        browser.render_ready_ms = 3000
+        fresh = browser.read()
+        assert fresh.settled
+        button = next(n for n in fresh.observation.nodes if n.role == 'button')
+        result = browser.act(Primitive('click', target=button.i))
+        assert result.ok, result.error
+        assert browser._page.locator('button').inner_text() == 'Changed'
+    finally:
+        browser.close()
+
+
+@pytest.mark.slow
+def test_render_readiness_is_document_local_and_warm_reads_do_not_wait_for_frames(monkeypatch):
+    browser = BrowserSession('https://synthetic.invalid/')
+    try:
+        browser._page.set_content('<button>First</button>')
+        assert browser.read().settled
+        root = browser._render_root
+        disposed = []
+        dispose = root.dispose
+        monkeypatch.setattr(root, 'dispose', lambda: (disposed.append(True), dispose())[1])
+        # Startup readiness is cached, not a substitute for per-action actionability.
+        browser._page.evaluate('() => { window.frameCalls = 0; requestAnimationFrame = () => ++frameCalls; }')
+        assert browser.read().settled
+        assert browser._page.evaluate('frameCalls') == 0
+        assert browser._render_root is root
+
+        browser._page.set_content('<button>Replacement</button>')
+        browser.render_ready_ms = 80
+        assert not browser.read().settled
+        assert disposed == [True]
+        assert browser._render_root is None
+    finally:
+        browser.close()
+
+
+@pytest.mark.slow
+def test_research_observation_explicitly_rejects_stalled_rendering():
+    browser = Browser('https://synthetic.invalid/', '', render_ready_ms=80)
+    try:
+        browser._page.set_content('<button>Apply</button><script>requestAnimationFrame = () => 1</script>')
+        with pytest.raises(RuntimeError, match='Observation unsettled'):
+            browser.observe()
+        assert browser.n_settle_timeouts == 1
+        assert browser.n_primitives == 0
+        assert browser._last_obs is None and browser._render_root is None
+        assert not browser.act(Primitive('click', target=1)).ok
+    finally:
+        browser.close()
+
+
 class _Driver:
     def __init__(self, failure=None):
         self.failure = failure
@@ -119,12 +196,34 @@ def test_native_browser_owns_and_stops_its_default_driver_once(monkeypatch):
                         lambda: SimpleNamespace(start=lambda: starts.append(driver) or driver))
 
     browser = Browser('https://synthetic.invalid/', '')
+    released = []
+    browser._render_root = SimpleNamespace(dispose=lambda: released.append(True))
     browser.close()
     browser.close()
 
     assert starts == [driver]
     assert driver.browsers[0].close_calls == 1
     assert driver.stop_calls == 1
+    assert released == [True] and browser._render_root is None
+
+
+def test_failed_readiness_disposes_handle_without_masking_primary_failure():
+    browser = Browser.__new__(Browser)
+    browser._render_root = None
+    disposed = []
+
+    def dispose():
+        disposed.append(True)
+        raise RuntimeError('synthetic destroyed document cleanup')
+
+    def fail(*args):
+        raise RuntimeError('synthetic permanent browser failure')
+
+    root = SimpleNamespace(dispose=dispose)
+    browser._page = SimpleNamespace(evaluate_handle=lambda script: root, evaluate=fail)
+    with pytest.raises(RuntimeError, match='synthetic permanent browser failure'):
+        browser._wait_for_render(80)
+    assert disposed == [True] and browser._render_root is None
 
 
 def test_borrowed_driver_keeps_another_browser_usable_after_one_closes(monkeypatch):
