@@ -4841,6 +4841,173 @@ def test_record_read_uses_current_labeled_values_and_tolerates_reordered_fields(
     assert browser.scene == 'list'
 
 
+class _TextNeighborBrowser(_EditableRecordBrowser):
+    neighbor_fault = None
+    pending_neighbor_reload = False
+
+    def act(self, action):
+        selected = self.selected
+        updating = (selected is not None and action.kind == 'click'
+                    and self.surface.observation.node(action.target).name == 'Save')
+        result = super().act(action)
+        if updating:
+            self.neighbor_index = (selected + 1) % len(self.rows)
+            if self.neighbor_fault == 'save':
+                self.rows[self.neighbor_index]['Description'] = 'Changed sibling at Save'
+            self.pending_neighbor_reload = True
+        return result
+
+    def reload(self):
+        if self.pending_neighbor_reload and self.neighbor_fault == 'reload':
+            self.rows[self.neighbor_index]['Description'] = 'Changed sibling at reload'
+        self.pending_neighbor_reload = False
+        return super().reload()
+
+
+@pytest.mark.parametrize('phase', ['save', 'reload'])
+def test_direct_text_learning_requires_unchanged_observed_neighbors(tmp_path, monkeypatch, phase):
+    browser = _TextNeighborBrowser()
+    browser.neighbor_fault = phase
+    _, _, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=browser)
+    assert [op['kind'] for op in learned['operations']] == ['create_visible_record', 'read_visible_record']
+    attempt, = learned['attempts']
+    assert attempt['stage'] == 'update_visible_record' and attempt['confirmed_trials'] == 0
+    assert 'neighboring state changed' in attempt['reason']
+    assert browser.rows[1]['Description'] == ('Changed sibling at Save' if phase == 'save' else 'Changed sibling at reload')
+
+
+@pytest.mark.parametrize('phase', ['save', 'reload'])
+def test_direct_text_update_rejects_visible_sibling_mutation_after_save_or_reload(tmp_path, monkeypatch, phase):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_TextNeighborBrowser())
+    operation = _learned_kind(learned, 'update_visible_record')
+    assert not operation['procedure'].get('boolean_fields')
+    browser.neighbor_fault = phase
+    before = deepcopy(browser.rows)
+    result = runtime.invoke(connection, operation,
+        {'target': before[0]['URL'], 'title': 'Fresh requested title'}, lambda event: None)
+    assert result['outcome'] == 'UNCERTAIN', result
+    assert 'neighboring state changed' in result['effect']['reason']
+    assert browser.rows[0] == {**before[0], 'Title': 'Fresh requested title'}
+    assert browser.rows[1]['Description'] != before[1]['Description']
+    assert browser.rows[1]['URL'] == before[1]['URL']
+
+
+def test_direct_text_update_scopes_duplicate_labels_and_preserves_omitted_fields(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_TextNeighborBrowser())
+    operation = _learned_kind(learned, 'update_visible_record')
+    for row in browser.rows:
+        row['Title'] = 'Same displayed title'
+    before = deepcopy(browser.rows)
+    result = runtime.invoke(connection, operation,
+        {'target': before[0]['URL'], 'description': 'Fresh scoped description'}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED', result
+    assert browser.rows == [{**before[0], 'Description': 'Fresh scoped description'}, before[1]]
+    bracket = result['effect']['witness']['neighbor_bracket']
+    assert all(bracket[key] for key in ('before_edit', 'after_submit', 'after_reload'))
+    assert 'not a complete collection' in bracket['scope']
+    assert result['effect']['preserved_values']['title'] == 'Same displayed title'
+    assert all(trial['witness']['neighbor_bracket']['before_edit']
+               for trial in operation['support']['trials'])
+
+
+def test_direct_text_rename_rechecks_new_anchor_and_keeps_neighbor_bracket(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_MenuRecordBrowser())
+    operation = _learned_kind(learned, 'update_visible_record')
+    assert operation['procedure']['anchor_mode'] == 'replace_value'
+    original, neighbor = browser.rows
+    first = runtime.invoke(connection, operation,
+        {'target': original, 'value': 'First fresh name'}, lambda event: None)
+    assert first['outcome'] == 'CONFIRMED', first
+    second = runtime.invoke(connection, operation,
+        {'target': 'First fresh name', 'value': 'Second fresh name'}, lambda event: None)
+    assert second['outcome'] == 'CONFIRMED', second
+    assert browser.rows == ['Second fresh name', neighbor]
+    assert second['effect']['witness']['old_anchor_absence']['value'] == 'First fresh name'
+    assert second['effect']['witness']['neighbor_bracket']['before_edit']
+
+
+def test_direct_text_publication_cannot_claim_neighbor_checks_without_trial_evidence(tmp_path, monkeypatch):
+    runtime, _, _, learned = _learn_editable_records(tmp_path, monkeypatch)
+    creation = _learned_kind(learned, 'create_visible_record')
+    operation = _learned_kind(learned, 'update_visible_record')
+    trials = deepcopy(operation['support']['trials'])
+    del trials[1]['witness']['neighbor_bracket']
+    with pytest.raises(runtime_module.StopOperation, match='two observed neighbor-preservation brackets'):
+        runtime._record_operation(creation, operation['kind'], operation['procedure'], trials, {})
+
+
+def test_direct_text_neighbor_bracket_does_not_accept_newly_incomplete_same_spelling(tmp_path, monkeypatch):
+    class BoundaryBrowser(_TextNeighborBrowser):
+        lose_completeness = False
+        incomplete = False
+
+        def act(self, action):
+            updating = (self.selected is not None and action.kind == 'click'
+                        and self.surface.observation.node(action.target).name == 'Save')
+            result = super().act(action)
+            if updating and self.lose_completeness:
+                self.incomplete = True
+            return result
+
+        def read(self):
+            surface = super().read()
+            if self.scene == 'list' and len(self.rows) > 1:
+                value = self.rows[1]['Description']
+                node, = [node.i for node in surface.observation.nodes if node.name == value]
+                surface.text_boundaries[node] = None if self.incomplete else value
+            return surface
+
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=BoundaryBrowser())
+    operation = _learned_kind(learned, 'update_visible_record')
+    browser.lose_completeness = True
+    original_neighbor = deepcopy(browser.rows[1])
+    result = runtime.invoke(connection, operation,
+        {'target': browser.rows[0]['URL'], 'title': 'Fresh checked title'}, lambda event: None)
+    assert browser.rows[1] == original_neighbor  # Same name/state is not evidence that the new preview is complete.
+    assert browser.incomplete
+    assert result['outcome'] != 'CONFIRMED', result
+
+
+def test_direct_text_neighbor_bracket_keeps_changing_own_text_under_constant_accessible_name(tmp_path, monkeypatch):
+    class OwnTextBrowser(_TextNeighborBrowser):
+        change_own_text = False
+        neighbor_own_text = 'Idle'
+
+        def act(self, action):
+            updating = (self.selected is not None and action.kind == 'click'
+                        and self.surface.observation.node(action.target).name == 'Save')
+            result = super().act(action)
+            if updating and self.change_own_text:
+                self.neighbor_own_text = 'Meaningfully changed state'
+            return result
+
+        def read(self):
+            surface = super().read()
+            if self.scene == 'list' and len(self.rows) > 1:
+                value = self.rows[1]['Description']
+                parent, = [node.parent for node in surface.observation.nodes if node.name == value]
+                nodes = deepcopy(surface.observation.nodes)
+                node = len(nodes)
+                nodes.append(Node(node, parent, 'group', 'Fixed accessible label'))
+                surface.observation = Observation(nodes, surface.observation.url)
+                surface.text_sources[node] = {'name_from_descendants': False, 'own_text': self.neighbor_own_text}
+            return surface
+
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=OwnTextBrowser())
+    operation = _learned_kind(learned, 'update_visible_record')
+    browser.change_own_text = True
+    result = runtime.invoke(connection, operation,
+        {'target': browser.rows[0]['URL'], 'title': 'Fresh requested title'}, lambda event: None)
+    assert browser.neighbor_own_text == 'Meaningfully changed state'
+    assert result['outcome'] == 'UNCERTAIN', result
+    assert 'neighboring state changed' in result['effect']['reason']
+
+
 @pytest.mark.parametrize('requested', [{'description': 'Only description changes'},
                                       {'title': 'Only title changes'}])
 def test_record_partial_text_update_preserves_captured_fields_without_filling_them(tmp_path, monkeypatch, requested):

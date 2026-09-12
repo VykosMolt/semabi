@@ -850,7 +850,7 @@ class Runtime:
         self._guard_current_editor(trace.read(browser))
         surface = trace.navigate(browser, procedure["readback_url"])
         surface, record = self._wait_for_record(browser, surface, procedure, target, trace)
-        if procedure.get("boolean_fields"):
+        if not procedure.get("linked_value_editor"):
             record = {**record, "neighbor_state": self._record_neighbors(surface, record)}
         if replacement_value is not None and (replacement_value == target or
                                              visible_record_matches(surface, replacement_value)):
@@ -1513,10 +1513,12 @@ class Runtime:
                        popup_events: list[dict] | None = None,
                        commit_events: list[dict] | None = None,
                        requested_fields: list[str] | None = None,
-                       neighbors: list | None = None) -> tuple[dict, dict]:
+                       neighbors: list | None = None, neighbor_observation: str | None = None) -> tuple[dict, dict]:
         if procedure.get("linked_value_editor"):
             return self._update_linked_value(browser, surface, procedure, before, values, trace,
                                             discover=discover, commit_events=[] if commit_events is None else commit_events)
+        if neighbors is None or neighbor_observation is None:
+            raise StopOperation("Direct update requires a captured pre-edit neighboring surface")
         old_anchor = before[procedure["anchor"]] if procedure["anchor_mode"] == "replace_value" else None
         popup_events = [] if popup_events is None else popup_events
         with self._capture_editor(browser, surface, procedure, before, trace) as (captured, retained):
@@ -1573,11 +1575,13 @@ class Runtime:
                     raise StopOperation("Application left the learned submit control disabled", refusal=True)
                 after = trace.act(browser, surface, Primitive("click", candidate["submit_node"]))
         return self._verify_updated_values(browser, after, procedure, values, old_anchor, captured, trace,
-                                           neighbors=neighbors, check_exit=discover)
+                                           neighbors=neighbors, neighbor_observation=neighbor_observation,
+                                           check_exit=discover)
 
     def _verify_updated_values(self, browser, after: Surface, procedure: dict, values: dict,
                                old_anchor: str | None, captured: dict, trace: Trace,
-                               *, neighbors: list | None = None, check_exit: bool = False) -> tuple[dict, dict]:
+                               *, neighbors: list | None = None, neighbor_observation: str | None = None,
+                               check_exit: bool = False) -> tuple[dict, dict]:
         text_values = {name: value for name, value in values.items() if isinstance(value, str)}
         after, witness = self._witness(browser, after, text_values, procedure["anchor"], trace,
                                        procedure["effect_slots"], absent_value=old_anchor,
@@ -1585,7 +1589,7 @@ class Runtime:
         if witness is None:
             raise StopOperation("Updated values lack the learned unique record witness")
         if neighbors is not None and self._record_neighbors(after, witness) != neighbors:
-            raise StopOperation("Rendered neighboring state changed during checkbox update")
+            raise StopOperation("Rendered neighboring state changed during record update")
         self._guard_current_editor(trace.read(browser))
         submitted_observation = after.observation.structural_signature()
         reloaded = trace.reload(browser)
@@ -1594,9 +1598,18 @@ class Runtime:
                                          expected_url=procedure["readback_url"] if old_anchor is not None else None)
         if witness is None:
             raise StopOperation("Updated record values did not persist through reload")
-        if procedure.get("boolean_fields"):
-            if neighbors is None or self._record_neighbors(reloaded, witness) != neighbors:
+        if neighbors is not None:
+            if self._record_neighbors(reloaded, witness) != neighbors:
                 raise StopOperation("Rendered neighboring state changed during reload")
+            witness["neighbor_bracket"] = {"before_edit": neighbor_observation,
+                "after_submit": submitted_observation,
+                "after_reload": reloaded.observation.structural_signature(),
+                "scope": "Exact observed surface outside the selected local record at these three observations; "
+                         "not a complete collection, hidden-state inventory or exclusive causal attribution. "
+                         "Text completeness/provenance checked where provided; missing metadata does not establish full coverage"}
+        if procedure.get("boolean_fields"):
+            if neighbors is None:
+                raise StopOperation("Rendered neighboring state was not captured before editing")
             reopened, _, actual = self._record_editor(browser, procedure, values[procedure["anchor"]], trace)
             if actual != values:
                 raise StopOperation("Reopened intended record does not retain requested and preserved values", stale=True)
@@ -1635,6 +1648,9 @@ class Runtime:
         indices = {node.i: index for index, node in enumerate(kept)}
         return [{"parent": indices.get(node.parent, -1),
                  **{key: value for key, value in node.to_json().items() if key not in {"i", "parent", "bbox"}},
+                 "text_complete": surface.text_is_complete(node.i),
+                 **({"text_boundary": surface.text_boundaries[node.i]} if node.i in surface.text_boundaries else {}),
+                 **({"text_source": deepcopy(surface.text_sources[node.i])} if node.i in surface.text_sources else {}),
                  "control": deepcopy(surface.controls.get(node.i))} for node in kept]
 
     def _invoke_record(self, browser, operation: dict, arguments: dict, trace: Trace) -> dict:
@@ -1684,7 +1700,8 @@ class Runtime:
             if len(set(texts)) != len(texts):
                 raise StopOperation("Requested and preserved values must remain distinct for visible field verification")
             witness, _ = self._update_record(browser, surface, procedure, values, updated, trace,
-                                             requested_fields=list(requested), neighbors=record.get("neighbor_state"))
+                                             requested_fields=list(requested), neighbors=record.get("neighbor_state"),
+                                             neighbor_observation=record.get("observation"))
             effect = {"kind": "visible_record_updated", "before": values,
                       "arguments": updated, "witness": witness,
                       "requested_changes": requested, "preserved_values": preserved,
@@ -1761,6 +1778,12 @@ class Runtime:
                                   "editor_state_retained_after_tab": True}
                 if linked.get("commit") != rule or any(trial.get("linked_commits") != [expected_event] for trial in trials):
                     raise StopOperation("Linked value commits require two saved and reloaded retained-Tab trials")
+        elif kind == "update_visible_record":
+            for trial in trials:
+                bracket = trial.get("witness", {}).get("neighbor_bracket", {})
+                if (not all(bracket.get(key) for key in ("before_edit", "after_submit", "after_reload"))
+                        or bracket["after_reload"] != trial["witness"].get("observation")):
+                    raise StopOperation("Direct update publication requires two observed neighbor-preservation brackets")
         fields = argument_schema({"fields": procedure["form"]["fields"]},
                                  list(procedure["read_fields"]))["properties"]
         properties = {selector: {**fields[anchor],
@@ -1826,6 +1849,13 @@ class Runtime:
                 "At least one supplied learned text field; omitted fields retain the current selected editor values")
             operation["effect_checks"].append(
                 "Requested and preserved learned fields all occupy their original slots after submission and reload")
+        if not reading and not linked:
+            operation["effect_checks"].append(
+                "Observed non-target surface matches the pre-edit view after submission and reload")
+            operation["scope"]["neighbor_checks"] = (
+                "Exact observed surface outside the selected local record, bracketed before editing, after submission "
+                "and after reload; text completeness/provenance checked where provided, missing metadata unestablished. "
+                "Not a complete collection, hidden-state inventory or exclusive causal attribution")
         if boolean_fields:
             operation["name"] += "_with_checkbox_fields"
             operation["prerequisites"] = [item.replace("supplied learned text field", "supplied learned typed field")
@@ -1969,6 +1999,8 @@ class Runtime:
                                   **{name: arguments[name] for name in update_names}}
                         witness, captured = self._update_record(browser, surface, procedure, before, values, trace,
                             discover=True, popup_events=popup_events,
+                            neighbors=selected_witness.get("neighbor_state"),
+                            neighbor_observation=selected_witness.get("observation"),
                             **({"commit_events": commit_events} if procedure.get("linked_value_editor") else {}))
                     trials.append({"arguments": arguments, "before": before, "values": values,
                                    "editor_state": captured, "editor_observation": surface.observation.structural_signature(),
@@ -2041,7 +2073,8 @@ class Runtime:
                         requested = not original if round_index == 0 else original
                         expected = {**before, name: requested}
                         witness, _ = self._update_record(browser, surface, extended, before, expected, trace,
-                            requested_fields=[name], neighbors=record["neighbor_state"], discover=True)
+                            requested_fields=[name], neighbors=record["neighbor_state"],
+                            neighbor_observation=record.get("observation"), discover=True)
                         extended["boolean_trials"].append({"field": name, "target": target, "requested": requested,
                                                           "readback": witness["checkbox_readback"]})
             published = []
