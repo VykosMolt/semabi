@@ -297,6 +297,60 @@ def acquisition_priority_context(surface, route):
     return digest([surface.observation.structural_signature(), latest])
 
 
+def _save_learning(trace, trials, edits, context):
+    """Replace a small resumable plan; observations/actions remain append-only."""
+    path = trace.log.dir / "learning.json"
+    temporary = path.with_suffix(".tmp")
+    temporary.write_text(json.dumps({"trials": trials, "edits": edits, "context": context}))
+    temporary.replace(path)
+
+
+def _new_frontier(entry):
+    return {"version": 1, "entry": entry, "pending": [{"route": [], "ancestors": []}],
+            "deferred": [], "completed": [], "queued": [digest([])],
+            "completed_routes": {}, "observed_priority": [], "active": None,
+            "totals": {"actions": 0, "writes": 0, "jobs": 0}}
+
+
+def _frontier_report(frontier):
+    return {"type": "acquisition_frontier", "visited_contexts": len(frontier["completed"]),
+            "pending_contexts": len(frontier["pending"]) + len(frontier["deferred"]) + int(frontier["active"] is not None),
+            "deferred_contexts": len(frontier["deferred"]),
+            "active_partial_route": deepcopy(frontier["active"]["route"]) if frontier["active"] else None,
+            "in_flight": deepcopy(frontier.get("in_flight")),
+            "retained_totals": dict(frontier["totals"]),
+            "accounting_scope": frontier.get("accounting_scope", "Charged acquisition actions across retained jobs; per-job setup remains in request metrics"),
+            "priority": "new rendered observations before retained alternate paths",
+            "context_limit": 48, "depth_limit": 6,
+            "bounded_frontier_exhausted": not frontier["pending"] and not frontier["deferred"] and frontier["active"] is None,
+            "scope": "Bounded sampled routes; not complete application enumeration"}
+
+
+def _acquisition_buttons(surface, route):
+    from semabi.compiler.runtime import EXCLUDED_WORDS
+    from semabi.compiler.v4.fields import MIN_DISTINCT
+    buttons, counts = [], {}
+    for node, control in surface.controls.items():
+        if control["role"] not in {"button", "link", "radio"} or control["disabled"] or EXCLUDED_WORDS.search(control["label"]):
+            continue
+        step = step_for(surface, node, route)
+        pattern = route_key([step])
+        counts[pattern] = counts.get(pattern, 0) + 1
+        if "selector" in step and counts[pattern] > (MIN_DISTINCT if route else 2):
+            continue
+        buttons.append(step)
+    return buttons[:10]
+
+
+def _acquisition_numeric(surface):
+    numeric = [(surface.descriptor(node), numeric_probes(surface, node))
+               for node, control in surface.controls.items()
+               if control["role"] == "textbox" and control["input_type"] == "number"
+               and not control["disabled"] and not control["readonly"]]
+    return [{"descriptor": descriptor, "value": value}
+            for descriptor, probes in numeric[:2] for value in probes]
+
+
 def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
     """Bounded graph traversal. Observed view changes supply composition edges.
 
@@ -305,110 +359,162 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
     the field language's minimum distinct examples for subsequent selectors.
     All replays, failed candidates and fills charge the ordinary Trace budget.
     """
-    pending, deferred = deque([([], ())]), deque()
-    seen, queued, observed_destinations = set(), set(), set()
-    while (pending or deferred) and len(seen) < 48:
-        route, ancestors = (pending if pending else deferred).popleft()
-        key = digest(route)
-        if key in seen:
-            continue
-        seen.add(key)
-        surface = replay(browser, trace, entry, route, context=context, acquiring=True)
-        observed_destinations.add(acquisition_priority_context(surface, route))
-        initial_shape = procedure_context(surface)
-        buttons = []
-        selector_counts = {}
-        from semabi.compiler.runtime import EXCLUDED_WORDS
-        for node, control in surface.controls.items():
-            if control["role"] not in {"button", "link", "radio"} or control["disabled"] or EXCLUDED_WORDS.search(control["label"]):
+    frontier = context.setdefault("acquisition_frontier", _new_frontier(entry))
+    if frontier.get("version") != 1 or frontier.get("entry") != entry:
+        _stop("Acquisition checkpoint version or entry does not match")
+    if frontier.get("in_flight"):
+        _stop("Acquisition write requires reconciliation before further exploration")
+    start_actions, start_writes = trace.budget.actions, trace.budget.writes
+    retained = dict(frontier["totals"])
+
+    def checkpoint():
+        frontier["totals"] = {"actions": retained["actions"] + trace.budget.actions - start_actions,
+                              "writes": retained["writes"] + trace.budget.writes - start_writes,
+                              "jobs": retained["jobs"] + 1}
+        frontier["evidence"] = {"steps": len(trace.log.steps),
+                                "last": trace.log.steps[-1].to_json() if trace.log.steps else None}
+        _save_learning(trace, trials, numeric_trials, context)
+
+    def revisit(route):
+        checkpoint()  # active route/cursor survives even interruption inside a replay
+        return replay(browser, trace, entry, route, context=context, acquiring=True)
+
+    original_act = trace.act
+
+    def fenced_act(browser, surface, primitive, **kwargs):
+        # A replay can itself dispatch several writes. Fence the actual primitive,
+        # not merely the outer trial, and never turn an uncertain write into a retry.
+        trace.budget.check_deadline()
+        if (trace.budget.actions >= trace.budget.max_actions
+                or trace.budget.writes >= trace.budget.max_writes):
+            _stop("Interaction budget exhausted")
+        counts = (trace.budget.actions, trace.budget.writes)
+        frontier["in_flight"] = {"before": surface.observation.structural_signature(),
+                                 "action": primitive.to_json(), "status": "DISPATCH_UNRESOLVED"}
+        checkpoint()
+        try:
+            after = original_act(browser, surface, primitive, **kwargs)
+        except BaseException:
+            if counts == (trace.budget.actions, trace.budget.writes):
+                # Budget/deadline rejection before dispatch is a clean interruption.
+                frontier.pop("in_flight", None)
+            checkpoint()
+            raise
+        frontier.pop("in_flight", None)
+        checkpoint()
+        return after
+
+    trace.act = fenced_act
+    try:
+        while (frontier["active"] or frontier["pending"] or frontier["deferred"]) and len(frontier["completed"]) < 48:
+            if frontier["active"] is None:
+                queue = frontier["pending"] if frontier["pending"] else frontier["deferred"]
+                frontier["active"] = queue.pop(0)
+            active = frontier["active"]
+            route, ancestors = active["route"], active["ancestors"]
+            key = digest(route)
+            if key in frontier["completed"]:
+                frontier["active"] = None
                 continue
-            step = step_for(surface, node, route)
-            pattern = route_key([step])
-            selector_counts[pattern] = selector_counts.get(pattern, 0) + 1
-            from semabi.compiler.v4.fields import MIN_DISTINCT
-            if "selector" in step and selector_counts[pattern] > (MIN_DISTINCT if route else 2):
-                continue
-            buttons.append(step)
-        stable_buttons = []
-        for step in buttons[:10]:
-            surface = replay(browser, trace, entry, route, context=context, acquiring=True)
-            node = resolve_step(surface, step)
-            before = surface
-            after = act_step(browser, trace, before, step)
-            trial = {"route": route, "action": step,
-                     "before": before.observation.structural_signature(),
-                     "after": after.observation.structural_signature(), "node": node}
-            trials.append(trial)
-            before_context, next_shape = procedure_context(before), procedure_context(after)
-            if next_shape == before_context:
-                if before.controls[node]["role"] != "radio":
-                    stable_buttons.append(step)
-            elif len(route) < 6 and (*ancestors, before_context).count(next_shape) < 2:
-                new_route = [*route, step]
-                candidate = digest(new_route)
-                if candidate not in queued:
-                    queued.add(candidate)
-                    signature = acquisition_priority_context(after, new_route)
-                    # Rank reachable new observations before alternate paths to
-                    # an already seen view. Do not equate observation with state:
-                    # deferred paths keep their complete argument/selection history.
-                    # In particular a radio/commit round trip may return to the
-                    # same displayed detail while binding a different resource.
-                    frontier = pending if signature not in observed_destinations else deferred
-                    observed_destinations.add(signature)
-                    frontier.append((new_route, (*ancestors, before_context)))
-        if stable_buttons:
-            surface = replay(browser, trace, entry, route, context=context, acquiring=True)
-            numeric = [(surface.descriptor(node), numeric_probes(surface, node))
-                       for node, control in surface.controls.items()
-                       if control["role"] == "textbox" and control["input_type"] == "number"
-                       and not control["disabled"] and not control["readonly"]]
-            for descriptor, probes in numeric[:2]:
-                for value in probes:
-                    surface = replay(browser, trace, entry, route, context=context, acquiring=True)
-                    hits = surface.resolve(descriptor)
-                    if len(hits) != 1:
-                        continue
+            surface = revisit(route)
+            signature = acquisition_priority_context(surface, route)
+            if signature not in frontier["observed_priority"]:
+                frontier["observed_priority"].append(signature)
+            initial_shape = procedure_context(surface)
+            if "buttons" not in active:
+                active.update(observation=surface.observation.structural_signature(),
+                              shape=shape(surface), buttons=_acquisition_buttons(surface, route),
+                              button_index=0, stable_buttons=[])
+            elif active["shape"] != shape(surface):
+                _stop("Acquisition partial route no longer reaches its observed context")
+            checkpoint()
+            while active["button_index"] < len(active["buttons"]):
+                step = active["buttons"][active["button_index"]]
+                surface = revisit(route)
+                node = resolve_step(surface, step)
+                before = surface
+                checkpoint()
+                after = act_step(browser, trace, before, step)
+                trials.append({"route": deepcopy(route), "action": step,
+                               "before": before.observation.structural_signature(),
+                               "after": after.observation.structural_signature(), "node": node})
+                before_context, next_shape = procedure_context(before), procedure_context(after)
+                if next_shape == before_context:
+                    if before.controls[node]["role"] != "radio":
+                        active["stable_buttons"].append(step)
+                elif len(route) < 6 and [*ancestors, before_context].count(next_shape) < 2:
+                    new_route = [*route, step]
+                    candidate = digest(new_route)
+                    if candidate not in frontier["queued"]:
+                        frontier["queued"].append(candidate)
+                        signature = acquisition_priority_context(after, new_route)
+                        queue = frontier["pending"] if signature not in frontier["observed_priority"] else frontier["deferred"]
+                        if signature not in frontier["observed_priority"]:
+                            frontier["observed_priority"].append(signature)
+                        queue.append({"route": new_route, "ancestors": [*ancestors, before_context]})
+                active["button_index"] += 1
+                checkpoint()
+            stable_buttons = active["stable_buttons"]
+            if "numeric" not in active:
+                surface = revisit(route) if stable_buttons else surface
+                active.update(numeric=_acquisition_numeric(surface) if stable_buttons else [], numeric_index=0,
+                              numeric_observation=surface.observation.structural_signature(), numeric_results=[])
+                checkpoint()
+            while active["numeric_index"] < len(active["numeric"]):
+                proposal = active["numeric"][active["numeric_index"]]
+                descriptor, value = proposal["descriptor"], proposal["value"]
+                surface = revisit(route)
+                hits = surface.resolve(descriptor)
+                receipt = {"status": "NO_UNIQUE_CONTROL", "observation": surface.observation.structural_signature()}
+                if len(hits) == 1:
                     before = surface
-                    surface = trace.act(browser, surface, Primitive("type", hits[0], value))
+                    edited_node = hits[0]
+                    checkpoint()
+                    surface = trace.act(browser, surface, Primitive("type", edited_node, value))
+                    receipt = {"status": "REJECTED_VALUE", "before": before.observation.structural_signature(),
+                               "after": surface.observation.structural_signature(), "node": edited_node}
                     hits = surface.resolve(descriptor)
                     if len(hits) != 1 or surface.observation.node(hits[0]).value != value:
                         emit({"type": "acquisition_rejected_edit", "field": descriptor, "value": value})
-                        continue
-                    numeric_trials.append({"route": route, "descriptor": descriptor, "value": value,
+                    else:
+                        receipt["status"] = "OBSERVED_VALUE"
+                        numeric_trials.append({"route": deepcopy(route), "descriptor": descriptor, "value": value,
+                                               "before": before.observation.structural_signature(),
+                                               "after": surface.observation.structural_signature()})
+                        for step in stable_buttons:
+                            try:
+                                node = resolve_step(surface, step)
+                            except Exception:
+                                break
+                            before = surface
+                            checkpoint()
+                            surface = trace.act(browser, surface, Primitive("click", node))
+                            trials.append({"route": deepcopy(route), "action": step, "node": node,
                                            "before": before.observation.structural_signature(),
                                            "after": surface.observation.structural_signature()})
-                    for step in stable_buttons:
-                        try:
-                            node = resolve_step(surface, step)
-                        except Exception:
-                            break
-                        before = surface
-                        surface = trace.act(browser, surface, Primitive("click", node))
-                        trials.append({"route": route, "action": step, "node": node,
-                                       "before": before.observation.structural_signature(),
-                                       "after": surface.observation.structural_signature()})
-                        if procedure_context(surface) != initial_shape:
-                            break
-                    restored = replay(browser, trace, entry, route, context=context, acquiring=True)
-                    restored = reload_observed(browser, trace)
-                    hits = restored.resolve(descriptor)
-                    if len(hits) == 1 and restored.observation.node(hits[0]).value == value:
-                        numeric_trials[-1]["persisted"] = restored.observation.structural_signature()
-    emit({"type": "acquisition_frontier", "visited_contexts": len(seen),
-          "pending_contexts": len(pending) + len(deferred), "deferred_contexts": len(deferred),
-          "priority": "new rendered observations before retained alternate paths",
-          "context_limit": 48, "depth_limit": 6, "bounded_frontier_exhausted": not pending and not deferred,
-          "scope": "Bounded sampled routes; not complete application enumeration"})
+                            if procedure_context(surface) != initial_shape:
+                                break
+                        restored = revisit(route)
+                        checkpoint()
+                        restored = reload_observed(browser, trace)
+                        hits = restored.resolve(descriptor)
+                        if len(hits) == 1 and restored.observation.node(hits[0]).value == value:
+                            numeric_trials[-1]["persisted"] = restored.observation.structural_signature()
+                active["numeric_results"].append(receipt)
+                active["numeric_index"] += 1
+                checkpoint()
+            frontier["completed"].append(key)
+            frontier["completed_routes"][key] = active
+            frontier["active"] = None
+            checkpoint()
+    finally:
+        trace.act = original_act
+        checkpoint()
+        emit(_frontier_report(frontier))
     return trials, numeric_trials
 
 
-def recover_learning(log):
-    """Recover observed paths from an interrupted/unpublished onboarding log.
-
-    This reads only recorded browser surfaces and primitives. It supplies no
-    target names or procedure steps that were absent from ordinary onboarding.
-    """
+def _learning_surfaces(log):
     surfaces = {}
     for line in (log.dir / "surfaces.jsonl").read_text().splitlines():
         item = json.loads(line)
@@ -418,10 +524,202 @@ def recover_learning(log):
                                     {int(k): v for k, v in item["controls"].items()}, {},
                                     item.get("settled", True),
                                     {int(k): v for k, v in item.get("text_boundaries", {}).items()})
+    return surfaces
+
+
+def _validate_learning_trials(log, surfaces, trials):
+    observed = {(step.before, step.after, step.action.kind, step.action.target,
+                 step.action.text) for step in log.steps if step.ok}
+    edges = {}
+    for trial in trials:
+        before, after = surfaces[trial["before"]], surfaces[trial["after"]]
+        step = trial["action"]
+        if ((trial["before"], trial["after"], step["kind"], trial["node"], step.get("text")) not in observed
+                or resolve_step(before, step) != trial["node"]):
+            raise ValueError("Acquisition trial has no matching rendered transition")
+        edges.setdefault(digest([*trial["route"], step]), trial)
+    for trial in trials:
+        for length in range(1, len(trial["route"]) + 1):
+            if digest(trial["route"][:length]) not in edges:
+                raise ValueError("Acquisition route has no observed prefix")
+    return edges
+
+
+def _validate_frontier(frontier, log, surfaces, trials, edges):
+    if frontier["version"] != 1:
+        raise ValueError("Unknown acquisition frontier version")
+    entries = {step.action.text for step in log.steps if step.action.kind == "navigate"}
+    if entries and frontier["entry"] not in entries:
+        raise ValueError("Acquisition entry has no navigation evidence")
+    if frontier.get("in_flight"):
+        fence = frontier["in_flight"]
+        if (fence["status"] != "DISPATCH_UNRESOLVED"
+                or fence["action"]["target"] not in surfaces[fence["before"]].controls):
+            raise ValueError("Acquisition write fence lacks its source observation")
+    evidence = frontier["evidence"]
+    count = evidence["steps"]
+    if not 0 <= count <= len(log.steps) or evidence["last"] != (log.steps[count - 1].to_json() if count else None):
+        raise ValueError("Acquisition checkpoint does not match raw history")
+    completed = frontier["completed"]
+    if len(completed) > 48 or set(completed) != set(frontier["completed_routes"]):
+        raise ValueError("Invalid completed acquisition contexts")
+    contexts = [*frontier["pending"], *frontier["deferred"], *frontier["completed_routes"].values()]
+    if frontier["active"] is not None:
+        contexts.append(frontier["active"])
+    keys = [digest(item["route"]) for item in contexts]
+    if len(keys) != len(set(keys)) or set(keys) != set(frontier["queued"]):
+        raise ValueError("Acquisition queues disagree")
+    for item in contexts:
+        route, ancestors = item["route"], item["ancestors"]
+        if len(route) > 6 or len(route) != len(ancestors):
+            raise ValueError("Acquisition route exceeds its language bounds")
+        if any(ancestors.count(value) > 2 for value in ancestors):
+            raise ValueError("Acquisition route exceeds its context visit bound")
+        for length in range(1, len(route) + 1):
+            if not any(digest([*trial["route"], trial["action"]]) == digest(route[:length])
+                       and procedure_context(surfaces[trial["before"]]) == ancestors[length - 1]
+                       for trial in trials):
+                raise ValueError("Acquisition ancestor lacks observation support")
+        if "buttons" in item:
+            surface = surfaces[item["observation"]]
+            if item["shape"] != shape(surface) or item["buttons"] != _acquisition_buttons(surface, route):
+                raise ValueError("Acquisition controls differ from their source observation")
+            index = item["button_index"]
+            if not 0 <= index <= len(item["buttons"]):
+                raise ValueError("Invalid acquisition cursor")
+            for step in item["buttons"][:index]:
+                if not any(trial["route"] == route and trial["action"] == step for trial in trials):
+                    raise ValueError("Completed acquisition action lacks a trial")
+            for step in item["stable_buttons"]:
+                if step not in item["buttons"][:index] or not any(
+                        trial["route"] == route and trial["action"] == step
+                        and procedure_context(surfaces[trial["before"]]) == procedure_context(surfaces[trial["after"]])
+                        and surfaces[trial["before"]].controls[trial["node"]]["role"] != "radio" for trial in trials):
+                    raise ValueError("Stable acquisition action lacks a matching transition")
+            if "numeric" in item:
+                expected = _acquisition_numeric(surfaces[item["numeric_observation"]]) if item["stable_buttons"] else []
+                if item["numeric"] != expected or not 0 <= item["numeric_index"] <= len(expected):
+                    raise ValueError("Numeric acquisition plan lacks its observed proposal source")
+                if len(item["numeric_results"]) != item["numeric_index"]:
+                    raise ValueError("Numeric acquisition progress lacks outcome evidence")
+                for proposal, receipt in zip(expected, item["numeric_results"]):
+                    descriptor, value = proposal["descriptor"], proposal["value"]
+                    if receipt["status"] == "NO_UNIQUE_CONTROL":
+                        if len(surfaces[receipt["observation"]].resolve(descriptor)) == 1:
+                            raise ValueError("Skipped numeric proposal had a unique observed control")
+                    else:
+                        before, after = surfaces[receipt["before"]], surfaces[receipt["after"]]
+                        if (before.resolve(descriptor) != [receipt["node"]] or not any(
+                                step.ok and step.before == receipt["before"] and step.after == receipt["after"]
+                                and step.action.kind == "type" and step.action.target == receipt["node"]
+                                and step.action.text == value for step in log.steps)):
+                            raise ValueError("Numeric proposal lacks its recorded edit")
+                        hits = after.resolve(descriptor)
+                        observed = len(hits) == 1 and after.observation.node(hits[0]).value == value
+                        if receipt["status"] != ("OBSERVED_VALUE" if observed else "REJECTED_VALUE"):
+                            raise ValueError("Numeric proposal outcome differs from its observation")
+                if digest(route) in completed and item["numeric_index"] != len(expected):
+                    raise ValueError("Completed context has unfinished field probes")
+            if digest(route) in completed and index != len(item["buttons"]):
+                raise ValueError("Completed context has unfinished actions")
+        elif digest(route) in completed:
+            raise ValueError("Completed context lacks its observation")
+    if any(not isinstance(frontier["totals"][key], int) or frontier["totals"][key] < 0
+           for key in ("actions", "writes", "jobs")):
+        raise ValueError("Invalid retained acquisition accounting")
+
+
+def _legacy_frontier(log, surfaces, trials, edits, context, edges):
+    """Only saved acquisition trials establish traversal progress, not replay clicks."""
+    entries = {step.action.text for step in log.steps if step.action.kind == "navigate"}
+    failed = [step for step in log.steps if not step.ok and step.action.kind not in {"navigate", "reload"}]
+    if len(entries) != 1 or (not trials and not failed):
+        return None
+    frontier = _new_frontier(next(iter(entries)))
+    last = digest(trials[-1]["route"]) if trials else digest([])
+    candidates = {digest([]): {"route": [], "ancestors": []}}
+    for trial in trials:
+        before, after = surfaces[trial["before"]], surfaces[trial["after"]]
+        route = trial["route"]
+        ancestors = [procedure_context(surfaces[edges[digest(route[:i])]["before"]])
+                     for i in range(1, len(route) + 1)]
+        candidates.setdefault(digest(route), {"route": route, "ancestors": ancestors})
+        priority = acquisition_priority_context(before, route)
+        if priority not in frontier["observed_priority"]:
+            frontier["observed_priority"].append(priority)
+        if (procedure_context(before) != procedure_context(after) and len(route) < 6
+                and [*ancestors, procedure_context(before)].count(procedure_context(after)) < 2):
+            child = [*route, trial["action"]]
+            priority = acquisition_priority_context(after, child)
+            candidates.setdefault(digest(child), {"route": child, "ancestors": [*ancestors, procedure_context(before)],
+                                                  "deferred": priority in frontier["observed_priority"]})
+            if priority not in frontier["observed_priority"]:
+                frontier["observed_priority"].append(priority)
+    frontier["pending"] = []
+    for key, item in candidates.items():
+        deferred = item.pop("deferred", False)
+        group = [trial for trial in trials if trial["route"] == item["route"]]
+        if group and key != last:
+            surface = surfaces[group[0]["before"]]
+            buttons = _acquisition_buttons(surface, item["route"])
+            has_numeric = any(control["input_type"] == "number" for control in surface.controls.values())
+            if not has_numeric and all(any(trial["action"] == step for trial in group) for step in buttons):
+                item.update(observation=group[0]["before"], shape=shape(surface), buttons=buttons,
+                            button_index=len(buttons), stable_buttons=[], numeric=[], numeric_index=0,
+                            numeric_observation=group[0]["before"], numeric_results=[])
+                frontier["completed"].append(key)
+                frontier["completed_routes"][key] = item
+                continue
+        if key == last:
+            frontier["active"] = item  # no reliable legacy cursor: redo only this partial route
+        else:
+            frontier["deferred" if deferred else "pending"].append(item)
+    frontier["queued"] = list(candidates)
+    frontier["totals"] = {"actions": len(log.steps), "writes": sum(step.action.kind not in {"navigate", "reload"} for step in log.steps), "jobs": 1}
+    frontier["accounting_scope"] = "Legacy totals count recorded actions; unrecorded interrupted attempts are unknown"
+    if failed:
+        step = failed[-1]
+        frontier["in_flight"] = {"before": step.before, "action": step.action.to_json(),
+                                 "status": "DISPATCH_UNRESOLVED"}
+    frontier["evidence"] = {"steps": len(log.steps), "last": log.steps[-1].to_json() if log.steps else None}
+    _validate_frontier(frontier, log, surfaces, trials, edges)
+    return frontier
+
+
+def recover_learning(log):
+    """Recover observed paths from an interrupted/unpublished onboarding log.
+
+    This reads only recorded browser surfaces and primitives. It supplies no
+    target names or procedure steps that were absent from ordinary onboarding.
+    """
+    from semabi.compiler.runtime import StopOperation
+    surfaces = _learning_surfaces(log)
+    saved = log.dir / "learning.json"
+    recovery_error = None
+    if saved.exists():
+        try:
+            retained = json.loads(saved.read_text())
+            trials, edits, context = retained["trials"], retained["edits"], retained["context"]
+            edges = _validate_learning_trials(log, surfaces, trials)
+            frontier = context.get("acquisition_frontier")
+            if frontier is not None:
+                _validate_frontier(frontier, log, surfaces, trials, edges)
+            else:
+                frontier = _legacy_frontier(log, surfaces, trials, edits, context, edges)
+                if frontier is not None:
+                    context["acquisition_frontier"] = frontier
+            return trials, edits, context
+        except (KeyError, ValueError, TypeError, IndexError, StopOperation) as error:
+            # Invalid plans do not confer completed paths or authorize new writes.
+            # Raw evidence below remains usable for source-only fitting.
+            recovery_error = str(error)
     if not log.steps or log.steps[0].before not in surfaces:
         return [], [], {}
     context = {"entry_shape": procedure_context(surfaces[log.steps[0].before]), "returns": [],
                "return_context_version": 2}
+    if recovery_error is not None:
+        context["frontier_recovery"] = {"status": "UNESTABLISHED", "reason": recovery_error,
+                                        "scope": "Raw evidence retained for fitting; no exploration plan recovered"}
     entry_context = procedure_context(surfaces[log.steps[0].before])
     trials, edits, route = [], [], []
     for step in log.steps:
@@ -461,6 +759,9 @@ def _reuse_training(log, trace):
     for step in log.steps:
         trace.log.add_step(step.episode, step.action, step.ok, step.error,
                            log.observations[step.before], log.observations[step.after])
+    if (log.dir / "surfaces.jsonl").exists():
+        with (trace.log.dir / "surfaces.jsonl").open("a") as stream:
+            stream.write((log.dir / "surfaces.jsonl").read_text())
 
 
 def owner_correspondence(group):
@@ -559,7 +860,7 @@ def learn(runtime, connection, settings, trace, emit):
         for directory in sorted(directories, key=lambda p: (p / "steps.jsonl").stat().st_mtime, reverse=True):
             old = EvidenceLog(directory)
             recovered, recovered_edits, recovered_context = recover_learning(old)
-            if not recovered:
+            if not recovered and not recovered_context.get("acquisition_frontier"):
                 continue
             _reuse_training(old, trace)
             trials, edits, context, reused = recovered, recovered_edits, recovered_context, len(old.steps)
@@ -607,10 +908,13 @@ def learn(runtime, connection, settings, trace, emit):
             emit({"type": "semantic_evidence_reused", "steps": reused, "scope": "same connection's prior onboarding"})
             if repair:
                 repair_witness = acquire_repair(runtime, browser, trace, repair, trials, edits, repair_report)
+            elif not existing and context.get("acquisition_frontier"):
+                emit({"type": "semantic_acquisition_resumed", "reason": "Retained unpublished traversal has a frontier"})
+                acquire(browser, trace, connection["url"], emit, trials, edits, context)
             # Authorized repair acquires missing persistence witnesses. It does
             # not replay customer invocations or treat a cached prediction as data.
             selected = {}
-            for edit in edits if not repair else []:
+            for edit in edits if not repair and not context.get("acquisition_frontier") else []:
                 if not edit.get("persisted") and edit["route"] and "selector" in edit["route"][0]:
                     selected.setdefault((route_key(edit["route"]), edit["descriptor"]["label"],
                                          edit["route"][0]["selector"]["value"]), []).append(edit)
@@ -641,45 +945,20 @@ def learn(runtime, connection, settings, trace, emit):
         if repair_report is not None:
             repair_report.update(status="UNCERTAIN" if trace.possible_effect else "STOPPED",
                                  reason=str(error))
-    (trace.log.dir / "learning.json").write_text(json.dumps({"trials": trials, "edits": edits, "context": context}))
+    _save_learning(trace, trials, edits, context)
     if not trials:
         return {"status": "UNESTABLISHED", "operations": [], "attempts": [],
                 "metrics": trace.metrics(), "invalidations": [], "repair": repair_report}
-    attempts = []
-    fit_seconds = 0.0
-    for fit_pass in range(1, 3):
-        emit({"type": "semantic_fit_started", "steps": len(trace.log.steps), "fit_pass": fit_pass})
-        artifact = fit_semantics(trace.log.dir)
-        fit_seconds += artifact.metadata["fit_seconds"]
-        frozen = artifact.to_json()
-        emit({"type": "semantic_fit_completed", "controls": len(artifact.operations()), "fit_pass": fit_pass})
-        if source_hashes() != runtime.source_sha256:
-            _stop("Source changed during learning; evidence retained, restart and refit before publication")
-        operations = publish_operations(runtime, browser, connection, settings, trace, artifact,
-                                        frozen, trials, edits, context)
-        attempts.append({"semantic_controls": artifact.operations(), "procedure_trials": len(trials),
-                         "fit_pass": fit_pass})
-        # An unpublished interrupted traversal is not repaired by refitting the
-        # same short prefix forever. First try the retained data (a source-only
-        # repair may suffice), then permit one ordinary bounded continuation.
-        # Published artifacts and explicit targeted repairs never take this path.
-        if (fit_pass == 1 and reused and not existing and not repair and not operations
-                and trace.budget.actions < trace.budget.max_actions
-                and trace.budget.writes < trace.budget.max_writes):
-            (trace.log.dir / "semantic_initial.json").write_text(json.dumps(frozen))
-            emit({"type": "semantic_acquisition_resumed", "reason": "Retained unpublished evidence supplies no operation"})
-            previous_steps = len(trace.log.steps)
-            previous_observations = len(trace.log.observations)
-            try:
-                acquire(browser, trace, connection["url"], emit, trials, edits, context)
-            except StopOperation as error:
-                emit({"type": "acquisition_stopped", "reason": str(error)})
-            (trace.log.dir / "learning.json").write_text(json.dumps(
-                {"trials": trials, "edits": edits, "context": context}))
-            if (len(trace.log.steps) > previous_steps
-                    or len(trace.log.observations) > previous_observations):
-                continue
-        break
+    emit({"type": "semantic_fit_started", "steps": len(trace.log.steps), "fit_pass": 1})
+    artifact = fit_semantics(trace.log.dir)
+    fit_seconds = artifact.metadata["fit_seconds"]
+    frozen = artifact.to_json()
+    emit({"type": "semantic_fit_completed", "controls": len(artifact.operations()), "fit_pass": 1})
+    if source_hashes() != runtime.source_sha256:
+        _stop("Source changed during learning; evidence retained, restart and refit before publication")
+    operations = publish_operations(runtime, browser, connection, settings, trace, artifact,
+                                    frozen, trials, edits, context)
+    attempts = [{"semantic_controls": artifact.operations(), "procedure_trials": len(trials), "fit_pass": 1}]
     if repair_witness is not None:
         old_artifact, before, after, node = repair_witness
         repair_report["predictive_change"] = artifact.acquisition_change(old_artifact, before, after, node)
@@ -688,7 +967,8 @@ def learn(runtime, connection, settings, trace, emit):
     return {"status": "COMPLETED" if operations else "UNESTABLISHED", "operations": operations,
             "attempts": attempts,
             "metrics": {**trace.metrics(), "reused_training_steps": reused,
-                        "fit_seconds": fit_seconds, "fit_passes": len(attempts)},
+                        "fit_seconds": fit_seconds, "fit_passes": len(attempts),
+                        "acquisition": _frontier_report(context["acquisition_frontier"]) if context.get("acquisition_frontier") else None},
             "invalidations": [], "repair": repair_report}
 
 

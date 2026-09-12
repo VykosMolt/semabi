@@ -1005,9 +1005,10 @@ def test_semantic_return_context_keeps_native_selection_transition_without_layou
     assert not result.observation.node(1).checked and browser.actions == 1
 
 
-def test_semantic_acquisition_composes_selection_return_and_check_with_finite_budget(tmp_path):
-    from semabi.compiler.runtime import Budget, Trace
-    from semabi.compiler.semantic_runtime import acquire, recover_learning
+@pytest.mark.parametrize('bounded_jobs', [1, 2])
+def test_semantic_acquisition_composes_selection_return_and_check_with_finite_budget(tmp_path, bounded_jobs):
+    from semabi.compiler.runtime import Budget, Trace, StopOperation
+    from semabi.compiler.semantic_runtime import acquire, recover_learning, _reuse_training
 
     class Browser:
         def __init__(self):
@@ -1042,9 +1043,25 @@ def test_semantic_acquisition_composes_selection_return_and_check_with_finite_bu
             return ActionResult(True)
 
     browser = Browser()
-    emitted, trials, edits = [], [], []
-    trace = Trace(tmp_path / 'selection-acquisition', emitted.append, Budget(2500, 1600))
-    acquire(browser, trace, 'entry', emitted.append, trials, edits, {})
+    emitted, trials, edits, context = [], [], [], {}
+    limits = (2500, 1600) if bounded_jobs == 1 else (180, 120)
+    previous = None
+    for job in range(bounded_jobs):
+        trace = Trace(tmp_path / f'selection-acquisition-{job}', emitted.append, Budget(*limits))
+        if previous:
+            trials, edits, context = recover_learning(previous.log)
+            assert context.get('acquisition_frontier'), 'resume must retain the actual queue'
+            _reuse_training(previous.log, trace)
+        completed_before = set(context.get('acquisition_frontier', {}).get('completed', []))
+        trial_count = len(trials)
+        try:
+            acquire(browser, trace, 'entry', emitted.append, trials, edits, context)
+        except StopOperation as error:
+            assert str(error) == 'Interaction budget exhausted'
+        from semabi.compiler.surface import digest
+        assert not any(digest(trial['route']) in completed_before for trial in trials[trial_count:])
+        assert trace.budget.actions <= limits[0] and trace.budget.writes <= limits[1]
+        previous = trace
     recovered, _, _ = recover_learning(trace.log)
 
     def completed(rows):
@@ -1054,10 +1071,44 @@ def test_semantic_acquisition_composes_selection_return_and_check_with_finite_bu
 
     assert completed(trials), 'returning to the earlier detail shape must retain the selection procedure'
     assert completed(recovered), 'interrupted recovery must preserve the same compositional capability'
+    assert len({trace.log.observations[trial['before']].node(1).name for trial in completed(trials)}) >= 2
     report = next(event for event in emitted if event['type'] == 'acquisition_frontier')
     assert report['visited_contexts'] <= 48
     assert all(len(trial['route']) <= 6 for trial in trials)
     assert trace.budget.actions < 2500 and trace.budget.writes < 1600
+    if bounded_jobs == 2:
+        first_directory = tmp_path / 'selection-acquisition-0'
+        first_saved = json.loads((first_directory / 'learning.json').read_text())
+        from semabi.compiler.evidence import EvidenceLog
+        first_log = EvidenceLog(first_directory)
+        assert len({first_log.obs(trial['before']).node(1).name
+                    for trial in completed(first_saved['trials'])}) == 1
+        retained = context['acquisition_frontier']['totals']
+        assert retained['jobs'] == 2 and retained['writes'] == 240
+        assert retained['actions'] > trace.budget.actions
+        assert context['acquisition_frontier']['active']['route'], 'partial argument history must survive'
+        # Bad checkpoint metadata grants no exploration authority. Raw evidence
+        # remains available, with an explicit unestablished recovery assessment.
+        path = trace.log.dir / 'learning.json'
+        original = json.loads(path.read_text())
+        for field, value in [('version', 999), ('entry', 'different-entry'),
+                             ('queued', []), ('evidence', {'steps': 1, 'last': None})]:
+            corrupted = deepcopy(original)
+            corrupted['context']['acquisition_frontier'][field] = value
+            path.write_text(json.dumps(corrupted))
+            raw_trials, _, recovered_context = recover_learning(trace.log)
+            assert raw_trials and 'acquisition_frontier' not in recovered_context
+            assert recovered_context['frontier_recovery']['status'] == 'UNESTABLISHED'
+        path.write_text(json.dumps(original))
+    else:
+        assert context['acquisition_frontier']['active'] is None
+        # Global context/depth bounds do not reset just because another job starts.
+        continued = Trace(tmp_path / 'finished-frontier', emitted.append, Budget(20, 10))
+        recovered_trials, recovered_edits, recovered_context = recover_learning(trace.log)
+        _reuse_training(trace.log, continued)
+        count = len(recovered_trials)
+        acquire(browser, continued, 'entry', emitted.append, recovered_trials, recovered_edits, recovered_context)
+        assert len(recovered_trials) == count and continued.budget.actions == 0
 
 
 def test_semantic_acquisition_reaches_selection_commit_amid_reversible_view_cycles(tmp_path):
@@ -1135,6 +1186,148 @@ def test_semantic_acquisition_reaches_selection_commit_amid_reversible_view_cycl
     assert trace.budget.actions <= 800 and trace.budget.writes <= 600
 
 
+@pytest.mark.parametrize('failure', ['rejected', 'unknown_observation', 'process_interrupt'])
+@pytest.mark.parametrize('dispatch_phase', ['trial', 'replay'])
+def test_semantic_acquisition_fences_dispatched_uncertain_writes_across_restart(tmp_path, failure, dispatch_phase):
+    from semabi.compiler.runtime import Budget, Trace, StopOperation
+    from semabi.compiler.semantic_runtime import acquire, recover_learning, _reuse_training
+
+    fail_at = 1 if dispatch_phase == 'trial' else 3
+
+    class Browser:
+        effects = 0
+        broken_read = False
+
+        def __init__(self):
+            self.goto('entry')
+
+        def goto(self, url):
+            self.surface = _semantic_diagnostic_entry()
+
+        def read(self):
+            if self.broken_read:
+                raise RuntimeError('No observation after dispatch')
+            return self.surface
+
+        def act(self, action):
+            # The persisted intent must precede even a browser call made inside replay.
+            checkpoint = json.loads((trace.log.dir / 'learning.json').read_text())
+            assert checkpoint['context']['acquisition_frontier']['in_flight']['action']['target'] == action.target
+            self.effects += 1
+            owner = self.surface.observation.node(action.target).name.removeprefix('Open ')
+            self.surface = _semantic_diagnostic_detail(owner, ('Changed',))
+            if self.effects < fail_at:
+                return ActionResult(True)
+            if failure == 'process_interrupt':
+                raise SystemExit('Interrupted after dispatch')
+            if failure == 'unknown_observation':
+                self.broken_read = True
+                return ActionResult(True)
+            return ActionResult(False, 'Native interaction reported failure after changing the interface')
+
+    browser = Browser()
+    trials, edits, context = [], [], {}
+    trace = Trace(tmp_path / 'interrupted-acquisition', lambda event: None, Budget(20, 10))
+    with pytest.raises((StopOperation, RuntimeError, SystemExit)):
+        acquire(browser, trace, 'entry', lambda event: None, trials, edits, context)
+    assert browser.effects == fail_at and trace.budget.writes == fail_at
+    recovered, recovered_edits, recovered_context = recover_learning(trace.log)
+    frontier = recovered_context['acquisition_frontier']
+    assert frontier['in_flight']['status'] == 'DISPATCH_UNRESOLVED'
+    assert frontier['totals']['writes'] == fail_at
+    if failure == 'rejected':
+        # Older acquisition plans had no fence field, but a recorded failed
+        # dispatch still cannot authorize another exploratory write on recovery.
+        path = trace.log.dir / 'learning.json'
+        saved = json.loads(path.read_text())
+        saved['context'].pop('acquisition_frontier')
+        path.write_text(json.dumps(saved))
+        _, _, legacy = recover_learning(trace.log)
+        assert legacy['acquisition_frontier']['in_flight']['status'] == 'DISPATCH_UNRESOLVED'
+    fresh = Trace(tmp_path / 'restart-acquisition', lambda event: None, Budget(20, 10))
+    _reuse_training(trace.log, fresh)
+    with pytest.raises(StopOperation, match='requires reconciliation'):
+        acquire(browser, fresh, 'entry', lambda event: None, recovered, recovered_edits, recovered_context)
+    assert browser.effects == fail_at and fresh.budget.actions == 0
+
+
+def test_semantic_acquisition_success_then_clean_budget_stop_resumes_without_a_write_fence(tmp_path):
+    from semabi.compiler.runtime import Budget, Trace, StopOperation
+    from semabi.compiler.semantic_runtime import acquire, recover_learning, _reuse_training
+
+    class Browser:
+        def __init__(self):
+            self.goto('entry')
+
+        def goto(self, url):
+            self.surface = _semantic_diagnostic_entry()
+
+        def read(self):
+            return self.surface
+
+        def act(self, action):
+            owner = self.surface.observation.node(action.target).name.removeprefix('Open ')
+            self.surface = _semantic_diagnostic_detail(owner, ('Waiting',))
+            return ActionResult(True)
+
+    browser = Browser()
+    trials, edits, context, old = [], [], {}, None
+    for job in range(2):
+        trace = Trace(tmp_path / f'clean-budget-{job}', lambda event: None, Budget(20, 1))
+        if old is not None:
+            trials, edits, context = recover_learning(old.log)
+            _reuse_training(old.log, trace)
+        with pytest.raises(StopOperation, match='Interaction budget exhausted'):
+            acquire(browser, trace, 'entry', lambda event: None, trials, edits, context)
+        assert 'in_flight' not in context['acquisition_frontier']
+        assert trace.budget.writes == 1
+        old = trace
+    assert [trial['action']['selector']['value'] for trial in trials] == ['A', 'B']
+    assert context['acquisition_frontier']['totals']['writes'] == 2
+
+
+def test_semantic_numeric_frontier_progress_requires_observed_edit_or_rejection(tmp_path):
+    from semabi.compiler.runtime import Budget, Trace
+    from semabi.compiler.semantic_runtime import acquire, recover_learning
+
+    class Browser:
+        value = '4'
+
+        def goto(self, url):
+            pass  # Navigation deliberately does not reset persisted field values.
+
+        def reload(self):
+            return self.read()
+
+        def read(self):
+            return _surface([Node(0, -1, 'group', ''), Node(1, 0, 'heading', 'Item'),
+                             Node(2, 0, 'textbox', 'Quantity', value=self.value),
+                             Node(3, 0, 'text', '2'), Node(4, 0, 'button', 'Check')],
+                            {2: {'input_type': 'number'}})
+
+        def act(self, action):
+            if action.kind == 'type' and action.text != '2':
+                self.value = action.text
+            return ActionResult(True)
+
+    browser = Browser()
+    trace = Trace(tmp_path / 'numeric-progress', lambda event: None, Budget(100, 60))
+    trials, edits, context = [], [], {}
+    acquire(browser, trace, 'entry', lambda event: None, trials, edits, context)
+    recovered, _, recovered_context = recover_learning(trace.log)
+    assert recovered and recovered_context.get('acquisition_frontier')
+    completed = recovered_context['acquisition_frontier']['completed_routes'][digest([])]
+    assert [receipt['status'] for receipt in completed['numeric_results']] == [
+        'OBSERVED_VALUE', 'REJECTED_VALUE', 'OBSERVED_VALUE']
+    path = trace.log.dir / 'learning.json'
+    saved = json.loads(path.read_text())
+    saved['context']['acquisition_frontier']['completed_routes'][digest([])]['numeric_results'].pop()
+    path.write_text(json.dumps(saved))
+    _, _, invalid = recover_learning(trace.log)
+    assert 'acquisition_frontier' not in invalid
+    assert invalid['frontier_recovery']['status'] == 'UNESTABLISHED'
+
+
 @pytest.mark.parametrize('predecessor_category', [False, True])
 @pytest.mark.parametrize('post_owner_changed', [False, True])
 @pytest.mark.parametrize('control_only', [False, True])
@@ -1197,8 +1390,8 @@ def test_semantic_publication_learns_which_selector_supplied_action_owner(
             procedures.validate(operation['argument_schema'], arguments)
 
 
-@pytest.mark.parametrize('case', ['resume', 'refit_suffices', 'no_write_budget'])
-def test_semantic_unpublished_learning_resumes_only_when_refit_cannot_publish(tmp_path, monkeypatch, case):
+@pytest.mark.parametrize('case', ['resume', 'refit_suffices', 'no_write_budget', 'raw_only'])
+def test_semantic_unpublished_frontier_resumes_before_one_fit_and_raw_only_logs_refit(tmp_path, monkeypatch, case):
     """Real trace reuse/budgets; supplied fitter/publication isolate continuation policy."""
     from semabi.compiler.browser import Primitive
     from semabi.compiler.runtime import Budget
@@ -1218,6 +1411,12 @@ def test_semantic_unpublished_learning_resumes_only_when_refit_cannot_publish(tm
     old.log.add_step(0, Primitive('navigate', text=connection['url']), True, None,
                      entry.observation, entry.observation)
     old.log.add_step(0, Primitive('click', 3), True, None, entry.observation, before.observation)
+    if case in {'resume', 'no_write_budget'}:
+        # Legacy saved acquisition trials are distinct from the replay steps.
+        procedures._save_learning(old, [{'route': [], 'action': procedures.step_for(entry, 3, []),
+            'node': 3, 'before': entry.observation.structural_signature(),
+            'after': before.observation.structural_signature()}], [],
+            {'entry_shape': procedures.procedure_context(entry), 'returns': [], 'return_context_version': 2})
     events, fits, acquired = [], [], []
     trace = runtime._trace(connection, events.append, Budget(10, 0 if case == 'no_write_budget' else 5))
     artifact = SimpleNamespace(metadata={'fit_seconds': 2.5}, operations=lambda: [], to_json=lambda: {})
@@ -1227,23 +1426,24 @@ def test_semantic_unpublished_learning_resumes_only_when_refit_cannot_publish(tm
         return artifact
 
     def acquire(browser, trace, entry, emit, trials, edits, context):
+        assert not fits, 'a pending frontier should continue before fitting, not after a failed fit'
         acquired.append(True)
         trace.act(browser, before, Primitive('click', 2))
 
     monkeypatch.setattr(semantic, 'fit_semantics', fit)
     monkeypatch.setattr(procedures, 'acquire', acquire)
     monkeypatch.setattr(procedures, 'publish_operations', lambda *args:
-                        [{'id': 'diagnostic-only'}] if case == 'refit_suffices' or len(fits) == 2 else [])
+                        [{'id': 'diagnostic-only'}] if case == 'refit_suffices' or trace.budget.writes else [])
     result = procedures.learn(runtime, connection, {}, trace, events.append)
     resumed = case == 'resume'
-    assert acquired == ([True] if resumed else [])
-    assert fits == ([2, 3] if resumed else [2])
-    assert result['metrics']['fit_seconds'] == (5.0 if resumed else 2.5)
+    assert acquired == ([True] if case in {'resume', 'no_write_budget'} else [])
+    assert fits == ([3] if resumed else [2])
+    assert result['metrics']['fit_seconds'] == 2.5
     assert result['metrics']['reused_training_steps'] == 2
     assert result['metrics']['possible_write_actions'] == int(resumed)
     assert result['metrics']['actions'] == int(resumed)
-    assert result['status'] == ('UNESTABLISHED' if case == 'no_write_budget' else 'COMPLETED')
-    assert (trace.log.dir / 'semantic_initial.json').exists() is resumed
+    assert result['status'] == ('UNESTABLISHED' if case in {'no_write_budget', 'raw_only'} else 'COMPLETED')
+    assert not (trace.log.dir / 'semantic_initial.json').exists()
 
 
 _AUTH_CREDENTIALS = {'username': 'synthetic-private-user', 'password': 'synthetic-private-password'}
