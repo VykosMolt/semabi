@@ -3126,3 +3126,282 @@ candidate field, Water available, is a clock (cisterns chosen in rising order). 
 singleton record with no name is a representational question of its own (a constant key
 "names no instance in particular" under the identity doctrine, but for a singleton it
 names the only one); left open, stated in Part XXIII.
+
+## P43 pre-registered (06:02): fall-seeking acquisition on dispatch's clocks
+Under ac773a1 the initial-only dispatch fit calls BOTH candidate operands clocks
+(`attr:group/text/textbox#0` the typed weight, `attr:Payload limit#0` the carrier's limit,
+tid 0 = the run keyed by name), so no pair is adopted and the 8 held-out Check dispatch
+clicks are unestablished (p43_base_initial.json: RULE 0 forced right / 0 wrong / 0 several
+/ 8 unestablished; 2 Review seal have no model; 26 navigation clicks have no live region).
+The disclosed untargeted_1702 arm (initial + 59 acquired steps) holds a payload fall on
+Cedar (Box -> Swift) but its typing was junk tokens rejected by the number input, so the
+weight stays a clock: payload adopted alone, spurious thresholds (attr_ge Payload >= 8 ...),
+RULE still 0/0/0/8 on Check dispatch, decision list 2 right (p43_base_unt1702.json).
+Driver p43_acquire_falls.py (scratchpad; reuses transport_collect's Recorder/Explorer,
+T1 refit schedule 0/15/30/45, budget 60 incl. reset+reload, acquisition partition, live
+server on 8767 under ac773a1, provenance in run.json): at each step, if the fitted field
+theory lists a clock whose slot the page in view carries in a textbox with a numeric
+value, type the SMALLEST WITNESSED value of that field below the current one (once per
+(field, current value)); otherwise the untargeted Explorer chooses, as in T1's control.
+No fixture knowledge enters: the field, the values and the node come from the model.
+Arms: seeds 1701 and 1702, out ~/semabi-scratch/preq/p43/falls_<seed>; scored with
+p42_score.py on evaluation_v2 (the T1 scorer's own score_model, RULE class) and
+p42_theory.py 'Check dispatch' for the terminal field theory.
+Expectations, frozen now:
+ E1 each arm types at least one fall (Rowan 11 -> 7 or Alder 20 -> 7; Cedar's 7 is the
+    minimum and cannot fall);
+ E2 at the refit after it the weight is no longer a clock;
+ E3 the payload clock falls only if the Explorer happens to select a smaller van after a
+    larger one on the same run (seed luck; reported, not claimed); where both clocks are
+    gone the pair weight/payload is adopted and Check dispatch's RULE verdicts move from
+    0/0/0/8 to forced right >= 1 with 0 wrong; where the payload stays a clock the
+    verdicts stay unestablished and the next mechanism is the click that lowers a field.
+ Gate: no forced wrong on any held-out click.  Risks stated: a typed witnessed value is a
+ token already on the page (typed-token anchoring may mark it); the reading may shift on
+ the longer history as it did on untargeted_1702 (singleton types).
+
+## Suite under ac773a1 (06:05): 1217 passed, 10 browser tests failed -- browsers gone again
+scratchpad/suite4.log: 10 failed / 1217 passed / 3 skipped / 1 xfailed in 24:37; every
+failure is a Playwright-driven test (test_operation_runtime x6, test_pipeline_smoke kanban,
+test_v4_navigation_settling x3) and the P43 arms died the same way: ~/.cache/ms-playwright
+is gone once more -- ~/.cache was recreated at the 03:57 reboot (every entry dated 03:56-
+04:08), so this machine loses the browsers at reboot.  Reinstalled (playwright install
+chromium) and the three files are rerun alone; the battery launches on their pass (the
+other 1217 already passed under this tree); then the P43 arms run.  chain2.log.
+Browser tests rerun after the reinstall (06:07): 353 passed in 59 s (suite4b.log), so the
+whole suite stands at 1570 passed under ac773a1 across the two runs; battery launched 06:07:04 as
+preq-battery-p42e-1789186024 (fresh: regen -> open_world -> identity -> outcome -> admissible),
+judged against ac773a1 with battery_compare.py.  P43 arms started 06:07 (chain2.log).
+
+## P43 first run (06:10): no fall typed -- driver defect, then a reading shift
+falls_1701 / falls_1702 (60 primitives each, 14 / 18 failed): fall_attempts 0.  Two causes.
+(1) The driver fitted no model before the loop (T1 fits at 0 attempts; mine first at 15), so
+the fourteen primitives on the initial-only model -- where both clocks are listed -- ran on
+the Explorer alone (the sequence is the untargeted arm's exactly).  Corrected: initial refit
+before the loop, later refits at 15/30/45 as before; rerun as falls2_<seed>.  (2) At the
+refit after 15 the field theory lists NO clock and adopts the pair (4, Payload) x (5,
+Payload): the reading of the longer history splits the run page into singleton types per
+variant (carrier chosen / none, dispatch status, seal-review status), as untargeted_1702's
+fit does (types 0-9, all 'id'-keyed) -- the P42 reading (run keyed by name, cards and page
+one type) does not survive thirteen acquired steps.  That shift is the finding to trace
+before the policy can be judged on the terminal fit: the acquired falls will be in the
+history whatever the reading, but the pair is adopted only where the operands live on one
+object.
+
+## P43 corrected arms (06:14): the fall is typed, the pair adopted at 15 and lost at 30
+falls2_1701 / falls2_1702 (chain p43_arms2.log; 60 primitives, 11 / 19 failed, fall_attempts 1
+each): at attempt 4, on Rowan's page, the policy typed 11 -> 7 (the smallest witnessed value)
+from the initial-only model whose clocks were the weight and the payload -- E1 met in both
+arms.  Refit at 15: clocks none, adopted pair (4, Payload limit) x (4, group/text/textbox) --
+the comparison the fixture hides, adopted from ONE fall (E2 met, and more).  Refits at 30
+and 45: pairs none, clocks none: the reading of the longer history no longer carries the
+weight on a keyed object.  Traced (p43_keys.py, p42_moves.py, p42_joint.py on falls2_1701):
+the run-page family (9 variant templates: no carrier / carrier, dispatch status, seal
+status) settles on key group#0 = 'Packing' (a constant: the details group's label), the
+name key heading#0 rejected by explained 39 vs 23 (unexplained 5 vs 2, atoms 117 vs 41,
+complexity 100 vs 35).  Under the constant key every variant is its own singleton type
+(tids 1,4,5,6,7,9) with its own belief; when a variant comes back into view its stale
+belief is diffed against the page and the differences (Payload 8 -> 14, weight 7 -> 10 at a
+Check dispatch that changed neither) are atoms that a learned set-op 'explains'; under the
+name key the same steps are NOTHING or NAVIGATION.  So the objective credits a reading
+for explaining the churn its own fragmentation manufactures, and prefers it.  This is the
+defect to repair before P43 can be judged on a terminal fit; it is general (any page with
+optional parts on a long history), not dispatch's.
+
+## P43 repair (t) drafted in a worktree (06:25): a belief revised out of view is not an effect
+Worktree scratchpad/p43_wt (branch p43-revisions from ac773a1; the battery imports the main
+tree, which stays untouched until it ends).  objective._drop_revisions: after the discovery
+filter, attribute and relation changes on objects the before-state did not render (tracker
+beliefs, node -1) are dropped from the delta -- a value formed while the object was out of
+view is a belief revised when it returns, not an effect of the step that brought it back.
+Test: test_a_belief_revised_when_a_thing_returns_to_view_is_not_an_explained_change (a
+keyed thing at 7, another view, back at 10: NAVIGATION twice, 0 explained / 0 atoms; the
+same change with the thing in view: EXPLAINED, 1 atom).  test_v4_objective + navigation:
+52 passed.  Under it the falls2_1701 history reads as P42 read the initial one: run page =
+8 variant templates (carrier / none, dispatch status, seal held) keyed by heading#0 with
+the cards (tid 0); the review groups keyed by the run name (tids 1, 3); and NEW: the
+carrier group on the run page keyed by Carrier and merged with the van cards (tid 2) --
+the carrier is the van, a join through CONTAINMENT (et 2 contain -> 0; no ref slots).
+Terminal field theory: weight on tid 0 (7..24, no clock: the fall), Payload limit on tid 2
+(per van constant, no clock), adopted pairs none, Check dispatch rules none, roles
+{owner}: held-out RULE 0/0/0/8 still.  The comparison now needs the van as a ROLE of Check
+dispatch -- 'the van shown on the run's page', the owner's contained object -- and
+roles_of derives roles from operators' variables only; Check dispatch has no effect (its
+answer is a message), so it has no variables beyond the owner.  Harbour's joins bound the
+vessel through variables the effects supplied.  Next mechanism (u): roles from the
+reading's own relations anchored on the owner (containment and reference slots of the
+entity types), the same RELATION kind and denotation the language already has; evidence
+discipline unchanged; the blend structural_roles lesson (more roles, spurious purity) is the
+risk and the ledgers judge it.  Baselines under (t): initial 0/0/0/36 and unt1702 rule
+0/0/0/36 unchanged (p43_wt_base_*.json).
+
+## Battery p42e, regen judged (06:32): harbour and blend unchanged, vet as pre-registered
+regen 06:07 -> 06:31 (battery_compare.py ac773a1): harbour BEHAVIOURALLY_DISTINGUISHED /
+CONFIRMED, selected cell@Vessel#0 unchanged; blend SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS /
+CONFIRMED, cell#0 unchanged; vet AMBIGUOUS_SURVIVORS / AMBIGUOUS_SURVIVOR_SET, selected None
+-- the move traced under 9a11be1 (the schedule form's label-keyed field units tie no-identity
+under the Pareto rule), expected.  open_world started 06:31:30.
+
+## P43 (u) relation roles and (v) multi-region output, first measurement (06:34)
+Worktree, three repairs together: (t) revisions, (u) outcome.relation_roles -- roles from the
+owner's own relations (types whose refs point at the owner: containment is a backward
+'in:<owner>' reference on the contained type; the owner's forward refs; nesting parents),
+same RELATION kind/denotation/names as operator-derived roles; (v) emission.observed -- with
+several live regions the output is the lines newly said (dispatch's standing seal verdict
+no longer fuses with the check's answer: events 'Dispatch ready' 10 / 'unavailable' 6).
+falls2_1701: roles owner + three backward in:0 roles (review group, carrier=van, review-held
+variant), the van bound with its Payload limit at the carrier-chosen occasions (p43_query.py:
+Panel 14, Box 23, Swift 8) -- but NO comparison literal in the query language and the only
+rule is junk purity on 'unnamed(review variant)' -> ready (cover 3); RULE 0/0/0/8 (1701),
+and 1702: 2 forced RIGHT / 2 forced WRONG / 4 unestablished on Check dispatch from
+'unnamed(review) -> unavailable' (cover 2): a NEW FORCED-WRONG -- the structural_roles
+lesson exactly (a role's presence is a condition, purity over more literals is cheap).  (u)
+as drafted is not retainable.  Two things to settle: why the pair literal
+cmp(owner.weight, van.payload) is absent from the language even on the first pass, and
+whether a relation role should enter the language only through comparisons (a path for a
+join, not a referent for nominal conditions).
+
+## P43 ESTABLISHED in the worktree (06:42): dispatch's comparison learned, held-out 7/0/1 and 5/0/3
+Fourth repair (w): a containment belief contradicted by the container's rendering.  The van
+role was AMBIGUOUS at nine of fifteen occasions (p43_firstpass.py: literal ('ambiguous',
+van) at [2,3,4,5,7,8,9,10,14]) and NAMED once by a stale belief (occasion 13, Alder with no
+carrier, 'Panel 14' from an earlier page): the tracker kept Swift's 'in:0 = Cedar' after
+Cedar's page showed Panel, and Panel's after Alder's page showed no carrier.  (w) AbsObj.
+contains / abstractor._contains (the types a rendering's family can show inside it, the
+_carried construction over et.contain) and the tracker vacates an 'in:' reference of an
+unrendered member whose holder is rendered here by a family able to show such members --
+the doctrine of (f) applied to containment.  With (t)(u)(v)(w) the terminal fits of BOTH
+arms learn Rule(Payload limit(van shown on the run's page) >= weight(run) -> Dispatch
+ready; otherwise Dispatch unavailable), covered 10/6 (1701) and 7/8 (1702), pair adopted,
+every carrier occasion named and every no-carrier one unnamed (p43_occasions.py).  Held-out
+RULE on the 8 Check dispatch clicks: 1702 7 forced right / 0 wrong / 1 several; 1701 5 / 0
+/ 3 (p43_wtw_falls2_*_score.json); Review seal 2 unestablished (immutable records, one
+occasion each); decision list 8 right / 2 wrong (the list guesses where RULE abstains).
+E3 met with 0 wrong, at the cost of four general repairs after the pre-registration, each
+traced from the arms' own evidence and each with a test ((w)'s to write).  Gate for
+retention: the full battery on the main tree under all four (harbour/blend/vet frontiers
+and ledgers, the JOIN corpora), after battery p42e ends.
+Checks under the worktree (06:44): workshop initial_v2 -> evaluation_v2 unchanged (Start job
+5 forced right / 0 wrong / 1 several; p43_workshop_p43_wt.json); tests for (t)(u)(v)(w) written
+(objective revision, outcome relation roles, emission new lines, navigation containment vacate) --
+objective/navigation/outcome/emission/fields/widget-mirror files pass; full suite in the worktree
+(suite_wt.log) and the three JOIN corpora scorings (p43_join_wt.log: sep2->sep Book pilot, pil,
+ref Allocate berth; P42 figures 15/15/0, 7/14/0, 16/11/0) running beside battery p42e.
+
+## (t) on the reservoir (06:48): the inherited numeric keys yield to no identity
+Under the worktree the reservoir's request page (3 variant templates) and its amount page,
+keyed INHERITED by the numeric last resort (Water requested / Recorded draw) under ac773a1,
+read NO_IDENTITY (p42_moves.py 'Water'); switching the revision rule off alone restores the
+inherited keys (p43_moves_norev.py), so (t) is the cause: the numeric-keyed request's
+changes (Water available after a cistern is chosen on the source page, where the request
+is not rendered) were credited to the click that showed the review page again, and that
+credit was all the key had over None; under (t) it is a revision and the inherited key
+yields on the tie (q).  Held-out unchanged, 0/0/0/8 on Schedule watering under both (the
+Water available field was a clock anyway).  The singleton-record question stands: a
+request that is the only one has no key, and its changes happen where it is not shown.
+
+## Worktree suite and the first JOIN corpus (07:25)
+Full suite in the worktree under (t)(u)(v)(w): 1231 passed / 3 skipped / 1 xfailed in 39:46
+(suite_wt.log; the six new tests included).  harbour_sep2_dev -> harbour_sep_hold, Book pilot:
+15 forced right / 15 several / 0 wrong, whole-holdout ledger 172 / 98 / 53 / 7 / 0 wrong --
+identical to P42's figures.  pil and ref scorings running (slow beside the battery).
+
+## (u) measured on harbour_pil and narrowed to paths (11:43)
+harbour_pil_dev -> pil_hold under (t)(u)(v)(w) as first drafted: Book pilot 11 forced right / 9
+several / 1 forced WRONG (step 513, 'Nothing chosen' the only admissible answer, a booking
+observed) against P42's 7/14/0 -- the Norway coincidence P39/P40 had made impure returned pure
+under a second name of the vessel (the owner's rel:0 forward role), with new presence and
+attribute literals to conjoin: the structural_roles hazard exactly.  sep2 -> sep unchanged
+(15/15/0, ledger 172/98/53/7/0).  Narrowed (u): a relation role supplied by the reading is a
+PATH (Role.path): it enters the language only through comparisons between its ordered
+fields and another role's (plus the equality literals of those fields, which justification
+reads); no presence, no nominal attribute, no threshold of its own (outcome._paths,
+_literals; test_a_path_role_enters_the_language_only_through_comparisons).  Dispatch under
+it: 7/0/1 and 5/0/3 unchanged, the same rule.  pil/sep/ref rescoring (p43_join_wty.log).
+
+## Battery p42e, open_world judged (11:49) -- GATE FAILED on blend; battery stopped
+open_world 06:31 -> 11:47 (the harbour prequential job starved for hours beside the other
+work).  Thirteen invariants zero; blend: columns_frozen 58 differences (0 under 9a11be1),
+renaming FRESH 49 / PERMUTE 9 (76 / 68 under 9a11be1).  Pre-registration was sixteen
+zeros: ac773a1 is not retainable; (r)/(s) reduced the renaming dependence and introduced
+a column one.  Battery stopped at the start of identity (unit preq-battery-p42e-1789186024
+stopped; dir archived as battery_p42e_stopped_openworld_failed); the next battery runs
+under the combined tree (P42 fixes + the P43 repairs).  Tracing the three files.
+
+## Blend gate traced (12:02): the row's own button still restates its name, under a verb
+columns_frozen 58 / renaming fresh 49 / permute 9 (docs/data/v4/*.json, differences): all at
+Record draw (admissible sets differing by one coincidental vouch) and Close (5 forced WRONG
+on the ORIGINAL holdout, '<> <> .' the only answer, gone under renaming and reversal).  The
+vat row's buttons are 'Close <vat>' and 'Open <vat>'; the re-parse (j) dissolves the unkeyed
+mention into the row as `cell/button#0@7` = 'Open Creek Bed' (named by position: '@7' is the
+node offset from the row root, hypotheses:212), which (r) kept because 'Open Creek Bed' is
+not 'Creek Bed'; the version space vouched on it -- a spelling under renaming, a position
+under reversal.  (r'') _is_attribute judged per instance: a slot whose value on each
+instance contains that instance's own key with one constant remainder ('Open ... run' on
+every card) restates the name and is not an attribute; a remainder that varies with the
+instance ('Follow'/'Unfollow') is a state and stays (test rewritten with instances,
+test_v2_collection_variation 45 passed).  Worktree: blend renaming fresh/permute and the
+column reversal running (scratchpad/ow, p43_wt_*_blend*.json), nominal probe running.
+
+## Blend invariants zero under the worktree (12:03); merging
+Under (t)(u')(v)(w)(r''): renaming_blend_book fresh 0 / permute 0 / reversal 0 of 503 clicks
+(p43_wt_*_blend*.json, 2.5 min each).  (r'') committed on p43-revisions; the main branch
+fast-forwarded to it (the failed p42e battery's regenerated docs/data left uncommitted, to
+be regenerated).  Next: full suite in the main tree chained to a fresh battery; the three
+JOIN corpora rescored under the merged tree (the worktree scoring of pil under pre-(r'')
+code stopped).
+Final figures under the merged tree bda932e (12:06): dispatch falls2_1701 Check dispatch
+5 forced right / 0 wrong / 3 several, falls2_1702 7 / 0 / 1 (the same rule, p43_final_*); dispatch
+initial-only 0/0/0/8; workshop Start job 5/0/1 unchanged.  P43 evidence staged under
+docs/data/v4/transport/p43 (six arm dirs, 852K) and the p43_* instruments under
+docs/data/v4/prequential/instruments (uncommitted until the battery passes).  Running: suite5 ->
+battery preq-battery-p43a; JOIN rescoring under main (p43_join_main.log).
+
+## Suite under bda932e and battery p43a (12:32)
+Main tree: 1232 passed / 3 skipped / 1 xfailed in 26:24 (suite5.log, browser tests included).
+Battery launched 12:30:19 as preq-battery-p43a-1789209019 (fresh regen).  JOIN under the
+merged tree: harbour_pil_dev -> pil_hold Book pilot 7 forced right / 14 several / 0 wrong --
+P42's figure exactly (the path restriction closed the 513 wrong); sep2 and ref running.
+JOIN under bda932e (12:49): pil whole-holdout 165/89/49/7 sole-wrong/3 forced-wrong, and the
+SAME ledger under ac773a1 scored in the worktree (p43_base_join_pil_dev.json): the three forced
+wrongs pre-exist P43; sep2 -> sep 172/98/53/7/0, Book pilot 15/15/0 (P42's exactly); ref running.
+
+## Battery p43a, regen judged (12:56)
+regen 12:30 -> 12:54 (battery_compare.py bda932e): harbour BEHAVIOURALLY_DISTINGUISHED /
+CONFIRMED (cell@Vessel#0), blend SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS / CONFIRMED (cell#0)
+unchanged; vet AMBIGUOUS_SURVIVORS / AMBIGUOUS_SURVIVOR_SET, selected None -- as under 9a11be1
+and ac773a1 (the schedule form's label-keyed field units tie no-identity under the Pareto
+rule; traced, pre-registered).  open_world started 12:54:58.
+ref under bda932e (13:00): Allocate berth 16 forced right / 11 several / 0 wrong, whole-holdout
+174/99/50/7/4 -- P42's figures exactly.  All three retained JOIN corpora are unchanged by the five
+repairs: sep 15/15/0, pil 7/14/0 (step-identical to ac773a1), ref 16/11/0.
+
+## Battery p43a, open_world judged (14:02): all sixteen invariants zero
+open_world 12:54 -> 14:01 (66 min, the machine otherwise quiet).  columns_frozen blend /
+harbour / vet 0; renaming fresh and permute on blend, cellar, harbour, vet 0; reversal on all
+four 0.  identity started 14:01; outcome and admissible follow; the ledgers decide retention.
+identity 14:01 -> 14:06 judged (14:06): every admissible_* and inadequacy_* verdict ledger
+identical to the committed files (harbour / blend / cellar / vet, frozen prefix, list, holdout,
+prequential); identity_ties files compared below.
+identity_ties vs the last RETAINED files (pre-P42, battery #9): blend open questions 6 -> 5;
+harbour final unexplained 73 -> 43 (explained 74 unchanged); vet final contradictions 1 -> 205,
+visibility 1 -> 288, explained 93 -> 83, spurious 5 -> 0, open questions 9 -> 5, reachable 2 -> 0
+-- the no-identity tie of vet's schedule form (P42, traced) seen in the settled reading's own
+account; frontiers and ledgers unchanged.  Noted for the retention paragraph.
+outcome 14:06 -> 14:46 judged (14:46): all eleven outcome_* ledgers identical to the committed
+state (blend cross-trace, subject-restricted, permuted, prequential, split05/07; harbour cross-trace,
+subject-restricted, split05; cellar split05; vet split05) -- no new forced-wrong anywhere
+(ledger_compare.py bda932e).  admissible started 14:46.
+
+## Battery p43a DONE (14:52) -- every gate met; P42 + P43 retained together
+12:30 -> 14:50 (regen 25 min, open_world 66, identity 5, outcome 40, admissible 5).  Sixteen
+invariants zero; harbour/blend frontiers unchanged, vet AMBIGUOUS as traced (its settled
+reading's contradictions 205 / visibility 288 on 897 steps recorded in Part XXIII's retention
+paragraph as the cost of the open question); admissible, inadequacy and outcome ledgers all
+identical to the committed state; JOIN corpora identical (sep 15/15/0, pil 7/14/0 step for
+step, ref 16/11/0).  Logs: battery_run10_gate_failed (9a11be1), battery_run11_gate_failed
+(ac773a1), battery_run12 (bda932e).  Retention commit: docs (Parts XXIII/XXIV, regenerated
+state, P43 evidence under transport/p43, p43 instruments, this notes mirror).
+Open after this: the singleton record (reservoir), vet's label-keyed form fields, the
+payload-side click planner for a clock a click sets, Review seal's immutable records; the
+reserved third interface for any transfer claim.

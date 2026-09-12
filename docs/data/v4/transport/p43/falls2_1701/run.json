@@ -1,0 +1,127 @@
+{
+  "bootstrap_goto": 0,
+  "budget": 60,
+  "charged_attempts": 60,
+  "complete": true,
+  "driver_sha256": "f983ab81e40f5ce859300c9380c7f8ee524685d5a95aaae34b57392de74ec01d",
+  "end": {
+    "argv": [
+      "/tmp/claude-1000/-home-moloch-semabi/cbdd0615-d7c0-4fae-b02c-d64c20b5ee38/scratchpad/p43_acquire_falls.py",
+      "--url",
+      "http://127.0.0.1:8767/dispatch",
+      "--reset-url",
+      "http://127.0.0.1:8767/reset?fixture=dispatch&partition=acquisition",
+      "--initial",
+      "docs/data/v4/transport/first_pass/dispatch/initial_v2",
+      "--out",
+      "/home/moloch/semabi-scratch/preq/p43/falls2_1701",
+      "--seed",
+      "1701",
+      "--budget",
+      "60"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "ac773a16a53a6c41468ab4d50acff9d324b5745a",
+    "pid": 64170,
+    "utc": "2026-09-12T04:11:09.990611+00:00"
+  },
+  "failed_attempts": 11,
+  "fall_attempts": 1,
+  "initial_sha256": {
+    "observations.jsonl": "c7e22d0f668505c6b50e33da1f2c86d2255c89b79ea1c0ef55b798e99eeb7d69",
+    "steps.jsonl": "c9af9c0e426338516397a2a139469909b653c55b7113fc0d784c504b0199b464"
+  },
+  "navigation_waits": 0,
+  "paired_steps_recorded": 59,
+  "policy": "falls",
+  "primitive_counts": {
+    "click": 46,
+    "press": 4,
+    "reload": 1,
+    "reset": 1,
+    "type": 8
+  },
+  "raw_hashes": {
+    "decisions.jsonl": "a1e12164b3cd7357feec1a418c9f5583f0f437d60e355fad81053c51a42d00a6",
+    "observations.jsonl": "84b1db30aaad357383153e4c69b544f47753b32e5fa82f4d3b57c5ba3c3aa5ce",
+    "steps.jsonl": "5407dde68521033d870aef33139bd54d86e94f0ba94e1594fe14d0f3ae34b12a"
+  },
+  "refits": [
+    {
+      "adopted_pairs": [],
+      "after_charged_attempts": 0,
+      "clocks": [
+        [
+          0,
+          "attr:Payload limit#0"
+        ],
+        [
+          0,
+          "attr:group/text/textbox#0"
+        ]
+      ],
+      "status": "FITTED",
+      "training_steps": 32
+    },
+    {
+      "adopted_pairs": [
+        [
+          [
+            4,
+            "attr:Payload limit#0"
+          ],
+          [
+            4,
+            "attr:group/text/textbox#0"
+          ]
+        ]
+      ],
+      "after_charged_attempts": 15,
+      "clocks": [],
+      "status": "FITTED",
+      "training_steps": 46
+    },
+    {
+      "adopted_pairs": [],
+      "after_charged_attempts": 30,
+      "clocks": [],
+      "status": "FITTED",
+      "training_steps": 61
+    },
+    {
+      "adopted_pairs": [],
+      "after_charged_attempts": 45,
+      "clocks": [],
+      "status": "FITTED",
+      "training_steps": 76
+    }
+  ],
+  "seed": 1701,
+  "settle_timeouts": 0,
+  "snapshot_calls": 60,
+  "source_dirty": false,
+  "source_head": "ac773a16a53a6c41468ab4d50acff9d324b5745a",
+  "start": {
+    "argv": [
+      "/tmp/claude-1000/-home-moloch-semabi/cbdd0615-d7c0-4fae-b02c-d64c20b5ee38/scratchpad/p43_acquire_falls.py",
+      "--url",
+      "http://127.0.0.1:8767/dispatch",
+      "--reset-url",
+      "http://127.0.0.1:8767/reset?fixture=dispatch&partition=acquisition",
+      "--initial",
+      "docs/data/v4/transport/first_pass/dispatch/initial_v2",
+      "--out",
+      "/home/moloch/semabi-scratch/preq/p43/falls2_1701",
+      "--seed",
+      "1701",
+      "--budget",
+      "60"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "ac773a16a53a6c41468ab4d50acff9d324b5745a",
+    "pid": 64170,
+    "utc": "2026-09-12T04:10:05.087828+00:00"
+  },
+  "status": "FINISHED",
+  "unpaired_attempts": 1
+}

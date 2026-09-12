@@ -1,18 +1,16 @@
 
-vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448  10 operators
-  39 held-out actions, 1.49 rules offered and 0.87 claims applicable per action
-  3 distinct claims across all its decided predictions
-    a named constant          14 claims,     7 decided, supported 100%   1 distinct
-                           ['attr:Status#0 = checked_in']
-    an object brought into being    17 claims,    14 decided, supported 100%   1 distinct
+vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448  18 operators
+  44 held-out actions, 2.16 rules offered and 2.55 claims applicable per action
+  6 distinct claims across all its decided predictions
+    a named constant          62 claims,    48 decided, supported  96%   4 distinct
+                           ['attr:Status#0 = cancelled', 'attr:Status#0 = checked_in', 'attr:Status#0 = completed', 'attr:Status#0 = in_progress']
+    an object brought into being   154 claims,    26 decided, supported  46%   1 distinct
                            ['id = new']
-    removal                   57 claims,    27 decided, supported  52%   1 distinct
+    removal                   64 claims,    64 decided, supported   0%   1 distinct
                            ['id = gone']
-    removal exposure: this reading 0.519, unconditional base rate 0.637, per-click control 0.239 (margin +0.28)
-                           steps by fraction gone {"all went (>90%)": 45, "none went (<10%)": 16, "some went": 22}
-       18 ( 46%)  every applicable rule was right
-        9 ( 23%)  the rules could not say which object they were about
-        7 ( 18%)  no rule applied
-        5 ( 13%)  every applicable rule was contradicted
+    removal exposure: this reading 0.0, unconditional base rate 0.628, per-click control 0.203 (margin -0.203)
+                           steps by fraction gone {"all went (>90%)": 109, "none went (<10%)": 44, "some went": 33}
+       23 ( 52%)  applicable rules disagreed
+       21 ( 48%)  every applicable rule was contradicted
 
 wrote docs/data/v4/claim_substance_vet_clinic_transfer_frozen_prefix.json

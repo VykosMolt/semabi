@@ -1,27 +1,105 @@
 {
  "run": "vet_clinic_transfer",
  "final": {
-  "contradictions": 1,
+  "contradictions": 205,
   "churn": 0,
-  "visibility": 1,
+  "visibility": 288,
   "conflicts": 0,
   "named": 0,
   "positional": 0,
-  "unexplained": 0,
-  "spurious": 5,
-  "explained": 93,
-  "delta_atoms": 93,
-  "complexity": 24,
+  "unexplained": 15,
+  "spurious": 0,
+  "explained": 83,
+  "delta_atoms": 83,
+  "complexity": 28,
   "steps": 897,
   "churn_steps": [],
   "contradiction_steps": [
-   4
+   4,
+   5,
+   12,
+   15,
+   16,
+   17,
+   27,
+   36,
+   41,
+   47,
+   52,
+   62,
+   67,
+   72,
+   77,
+   82,
+   87,
+   92,
+   97,
+   102,
+   107,
+   112,
+   121,
+   128,
+   133,
+   135,
+   144,
+   152,
+   155,
+   157,
+   159,
+   161,
+   163,
+   165,
+   169,
+   171,
+   176,
+   181,
+   183,
+   189
   ],
   "visibility_steps": [
-   4
+   4,
+   5,
+   12,
+   14,
+   15,
+   16,
+   17,
+   22,
+   27,
+   28,
+   36,
+   38,
+   41,
+   44,
+   47,
+   49,
+   52,
+   59,
+   62,
+   64,
+   67,
+   69,
+   72,
+   74,
+   77,
+   79,
+   82,
+   84,
+   87,
+   89,
+   92,
+   94,
+   97,
+   99,
+   102,
+   104,
+   107,
+   109,
+   112,
+   118
   ]
  },
- "open_questions": 9,
+ "open_questions": 5,
  "questions": [
   {
    "family": "group[_](heading[_],list[_](listitem[_]))",
@@ -58,386 +136,6 @@
    "decided": null
   },
   {
-   "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": "cell@Patient#0|cell@Reason#0",
-   "right": "cell@Patient#0",
-   "reason": "the trace so far scores both readings identically",
-   "tids": [
-    2
-   ],
-   "contested": [
-    "cell@Reason#0"
-   ],
-   "status": "DECIDED",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op3",
-     "control": "button:Complete",
-     "support": 4,
-     "acts": [
-      "click(button:Complete)"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op4",
-     "control": "button:Schedule",
-     "support": 13,
-     "acts": [
-      "click(button:Schedule)"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
-     "control": "button:Complete",
-     "support": 5,
-     "acts": [
-      "type(textbox#cell@Actions/textbox, ?s0)",
-      "click(button:Complete)"
-     ],
-     "test": "collision",
-     "parameters": [
-      "type(textbox#cell@Actions/textbox, ?s0)"
-     ]
-    }
-   ],
-   "movers": [],
-   "made_values": {
-    "op3": [
-     {
-      "cell@Reason#0": "tp79",
-      "key": "Luna|tp79"
-     },
-     {
-      "cell@Reason#0": "Skin irritation",
-      "key": "Shadow|Skin irritation"
-     },
-     {
-      "cell@Reason#0": "Annual checkup",
-      "key": "Sable|Annual checkup"
-     },
-     {
-      "cell@Reason#0": "Limping",
-      "key": "Shadow|Limping"
-     }
-    ],
-    "op4": [
-     {
-      "cell@Reason#0": "tp79",
-      "key": "Luna|tp79"
-     },
-     {
-      "cell@Reason#0": "ak41",
-      "key": "Luna|ak41"
-     },
-     {
-      "cell@Reason#0": "iz87",
-      "key": "Luna|iz87"
-     },
-     {
-      "cell@Reason#0": "dr94",
-      "key": "Luna|dr94"
-     },
-     {
-      "cell@Reason#0": "zp37",
-      "key": "Biscuit|zp37"
-     },
-     {
-      "cell@Reason#0": "cv81",
-      "key": "Biscuit|cv81"
-     },
-     {
-      "cell@Reason#0": "hj64",
-      "key": "Biscuit|hj64"
-     },
-     {
-      "cell@Reason#0": "xe47",
-      "key": "Biscuit|xe47"
-     },
-     {
-      "cell@Reason#0": "wn22",
-      "key": "Rocket|wn22"
-     },
-     {
-      "cell@Reason#0": "rk35",
-      "key": "Sable|rk35"
-     },
-     {
-      "cell@Reason#0": "fu92",
-      "key": "Ziggy|fu92"
-     },
-     {
-      "cell@Reason#0": "nj12",
-      "key": "Sable|nj12"
-     }
-    ],
-    "op7": [
-     {
-      "cell@Reason#0": "ak41",
-      "key": "Luna|ak41"
-     },
-     {
-      "cell@Reason#0": "zp37",
-      "key": "Biscuit|zp37"
-     },
-     {
-      "cell@Reason#0": "Annual checkup",
-      "key": "Ziggy|Annual checkup"
-     },
-     {
-      "cell@Reason#0": "rk35",
-      "key": "Sable|rk35"
-     },
-     {
-      "cell@Reason#0": "Vaccination",
-      "key": "Shadow|Vaccination"
-     }
-    ]
-   },
-   "separable_by_the_history": {
-    "cell@Reason#0": false
-   },
-   "decided": {
-    "by": "experiment",
-    "experiment": "result_vet.json",
-    "survivors": [
-     "Reason",
-     "Patient|Reason"
-    ],
-    "refuted": [
-     "Owner",
-     "Patient"
-    ],
-    "keys": {
-     "Owner": "cell@Owner#0",
-     "Reason": "cell@Reason#0",
-     "Patient": "cell@Patient#0",
-     "Patient|Reason": "cell@Patient#0|cell@Reason#0"
-    }
-   },
-   "experiment": {
-    "test": "collision",
-    "by": "button:Complete",
-    "operator": "op3",
-    "parameters": [],
-    "predictions": {
-     "cell@Patient#0|cell@Reason#0": "a second instance with the same value is one object",
-     "cell@Patient#0": "a second instance with the same value is one object"
-    }
-   }
-  },
-  {
-   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": null,
-   "right": "cell@Reason#0",
-   "reason": "the trace so far scores both readings identically",
-   "tids": [],
-   "contested": [
-    "cell@Reason#0"
-   ],
-   "status": "NO_KNOWN_EXPERIMENT",
-   "writers": {},
-   "makers": [],
-   "movers": [],
-   "made_values": {},
-   "separable_by_the_history": {},
-   "decided": null
-  },
-  {
-   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": null,
-   "right": "cell@Owner#0",
-   "reason": "the trace so far scores both readings identically",
-   "tids": [],
-   "contested": [
-    "cell@Owner#0"
-   ],
-   "status": "NO_KNOWN_EXPERIMENT",
-   "writers": {},
-   "makers": [],
-   "movers": [],
-   "made_values": {},
-   "separable_by_the_history": {},
-   "decided": null
-  },
-  {
-   "family": "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": "cell@Patient#0|cell@Reason#0",
-   "right": "cell@Patient#0",
-   "reason": "the trace so far scores both readings identically",
-   "tids": [
-    2
-   ],
-   "contested": [
-    "cell@Reason#0"
-   ],
-   "status": "DECIDED",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op3",
-     "control": "button:Complete",
-     "support": 4,
-     "acts": [
-      "click(button:Complete)"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op4",
-     "control": "button:Schedule",
-     "support": 13,
-     "acts": [
-      "click(button:Schedule)"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
-     "control": "button:Complete",
-     "support": 5,
-     "acts": [
-      "type(textbox#cell@Actions/textbox, ?s0)",
-      "click(button:Complete)"
-     ],
-     "test": "collision",
-     "parameters": [
-      "type(textbox#cell@Actions/textbox, ?s0)"
-     ]
-    }
-   ],
-   "movers": [],
-   "made_values": {
-    "op3": [
-     {
-      "cell@Reason#0": "tp79",
-      "key": "Luna|tp79"
-     },
-     {
-      "cell@Reason#0": "Skin irritation",
-      "key": "Shadow|Skin irritation"
-     },
-     {
-      "cell@Reason#0": "Annual checkup",
-      "key": "Sable|Annual checkup"
-     },
-     {
-      "cell@Reason#0": "Limping",
-      "key": "Shadow|Limping"
-     }
-    ],
-    "op4": [
-     {
-      "cell@Reason#0": "tp79",
-      "key": "Luna|tp79"
-     },
-     {
-      "cell@Reason#0": "ak41",
-      "key": "Luna|ak41"
-     },
-     {
-      "cell@Reason#0": "iz87",
-      "key": "Luna|iz87"
-     },
-     {
-      "cell@Reason#0": "dr94",
-      "key": "Luna|dr94"
-     },
-     {
-      "cell@Reason#0": "zp37",
-      "key": "Biscuit|zp37"
-     },
-     {
-      "cell@Reason#0": "cv81",
-      "key": "Biscuit|cv81"
-     },
-     {
-      "cell@Reason#0": "hj64",
-      "key": "Biscuit|hj64"
-     },
-     {
-      "cell@Reason#0": "xe47",
-      "key": "Biscuit|xe47"
-     },
-     {
-      "cell@Reason#0": "wn22",
-      "key": "Rocket|wn22"
-     },
-     {
-      "cell@Reason#0": "rk35",
-      "key": "Sable|rk35"
-     },
-     {
-      "cell@Reason#0": "fu92",
-      "key": "Ziggy|fu92"
-     },
-     {
-      "cell@Reason#0": "nj12",
-      "key": "Sable|nj12"
-     }
-    ],
-    "op7": [
-     {
-      "cell@Reason#0": "ak41",
-      "key": "Luna|ak41"
-     },
-     {
-      "cell@Reason#0": "zp37",
-      "key": "Biscuit|zp37"
-     },
-     {
-      "cell@Reason#0": "Annual checkup",
-      "key": "Ziggy|Annual checkup"
-     },
-     {
-      "cell@Reason#0": "rk35",
-      "key": "Sable|rk35"
-     },
-     {
-      "cell@Reason#0": "Vaccination",
-      "key": "Shadow|Vaccination"
-     }
-    ]
-   },
-   "separable_by_the_history": {
-    "cell@Reason#0": false
-   },
-   "decided": {
-    "by": "experiment",
-    "experiment": "result_vet.json",
-    "survivors": [
-     "Reason",
-     "Patient|Reason"
-    ],
-    "refuted": [
-     "Owner",
-     "Patient"
-    ],
-    "keys": {
-     "Owner": "cell@Owner#0",
-     "Reason": "cell@Reason#0",
-     "Patient": "cell@Patient#0",
-     "Patient|Reason": "cell@Patient#0|cell@Reason#0"
-    }
-   },
-   "experiment": {
-    "test": "collision",
-    "by": "button:Complete",
-    "operator": "op3",
-    "parameters": [],
-    "predictions": {
-     "cell@Patient#0|cell@Reason#0": "a second instance with the same value is one object",
-     "cell@Patient#0": "a second instance with the same value is one object"
-    }
-   }
-  },
-  {
    "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
    "left": null,
    "right": "cell@Name#0",
@@ -472,13 +170,12 @@
    "decided": null
   },
   {
-   "family": "text[_](textbox[_])",
+   "family": "text[_](combobox[_])",
    "left": "text#0",
    "right": null,
-   "reason": "undecided: chosen explains 93 with 7 errors, the alternative explains 72 with 0",
+   "reason": "undecided: chosen explains 83 with 493 errors, the alternative explains 72 with 0",
    "tids": [
-    0,
-    1
+    0
    ],
    "contested": [
     "text#0"
@@ -487,44 +184,416 @@
    "writers": {},
    "makers": [
     {
+     "operator": "op6",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op7",
+     "control": "button:Assign vet",
+     "support": 2,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
      "operator": "op8",
-     "control": "?",
+     "control": "button:Cancel",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Cancel@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op9",
+     "control": "button:Check in",
+     "support": 3,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Check in@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op10",
+     "control": "button:Complete",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Complete@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op11",
+     "control": "button:Schedule",
      "support": 6,
      "acts": [
-      "type(textbox#textbox@0af5a3@T0[?o0], ?s0)"
+      "context(cell#0, ?o0)",
+      "click(button:Schedule)"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op12",
+     "control": "button:Schedule",
+     "support": 2,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Schedule)"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op13",
+     "control": "button:Start exam",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Start exam@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op14",
+     "control": "?",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "context(cell#2, ?o1)",
+      "type(textbox#textbox@0af5a3@T1[?o2], ?s0)"
      ],
      "test": "collision",
      "parameters": [
-      "type(textbox#textbox@0af5a3@T0[?o0], ?s0)"
+      "type(textbox#textbox@0af5a3@T1[?o2], ?s0)"
      ]
     }
    ],
-   "movers": [],
+   "movers": [
+    {
+     "operator": "op6",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      0
+     ],
+     "to": [
+      0
+     ]
+    },
+    {
+     "operator": "op7",
+     "control": "button:Assign vet",
+     "support": 2,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      0
+     ],
+     "to": [
+      0
+     ]
+    },
+    {
+     "operator": "op8",
+     "control": "button:Cancel",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Cancel@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      0
+     ],
+     "to": [
+      0
+     ]
+    },
+    {
+     "operator": "op9",
+     "control": "button:Check in",
+     "support": 3,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Check in@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      0
+     ],
+     "to": [
+      0
+     ]
+    },
+    {
+     "operator": "op10",
+     "control": "button:Complete",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Complete@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      0
+     ],
+     "to": [
+      0
+     ]
+    },
+    {
+     "operator": "op11",
+     "control": "button:Schedule",
+     "support": 6,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Schedule)"
+     ],
+     "test": "re-typing",
+     "from": [
+      0
+     ],
+     "to": [
+      0
+     ]
+    },
+    {
+     "operator": "op12",
+     "control": "button:Schedule",
+     "support": 2,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Schedule)"
+     ],
+     "test": "re-typing",
+     "from": [
+      0
+     ],
+     "to": [
+      0
+     ]
+    },
+    {
+     "operator": "op13",
+     "control": "button:Start exam",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "click(button:Start exam@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      0
+     ],
+     "to": [
+      0
+     ]
+    },
+    {
+     "operator": "op14",
+     "control": "?",
+     "support": 1,
+     "acts": [
+      "context(cell#0, ?o0)",
+      "context(cell#2, ?o1)",
+      "type(textbox#textbox@0af5a3@T1[?o2], ?s0)"
+     ],
+     "test": "re-typing",
+     "from": [
+      0
+     ],
+     "to": [
+      0
+     ]
+    }
+   ],
    "made_values": {
+    "op6": [
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ],
+    "op7": [
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     },
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ],
     "op8": [
      {
       "text#0": null,
-      "key": "Reason"
+      "key": "Owner"
      },
      {
       "text#0": null,
-      "key": "Reason"
+      "key": "Species"
+     }
+    ],
+    "op9": [
+     {
+      "text#0": null,
+      "key": "Owner"
      },
      {
       "text#0": null,
-      "key": "Reason"
+      "key": "Species"
      },
      {
       "text#0": null,
-      "key": "Reason"
+      "key": "Owner"
      },
      {
       "text#0": null,
-      "key": "Reason"
+      "key": "Species"
      },
      {
       "text#0": null,
-      "key": "Reason"
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ],
+    "op10": [
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ],
+    "op11": [
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     },
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     },
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     },
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     },
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     },
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ],
+    "op12": [
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     },
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ],
+    "op13": [
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ],
+    "op14": [
+     {
+      "text#0": null,
+      "key": "Owner"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
      }
     ]
    },
@@ -534,11 +603,9 @@
    "decided": null,
    "experiment": {
     "test": "collision",
-    "by": "?",
-    "operator": "op8",
-    "parameters": [
-     "type(textbox#textbox@0af5a3@T0[?o0], ?s0)"
-    ],
+    "by": "button:Assign vet",
+    "operator": "op6",
+    "parameters": [],
     "predictions": {
      "text#0": "a second instance with the same value is one object",
      "None": "a second instance is a second object"
@@ -546,5 +613,5 @@
    }
   }
  ],
- "reachable": 2
+ "reachable": 0
 }

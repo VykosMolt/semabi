@@ -2,19 +2,19 @@
  "applications": {
   "blend_book": {
    "attestation": "docs/data/v4/attestations/frontier_blend_book.execution.json",
-   "attestation_sha256": "281dd9863e963c6f3ec2480489aecbaed1ea1b482c3aa810fcd53ae52eb8a2c4",
+   "attestation_sha256": "5a03ebe0241dad251a4863455461a198a04a2fde71a937849a54ae64597fc81c",
    "holdout_classifications": {
     "cell[_]=cell#0": "CONFIRMED"
    },
    "holdout_outcome": "CONFIRMED",
    "holdout_pairwise_frontier": null,
    "report": "docs/data/v4/frontier_blend_book.json",
-   "report_sha256": "06f8e9ae8b8059a8521119cc5b305816947c9e0d7a42425eaa4c7984c5f0fd55",
+   "report_sha256": "5fc4981c93d663e5f6234aac9315ea2d1a72e9b2135a12818d63c23012b0c4ed",
    "selected": "cell[_]=cell#0",
    "source_choice_rejected": true,
    "survivors": [
     {
-     "decision_fingerprint": "c88398081b0db64e",
+     "decision_fingerprint": "3573ed35937ada54",
      "name": "cell[_]=cell#0"
     }
    ],
@@ -22,14 +22,14 @@
   },
   "harbour": {
    "attestation": "docs/data/v4/attestations/frontier_harbour.execution.json",
-   "attestation_sha256": "d9ba6ee3721120f7af7edc7ac61c9cc7d0dcdfca509213cf25cee9f919b8cbe0",
+   "attestation_sha256": "55d62be67f6ee36092efcfc2984a0410e3676df1edc8686ba83eba68104f50de",
    "holdout_classifications": {
     "row[_](cell@Berth[_],cel=cell@Vessel#0": "CONFIRMED"
    },
    "holdout_outcome": "CONFIRMED",
    "holdout_pairwise_frontier": null,
    "report": "docs/data/v4/frontier_harbour.json",
-   "report_sha256": "979202a46630b18e10f0b8843de28d8b1bf3dad0ca7f9bf7accd8aca65d4fe09",
+   "report_sha256": "96d1d1d91483a33b67b51405a8002ebab3ab892941bcc8579f0066f56a2ccb66",
    "selected": "row[_](cell@Berth[_],cel=cell@Vessel#0",
    "source_choice_rejected": true,
    "survivors": [
@@ -42,23 +42,33 @@
   },
   "vet_clinic": {
    "attestation": "docs/data/v4/attestations/frontier_vet_clinic.execution.json",
-   "attestation_sha256": "277968c73990d027cea62a68d7621deaa00329227cfe89e73b883d81a8019e4f",
+   "attestation_sha256": "7682063a7ff24f5ada8f14033abc0b7bb64940b1bfba3aa6a8090c76831703af",
    "holdout_classifications": {
-    "group[_](heading[_],list=heading#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
+    "group[_](heading[_],list=heading#0": "PARTIALLY_CONTRADICTED",
+    "promote listitem[_]=listitem#0!": "PARTIALLY_CONTRADICTED",
+    "row[_](cell@Name[_],cell=cell@Name#0": "PARTIALLY_CONTRADICTED"
    },
-   "holdout_outcome": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
-   "holdout_pairwise_frontier": null,
+   "holdout_outcome": "AMBIGUOUS_SURVIVOR_SET",
+   "holdout_pairwise_frontier": "AMBIGUOUS_SURVIVOR_SET",
    "report": "docs/data/v4/frontier_vet_clinic.json",
-   "report_sha256": "8c2b4df24add47ede44e62320b47bd9bed407f0b1cfbd91105a06045c709ad02",
-   "selected": "group[_](heading[_],list=heading#0",
+   "report_sha256": "5589ec2a0b1217e8c3cc886d29ecc788061ef32cf37795940ffbb04a7620ad02",
+   "selected": null,
    "source_choice_rejected": true,
    "survivors": [
     {
-     "decision_fingerprint": "2de65b32c7b849f1",
+     "decision_fingerprint": "fb4aa0f0735a9572",
      "name": "group[_](heading[_],list=heading#0"
+    },
+    {
+     "decision_fingerprint": "ec32664203492146",
+     "name": "promote listitem[_]=listitem#0!"
+    },
+    {
+     "decision_fingerprint": "415cf8b39cb926dd",
+     "name": "row[_](cell@Name[_],cell=cell@Name#0"
     }
    ],
-   "transfer_outcome": "UNIQUE_SURVIVOR"
+   "transfer_outcome": "AMBIGUOUS_SURVIVOR_SET"
   }
  },
  "claims": {
@@ -67,7 +77,7 @@
   "identity_confirmed_on_holdout": "SEE_PER_APPLICATION_CLASSIFICATIONS",
   "prospective_collection_chronology": "NOT_ESTABLISHED",
   "representation_transportability": "NOT_ESTABLISHED_RTC_ZERO_ON_DIAGNOSED_TRANSPORTS",
-  "unique_transfer_survivor": "ON_3_OF_3_DEVELOPMENT_APPLICATIONS: blend_book, harbour, vet_clinic"
+  "unique_transfer_survivor": "ON_2_OF_3_DEVELOPMENT_APPLICATIONS: blend_book, harbour"
  },
  "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
  "execution_authority": {

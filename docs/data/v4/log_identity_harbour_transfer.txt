@@ -25,7 +25,7 @@ harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  control=None  corrobo
         1  the only outcome ever seen on this control, and something else happened
         1  deferred to the list: the event the interface returned
         1  one outcome was admissible and a different one happened
-    button#cell@Call/button    fitted=  43 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 30}
+    button#button              fitted=  43 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 30}
     button:Reopen              fitted=  18 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 20}
     button:Schedule call       fitted=  19 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 17}
     button:Sign off            fitted=  14 events= 2 rules= 2 forced-wrong=  1  {'the evidence forces one outcome': 17}
@@ -62,7 +62,7 @@ harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  control=None  corrobo
         1  the only outcome ever seen on this control, and something else happened
         1  deferred to the list: the event the interface returned
         1  one outcome was admissible and a different one happened
-    button#cell@Call/button    fitted=  43 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 30}
+    button#button              fitted=  43 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 30}
     button:Reopen              fitted=  18 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 20}
     button:Schedule call       fitted=  19 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 17}
     button:Sign off            fitted=  14 events= 2 rules= 2 forced-wrong=  1  {'the evidence forces one outcome': 17}
@@ -82,13 +82,12 @@ wrote docs/data/v4/inadequacy_harbour_transfer.json
 
 harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  15 operators
   67 held-out actions, 1.0 rules offered and 0.27 claims applicable per action
-  12 distinct claims across all its decided predictions
+  11 distinct claims across all its decided predictions
     a named constant          67 claims,    18 decided, supported  94%   2 distinct
                            ['attr:Condition#0 = closed', 'attr:Condition#0 = open']
     an interface response    185 claims,    82 decided, supported  98%   9 distinct
                            ['<> <> cannot be <> while call <> holds it . = <> <> cannot be <> while call <> holds it .', '<> <> is already <> . = <> <> is already <> .', '<> <> is now <> . = <> <> is now <> .', '<> already has call <> on the board . = <> already has call <> on the board .', '<> is already signed off . = <> is already signed off .', '<> is already signed on . = <> is already signed on .']
-    an object brought into being    17 claims,     5 decided, supported 100%   1 distinct
-                           ['id = new']
+    an object brought into being    17 claims,     0 decided, supported    -   0 distinct
        49 ( 73%)  no rule applied
        17 ( 25%)  every applicable rule was right
         1 (  1%)  every applicable rule was contradicted

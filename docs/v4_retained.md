@@ -1931,6 +1931,19 @@ is then keyed by the requested amount, the numeric last resort for a single requ
 no name, which leaves the operand that should be compared as the key and no rule, an
 open question about singleton records.  The battery runs again under both.
 
+**What the third battery caught.**  Under the second round's repairs the renaming
+invariant on blend fell from seventy-six and sixty-eight differences to forty-nine and nine,
+and the column-reversal invariant, zero before, rose to fifty-eight -- all at *Record draw*,
+where admissible sets differed by one vouch, and at *Close*, where five verdicts forced
+wrong on the original holdout vanished under either transform.  The vat row's buttons are
+`Close <vat>` and `Open <vat>`; the re-parse dissolves the unkeyed mention into the row as a
+slot named by its position, `cell/button#0@7`, whose value is `Open Creek Bed`, and the
+restatement rule had kept it because `Open Creek Bed` is not `Creek Bed`.  The version
+space then vouched on it: a spelling under renaming, a position under reversal.  The rule
+is now judged per instance -- a slot whose value on each instance contains that instance's
+own key under one constant remainder restates the name, while a remainder that varies with
+the instance is a state and stays -- and blend's three invariants return to zero.
+
 **Retention.**  Pre-registered before the battery: every metamorphic invariant zero; no
 new forced-wrong verdict on any retained ledger, a wrong being a finding against the
 change that caused it; readings may move where a belief is now carried, a navigation no
@@ -1941,8 +1954,126 @@ exactly: on the separating holdout `Book pilot` is 15 forced right, 15 several, 
 wrong, on the pilot holdout 7, 14 and none, and on the allocation holdout `Allocate
 berth` is 16, 11 and none -- the last identical to the unmodified tree scored in a
 worktree, step for step, the earlier 21/3/3 being the call-keyed reading of Part XVII
-that Part XVIII's vessel key superseded.  The battery's verdict is recorded in the
-campaign notes and below when it completes.
+that Part XVIII's vessel key superseded.  Two batteries failed their gate on the way,
+both on blend's invariants, and both are kept (`battery_run10_gate_failed.log`,
+`battery_run11_gate_failed.log`); the third, under the tree that also carries Part XXIV's
+repairs (`battery_run12.log`), returned every one of the sixteen invariants at zero;
+harbour's and blend's frontiers unchanged; vet's identification AMBIGUOUS_SURVIVORS as
+traced, its settled reading now carrying the contradictions and visibility of the schedule
+form's label-keyed fields -- 205 and 288 on 897 steps against one and one before -- which
+the Pareto rule cannot trade against the forty-five steps they explain, recorded here as
+the cost of that open question; every admissible, inadequacy and outcome ledger identical
+to the retained ones.  Retained together with Part XXIV.
+
+## Part XXIV -- the clock question answered by a fall, and what the longer history broke (2026-09-12)
+
+Part XXIII left dispatch's check unestablished for a reason the fixture had designed: on
+the initial history both operands of the hidden comparison only ever rose -- the packed
+weight was typed 7, 10, 17, 24 on one run and 11, 15, 23 on the next, the carriers were
+chosen in rising order of limit -- and under P38 a field that only rises on an object is a
+clock, whose order the history alone does not adopt.  The T1 acquisition arms could not
+break it: the Explorer's fresh tokens are letters and digits, a number input refuses
+them, and every typed primitive failed.  P43 asked whether the learner can seek the fall
+itself.
+
+**Fall-seeking acquisition.**  A clock the learner can set is a clock it can test.  The
+driver (`p43_acquire_falls.py`) refits on the T1 schedule and, wherever the fitted field
+theory calls a field a clock and the page in view carries that field in a textbox with a
+number in it, types the smallest value the history witnessed for the field below the
+current one; everywhere else the untargeted Explorer chooses, as in the control arms, at
+the same budget of sixty primitives from the acquisition partition.  No fixture knowledge
+enters: the field, the values and the node come from the model.  Pre-registered: at
+least one fall typed per arm, the weight no longer a clock at the next refit, and the
+comparison adopted only where the payload clock also fell.  Both arms typed the fall at
+their fourth primitive, on Rowan's page, 11 to 7.  A first run typed none, for a defect in
+the driver -- it fitted no model before its loop, so the fourteen primitives on the
+initial-only model, the one that lists the clocks, ran on the Explorer alone -- corrected
+and rerun, with the first run kept.
+
+**The pair was adopted at the first refit after the fall, and lost at the next.**  After
+fifteen primitives the field theory listed no clock and adopted the comparison between the
+run's weight and the payload limit; after thirty it adopted nothing, and the terminal fit
+of both arms left every held-out check unestablished.  Nothing in the fall had gone: the
+reading of the longer history no longer carried the weight on a keyed object.  Reading the
+search's moves on the terminal history found the run page -- nine variant templates now,
+with and without a carrier, with either dispatch status, with the seal verdict -- keyed by
+the constant `'Packing'`, the label of its details group, and the name key rejected by
+explanation: thirty-nine transitions explained against twenty-three.  The step-by-step
+comparison showed where the sixteen came from.  Under the constant key each variant is its
+own singleton type with its own belief, and when a variant comes back into view its
+stale belief is diffed against the page: a click on *Check dispatch* that changed neither
+the weight nor the limit registered the weight moving from 7 to 10 and the limit from 8
+to 14, atoms a learned set-operator then explained.  The objective was crediting a reading
+for explaining the churn its own fragmentation manufactured, and preferring it.
+
+**Four general repairs, each traced on the arms' own evidence.**  *A belief revised out of
+view is not an effect.*  A change on an object the before-state did not render is dropped
+from the delta: the value was formed while the object was out of view, and what the
+action did to the page cannot be read off a comparison with it (`objective._drop_revisions`).
+Under it the terminal history reads as Part XXIII read the initial one -- the run page
+keyed by its name with its cards, eight variants one type -- and something new: the
+carrier group on the run page keyed by the carrier's name and merged with the van cards.
+The carrier is the van, a join through containment, and the payload limit is the van's
+attribute.  *The owner's own relations are roles.*  A control whose whole answer is a
+message has no effect and so no operator variable beyond its owner; harbour's joins reached
+the vessel through variables the booking's effects supplied.  The reading's relations from
+the acting owner -- what its reference slots point at, what its page contains, recorded as
+a backward `in:` reference on the contained type -- are now offered as roles of the same
+RELATION kind, name and denotation the language already has (`outcome.relation_roles`),
+and as *paths*: a role the reading supplies enters the language only through comparisons
+between its ordered fields and another role's, never as a presence or a nominal condition.
+Offered as a full referent first, it did what the blend lesson on structural roles said it
+would -- on harbour's pilot corpus the coincidence P39 and P40 had made impure returned pure
+under a second name of the vessel, one new forced-wrong verdict -- and the restriction to
+comparisons removed it with dispatch unchanged.
+*A multi-region output is what was newly said.*  Dispatch keeps its seal verdict on the
+page while the check answers beside it, and the live region's text had been read whole, so
+the events were "Dispatch ready Seal held" and its three siblings; with several live
+regions the output is the lines not standing before (`emission.observed`).  *A containment
+belief is vacated by a rendering that could show it.*  With the van a role, it was
+ambiguous at nine of fifteen occasions and named once by a stale belief: the tracker had
+kept Swift in Cedar after Cedar's page showed Panel, and Panel in Alder after Alder's page
+showed no carrier.  The types a rendering's family can show inside an entity are recorded
+beside the attributes it can show (`AbsObj.contains`, the construction of `carried` over
+`contain`), and an unrendered member's `in:` reference is vacated when its holder is
+rendered by such a family without it -- Part XXIII's doctrine for values, applied to
+membership.  Each carries a test.
+
+**Dispatch's check is learned and transfers.**  Under the four, the terminal fits of both
+arms state `Payload limit(the van on the run's page) >= weight(the run) -> Dispatch ready`,
+otherwise unavailable, with the pair adopted; every carrier occasion names the van and every
+no-carrier one does not.  On the eight held-out *Check dispatch* clicks the version space
+answers seven forced right, none wrong and one several on the 1702 arm, five, none and
+three on the 1701 arm, where every earlier state of the learner had answered nothing.  The
+seal review's two clicks stay unestablished: its operands are immutable records with one
+occasion each.  The initial-only history, the disclosed T1 arms and workshop's *Start job*
+(five right, none wrong, one several) are unchanged under the four repairs.
+
+**What is claimed and what is not.**  The fixture's clock attack is answered by the
+mechanism its author left room for: an acquisition that sets what only ever rose.  The
+three shifts the longer history caused are not dispatch's; a page with optional parts on a
+long history, a control that only speaks, a second status line and a member that moves
+between holders are ordinary, and each repair is stated without reference to this fixture.
+The blend lesson on structural roles -- more roles, cheaper purity -- was the risk of the
+second repair, and it showed twice: before the containment vacate the new roles
+manufactured presence rules and two forced-wrong verdicts on one arm, and as referents
+they cost harbour's pilot corpus a verdict; as paths the version space vouches only the
+comparison.  The retained corpora are the judge of that risk, below.  Dispatch remains development evidence; nothing here transfers to an
+interface the learner has not seen.
+
+**Retention.**  Pre-registered before the battery: every metamorphic invariant zero; no new
+forced-wrong verdict on any retained ledger; the harbour joins with the same fields and no
+wrong holdout verdict; readings may move where a belief is now a revision, an owner's
+relation a path, an output the line newly said or a membership vacated, each traced.  The
+joins hold exactly -- the separating holdout 15 forced right, 15 several, none wrong, its
+whole-holdout ledger 172, 98, 53, 7 and none wrong; the pilot holdout 7, 14 and none, step
+for step the ledger of the unmodified tree scored beside it; the allocation holdout 16, 11
+and none -- the sixteen invariants are zero, the frontiers as Part XXIII left them, and
+every admissible, inadequacy and outcome ledger is identical to the retained one
+(`battery_run12.log`).  The reservoir's request page, keyed under Part XXIII by its numeric
+last resort, reads under the revision rule as no identity at all: the credit that key had
+over none was a change formed where the request is not shown, and the singleton-record
+question stands with one fewer accident behind it.
 
 ## What stands, and what is open
 

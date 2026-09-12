@@ -5,40 +5,43 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 448,
-  "operators": 10,
-  "held_out_actions": 39,
-  "rules_offered_per_action": 1.49,
-  "applicable_claims_per_action": 0.87,
-  "distinct_decided_claims": 3,
+  "operators": 18,
+  "held_out_actions": 44,
+  "rules_offered_per_action": 2.16,
+  "applicable_claims_per_action": 2.55,
+  "distinct_decided_claims": 6,
   "composition": {
    "a named constant": {
-    "claims": 14,
-    "decided": 7,
-    "supported": 7,
-    "refuted": 0,
-    "supported_share": 1.0,
-    "distinct_claims": 1,
+    "claims": 62,
+    "decided": 48,
+    "supported": 46,
+    "refuted": 2,
+    "supported_share": 0.958,
+    "distinct_claims": 4,
     "examples": [
-     "attr:Status#0 = checked_in"
+     "attr:Status#0 = cancelled",
+     "attr:Status#0 = checked_in",
+     "attr:Status#0 = completed",
+     "attr:Status#0 = in_progress"
     ]
    },
    "an object brought into being": {
-    "claims": 17,
-    "decided": 14,
-    "supported": 14,
-    "refuted": 0,
-    "supported_share": 1.0,
+    "claims": 154,
+    "decided": 26,
+    "supported": 12,
+    "refuted": 14,
+    "supported_share": 0.462,
     "distinct_claims": 1,
     "examples": [
      "id = new"
     ]
    },
    "removal": {
-    "claims": 57,
-    "decided": 27,
-    "supported": 14,
-    "refuted": 13,
-    "supported_share": 0.519,
+    "claims": 64,
+    "decided": 64,
+    "supported": 0,
+    "refuted": 64,
+    "supported_share": 0.0,
     "distinct_claims": 1,
     "examples": [
      "id = gone"
@@ -46,24 +49,22 @@
    }
   },
   "per_action": {
-   "every applicable rule was right": 18,
-   "the rules could not say which object they were about": 9,
-   "no rule applied": 7,
-   "every applicable rule was contradicted": 5
+   "applicable rules disagreed": 23,
+   "every applicable rule was contradicted": 21
   },
   "removal_exposure": {
-   "base_rate_gone": 0.637,
+   "base_rate_gone": 0.628,
    "steps_by_fraction_gone": {
-    "all went (>90%)": 45,
-    "none went (<10%)": 16,
-    "some went": 22
+    "all went (>90%)": 109,
+    "none went (<10%)": 44,
+    "some went": 33
    },
-   "reading_supported_share": 0.519,
-   "removal_claims": 27,
-   "steps_spoken_at": 16,
-   "per_click_control": 0.239,
-   "objects_in_those_steps": 46,
-   "margin_over_per_click_control": 0.28
+   "reading_supported_share": 0.0,
+   "removal_claims": 64,
+   "steps_spoken_at": 44,
+   "per_click_control": 0.203,
+   "objects_in_those_steps": 217,
+   "margin_over_per_click_control": -0.203
   }
  }
 ]
