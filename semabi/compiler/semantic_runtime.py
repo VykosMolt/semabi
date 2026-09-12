@@ -1226,6 +1226,14 @@ def invoke(runtime, browser, operation, arguments, trace):
                     "effect": {"field_write_attempted": False, "reason": "Supported response excludes caller's requested response"},
                     "metrics": trace.metrics()}
         _check_owner(proposed, procedure, arguments)
+        # The supplied guarded wrapper has a finite mandatory tail: fill/check,
+        # two collection replays, two detail replays, and two reloads. Refuse a
+        # knowingly unaffordable write; additional learned return edges still
+        # consume the ordinary budget and are not promised by this lower bound.
+        route_actions = 2 * (len(collection_prefix) + len(procedure["navigation"]))
+        if (trace.budget.actions + 8 + route_actions > trace.budget.max_actions
+                or trace.budget.writes + 2 + route_actions > trace.budget.max_writes):
+            _stop("Remaining interaction budget cannot cover the mandatory guarded verification procedure")
     current = trace.read(browser)
     if _live_signature(current) != _live_signature(surface):
         _stop("Relevant interface state changed during semantic preflight")

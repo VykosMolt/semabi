@@ -437,7 +437,7 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
                          response_names_owner=False, prediction_status='supported',
                          additional_known_event=None, guarded=False, counterfactual_status='supported',
                          counterfactual_event='Recorded', predecessor_category=False,
-                         nested_category=False, argument_overrides=None, **browser_options):
+                         nested_category=False, argument_overrides=None, scope_limits=None, **browser_options):
     """Supply a fitted prediction contract; exercise real routing, tracing and response readback.
 
     No fitting claim is made by this diagnostic. The rendered application deliberately can
@@ -453,7 +453,7 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
                else _SemanticDiagnosticBrowser(**browser_options))
     runtime = Runtime(tmp_path)
     connection = {'id': 'semantic-diagnostic', 'url': browser.allowed_origin + '/',
-                  'scope': {'max_actions': 30, 'max_writes': 20}}
+                  'scope': {'max_actions': 30, 'max_writes': 20, **(scope_limits or {})}}
     runtime.sessions[connection['id']] = browser
     control = 'button:Check'
     event_frame = 'Recorded <>' if response_names_owner else 'Recorded'
@@ -604,6 +604,22 @@ def test_semantic_guarded_update_confirms_the_intended_field_after_reopen_and_re
     assert browser.reloads == 2
     assert result['effect']['persisted'] == browser.surface.observation.structural_signature()
     assert result['effect']['checked_neighbors'] == ['B']
+
+
+@pytest.mark.parametrize(('actions', 'writes', 'confirmed'), [(12, 20, False), (30, 4, False), (13, 5, True)])
+def test_semantic_guarded_write_reserves_its_terminal_verification_budget(tmp_path, monkeypatch, actions, writes, confirmed):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True,
+        scope_limits={'max_actions': actions, 'max_writes': writes})
+    if confirmed:
+        assert result['outcome'] == 'CONFIRMED', result
+        assert result['metrics']['actions'] == actions
+        assert result['metrics']['possible_write_actions'] == writes
+        assert browser.values == {'A': '7', 'B': '9'}
+    else:
+        assert result['outcome'] != 'CONFIRMED', result
+        assert 'mandatory guarded verification' in result['effect']['reason']
+        assert browser.fills == browser.final_actions == 0
+        assert browser.values == {'A': '3', 'B': '9'}
 
 
 @pytest.mark.parametrize(('status', 'event', 'expected'), [
