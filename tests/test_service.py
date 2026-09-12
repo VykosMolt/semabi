@@ -983,13 +983,17 @@ def test_example_client_sends_optional_invocation_limits_only_when_requested(tmp
     assert invoked == [expected]
 
 
-@pytest.mark.parametrize('patch', [{'description': 'Changed through HTTP'}, {}, {'unknown': 'Rejected field'}])
+@pytest.mark.parametrize('patch', [{'description': 'Changed through HTTP'}, {}, {'unknown': 'Rejected field'},
+                                  {'pinned': False}])
 def test_http_partial_text_patch_preserves_schema_and_uses_real_runtime(tmp_path, monkeypatch, patch):
     """Fake connection setup only; the learned artifact and invocation are real Runtime work."""
     import test_operation_runtime as diagnostics
-    runtime, original_connection, browser, learned = diagnostics._learn_editable_records(
-        tmp_path / 'runtime', monkeypatch)
-    artifact = diagnostics._learned_kind(learned, 'update_visible_record')
+    helper = diagnostics._learn_checkbox_records if 'pinned' in patch else diagnostics._learn_editable_records
+    runtime, original_connection, browser, learned = helper(tmp_path / 'runtime', monkeypatch)
+    artifact = (diagnostics._checkbox_kind if 'pinned' in patch else diagnostics._learned_kind)(
+        learned, 'update_visible_record')
+    if 'pinned' in patch:
+        browser.rows[0]['Pinned'] = True
     before = deepcopy(browser.rows)
     actions_before = len(browser.actions)
     api = HTTPHarness(tmp_path / 'http')
@@ -1016,11 +1020,14 @@ def test_http_partial_text_patch_preserves_schema_and_uses_real_runtime(tmp_path
                                        {'version': artifact['version'], 'arguments': {'target': before[0]['URL'], **patch}})
         assert status == 202
         result = api.completed(accepted)['result']
-        if 'description' in patch:
+        if 'description' in patch or 'pinned' in patch:
             assert result['outcome'] == 'CONFIRMED', result
-            assert browser.rows == [{**before[0], 'Description': patch['description']}, before[1]]
+            assert browser.rows == [{**before[0], **{name.title(): value for name, value in patch.items()}}, before[1]]
             assert result['effect']['requested_changes'] == patch
             assert result['effect']['preserved_values']['title'] == before[0]['Title']
+            if 'pinned' in patch:
+                assert exposed['argument_schema']['properties']['pinned']['type'] == 'boolean'
+                assert result['effect']['witness']['checkbox_readback']['values']['pinned'] is False
         else:
             assert result['outcome'] == 'FAILED_BEFORE_EFFECT', result
             assert browser.rows == before and len(browser.actions) == actions_before

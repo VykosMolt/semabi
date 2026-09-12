@@ -2787,6 +2787,172 @@ def _learned_kind(result, kind):
     return next(operation for operation in result['operations'] if operation['kind'] == kind)
 
 
+class _CheckboxRecordBrowser(_EditableRecordBrowser):
+    checkbox_fault = None
+    checkbox_clicks = 0
+
+    def read(self):
+        surface = super().read()
+        if self.checkbox_fault in {'unknown', 'mixed'} and self.scene == 'editor':
+            for node in surface.observation.nodes:
+                if node.role == 'checkbox':
+                    node.checked = None
+        return surface
+
+    def act(self, action):
+        node = self.surface.observation.node(action.target)
+        if action.kind == 'click' and node.role == 'checkbox':
+            self.actions.append(action)
+            self.checkbox_clicks += 1
+            if self.checkbox_fault != 'ignored' and not (self.checkbox_fault == 'ignored_second_owner' and self.selected == 1):
+                self.pinned = not self.pinned
+            if self.checkbox_fault == 'sibling_draft':
+                self.sibling_draft = 'Preserve this unrelated draft'
+            if self.checkbox_fault == 'collateral':
+                self.rows[1]['Title'] = 'Collateral mutation'
+            return ActionResult(True)
+        return super().act(action)
+
+    def reload(self):
+        if self.checkbox_fault == 'reset':
+            self.rows[0]['Pinned'] = False
+        return super().reload()
+
+
+def _learn_checkbox_records(tmp_path, monkeypatch, *, fault=None, budget=140):
+    ticks = count(0, 10)
+    monkeypatch.setattr(runtime_module, 'time', SimpleNamespace(monotonic=lambda: next(ticks), sleep=lambda _: None))
+    browser = _CheckboxRecordBrowser()
+    browser.checkbox_fault = fault
+    runtime = Runtime(tmp_path)
+    connection = {'id': 'checkbox', 'url': browser.allowed_origin + '/',
+                  'scope': {'exploration_enabled': True, 'max_actions': budget, 'max_writes': budget}}
+    runtime.sessions[connection['id']] = browser
+    learned = runtime.learn(connection, {'max_actions': budget, 'max_writes': budget}, lambda event: None)
+    return runtime, connection, browser, learned
+
+
+def _checkbox_kind(learned, kind):
+    return next(op for op in learned['operations'] if op['kind'] == kind and op['procedure'].get('boolean_fields'))
+
+
+def test_checkbox_family_requires_two_owner_persisted_contrasts_and_preserves_text_operations(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
+    assert learned['attempts'] == [], learned
+    assert len(learned['operations']) == 5
+    assert browser.checkbox_clicks == 4
+    assert all(row['Pinned'] is False for row in browser.rows), 'authorized contrast roundtrips restore both originals'
+    reading = _checkbox_kind(learned, 'read_visible_record')
+    updating = _checkbox_kind(learned, 'update_visible_record')
+    trials = updating['procedure']['boolean_trials']
+    assert len({trial['target'] for trial in trials}) == 2
+    assert {trial['requested'] for trial in trials} == {False, True}
+    assert updating['argument_schema']['properties']['pinned'] == {'type': 'boolean', 'description': 'Pinned'}
+    assert reading['output_schema']['properties']['effect']['properties']['values']['properties']['pinned']['type'] == 'boolean'
+    base = _learned_kind(learned, 'update_visible_record')
+    assert 'pinned' not in base['argument_schema']['properties']
+    assert 'pinned' not in learned['operations'][0]['argument_schema']['properties']
+    result = runtime.invoke(connection, reading, {'target': browser.rows[0]['URL']}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED' and result['effect']['values']['pinned'] is False
+
+
+@pytest.mark.parametrize('patch', [{'pinned': True}, {'pinned': False}, {'description': 'Preserve the checkbox'},
+                                  {'pinned': True, 'description': 'A mixed typed patch'}])
+def test_checkbox_update_uses_known_state_and_checks_reopened_owner(tmp_path, monkeypatch, patch):
+    runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    before = deepcopy(browser.rows)
+    clicks = browser.checkbox_clicks
+    result = runtime.invoke(connection, operation, {'target': before[0]['URL'], **patch}, lambda event: None)
+    assert result['outcome'] == 'CONFIRMED', result
+    assert browser.checkbox_clicks - clicks == int(patch.get('pinned', False))
+    assert browser.rows[0] == {**before[0], **{name.title(): value for name, value in patch.items()}}
+    assert browser.rows[1] == before[1]
+    assert result['effect']['requested_changes'] == patch
+    assert result['effect']['witness']['checkbox_readback']['values']['pinned'] is patch.get('pinned', False)
+    assert browser.scene == 'list'
+
+
+@pytest.mark.parametrize('fault', ['unknown', 'mixed', 'ignored', 'reset', 'collateral', 'sibling_draft', 'wrong_owner'])
+def test_checkbox_update_does_not_confirm_unknown_reset_or_wrong_effects(tmp_path, monkeypatch, fault):
+    runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    before = deepcopy(browser.rows)
+    browser.checkbox_fault = fault
+    if fault == 'wrong_owner':
+        browser.mode = 'wrong_editor'
+    clicks = browser.checkbox_clicks
+    result = runtime.invoke(connection, operation, {'target': before[0]['URL'], 'pinned': True}, lambda event: None)
+    assert result['outcome'] != 'CONFIRMED', result
+    if fault in {'unknown', 'mixed', 'wrong_owner'}:
+        assert browser.checkbox_clicks == clicks and browser.rows == before
+    if fault == 'reset':
+        assert browser.rows[0]['Pinned'] is False
+    if fault == 'sibling_draft':
+        assert browser.sibling_draft == 'Preserve this unrelated draft' and browser.scene == 'editor'
+    if fault == 'collateral':
+        assert browser.rows[1]['Title'] == 'Collateral mutation'
+
+
+@pytest.mark.parametrize('fault,budget', [('ignored', 140), ('ignored_second_owner', 140), ('unknown', 140), (None, 60)])
+def test_checkbox_extension_preserves_established_text_catalog_when_unproved(tmp_path, monkeypatch, fault, budget):
+    _, _, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch, fault=fault, budget=budget)
+    assert len(learned['operations']) == 3, learned
+    assert not any(op['procedure'].get('boolean_fields') for op in learned['operations'])
+    if budget == 60 or fault == 'unknown':
+        assert browser.checkbox_clicks == 0
+
+
+def test_checkbox_update_reserves_reopen_verification_before_selection(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    connection['scope']['max_writes'] = 3  # Enough through Save, not the verification edit.
+    before = len(browser.actions), browser.navigation_count
+    result = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL'], 'pinned': True}, lambda event: None)
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT', result
+    assert (len(browser.actions), browser.navigation_count) == before
+
+
+@pytest.mark.parametrize('phase', ['reopen_owner', 'reload_neighbor', 'exit_neighbor', 'omitted_text'])
+def test_checkbox_verification_checks_reopen_owner_and_late_visible_state(tmp_path, monkeypatch, phase):
+    runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    original_act, original_reload, original_goto = browser.act, browser.reload, browser.goto
+    edits = []
+
+    def act(action):
+        label = browser.surface.observation.node(action.target).name
+        result = original_act(action)
+        if label == 'Edit':
+            edits.append(True)
+            if phase == 'reopen_owner' and len(edits) == 2:
+                browser.selected = 1
+                browser.fields = {name: browser.rows[1][name] for name in browser.labels}
+                browser.pinned = browser.rows[1]['Pinned']
+        if label == 'Pinned' and phase == 'omitted_text':
+            browser.fields['Title'] = 'Intervening preserved-field draft'
+        return result
+
+    def reload():
+        if phase == 'reload_neighbor':
+            browser.rows[1]['Title'] = 'Changed during verification reload'
+        return original_reload()
+
+    def goto(url):
+        result = original_goto(url)
+        if phase == 'exit_neighbor' and len(edits) == 2:
+            browser.rows[1]['Description'] = 'Changed during final exit'
+        return result
+
+    monkeypatch.setattr(browser, 'act', act)
+    monkeypatch.setattr(browser, 'reload', reload)
+    monkeypatch.setattr(browser, 'goto', goto)
+    result = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL'], 'pinned': True}, lambda event: None)
+    assert result['outcome'] != 'CONFIRMED', result
+    if phase == 'omitted_text':
+        assert browser.fields['Title'] == 'Intervening preserved-field draft' and browser.scene == 'editor'
+
+
 @pytest.mark.parametrize('phase', ['retain', 'initial_validation', 'fresh_validation', 'read_release'])
 def test_record_continuity_calls_obey_deadline_and_always_release(tmp_path, monkeypatch, phase):
     runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)

@@ -254,6 +254,9 @@ def argument_schema(candidate: dict, names: list[str]) -> dict:
     properties = {}
     for name in names:
         field = fields[name]
+        if field["role"] == "checkbox" and field["input_type"] == "checkbox":
+            properties[name] = {"type": "boolean", "description": field["descriptor"]["label"]}
+            continue
         prop = {"type": "string", "minLength": 1,
                 "description": field["descriptor"]["label"] or "Visible editor value"}
         if field["max_length"] is not None:
@@ -275,6 +278,10 @@ def validate_arguments(schema: dict, arguments: dict) -> None:
         raise StopOperation("At least one learned update field must be supplied")
     for name, value in arguments.items():
         prop = schema["properties"][name]
+        if prop.get("type") == "boolean":
+            if type(value) is not bool:
+                raise StopOperation("Native checkbox arguments require booleans")
+            continue
         if not isinstance(value, str) or not value.strip() or value != " ".join(value.split()):
             raise StopOperation("Arguments require nonempty text with normalized whitespace")
         if len(value) > prop.get("maxLength", 100000):
@@ -286,7 +293,8 @@ def validate_arguments(schema: dict, arguments: dict) -> None:
                 raise StopOperation("URL argument requires an HTTP(S) URL") from None
         if prop.get("format") == "email" and not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", value):
             raise StopOperation("Email argument is invalid")
-    if len(set(arguments.values())) != len(arguments):
+    texts = [value for value in arguments.values() if isinstance(value, str)]
+    if len(set(texts)) != len(texts):
         raise StopOperation("Argument values must be distinct for independent visible field verification")
 
 
@@ -627,6 +635,13 @@ class Runtime:
             matches = surface.resolve(descriptor, within=candidate["root"])
             if len(matches) != 1:
                 raise StopOperation("Learned field descriptor binding is absent or ambiguous", stale=True)
+            if descriptor["role"] == "checkbox":
+                control = surface.controls[matches[0]]
+                value = surface.observation.node(matches[0]).checked
+                if control.get("input_type") != "checkbox" or type(value) is not bool:
+                    raise StopOperation("Native checkbox state is unknown or mixed", stale=True)
+                values[name] = value
+                continue
             value = surface.observation.node(matches[0]).value
             if not isinstance(value, str):
                 raise StopOperation("A learned text field no longer exposes a text value", stale=True)
@@ -769,6 +784,8 @@ class Runtime:
         self._guard_current_editor(trace.read(browser))
         surface = trace.navigate(browser, procedure["readback_url"])
         surface, record = self._wait_for_record(browser, surface, procedure, target, trace)
+        if procedure.get("boolean_fields"):
+            record = {**record, "neighbor_state": self._record_neighbors(surface, record)}
         if replacement_value is not None and (replacement_value == target or
                                              visible_record_matches(surface, replacement_value)):
             raise StopOperation("Replacement value is already visible in the inspected record view")
@@ -1058,7 +1075,8 @@ class Runtime:
                        trace: Trace, *, discover: bool = False,
                        popup_events: list[dict] | None = None,
                        commit_events: list[dict] | None = None,
-                       requested_fields: list[str] | None = None) -> tuple[dict, dict]:
+                       requested_fields: list[str] | None = None,
+                       neighbors: list | None = None) -> tuple[dict, dict]:
         if procedure.get("linked_value_editor"):
             return self._update_linked_value(browser, surface, procedure, before, values, trace,
                                             discover=discover, commit_events=[] if commit_events is None else commit_events)
@@ -1078,6 +1096,20 @@ class Runtime:
                     nodes = surface.resolve(descriptor, within=candidate["root"])
                     if len(nodes) != 1:
                         raise StopOperation("Update field binding is ambiguous", stale=True)
+                    if descriptor["role"] == "checkbox":
+                        current = surface.observation.node(nodes[0]).checked
+                        if surface.controls[nodes[0]].get("input_type") != "checkbox" or type(current) is not bool:
+                            raise StopOperation("Native checkbox state is unknown or mixed", stale=True)
+                        if current != values[name]:
+                            surface = trace.act(browser, surface, Primitive("click", nodes[0]))
+                            expected[digest(descriptor)]["checked"] = values[name]
+                            self._checked_editor(browser, surface, procedure, expected, retained, trace)
+                            if popup is not None:
+                                original = self._popup_indices(browser, popup["retained"], trace)
+                                offset = original.index(nodes[0])
+                                popup["expected"][offset - 1]["node"]["checked"] = values[name]
+                                self._check_popup_controls(browser, surface, popup, trace)
+                        continue
                     if popup is not None:
                         original = self._check_popup_controls(browser, surface, popup, trace)
                         popup["field_offset"] = original.index(nodes[0])
@@ -1103,31 +1135,67 @@ class Runtime:
                 if surface.controls[candidate["submit_node"]]["disabled"]:
                     raise StopOperation("Application left the learned submit control disabled", refusal=True)
                 after = trace.act(browser, surface, Primitive("click", candidate["submit_node"]))
-        return self._verify_updated_values(browser, after, procedure, values, old_anchor, captured, trace)
+        return self._verify_updated_values(browser, after, procedure, values, old_anchor, captured, trace,
+                                           neighbors=neighbors)
 
     def _verify_updated_values(self, browser, after: Surface, procedure: dict, values: dict,
-                               old_anchor: str | None, captured: dict, trace: Trace) -> tuple[dict, dict]:
-        after, witness = self._witness(browser, after, values, procedure["anchor"], trace,
+                               old_anchor: str | None, captured: dict, trace: Trace,
+                               *, neighbors: list | None = None) -> tuple[dict, dict]:
+        text_values = {name: value for name, value in values.items() if isinstance(value, str)}
+        after, witness = self._witness(browser, after, text_values, procedure["anchor"], trace,
                                        procedure["effect_slots"], absent_value=old_anchor,
                                        expected_url=procedure["readback_url"] if old_anchor is not None else None)
         if witness is None:
             raise StopOperation("Updated values lack the learned unique record witness")
+        if neighbors is not None and self._record_neighbors(after, witness) != neighbors:
+            raise StopOperation("Rendered neighboring state changed during checkbox update")
         self._guard_current_editor(trace.read(browser))
         submitted_observation = after.observation.structural_signature()
         reloaded = trace.reload(browser)
-        reloaded, witness = self._witness(browser, reloaded, values, procedure["anchor"], trace,
+        reloaded, witness = self._witness(browser, reloaded, text_values, procedure["anchor"], trace,
                                          procedure["effect_slots"], absent_value=old_anchor,
                                          expected_url=procedure["readback_url"] if old_anchor is not None else None)
         if witness is None:
             raise StopOperation("Updated record values did not persist through reload")
+        if procedure.get("boolean_fields"):
+            if neighbors is None or self._record_neighbors(reloaded, witness) != neighbors:
+                raise StopOperation("Rendered neighboring state changed during reload")
+            reopened, _, actual = self._record_editor(browser, procedure, values[procedure["anchor"]], trace)
+            if actual != values:
+                raise StopOperation("Reopened intended record does not retain requested and preserved values", stale=True)
+            boolean_witness = {"values": actual, "observation": reopened.observation.structural_signature(),
+                               "fields": procedure["boolean_fields"]}
+            self._leave_editor(browser, reopened, procedure, actual, trace)
+            final = trace.read(browser)
+            final_record = record_witness(final, text_values, procedure["anchor"], procedure["effect_slots"])
+            if final_record is None or self._record_neighbors(final, final_record) != neighbors:
+                raise StopOperation("Record or neighboring state changed during verification exit")
+            witness["checkbox_readback"] = boolean_witness
+            witness["neighbor_scope"] = "Matching rendered non-target state around verification; no complete collection or causal exclusivity claim"
         if old_anchor is not None:
             witness["old_anchor_absence"] = {"value": old_anchor,
                                             "after_submit_observation": submitted_observation,
                                             "after_reload_observation": reloaded.observation.structural_signature()}
         return witness, captured
 
+    @staticmethod
+    def _record_neighbors(surface: Surface, record: dict) -> list:
+        """Observed surface outside one selected local record, not a global inventory."""
+        omitted = set(surface.observation.subtree(record["root"]))
+        kept = [node for node in surface.observation.nodes if node.i not in omitted]
+        indices = {node.i: index for index, node in enumerate(kept)}
+        return [{"parent": indices.get(node.parent, -1),
+                 **{key: value for key, value in node.to_json().items() if key not in {"i", "parent", "bbox"}},
+                 "control": deepcopy(surface.controls.get(node.i))} for node in kept]
+
     def _invoke_record(self, browser, operation: dict, arguments: dict, trace: Trace) -> dict:
         procedure = operation["procedure"]
+        if procedure.get("boolean_fields") and operation["kind"] == "update_visible_record":
+            requested = sum(name in arguments for name in procedure["update_arguments"])
+            menu = int("menu_trigger" in procedure)
+            # Reserve the worst case including changed checkboxes, commit,
+            # reload, selected-owner reopening and the already learned exit.
+            self._reserve_record_actions(trace, 7 + requested + 2 * menu, 3 + requested + 2 * menu)
         target = arguments[procedure["selector_argument"]]
         replacing = (operation["kind"] == "update_visible_record" and
                      procedure["anchor_mode"] == "replace_value")
@@ -1148,14 +1216,19 @@ class Runtime:
             # every fill/commit, and all learned fields remain in the witness.
             updated = {**values, **requested}
             preserved = {name: value for name, value in values.items() if name not in requested}
-            if len(set(updated.values())) != len(updated):
+            texts = [value for value in updated.values() if isinstance(value, str)]
+            if len(set(texts)) != len(texts):
                 raise StopOperation("Requested and preserved values must remain distinct for visible field verification")
             witness, _ = self._update_record(browser, surface, procedure, values, updated, trace,
-                                             requested_fields=list(requested))
+                                             requested_fields=list(requested), neighbors=record.get("neighbor_state"))
             effect = {"kind": "visible_record_updated", "before": values,
                       "arguments": updated, "witness": witness,
                       "requested_changes": requested, "preserved_values": preserved,
                       "scope": "Same local anchor and requested field values in learned slots, retained after reload"}
+            if procedure.get("boolean_fields"):
+                effect["scope"] = ("Text fields retain learned record slots after reload; typed fields checked in the "
+                                   "reopened intended editor before its learned exit. Only rendered neighboring state checked; "
+                                   "no atomicity, hidden-state preservation or exclusive causal attribution guarantee.")
             if replacing:
                 effect.update(kind="visible_record_value_replaced", before_witness=record,
                               old_anchor_absence=witness["old_anchor_absence"], identity="UNESTABLISHED",
@@ -1167,6 +1240,20 @@ class Runtime:
         if source_hashes() != self.source_sha256:
             raise StopOperation("Runtime source changed during learning; restart before publishing")
         selector, anchor = procedure["selector_argument"], procedure["anchor"]
+        boolean_fields = procedure.get("boolean_fields", {})
+        if boolean_fields:
+            evidence = procedure.get("boolean_trials", [])
+            for name, descriptor in boolean_fields.items():
+                by_owner = {}
+                for trial in evidence:
+                    if trial["field"] == name:
+                        value = trial["requested"]
+                        if (type(value) is not bool or trial["readback"]["values"].get(name) is not value
+                                or trial["readback"]["fields"].get(name) != descriptor):
+                            raise StopOperation("Checkbox persistence contrast is unverified")
+                        by_owner.setdefault(trial["target"], set()).add(value)
+                if len([owner for owner, values in by_owner.items() if values == {False, True}]) < 2:
+                    raise StopOperation("Checkbox publication requires both persisted values on two distinct owners")
         if len(trials) != 2 or len({trial["arguments"][selector] for trial in trials}) != 2:
             raise StopOperation("Record operations require two distinct selected-record trials")
         for name, rule in procedure.get("textbox_popups", {}).items():
@@ -1209,7 +1296,8 @@ class Runtime:
         if partial:
             schema.update(required=[selector], minProperties=2)
         value_schema = {"type": "object", "properties": {
-            name: {"type": "string", "description": descriptor["label"] or "Visible editor value",
+            name: {"type": "boolean" if descriptor["role"] == "checkbox" else "string",
+                   "description": descriptor["label"] or "Visible editor value",
                    **({"binding_basis": "unique_original_descriptor_and_two_distinct_creation_trials"}
                       if not descriptor["label"] else {})}
             for name, descriptor in procedure["read_fields"].items()},
@@ -1222,7 +1310,10 @@ class Runtime:
             output["properties"]["effect"]["properties"].update({
                 key: {**deepcopy(value_schema), "required": []}
                 for key in ("requested_changes", "preserved_values")})
-        op_id = "op_" + digest({"parent_create_id": creation["id"], "kind": kind})[:20]
+        identity = {"parent_create_id": creation["id"], "kind": kind}
+        if boolean_fields:
+            identity["boolean_fields"] = boolean_fields
+        op_id = "op_" + digest(identity)[:20]
         reading = kind == "read_visible_record"
         replacing = not reading and procedure["anchor_mode"] == "replace_value"
         operation = {"id": op_id, "version": settings.get("_operation_versions", {}).get(op_id, 0) + 1,
@@ -1258,6 +1349,17 @@ class Runtime:
                 "At least one supplied learned text field; omitted fields retain the current selected editor values")
             operation["effect_checks"].append(
                 "Requested and preserved learned fields all occupy their original slots after submission and reload")
+        if boolean_fields:
+            operation["name"] += "_with_checkbox_fields"
+            operation["prerequisites"] = [item.replace("supplied learned text field", "supplied learned typed field")
+                                          for item in operation["prerequisites"]]
+            operation["scope"]["checkbox_fields"] = (
+                "Known native boolean state in the selected retained editor; no label meaning or boolean creation claim")
+            operation["prerequisites"].append("Uniquely bound native checkbox fields expose known boolean state")
+            operation["effect_checks"] = (["Typed fields read in the selected retained editor and rechecked before the learned exit"]
+                if reading else ["Text and anchor retain learned local slots after save and reload",
+                                 "All expected typed values rechecked in the reopened intended editor",
+                                 "Rendered non-target state unchanged through save, reload, reopen and exit"])
         if binding:
             operation["prerequisites"].append(
                 "One bound numeric context control retains its label, state, placement and DOM element during the call")
@@ -1391,6 +1493,64 @@ class Runtime:
                 attempts.append(attempt)
                 emit({"type": "candidate_unestablished", **attempt})
                 return  # Keep every already-established operation and preserve any current draft.
+        self._learn_checkbox_family(browser, creation, procedure, trace, settings, operations, attempts, emit)
+
+    def _learn_checkbox_family(self, browser, creation, procedure, trace, settings, operations, attempts, emit):
+        """An optional typed-field extension, induced by resettable two-owner contrasts."""
+        if procedure.get("linked_value_editor"):
+            return
+        fields = {field["argument"]: field["descriptor"] for field in procedure["form"]["fields"]
+                  if field["role"] == "checkbox" and field["input_type"] == "checkbox"}
+        if not fields or procedure["selector_argument"] in fields:
+            return
+        menu = int("menu_trigger" in procedure)
+        try:
+            self._reserve_record_actions(trace, 4 * len(fields) * (8 + 2 * menu),
+                                         4 * len(fields) * (4 + 2 * menu))
+        except StopOperation as error:
+            emit({"type": "checkbox_extension_unestablished", "reason": str(error), "writes_started": False})
+            return
+        extended = deepcopy(procedure)
+        extended["boolean_fields"] = fields
+        extended["boolean_trials"] = []
+        extended["read_fields"].update(fields)
+        extended["anchor_mode"] = "immutable"
+        extended["update_arguments"] = [name for name in extended["update_arguments"]
+                                        if name != extended["anchor"]] + list(fields)
+        # The already observed list/editor/submit/exit paths are reused. No new
+        # action names, routes, identities, or checkbox label meanings are supplied.
+        parents = {op["kind"]: op for op in operations
+                   if op.get("support", {}).get("parent_create_id") == creation["id"]}
+        targets = [trial["arguments"][extended["selector_argument"]]
+                   for trial in parents["read_visible_record"]["support"]["trials"]]
+        try:
+            for name in fields:
+                for target in targets:
+                    original = None
+                    for round_index in range(2):
+                        surface, record, before = self._record_editor(browser, extended, target, trace)
+                        if original is None:
+                            original = before[name]
+                        requested = not original if round_index == 0 else original
+                        expected = {**before, name: requested}
+                        witness, _ = self._update_record(browser, surface, extended, before, expected, trace,
+                            requested_fields=[name], neighbors=record["neighbor_state"])
+                        extended["boolean_trials"].append({"field": name, "target": target, "requested": requested,
+                                                          "readback": witness["checkbox_readback"]})
+            published = []
+            for kind in ("read_visible_record", "update_visible_record"):
+                published.append(self._record_operation(creation, kind, extended,
+                                 parents[kind]["support"]["trials"], settings))
+            operations.extend(published)
+            for operation in published:
+                emit({"type": "operation_learned", "id": operation["id"], "version": operation["version"]})
+        except Exception as error:
+            attempt = {"candidate": creation["id"], "stage": "checkbox_fields",
+                       "confirmed_trials": len(extended["boolean_trials"]),
+                       "reason": str(error) if isinstance(error, StopOperation) else "Checkbox experiment did not complete",
+                       "error_type": type(error).__name__}
+            attempts.append(attempt)
+            emit({"type": "candidate_unestablished", **attempt})
 
     @staticmethod
     def _witness(browser, surface: Surface, arguments: dict, anchor: str,
