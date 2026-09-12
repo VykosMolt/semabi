@@ -105,7 +105,10 @@ def main():
         learning = {"settings": {"max_actions": args.max_actions, "max_writes": args.max_writes}}
         if args.repair_execution_id:
             learning["repair_execution_id"] = args.repair_execution_id
-        wait(request("POST", prefix + "/learn", learning))
+        learned = wait(request("POST", prefix + "/learn", learning))
+        print(json.dumps({"learning_job_id": learned["id"],
+                          "learning_metrics": learned.get("result", {}).get("metrics", {})},
+                         indent=2), flush=True)
     operations = request("GET", prefix + "/operations")["operations"]
     print(json.dumps({"operations": [{"id": operation["id"], "version": operation["version"],
                                      "name": operation["name"], "kind": operation["kind"],
