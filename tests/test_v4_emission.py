@@ -61,6 +61,81 @@ def test_a_frozen_vocabulary_stops_learning_but_keeps_reading():
                          vocabulary=vocabulary).args == ("Mill Race",)
 
 
+def test_rendered_cache_reuses_only_pure_values_and_relearns_cleared_knowledge(monkeypatch):
+    raw = em.rendered_values
+    calls = []
+    def observed(*pages):
+        calls.extend(pages)
+        return raw(*pages)
+    monkeypatch.setattr(em, 'rendered_values', observed)
+    before = page('Standing notice')
+    vocabulary = em.Vocabulary([before])
+    vocabulary.learn(None)
+    expected = raw(before)
+    vocabulary.learn(before)
+    vocabulary.values.clear()
+    vocabulary.learn(before)
+    assert vocabulary.values == expected and len(calls) == 1
+    returned = vocabulary.for_pages(before)
+    returned.clear()
+    assert vocabulary.for_pages(before) == expected
+    assert len(calls) == 1
+    vocabulary.freeze()
+    fresh = page('Standing notice', cells=('Fresh owner', 'New grape', '8', 'Open'))
+    vocabulary.learn(fresh)
+    assert vocabulary.values == expected
+    assert vocabulary.for_pages(fresh) == expected | raw(fresh)
+    assert vocabulary.values == expected
+
+
+def test_rendered_cache_key_includes_mutable_values_options_and_actual_traversal(monkeypatch):
+    from copy import deepcopy
+    before = page('Standing notice')
+    before.nodes.append(Node(14, 0, 'combobox', 'Choose', value='First', options=['Second']))
+    before.__post_init__()
+    vocabulary = em.Vocabulary()
+    # Equal short signatures are not permission to share distinct rendered data.
+    monkeypatch.setattr(Observation, 'structural_signature', lambda self: 'collision')
+    assert vocabulary.for_pages(before) == em.rendered_values(before)
+    before.nodes[14].options.append('Third')
+    before.nodes[14].value = 'Fourth'
+    assert vocabulary.for_pages(before) == em.rendered_values(before)
+    assert ('Third',) in vocabulary.for_pages(before)
+    copied = deepcopy(before)
+    copied.nodes[10].name = 'Renamed owner'
+    assert vocabulary.for_pages(copied) == em.rendered_values(copied)
+    # Keep parent fields unchanged but change the actual table traversal. The
+    # former value row becomes the first row, so its cells now count as headers.
+    old = vocabulary.for_pages(before)
+    before._children[3] = [9]
+    current = vocabulary.for_pages(before)
+    assert current == em.rendered_values(before) and current != old
+    assert ('Creek', 'Bed') not in current
+
+
+def test_rendered_cache_is_bounded_ephemeral_and_independent_of_graph_growth(monkeypatch):
+    import copy
+    import pickle
+    from semabi.compiler.v2.graph import ObsGraph
+    monkeypatch.setattr(em, 'RENDERED_VALUE_CACHE_SIZE', 2)
+    graph, vocabulary = ObsGraph(), em.Vocabulary()
+    original = page('Standing notice')
+    graph.add(original.structural_signature(), original)
+    expected = vocabulary.for_pages(original)
+    for name in ('Different A', 'Different B', 'Different C'):
+        fresh = page('Standing notice', cells=(name, 'State', '7', 'Busy'))
+        graph.add(fresh.structural_signature(), fresh)
+        assert vocabulary.for_pages(fresh) == em.rendered_values(fresh)
+    assert len(vocabulary._rendered_cache) == 2
+    assert vocabulary.for_pages(original) == expected
+    vocabulary.learn(original)
+    vocabulary.freeze()
+    for restored in (copy.deepcopy(vocabulary), pickle.loads(pickle.dumps(vocabulary))):
+        assert restored.values == vocabulary.values and restored.frozen
+        assert not restored._rendered_cache
+        assert restored.for_pages(original) == vocabulary.for_pages(original)
+
+
 def test_rendering_a_frame_back_puts_the_arguments_where_they_were():
     assert em.render("<> is already <> .", ["Festival White", "bottled"]) == \
         "Festival White is already bottled ."

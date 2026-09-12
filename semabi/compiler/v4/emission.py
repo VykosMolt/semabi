@@ -38,7 +38,7 @@ objects, so an outcome class cannot be defined by the model that is about to be 
 from __future__ import annotations
 
 import re
-from collections import Counter
+from collections import Counter, OrderedDict
 from dataclasses import dataclass
 
 from semabi.compiler.observation import Observation
@@ -212,6 +212,9 @@ def rendered_values(*observations: Observation) -> set[tuple[str, ...]]:
     return out
 
 
+RENDERED_VALUE_CACHE_SIZE = 128
+
+
 class Vocabulary:
     """Which token spans are page data, learned over a corpus and then frozen.
 
@@ -230,19 +233,51 @@ class Vocabulary:
     def __init__(self, observations=()):
         self.values: set[tuple[str, ...]] = set()
         self.frozen = False
+        self._rendered_cache = OrderedDict()
         for obs in observations:
             self.learn(obs)
 
+    def __getstate__(self):
+        # Derived page values are ephemeral, not fitted knowledge. In particular,
+        # copying an abstractor must not duplicate its recently visited pages.
+        return {key: value for key, value in self.__dict__.items() if key != '_rendered_cache'}
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        self._rendered_cache = OrderedDict()
+
+    def _rendered(self, obs: Observation) -> frozenset[tuple[str, ...]]:
+        # This exact key includes every input rendered_values reads. Do not use
+        # the short structural signature, graph vocabulary, or inferred identity.
+        # Actual child traversal can diverge from parent fields after mutation.
+        key = tuple((node.i, node.parent, node.role, node.name, node.value,
+                     tuple(node.options or ()), tuple(obs.children(node.i))) for node in obs.nodes)
+        cached = self._rendered_cache.get(key)
+        if cached is None:
+            cached = frozenset(rendered_values(obs))
+            self._rendered_cache[key] = cached
+            if len(self._rendered_cache) > RENDERED_VALUE_CACHE_SIZE:
+                self._rendered_cache.popitem(last=False)
+        else:
+            self._rendered_cache.move_to_end(key)
+        return cached
+
     def learn(self, obs: Observation) -> None:
-        if self.frozen:
+        if self.frozen or obs is None:
             return
-        self.values |= rendered_values(obs)
+        # Re-union even on a cache hit: values can legitimately be replaced when
+        # restoring or revising a vocabulary. This is not learned-once suppression.
+        self.values |= self._rendered(obs)
 
     def freeze(self) -> None:
         self.frozen = True
 
     def for_pages(self, *pages: Observation) -> set[tuple[str, ...]]:
-        return self.values | rendered_values(*pages)
+        values = set(self.values)
+        for page in pages:
+            if page is not None:
+                values.update(self._rendered(page))
+        return values
 
 
 def lift_event(text: str, *pages: Observation, vocabulary: "Vocabulary | None" = None) -> Event:
