@@ -498,7 +498,8 @@ def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_repla
 
 @pytest.mark.parametrize('fault', [None, 'new_outcome', 'no_rivals', 'unrepresented',
                                   'actual_no_rivals', 'rejected_edit', 'sibling_changed',
-                                  'no_write_budget', 'setup_only_budget', 'no_response_budget'])
+                                  'no_write_budget', 'setup_only_budget', 'no_response_budget',
+                                  'terminal_reset'])
 def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effects(tmp_path, monkeypatch, fault):
     """Diagnostic artifact; real acquisition routing, budgets and observed persistence.
 
@@ -509,6 +510,12 @@ def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effec
     from semabi.compiler.runtime import Budget, Runtime, StopOperation, Trace
     from semabi.compiler.semantic import SemanticArtifact
     from semabi.compiler.semantic_runtime import acquire_repair
+
+    if fault == 'terminal_reset':
+        monkeypatch.setattr(diagnostics._DetailOnlyGuardedSemanticDiagnosticBrowser,
+                            'reset_on_final_return', True)
+        monkeypatch.setattr(diagnostics, '_GuardedSemanticDiagnosticBrowser',
+                            diagnostics._DetailOnlyGuardedSemanticDiagnosticBrowser)
 
     captured = {}
 
@@ -558,7 +565,7 @@ def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effec
     report = {'field_write_attempted': False}
     repair = {key: captured[key] for key in ('operation', 'arguments')}
     stopped = fault in {'actual_no_rivals', 'rejected_edit', 'sibling_changed',
-                        'no_write_budget', 'setup_only_budget', 'no_response_budget'}
+                        'no_write_budget', 'setup_only_budget', 'no_response_budget', 'terminal_reset'}
     if stopped:
         with pytest.raises(StopOperation):
             acquire_repair(captured['runtime'], browser, trace, repair, trials, edits, report)
@@ -572,9 +579,16 @@ def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effec
             assert report['status'] == 'OBSERVED_EXPERIMENT'
             assert browser.values == {'A': '7', 'B': '9'}
             assert len(trials) == len(edits) == 1 and edits[0].get('persisted')
+            assert edits[0]['persisted'] == browser.surface.observation.structural_signature()
             if fault == 'new_outcome':
                 assert 'Unseen completion' in json.dumps(report['observation'])
                 assert trials[0]['after'] != trials[0]['before']
+    if fault == 'terminal_reset':
+        assert browser.final_return_resets[0] == {'A': '7', 'B': '9'}
+        assert browser.values == {'A': '3', 'B': '9'}
+        assert browser.reloads == 2
+        assert len(edits) == 1 and not edits[0].get('persisted')
+        assert report.get('status') != 'OBSERVED_EXPERIMENT'
     if fault in {'no_write_budget', 'setup_only_budget', 'no_rivals', 'unrepresented'}:
         assert browser.fills == browser.final_actions == 0
         assert report['field_write_attempted'] is False
@@ -1037,7 +1051,7 @@ def test_http_partial_text_patch_preserves_schema_and_uses_real_runtime(tmp_path
 
 @pytest.mark.parametrize('fault', [None, 'wrong_owner', 'sibling_changed', 'stale_operation',
                                  'postaction_owner_changed', 'verification_reload_sibling_changed',
-                                 'transient_draft'])
+                                 'transient_draft', 'detail_only_final_return_reset'])
 def test_http_semantic_invocation_uses_real_runtime_and_independent_application_state(tmp_path, monkeypatch, fault):
     """Supplied artifact setup; actual HTTP queue, Runtime invocation and verification.
 
@@ -1047,6 +1061,12 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
     from types import SimpleNamespace
     import test_operation_runtime as diagnostics
     from semabi.compiler.runtime import Runtime, bind_contract
+
+    if fault == 'detail_only_final_return_reset':
+        monkeypatch.setattr(diagnostics._DetailOnlyGuardedSemanticDiagnosticBrowser,
+                            'reset_on_final_return', True)
+        monkeypatch.setattr(diagnostics, '_GuardedSemanticDiagnosticBrowser',
+                            diagnostics._DetailOnlyGuardedSemanticDiagnosticBrowser)
 
     captured = {}
 
@@ -1137,6 +1157,12 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
             assert browser.values == {'A': '7', 'B': '7'}
             assert browser.fills == 1
             assert api.service.store.operation(connection['id'], artifact['id'])['status'] == 'ACTIVE'
+        elif fault == 'detail_only_final_return_reset':
+            assert browser.final_return_resets[0] == {'A': '7', 'B': '9'}
+            assert browser.values == {'A': '3', 'B': '9'}, 'actual terminal target refutes the HTTP update result'
+            assert browser.fills == browser.final_actions == 1
+            assert browser.reloads == 2
+            assert result['outcome'] != 'CONFIRMED', result
         elif fault == 'transient_draft':
             assert result['outcome'] == 'UNCERTAIN', result
             assert browser.values == {'A': '3', 'B': '9'}, 'independent application state refutes persistence'

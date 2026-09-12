@@ -7,7 +7,7 @@
 - Current milestone: integrated API checkpoint `956b72b`, authorized repair
   checkpoint `4c6a8f7`, control labels `f1fd5a5`, bounded resume `a417aca`,
   scoped frontier/native observations `09c1ad0`, partial text updates `992b358`;
-  now resumable workshop composition and typed Linkding operations after the
+  now terminal effect verification, resumable workshop composition and typed Linkding operations after the
   original-app reruns and first reserved Kanboard assessment.
   Acceptance: standard HTTP discovery/fit/schema/invoke, shared frozen/live
   language, fresh owner/resource arguments, persistent checked write, restart,
@@ -50,8 +50,20 @@
   unavailable prediction, and verified result. Fixture check/start only emits
   a response: the persisted demonstrated business write is the numeric field.
   Guard refusal may follow write-capable navigation/selection prefixes; no
-  rollback or no-interaction promise. Confirmation brackets a reopened/reloaded
-  target field with equal full observed local inventories including siblings.
+  rollback or no-interaction promise. Independent detail-only target-reset tests
+  exposed false confirmation after the final collection navigation in both the
+  numeric and typed-checkbox paths. Earlier independently checked real dispatch
+  effects remain valid, but do not establish verifier robustness against this fault.
+  Numeric candidate retains the inventory bracket and adds a terminal target
+  reopen/reload, owner/value/learned-condition check, with no action afterward.
+  This catches stale drafts, equal-valued wrong owners and changed related state;
+  the existing late-reload sibling rejection is retained. Authorized repair uses
+  the same terminal persistence witness, without demanding agreement on an
+  intentionally ambiguous acquisition outcome. Focused actual-source gate:
+  154 passed/4.24s, including real HTTP reset rejection and independent mutable
+  application state. Typed clean-editor continuation is being repaired separately.
+  Confirmation brackets an earlier detail witness with equal full observed local
+  inventories including siblings; these precede terminal target verification.
   This is timed observational evidence, not atomicity, a global collection,
   exactly-once application effects, or exclusive causal attribution.
 - Failure/repair trail retained: v1 chooser stopped at19 actions; v2 304 actions/
@@ -120,8 +132,13 @@
   eight CPUs/8GiB; no concurrent heavy fit. Root moved inactive retention956 and
   observationa417 worktrees to disk-backed `runs/.retention-956b72b-9pza6H` and
   `runs/.observation-a417aca`, preserving original/tmp paths as symlinks and all data.
-  Isolated agents own frontier continuation, browser readiness, and the Kanboard
-  generic-probe development experiment. Aggregate cap12cores.
+  Root API8860 currently runs frozenfebe835 from `runs/.semantic-frontier-febe835`,
+  with existing service data; no new acquisition/invocation has run on that source.
+  Workshopv2 frontier recovery is read-only:17 completed/42 pending routes,
+  no in-flight fence; legacy raw evidence retains1031 actions/900writes.
+  Next: integrate typed terminal repair, freeze service, resume that same connection
+  only after the heavy retention job completes. Isolated agents own typed receipt
+  repair, independent tail tests and bounded LIST-language diagnosis. Aggregate cap12cores.
 - Workshop candidate gate588 passed/32.29s. Control-contained labels now require
   learned owner-wrapper constraints before any action; other such prerequisites
   remain observed enums. Nested inventory retains parent-owned state and checks

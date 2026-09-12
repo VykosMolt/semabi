@@ -60,8 +60,10 @@ The learned checking slice also requires the action owner to remain observable
 after the action; navigational completion needs a different learned correspondence.
 For guarded updates it additionally requires the intended field after reopening
 and reload, bracketed by matching rendered collection inventories that include
-the target and neighboring rows, including duplicate-name occurrences. It finishes
-on that collection view. These are separate timed observations, not a claim of
+the target and neighboring rows, including duplicate-name occurrences. It then
+reopens and reloads the target, checks its owner, value and learned condition,
+and finishes there without a subsequent navigation that could undo the effect.
+The sibling witnesses precede this terminal target check. These are separate timed observations, not a claim of
 simultaneously known global state or a complete collection. An unrelated notice,
 repeated stale response, or several unresolved
 response regions cannot confirm completion. These are observed outcomes, not

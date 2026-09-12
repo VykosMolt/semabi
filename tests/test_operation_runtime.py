@@ -600,7 +600,9 @@ def test_semantic_guarded_update_confirms_the_intended_field_after_reopen_and_re
     result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
     assert result['outcome'] == 'CONFIRMED', result
     assert browser.values == {'A': '7', 'B': '9'}
-    assert browser.fills == browser.final_actions == browser.reloads == 1
+    assert browser.fills == browser.final_actions == 1
+    assert browser.reloads == 2
+    assert result['effect']['persisted'] == browser.surface.observation.structural_signature()
     assert result['effect']['checked_neighbors'] == ['B']
 
 
@@ -664,7 +666,7 @@ def test_semantic_guarded_update_brackets_the_owner_collection_after_prerequisit
         assert browser.values['B'] == '9'
         assert result['effect']['checked_neighbors'] == ['B']
         assert result['effect']['inventory_bracket']['collection_prefix'][0]['argument'] == 'target'
-        assert any(node.name == 'Open A' for node in browser.surface.observation.nodes)
+        assert any(node.name == 'Amount' for node in browser.surface.observation.nodes)
         assert not any(node.name == 'Open Workspace' for node in browser.surface.observation.nodes)
 
 
@@ -4908,6 +4910,97 @@ def test_semantic_final_collection_return_detects_its_own_target_reset(tmp_path,
     result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
     assert reset_during_final_return, 'the finite verification bracket must return after the detail reload'
     assert browser.values == {'A': '3', 'B': '9'}
+    assert result['outcome'] != 'CONFIRMED', result
+
+
+class _DetailOnlyGuardedSemanticDiagnosticBrowser(_GuardedSemanticDiagnosticBrowser):
+    """The amount is rendered only in details, not in the owner's collection row."""
+
+    reset_on_final_return = False
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.final_return_resets = []
+
+    def entry(self):
+        return _semantic_diagnostic_entry(self.names)
+
+    def goto(self, url):
+        if self.reset_on_final_return and self.reloads:
+            self.final_return_resets.append(dict(self.values))
+            self.values['A'] = '3'
+        return super().goto(url)
+
+
+@pytest.mark.parametrize('reset', [False, True])
+def test_semantic_detail_only_field_must_survive_final_collection_return(tmp_path, monkeypatch, reset):
+    """Supplied semantic artifact isolates execution; no claim of induced semantics."""
+    monkeypatch.setattr(_DetailOnlyGuardedSemanticDiagnosticBrowser, 'reset_on_final_return', reset)
+    monkeypatch.setitem(globals(), '_GuardedSemanticDiagnosticBrowser', _DetailOnlyGuardedSemanticDiagnosticBrowser)
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
+    assert browser.fills == browser.final_actions == 1
+    assert browser.reloads == 2
+    assert any(node.name == 'Amount' for node in browser.surface.observation.nodes)
+    if reset:
+        assert browser.final_return_resets[0] == {'A': '7', 'B': '9'}
+        assert browser.values == {'A': '3', 'B': '9'}, 'terminal persisted target contradicts the requested effect'
+        assert result['outcome'] != 'CONFIRMED', result
+    else:
+        assert browser.values == {'A': '7', 'B': '9'}
+        assert result['outcome'] == 'CONFIRMED', result
+        assert result['effect']['persisted'] == browser.surface.observation.structural_signature()
+
+
+class _FinalReopenGuardedSemanticDiagnosticBrowser(_DetailOnlyGuardedSemanticDiagnosticBrowser):
+    """Faults arise only after the first detail reload and collection bracket."""
+
+    final_reopen_fault = None
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.final_reopen_events = []
+        if self.final_reopen_fault == 'wrong_owner':
+            # Equal displayed amounts cannot substitute for the selected owner.
+            self.values['B'] = '7'
+
+    def act(self, action):
+        name = self.surface.observation.node(action.target).name
+        result = super().act(action)
+        if name.startswith('Open ') and self.reloads and not self.final_reopen_events:
+            self.final_reopen_events.append({'owner': self.selected, 'persisted': dict(self.values),
+                                             'capacity': self.capacity})
+            if self.final_reopen_fault == 'stale_draft':
+                self.values['A'] = '3'
+                self.draft = '7'
+            elif self.final_reopen_fault == 'changed_capacity':
+                self.capacity = '1'
+            elif self.final_reopen_fault == 'wrong_owner':
+                self.selected = 'B'
+            self.surface = self.detail()
+        return result
+
+
+@pytest.mark.parametrize('fault', ['stale_draft', 'changed_capacity', 'wrong_owner'])
+def test_semantic_final_reopen_revalidates_persistence_prerequisite_and_owner(tmp_path, monkeypatch, fault):
+    """Supplied diagnostic condition; mutable state refutes a final read-only check.
+
+    This requires the proposed final reopen to engage. It is not evidence that
+    ordinary learning induces the supplied diagnostic relationship or condition.
+    """
+    monkeypatch.setattr(_FinalReopenGuardedSemanticDiagnosticBrowser, 'final_reopen_fault', fault)
+    monkeypatch.setitem(globals(), '_GuardedSemanticDiagnosticBrowser', _FinalReopenGuardedSemanticDiagnosticBrowser)
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
+    assert len(browser.final_reopen_events) == 1, 'the final target must be reopened after the collection bracket'
+    assert browser.final_reopen_events[0]['owner'] == 'A'
+    assert browser.final_reopen_events[0]['persisted']['A'] == '7'
+    if fault == 'stale_draft':
+        assert browser.values == {'A': '3', 'B': '9'}
+        assert browser.reloads >= 2 and browser.draft is None, 'a final draft read is not persisted-field evidence'
+    elif fault == 'changed_capacity':
+        assert browser.values == {'A': '7', 'B': '9'} and browser.capacity == '1'
+        assert float(browser.values['A']) > float(browser.capacity), 'the actual related condition now excludes Recorded'
+    else:
+        assert browser.values == {'A': '7', 'B': '7'} and browser.selected == 'B'
     assert result['outcome'] != 'CONFIRMED', result
 
 

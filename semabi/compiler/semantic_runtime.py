@@ -1066,9 +1066,9 @@ def publish_operations(runtime, browser, connection, settings, trace, artifact, 
                 guarded["argument_schema"]["required"] += ["value", "expect"]
                 guarded["support"]["persisted_edits"] = persisted
                 guarded["scope"]["guard"] = "Caller-requested empirical prediction agreement, not a necessary/sufficient application guarantee"
-                guarded["effect_checks"] += ["Requested field bound to intended owner after fill and re-opening",
+                guarded["effect_checks"] += ["Requested field and empirical condition on intended owner after terminal reopening and reload",
                                               "Detail persistence witness bracketed by matching rendered entry inventories",
-                                              "Observed sibling rows unchanged; no simultaneous global-state guarantee"]
+                                              "Observed sibling rows unchanged before terminal target verification; no simultaneous global-state guarantee"]
                 bind_contract(guarded)
                 operations.append(guarded)
     return operations
@@ -1143,6 +1143,34 @@ def _live_signature(surface):
     # Control state such as readonly, bounds and destinations is visible evidence
     # retained beside the node tree; comparing only Node keys drops that evidence.
     return digest([surface.observation.structural_signature(), surface.controls, surface.forms])
+
+
+def _terminal_guarded_witness(browser, trace, artifact, procedure, arguments, *, expected_response=None):
+    """Finish on a freshly reloaded target, never act after the final witness.
+
+    Returning to a collection can change a field absent from its rows; opening
+    details can restore a stale draft. Neither preserves an earlier persistence
+    witness. Neighbor observations remain explicitly earlier, not simultaneous.
+    """
+    restored = replay(browser, trace, procedure["entry_url"], procedure["navigation"], arguments,
+                      context=procedure["return_context"])
+    restored = reload_observed(browser, trace)
+    action_node = resolve_step(restored, procedure["action"], arguments)
+    prediction = artifact.predict(restored.observation, action_node, procedure["control"])
+    _check_owner(prediction, procedure, arguments)
+    field_node = resolve_step(restored, {"descriptor": procedure["guarded_field"]["descriptor"]})
+    if restored.observation.node(field_node).value != arguments["value"]:
+        _stop("Requested target field did not persist through terminal reopening and reload", stale=True)
+    if expected_response is not None and (prediction.get("status") != "supported"
+            or set(prediction.get("alternatives", {})) != {expected_response}):
+        _stop("Learned condition no longer agrees with the requested response at terminal verification")
+    final = trace.read(browser)
+    if _live_signature(final) != _live_signature(restored):
+        _stop("Relevant interface state changed during terminal target verification")
+    witness = final.observation.structural_signature()
+    trace.emit({"type": "semantic_terminal_target_witness", "observation": witness,
+                "prediction": prediction, "scope": "Reloaded target after the last procedure action"})
+    return witness
 
 
 def invoke(runtime, browser, operation, arguments, trace):
@@ -1260,12 +1288,15 @@ def invoke(runtime, browser, operation, arguments, trace):
                     "detail_observation": persisted})
         if target not in remaining or final_inventory != remaining:
             _stop("Rendered owner-collection inventory changed during persistence verification")
+        terminal = _terminal_guarded_witness(browser, trace, artifact, procedure, arguments,
+                                            expected_response=arguments["expect"])
         return {"outcome": "CONFIRMED", "prediction": prediction, "counterfactual": counterfactual,
                 "effect": {"kind": "guarded_field_update", "response": response,
-                           "target_arguments": arguments, "field": guard, "persisted": persisted,
+                           "target_arguments": arguments, "field": guard, "persisted": terminal,
                            "inventory_bracket": {"before_detail": first_inventory,
+                                                 "detail": persisted,
                                                  "after_detail": final_entry.observation.structural_signature(),
-                                                 "scope": "Matching rendered owner-collection inventories surrounding the detail witness; not complete or simultaneous global state",
+                                                 "scope": "Matching rendered owner-collection inventories surrounding an earlier detail witness, before terminal target verification; not complete or simultaneous global state",
                                                  "collection_prefix": collection_prefix},
                            "checked_neighbors": sorted(key for key in neighbors if key != target),
                            "attribution": "Observed requested field effect; concurrent external causes not excluded"},
@@ -1392,7 +1423,7 @@ def acquire_repair(runtime, browser, trace, repair, trials, edits, report):
                    context=procedure["return_context"])
     if _inventory(final) != remaining:
         _stop("Scoped inventory changed during repair persistence checking")
-    edit["persisted"] = restored.observation.structural_signature()
+    edit["persisted"] = _terminal_guarded_witness(browser, trace, artifact, procedure, arguments)
     report.update(status="OBSERVED_EXPERIMENT", targeting_engaged=True,
                   observation=artifact.observe(before.observation, after.observation, procedure["control"]),
                   persisted=edit["persisted"], inventory_bracket=[
