@@ -29,6 +29,7 @@ def main():
                         help="With --connection, use its current session instead of reconnecting")
     parser.add_argument("--credentials-file", type=Path, help="Private JSON containing username and password")
     parser.add_argument("--learn", action="store_true")
+    parser.add_argument("--repair-execution-id", help="Investigate an unavailable prediction during explicit learning")
     parser.add_argument("--max-actions", type=int, default=40)
     parser.add_argument("--max-writes", type=int, default=4)
     parser.add_argument("--invoke-max-actions", type=int,
@@ -44,6 +45,8 @@ def main():
     parser.add_argument("--idempotency-key", default=None)
     parser.add_argument("--timeout", type=float, default=300)
     args = parser.parse_args()
+    if args.repair_execution_id and not args.learn:
+        parser.error("--repair-execution-id requires --learn")
     if args.reuse_session and not args.connection:
         parser.error("--reuse-session requires --connection")
     arguments = json.loads(args.arguments) if args.arguments is not None else None
@@ -99,7 +102,10 @@ def main():
             wait(request("POST", f"/v1/connections/{connection_id}/reconnect", {}))
     prefix = f"/v1/connections/{connection_id}"
     if args.learn:
-        wait(request("POST", prefix + "/learn", {"settings": {"max_actions": args.max_actions, "max_writes": args.max_writes}}))
+        learning = {"settings": {"max_actions": args.max_actions, "max_writes": args.max_writes}}
+        if args.repair_execution_id:
+            learning["repair_execution_id"] = args.repair_execution_id
+        wait(request("POST", prefix + "/learn", learning))
     operations = request("GET", prefix + "/operations")["operations"]
     print(json.dumps({"operations": [{"id": operation["id"], "version": operation["version"],
                                      "name": operation["name"], "kind": operation["kind"],

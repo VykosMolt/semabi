@@ -324,6 +324,43 @@ def test_a_guard_that_is_pure_only_after_an_earlier_one_is_a_rule_in_the_list_cl
     assert got["closed"].ordered
 
 
+def test_additive_categorical_evidence_can_remove_an_expressible_old_list():
+    """Retained diagnostic of the maximal-shared-witness LIST language restriction.
+
+    This is not a claimed correction: the current engine rejects the old residual
+    guard once a newly represented category is shared by all of its witnesses.
+    No old observation or literal was contradicted, and the old procedure below
+    still fits every row. The second arm can even turn that loss into a different
+    lone prediction. A categorical-language extension must not call this rival
+    elimination by an acquired observation.
+    """
+    original_rows = _guard_chain().rows_for_refit()
+    original_rows.append((lits(s="bottled", c="yes"), "bottled", frozenset()))
+    original = oc.Evidence(original_rows)
+    question = lits(s="cask", c="yes")
+    old_procedure = [(lits(s="bottled"), "bottled"),
+                     (lits(c="yes"), "closed"), (lits(c="no"), "drew")]
+
+    def execute(procedure, state):
+        return next((event for condition, event in procedure if condition <= state), None)
+
+    assert set(original.admissible(question, corroborated=True, hypothesis=oc.LIST)) == {"closed"}
+    assert execute(old_procedure, question) == "closed"
+    for varying, expected in [(False, set()), (True, {"bottled"})]:
+        enriched_rows = [(state | {("attr", "related", "region",
+                                    "south" if varying and event != "closed" else "north")}, event, roles)
+                         for state, event, roles in original_rows]
+        enriched_question = question | {("attr", "related", "region", "south")}
+        for original_row, enriched_row in zip(original_rows, enriched_rows):
+            assert original_row[0] < enriched_row[0]
+            assert original_row[1:] == enriched_row[1:]
+            assert execute(old_procedure, enriched_row[0]) == enriched_row[1]
+        assert execute(old_procedure, enriched_question) == "closed"
+        enriched = oc.Evidence(enriched_rows)
+        admitted = enriched.admissible(enriched_question, corroborated=True, hypothesis=oc.LIST)
+        assert set(admitted) == expected
+
+
 def test_the_rule_class_is_the_unordered_part_of_the_list_class():
     e = _guard_chain()
     for state in (lits(s="bottled", c="no"), lits(s="bottled", c="yes"), lits(s="cask", c="no")):

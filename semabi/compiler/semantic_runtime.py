@@ -28,18 +28,37 @@ def has_onboarding_history(runtime, connection):
                for path in root.glob("*/steps.jsonl") for line in path.read_text().splitlines())
 
 
+def local_anchor(surface, root, control_node=None):
+    """A unique observed row anchor, not a persistent identity or complete listing.
+
+    Heading anchors also work beside constant controls. Otherwise a leaf's value
+    must be repeated by a control label; neither column order nor word shape names
+    the record. Competing anchors remain unresolved.
+    """
+    obs = surface.observation
+    nodes = [obs.node(i) for i in obs.subtree(root)]
+    headings = [n for n in nodes if n.role == "heading" and n.name]
+    if len(headings) == 1:
+        return headings[0]
+    controls = ([control_node] if control_node is not None else
+                [n.i for n in nodes if n.i in surface.controls])
+    candidates = [n for n in nodes if n.role in {"cell", "text"} and n.name
+                  and not obs.children(n.i) and n.i not in surface.controls
+                  and any(surface.controls[i]["label"].count(n.name) == 1 for i in controls)]
+    return candidates[0] if len(candidates) == 1 else None
+
+
 def selector(surface, node):
-    """A heading and control in one observed local row, not a business key."""
+    """An anchored control in one observed local row, not a business key."""
     obs = surface.observation
     regions = {region["root"] for region in local_regions(obs)}
     for root in obs.ancestors(node):
         if root not in regions:
             continue
-        headings = [obs.node(i) for i in obs.subtree(root)
-                    if obs.node(i).role == "heading" and obs.node(i).name]
-        if len(headings) != 1:
+        anchor = local_anchor(surface, root, node)
+        if anchor is None:
             continue
-        value = headings[0].name
+        value = anchor.name
         descriptor = surface.descriptor(node)
         label = descriptor["label"]
         # The same heading may be restated in a button, or a constant control
@@ -48,7 +67,7 @@ def selector(surface, node):
             prefix, suffix = label.split(value)
             descriptor["label"] = {"prefix": prefix, "suffix": suffix}
         return {"descriptor": descriptor, "region_role": obs.node(root).role,
-                "anchor_role": "heading", "value": value}
+                "anchor_role": anchor.role, "value": value}
     return None
 
 
@@ -56,9 +75,13 @@ def step_for(surface, node, route):
     selected = selector(surface, node)
     if selected:
         index = 1 + sum("selector" in step for step in route)
-        return {"kind": "click", "selector": selected,
+        step = {"kind": "click", "selector": selected,
                 "argument": "target" if index == 1 else f"selection_{index}"}
-    return {"kind": "click", "descriptor": surface.descriptor(node)}
+    else:
+        step = {"kind": "click", "descriptor": surface.descriptor(node)}
+    if surface.observation.node(node).role == "radio":
+        step["postcondition"] = {"checked": True}
+    return step
 
 
 def resolve_step(surface, step, arguments=None):
@@ -99,6 +122,24 @@ def shape(surface):
     kept = [n for n in obs.nodes if n.i not in skip]
     indices = {n.i: index for index, n in enumerate(kept)}
     return digest([(indices.get(n.parent, -1), n.role) for n in kept])
+
+
+def procedure_context(surface):
+    """Finite discrete UI context; text/numeric values do not create graph nodes."""
+    states = [(n.role, n.checked, n.selected, n.pressed) for n in surface.observation.nodes
+              if n.i in surface.controls and
+              (n.checked is not None or n.selected is not None or n.pressed is not None)]
+    return digest([shape(surface), states]) if states else shape(surface)
+
+
+def act_step(browser, trace, surface, step, arguments=None):
+    node = resolve_step(surface, step, arguments)
+    after = trace.act(browser, surface, Primitive(step["kind"], node, step.get("text")))
+    if step.get("postcondition"):
+        selected = after.observation.node(resolve_step(after, step, arguments))
+        if any(getattr(selected, name, None) != value for name, value in step["postcondition"].items()):
+            _stop("Selection did not reach its observable postcondition")
+    return after
 
 
 def replay(browser, trace, entry, route, arguments=None, *, context=None, acquiring=False):
@@ -146,8 +187,7 @@ def replay(browser, trace, entry, route, arguments=None, *, context=None, acquir
         if shape(surface) != context["entry_shape"]:
             _stop("Return procedure did not reach its observed entry view")
     for step in route:
-        node = resolve_step(surface, step, arguments)
-        surface = trace.act(browser, surface, Primitive(step["kind"], node, step.get("text")))
+        surface = act_step(browser, trace, surface, step, arguments)
     return surface
 
 
@@ -184,25 +224,26 @@ def reload_observed(browser, trace):
 def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
     """Bounded graph traversal. Observed view changes supply composition edges.
 
-    At most 24 contexts, depth four, two initial target exemplars and at least
+    Supplied search bounds: at most 48 contexts, depth six, at most two visits to
+    the same discrete context per route, two initial target exemplars and at least
     the field language's minimum distinct examples for subsequent selectors.
     All replays, failed candidates and fills charge the ordinary Trace budget.
     """
     pending = deque([([], ())])
     seen, queued = set(), set()
-    while pending and len(seen) < 24:
+    while pending and len(seen) < 48:
         route, ancestors = pending.popleft()
         key = digest(route)
         if key in seen:
             continue
         seen.add(key)
         surface = replay(browser, trace, entry, route, context=context, acquiring=True)
-        initial_shape = shape(surface)
+        initial_shape = procedure_context(surface)
         buttons = []
         selector_counts = {}
         from semabi.compiler.runtime import EXCLUDED_WORDS
         for node, control in surface.controls.items():
-            if control["role"] not in {"button", "link"} or control["disabled"] or EXCLUDED_WORDS.search(control["label"]):
+            if control["role"] not in {"button", "link", "radio"} or control["disabled"] or EXCLUDED_WORDS.search(control["label"]):
                 continue
             step = step_for(surface, node, route)
             pattern = route_key([step])
@@ -216,20 +257,21 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
             surface = replay(browser, trace, entry, route, context=context, acquiring=True)
             node = resolve_step(surface, step)
             before = surface
-            after = trace.act(browser, before, Primitive("click", node))
+            after = act_step(browser, trace, before, step)
             trial = {"route": route, "action": step,
                      "before": before.observation.structural_signature(),
                      "after": after.observation.structural_signature(), "node": node}
             trials.append(trial)
-            next_shape = shape(after)
-            if next_shape == initial_shape:
-                stable_buttons.append(step)
-            elif len(route) < 4 and next_shape not in (*ancestors, initial_shape):
+            before_context, next_shape = procedure_context(before), procedure_context(after)
+            if next_shape == before_context:
+                if before.controls[node]["role"] != "radio":
+                    stable_buttons.append(step)
+            elif len(route) < 6 and (*ancestors, before_context).count(next_shape) < 2:
                 new_route = [*route, step]
                 candidate = digest(new_route)
                 if candidate not in queued:
                     queued.add(candidate)
-                    pending.append((new_route, (*ancestors, initial_shape)))
+                    pending.append((new_route, (*ancestors, before_context)))
         if stable_buttons:
             surface = replay(browser, trace, entry, route, context=context, acquiring=True)
             numeric = [(surface.descriptor(node), numeric_probes(surface, node))
@@ -261,13 +303,16 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
                         trials.append({"route": route, "action": step, "node": node,
                                        "before": before.observation.structural_signature(),
                                        "after": surface.observation.structural_signature()})
-                        if shape(surface) != initial_shape:
+                        if procedure_context(surface) != initial_shape:
                             break
                     restored = replay(browser, trace, entry, route, context=context, acquiring=True)
                     restored = reload_observed(browser, trace)
                     hits = restored.resolve(descriptor)
                     if len(hits) == 1 and restored.observation.node(hits[0]).value == value:
                         numeric_trials[-1]["persisted"] = restored.observation.structural_signature()
+    emit({"type": "acquisition_frontier", "visited_contexts": len(seen), "pending_contexts": len(pending),
+          "context_limit": 48, "depth_limit": 6, "bounded_frontier_exhausted": not pending,
+          "scope": "Bounded sampled routes; not complete application enumeration"})
     return trials, numeric_trials
 
 
@@ -289,12 +334,13 @@ def recover_learning(log):
     if not log.steps or log.steps[0].before not in surfaces:
         return [], [], {}
     context = {"entry_shape": shape(surfaces[log.steps[0].before]), "returns": []}
+    entry_context = procedure_context(surfaces[log.steps[0].before])
     trials, edits, route = [], [], []
     for step in log.steps:
         before, after = surfaces.get(step.before), surfaces.get(step.after)
         if before is None or after is None:
             continue
-        if shape(before) == context["entry_shape"]:
+        if procedure_context(before) == entry_context:
             route = []
         if step.action.kind == "click" and step.action.target in before.controls:
             action = step_for(before, step.action.target, route)
@@ -305,7 +351,7 @@ def recover_learning(log):
                         "descriptor": before.descriptor(step.action.target)}
                 if edge not in context["returns"]:
                     context["returns"].append(edge)
-            if shape(before) != shape(after):
+            if procedure_context(before) != procedure_context(after):
                 route = [*route, action]
         elif step.action.kind == "type" and step.action.target in before.controls:
             edits.append({"route": deepcopy(route), "descriptor": before.descriptor(step.action.target),
@@ -316,7 +362,7 @@ def recover_learning(log):
                 if (edit["route"] == route and len(matches) == 1
                         and after.observation.node(matches[0]).value == edit["value"]):
                     edit["persisted"] = step.after
-        if shape(after) == context["entry_shape"]:
+        if procedure_context(after) == entry_context:
             route = []
     return trials, edits, context
 
@@ -329,6 +375,55 @@ def _reuse_training(log, trace):
                            log.observations[step.before], log.observations[step.after])
 
 
+def owner_correspondence(group):
+    """Unique empirical argument-to-owner wrapper across distinct supported owners.
+
+    Earlier selectors can name prerequisite collections. Equal competing sources
+    remain ambiguous; their repeated names are not independent identity evidence.
+    """
+    if not group or len({trial["owner"]["key"] for trial in group
+                         if trial.get("prediction_status") == "supported"}) < 2:
+        return None
+    candidates = []
+    for index, step in enumerate(group[0]["route"]):
+        if "selector" not in step:
+            continue
+        wrappers, values = set(), set()
+        for trial in group:
+            if index >= len(trial["route"]):
+                break
+            source = trial["route"][index]
+            value = source.get("selector", {}).get("value", "")
+            key = trial["owner"]["key"]
+            if source.get("argument") != step["argument"] or not key or value.count(key) != 1:
+                break
+            prefix, suffix = value.split(key)
+            wrappers.add((prefix, suffix, trial["owner"]["type"]))
+            values.add(value)
+        else:
+            if len(wrappers) == 1 and len(values) >= 2:
+                prefix, suffix, owner_type = wrappers.pop()
+                candidates.append({"argument": step["argument"], "prefix": prefix,
+                                   "suffix": suffix, "type": owner_type})
+    return candidates[0] if len(candidates) == 1 else None
+
+
+def owner_collection_prefix(procedure):
+    """Observed route preceding the argument that supplied the final action owner."""
+    argument = procedure["owner_binding"]["argument"]
+    matches = [index for index, step in enumerate(procedure["navigation"])
+               if "selector" in step and step.get("argument") == argument]
+    if len(matches) != 1:
+        _stop("Learned owner has no unique collection prefix", stale=True)
+    return procedure["navigation"][:matches[0]]
+
+
+def _argument_value(route, argument):
+    values = [step["selector"]["value"] for step in route
+              if "selector" in step and step.get("argument") == argument]
+    return values[0] if len(values) == 1 else None
+
+
 def learn(runtime, connection, settings, trace, emit):
     from semabi.compiler.semantic import fit_semantics, training_evidence_digest
     from semabi.compiler.runtime import POLICY_VERSION, bind_contract, source_hashes
@@ -338,6 +433,10 @@ def learn(runtime, connection, settings, trace, emit):
     existing = [op for op in settings.get("_semantic_training_operations", settings.get("_existing_operations", []))
                 if op.get("kind", "").startswith("semantic_") and op.get("support", {}).get("semantic_artifact")]
     reused = 0
+    repair = settings.get("_semantic_repair")
+    repair_report = {"execution_id": repair["execution_id"], "status": "NOT_STARTED",
+                     "field_write_attempted": False} if repair else None
+    repair_witness = None
     # Before any operation has ever been published, these connection traces
     # cannot contain service invocations. Refit prior onboarding after a source
     # repair rather than repeating the same exploratory writes.
@@ -394,10 +493,12 @@ def learn(runtime, connection, settings, trace, emit):
     try:
         if reused:
             emit({"type": "semantic_evidence_reused", "steps": reused, "scope": "same connection's prior onboarding"})
+            if repair:
+                repair_witness = acquire_repair(runtime, browser, trace, repair, trials, edits, repair_report)
             # Authorized repair acquires missing persistence witnesses. It does
             # not replay customer invocations or treat a cached prediction as data.
             selected = {}
-            for edit in edits:
+            for edit in edits if not repair else []:
                 if not edit.get("persisted") and edit["route"] and "selector" in edit["route"][0]:
                     selected.setdefault((route_key(edit["route"]), edit["descriptor"]["label"],
                                          edit["route"][0]["selector"]["value"]), []).append(edit)
@@ -418,16 +519,26 @@ def learn(runtime, connection, settings, trace, emit):
                     if len(hits) == 1 and restored.observation.node(hits[0]).value == proposal["value"]:
                         edit["persisted"] = restored.observation.structural_signature()
                         edits.append(edit)
-        else:
+        elif not repair:
             acquire(browser, trace, connection["url"], emit, trials, edits, context)
+        else:
+            repair_report.update(status="TRAINING_UNAVAILABLE",
+                                 reason="Exact prior raw training is required before targeted repair")
     except StopOperation as error:
         emit({"type": "acquisition_stopped", "reason": str(error)})
+        if repair_report is not None:
+            repair_report.update(status="UNCERTAIN" if trace.possible_effect else "STOPPED",
+                                 reason=str(error))
     (trace.log.dir / "learning.json").write_text(json.dumps({"trials": trials, "edits": edits, "context": context}))
     if not trials:
         return {"status": "UNESTABLISHED", "operations": [], "attempts": [],
-                "metrics": trace.metrics(), "invalidations": []}
+                "metrics": trace.metrics(), "invalidations": [], "repair": repair_report}
     emit({"type": "semantic_fit_started", "steps": len(trace.log.steps)})
     artifact = fit_semantics(trace.log.dir)
+    if repair_witness is not None:
+        old_artifact, before, after, node = repair_witness
+        repair_report["predictive_change"] = artifact.acquisition_change(old_artifact, before, after, node)
+        emit({"type": "semantic_repair_refitted", **repair_report})
     frozen = artifact.to_json()
     (trace.log.dir / "semantic.json").write_text(json.dumps(frozen))
     emit({"type": "semantic_fit_completed", "controls": len(artifact.operations())})
@@ -452,25 +563,7 @@ def learn(runtime, connection, settings, trace, emit):
         for group in groups.values():
             route = group[0]["route"]
             selectors = [step for step in route if "selector" in step]
-            if not selectors or len({trial["route"][0].get("selector", {}).get("value") for trial in group}) < 2:
-                continue
-            if len({trial["owner"]["key"] for trial in group if trial.get("prediction_status") == "supported"}) < 2:
-                continue
-            wrappers = set()
-            owner_binding = None
-            for trial in group:
-                value = trial["route"][0]["selector"]["value"]
-                key = trial["owner"]["key"]
-                if not key or value.count(key) != 1:
-                    break
-                prefix, suffix = value.split(key)
-                wrappers.add((prefix, suffix, trial["owner"]["type"]))
-            else:
-                if len(wrappers) != 1:
-                    continue
-                prefix, suffix, owner_type = wrappers.pop()
-                owner_binding = {"argument": route[0]["argument"], "prefix": prefix,
-                                 "suffix": suffix, "type": owner_type}
+            owner_binding = owner_correspondence(group)
             if owner_binding is None:
                 continue
             response_owners, response_paths = {}, {}
@@ -496,7 +589,7 @@ def learn(runtime, connection, settings, trace, emit):
             procedure = {"entry_url": connection["url"], "navigation": route, "return_context": context,
                          "action": group[0]["action"], "control": control, "owner_binding": owner_binding}
             props = {step["argument"]: {"type": "string", "minLength": 1,
-                     "description": "Exact heading in one uniquely resolved local collection row"}
+                     "description": "Exact observed anchor in one uniquely resolved local collection row"}
                      for step in selectors}
             schema = {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}
             op_id = "op_" + digest([procedure["entry_url"], control, route_key(route)])[:20]
@@ -510,7 +603,7 @@ def learn(runtime, connection, settings, trace, emit):
                          "effect_checks": ["Fresh live region change after the selected action",
                                            "Learned action owner remains uniquely observable after the action",
                                            "Response checked separately from the learned prediction"],
-                         "scope": {"origin": browser.allowed_origin, "identity": "Local heading selector; V4 owner re-resolved per view",
+                         "scope": {"origin": browser.allowed_origin, "identity": "Local observed-anchor selector; V4 owner re-resolved per view",
                                    "procedure_language": "Observed finite sequence of scoped clicks",
                                    "unsupported": ["Global uniqueness", "Exactly-once effects", "Exclusive causal attribution",
                                                    "Complete collections without scope evidence"]},
@@ -528,7 +621,8 @@ def learn(runtime, connection, settings, trace, emit):
                 persisted = [edit for edit in edits if edit.get("persisted")
                              and route_key(edit["route"]) == route_key(route)
                              and edit["descriptor"]["label"] == label]
-                if (len({edit["route"][0]["selector"]["value"] for edit in persisted}) < 2
+                if (len({_argument_value(edit["route"], owner_binding["argument"]) for edit in persisted}
+                        - {None}) < 2
                         or len({edit["value"] for edit in persisted}) < 2):
                     continue
                 guarded = deepcopy(operation)
@@ -551,7 +645,8 @@ def learn(runtime, connection, settings, trace, emit):
     return {"status": "COMPLETED" if operations else "UNESTABLISHED", "operations": operations,
             "attempts": [{"semantic_controls": artifact.operations(), "procedure_trials": len(trials)}],
             "metrics": {**trace.metrics(), "reused_training_steps": reused,
-                        "fit_seconds": artifact.metadata["fit_seconds"]}, "invalidations": []}
+                        "fit_seconds": artifact.metadata["fit_seconds"]}, "invalidations": [],
+            "repair": repair_report}
 
 
 def validate(schema, arguments):
@@ -587,8 +682,8 @@ def _inventory(surface):
         if region["role"] not in {"article", "row", "listitem"}:
             continue
         nodes = [obs.node(i) for i in obs.subtree(region["root"])]
-        headings = [n.name for n in nodes if n.role == "heading"]
-        if len(headings) != 1:
+        anchor = local_anchor(surface, region["root"])
+        if anchor is None:
             continue
         positions = {n.i: index for index, n in enumerate(nodes)}
         # A node's own visible text/state does not disappear when it contains
@@ -607,7 +702,7 @@ def _inventory(surface):
                         obs.node(form).key(), surface.forms.get(form))
             return control
 
-        result.setdefault(headings[0], []).append([
+        result.setdefault(anchor.name, []).append([
             (positions.get(n.parent, -1), n.key(), control_state(n.i)) for n in nodes])
     return {key: sorted(occurrences, key=digest) for key, occurrences in result.items()}
 
@@ -632,7 +727,8 @@ def invoke(runtime, browser, operation, arguments, trace):
                 and not control["readonly"] and control["input_type"] != "search"
                 and digest(initial.descriptor(index)) not in allowed):
             _stop("Current editor has a populated field without learned persistence support")
-    entry = replay(browser, trace, procedure["entry_url"], [], arguments,
+    collection_prefix = owner_collection_prefix(procedure)
+    entry = replay(browser, trace, procedure["entry_url"], collection_prefix, arguments,
                    context=procedure["return_context"])
     neighbors = _inventory(entry)
     surface = replay(browser, trace, procedure["entry_url"], procedure["navigation"], arguments,
@@ -704,7 +800,8 @@ def invoke(runtime, browser, operation, arguments, trace):
             return {"outcome": "UNCERTAIN", "prediction": prediction, "effect": {
                     "field_write_attempted": True, "response": response, "reason": "Actual response did not confirm requested completion"},
                     "metrics": trace.metrics()}
-        entry_after = replay(browser, trace, procedure["entry_url"], [], context=procedure["return_context"])
+        entry_after = replay(browser, trace, procedure["entry_url"], collection_prefix, arguments,
+                             context=procedure["return_context"])
         remaining = _inventory(entry_after)
         target = arguments[procedure["owner_binding"]["argument"]]
         if not neighbors or {key: val for key, val in neighbors.items() if key != target} != {
@@ -723,19 +820,21 @@ def invoke(runtime, browser, operation, arguments, trace):
         if restored.observation.node(field_node).value != arguments["value"]:
             _stop("Requested target field did not persist through reopening and reload")
         persisted = restored.observation.structural_signature()
-        final_entry = replay(browser, trace, procedure["entry_url"], [], context=procedure["return_context"])
+        final_entry = replay(browser, trace, procedure["entry_url"], collection_prefix, arguments,
+                             context=procedure["return_context"])
         final_inventory = _inventory(final_entry)
         trace.emit({"type": "semantic_inventory_witness", "phase": "after_detail_check",
                     "observation": final_entry.observation.structural_signature(),
                     "detail_observation": persisted})
         if target not in remaining or final_inventory != remaining:
-            _stop("Rendered entry inventory changed during persistence verification")
+            _stop("Rendered owner-collection inventory changed during persistence verification")
         return {"outcome": "CONFIRMED", "prediction": prediction, "counterfactual": counterfactual,
                 "effect": {"kind": "guarded_field_update", "response": response,
                            "target_arguments": arguments, "field": guard, "persisted": persisted,
                            "inventory_bracket": {"before_detail": first_inventory,
                                                  "after_detail": final_entry.observation.structural_signature(),
-                                                 "scope": "Matching rendered entry inventories surrounding the detail witness; not simultaneous global state"},
+                                                 "scope": "Matching rendered owner-collection inventories surrounding the detail witness; not complete or simultaneous global state",
+                                                 "collection_prefix": collection_prefix},
                            "checked_neighbors": sorted(key for key in neighbors if key != target),
                            "attribution": "Observed requested field effect; concurrent external causes not excluded"},
                 "metrics": trace.metrics()}
@@ -744,3 +843,126 @@ def invoke(runtime, browser, operation, arguments, trace):
             "target_arguments": arguments, "before": current.observation.structural_signature(),
             "after": after.observation.structural_signature(),
             "attribution": "Observed after action; concurrent external causes not excluded"}, "metrics": trace.metrics()}
+
+
+def acquire_repair(runtime, browser, trace, repair, trials, edits, report):
+    """One task-directed experiment during explicitly authorized learning only.
+
+    The supplied request proposes a value, not its answer. Complete empirical
+    outcome alternatives must disagree both on simulation and on the actual
+    edited view. All setup, unsuccessful actions and verification use Trace.
+    Neither a selected point answer nor the caller's `expect` labels training.
+    """
+    from semabi.compiler.semantic import SemanticArtifact
+    operation, arguments = repair["operation"], repair["arguments"]
+    runtime._check_operation(operation)
+    validate(operation["argument_schema"], arguments)
+    artifact = SemanticArtifact.from_json(operation["support"]["semantic_artifact"])
+    procedure = operation["procedure"]
+    guard = procedure["guarded_field"]
+    allowed = {digest(edit["descriptor"]) for edit in operation["support"].get("edits", [])
+               if edit.get("persisted")}
+    initial = trace.read(browser)
+    for index, control in initial.controls.items():
+        if (control["role"] == "textbox" and initial.observation.node(index).value
+                and not control["readonly"] and control["input_type"] != "search"
+                and digest(initial.descriptor(index)) not in allowed):
+            _stop("Repair cannot discard an editor without learned persistence support")
+    collection_route = owner_collection_prefix(procedure)
+    collection = replay(browser, trace, procedure["entry_url"], collection_route, arguments,
+                        context=procedure["return_context"])
+    neighbors = _inventory(collection)
+    target = arguments[procedure["owner_binding"]["argument"]]
+    if not neighbors or target not in neighbors:
+        _stop("Repair lacks an observable scoped collection witness for the intended target")
+    surface = replay(browser, trace, procedure["entry_url"], procedure["navigation"], arguments,
+                     context=procedure["return_context"])
+    node = resolve_step(surface, procedure["action"], arguments)
+    prediction = artifact.predict(surface.observation, node, procedure["control"])
+    _check_owner(prediction, procedure, arguments)
+    field = resolve_step(surface, {"descriptor": guard["descriptor"]})
+    control = surface.controls[field]
+    if control["readonly"] or control["disabled"]:
+        _stop("Repair field is not writable")
+    try:
+        number = float(arguments["value"])
+        minimum = float(control["min"]) if control.get("min") else -math.inf
+        maximum = float(control["max"]) if control.get("max") else math.inf
+    except (TypeError, ValueError):
+        _stop("Repair value or visible numeric bounds are not represented")
+    if not math.isfinite(number) or not minimum <= number <= maximum:
+        _stop("Repair value is outside the observed numeric field bounds")
+    opportunity = artifact.acquisition_opportunity(surface.observation, node,
+                                                   editable_node=field, value=arguments["value"])
+    report["opportunity"] = opportunity
+    trace.emit({"type": "semantic_repair_opportunity", **report})
+    if not opportunity["eligible"]:
+        report.update(status="NOT_ENGAGED", reason=opportunity["kind"])
+        return None
+    _check_owner(opportunity["prediction"], procedure, arguments)
+    current = trace.read(browser)
+    if _live_signature(current) != _live_signature(surface):
+        _stop("Interface changed before the repair experiment")
+    # Check budget before marking the fill as possibly attempted. The actual
+    # action's write-intent remains durably emitted by Trace before browser work.
+    trace.budget.check_deadline()
+    if trace.budget.writes >= trace.budget.max_writes or trace.budget.actions >= trace.budget.max_actions:
+        _stop("Repair budget cannot admit the experimental field write")
+    report["field_write_attempted"] = True
+    filled = trace.act(browser, current, Primitive("type", field, arguments["value"]))
+    field = resolve_step(filled, {"descriptor": guard["descriptor"]})
+    if filled.observation.node(field).value != arguments["value"]:
+        _stop("Repair edit was rejected or changed; no automatic retry")
+    node = resolve_step(filled, procedure["action"], arguments)
+    actual = artifact.acquisition_opportunity(filled.observation, node)
+    report["actual_opportunity"] = actual
+    _check_owner(actual["prediction"], procedure, arguments)
+    if not actual["eligible"]:
+        _stop("The actual edited view does not retain the predicted rival outcomes")
+    before = trace.read(browser)
+    if _live_signature(before) != _live_signature(filled):
+        _stop("Interface changed before the repair response action")
+    after = trace.act(browser, before, Primitive("click", node))
+    post_node = resolve_step(after, procedure["action"], arguments)
+    _check_owner(artifact.predict(after.observation, post_node, procedure["control"]), procedure, arguments)
+
+    def concrete(route):
+        route = deepcopy(route)
+        for step in route:
+            if "selector" in step:
+                step["selector"]["value"] = arguments[step["argument"]]
+        return route
+
+    route = concrete(procedure["navigation"])
+    trials.append({"route": route, "action": concrete([procedure["action"]])[0], "node": node,
+                   "before": before.observation.structural_signature(),
+                   "after": after.observation.structural_signature()})
+    edit = {"route": route, "descriptor": guard["descriptor"], "value": arguments["value"],
+            "before": current.observation.structural_signature(), "after": filled.observation.structural_signature()}
+    edits.append(edit)
+    observed_collection = replay(browser, trace, procedure["entry_url"], collection_route, arguments,
+                                 context=procedure["return_context"])
+    remaining = _inventory(observed_collection)
+    if target not in remaining or {k: v for k, v in neighbors.items() if k != target} != {
+            k: v for k, v in remaining.items() if k != target}:
+        _stop("Repair changed neighboring observed records or lost its target")
+    restored = replay(browser, trace, procedure["entry_url"], procedure["navigation"], arguments,
+                      context=procedure["return_context"])
+    restored = reload_observed(browser, trace)
+    restored_node = resolve_step(restored, procedure["action"], arguments)
+    _check_owner(artifact.predict(restored.observation, restored_node, procedure["control"]), procedure, arguments)
+    field = resolve_step(restored, {"descriptor": guard["descriptor"]})
+    if restored.observation.node(field).value != arguments["value"]:
+        _stop("Repair value did not persist on the intended owner")
+    final = replay(browser, trace, procedure["entry_url"], collection_route, arguments,
+                   context=procedure["return_context"])
+    if _inventory(final) != remaining:
+        _stop("Scoped inventory changed during repair persistence checking")
+    edit["persisted"] = restored.observation.structural_signature()
+    report.update(status="OBSERVED_EXPERIMENT", targeting_engaged=True,
+                  observation=artifact.observe(before.observation, after.observation, procedure["control"]),
+                  persisted=edit["persisted"], inventory_bracket=[
+                      observed_collection.observation.structural_signature(), final.observation.structural_signature()],
+                  attribution="Observed experiment and persisted field, not exclusive causality or proven rule")
+    trace.emit({"type": "semantic_repair_observed", **report})
+    return artifact, before.observation, after.observation, node

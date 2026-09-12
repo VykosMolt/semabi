@@ -178,16 +178,60 @@ class Service:
         connection = self.store.connection(connection_id)
         if not connection["scope"]["exploration_enabled"]:
             raise StoreError("exploration is not enabled for this connection", 409)
-        _keys(body, {"settings"}, "learn request")
+        _keys(body, {"settings", "repair_execution_id"}, "learn request")
         settings = _object(body.get("settings", {}), "settings")
         _keys(settings, {"max_actions", "max_writes"}, "settings")
         actions = _integer(settings.get("max_actions", connection["scope"]["max_actions"]),
                            "settings.max_actions", 1, connection["scope"]["max_actions"])
         writes = _integer(settings.get("max_writes", min(connection["scope"]["max_writes"], actions)),
                           "settings.max_writes", 0, min(connection["scope"]["max_writes"], actions))
-        job_id = self.store.queue_job(connection_id, "learn", {"settings": {"max_actions": actions, "max_writes": writes}})
+        request = {"settings": {"max_actions": actions, "max_writes": writes}}
+        if "repair_execution_id" in body:
+            repair = self._semantic_repair(connection_id, _identifier(body["repair_execution_id"]))
+            request["repair_execution_id"] = repair["execution_id"]
+            request["repair_operation_version"] = repair["operation"]["version"]
+        job_id = self.store.queue_job(connection_id, "learn", request)
         self._enqueue(job_id)
         return {"id": job_id, "job_id": job_id, "connection_id": connection_id}
+
+    def _semantic_repair(self, connection_id: str, execution_id: str, version: int | None = None,
+                         current_job: str | None = None) -> dict:
+        """A failed prediction supplies a task objective, never procedure authority.
+
+        Resolve both at admission and on the serialized worker. A prior version
+        can identify the question after republishing, but only the current active
+        procedure and current live evidence may authorize an experiment.
+        """
+        job = self.store.job(execution_id)
+        if job["connection_id"] != connection_id:
+            raise StoreError("repair execution not found for this connection", 404)
+        for previous in self.store.prior_repairs(connection_id, execution_id, current_job):
+            prior_result = previous.get("result") or {}
+            if (previous["status"] in {"QUEUED", "RUNNING"}
+                    or previous["write_intent"] and previous["status"] == "FAILED"
+                    or (prior_result.get("repair") or {}).get("status") == "UNCERTAIN"):
+                raise StoreError("prior repair is pending or uncertain; reconcile it before a new experiment", 409)
+        result = job.get("result") or {}
+        if (job["kind"] != "invoke" or job["status"] != "COMPLETED"
+                or result.get("outcome") != "PREDICTION_UNAVAILABLE"
+                or result.get("effect", {}).get("field_write_attempted") is not False):
+            raise StoreError("repair requires a completed unavailable prediction with no guarded field write", 409)
+        request = job["request"]
+        source = self.store.operation(connection_id, request["operation_id"], request["version"])
+        operation = self.store.operation(connection_id, request["operation_id"])
+        if (source.get("kind") != "semantic_guarded_update"
+                or operation.get("kind") != "semantic_guarded_update"
+                or operation["status"] != "ACTIVE"
+                or version is not None and operation["version"] != version):
+            raise StoreError("repair operation is unavailable or changed before learning", 409)
+        from semabi.compiler.runtime import StopOperation
+        from semabi.compiler.semantic_runtime import validate
+        try:
+            validate(operation["argument_schema"], request["arguments"])
+        except StopOperation as error:
+            raise StoreError("repair arguments no longer satisfy the current operation: " + str(error), 409) from None
+        return {"execution_id": execution_id, "source_version": request["version"],
+                "operation": operation, "arguments": request["arguments"]}
 
     def reconnect(self, connection_id: str, body: dict) -> dict:
         _keys(body, set(), "reconnect request")
@@ -294,6 +338,9 @@ class Service:
                             "_semantic_training_operations": [operation for operation in
                                 self.store.operations(connection["id"], include_history=True)
                                 if operation.get("kind", "").startswith("semantic_")]}
+                if "repair_execution_id" in request:
+                    settings["_semantic_repair"] = self._semantic_repair(
+                        connection["id"], request["repair_execution_id"], request["repair_operation_version"], job_id)
                 result = runtime.learn(connection, settings, emit)
                 _object(result, "Runtime result")
                 operations = self._operations(result)
@@ -354,7 +401,8 @@ def openapi() -> dict:
         "Connection": {"type": "object", "required": ["id", "url", "allowed_origin", "scope", "status", "created_at"],
                        "properties": {"id": string, "url": string, "allowed_origin": string, "scope": ref("Scope"),
                                       "status": string, "created_at": {"type": "string", "format": "date-time"}}},
-        "LearnInput": obj({"settings": obj({"max_actions": integer, "max_writes": {"type": "integer", "minimum": 0}})}),
+        "LearnInput": obj({"settings": obj({"max_actions": integer, "max_writes": {"type": "integer", "minimum": 0}}),
+                           "repair_execution_id": {"type": "string", "description": "Optional same-connection unavailable guarded prediction to investigate during explicitly authorized learning. May write disposable application data within the connection budgets; never retries an uncertain write."}}),
         "InvocationLimits": {**obj({
             "max_actions": {"type": "integer", "minimum": 1, "maximum": 40,
                             "description": "Cannot exceed connection scope. Omitted values use its effective runtime cap."},

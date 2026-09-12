@@ -495,6 +495,298 @@ def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_repla
         api.close()
 
 
+@pytest.mark.parametrize('fault', [None, 'new_outcome', 'no_rivals', 'unrepresented',
+                                  'actual_no_rivals', 'rejected_edit', 'sibling_changed',
+                                  'no_write_budget', 'setup_only_budget', 'no_response_budget'])
+def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effects(tmp_path, monkeypatch, fault):
+    """Diagnostic artifact; real acquisition routing, budgets and observed persistence.
+
+    Opportunity answers are supplied to isolate orchestration, not to claim that
+    fitting discovers rivals. HTTP provenance authorization is tested separately.
+    """
+    import test_operation_runtime as diagnostics
+    from semabi.compiler.runtime import Budget, Runtime, StopOperation, Trace
+    from semabi.compiler.semantic import SemanticArtifact
+    from semabi.compiler.semantic_runtime import acquire_repair
+
+    captured = {}
+
+    def capture(runtime, connection, operation, arguments, emit):
+        captured.update(runtime=runtime, operation=operation, arguments=arguments)
+        return {'outcome': 'DIAGNOSTIC_SETUP_ONLY'}
+
+    with monkeypatch.context() as setup:
+        setup.setattr(Runtime, 'invoke', capture)
+        _, browser = diagnostics._semantic_diagnostic(
+            tmp_path / 'setup', monkeypatch, guarded=True,
+            fault='sibling_changed' if fault == 'sibling_changed' else None,
+            response=('Unseen completion',) if fault == 'new_outcome' else ('Recorded',))
+    artifact = SemanticArtifact.from_json({})
+    opportunities = []
+
+    def opportunity(obs, node, *, editable_node=None, value=None):
+        proposed = editable_node is not None
+        opportunities.append('proposed' if proposed else 'actual')
+        blocked = ((proposed and fault in {'no_rivals', 'unrepresented'}) or
+                   (not proposed and fault == 'actual_no_rivals'))
+        prediction = artifact.predict(obs, node)
+        prediction.update(status='ambiguous' if not blocked else 'unestablished',
+                          alternatives={'Recorded': {}, 'Declined': {}} if not blocked else {})
+        return {'eligible': not blocked,
+                'kind': 'unrepresented_edit' if fault == 'unrepresented' else
+                        'no_complete_outcome_rivals' if blocked else 'complete_outcome_rivals',
+                'prediction': prediction}
+
+    artifact.acquisition_opportunity = opportunity
+    if fault == 'rejected_edit':
+        original_act = browser.act
+
+        def reject_edit(action):
+            result = original_act(action)
+            if action.kind == 'type':
+                browser.values['A'] = '3'
+                browser.draft = None
+                browser.surface = browser.detail()
+            return result
+
+        browser.act = reject_edit
+    max_writes = {'no_write_budget': 0, 'setup_only_budget': 1,
+                  'no_response_budget': 2}.get(fault, 20)
+    events, trials, edits = [], [], []
+    trace = Trace(tmp_path / 'repair', events.append, Budget(30, max_writes))
+    report = {'field_write_attempted': False}
+    repair = {key: captured[key] for key in ('operation', 'arguments')}
+    stopped = fault in {'actual_no_rivals', 'rejected_edit', 'sibling_changed',
+                        'no_write_budget', 'setup_only_budget', 'no_response_budget'}
+    if stopped:
+        with pytest.raises(StopOperation):
+            acquire_repair(captured['runtime'], browser, trace, repair, trials, edits, report)
+    else:
+        witness = acquire_repair(captured['runtime'], browser, trace, repair, trials, edits, report)
+        if fault in {'no_rivals', 'unrepresented'}:
+            assert witness is None
+            assert report['status'] == 'NOT_ENGAGED'
+        else:
+            assert witness is not None
+            assert report['status'] == 'OBSERVED_EXPERIMENT'
+            assert browser.values == {'A': '7', 'B': '9'}
+            assert len(trials) == len(edits) == 1 and edits[0].get('persisted')
+            if fault == 'new_outcome':
+                assert 'Unseen completion' in json.dumps(report['observation'])
+                assert trials[0]['after'] != trials[0]['before']
+    if fault in {'no_write_budget', 'setup_only_budget', 'no_rivals', 'unrepresented'}:
+        assert browser.fills == browser.final_actions == 0
+        assert report['field_write_attempted'] is False
+        assert not trials and not edits
+    if fault in {'actual_no_rivals', 'rejected_edit', 'no_response_budget'}:
+        assert browser.fills == 1 and browser.final_actions == 0
+        assert report['field_write_attempted'] is True
+        assert not trials and not edits
+    if fault == 'rejected_edit':
+        assert opportunities == ['proposed']
+        assert browser.values['A'] == '3'
+    if fault == 'actual_no_rivals':
+        assert opportunities == ['proposed', 'actual']
+    if fault == 'sibling_changed':
+        assert browser.values == {'A': '7', 'B': '7'}
+        assert browser.final_actions == 1
+        assert edits and not any(edit.get('persisted') for edit in edits)
+        assert not any(event['type'] == 'semantic_repair_observed' for event in events)
+    # Navigation/selection, failed attempts, and verification are charged too.
+    assert trace.budget.writes == len(browser.actions)
+    assert trace.budget.actions >= trace.budget.writes
+    assert trace.budget.writes <= max_writes
+    assert sum(event['type'] == 'write_intent' for event in events) == len(browser.actions)
+
+
+def _semantic_repair_operation(version=1, *, kind='semantic_guarded_update'):
+    """Supplied operation for repair-authorization tests, not learned competence."""
+    artifact = operation(version)
+    artifact.update(id='guarded', kind=kind,
+                    argument_schema={'type': 'object', 'additionalProperties': False,
+                                     'properties': {'target': {'type': 'string'}, 'value': {'type': 'string'},
+                                                    'expect': {'type': 'string', 'enum': ['Recorded', 'Declined']}},
+                                     'required': ['target', 'value', 'expect']})
+    return artifact
+
+
+def _publish_repair_fixture_operation(api, connection_id, artifact):
+    job = api.service.store.queue_job(connection_id, 'learn', {})
+    assert api.service.store.start_job(job)
+    api.service.store.finish_job(job, {'status': 'COMPLETED'}, operations=[artifact])
+
+
+def _semantic_repair_source(api, connection_id, *, state='COMPLETED', outcome='PREDICTION_UNAVAILABLE',
+                            field_witness=False, omit_field_witness=False, kind='semantic_guarded_update',
+                            job_kind='invoke'):
+    _publish_repair_fixture_operation(api, connection_id, _semantic_repair_operation(kind=kind))
+    arguments = {'target': 'A', 'value': '12', 'expect': 'Recorded'}
+    if job_kind == 'invoke':
+        job, _ = api.service.store.queue_invocation(connection_id, 'guarded', 1, arguments, None)
+    else:
+        job = api.service.store.queue_job(connection_id, job_kind, {})
+    if state != 'QUEUED':
+        assert api.service.store.start_job(job)
+    if state not in {'QUEUED', 'RUNNING'}:
+        result = {'outcome': outcome, 'effect': {} if omit_field_witness else {'field_write_attempted': field_witness}}
+        api.service.store.finish_job(job, result, failed=state == 'FAILED')
+    return job, arguments
+
+
+@pytest.mark.parametrize('fault', ['missing', 'foreign', 'queued', 'running', 'failed', 'uncertain',
+                                 'wrong_job_kind', 'wrong_operation_kind', 'missing_field_witness',
+                                 'numeric_false_witness', 'written_field', 'predicted_refusal',
+                                 'no_active_operation', 'changed_argument_schema'])
+def test_semantic_repair_rejects_ineligible_execution_provenance(api, fault):
+    """HTTP authorization/plumbing only; FakeRuntime never fits or executes here."""
+    connection = api.connect()
+    source_connection = api.connect() if fault == 'foreign' else connection
+    state = {'queued': 'QUEUED', 'running': 'RUNNING', 'failed': 'FAILED'}.get(fault, 'COMPLETED')
+    source, _ = _semantic_repair_source(
+        api, source_connection, state=state,
+        outcome={'uncertain': 'UNCERTAIN', 'predicted_refusal': 'PREDICTED_REFUSAL'}.get(fault, 'PREDICTION_UNAVAILABLE'),
+        field_witness=0 if fault == 'numeric_false_witness' else fault == 'written_field',
+        omit_field_witness=fault == 'missing_field_witness',
+        kind='semantic_action' if fault == 'wrong_operation_kind' else 'semantic_guarded_update',
+        job_kind='learn' if fault == 'wrong_job_kind' else 'invoke')
+    if fault == 'missing':
+        source = 'job_missing'
+    if fault in {'no_active_operation', 'changed_argument_schema'}:
+        current = _semantic_repair_operation(2)
+        if fault == 'no_active_operation':
+            job = api.service.store.queue_job(connection, 'learn', {})
+            assert api.service.store.start_job(job)
+            api.service.store.finish_job(job, {'status': 'COMPLETED'}, invalidations=[
+                {'id': 'guarded', 'version': 1, 'status': 'STALE', 'reason': 'diagnostic withdrawal'}])
+        else:
+            current['argument_schema']['properties']['new_required'] = {'type': 'string'}
+            current['argument_schema']['required'].append('new_required')
+            _publish_repair_fixture_operation(api, connection, current)
+    before = len(api.fake.settings)
+    status, _ = api.request('POST', f'/v1/connections/{connection}/learn', {'repair_execution_id': source})
+    assert status in {400, 404, 409}, (fault, status)
+    assert len(api.fake.settings) == before
+    assert api.fake.invocations == []
+
+
+@pytest.mark.parametrize('max_writes', [0, 1])
+def test_semantic_repair_binds_original_objective_to_latest_active_operation_and_limits(api, max_writes):
+    """An old result is an objective; explicit republication supplies current authority."""
+    connection = api.connect()
+    source, arguments = _semantic_repair_source(api, connection)
+    latest = _semantic_repair_operation(2)
+    _publish_repair_fixture_operation(api, connection, latest)
+    status, accepted = api.request('POST', f'/v1/connections/{connection}/learn', {
+        'repair_execution_id': source, 'settings': {'max_actions': 6, 'max_writes': max_writes}})
+    assert status == 202
+    job = api.completed(accepted)
+    assert job['status'] == 'COMPLETED', job
+    settings = api.fake.settings[-1]
+    repair = settings['_semantic_repair']
+    assert repair['execution_id'] == source
+    assert repair['source_version'] == 1
+    assert repair['operation'] == latest
+    assert repair['arguments'] == arguments
+    assert settings['max_actions'] == 6 and settings['max_writes'] == max_writes
+    assert api.fake.invocations == [], 'requesting repair does not dispatch an ordinary invocation'
+    assert not job['write_intent'], 'fake learning produced no observations or application writes'
+
+
+@pytest.mark.parametrize('injection', [
+    {'arguments': {'value': '1'}}, {'_semantic_repair': {'arguments': {'value': '1'}}},
+    {'settings': {'_semantic_repair': {}}}, {'settings': {'repair_execution_id': 'job_other'}},
+    {'settings': {'max_actions': 13}}, {'settings': {'max_writes': 4}},
+])
+def test_semantic_repair_does_not_accept_injected_objectives_or_expand_scope(api, injection):
+    connection = api.connect()
+    source, _ = _semantic_repair_source(api, connection)
+    status, _ = api.request('POST', f'/v1/connections/{connection}/learn',
+                            {'repair_execution_id': source, **injection})
+    assert status == 400
+    assert api.fake.settings == []
+
+
+@pytest.mark.parametrize('change', ['republished', 'withdrawn'])
+def test_semantic_repair_revalidates_queued_operation_revision_before_learning(api, monkeypatch, change):
+    connection = api.connect()
+    source, _ = _semantic_repair_source(api, connection)
+    queued = []
+    enqueue = api.service._enqueue
+    monkeypatch.setattr(api.service, '_enqueue', queued.append)
+    status, accepted = api.request('POST', f'/v1/connections/{connection}/learn', {'repair_execution_id': source})
+    assert status == 202 and queued == [accepted['job_id']]
+    if change == 'republished':
+        _publish_repair_fixture_operation(api, connection, _semantic_repair_operation(2))
+    else:
+        job = api.service.store.queue_job(connection, 'learn', {})
+        assert api.service.store.start_job(job)
+        api.service.store.finish_job(job, {'status': 'COMPLETED'}, invalidations=[
+            {'id': 'guarded', 'version': 1, 'status': 'STALE', 'reason': 'diagnostic queued withdrawal'}])
+    enqueue(accepted['job_id'])
+    job = api.completed(accepted)
+    assert job['status'] == 'FAILED', job
+    assert job['result']['outcome'] == 'FAILED_BEFORE_EFFECT'
+    assert not job['write_intent']
+    assert api.fake.settings == []
+
+
+@pytest.mark.parametrize('prior_state', ['QUEUED', 'RUNNING', 'FAILED_WRITE', 'UNCERTAIN',
+                                       'FAILED_BEFORE_EFFECT', 'OBSERVED_EXPERIMENT'])
+def test_semantic_repair_fences_pending_and_uncertain_prior_experiments(api, prior_state):
+    """Persisted attempts, not client retries, govern duplicate experiment admission."""
+    connection = api.connect()
+    source, _ = _semantic_repair_source(api, connection)
+    prior = api.service.store.queue_job(connection, 'learn', {
+        'repair_execution_id': source, 'repair_operation_version': 1,
+        'settings': {'max_actions': 6, 'max_writes': 3}})
+    if prior_state != 'QUEUED':
+        assert api.service.store.start_job(prior)
+    if prior_state == 'FAILED_WRITE':
+        api.service.store.add_event(prior, {'type': 'write_intent'})
+    if prior_state not in {'QUEUED', 'RUNNING'}:
+        api.service.store.finish_job(prior, {'repair': {'status': prior_state}},
+                                     failed=prior_state in {'FAILED_WRITE', 'FAILED_BEFORE_EFFECT'})
+    status, accepted = api.request('POST', f'/v1/connections/{connection}/learn',
+                                    {'repair_execution_id': source})
+    if prior_state in {'QUEUED', 'RUNNING', 'FAILED_WRITE', 'UNCERTAIN'}:
+        assert status == 409
+        assert api.fake.settings == []
+    else:
+        assert status == 202
+        assert api.completed(accepted)['status'] == 'COMPLETED'
+        assert len(api.fake.settings) == 1
+
+
+@pytest.mark.parametrize('earlier_failed', [True, False])
+def test_semantic_repair_worker_orders_concurrent_admissions_without_repeating_uncertain_write(api, earlier_failed):
+    connection = api.connect()
+    source, _ = _semantic_repair_source(api, connection)
+    request = {'repair_execution_id': source, 'repair_operation_version': 1,
+               'settings': {'max_actions': 6, 'max_writes': 3}}
+    # Seed the two queued rows that concurrent admission can produce. The real
+    # worker must inspect only earlier attempts, never block on later requests.
+    first = api.service.store.queue_job(connection, 'learn', request)
+    second = api.service.store.queue_job(connection, 'learn', request)
+    if earlier_failed:
+        assert api.service.store.start_job(first)
+        api.service.store.add_event(first, {'type': 'write_intent'})
+        api.service.store.finish_job(first, {'outcome': 'UNCERTAIN'}, failed=True)
+        selected = second
+    else:
+        selected = first
+    api.service._enqueue(selected)
+    completed = api.completed({'job_id': selected})
+    if earlier_failed:
+        assert completed['status'] == 'FAILED'
+        assert completed['result']['outcome'] == 'FAILED_BEFORE_EFFECT'
+        assert not completed['write_intent']
+        assert api.fake.settings == []
+    else:
+        assert completed['status'] == 'COMPLETED'
+        assert len(api.fake.settings) == 1
+        assert api.service.store.job(second)['status'] == 'QUEUED'
+
+
 @pytest.mark.parametrize('later_log', ['none', 'identical', 'changed_trial', 'ambiguous_unrecorded_step'])
 def test_http_relearning_uses_stale_semantic_training_without_replaying_old_procedures(
         tmp_path, monkeypatch, later_log):

@@ -138,6 +138,7 @@ def main():
     target.add_argument("--application-url")
     target.add_argument("--connection")
     parser.add_argument("--learn", action="store_true")
+    parser.add_argument("--repair-execution-id")
     parser.add_argument("--reconnect", action="store_true")
     parser.add_argument("--operation")
     parser.add_argument("--arguments", type=json.loads)
@@ -158,6 +159,8 @@ def main():
         parser.error("arguments must be a JSON object")
     if args.restart_before_invoke and not args.owned_service_data_dir:
         parser.error("restart requires a service owned by this runner")
+    if args.repair_execution_id and not args.learn:
+        parser.error("repair requires explicit --learn authorization")
     client = Client(args.server, args.token_file, args.timeout)
     owned = OwnedService(args.owned_service_data_dir, args.server) if args.owned_service_data_dir else None
     result = {"boundary": "standard authenticated HTTP client; no learner model supplied", "requests": client.requests}
@@ -179,8 +182,10 @@ def main():
             result["reconnect_job"] = client.wait(client.request("POST", prefix + "/reconnect", {}))
         if args.learn:
             began = monotonic()
-            result["learning_job"] = client.wait(client.request("POST", prefix + "/learn", {
-                "settings": {"max_actions": args.max_actions, "max_writes": args.max_writes}}))
+            learning = {"settings": {"max_actions": args.max_actions, "max_writes": args.max_writes}}
+            if args.repair_execution_id:
+                learning["repair_execution_id"] = args.repair_execution_id
+            result["learning_job"] = client.wait(client.request("POST", prefix + "/learn", learning))
             result["learning_seconds"] = monotonic() - began
         result["operations"] = client.request("GET", prefix + "/operations")["operations"]
         if args.arguments is not None:

@@ -315,6 +315,97 @@ class SemanticArtifact:
                            "prediction": self.predict(obs, n.i, control)})
         return result
 
+    def acquisition_opportunity(self, obs, node, *, editable_node=None, value=None):
+        """Classify a possible question, without authorizing or executing exploration.
+
+        These are the corroborated LIST alternatives under this artifact's
+        observation model, not a frontier over every possible ontology.
+        """
+        if (editable_node is None) != (value is None):
+            raise ValueError("an acquisition edit requires both editable_node and value")
+        simulation = (self.simulate_edit(obs, node, editable_node, value)
+                      if editable_node is not None else None)
+        prediction = simulation.get("prediction") if simulation is not None else None
+        if prediction is None:
+            prediction = self.predict(obs, node)
+        alternatives = prediction.get("alternatives", {})
+        if simulation is not None and simulation.get("status") != "represented":
+            kind = "UNREPRESENTED_INTERVENTION"
+        elif prediction.get("control") not in self.outcomes:
+            kind = "UNSUPPORTED_CONTROL"
+        elif prediction.get("owner") is None:
+            kind = "UNBOUND_TARGET"
+        elif len(alternatives) > 1:
+            kind = "RIVAL_OUTCOMES"
+        elif not alternatives:
+            kind = "NO_ADMISSIBLE_INTERPRETATION"
+        elif prediction.get("status") == "supported":
+            kind = "AGREED_OUTCOME"
+        else:
+            kind = "INSUFFICIENT_CORROBORATION"
+        return {"kind": kind, "eligible": kind == "RIVAL_OUTCOMES",
+                "outcomes": sorted(alternatives), "prediction": prediction, "simulation": simulation,
+                "query": {"observation": obs.structural_signature(), "node": node,
+                          "editable_node": editable_node, "value": value},
+                "representation_revision": self.metadata.get("representation_revision")}
+
+    def acquisition_change(self, previous, before, after, node, *, question=None, question_node=None):
+        """Compare admitted outcomes after ordinary refitting on new raw evidence.
+
+        Both models rebuild the same raw question. A changed short witness is
+        not elimination if some conjunction/list still supports that outcome.
+        Response recognition is deliberately not an eligibility gate: unfamiliar
+        observations remain data for the ordinary fitter.
+        """
+        question = before if question is None else question
+        question_node = node if question_node is None else question_node
+        prior = previous.acquisition_opportunity(question, question_node)
+        current = self.acquisition_opportunity(question, question_node)
+        old, new = set(prior["outcomes"]), set(current["outcomes"])
+
+        def local_owner(opportunity):
+            owner = opportunity["prediction"].get("owner")
+            return None if owner is None else (owner.get("node"), owner.get("key"))
+
+        owner_changed = local_owner(prior) != local_owner(current)
+        prior_control, current_control = previous.control_at(before, node), self.control_at(before, node)
+        observed_before = previous.observe(before, after, prior_control)
+        observed_after = self.observe(before, after, current_control)
+        old_event, event = observed_before.get("event"), observed_after.get("event")
+        old_model = previous.outcomes.get(prior_control)
+        same_question = (question.structural_signature() == before.structural_signature()
+                         and question_node == node)
+        consistent = event["frame"] in new if event is not None and same_question else None
+        question_matches_action = (prior["prediction"].get("control") == prior_control
+                                   and current["prediction"].get("control") == current_control)
+        same_control = (prior_control is not None and prior_control == current_control
+                        and question_matches_action)
+        # A refit may change how the same rendered response is segmented into a
+        # frame and arguments. That is a representation change, not evidence that
+        # an old outcome has been ruled out in a shared response language.
+        def event_meaning(observed_event):
+            return None if observed_event is None else (observed_event["frame"], observed_event["args"])
+
+        response_changed = event_meaning(old_event) != event_meaning(event)
+        return {"before": prior, "after": current,
+                "removed_outcomes": sorted(old - new), "added_outcomes": sorted(new - old),
+                "remaining_ambiguity": len(new) > 1,
+                "no_admissible_interpretation": not new,
+                "rival_outcome_elimination": bool(len(old) > 1 and new and new < old
+                                                   and not owner_changed and same_control
+                                                   and not response_changed),
+                "owner_interpretation_changed": owner_changed,
+                "representation_changed": prior["representation_revision"] != current["representation_revision"],
+                "same_control": same_control,
+                "question_matches_action": question_matches_action,
+                "response_interpretation_changed": response_changed,
+                "observed": {"previous_model": observed_before, "current_model": observed_after},
+                "additional_observed_frame": bool(old_event is not None and (
+                    old_model is None or old_event["frame"] not in old_model.events)),
+                "observation_consistent_with_current_prediction": consistent,
+                "false_certainty": current["kind"] == "AGREED_OUTCOME" and consistent is False,
+                "scope": "changed predictive alternatives at one raw question, not a count of syntactic clauses or proof of targeting advantage"}
+
     def predict(self, obs, node, control=None):
         obs = self.prepare(obs)
         actual = self.control_at(obs, node)

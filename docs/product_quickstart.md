@@ -28,7 +28,7 @@ refit this connection's prior onboarding after a code repair without repeating
 its exploratory writes. Loading a published artifact after restart does not fit.
 
 For a returned guarded schema with `target`, `selection_2`, `value` and `expect`,
-the first two arguments identify exact headings within learned local rows;
+the first two arguments identify exact observed anchors within learned local rows;
 `value` supplies the new field value and `expect` selects a returned response
 alternative. Use the names and enum values actually returned by your connection.
 The operation simulates that value with the same fitted field/binding language
@@ -65,6 +65,27 @@ semantic path learns navigation/selection sequences from observed transitions;
 the conditional fill-and-check wrapper is supplied, while its relational field
 bindings, response alternatives and numeric conditions come from V4. Neither
 path claims unrestricted program induction.
+
+An unavailable guarded prediction can become an explicit learning objective:
+
+```sh
+.venv/bin/python examples/client.py --connection CONNECTION_ID --learn \
+  --repair-execution-id EXECUTION_ID --max-actions 30 --max-writes 20
+```
+
+This requires exploration-enabled disposable data. It is **not** an invocation
+retry: the learner may execute one persisted field experiment if complete
+supported outcomes disagree on the requested value. Missing representation does
+not qualify. The service resolves the original arguments and a current active
+operation itself, rechecks the version when work starts, and charges setup,
+selection, failed actions and checking to the ordinary learning budget. The
+caller supplies no rule, binding or expected training answer. The raw response
+is retained even when it is outside the old vocabulary, then ordinary fitting
+compares predictive alternatives rather than counting eliminated clauses.
+Results disclose whether targeting engaged, whether the field persisted, and
+whether ambiguity actually changed. Pending or uncertain experiments block
+another repair of the same execution; they are not automatically repeated.
+This mechanism does not establish an acquisition advantage over a matched arm.
 
 ## Start
 

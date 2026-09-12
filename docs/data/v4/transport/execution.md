@@ -4,8 +4,9 @@
 
 - Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
   `d0b1574` and research `bbd56ef` are ancestors. No cherry-pick or reset.
-- Current milestone: finish the integrated relational API checkpoint; then normal
-  authorized acquisition of complete predictive rivals and workshop composition.
+- Current milestone: checkpoint `956b72b` committed; normal authorized acquisition
+  of complete predictive rivals and workshop composition now implemented for
+  actual HTTP evaluation (not yet successful acquisition/transport claims).
   Acceptance: standard HTTP discovery/fit/schema/invoke, shared frozen/live
   language, fresh owner/resource arguments, persistent checked write, restart,
   relational boundary cases, meaningful learned-binding/condition ablation.
@@ -79,14 +80,36 @@
   Only first40 visibility indices survive, so288 cannot be exhaustively
   classified; counters overlap. Luna Cancel atstep37 is an observable scoped
   row change separable from that form ontology. Original assessment unchanged.
+- Current candidate: combined product572 passed/31.21s; three shared acquisition
+  diagnostics compare complete LIST alternatives including surviving conjunctions
+  and new responses. These are mechanism tests, not measured acquisition advantage.
+  Native radio state, bounded selection-return composition, intermediate owner
+  binding and scoped collection confirmation have focused positive/adversarial
+  checks. Explicit /learn repair references a real unavailable execution; it
+  cannot accept supplied answers, explore on invocation, or retry uncertain jobs.
+  Actual `targeted_rival_repair.json`: explicit /learn used17 actions/11 possible
+  writes and542 prior steps;50.519s fit/62.049s total, four version5 operations.
+  Independent nine checks PASS for Quartz quantity12 and unchanged siblings.
+  On the same raw question, alternatives changed from ready/unavailable to ready;
+  control, local owner and response interpretation remained aligned. The rejected
+  outcome disappeared from complete LIST alternatives, not just a short clause.
+  This is useful targeted acquisition, not a matched-arm advantage claim.
+  `repaired_rival_fresh_owner_write.json`: Indigo10→12 confirmed in9.277s,
+  independent nine checks PASS. Restartseed5 loaded version5 without refitting;
+  new Lumen13/Cobalt remained unavailable and independent checks preserved7.
+  Its rival is a conjunction on a different observed owner field (seal load5)
+  and quantity>=8, not merely the old constant threshold. Do not generalize the
+  resolved Quartz12 question into a universal relationship or erase this rival.
 - Jobs/ownership: root API/acquisition; semantic_bridge shared artifact;
   observation_review workshop composition; fixture_evaluation independent checks.
   Root owns API8860, dispatch8877, workshop8878, presentation variant8879;
-  unrelated dispatch8910 untouched. No heavy job currently active.
-- Next executable actions: commit integrated source and start isolated broad
-  retention. Extend /learn with budgeted rival-discriminating experiments only
-  when explicitly authorized, and compose workshop intermediate owner/radio/
-  commit routes. Then remeasure original application task denominators and freeze
+  unrelated dispatch8910 untouched. Broad retention runs fixed956b72b in owned
+  `/tmp/semabi-retention-956b72b-9pza6H`, unit `semabi-retention-956b72b.service`,
+  eight-core/20GiB cap; remaining concurrent work at mostfourcores.
+- Next executable actions: restart candidate service, raw-evidence refit, then
+  explicit repair of `job_3b8a9cd424824fc789158aeb1dc0c5ad` (quantity12/Cobalt).
+  Independently check actual edit and refitted predictions; run bounded workshop
+  onboarding through HTTP. Then remeasure original application task denominators and freeze
   an independently developed reserved-application assessment.
 
 ## Product development resumed (2026-09-09)

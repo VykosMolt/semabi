@@ -436,3 +436,138 @@ def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monk
     assert changed > 0, "the learned comparison must change an operational prediction"
     assert simulated
     assert restored.metadata == original.metadata
+
+
+def _acquisition_page(features, response=None):
+    from semabi.compiler.observation import Node, Observation
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'text', ' '.join(sorted(features))),
+             Node(2, 0, 'button', 'Act')]
+    if response is not None:
+        nodes.append(Node(3, 0, 'status', response))
+    return Observation(nodes)
+
+
+def _acquisition_artifact(rows):
+    """A supplied finite feature language; the actual LIST evidence engine is tested.
+
+    This isolates acquisition bookkeeping from ontology fitting. Raw observations
+    still supply the query on each call, and actual emission code reads responses.
+    """
+    from collections import Counter
+    from types import SimpleNamespace
+    from semabi.compiler.semantic import SemanticArtifact
+    from semabi.compiler.v4.emission import Vocabulary
+    artifact = SemanticArtifact.__new__(SemanticArtifact)
+    got = oc.ControlOutcome('act', events=dict(Counter(event for _, event in rows)))
+    got.evidence = oc.Evidence([({('feature', feature) for feature in features}, event, frozenset())
+                                for features, event in rows])
+    artifact.outcomes = {'act': got}
+    artifact.metadata = {'representation_revision': 'finite-test-language'}
+    artifact.abstractor = SimpleNamespace(emissions=Vocabulary())
+    artifact.control_at = lambda obs, node: 'act'
+    artifact.queries = []
+
+    def predict(obs, node):
+        artifact.queries.append(obs.structural_signature())
+        literals = {('feature', feature) for feature in obs.node(1).name.split()}
+        options = got.admissible(literals, corroborated=True, hypothesis=oc.LIST)
+        return {'control': 'act', 'owner': {'node': 1, 'key': 'Target'},
+                'status': 'supported' if len(options) == 1 and not next(iter(options.values())).sole
+                          else 'ambiguous' if options else 'unavailable',
+                'alternatives': {event: {'condition': list(witness.condition), 'sole': witness.sole}
+                                 for event, witness in options.items()}}
+
+    artifact.predict = predict
+    return artifact
+
+
+def test_acquisition_distinguishes_competing_outcomes_from_other_barriers():
+    rows = [({'p'}, 'Ready')] * 3 + [({'q', 'r'}, 'Unavailable')] * 3
+    artifact = _acquisition_artifact(rows)
+    page = _acquisition_page({'p', 'q', 'r'})
+    assert artifact.acquisition_opportunity(page, 2)['kind'] == 'RIVAL_OUTCOMES'
+    assert artifact.acquisition_opportunity(page, 2)['eligible']
+    empty = _acquisition_artifact([])
+    assert empty.acquisition_opportunity(page, 2)['kind'] == 'NO_ADMISSIBLE_INTERPRETATION'
+    assert not empty.acquisition_opportunity(page, 2)['eligible']
+
+    prediction = artifact.predict(page, 2)
+    artifact.predict = lambda obs, node: {**prediction, 'owner': None}
+    assert artifact.acquisition_opportunity(page, 2)['kind'] == 'UNBOUND_TARGET'
+    artifact.predict = lambda obs, node: prediction
+    artifact.simulate_edit = lambda *args: {'status': 'unavailable', 'reason': 'field not represented'}
+    assert artifact.acquisition_opportunity(page, 2, editable_node=1, value='12')['kind'] == 'UNREPRESENTED_INTERVENTION'
+    artifact.predict = lambda obs, node: {**prediction, 'alternatives': {'Ready': {'sole': True}}}
+    assert artifact.acquisition_opportunity(page, 2)['kind'] == 'INSUFFICIENT_CORROBORATION'
+    artifact.predict = lambda obs, node: {**prediction, 'status': 'supported', 'alternatives': {'Ready': {'sole': False}}}
+    assert artifact.acquisition_opportunity(page, 2)['kind'] == 'AGREED_OUTCOME'
+
+
+def test_acquisition_does_not_count_a_changed_short_clause_as_rival_elimination():
+    rows = [({'p'}, 'Ready')] * 3 + [({'q', 'r'}, 'Unavailable')] * 3
+    previous = _acquisition_artifact(rows)
+    question = _acquisition_page({'p', 'q', 'r'})
+    short = previous.predict(question, 2)['alternatives']['Unavailable']['condition']
+    attempted = {'p'} | {literal[1] for literal in short}
+    assert attempted < {'p', 'q', 'r'}
+    before, after = _acquisition_page(attempted), _acquisition_page(attempted, 'Ready')
+    current = _acquisition_artifact(rows + [(attempted, 'Ready')])
+    change = current.acquisition_change(previous, before, after, 2, question=question)
+    assert change['before']['outcomes'] == change['after']['outcomes'] == ['Ready', 'Unavailable']
+    assert current.predict(question, 2)['alternatives']['Unavailable']['condition'] != short
+    assert change['remaining_ambiguity'] and not change['rival_outcome_elimination']
+    assert not change['removed_outcomes']
+    assert change['observation_consistent_with_current_prediction'] is None
+    assert previous.queries[-1] == current.queries[-1] == question.structural_signature()
+
+
+def test_acquisition_tracks_exact_question_resolution_novelty_and_unconfirmed_responses():
+    rows = [({'p'}, 'Ready')] * 3 + [({'q', 'r'}, 'Unavailable')] * 3
+    features = {'p', 'q', 'r'}
+    before, after = _acquisition_page(features), _acquisition_page(features, 'Ready')
+    previous = _acquisition_artifact(rows)
+    current = _acquisition_artifact(rows + [(features, 'Ready')])
+    change = current.acquisition_change(previous, before, after, 2)
+    assert change['rival_outcome_elimination'] and not change['remaining_ambiguity']
+    assert change['removed_outcomes'] == ['Unavailable']
+    assert change['observation_consistent_with_current_prediction'] is True
+    unchanged = current.acquisition_change(previous, after, after, 2)
+    assert unchanged['observation_consistent_with_current_prediction'] is None
+    assert not unchanged['observed']['current_model']['changed']
+
+    novel = _acquisition_artifact(rows + [(features, 'Queued')])
+    discovery = novel.acquisition_change(previous, before, _acquisition_page(features, 'Queued'), 2)
+    assert discovery['additional_observed_frame']
+    assert discovery['observed']['previous_model']['event']['frame'] == 'Queued'
+    assert discovery['no_admissible_interpretation']
+    assert not discovery['remaining_ambiguity'] and not discovery['false_certainty']
+
+
+def test_acquisition_qualifies_changed_control_or_response_interpretation():
+    from copy import deepcopy
+    rows = [({'p'}, 'Ready')] * 3 + [({'q', 'r'}, 'Unavailable')] * 3
+    features = {'p', 'q', 'r'}
+    before, after = _acquisition_page(features), _acquisition_page(features, 'Ready')
+    previous = _acquisition_artifact(rows)
+    current = _acquisition_artifact(rows + [(features, 'Ready')])
+    original_prediction = current.predict
+    current.predict = lambda obs, node: {**original_prediction(obs, node), 'control': 'other-act'}
+    current.control_at = lambda obs, node: 'other-act'
+    current.outcomes['other-act'] = current.outcomes.pop('act')
+    change = current.acquisition_change(previous, before, after, 2)
+    assert change['question_matches_action'], 'both models still interpret the same raw occurrence'
+    assert not change['same_control'] and not change['rival_outcome_elimination']
+    assert change['removed_outcomes'] == ['Unavailable'], 'raw set changes remain visible'
+
+    current = _acquisition_artifact(rows + [(features, 'Ready')])
+    observe = current.observe
+
+    def reinterpret(*args):
+        observed = deepcopy(observe(*args))
+        observed['event'].update(frame='<>', args=['Ready'])
+        return observed
+
+    current.observe = reinterpret
+    change = current.acquisition_change(previous, before, after, 2)
+    assert change['same_control'] and change['response_interpretation_changed']
+    assert not change['rival_outcome_elimination']

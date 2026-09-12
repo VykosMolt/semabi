@@ -368,10 +368,42 @@ class _GuardedSemanticDiagnosticBrowser(_SemanticDiagnosticBrowser):
         return ActionResult(True)
 
 
+class _CategoryGuardedSemanticDiagnosticBrowser(_GuardedSemanticDiagnosticBrowser):
+    """A real prerequisite view; the writable owners are text-anchored rows inside it."""
+
+    @staticmethod
+    def categories():
+        return _semantic_diagnostic_entry(('Workspace', 'Other workspace'))
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.surface = self.categories()
+
+    def entry(self):
+        nodes = [Node(0, -1, 'group', '')]
+        for name in self.names:
+            root = len(nodes)
+            nodes += [Node(root, 0, 'listitem', ''), Node(root + 1, root, 'text', name),
+                      Node(root + 2, root, 'button', 'Open ' + name),
+                      Node(root + 3, root, 'text', 'Amount ' + self.values[name])]
+        return _surface(nodes)
+
+    def goto(self, url):
+        self.draft = None
+        self.surface = self.categories()
+
+    def act(self, action):
+        if self.surface.observation.node(action.target).name == 'Open Workspace':
+            self.actions.append('Open Workspace')
+            self.surface = self.entry()
+            return ActionResult(True)
+        return super().act(action)
+
+
 def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, intervening=False,
                          response_names_owner=False, prediction_status='supported',
                          additional_known_event=None, guarded=False, counterfactual_status='supported',
-                         counterfactual_event='Recorded', **browser_options):
+                         counterfactual_event='Recorded', predecessor_category=False, **browser_options):
     """Supply a fitted prediction contract; exercise real routing, tracing and response readback.
 
     No fitting claim is made by this diagnostic. The rendered application deliberately can
@@ -381,7 +413,8 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
     from semabi.compiler.semantic_runtime import shape, step_for
     from semabi.compiler.v4 import emission, outcome
     from semabi.compiler.runtime import POLICY_VERSION, bind_contract
-    browser = (_GuardedSemanticDiagnosticBrowser(**browser_options) if guarded
+    browser = (_CategoryGuardedSemanticDiagnosticBrowser(**browser_options) if predecessor_category else
+               _GuardedSemanticDiagnosticBrowser(**browser_options) if guarded
                else _SemanticDiagnosticBrowser(**browser_options))
     runtime = Runtime(tmp_path)
     connection = {'id': 'semantic-diagnostic', 'url': browser.allowed_origin + '/',
@@ -452,6 +485,14 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
         operation['argument_schema']['properties'].update({'value': {'type': 'string'}, 'expect': {'type': 'string'}})
         operation['argument_schema']['required'] += ['value', 'expect']
         arguments.update(value='7', expect='Recorded')
+    if predecessor_category:
+        prefix = step_for(browser.categories(), 3, [])
+        operation['procedure']['navigation'] = [prefix, step_for(entry, 3, [prefix])]
+        operation['procedure']['owner_binding']['argument'] = 'selection_2'
+        operation['procedure']['return_context']['entry_shape'] = shape(browser.categories())
+        operation['argument_schema']['properties']['selection_2'] = {'type': 'string'}
+        operation['argument_schema']['required'].append('selection_2')
+        arguments.update(target='Workspace', selection_2='A')
     bind_contract(operation)
     result = runtime.invoke(connection, operation, arguments, lambda event: None)
     return result, browser
@@ -562,6 +603,23 @@ def test_semantic_guarded_update_does_not_fill_a_wrong_owner_opened_by_the_targe
     assert browser.values == {'A': '3', 'B': '9'}
 
 
+@pytest.mark.parametrize('fault', [None, 'sibling_changed'])
+def test_semantic_guarded_update_brackets_the_owner_collection_after_prerequisite_navigation(tmp_path, monkeypatch, fault):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True,
+                                          predecessor_category=True, fault=fault)
+    assert browser.values['A'] == '7'
+    if fault:
+        assert result['outcome'] == 'UNCERTAIN'
+        assert browser.values['B'] == '7'
+    else:
+        assert result['outcome'] == 'CONFIRMED', result
+        assert browser.values['B'] == '9'
+        assert result['effect']['checked_neighbors'] == ['B']
+        assert result['effect']['inventory_bracket']['collection_prefix'][0]['argument'] == 'target'
+        assert any(node.name == 'Open A' for node in browser.surface.observation.nodes)
+        assert not any(node.name == 'Open Workspace' for node in browser.surface.observation.nodes)
+
+
 def _semantic_radio_rows(names=('Alpha', 'Beta'), selected=None):
     nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'table', '')]
     for name in names:
@@ -580,37 +638,36 @@ def _semantic_radio_rows(names=('Alpha', 'Beta'), selected=None):
     (('Alpha', 'Alpha'), 'Alpha', 'multiple matches'),
 ])
 def test_semantic_cell_anchor_language_resolves_fresh_rows_and_refuses_ambiguous_labels(names, requested, expected):
-    """Supplied-selector diagnostic: resolution supports this language before proposal does."""
+    """Propose from training rows, then resolve new rows without supplied field mapping."""
     from semabi.compiler.runtime import StopOperation
-    from semabi.compiler.semantic_runtime import resolve_step
-    step = {'kind': 'click', 'argument': 'resource', 'selector': {
-        'descriptor': {'role': 'radio', 'label': {'prefix': 'Choose ', 'suffix': ''}, 'input_type': ''},
-        'region_role': 'row', 'anchor_role': 'cell', 'value': 'Alpha'}}
+    from semabi.compiler.semantic_runtime import resolve_step, step_for
+    step = step_for(_semantic_radio_rows(), 4, [])
     surface = _semantic_radio_rows(names)
     if isinstance(expected, int):
-        assert resolve_step(surface, step, {'resource': requested}) == expected
+        assert resolve_step(surface, step, {'target': requested}) == expected
     else:
         with pytest.raises(StopOperation, match=expected):
-            resolve_step(surface, step, {'resource': requested})
+            resolve_step(surface, step, {'target': requested})
 
 
-def test_current_radio_proposal_and_shape_limits_preserve_a_visible_selection_change():
-    """Current composition limitation: the radio row has a value, but no heading anchor.
+def test_semantic_radio_proposal_retains_same_layout_selection_change():
+    """Regression: heading-only proposal and role-only context lost this selection.
 
     A checked-state transition is already observed even though the navigation shape stays
     the same. A procedure learner must retain that edge to reach its later commit action.
     """
-    from semabi.compiler.semantic_runtime import selector, shape, step_for
+    from semabi.compiler.semantic_runtime import procedure_context, selector, shape, step_for
     before, after = _semantic_radio_rows(), _semantic_radio_rows(selected='Alpha')
-    assert selector(before, 4) is None
-    assert 'selector' not in step_for(before, 4, [])
+    assert selector(before, 4)['anchor_role'] == 'cell'
+    assert step_for(before, 4, [])['postcondition'] == {'checked': True}
     assert shape(before) == shape(after)
+    assert procedure_context(before) != procedure_context(after)
     assert before.observation.structural_signature() != after.observation.structural_signature()
     assert before.observation.node(4).checked is False and after.observation.node(4).checked is True
 
 
-def test_current_recovery_drops_observed_radio_prerequisite_before_commit(tmp_path):
-    """The raw log retains the selection; recovered procedures currently omit it.
+def test_semantic_recovery_keeps_observed_radio_prerequisite_before_commit(tmp_path):
+    """Regression: raw selection evidence was dropped from recovered procedures.
 
     This reproduces an interrupted-onboarding boundary, not just selector proposal:
     opening a chooser, selecting a row, and committing are three recorded actions.
@@ -630,19 +687,125 @@ def test_current_recovery_drops_observed_radio_prerequisite_before_commit(tmp_pa
     assert len(trials) == 3
     assert trials[1]['node'] == 4
     assert trace.log.observations[trials[1]['after']].node(4).checked is True
-    assert len(trials[2]['route']) == 1  # known lost selection edge, despite raw state evidence
+    assert len(trials[2]['route']) == 2
     assert trials[2]['route'][0]['selector']['value'] == 'A'
+    assert trials[2]['route'][1]['selector']['value'] == 'Alpha'
+    assert trials[2]['route'][1]['postcondition'] == {'checked': True}
+
+
+def test_semantic_owner_correspondence_rejects_two_equally_supported_source_arguments():
+    from semabi.compiler.semantic_runtime import owner_correspondence, step_for
+    group = []
+    for name, node in [('A', 3), ('B', 6)]:
+        board = _semantic_diagnostic_entry()
+        first = step_for(board, node, [])
+        group.append({'route': [first, step_for(board, node, [first])],
+                      'owner': {'type': 1, 'key': name}, 'prediction_status': 'supported'})
+    assert owner_correspondence(group) is None
+
+
+def test_semantic_sibling_anchor_does_not_choose_between_competing_label_values():
+    from semabi.compiler.semantic_runtime import selector
+    surface = _semantic_radio_rows()
+    # Both a row's identity text and another field are repeated in this control.
+    surface.controls[4]['label'] = 'Choose Alpha with 17 units'
+    assert selector(surface, 4) is None
+
+
+@pytest.mark.parametrize('ignores_selection', [False, True])
+def test_semantic_radio_replay_checks_actual_selected_state(tmp_path, ignores_selection):
+    from semabi.compiler.runtime import Budget, StopOperation, Trace
+    from semabi.compiler.semantic_runtime import replay, step_for
+
+    class Browser:
+        def goto(self, url):
+            self.surface = _semantic_radio_rows(('Fresh', 'Other'))
+
+        def read(self):
+            return self.surface
+
+        def act(self, action):
+            if not ignores_selection:
+                self.surface = _semantic_radio_rows(('Fresh', 'Other'), selected='Fresh')
+            return ActionResult(True)
+
+    browser = Browser()
+    browser.goto('entry')
+    step = step_for(_semantic_radio_rows(), 4, [])
+    trace = Trace(tmp_path / 'radio-replay', lambda event: None, Budget(8, 4))
+    if ignores_selection:
+        with pytest.raises(StopOperation, match='postcondition'):
+            replay(browser, trace, 'entry', [step], {'target': 'Fresh'})
+    else:
+        after = replay(browser, trace, 'entry', [step], {'target': 'Fresh'})
+        assert after.observation.node(4).checked is True
+        assert after.observation.node(9).checked is False
+
+
+def test_semantic_acquisition_composes_selection_return_and_check_with_finite_budget(tmp_path):
+    from semabi.compiler.runtime import Budget, Trace
+    from semabi.compiler.semantic_runtime import acquire, recover_learning
+
+    class Browser:
+        def __init__(self):
+            self.choices = {}
+            self.goto('entry')
+
+        def detail(self, checked=False):
+            return _surface([Node(0, -1, 'group', ''), Node(1, 0, 'heading', self.owner),
+                             Node(2, 0, 'button', 'Choose resource'), Node(3, 0, 'button', 'Check'),
+                             Node(4, 0, 'status', 'Recorded' if checked else 'Waiting')])
+
+        def goto(self, url):
+            self.surface = _semantic_diagnostic_entry()
+
+        def read(self):
+            return self.surface
+
+        def act(self, action):
+            label = self.surface.observation.node(action.target).name
+            if label.startswith('Open '):
+                self.owner = label[5:]
+                self.surface = self.detail()
+            elif label == 'Choose resource':
+                self.surface = _semantic_radio_rows(selected=self.choices.get(self.owner))
+            elif label in ('Choose Alpha', 'Choose Beta'):
+                self.choices[self.owner] = label[7:]
+                self.surface = _semantic_radio_rows(selected=self.choices[self.owner])
+            elif label == 'Apply selection':
+                self.surface = self.detail()
+            elif label == 'Check':
+                self.surface = self.detail(checked=True)
+            return ActionResult(True)
+
+    browser = Browser()
+    emitted, trials, edits = [], [], []
+    trace = Trace(tmp_path / 'selection-acquisition', emitted.append, Budget(2500, 1600))
+    acquire(browser, trace, 'entry', emitted.append, trials, edits, {})
+    recovered, _, _ = recover_learning(trace.log)
+
+    def completed(rows):
+        return [trial for trial in rows if trial['action'].get('descriptor', {}).get('label') == 'Check'
+                and any(step.get('postcondition') == {'checked': True} for step in trial['route'])
+                and trial['route'][-1].get('descriptor', {}).get('label') == 'Apply selection']
+
+    assert completed(trials), 'returning to the earlier detail shape must retain the selection procedure'
+    assert completed(recovered), 'interrupted recovery must preserve the same compositional capability'
+    report = next(event for event in emitted if event['type'] == 'acquisition_frontier')
+    assert report['visited_contexts'] <= 48
+    assert all(len(trial['route']) <= 6 for trial in trials)
+    assert trace.budget.actions < 2500 and trace.budget.writes < 1600
 
 
 @pytest.mark.parametrize('predecessor_category', [False, True])
 @pytest.mark.parametrize('post_owner_changed', [False, True])
-def test_current_semantic_publication_assumes_first_selector_supplied_action_owner(
+def test_semantic_publication_learns_which_selector_supplied_action_owner(
         tmp_path, monkeypatch, predecessor_category, post_owner_changed):
-    """Isolate publication from fitting: an extra navigation argument hides a valid owner.
+    """Isolate publication from fitting: a predecessor must not hide the actual owner.
 
     Predictions and response observations are identical in the two arms. Only the earlier
-    collection selector differs; it is not the action's owner. The prefixed arm records a
-    current limitation and should publish with selection_2 after owner-source induction.
+    collection selector differs; it is not the action's owner. Previously this arm failed
+    publication because the implementation assumed route[0] was always the owner source.
     """
     from semabi.compiler.browser import Primitive
     from semabi.compiler.runtime import Budget
@@ -681,11 +844,10 @@ def test_current_semantic_publication_assumes_first_selector_supplied_action_own
     learned = procedures.learn(runtime, connection, {}, trace, lambda event: None)
     if post_owner_changed:
         assert learned['operations'] == [], 'an anonymous response on another owner is not completion support'
-    elif predecessor_category:
-        assert learned['operations'] == []  # known route[0] assumption, not failed semantic fitting
     else:
         assert len(learned['operations']) == 1
-        assert learned['operations'][0]['procedure']['owner_binding']['argument'] == 'target'
+        assert learned['operations'][0]['procedure']['owner_binding']['argument'] == (
+            'selection_2' if predecessor_category else 'target')
 
 
 _AUTH_CREDENTIALS = {'username': 'synthetic-private-user', 'password': 'synthetic-private-password'}

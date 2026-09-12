@@ -275,6 +275,28 @@ class ArtifactStore:
                     "created_at": row["created_at"], "updated_at": row["updated_at"],
                     "write_intent": bool(row["write_intent"]), "events": events}
 
+    def prior_repairs(self, connection_id: str, execution_id: str, before_job: str | None = None) -> list[dict]:
+        """Durable repair attempts, ordered before a worker's current request.
+
+        Admission sees all existing attempts. Worker revalidation ignores later
+        queued requests, so two concurrent admissions cannot bypass an earlier
+        uncertain experiment or deadlock each other by both seeing the future.
+        """
+        with self._lock:
+            rows = self.db.execute(
+                "SELECT rowid,id,status,request,result,write_intent FROM jobs "
+                "WHERE connection_id=? AND kind='learn' ORDER BY rowid", (connection_id,)).fetchall()
+            attempts = []
+            for row in rows:
+                if row["id"] == before_job:
+                    break
+                request = json.loads(row["request"])
+                if request.get("repair_execution_id") == execution_id:
+                    attempts.append({"id": row["id"], "status": row["status"],
+                                     "result": json.loads(row["result"]) if row["result"] else None,
+                                     "write_intent": bool(row["write_intent"])})
+            return attempts
+
     def start_job(self, job_id: str) -> bool:
         with self.transaction() as db:
             return db.execute("UPDATE jobs SET status = 'RUNNING', updated_at = ? "
