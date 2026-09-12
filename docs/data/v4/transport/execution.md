@@ -2,6 +2,25 @@
 
 ## Integrated semantic product — active 2026-09-12
 
+- Active checkpoint: frozen productf2c110f runs on8860, seed7/CPU0-7;
+  main46da49d additionally separates unused completion capability from typed READ
+  (74 affected popup/checkbox tests passed/5.29s). Dispatch v6 raw refit reused559
+  steps with0newactions/writes,44.011s fit. Exact Quartz run/Cobalt van10 write
+  confirmed21actions/13possiblewrites/11.235s; actual restart then Indigo run10
+  confirmed22/14/11.631s without refit. Independent11checks passed for each,
+  including owner/value/resource reload and unchanged sibling quantities.
+  Earlier over-scope settings400 and abbreviated-target no-match (2actions/0writes)
+  remain in their original receipts. Current-artifact offline ablation reproduces
+  HTTP exactly: removing related binding or all ordered features makes prediction
+  unavailable; comparisons alone still permit a relational scalar conjunction.
+  Workshopv2 continuation job `job_b99bb111b38248678aa1eff4fb2fb542` is RUNNING
+  under1200/900, same saved frontier/no reset, output
+  `runs/product_semantic_workshop_v2/continued_frontier_f2c110f.json`.
+  Linkdingv3 ordinary onboarding published5ops in91actions/56possiblewrites/
+  54.066s (authentication separate); unchanged caller still preflights0/16 eligible.
+  Separate schema-selected partial/boolean/duplicate-title/restart checks are active.
+  Next: inspect workshop continuation's actual evidence/barrier and complete
+  Linkding's independent checks; no overlapping heavy fit or source changes in service.
 - Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
   `d0b1574` and research `bbd56ef` are ancestors. No cherry-pick or reset.
 - Current milestone: integrated API checkpoint `956b72b`, authorized repair
