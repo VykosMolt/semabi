@@ -234,7 +234,7 @@ def probe_arguments(candidate: dict, trial: int, *, punctuation: bool = False,
             if field["required"] and not field.get("value") and not field.get("checked"):
                 raise StopOperation("A required control has no supported argument generator")
             continue
-        token = f"semabi_{uuid.uuid4().hex[:10]}_{trial}"
+        token = f"semabi{uuid.uuid4().hex[:10]}{trial}"
         if field_format(field) == "uri":
             token = "https://example.invalid/" + token
         elif field_format(field) == "email":
