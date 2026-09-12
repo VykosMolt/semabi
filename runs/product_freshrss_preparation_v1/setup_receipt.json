@@ -1,0 +1,35 @@
+{
+  "application": "FreshRSS",
+  "version": "1.30.0",
+  "url": "http://127.0.0.1:8882/",
+  "container": "semabi-freshrss-reserved-v1",
+  "container_id": "b3806905b3d13e40fc6688226dc46b06eee95525622173e0e19d87b84857c662",
+  "image_id": "sha256:258b8edfc8a76a61f60d2d6a14d8f8d12495d78abf38646a2137612dfa264a21",
+  "image_digests": [
+    "freshrss/freshrss@sha256:258b8edfc8a76a61f60d2d6a14d8f8d12495d78abf38646a2137612dfa264a21"
+  ],
+  "limits": {
+    "cpus": 2,
+    "cpuset": "10,11",
+    "memory_bytes": 1073741824
+  },
+  "credential_path": "/home/moloch/semabi/runs/product_freshrss_preparation_v1/private/credentials.json",
+  "task_plan": "/home/moloch/semabi/runs/product_freshrss_preparation_v1/task_plan.json",
+  "setup_verified": true,
+  "requested_tasks": 16,
+  "learner_runs": 0,
+  "reserved_assessment_started": false,
+  "baseline": "/home/moloch/semabi/runs/product_freshrss_preparation_v1/private/baseline_verified.sqlite",
+  "presentation_challenge_preselected": true,
+  "setup_failures_retained": [
+    "Native OPML import omitted an empty planned category; evaluator UI completed it",
+    "Evaluator login wait returned before asynchronous navigation; explicit password disappearance succeeded",
+    "Evaluator Add a category role-link locator failed; rendered heading was the observed affordance"
+  ],
+  "exposure": "Evaluator read official setup docs, rendered login/subscription/display UI, exported OPML and SQLite schema/data. Native identifiers, selectors, theme and expected data remain evaluator-only; no application source or learner outcomes inspected. Shared context is not blind.",
+  "official_sources": [
+    "https://github.com/FreshRSS/FreshRSS/releases/tag/1.30.0",
+    "https://github.com/FreshRSS/FreshRSS/blob/1.30.0/Docker/README.md",
+    "https://github.com/FreshRSS/FreshRSS/blob/1.30.0/cli/README.md"
+  ]
+}

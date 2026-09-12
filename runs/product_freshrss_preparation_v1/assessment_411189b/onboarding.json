@@ -1,0 +1,158 @@
+{
+  "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+  "created_at": "2026-09-12T23:16:05.871761+00:00",
+  "events": [
+    {
+      "created_at": "2026-09-12T23:16:05.873822+00:00",
+      "kind": "learn",
+      "sequence": 1,
+      "type": "job_started"
+    },
+    {
+      "created_at": "2026-09-12T23:16:06.304504+00:00",
+      "sequence": 2,
+      "settled": true,
+      "signature": "b9c1407d142d8690",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-12T23:16:06.732684+00:00",
+      "sequence": 3,
+      "settled": true,
+      "signature": "b9c1407d142d8690",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-12T23:16:06.742966+00:00",
+      "sequence": 4,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8882/"
+    },
+    {
+      "created_at": "2026-09-12T23:16:07.721947+00:00",
+      "sequence": 5,
+      "settled": true,
+      "signature": "f1c74f9ca08499b0",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-12T23:16:08.158956+00:00",
+      "sequence": 6,
+      "settled": true,
+      "signature": "f1c74f9ca08499b0",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-12T23:16:08.169600+00:00",
+      "sequence": 7,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8882/"
+    },
+    {
+      "created_at": "2026-09-12T23:16:09.130362+00:00",
+      "sequence": 8,
+      "settled": true,
+      "signature": "f1c74f9ca08499b0",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-12T23:16:09.647618+00:00",
+      "sequence": 9,
+      "settled": true,
+      "signature": "f1c74f9ca08499b0",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-12T23:16:09.656199+00:00",
+      "sequence": 10,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8882/"
+    },
+    {
+      "created_at": "2026-09-12T23:16:10.633344+00:00",
+      "sequence": 11,
+      "settled": true,
+      "signature": "f1c74f9ca08499b0",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-12T23:16:11.823322+00:00",
+      "sequence": 12,
+      "settled": true,
+      "signature": "f1c74f9ca08499b0",
+      "type": "observation"
+    },
+    {
+      "created_at": "2026-09-12T23:16:11.831600+00:00",
+      "sequence": 13,
+      "type": "navigation",
+      "url": "http://127.0.0.1:8882/"
+    },
+    {
+      "created_at": "2026-09-12T23:16:12.974725+00:00",
+      "sequence": 14,
+      "settled": true,
+      "signature": "f1c74f9ca08499b0",
+      "type": "observation"
+    },
+    {
+      "accounting_scope": "Charged acquisition actions across retained jobs; per-job setup remains in request metrics",
+      "active_partial_route": [],
+      "bounded_frontier_exhausted": false,
+      "context_limit": 48,
+      "created_at": "2026-09-12T23:16:12.985432+00:00",
+      "deferred_contexts": 0,
+      "depth_limit": 6,
+      "in_flight": null,
+      "pending_contexts": 1,
+      "priority": "new rendered observations before retained alternate paths",
+      "retained_totals": {
+        "actions": 2,
+        "jobs": 1,
+        "writes": 0
+      },
+      "scope": "Bounded sampled routes; not complete application enumeration",
+      "sequence": 15,
+      "type": "acquisition_frontier",
+      "visited_contexts": 0
+    },
+    {
+      "created_at": "2026-09-12T23:16:12.986995+00:00",
+      "reason": "Scoped target has multiple matches",
+      "sequence": 16,
+      "type": "acquisition_stopped"
+    },
+    {
+      "created_at": "2026-09-12T23:16:12.989190+00:00",
+      "sequence": 17,
+      "status": "COMPLETED",
+      "type": "job_finished"
+    }
+  ],
+  "id": "job_64950d7fd9bb46488f9b85d04a452403",
+  "job_id": "job_64950d7fd9bb46488f9b85d04a452403",
+  "kind": "learn",
+  "request": {
+    "settings": {
+      "max_actions": 600,
+      "max_writes": 400
+    }
+  },
+  "result": {
+    "attempts": [],
+    "invalidations": [],
+    "metrics": {
+      "actions": 4,
+      "elapsed_seconds": 7.114,
+      "model_calls": 0,
+      "paid_cost": 0,
+      "possible_write_actions": 0
+    },
+    "operations": [],
+    "repair": null,
+    "status": "UNESTABLISHED"
+  },
+  "status": "COMPLETED",
+  "updated_at": "2026-09-12T23:16:12.989215+00:00",
+  "write_intent": false
+}

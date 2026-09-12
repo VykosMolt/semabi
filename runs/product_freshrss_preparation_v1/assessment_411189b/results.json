@@ -1,0 +1,747 @@
+{
+  "status": "TERMINAL_ALL16_RETAINED",
+  "denominator": 16,
+  "rows": [
+    {
+      "id": "R1",
+      "request": "Read the subscription URL of feed Field notes in category North desk.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes"
+      },
+      "check": "Correct category-scoped feed URL, not the same-named South desk feed; no subscription or article state writes.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "R2",
+      "request": "Read the content, read status and favourite status of Morning report in South desk / Field notes.",
+      "arguments": {
+        "category": "South desk",
+        "feed": "Field notes",
+        "article": "Morning report"
+      },
+      "check": "Correct related category/feed/article and source content. Any application auto-mark-read side effect must be disclosed and measured, not silently called a no-write read.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "C1",
+      "request": "Create a category named Longlist.",
+      "arguments": {
+        "name": "Longlist"
+      },
+      "check": "Exactly one new category after reload, with existing categories and subscriptions unchanged.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "C2",
+      "request": "Subscribe to http://127.0.0.1:8882/evaluator-feeds/fresh.xml in category To review.",
+      "arguments": {
+        "url": "http://127.0.0.1:8882/evaluator-feeds/fresh.xml",
+        "category": "To review"
+      },
+      "check": "One subscription to the requested fresh URL in the intended category; imported articles belong to it, not another feed.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "U1",
+      "request": "Rename North desk / Field notes to Northern briefing, then read that same subscription URL.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes",
+        "name": "Northern briefing"
+      },
+      "check": "Rename persists and the same feed's URL/articles remain attached; South desk duplicate and other fields unchanged.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "U2",
+      "request": "Set Morning report in North desk / Field notes to favourite.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes",
+        "article": "Morning report",
+        "favourite": true
+      },
+      "check": "Intended article favourite flag persists after reload; South desk same-title article and all sibling favourite flags unchanged.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "REL1",
+      "request": "Move North desk / Field notes into category Archive.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes",
+        "destination_category": "Archive"
+      },
+      "check": "Same feed now belongs to Archive, not North desk; URL/articles and South desk copy unchanged. Absence claims require established scope.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "REL2",
+      "request": "Rename category North desk to Northern desk and read Field notes inside the renamed category.",
+      "arguments": {
+        "category": "North desk",
+        "name": "Northern desk",
+        "feed": "Field notes"
+      },
+      "check": "Category identity and feed membership persist through rename; read resolves the original feed, not a string-matching substitute.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "M1",
+      "request": "Create category Trip notes, subscribe to http://127.0.0.1:8882/evaluator-feeds/trip.xml there, and favourite Route report in that feed.",
+      "arguments": {
+        "category": "Trip notes",
+        "url": "http://127.0.0.1:8882/evaluator-feeds/trip.xml",
+        "article": "Route report",
+        "favourite": true
+      },
+      "check": "All three effects belong to the intended new category/feed/article and persist; partial completion must not be reported as complete.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "M2",
+      "request": "Mark every article in North desk / Field notes as read, leaving other feeds unchanged.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes",
+        "read": true,
+        "scope": "all articles in that feed"
+      },
+      "check": "Independent evaluator checks all42 intended articles plus complete sibling inventories. A partial page or observed count is not proof of total coverage.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "N0",
+      "request": "Favourite Absent bulletin in North desk / Field notes.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes",
+        "article": "Absent bulletin",
+        "favourite": true
+      },
+      "check": "Distinguish no match; do not create an article or change any existing favourite flag.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "NM",
+      "request": "Favourite Duplicate report in North desk / Field notes.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes",
+        "article": "Duplicate report",
+        "favourite": true
+      },
+      "check": "Two same-title articles in the same feed remain ambiguous without another supplied discriminator; neither may be arbitrarily changed.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "NREL",
+      "request": "Move North desk / Field notes into category Not a category.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes",
+        "destination_category": "Not a category"
+      },
+      "check": "Missing related resource is distinguished from target ambiguity; no invented category or unintended membership change.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "CH1",
+      "request": "After evaluator moves Field notes from North desk to Archive, call the old North desk-scoped rename to Stale rename.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes",
+        "name": "Stale rename"
+      },
+      "check": "Stale relationship is revalidated, suspended or resolves no match; no old-scope/wrong-target write. Evaluator intervention is not learner evidence or a learner action.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "CH2",
+      "request": "After browser and service restart, subscribe to http://127.0.0.1:8882/evaluator-feeds/restart.xml in To review, read the new feed, and favourite Restart report.",
+      "arguments": {
+        "category": "To review",
+        "url": "http://127.0.0.1:8882/evaluator-feeds/restart.xml",
+        "article": "Restart report",
+        "favourite": true
+      },
+      "check": "Fresh arguments, learned operation persistence and intended-target continuity after restart; retry only after uncertain writes are reconciled.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    },
+    {
+      "id": "CH3",
+      "request": "After evaluator changes only the built-in display theme, read the subscription URL of North desk / Field notes again.",
+      "arguments": {
+        "category": "North desk",
+        "feed": "Field notes"
+      },
+      "check": "Presentation change is separate from membership changes; native subscription/article state unchanged. Alternate built-in theme chosen deterministically before learner freeze; if unavailable retain setup-unestablished, no substitute challenge.",
+      "status": "UNSUPPORTED_BY_FROZEN_CALLER",
+      "invoked": false,
+      "completed": false,
+      "failure_stage": "caller_goal_grammar",
+      "reasons": [
+        "The entire goal and all arguments are outside the unambiguous limited grammar."
+      ]
+    }
+  ],
+  "source_commit": "411189b9fd42e622fd9f7e792ad75394ae3098f1",
+  "native_checks": [
+    {
+      "phase": "before",
+      "elapsed_seconds": 0.11596091799583519,
+      "counts": {
+        "category": 5,
+        "feed": 3,
+        "entry": 52
+      },
+      "scope": "Complete native category/feed/article inventory on named fields; evaluator-only",
+      "native_export_calls": 1,
+      "application_semantic_writes": 0
+    },
+    {
+      "phase": "after",
+      "elapsed_seconds": 0.11340599899995141,
+      "counts": {
+        "category": 5,
+        "feed": 3,
+        "entry": 52
+      },
+      "scope": "Complete native category/feed/article inventory on named fields; evaluator-only",
+      "native_export_calls": 1,
+      "application_semantic_writes": 0
+    }
+  ],
+  "baseline_comparison": "NOT_RUN; no competence or speed superiority claim",
+  "wrong_task_effects": "UNMEASURED_NO_TASK_INVOCATIONS",
+  "false_confirmations": "UNDEFINED_WITHOUT_TASK_CONFIRMATIONS",
+  "exposure": "Evaluator read official setup docs, rendered login/subscription/display UI and native OPML/SQLite schema/data. Learner gets only URL, private credentials, authorized UI actions and rendered observations. No FreshRSS source, native identity, expected answer or field mapping reaches learner. Shared context is not blind.",
+  "resets": 0,
+  "connection": "conn_fa1245cac99847d083b30f92dc15c8f6",
+  "authentication": {
+    "wall_seconds": 5.026202519002254,
+    "result": {
+      "allowed_origin": "http://127.0.0.1:8882",
+      "authentication_actions": 3,
+      "authentication_evidence": "same_origin_settled_password_form_absence",
+      "elapsed_seconds": 4.748,
+      "login_selection_basis": "unique_native_submit",
+      "status": "CONNECTED"
+    }
+  },
+  "onboarding": {
+    "status": "COMPLETED",
+    "wall_seconds": 7.598951095002121,
+    "result": {
+      "attempts": [],
+      "invalidations": [],
+      "metrics": {
+        "actions": 4,
+        "elapsed_seconds": 7.114,
+        "model_calls": 0,
+        "paid_cost": 0,
+        "possible_write_actions": 0
+      },
+      "operations": [],
+      "repair": null,
+      "status": "UNESTABLISHED"
+    }
+  },
+  "onboarding_native_changes": {
+    "category": {
+      "added": 0,
+      "removed": 0,
+      "changed": 0
+    },
+    "feed": {
+      "added": 0,
+      "removed": 0,
+      "changed": 0
+    },
+    "entry": {
+      "added": 0,
+      "removed": 0,
+      "changed": 0
+    }
+  },
+  "source_unchanged": true,
+  "wall_seconds": 12.86518349400285,
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/v1/connections",
+      "status": 202,
+      "seconds": 0.006961003004107624,
+      "response": {
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "job_id": "job_7cc50555a4024957b9e27ec899351b2d"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.0008991850045276806,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.0010575689957477152,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.001056688000971917,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.0008997909972094931,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.0007240609993459657,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.0005556710020755418,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.0008338649931829423,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.001279856005567126,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.0006619169944315217,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.00067909799690824,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "RUNNING",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_7cc50555a4024957b9e27ec899351b2d",
+      "status": 200,
+      "seconds": 0.008375867997528985,
+      "response_metadata": {
+        "id": "job_7cc50555a4024957b9e27ec899351b2d",
+        "status": "COMPLETED",
+        "kind": "connect",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 2
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/connections/conn_fa1245cac99847d083b30f92dc15c8f6/learn",
+      "status": 202,
+      "seconds": 0.0018432330034556799,
+      "response": {
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "job_id": "job_64950d7fd9bb46488f9b85d04a452403"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0005972139988443814,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.02263950600172393,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 2
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0008025630013435148,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 4
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0007924430028651841,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 4
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0015568240050924942,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 5
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.000809244993433822,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 7
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0007600070020998828,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 7
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.00231836800230667,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 8
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0009684559991001152,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 10
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0008864409974194132,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 10
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.028648811996390577,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 11
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0008050010001170449,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 11
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0029599120025523007,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 13
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0008796330002951436,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 13
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.026931221000268124,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "RUNNING",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 13
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/jobs/job_64950d7fd9bb46488f9b85d04a452403",
+      "status": 200,
+      "seconds": 0.0011611740046646446,
+      "response_metadata": {
+        "id": "job_64950d7fd9bb46488f9b85d04a452403",
+        "status": "COMPLETED",
+        "kind": "learn",
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "event_count": 17
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/connections/conn_fa1245cac99847d083b30f92dc15c8f6/operations",
+      "status": 200,
+      "seconds": 0.0005302409990690649,
+      "response_metadata": {
+        "connection_id": "conn_fa1245cac99847d083b30f92dc15c8f6",
+        "operation_count": 0
+      }
+    }
+  ],
+  "completed": 0,
+  "invocations": 0
+}

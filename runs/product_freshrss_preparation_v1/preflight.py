@@ -24,7 +24,7 @@ def main():
                      'named_container_exists': container.returncode == 0,
                      'port_8882_occupied': occupied,
                      'setup_actions': 0, 'learner_attempts': 0,
-                     'next': 'Wait for resource release; image availability and port ownership must be rechecked before setup'}))
+                     'next': 'Read the retained setup/assessment receipts; do not repeat a frozen assessment or reseed its baseline'}))
 
 
 if __name__ == '__main__':

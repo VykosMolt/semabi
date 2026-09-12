@@ -1,0 +1,48 @@
+{
+  "source_commit": "411189b9fd42e622fd9f7e792ad75394ae3098f1",
+  "runtime_source_sha256": {
+    "runtime.py": "90de9a8ecdb83c7a34552fc4a58b6a249b1f28e569e2842952fdc0d5bbba9c38",
+    "surface.py": "3f6c7d968a7166b484b79c5c4c60a96c04e63b3ea8fd914c0daaa52c65fc0cb4",
+    "browser_session.py": "cd84f0ab1d326b0e410f3793678e90885f607ef614ca2cf7e5aa3c273f9173d2",
+    "browser.py": "566c7b60c329766a69e86f5d391adb692161317ed3ae82371ebdcd31bca13839",
+    "observation.py": "cf4eb674553bb8b1463f755d793556bcd8c89a1d2046a63036ac892264e5ef4a",
+    "evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semantic.py": "b77e584fd06e602034c9202c2df37d47aebe655e65b80ff9ac02cbd7b95a29ef",
+    "semantic_runtime.py": "3105f69ce21a3878fd31cd5b9e0076b82a061b0b0fa95988dd47f543aa546f7e",
+    "semantic_language": "5c3698011df79f141bb4db2b5e5b89ef55d89cf759817d1a7ddcaee20f701ef3",
+    "relmodel.py": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
+  },
+  "frozen_at_utc": "2026-09-12T23:16:00Z",
+  "caller": {
+    "path": "runs/product_assessment_development_v1/binding/binding.py",
+    "policy_version": "assessment-schema-bijection-v1",
+    "source_sha256": "a0315bf1e08037a60e20a138d107ddf2a44ead1e4defba48f3413efcecd60da4",
+    "policy_sha256": "e3f95d1ac62d0da28ad791da06c2ba57d9476a5533eb273c2881d9b99ea8b0d0",
+    "scope": "Existing literal single-payload CREATE/exact-value REPLACE; no new grammar or schema rescue"
+  },
+  "onboarding": {
+    "jobs": 1,
+    "max_actions": 600,
+    "max_writes": 400,
+    "max_seconds": 1800,
+    "frontier_contexts": 48,
+    "depth": 6,
+    "context_visits": 2,
+    "automatic_second_job_or_repair": false
+  },
+  "invocation": {
+    "max_actions": 64,
+    "max_writes": 48,
+    "max_seconds": 180
+  },
+  "task_plan": "/home/moloch/semabi/runs/product_freshrss_preparation_v1/task_plan.json",
+  "denominator": 16,
+  "resources": {
+    "service_port": 8866,
+    "cpuset": "8,9",
+    "application_memory_bytes": 1073741824
+  },
+  "exposure": "Evaluator read official setup docs, rendered login/subscription/display UI and native OPML/SQLite schema/data. Learner gets only URL, private credentials, authorized UI actions and rendered observations. No FreshRSS source, native identity, expected answer or field mapping reaches learner. Shared context is not blind.",
+  "known_limit": "Frozen411 includes a disclosed Workshop fitted/live feature mismatch; later unaccepted research candidates are excluded. This run measures the frozen whole stack, including the limited caller, not a claim that every unrouted task is impossible through API operations.",
+  "baseline_comparison": "NOT_RUN; no competence or speed superiority claim"
+}
