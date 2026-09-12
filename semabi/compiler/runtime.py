@@ -268,10 +268,13 @@ def argument_schema(candidate: dict, names: list[str]) -> dict:
 
 
 def validate_arguments(schema: dict, arguments: dict) -> None:
-    if not isinstance(arguments, dict) or set(arguments) != set(schema["properties"]):
+    if (not isinstance(arguments, dict) or set(arguments) - set(schema["properties"])
+            or not set(schema["required"]).issubset(arguments)):
         raise StopOperation("Arguments must match the learned schema exactly")
-    for name, prop in schema["properties"].items():
-        value = arguments[name]
+    if len(arguments) < schema.get("minProperties", 0):
+        raise StopOperation("At least one learned update field must be supplied")
+    for name, value in arguments.items():
+        prop = schema["properties"][name]
         if not isinstance(value, str) or not value.strip() or value != " ".join(value.split()):
             raise StopOperation("Arguments require nonempty text with normalized whitespace")
         if len(value) > prop.get("maxLength", 100000):
@@ -1054,7 +1057,8 @@ class Runtime:
     def _update_record(self, browser, surface: Surface, procedure: dict, before: dict, values: dict,
                        trace: Trace, *, discover: bool = False,
                        popup_events: list[dict] | None = None,
-                       commit_events: list[dict] | None = None) -> tuple[dict, dict]:
+                       commit_events: list[dict] | None = None,
+                       requested_fields: list[str] | None = None) -> tuple[dict, dict]:
         if procedure.get("linked_value_editor"):
             return self._update_linked_value(browser, surface, procedure, before, values, trace,
                                             discover=discover, commit_events=[] if commit_events is None else commit_events)
@@ -1064,7 +1068,7 @@ class Runtime:
             expected = deepcopy(captured)
             candidate = self._record_form(surface, procedure, before[procedure["anchor"]])
             with self._capture_popup_controls(browser, surface, candidate, procedure, trace, discover) as popup:
-                for name in procedure["update_arguments"]:
+                for name in procedure["update_arguments"] if requested_fields is None else requested_fields:
                     surface = trace.read(browser)
                     candidate = self._checked_editor(browser, surface, procedure, expected, retained, trace)
                     self._guard_current_editor(surface, selected_root=candidate["root"])
@@ -1138,11 +1142,19 @@ class Runtime:
             if procedure.get("linked_value_editor"):
                 effect["scope"] = "Current value of the unique linked textbox matched in two created-record trials"
         else:
-            updated = {**({procedure["anchor"]: target} if not replacing else {}),
-                       **{name: arguments[name] for name in procedure["update_arguments"]}}
-            witness, _ = self._update_record(browser, surface, procedure, values, updated, trace)
+            requested = {name: arguments[name] for name in procedure["update_arguments"] if name in arguments}
+            # Keep captured values, not caller-supplied defaults or an earlier
+            # independent read. The complete editor state remains guarded at
+            # every fill/commit, and all learned fields remain in the witness.
+            updated = {**values, **requested}
+            preserved = {name: value for name, value in values.items() if name not in requested}
+            if len(set(updated.values())) != len(updated):
+                raise StopOperation("Requested and preserved values must remain distinct for visible field verification")
+            witness, _ = self._update_record(browser, surface, procedure, values, updated, trace,
+                                             requested_fields=list(requested))
             effect = {"kind": "visible_record_updated", "before": values,
                       "arguments": updated, "witness": witness,
+                      "requested_changes": requested, "preserved_values": preserved,
                       "scope": "Same local anchor and requested field values in learned slots, retained after reload"}
             if replacing:
                 effect.update(kind="visible_record_value_replaced", before_witness=record,
@@ -1193,6 +1205,9 @@ class Runtime:
             properties.update({name: fields[name] for name in procedure["update_arguments"]})
         schema = {"type": "object", "properties": properties,
                   "required": list(properties), "additionalProperties": False}
+        partial = kind == "update_visible_record" and procedure["anchor_mode"] != "replace_value"
+        if partial:
+            schema.update(required=[selector], minProperties=2)
         value_schema = {"type": "object", "properties": {
             name: {"type": "string", "description": descriptor["label"] or "Visible editor value",
                    **({"binding_basis": "unique_original_descriptor_and_two_distinct_creation_trials"}
@@ -1203,6 +1218,10 @@ class Runtime:
             "outcome": {"type": "string"}, "effect": {"type": "object", "properties": {
                 "values" if kind == "read_visible_record" else "arguments": value_schema}},
             "metrics": {"type": "object"}}, "required": ["outcome", "effect", "metrics"]}
+        if kind == "update_visible_record":
+            output["properties"]["effect"]["properties"].update({
+                key: {**deepcopy(value_schema), "required": []}
+                for key in ("requested_changes", "preserved_values")})
         op_id = "op_" + digest({"parent_create_id": creation["id"], "kind": kind})[:20]
         reading = kind == "read_visible_record"
         replacing = not reading and procedure["anchor_mode"] == "replace_value"
@@ -1234,6 +1253,11 @@ class Runtime:
                                  "parent_create_id": creation["id"], "parent_create_version": creation["version"],
                                  "parent_create_evidence_sha256": creation["evidence_sha256"],
                                  "trials": deepcopy(trials)}}
+        if partial:
+            operation["prerequisites"].append(
+                "At least one supplied learned text field; omitted fields retain the current selected editor values")
+            operation["effect_checks"].append(
+                "Requested and preserved learned fields all occupy their original slots after submission and reload")
         if binding:
             operation["prerequisites"].append(
                 "One bound numeric context control retains its label, state, placement and DOM element during the call")

@@ -2864,6 +2864,104 @@ def test_record_read_uses_current_labeled_values_and_tolerates_reordered_fields(
     assert browser.scene == 'list'
 
 
+@pytest.mark.parametrize('requested', [{'description': 'Only description changes'},
+                                      {'title': 'Only title changes'}])
+def test_record_partial_text_update_preserves_captured_fields_without_filling_them(tmp_path, monkeypatch, requested):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    operation = _learned_kind(learned, 'update_visible_record')
+    before = deepcopy(browser.rows)
+    target = before[0]['URL']
+    browser.order.reverse()
+    events = []
+
+    result = runtime.invoke(connection, operation, {'target': target, **requested}, events.append)
+
+    assert result['outcome'] == 'CONFIRMED', result
+    expected = {**before[0], **{name.title(): value for name, value in requested.items()}}
+    assert browser.rows == [expected, before[1]]
+    assert operation['argument_schema']['required'] == ['target']
+    assert operation['argument_schema']['minProperties'] == 2
+    assert result['effect']['requested_changes'] == requested
+    preserved = {name.lower(): value for name, value in before[0].items()
+                 if name.lower() not in requested and name != 'Pinned'}
+    assert result['effect']['preserved_values'] == preserved
+    assert result['effect']['arguments'] == {**preserved, **requested}
+    assert set(result['effect']['witness']['field_slots']) == {'url', 'title', 'description'}
+    fills = [event['action']['text'] for event in events if event['type'] == 'write_intent'
+             and event['action']['kind'] == 'type']
+    assert fills == list(requested.values())
+    assert sum(event['type'] == 'reload' for event in events) == 1
+
+
+@pytest.mark.parametrize('patch', [{}, {'unknown': 'Not a learned field'}, {'description': ''},
+                                  {'description': True}, {'description': 'same', 'title': 'same'}])
+def test_record_partial_text_update_rejects_invalid_patch_before_browser_actions(tmp_path, monkeypatch, patch):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    operation = _learned_kind(learned, 'update_visible_record')
+    before, navigation = len(browser.actions), browser.navigation_count
+
+    result = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL'], **patch}, lambda event: None)
+
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT', result
+    assert len(browser.actions) == before and browser.navigation_count == navigation
+
+
+@pytest.mark.parametrize('phase', ['before_fill', 'after_fill', 'after_commit', 'after_reload'])
+def test_record_partial_text_update_checks_omitted_field_through_completion(tmp_path, monkeypatch, phase):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    operation = _learned_kind(learned, 'update_visible_record')
+    before = deepcopy(browser.rows)
+    events = []
+    if phase in {'before_fill', 'after_fill'}:
+        browser.mode = 'before_first_fill_changed' if phase == 'before_fill' else 'later_field_changed'
+    elif phase == 'after_commit':
+        original_act = browser.act
+
+        def corrupt_after_commit(action):
+            saving = browser.surface.observation.node(action.target).name == 'Save'
+            result = original_act(action)
+            if saving:
+                browser.rows[0]['Description'] = 'Unrequested application change'
+            return result
+
+        monkeypatch.setattr(browser, 'act', corrupt_after_commit)
+    else:
+        original_reload = browser.reload
+
+        def corrupt_after_reload():
+            browser.rows[0]['Description'] = 'Unrequested application change'
+            return original_reload()
+
+        monkeypatch.setattr(browser, 'reload', corrupt_after_reload)
+
+    result = runtime.invoke(connection, operation, {'target': before[0]['URL'], 'title': 'Requested title'}, events.append)
+
+    assert result['outcome'] == 'UNCERTAIN', result
+    assert browser.rows[1] == before[1]
+    if phase in {'before_fill', 'after_fill'}:
+        assert browser.rows == before
+        assert browser.fields['Description'] == 'Intervening draft'
+        assert browser.scene == 'editor', 'preserve the intervening omitted-field draft'
+    else:
+        assert browser.rows[0]['Description'] == 'Unrequested application change'
+        assert browser.rows[0]['Title'] == 'Requested title'
+    fills = [event for event in events if event['type'] == 'write_intent' and event['action']['kind'] == 'type']
+    assert len(fills) == (0 if phase == 'before_fill' else 1)
+
+
+def test_record_partial_update_preserves_distinct_value_witness_restriction(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
+    operation = _learned_kind(learned, 'update_visible_record')
+    before = deepcopy(browser.rows)
+    events = []
+    result = runtime.invoke(connection, operation, {'target': before[0]['URL'],
+                                                   'title': before[0]['Description']}, events.append)
+    assert result['outcome'] == 'UNCERTAIN', result  # Selection opened the editor.
+    assert browser.rows == before
+    assert not any(event['type'] == 'write_intent' and event['action']['kind'] == 'type' for event in events)
+    assert 'distinct' in result['effect']['reason']
+
+
 def test_record_update_preserves_anchor_and_changes_all_required_fields_after_reload(tmp_path, monkeypatch):
     runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
     operation = _learned_kind(learned, 'update_visible_record')
@@ -2882,7 +2980,7 @@ def test_record_update_preserves_anchor_and_changes_all_required_fields_after_re
     assert sum(event['type'] == 'reload' for event in events) == 1
 
 
-@pytest.mark.parametrize('mode', ['missing', 'duplicate', 'wrong_channel', 'missing_argument'])
+@pytest.mark.parametrize('mode', ['missing', 'duplicate', 'wrong_channel', 'missing_selector'])
 def test_record_selection_and_argument_failures_precede_every_click(tmp_path, monkeypatch, mode):
     runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch)
     operation = _learned_kind(learned, 'update_visible_record')
@@ -2895,7 +2993,7 @@ def test_record_selection_and_argument_failures_precede_every_click(tmp_path, mo
     elif mode == 'wrong_channel':
         browser.rows[0]['URL'], browser.rows[0]['Title'] = 'https://synthetic.invalid/changed', target
     else:
-        arguments.pop('description')
+        arguments.pop('target')
     before = len(browser.actions)
     result = runtime.invoke(connection, operation, arguments, lambda event: None)
     assert result['outcome'] == 'FAILED_BEFORE_EFFECT'
@@ -3057,12 +3155,18 @@ def test_record_learning_reserves_complete_trials_and_preserves_proved_stages(tm
     assert learned['metrics']['possible_write_actions'] <= writes
 
 
-def test_record_selector_name_cannot_shadow_a_required_update_argument(tmp_path, monkeypatch):
-    _, _, _, learned = _learn_editable_records(
+def test_record_selector_name_cannot_shadow_an_optional_update_argument(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_editable_records(
         tmp_path, monkeypatch, browser=_EditableRecordBrowser(labels=('URL', 'Target', 'Description')))
     operation = _learned_kind(learned, 'update_visible_record')
     assert operation['procedure']['selector_argument'] == '_target'
-    assert set(operation['argument_schema']['required']) == {'_target', 'target', 'description'}
+    assert set(operation['argument_schema']['required']) == {'_target'}
+    assert set(operation['argument_schema']['properties']) == {'_target', 'target', 'description'}
+    before = deepcopy(browser.rows)
+    result = runtime.invoke(connection, operation, {'_target': before[0]['URL'], 'target': 'Changed Target field'},
+                            lambda event: None)
+    assert result['outcome'] == 'CONFIRMED', result
+    assert browser.rows == [{**before[0], 'Target': 'Changed Target field'}, before[1]]
 
 
 def test_record_family_artifacts_round_trip_and_relearn_as_independent_versions(tmp_path, monkeypatch):

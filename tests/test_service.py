@@ -983,6 +983,51 @@ def test_example_client_sends_optional_invocation_limits_only_when_requested(tmp
     assert invoked == [expected]
 
 
+@pytest.mark.parametrize('patch', [{'description': 'Changed through HTTP'}, {}, {'unknown': 'Rejected field'}])
+def test_http_partial_text_patch_preserves_schema_and_uses_real_runtime(tmp_path, monkeypatch, patch):
+    """Fake connection setup only; the learned artifact and invocation are real Runtime work."""
+    import test_operation_runtime as diagnostics
+    runtime, original_connection, browser, learned = diagnostics._learn_editable_records(
+        tmp_path / 'runtime', monkeypatch)
+    artifact = diagnostics._learned_kind(learned, 'update_visible_record')
+    before = deepcopy(browser.rows)
+    actions_before = len(browser.actions)
+    api = HTTPHarness(tmp_path / 'http')
+    try:
+        connection, job = api.service.store.create_connection(
+            {key: value for key, value in original_connection.items() if key != 'id'}, {})
+        assert api.service.store.start_job(job)
+        api.service.store.finish_job(job, {'status': 'CONNECTED'})
+        runtime.sessions[connection['id']] = browser
+        # Delegate the HTTP worker's execution to the actual runtime, rather
+        # than the harness's canned effect. No browser onboarding is claimed.
+        api.fake.invoke = runtime.invoke
+        job = api.service.store.queue_job(connection['id'], 'learn', {})
+        assert api.service.store.start_job(job)
+        validated = Service._operations({'operations': [artifact]})
+        api.service.store.finish_job(job, {'status': 'COMPLETED'}, operations=validated)
+        status, catalog = api.request('GET', f"/v1/connections/{connection['id']}/operations")
+        assert status == 200
+        exposed = next(op for op in catalog['operations'] if op['id'] == artifact['id'])
+        assert exposed['argument_schema'] == artifact['argument_schema']
+        assert exposed['argument_schema']['required'] == ['target']
+        assert exposed['argument_schema']['minProperties'] == 2
+        status, accepted = api.request('POST', f"/v1/connections/{connection['id']}/operations/{artifact['id']}/invoke",
+                                       {'version': artifact['version'], 'arguments': {'target': before[0]['URL'], **patch}})
+        assert status == 202
+        result = api.completed(accepted)['result']
+        if 'description' in patch:
+            assert result['outcome'] == 'CONFIRMED', result
+            assert browser.rows == [{**before[0], 'Description': patch['description']}, before[1]]
+            assert result['effect']['requested_changes'] == patch
+            assert result['effect']['preserved_values']['title'] == before[0]['Title']
+        else:
+            assert result['outcome'] == 'FAILED_BEFORE_EFFECT', result
+            assert browser.rows == before and len(browser.actions) == actions_before
+    finally:
+        api.close()
+
+
 @pytest.mark.parametrize('fault', [None, 'wrong_owner', 'sibling_changed', 'stale_operation',
                                  'postaction_owner_changed', 'verification_reload_sibling_changed',
                                  'transient_draft'])
