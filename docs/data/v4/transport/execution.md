@@ -2,7 +2,25 @@
 
 ## Integrated semantic product — active 2026-09-12
 
-- Active checkpoint: frozen productf2c110f runs on8860, seed7/CPU0-7;
+- Active checkpoint: frozen productec71cb7 runs on8860, seed8/CPU0-7,
+  from `runs/.product-return-cache-ec71cb7`, owned service PID952650/exec13743.
+  Ordinary workshop refit `job_08b0326a0c4a4c509c19d52fa6b19979` started22:32:56UTC
+  with1action/0write budget, reusing prior training; clientexec40026/output
+  `runs/product_semantic_workshop_v2/return_cache_refit_ec71cb7.json`.
+  Hard owned fit deadline23:02:56UTC (30minutes); stop this owned job if exceeded,
+  preserving raw training and reporting interruption. No concurrent heavy jobs.
+  ec71cb7 adds bounded exact rendered-value derivation reuse, not belief/effect
+  caching. All2053-step Behavior results equal in ABBA fixed-reading comparisons:
+  uncached build+score1.294/1.261s, cached0.982/0.963s,12169→68 derivations perarm.
+  This is not a measured full-fit speedup. Independent800mutation/lifecycle cases
+  passed;89 emission/objective/outcome checks on536a1d3; actualmerged emission/HTTP
+  gate108passed/2.04s. Cost outputs in workshopv2/cost_diagnosis.
+  Formerf2 service stopped gracefully after completed jobs; its preserved catalog
+  and independent visible baseline remain in workshopv2. Return repair67dcc1c is
+  included; no old artifact hashes or semantic answers were rewritten.
+  While fit runs, isolated populated-view exit repair remains under review:
+  initial20controlledcases passed, then review exposed omitted row/scope owner
+  context and link destination fidelity; these are not accepted as preservation.
   main46da49d additionally separates unused completion capability from typed READ
   (74 affected popup/checkbox tests passed/5.29s). Dispatch v6 raw refit reused559
   steps with0newactions/writes,44.011s fit. Exact Quartz run/Cobalt van10 write
