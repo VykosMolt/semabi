@@ -11,6 +11,7 @@ from semabi.compiler.browser import Primitive
 from semabi.compiler.evidence import EvidenceLog, Step
 from semabi.compiler.observation import Node, Observation
 from semabi.compiler.v4.objective import evaluate
+import pytest
 
 from tests.test_v4_objective import _widget_abstractor, _widget_hypotheses, _widget_log
 
@@ -135,10 +136,11 @@ def _chooser(*vans):
     return Observation(nodes)
 
 
-def test_a_member_a_rendering_of_its_holder_could_show_and_does_not_is_no_longer_in_it():
+def test_historical_family_visibility_does_not_establish_membership_absence():
     # Cedar's page shows Swift as its carrier, then the chooser, then Cedar with Panel: the
     # chooser shows no run and contradicts nothing, so Swift stays Cedar's carrier there; the
-    # page that shows Panel in Cedar is a rendering that could show Swift and does not
+    # page that shows Panel in Cedar can also be a filtered/collapsed view retaining Swift.
+    # P43's original assertion vacated Swift here, assuming the family was complete.
     pages = [_run_with_carrier("Cedar", "Swift", 8), _chooser(("Swift", 8), ("Panel", 14)),
              _run_with_carrier("Cedar", "Panel", 14), _run_with_carrier("Rowan", "Swift", 8)]
     A = _widget_abstractor(_widget_hypotheses(*pages, keys={"group": "heading#0"}, persistent=()))
@@ -148,5 +150,106 @@ def test_a_member_a_rendering_of_its_holder_could_show_and_does_not_is_no_longer
     state, _ = tracker.observe(pages[1], "click")
     assert state.objs[(van_tid, "Swift")].refs[slot] == (holder, "Cedar")
     state, _ = tracker.observe(pages[2], "click")
-    assert state.objs[(van_tid, "Swift")].refs[slot] is None
+    assert state.objs[(van_tid, "Swift")].refs[slot] == (holder, "Cedar")
     assert state.objs[(van_tid, "Panel")].refs[slot] == (holder, "Cedar")
+    # Current observation-local bindings are unaffected by the carried ambiguity.
+    assert (van_tid, "Swift") not in A.abstract(pages[2]).objs
+
+
+def _scoped_members(names, *, total=None, indices=None, query="", busy=None, expanded=None):
+    nodes = [Node(0, -1, "document", ""),
+             Node(1, 0, "grid", "Owner", row_count=total, busy=busy, expanded=expanded),
+             Node(2, 0, "textbox", "Filter", value=query)]
+    for i, name in enumerate(names):
+        nodes.append(Node(len(nodes), 1, "row", name,
+                          row_index=indices[i] if indices is not None else i + 1))
+    return Observation(nodes)
+
+
+def _scope_tracker():
+    from types import SimpleNamespace
+    from semabi.compiler.v2.abstractor import V2Tracker
+
+    class ScopeAbstractor:
+        conservative_belief = True
+
+        def complete_types(self, obs, po):
+            return set()
+
+        def abstract(self, obs):
+            owner = AbsObj(0, "Owner", {}, node=1, contains=frozenset({1}))
+            objs = [owner] + [AbsObj(1, n.name, {}, node=n.i, refs={"in:0": owner.id})
+                              for n in obs.nodes if n.role == "row"]
+            return AbstractState({o.id: o for o in objs}, {}, partial=True,
+                                 parsed=SimpleNamespace(obs=obs), unknown_is_none=True)
+
+    return V2Tracker(ScopeAbstractor())
+
+
+@pytest.mark.parametrize("restriction", ["undeclared", "pagination", "filtered", "collapsed", "loading", "unknown_total", "duplicate_index"])
+def test_partial_collection_absence_keeps_membership_unknown(restriction):
+    before = _scoped_members(["A", "B"], total=2)
+    kwargs = {"total": 1}
+    names = ["B"]
+    if restriction == "undeclared": kwargs["total"] = None
+    if restriction == "pagination": kwargs.update(total=2, indices=[2])
+    if restriction == "filtered": kwargs["query"] = "B"
+    if restriction == "collapsed": kwargs["expanded"] = False
+    if restriction == "loading": kwargs["busy"] = True
+    if restriction == "unknown_total": kwargs["total"] = -1
+    if restriction == "duplicate_index":
+        names, kwargs = ["B", "C"], {"total": 2, "indices": [1, 1]}
+    after = _scoped_members(names, **kwargs)
+    tracker = _scope_tracker()
+    tracker.observe(before, "reset")
+    state, _ = tracker.observe(after, "click")
+    assert state.objs[(1, "A")].refs["in:0"] == (0, "Owner")
+    assert tracker.fact_provenance[((1, "A"), "reference", "in:0")]["status"] == "UNKNOWN"
+
+
+@pytest.mark.parametrize("remaining", [[], ["B"], ["B", "C"]])
+def test_explicit_complete_scope_retains_negative_membership_evidence(remaining):
+    before = _scoped_members(["A", "B"], total=2)
+    after = _scoped_members(remaining, total=len(remaining))
+    tracker = _scope_tracker()
+    tracker.observe(before, "reset")
+    state, _ = tracker.observe(after, "click")
+    assert state.objs[(1, "A")].refs["in:0"] is None
+    evidence = tracker.fact_provenance[((1, "A"), "reference", "in:0")]
+    assert evidence["status"] == "FALSE"
+    assert evidence["confidence"] == "COMPLETE_SCOPED_MEMBERSHIP_ABSENCE"
+    assert evidence["source_observations"] == [before.structural_signature(), after.structural_signature()]
+    # Exclusion from a holder is not evidence that the object ceased to exist.
+    assert (1, "A") in state.objs
+
+
+def test_sibling_multiplicity_does_not_prove_global_type_completeness():
+    pages = [_board(("Cedar", "North"), ("Rowan", "River")), _board(("Rowan", "River"))]
+    A = _widget_abstractor(_widget_hypotheses(*pages, keys={"group": "heading#0"}, persistent=()))
+    tracker = A.make_tracker()
+    before, _ = tracker.observe(pages[0], "reset")
+    after, _ = tracker.observe(pages[1], "click")
+    cedar = next(o.id for o in before.objs.values() if o.key == "Cedar")
+    assert cedar in after.objs
+    assert not A.complete_types(pages[1], A.parsed(pages[1]))
+
+
+def test_delayed_revision_survives_separately_from_adjacent_action_effects():
+    from semabi.compiler.v4.objective import _drop_revisions
+    before = _state([AbsObj(1, "A", {"quantity": 3}, node=-1,
+                            refs={"in:0": (0, "North")}),
+                     AbsObj(1, "B", {"quantity": 4}, node=2)])
+    after = _state([AbsObj(1, "A", {"quantity": 7}, node=1,
+                           refs={"in:0": (0, "South")}),
+                    AbsObj(1, "B", {"quantity": 8}, node=2)])
+    delta = diff(before, after)
+    original_attrs, original_refs = list(delta.attr_changes), list(delta.rel_changes)
+    _drop_revisions(delta, before)
+    assert delta.attr_changes == [((1, "B"), "quantity", 4, 8)]
+    assert delta.attr_revisions == [((1, "A"), "quantity", 3, 7)]
+    assert delta.rel_revisions == [((1, "A"), "in:0", (0, "North"), (0, "South"))]
+    assert not delta.rel_changes
+    assert sorted(delta.attr_changes + delta.attr_revisions) == sorted(original_attrs)
+    assert delta.rel_revisions == original_refs
+    _drop_revisions(delta, before)
+    assert len(delta.attr_revisions) == len(delta.rel_revisions) == 1

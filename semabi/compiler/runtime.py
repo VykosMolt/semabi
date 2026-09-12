@@ -34,7 +34,8 @@ EDIT_WORDS = re.compile(r"\b(edit|modify|update)\b", re.I)
 EXCLUDED_WORDS = re.compile(r"\b(delete|remove|logout|log out|sign out|reset|purchase|pay|invite)\b", re.I)
 TEXT_TYPES = {"", "text", "textarea", "contenteditable", "url", "email", "search"}
 URL_LABEL = re.compile(r"^(url|uri|web\s*(address|link)|website(\s+address)?)$", re.I)
-OPERATION_KINDS = {"create_visible_record", "read_visible_record", "update_visible_record"}
+OPERATION_KINDS = {"create_visible_record", "read_visible_record", "update_visible_record",
+                   "semantic_action", "semantic_guarded_update"}
 CONTRACT_FIELDS = ("kind", "procedure", "argument_schema", "output_schema",
                    "prerequisites", "effect_checks", "scope")
 NUMERIC_CONTEXT_PRIOR = ("One unexecuted dialog-advertising context button may vary between records: "
@@ -91,8 +92,16 @@ def field_format(field: dict) -> str | None:
 
 def source_hashes() -> dict:
     paths = [Path(__file__).with_name(name + ".py") for name in
-             ("runtime", "surface", "browser_session", "browser", "observation", "evidence")]
-    return {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
+             ("runtime", "surface", "browser_session", "browser", "observation", "evidence",
+              "semantic", "semantic_runtime")]
+    result = {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
+    # Frozen models execute shared compiler code after restart. A changed field,
+    # binding or observation language cannot silently reinterpret an old model.
+    root = Path(__file__).parent
+    shared = {str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in sorted(root.rglob("*.py")) if path not in paths}
+    result["semantic_language"] = digest(shared)
+    return result
 
 
 # Capture provenance when this module loads, not after a possibly long-lived
@@ -1391,6 +1400,10 @@ class Runtime:
                                                     deadline=deadline))
         try:
             self._check_operation(operation)
+            if operation["kind"].startswith("semantic_"):
+                from semabi.compiler.semantic_runtime import invoke, validate
+                validate(operation["argument_schema"], arguments)
+                return invoke(self, self._browser(connection), operation, arguments, trace)
             validate_arguments(operation["argument_schema"], arguments)
             browser = self._browser(connection)
             self._guard_current_editor(trace.read(browser))
@@ -1455,6 +1468,15 @@ class Runtime:
                                     "status": "STALE", "reason": str(error)}
                     invalidations.append(invalidation)
                     emit({"type": "operation_invalidated", **invalidation})
+            from semabi.compiler.semantic_runtime import has_onboarding_history
+            if (any(op.get("kind", "").startswith("semantic_") for op in settings.get("_existing_operations", []))
+                    or settings.get("_semantic_training_operations")
+                    or not settings.get("_operation_versions") and has_onboarding_history(self, connection)):
+                from semabi.compiler.semantic_runtime import learn
+                semantic = learn(self, connection, settings, trace, emit)
+                semantic["invalidations"] = invalidations
+                semantic["attempts"] = attempts + semantic.get("attempts", [])
+                return semantic
             browser = self._browser(connection)
             self._guard_current_editor(trace.read(browser))
             pending = [{"entry_url": connection["url"], "navigation": []}]
@@ -1549,6 +1571,12 @@ class Runtime:
                             if len(surface.resolve(descriptor)) == 1:
                                 pending.append({"entry_url": location["entry_url"],
                                                 "navigation": [*location["navigation"], descriptor]})
+            if not operations and not attempts and budget.actions < budget.max_actions and budget.writes < budget.max_writes:
+                from semabi.compiler.semantic_runtime import learn
+                semantic = learn(self, connection, settings, trace, emit)
+                semantic["invalidations"] = invalidations
+                semantic["attempts"] = attempts + semantic.get("attempts", [])
+                return semantic
             return {"status": "COMPLETED" if operations else "UNESTABLISHED", "operations": operations,
                     "attempts": attempts, "invalidations": invalidations, "metrics": trace.metrics()}
         except StopOperation as error:

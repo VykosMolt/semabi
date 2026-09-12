@@ -19,7 +19,8 @@ from urllib.parse import parse_qs, unquote, urlsplit, urlunsplit
 
 from semabi.compiler.artifacts import ArtifactStore, StoreError, canonical
 
-OUTCOMES = ("CONFIRMED", "APPLICATION_REFUSAL", "FAILED_BEFORE_EFFECT", "UNCERTAIN")
+OUTCOMES = ("CONFIRMED", "APPLICATION_REFUSAL", "FAILED_BEFORE_EFFECT", "UNCERTAIN",
+            "PREDICTED_REFUSAL", "PREDICTION_UNAVAILABLE")
 IDENTIFIER = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}\Z")
 MAX_BODY = 1024 * 1024
 
@@ -287,7 +288,12 @@ class Service:
             elif job["kind"] == "learn":
                 settings = {**request["settings"],
                             "_operation_versions": self.store.operation_versions(connection["id"]),
-                            "_existing_operations": self.store.operations(connection["id"])}
+                            "_existing_operations": self.store.operations(connection["id"]),
+                            # Revocation removes authority to invoke, not the
+                            # connection's retained raw training provenance.
+                            "_semantic_training_operations": [operation for operation in
+                                self.store.operations(connection["id"], include_history=True)
+                                if operation.get("kind", "").startswith("semantic_")]}
                 result = runtime.learn(connection, settings, emit)
                 _object(result, "Runtime result")
                 operations = self._operations(result)

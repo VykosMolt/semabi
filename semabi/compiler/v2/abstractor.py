@@ -216,21 +216,21 @@ class V2Abstractor(Abstractor):
         if sid.startswith("attr:"):
             return sid          # a part's slot already named when it flowed to the enclosing unit
         u = self.H.units[t]
-        ui = u.instances[0]
-        node = ui.slot_nodes.get(sid)
-        if node is None:
-            return f"attr:{sid}"
-        n = self.G.obs[ui.sig].node(node)
-        lab = sorted(self.G.labels(ui.sig, node))
         k = sid.split("#")[-1].split("@")[0]
-        header = self.G.cell_header(ui.sig, node)
-        if header:
-            # a cell under a declared column header holds the attribute the column names,
-            # wherever the column stands (`semabi.eval.v4_columns`); a cell beside a row
-            # header likewise
-            return "attr:" + " ".join(tokens(header)) + f"#{k}"
-        if lab:
-            return "attr:" + " ".join(lab) + f"#{k}"
+        contexts = set()
+        for ui in u.instances:
+            node = ui.slot_nodes.get(sid)
+            if node is None:
+                continue  # an absent occurrence cannot supply this field's label
+            header = self.G.cell_header(ui.sig, node)
+            lab = sorted(self.G.labels(ui.sig, node))
+            context = " ".join(tokens(header)) if header else " ".join(lab)
+            contexts.add(context)
+        if len(contexts) == 1 and next(iter(contexts)):
+            # A slot may first occur after an optional sibling appears. Every
+            # actual supplying occurrence must agree, rather than letting the
+            # first instance's absence invent a new positional attribute.
+            return "attr:" + next(iter(contexts)) + f"#{k}"
         return "attr:" + sid  # unlabeled slots keep their positional id
 
     def persistent_types(self) -> list[int]:
@@ -614,9 +614,7 @@ class V2Abstractor(Abstractor):
         return cache[key]
 
     def _contains(self, et, template: str) -> frozenset:
-        """The types an entity's rendering by this template, or by a variant of it, can show
-        inside it: a member believed to be in the entity that such a rendering does not show
-        is no longer in it -- the run's carrier once another van is chosen, or none."""
+        """Types this rendering family can show, not a declaration of complete membership."""
         cache = self.__dict__.setdefault("_contains_cache", {})
         key = (et.tid, template)
         if key not in cache:
@@ -719,24 +717,14 @@ class V2Abstractor(Abstractor):
         return V2Tracker(self)
 
     def complete_types(self, obs: Observation, po: ParsedObs) -> set[int]:
-        """Types for which this observation is a collection view, not one detail mention.
+        """No rendered collection establishes the entire extension of an object type.
 
-        Mere visibility is insufficient evidence that absent objects are false.  Recurring
-        templates observed with sibling multiplicity and accepted matrix-record boards are
-        conservative completeness evidence; a singleton detail pane is not.
+        Sibling multiplicity previously declared type-wide absence. A filtered/paginated
+        collection has exactly that structure, and even a complete local collection says
+        nothing about another holder's objects. Scoped membership is checked separately.
+        Explicit complete-type providers remain possible through the tracker interface.
         """
-        sig = obs.structural_signature()
-        complete = set()
-        units = self.H.parse_units(sig)
-        for ui in units:
-            u = self.H.units.get(ui.template)
-            et = self.H.tid_of_template.get(ui.template)
-            if u is not None and et is not None and u.max_per_obs >= 2:
-                complete.add(self.tid_map[et])
-        for spec in self.record_by_anchor.values():
-            if any(ui.template in spec["row_templates"] for ui in units):
-                complete.add(spec["record_tid"])
-        return complete
+        return set()
 
     def fit_view_controls(self, log: EvidenceLog) -> None:
         """Sensing controls. Primary evidence: persistence probes (probes.jsonl, written by
@@ -943,11 +931,31 @@ class V2Tracker(Tracker):
         self.belief: AbstractState | None = None
         self.prev_visible: dict[tuple[int, str], Any] = {}
         self.fact_provenance: dict[tuple, dict] = {}
+        self.membership_scopes: dict[tuple, tuple] = {}
 
     def reset(self) -> None:
         self.belief = None
         self.prev_visible = {}
         self.fact_provenance = {}
+        self.membership_scopes = {}
+
+    def _record_membership_scopes(self, obs, raw, sig):
+        for oid, obj in raw.objs.items():
+            for slot, target in obj.refs.items():
+                if not slot.startswith("in:") or target is None:
+                    continue
+                holder = raw.objs.get(target)
+                if holder is None or holder.node is None or holder.node < 0:
+                    continue
+                scope = obs.collection_scope(holder.node)
+                if scope is not None and obj.node not in {
+                        n.i for n in obs.collection_members(holder.node)}:
+                    # Enumerating rows establishes row membership, not all nested
+                    # fields or related objects that a row could conditionally show.
+                    scope = None
+                # A fresh positive mention without a scoped collection supersedes an
+                # older scope witness; it must not inherit that witness accidentally.
+                self.membership_scopes[(oid, slot)] = (target, scope, sig)
 
     def _confirm(self, oid, kind, slot, value, sig) -> None:
         self.fact_provenance[(oid, kind, slot)] = {
@@ -971,11 +979,13 @@ class V2Tracker(Tracker):
             self.belief = raw
             self.prev_visible = {o.id: o for o in raw.objs.values()}
             self.fact_provenance = {}
+            self.membership_scopes = {}
             for o in raw.objs.values():
                 for slot, value in o.attrs.items():
                     self._confirm(o.id, "attribute", slot, value, sig)
                 for slot, value in o.refs.items():
                     self._confirm(o.id, "reference", slot, value, sig)
+            self._record_membership_scopes(obs, raw, sig)
             return raw, set()
         discovered: set[tuple[int, str]] = set()
         complete_types = (self.A.complete_types(obs, raw.parsed)
@@ -1035,16 +1045,36 @@ class V2Tracker(Tracker):
                     self._confirm(oid, "reference", k, v, sig)
                 if action_kind in ("click", "reload") and o.tid not in {x.tid for x in self.prev_visible.values()}:
                     discovered.add(oid)  # first listing of this type since the last view of it: not an effect
-        # A member believed inside a thing that is rendered here by a family able to show
-        # such members, and does not show this one, is no longer in it.
+        # Absence belongs to a matched, explicitly covered collection scope, never to
+        # a template family's mere ability to render a member.
         for c in new.objs.values():
             if c.node is not None and c.node >= 0:
                 continue
             for k, v in list(c.refs.items()):
                 if k.startswith("in:") and v is not None:
                     holder = raw.objs.get(v)
-                    if holder is not None and c.tid in holder.contains:
+                    witness = self.membership_scopes.get((c.id, k))
+                    if (holder is not None and c.tid in holder.contains
+                            and holder.node is not None and holder.node >= 0
+                            and witness is not None and witness[0] == v
+                            and witness[1] is not None
+                            and witness[1] == obs.collection_scope(holder.node)
+                            and obs.complete_collection(holder.node)):
                         c.refs[k] = None
+                        self.fact_provenance[(c.id, "reference", k)] = {
+                            "status": "FALSE", "value": None,
+                            "source_observations": [witness[2], sig],
+                            "last_confirming_observation": sig, "last_confirming_step": self.step,
+                            "actions_since_confirmation": [], "possible_invalidators": [],
+                            "confidence": "COMPLETE_SCOPED_MEMBERSHIP_ABSENCE",
+                        }
+                    elif holder is not None and c.tid in holder.contains:
+                        provenance = self.fact_provenance.get((c.id, "reference", k))
+                        if provenance is not None:
+                            provenance["status"] = "UNKNOWN"
+                            provenance["confidence"] = "UNOBSERVED_IN_UNESTABLISHED_SCOPE"
+                            provenance["last_observed_absence"] = sig
+        self._record_membership_scopes(obs, raw, sig)
         self.belief = new
         self.prev_visible = {o.id: o for o in raw.objs.values()}
         return new, discovered

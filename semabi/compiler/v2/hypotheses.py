@@ -585,6 +585,11 @@ class Hypotheses:
     def _same_view(self, a: str, b: str, root: int) -> bool:
         """Do observations a and b render the same view, ignoring the subtree at root in a?
         (Role-path multisets, Jaccard >= 0.8.)"""
+        # An unchanged reload establishes the context directly. Masking a large
+        # candidate only on the left otherwise makes even a page compared with
+        # itself fail, losing positive persistence evidence for its main object.
+        if a == b:
+            return True
         oa, ob = self.G.obs[a], self.G.obs[b]
         skip = set(oa.subtree(root))
         pa = Counter(self.G.nodes[(a, n.i)].path for n in oa.nodes if n.i not in skip)
@@ -697,7 +702,14 @@ class Hypotheses:
                 if ok:
                     cands.append((tot / len(f), sid))
             if cands:
-                best = max(cands)[1]
+                strongest = max(score for score, _ in cands)
+                tied = {sid for score, sid in cands if score == strongest}
+                existing = {u.key_slot for u in f}
+                if len(existing) == 1 and existing <= tied:
+                    continue  # already consistent; a slot's spelling is not new evidence
+                if len(tied) != 1:
+                    continue  # competing common keys remain candidates for behavioural search
+                best = next(iter(tied))
                 for u in f:
                     if u.key_slot != best:
                         u.evidence.append(f"key {best} adopted for family consistency (was {u.key_slot})")
@@ -1391,8 +1403,13 @@ class Hypotheses:
             return True
         first = u.key_slot.split("|")[0]
         pairs = [(ui.slots[sid], ui.slots.get(first)) for ui in u.instances if sid in ui.slots]
-        rest = [value.replace(key, "", 1).strip() for value, key in pairs if key and key in value]
-        return not pairs or len(rest) / len(pairs) < 0.8 or len(set(rest)) > 1
+        matching = sum(bool(key and key in value) for value, key in pairs)
+        # A minority value that omits its name can still express a different state.
+        # Compare every remainder, not just the values that support restatement;
+        # multiple occurrences of the same own name are all restatements.
+        rest = [value.replace(key, "").strip() if key and key in value else value
+                for value, key in pairs]
+        return not pairs or matching / len(pairs) < 0.8 or len(set(rest)) > 1
 
     def _slot_labels(self, t: str, sid: str) -> set[str]:
         """The label tokens of the node holding this slot, lower-cased: `Ticket 4` -> {ticket}."""

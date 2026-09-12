@@ -69,6 +69,25 @@ def test_agreement_alone_without_a_propagated_change_is_not_enough():
     assert not any(slot.startswith("group/text/textbox") for _t, slot in H.persistent_widgets)
 
 
+def test_repeated_persistent_edits_are_not_discarded_as_a_log_line():
+    observations = [page(name, depot, value) for name, depot in (("Cedar", "North"), ("Rowan", "River"))
+                    for value in (3, 9, 4, 12)]
+    graph = ObsGraph()
+    for obs in observations:
+        graph.add(obs.structural_signature(), obs)
+    signatures = [obs.structural_signature() for obs in observations]
+    hypothesis = Hypotheses(graph)
+    # Each edit is followed by an actually unchanged reload of the same object.
+    # The large owner subtree must not make identical observations different views.
+    assert hypothesis._same_view(signatures[0], signatures[0], 1)
+    hypothesis.fit(step_sigs=[sig for sig in signatures for _ in range(2)],
+                   step_kinds=[kind for _ in signatures for kind in ("type", "reload")],
+                   reload_pairs=[(sig, sig) for sig in signatures])
+    template = next(t for t in hypothesis.units if t.startswith("group[](button[Back"))
+    assert hypothesis.units[template].key_slot is not None
+    assert (template, "group/text/textbox#0") in hypothesis.persistent_widgets
+
+
 def registry(*jobs) -> Observation:
     rows = [("group", "", -1, None), ("group", "", 0, None), ("heading", "Production registry", 1, None),
             ("list", "", 1, None)]

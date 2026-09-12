@@ -249,6 +249,445 @@ from semabi.compiler import runtime as runtime_module
 from semabi.compiler.runtime import Runtime, argument_schema
 
 
+def _semantic_diagnostic_entry(names=('A', 'B')):
+    nodes = [Node(0, -1, 'group', '')]
+    for name in names:
+        root = len(nodes)
+        nodes += [Node(root, 0, 'article', ''), Node(root + 1, root, 'heading', name),
+                  Node(root + 2, root, 'button', 'Open ' + name)]
+    return _surface(nodes)
+
+
+def _semantic_diagnostic_detail(owner, statuses, sidebar=None):
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'heading', owner), Node(2, 0, 'button', 'Check')]
+    nodes += [Node(i + 3, 0, 'status', text) for i, text in enumerate(statuses)]
+    if sidebar is not None:
+        root = len(nodes)
+        nodes += [Node(root, 0, 'group', 'Other panel'), Node(root + 1, root, 'status', sidebar)]
+    return _surface(nodes)
+
+
+class _SemanticDiagnosticBrowser:
+    allowed_origin = 'https://synthetic.invalid'
+
+    def __init__(self, *, owner=None, initial=('Waiting',), response=('Recorded',), names=('A', 'B'),
+                 sidebar_response=False):
+        self.wrong_owner, self.initial, self.response, self.names = owner, initial, response, names
+        self.surface = _semantic_diagnostic_entry(names)
+        self.actions = []
+        self.final_actions = 0
+        self.sidebar_response = sidebar_response
+
+    def read(self):
+        return self.surface
+
+    def goto(self, url):
+        self.surface = _semantic_diagnostic_entry(self.names)
+
+    def act(self, action):
+        name = self.surface.observation.node(action.target).name
+        self.actions.append(name)
+        if name.startswith('Open '):
+            self.surface = _semantic_diagnostic_detail(self.wrong_owner or name[5:], self.initial,
+                                                       'Idle' if self.sidebar_response else None)
+        elif name == 'Check':
+            self.final_actions += 1
+            owner = next(n.name for n in self.surface.observation.nodes if n.role == 'heading')
+            self.surface = (_semantic_diagnostic_detail(owner, self.initial, self.response[0])
+                            if self.sidebar_response else _semantic_diagnostic_detail(owner, self.response))
+        return ActionResult(True)
+
+
+class _GuardedSemanticDiagnosticBrowser(_SemanticDiagnosticBrowser):
+    """Independent application state; fills may persist, affect a sibling, or be drafts."""
+
+    def __init__(self, *, fault=None, **kwargs):
+        if fault == 'duplicate_sibling_changed':
+            kwargs['names'] = ('A', 'B', 'B')
+        super().__init__(**kwargs)
+        self.fault, self.values, self.capacity = fault, {'A': '3', 'B': '9'}, '10'
+        self.selected, self.draft = None, None
+        self.fills, self.reloads = 0, 0
+        self.extra_sibling_value = '9'
+        self.surface = self.entry()
+
+    def entry(self):
+        surface = _semantic_diagnostic_entry(self.names)
+        nodes = list(surface.observation.nodes)
+        seen = set()
+        for node in list(nodes):
+            if node.role == 'heading':
+                value = self.extra_sibling_value if node.name in seen else self.values.get(node.name, '?')
+                nodes.append(Node(len(nodes), node.parent, 'text', 'Amount ' + value))
+                seen.add(node.name)
+        return _surface(nodes)
+
+    def detail(self, statuses=None):
+        surface = _semantic_diagnostic_detail(self.selected, self.initial if statuses is None else statuses)
+        nodes = list(surface.observation.nodes)
+        field = len(nodes)
+        value = self.draft if self.draft is not None else self.values[self.selected]
+        nodes += [Node(field, 0, 'textbox', 'Amount', value=value),
+                  Node(field + 1, 0, 'group', 'Assigned resource'),
+                  Node(field + 2, field + 1, 'text', 'Capacity ' + self.capacity)]
+        return _surface(nodes, {field: {'input_type': 'number'}})
+
+    def goto(self, url):
+        self.draft = None
+        self.surface = self.entry()
+
+    def reload(self):
+        self.reloads += 1
+        self.draft = None
+        self.surface = self.detail() if self.selected else self.entry()
+        return self.surface
+
+    def act(self, action):
+        name = self.surface.observation.node(action.target).name
+        self.actions.append(name)
+        if name.startswith('Open '):
+            self.selected = self.wrong_owner or name[5:]
+            self.surface = self.detail()
+        elif action.kind == 'type':
+            self.fills += 1
+            self.draft = action.text
+            if self.fault != 'transient_draft':
+                self.values[self.selected] = action.text
+            if self.fault == 'sibling_changed':
+                self.values['B'] = action.text
+            if self.fault == 'duplicate_sibling_changed':
+                self.extra_sibling_value = action.text
+            if self.fault == 'wrong_owner_after_fill':
+                self.selected = 'B'
+            if self.fault == 'relation_changed_after_fill':
+                self.capacity = '1'
+            self.surface = self.detail()
+        elif name == 'Check':
+            self.final_actions += 1
+            self.surface = self.detail(self.response)
+        return ActionResult(True)
+
+
+def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, intervening=False,
+                         response_names_owner=False, prediction_status='supported',
+                         additional_known_event=None, guarded=False, counterfactual_status='supported',
+                         counterfactual_event='Recorded', **browser_options):
+    """Supply a fitted prediction contract; exercise real routing, tracing and response readback.
+
+    No fitting claim is made by this diagnostic. The rendered application deliberately can
+    navigate to the wrong owner or emit a notice without producing the requested result.
+    """
+    from semabi.compiler.semantic import SemanticArtifact
+    from semabi.compiler.semantic_runtime import shape, step_for
+    from semabi.compiler.v4 import emission, outcome
+    from semabi.compiler.runtime import POLICY_VERSION, bind_contract
+    browser = (_GuardedSemanticDiagnosticBrowser(**browser_options) if guarded
+               else _SemanticDiagnosticBrowser(**browser_options))
+    runtime = Runtime(tmp_path)
+    connection = {'id': 'semantic-diagnostic', 'url': browser.allowed_origin + '/',
+                  'scope': {'max_actions': 30, 'max_writes': 20}}
+    runtime.sessions[connection['id']] = browser
+    control = 'button:Check'
+    event_frame = 'Recorded <>' if response_names_owner else 'Recorded'
+    known_events = {event_frame: 5}
+    if additional_known_event:
+        known_events[additional_known_event] = 3
+    model = outcome.ControlOutcome(control, events=known_events,
+                                   arg_roles={event_frame: {0: outcome.OWNER}} if response_names_owner else {})
+    vocabulary = emission.Vocabulary([_semantic_diagnostic_entry().observation])
+    artifact = SemanticArtifact(SimpleNamespace(emissions=vocabulary), {control: model}, {})
+
+    def predict(obs, node, control=None):
+        owner = next(n.name for n in obs.nodes if n.role == 'heading')
+        if intervening:
+            browser.surface = _semantic_diagnostic_detail('B', browser.initial)
+        current_frame = event_frame
+        if guarded:
+            amount = next(float(n.value) for n in obs.nodes if n.role == 'textbox' and n.name == 'Amount')
+            capacity = next(float(n.name.split()[-1]) for n in obs.nodes if n.name.startswith('Capacity '))
+            current_frame = 'Recorded' if amount <= capacity else 'Declined'
+            if browser.fault == 'relation_changes_during_postfill_prediction' and browser.fills:
+                browser.capacity = '1'
+                browser.surface = browser.detail()
+        return {'control': 'button:Other' if wrong_control else 'button:Check',
+                'status': prediction_status, 'point': current_frame if prediction_status == 'supported' else None,
+                'owner': {'type': 1, 'key': owner, 'node': 0, 'identity': 'learned_key'},
+                'alternatives': {current_frame: {'arguments': {'0': owner} if response_names_owner else {}}}
+                                if prediction_status == 'supported' else {},
+                'bindings': {outcome.OWNER: {'type': 1, 'key': owner, 'node': 0}},
+                'binding_status': {outcome.OWNER: 'unique'}}
+
+    artifact.predict = predict
+    if guarded:
+        def simulate_edit(obs, action_node, field_node, value):
+            proposed = predict(obs, action_node)
+            proposed['status'] = counterfactual_status
+            proposed['alternatives'] = {counterfactual_event: {}} if counterfactual_status == 'supported' else {}
+            if browser.fault == 'relation_changes_during_counterfactual':
+                browser.capacity = '1'
+                browser.surface = browser.detail()
+            return {'status': 'represented', 'prediction': proposed, 'value': value}
+        artifact.simulate_edit = simulate_edit
+    monkeypatch.setattr(SemanticArtifact, 'from_json', classmethod(lambda cls, data: artifact))
+    entry = browser.entry() if guarded else _semantic_diagnostic_entry()
+    operation = {'id': 'op-semantic-diagnostic', 'version': 1, 'name': 'check',
+                 'kind': 'semantic_action', 'status': 'ACTIVE',
+                 'argument_schema': {'type': 'object', 'properties': {'target': {'type': 'string'}},
+                                     'required': ['target'], 'additionalProperties': False},
+                 'output_schema': {'type': 'object'}, 'prerequisites': [], 'effect_checks': [], 'scope': {},
+                 'procedure': {'entry_url': connection['url'], 'navigation': [step_for(entry, 3, [])],
+                               'return_context': {'entry_shape': shape(entry), 'returns': []},
+                               'action': {'kind': 'click', 'descriptor': _semantic_diagnostic_detail('A', []).descriptor(2)},
+                               'control': control,
+                               'owner_binding': {'argument': 'target', 'prefix': '', 'suffix': '', 'type': 1}},
+                 'support': {'policy_version': POLICY_VERSION, 'source_sha256': runtime.source_sha256,
+                             'semantic_artifact': {}, 'learned': {'outcomes': known_events, 'control': control},
+                             'response_paths': [[list(part) for part in emission.response_region_path(
+                                 _semantic_diagnostic_detail('A', ('Waiting',)).observation, 3)]]}}
+    arguments = {'target': 'A'}
+    if guarded:
+        operation['kind'] = 'semantic_guarded_update'
+        operation['procedure']['guarded_field'] = {
+            'descriptor': {'role': 'textbox', 'label': 'Amount', 'input_type': 'number'}, 'slot': 'amount'}
+        operation['argument_schema']['properties'].update({'value': {'type': 'string'}, 'expect': {'type': 'string'}})
+        operation['argument_schema']['required'] += ['value', 'expect']
+        arguments.update(value='7', expect='Recorded')
+    bind_contract(operation)
+    result = runtime.invoke(connection, operation, arguments, lambda event: None)
+    return result, browser
+
+
+def test_semantic_runtime_confirms_a_recognized_single_response_on_the_selected_owner(tmp_path, monkeypatch):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch)
+    assert result['outcome'] == 'CONFIRMED', result
+    assert browser.actions == ['Open A', 'Check']
+    assert result['prediction']['owner']['key'] == 'A'
+
+
+@pytest.mark.parametrize(('initial', 'response'), [
+    (('Background sync waiting',), ('Background sync complete',)),
+    (('Recorded',), ('Recorded',)),
+    (('Waiting', 'Notice'), ('Recorded', 'Background sync complete')),
+])
+def test_semantic_runtime_cannot_confirm_unrelated_repeated_or_competing_responses(tmp_path, monkeypatch, initial, response):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, initial=initial, response=response)
+    assert browser.final_actions == 1
+    assert result['outcome'] == 'UNCERTAIN', result
+    assert result['effect']['response']['regions']['after']
+
+
+@pytest.mark.parametrize('fault', ['wrong_owner', 'wrong_control', 'intervening_change', 'duplicate_selector'])
+def test_semantic_runtime_stops_before_final_action_on_wrong_or_ambiguous_target(tmp_path, monkeypatch, fault):
+    options = {'wrong_owner': {'owner': 'B'}, 'wrong_control': {'wrong_control': True},
+               'intervening_change': {'intervening': True}, 'duplicate_selector': {'names': ('A', 'A')}}[fault]
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, **options)
+    assert browser.final_actions == 0, result
+    assert result['outcome'] != 'CONFIRMED', result
+
+
+@pytest.mark.parametrize(('response', 'expected'), [('Recorded A', 'CONFIRMED'), ('Recorded B', 'UNCERTAIN')])
+def test_semantic_runtime_checks_response_arguments_against_the_learned_owner(tmp_path, monkeypatch, response, expected):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, response_names_owner=True, response=(response,))
+    assert browser.final_actions == 1
+    assert result['effect']['response']['event']['frame'] == 'Recorded <>'
+    assert result['outcome'] == expected, result
+
+
+@pytest.mark.parametrize('prediction_status', ['supported', 'unavailable'])
+def test_semantic_runtime_verification_does_not_use_the_point_prediction_as_its_oracle(tmp_path, monkeypatch, prediction_status):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, prediction_status=prediction_status,
+                                          additional_known_event='Deferred', response=('Deferred',))
+    assert browser.final_actions == 1
+    assert result['prediction']['point'] != 'Deferred'
+    assert result['outcome'] == 'CONFIRMED', result
+    assert result['effect']['response']['event']['frame'] == 'Deferred'
+
+
+def test_semantic_runtime_rejects_a_known_response_frame_from_an_unrelated_panel(tmp_path, monkeypatch):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, sidebar_response=True)
+    assert browser.final_actions == 1
+    assert result['effect']['response']['event']['frame'] == 'Recorded'
+    assert result['outcome'] == 'UNCERTAIN', result
+
+
+def test_semantic_guarded_update_confirms_the_intended_field_after_reopen_and_reload(tmp_path, monkeypatch):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
+    assert result['outcome'] == 'CONFIRMED', result
+    assert browser.values == {'A': '7', 'B': '9'}
+    assert browser.fills == browser.final_actions == browser.reloads == 1
+    assert result['effect']['checked_neighbors'] == ['B']
+
+
+@pytest.mark.parametrize(('status', 'event', 'expected'), [
+    ('supported', 'Declined', 'PREDICTED_REFUSAL'),
+    ('unavailable', 'Recorded', 'PREDICTION_UNAVAILABLE'),
+    ('ambiguous', 'Recorded', 'PREDICTION_UNAVAILABLE'),
+])
+def test_semantic_guarded_preflight_refusals_do_not_write_fields(tmp_path, monkeypatch, status, event, expected):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True,
+                                          counterfactual_status=status, counterfactual_event=event)
+    assert result['outcome'] == expected, result
+    assert browser.fills == browser.final_actions == 0
+    assert browser.values == {'A': '3', 'B': '9'}
+    assert result['effect']['field_write_attempted'] is False
+
+
+@pytest.mark.parametrize(('fault', 'fills', 'final_actions'), [
+    ('transient_draft', 1, 1),
+    ('sibling_changed', 1, 1),
+    ('duplicate_sibling_changed', 1, 1),
+    ('wrong_owner_after_fill', 1, 0),
+    ('relation_changed_after_fill', 1, 0),
+    ('relation_changes_during_counterfactual', 0, 0),
+    ('relation_changes_during_postfill_prediction', 1, 0),
+])
+def test_semantic_guarded_update_detects_partial_wrong_neighbor_and_stale_related_effects(tmp_path, monkeypatch,
+                                                                                      fault, fills, final_actions):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True, fault=fault)
+    assert result['outcome'] == 'UNCERTAIN', result
+    assert browser.fills == fills
+    assert browser.final_actions == final_actions
+    if fault == 'transient_draft':
+        assert browser.values['A'] == '3', 'a field value shown in a draft must not count as a durable write'
+    if fault == 'sibling_changed':
+        assert browser.values['B'] == '7', 'independent application state establishes the unintended sibling effect'
+    if fault == 'duplicate_sibling_changed':
+        assert browser.values['B'] == '9' and browser.extra_sibling_value == '7'
+
+
+def test_semantic_guarded_update_does_not_fill_a_wrong_owner_opened_by_the_target_row(tmp_path, monkeypatch):
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True, owner='B')
+    assert result['outcome'] != 'CONFIRMED'
+    assert browser.fills == browser.final_actions == 0
+    assert browser.values == {'A': '3', 'B': '9'}
+
+
+def _semantic_radio_rows(names=('Alpha', 'Beta'), selected=None):
+    nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'table', '')]
+    for name in names:
+        root = len(nodes)
+        nodes += [Node(root, 1, 'row', ''), Node(root + 1, root, 'cell', ''),
+                  Node(root + 2, root + 1, 'radio', 'Choose ' + name, checked=name == selected),
+                  Node(root + 3, root, 'cell', name), Node(root + 4, root, 'cell', '17 units')]
+    nodes.append(Node(len(nodes), 0, 'button', 'Apply selection'))
+    return _surface(nodes)
+
+
+@pytest.mark.parametrize(('names', 'requested', 'expected'), [
+    (('Alpha', 'Beta'), 'Beta', 9),
+    (('Fresh', 'Other'), 'Fresh', 4),
+    (('Alpha', 'Beta'), 'Missing', 'no match'),
+    (('Alpha', 'Alpha'), 'Alpha', 'multiple matches'),
+])
+def test_semantic_cell_anchor_language_resolves_fresh_rows_and_refuses_ambiguous_labels(names, requested, expected):
+    """Supplied-selector diagnostic: resolution supports this language before proposal does."""
+    from semabi.compiler.runtime import StopOperation
+    from semabi.compiler.semantic_runtime import resolve_step
+    step = {'kind': 'click', 'argument': 'resource', 'selector': {
+        'descriptor': {'role': 'radio', 'label': {'prefix': 'Choose ', 'suffix': ''}, 'input_type': ''},
+        'region_role': 'row', 'anchor_role': 'cell', 'value': 'Alpha'}}
+    surface = _semantic_radio_rows(names)
+    if isinstance(expected, int):
+        assert resolve_step(surface, step, {'resource': requested}) == expected
+    else:
+        with pytest.raises(StopOperation, match=expected):
+            resolve_step(surface, step, {'resource': requested})
+
+
+def test_current_radio_proposal_and_shape_limits_preserve_a_visible_selection_change():
+    """Current composition limitation: the radio row has a value, but no heading anchor.
+
+    A checked-state transition is already observed even though the navigation shape stays
+    the same. A procedure learner must retain that edge to reach its later commit action.
+    """
+    from semabi.compiler.semantic_runtime import selector, shape, step_for
+    before, after = _semantic_radio_rows(), _semantic_radio_rows(selected='Alpha')
+    assert selector(before, 4) is None
+    assert 'selector' not in step_for(before, 4, [])
+    assert shape(before) == shape(after)
+    assert before.observation.structural_signature() != after.observation.structural_signature()
+    assert before.observation.node(4).checked is False and after.observation.node(4).checked is True
+
+
+def test_current_recovery_drops_observed_radio_prerequisite_before_commit(tmp_path):
+    """The raw log retains the selection; recovered procedures currently omit it.
+
+    This reproduces an interrupted-onboarding boundary, not just selector proposal:
+    opening a chooser, selecting a row, and committing are three recorded actions.
+    """
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler.runtime import Budget, Trace
+    from semabi.compiler.semantic_runtime import recover_learning
+    trace = Trace(tmp_path / 'radio-recovery', lambda event: None, Budget(10, 10))
+    entry = _semantic_diagnostic_entry()
+    chooser, selected = _semantic_radio_rows(), _semantic_radio_rows(selected='Alpha')
+    final = _semantic_diagnostic_detail('A', ('Recorded',))
+    for surface in (entry, chooser, selected, final):
+        trace.observe(surface)
+    for before, after, node in ((entry, chooser, 3), (chooser, selected, 4), (selected, final, 12)):
+        trace.log.add_step(0, Primitive('click', node), True, None, before.observation, after.observation)
+    trials, _, _ = recover_learning(trace.log)
+    assert len(trials) == 3
+    assert trials[1]['node'] == 4
+    assert trace.log.observations[trials[1]['after']].node(4).checked is True
+    assert len(trials[2]['route']) == 1  # known lost selection edge, despite raw state evidence
+    assert trials[2]['route'][0]['selector']['value'] == 'A'
+
+
+@pytest.mark.parametrize('predecessor_category', [False, True])
+@pytest.mark.parametrize('post_owner_changed', [False, True])
+def test_current_semantic_publication_assumes_first_selector_supplied_action_owner(
+        tmp_path, monkeypatch, predecessor_category, post_owner_changed):
+    """Isolate publication from fitting: an extra navigation argument hides a valid owner.
+
+    Predictions and response observations are identical in the two arms. Only the earlier
+    collection selector differs; it is not the action's owner. The prefixed arm records a
+    current limitation and should publish with selection_2 after owner-source induction.
+    """
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler.runtime import Budget
+    from semabi.compiler import semantic, semantic_runtime as procedures
+    from semabi.compiler.v4 import emission, outcome
+    runtime = Runtime(tmp_path)
+    connection = {'id': 'publication-diagnostic', 'url': 'https://synthetic.invalid/', 'scope': {}}
+    runtime.sessions[connection['id']] = SimpleNamespace(allowed_origin='https://synthetic.invalid')
+    trace = runtime._trace(connection, lambda event: None, Budget(30, 20))
+    artifact = semantic.SemanticArtifact(SimpleNamespace(emissions=emission.Vocabulary()),
+                                         {'button:Check': outcome.ControlOutcome('button:Check', events={'Recorded': 6})},
+                                         {'fit_seconds': 0})
+    artifact.operations = lambda: [{'comparison': True, 'control': 'button:Check', 'outcomes': {'Recorded': 6}}]
+    artifact.predict = lambda obs, node: {'control': 'button:Check', 'status': 'supported',
+        'owner': {'type': 1, 'key': obs.node(1).name, 'identity': 'learned_key'}}
+    artifact.candidates = lambda obs, control: [{'node': 2, 'owner': artifact.predict(obs, 2)['owner']}]
+    artifact.relevant_editables = lambda obs, node: []
+    artifact.to_json = lambda: {}
+    monkeypatch.setattr(semantic, 'fit_semantics', lambda directory: artifact)
+
+    def acquire(browser, trace, entry, emit, trials, edits, context):
+        board = _semantic_diagnostic_entry()
+        prefix = [procedures.step_for(_semantic_diagnostic_entry(('Collection', 'Other collection')), 3, [])]
+        if not predecessor_category:
+            prefix = []
+        context.update(entry_shape=procedures.shape(board), returns=[])
+        for i, (owner, target_node) in enumerate((('A', 3), ('B', 6))):
+            route = [*prefix, procedures.step_for(board, target_node, prefix)]
+            before = _semantic_diagnostic_detail(owner, ('Waiting',))
+            after = _semantic_diagnostic_detail('Other' if post_owner_changed else owner, ('Recorded',))
+            trace.log.add_step(i, Primitive('click', 2), True, None, before.observation, after.observation)
+            trials.append({'route': route, 'action': procedures.step_for(before, 2, route), 'node': 2,
+                           'before': before.observation.structural_signature(), 'after': after.observation.structural_signature()})
+
+    monkeypatch.setattr(procedures, 'acquire', acquire)
+    learned = procedures.learn(runtime, connection, {}, trace, lambda event: None)
+    if post_owner_changed:
+        assert learned['operations'] == [], 'an anonymous response on another owner is not completion support'
+    elif predecessor_category:
+        assert learned['operations'] == []  # known route[0] assumption, not failed semantic fitting
+    else:
+        assert len(learned['operations']) == 1
+        assert learned['operations'][0]['procedure']['owner_binding']['argument'] == 'target'
+
+
 _AUTH_CREDENTIALS = {'username': 'synthetic-private-user', 'password': 'synthetic-private-password'}
 
 
@@ -1150,6 +1589,45 @@ def test_synthetic_incompatible_operation_evidence_is_rejected_before_navigation
 
     result = runtime.invoke(connection, operation,
                             {'first': 'Fresh alpha', 'second': 'Fresh beta'}, lambda event: None)
+
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT'
+    assert result['operation_status'] == 'STALE'
+    assert browser.navigation_count == 0
+    assert browser.actions == []
+
+
+@pytest.mark.parametrize('dependency', [
+    'semantic.py', 'semantic_runtime.py', 'observation.py',
+    'v2/hypotheses.py', 'v2/graph.py', 'v2/sections.py',
+    'v4/abstractor.py', 'v4/consequence.py', 'v4/fields.py',
+    'v4/outcome.py', 'v4/emission.py', 'v4/referring.py',
+])
+def test_shared_semantic_source_change_invalidates_persisted_operation_on_restart(
+        tmp_path, monkeypatch, dependency):
+    browser = _NavigationReloadBrowser()
+    runtime, connection, operation = _runtime_with_operation(tmp_path, browser)
+    before = runtime_module.source_hashes()
+    source = runtime_module.Path(runtime_module.__file__).parent / dependency
+    original_read = runtime_module.Path.read_bytes
+
+    # Model an edited dependency without changing the running service's files.
+    def changed_read(path):
+        content = original_read(path)
+        return content + b'\n# changed semantic dependency\n' if path == source else content
+
+    monkeypatch.setattr(runtime_module.Path, 'read_bytes', changed_read)
+    after = runtime_module.source_hashes()
+    changed_keys = {key for key in before if before[key] != after[key]}
+    assert changed_keys == {dependency if '/' not in dependency else 'semantic_language'}
+    assert runtime.source_sha256 == before
+
+    # A restart loads the new language, but an old artifact remains an old
+    # artifact: recomputing its evidence digest does not establish compatibility.
+    monkeypatch.setattr(runtime_module, 'LOADED_SOURCE_SHA256', after)
+    restarted = Runtime(tmp_path)
+    restarted.sessions[connection['id']] = browser
+    result = restarted.invoke(connection, operation,
+                              {'first': 'Fresh alpha', 'second': 'Fresh beta'}, lambda event: None)
 
     assert result['outcome'] == 'FAILED_BEFORE_EFFECT'
     assert result['operation_status'] == 'STALE'
@@ -3165,3 +3643,128 @@ def test_rendered_linked_value_learning_and_retained_tab_persist_through_navigat
             runtime.close()
         else:
             browser.close()
+
+
+def test_semantic_guarded_update_retains_sibling_state_on_nonleaf_nodes(tmp_path, monkeypatch):
+    """Own visible text remains state when the same element contains a control."""
+    original_entry = _GuardedSemanticDiagnosticBrowser.entry
+
+    def entry_with_nested_control(browser):
+        surface = original_entry(browser)
+        nodes = list(surface.observation.nodes)
+        for node in list(nodes):
+            if node.role == 'text' and node.name.startswith('Amount '):
+                nodes.append(Node(len(nodes), node.i, 'button', 'Details'))
+        return _surface(nodes)
+
+    monkeypatch.setattr(_GuardedSemanticDiagnosticBrowser, 'entry', entry_with_nested_control)
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True, fault='sibling_changed')
+    assert browser.values == {'A': '7', 'B': '7'}, 'independent application state establishes the wrong sibling effect'
+    assert result['outcome'] != 'CONFIRMED', result
+
+
+def test_semantic_guarded_update_checks_siblings_after_verification_reload(tmp_path, monkeypatch):
+    """A verification procedure may have effects after the first neighbor check."""
+    original_reload = _GuardedSemanticDiagnosticBrowser.reload
+
+    def reload_with_sibling_effect(browser):
+        surface = original_reload(browser)
+        browser.values['B'] = '7'
+        return surface
+
+    monkeypatch.setattr(_GuardedSemanticDiagnosticBrowser, 'reload', reload_with_sibling_effect)
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
+    assert browser.values == {'A': '7', 'B': '7'}, 'the final runtime-owned reload changed the sibling'
+    assert result['outcome'] != 'CONFIRMED', result
+
+
+def test_semantic_response_on_a_different_postaction_owner_is_not_target_confirmation(tmp_path, monkeypatch):
+    """Same response frame/path on a different detail owner is not the target's reply."""
+    original_act = _SemanticDiagnosticBrowser.act
+
+    def act_then_switch_response_owner(browser, action):
+        name = browser.surface.observation.node(action.target).name
+        result = original_act(browser, action)
+        if name == 'Check':
+            browser.surface = _semantic_diagnostic_detail('B', ('Recorded',))
+        return result
+
+    monkeypatch.setattr(_SemanticDiagnosticBrowser, 'act', act_then_switch_response_owner)
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch)
+    assert browser.final_actions == 1
+    assert browser.surface.observation.node(1).name == 'B'
+    assert result['outcome'] != 'CONFIRMED', result
+
+
+def test_semantic_final_collection_return_detects_its_own_target_reset(tmp_path, monkeypatch):
+    """The closing collection witness must include the target as well as siblings."""
+    original_goto = _GuardedSemanticDiagnosticBrowser.goto
+    reset_during_final_return = []
+
+    def goto_with_late_reset(browser, url):
+        original_goto(browser, url)
+        if browser.reloads:
+            browser.values['A'] = '3'
+            browser.surface = browser.entry()
+            reset_during_final_return.append(True)
+
+    monkeypatch.setattr(_GuardedSemanticDiagnosticBrowser, 'goto', goto_with_late_reset)
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
+    assert reset_during_final_return, 'the finite verification bracket must return after the detail reload'
+    assert browser.values == {'A': '3', 'B': '9'}
+    assert result['outcome'] != 'CONFIRMED', result
+
+
+def test_semantic_guarded_update_checks_observed_sibling_link_destinations(tmp_path, monkeypatch):
+    """Rendered link destinations are observed row state even with unchanged labels."""
+    original_entry = _GuardedSemanticDiagnosticBrowser.entry
+    original_act = _GuardedSemanticDiagnosticBrowser.act
+
+    def entry_with_destination(browser):
+        surface = original_entry(browser)
+        nodes, properties = list(surface.observation.nodes), {}
+        for node in list(nodes):
+            if node.role == 'heading':
+                link = len(nodes)
+                nodes.append(Node(link, node.parent, 'link', 'Details'))
+                destination = '/A' if node.name == 'A' else getattr(browser, 'sibling_destination', '/B')
+                properties[link] = {'destination': browser.allowed_origin + destination}
+        return _surface(nodes, properties)
+
+    def fill_changes_sibling_destination(browser, action):
+        result = original_act(browser, action)
+        if action.kind == 'type':
+            browser.sibling_destination = '/wrong-record'
+        return result
+
+    monkeypatch.setattr(_GuardedSemanticDiagnosticBrowser, 'entry', entry_with_destination)
+    monkeypatch.setattr(_GuardedSemanticDiagnosticBrowser, 'act', fill_changes_sibling_destination)
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
+    assert browser.values == {'A': '7', 'B': '9'}
+    assert browser.sibling_destination == '/wrong-record'
+    assert result['outcome'] != 'CONFIRMED', result
+
+
+def test_semantic_preflight_stops_when_field_becomes_readonly_without_text_changes(tmp_path, monkeypatch):
+    original_read = _GuardedSemanticDiagnosticBrowser.read
+    changes = []
+
+    def read_with_intervening_contract_change(browser):
+        surface = original_read(browser)
+        if browser.selected is not None and not browser.fills:
+            browser.detail_reads = getattr(browser, 'detail_reads', 0) + 1
+            if browser.detail_reads == 2:
+                changed = deepcopy(surface)
+                field = next(i for i, c in changed.controls.items() if c['label'] == 'Amount')
+                changed.controls[field]['readonly'] = True
+                changes.append((surface.observation.structural_signature(), changed.observation.structural_signature()))
+                browser.surface = changed
+                return changed
+        return surface
+
+    monkeypatch.setattr(_GuardedSemanticDiagnosticBrowser, 'read', read_with_intervening_contract_change)
+    result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
+    assert changes and all(before == after for before, after in changes)
+    assert browser.fills == browser.final_actions == 0
+    assert browser.values == {'A': '3', 'B': '9'}
+    assert result['outcome'] != 'CONFIRMED', result

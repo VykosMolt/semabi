@@ -13,7 +13,7 @@ from __future__ import annotations
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 
-from semabi.compiler.v2.graph import ObsGraph, node_text, tokens
+from semabi.compiler.v2.graph import ObsGraph, RESPONSE_ROLES, node_text, tokens
 
 
 def collapsed_template(G: ObsGraph, sig: str, i: int, memo: dict) -> str:
@@ -31,7 +31,11 @@ def collapsed_template(G: ObsGraph, sig: str, i: int, memo: dict) -> str:
         if m == "_" and parts and parts[-1] == "_":
             continue  # a run of data tokens is one slot
         parts.append(m)
-    kids = obs.children(i)
+    # Optional live output is not part of the enclosing object's identity shape.
+    # Only this template projection changes: the parser still traverses every
+    # raw child, extracts its state fields, and owns any nested recovery actions.
+    kids = [c for c in obs.children(i) if not (
+        G.response_independent_structure and obs.node(c).role in RESPONSE_ROLES)]
     ch = [collapsed_template(G, sig, c, memo) for c in kids]
     if n.role == "row" and any(G.column_header(sig, c) for c in kids):
         # the cells of a row under a declared header row are the row's columns, and a

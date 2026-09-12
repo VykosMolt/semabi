@@ -1,5 +1,94 @@
 # Fresh-interface campaign execution record
 
+## Integrated semantic product — active 2026-09-12
+
+- Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
+  `d0b1574` and research `bbd56ef` are ancestors. No cherry-pick or reset.
+- Current milestone: finish the integrated relational API checkpoint; then normal
+  authorized acquisition of complete predictive rivals and workshop composition.
+  Acceptance: standard HTTP discovery/fit/schema/invoke, shared frozen/live
+  language, fresh owner/resource arguments, persistent checked write, restart,
+  relational boundary cases, meaningful learned-binding/condition ablation.
+- Initial diagnosis was coexistence: local-record-v8 did not consume V4.
+  Now a shared serializable V4 artifact supplies owner/relation bindings,
+  ordered conditions, response alternatives and revision to semantic operations.
+  Existing local create/read/update, authentication, idempotency and isolation
+  remain. Supplied primitives are bounded clicks/fills and a guarded-edit wrapper;
+  observed routes, selectors and semantic conditions are learned, not adapters.
+- Evidence boundary: dispatch/workshop/reservoir, generated fixtures, Memos,
+  linkding and Vikunja remain disclosed development. No new reserved application
+  opened. P43 both-arm fall is useful acquisition, not targeting advantage.
+  Learned JOIN, reservoir persistence and review-seal observability remain separate.
+  Original failed assessments, rate-limit confound and snapshot test totals stand.
+- Current real HTTP evidence: `runs/product_semantic_development_v3`.
+  `field_provenance_repair_onboarding.json` republishes four version-3 operations
+  from 542 retained raw steps: zero new actions/writes, 45.362s fit.
+  `fresh_records_field_repaired_write.json`: fresh Indigo/Cobalt quantity20→10,
+  CONFIRMED, 9.196s; independent nine visible checks PASS (reload/owner/siblings).
+  Fit seed3 → actual service/browser restart seed4:
+  `current_restart_refusal.json` refuses Quartz10/Amber with quantity11 unchanged;
+  changing only resource to Cobalt confirms the write in
+  `current_restart_related_write.json`; independent nine checks PASS.
+  Equal-valued distinct owners Indigo10/Amber and Quartz10/Cobalt return different
+  checked responses; both independent thirteen-check evaluations PASS.
+- Current-artifact `current_artifact_ablation.json` reproduces exact HTTP
+  counterfactual under seed4. Removing the learned related binding or all ordered
+  features changes permission to unavailable. Removing comparisons alone still
+  permits through a learned scalar relational conjunction; this is not evidence
+  of comparison-exclusive dependence. Quantity12 retains a complete constant-
+  threshold rival: ambiguity is not missing representation or a guaranteed rule.
+- Checking distinguishes predicted refusal, actual application response,
+  unavailable prediction, and verified result. Fixture check/start only emits
+  a response: the persisted demonstrated business write is the numeric field.
+  Guard refusal may follow write-capable navigation/selection prefixes; no
+  rollback or no-interaction promise. Confirmation brackets a reopened/reloaded
+  target field with equal full observed local inventories including siblings.
+  This is timed observational evidence, not atomicity, a global collection,
+  exactly-once application effects, or exclusive causal attribution.
+- Failure/repair trail retained: v1 chooser stopped at19 actions; v2 304 actions/
+  244 possible writes/302 steps/200.529s had no comparison (missing reloads,
+  group labels and third related value). V3 544 actions/418 possible writes/
+  542 steps/24 reloads/282.487s initially unpublished: non-reflexive same-view
+  matching discarded persistent objects. Raw refit repaired that without new
+  writes. Fresh-name failure was isolated by a2×2 replay to optional unrelated
+  status structure, not spelling. New graphs project explicit status/alert only
+  from enclosing identity shape, retaining raw response evidence. Arbitrary
+  family-key ties and missing-instance field naming then caused failed fits/
+  phantom rivals; both repaired from shared evidence, failures retained.
+  Stable role-path hashes and legacy migration repair cross-process persistence.
+  One checker omitted /dispatch; its setup failure and corrected PASS both remain.
+- Shared observation repairs retain local scope/containment/control evidence,
+  qualify negative membership, and separate delayed belief reconciliation from
+  action effects. Response checks retain whole regions and reject stale,
+  unrelated, wrong-owner or ambiguous notices. Adversarial service/runtime tests
+  cover duplicate labels, wrong targets, sibling drafts/writes, control-only
+  changes, final-navigation collateral effects, target resets and stale policies.
+  HTTP diagnostic tests use supplied fitted artifacts and do not count as new
+  onboarding evidence.
+- Validation of current source: product composition 523 passed/30.52s; focused
+  shared field/key/definition23 passed; real P43 fit/artifact/live parity gate
+  passed. Original whole-repository run was interrupted at reported88% after
+  new concrete defects, 19m32s elapsed; retained journal is NOT a whole-suite
+  pass. Next broad gate will run on a committed isolated snapshot while main
+  continues, under the aggregate12-CPU cap. Historical counts are not combined.
+- Vet attribution: retained transfer frontier reports205 contradictions,
+  288 visibility and83 explained/897 steps;45 explained belongs to a separate
+  403-step local diagnostic. All205 contradiction verdicts are verified-view
+  clicks (144 Appointments/61 Clients), not205 business-response conflicts.
+  Disputed label-keyed form objects and hidden/reappearing views are implicated.
+  Only first40 visibility indices survive, so288 cannot be exhaustively
+  classified; counters overlap. Luna Cancel atstep37 is an observable scoped
+  row change separable from that form ontology. Original assessment unchanged.
+- Jobs/ownership: root API/acquisition; semantic_bridge shared artifact;
+  observation_review workshop composition; fixture_evaluation independent checks.
+  Root owns API8860, dispatch8877, workshop8878, presentation variant8879;
+  unrelated dispatch8910 untouched. No heavy job currently active.
+- Next executable actions: commit integrated source and start isolated broad
+  retention. Extend /learn with budgeted rival-discriminating experiments only
+  when explicitly authorized, and compose workshop intermediate owner/radio/
+  commit routes. Then remeasure original application task denominators and freeze
+  an independently developed reserved-application assessment.
+
 ## Product development resumed (2026-09-09)
 
 The user resumed development from reviewed handoff `c8dd81b` and set the product

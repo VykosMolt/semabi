@@ -43,6 +43,30 @@ class FakeInducer:
         return lits
 
 
+def test_semantic_training_input_digest_rejects_same_length_evidence_substitution():
+    from copy import deepcopy
+    from types import SimpleNamespace
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler.evidence import Step
+    from semabi.compiler.observation import Node, Observation
+    from semabi.compiler.semantic import training_evidence_digest
+
+    before = Observation([Node(0, -1, 'group', ''), Node(1, 0, 'textbox', 'Quantity', value='1')])
+    after = Observation([Node(0, -1, 'group', ''), Node(1, 0, 'textbox', 'Quantity', value='2')])
+    log = SimpleNamespace(steps=[Step(0, 0, Primitive('type', 1, '2'), True, None, 'a', 'b', ['2'])],
+                          observations={'a': before, 'b': after})
+    digest = training_evidence_digest(log)
+    assert training_evidence_digest(deepcopy(log)) == digest
+    changed_action = deepcopy(log)
+    changed_action.steps[0].action = Primitive('type', 1, '3')
+    changed_observation = deepcopy(log)
+    changed_observation.observations['b'].node(1).value = '3'
+    standalone_read = deepcopy(log)
+    standalone_read.observations['c'] = Observation([Node(0, -1, 'heading', 'Another record')])
+    for different in (changed_action, changed_observation, standalone_read):
+        assert len(different.steps) == len(log.steps)
+        assert training_evidence_digest(different) != digest
+
 def _state(**vats):
     return State({(1, k): Obj(1, k, dict(a)) for k, a in vats.items()})
 
@@ -162,3 +186,253 @@ def test_a_path_role_enters_the_language_only_through_comparisons():
     assert {lit for lit in paths if lit[0] == "attr" and lit[1] == "van"} == {("attr", "van", "attr:limit#0", "14")}
     assert ("attr_cmp_ge", "van", "attr:limit#0", "owner", "attr:weight#0") in paths
     assert ("attr", "owner", "attr:weight#0", "10") in paths and ("named", "owner") in paths
+
+
+def test_categorical_path_limit_survives_duplicate_aliases_without_new_evidence():
+    """Keep the explicit language limit without admitting categories through an alias.
+
+    Availability truly governs this synthetic task, but no comparison can express it.
+    Before Alias.path propagated the restriction, these same eight observations became
+    representable merely by adding a second path to the very same resources: point
+    Allowed and one admissible Allowed branch. No new occasion justified that change.
+    """
+    from dataclasses import replace
+    from semabi.compiler.abstract import AbsObj, AbstractState
+    roles = {oc.OWNER: oc.Role(oc.OWNER, 'action', (), 0),
+             'resource': oc.Role('resource', oc.referring.RELATION, ('forward', 'assigned'),
+                                 1, oc.OWNER, path=True)}
+    occasions = []
+    for i in range(8):
+        available = i % 2 == 0
+        owner = AbsObj(0, f'owner{i}', {}, node=0)
+        resource = AbsObj(1, f'resource{i % 3}', {'availability': 'ready' if available else 'busy'},
+                          refs={'in:0': owner.id}, node=1)
+        owner.refs['assigned'] = resource.id
+        state = AbstractState({o.id: o for o in (owner, resource)}, {})
+        occasions.append((state, owner, 'Allowed <>' if available else 'Blocked <>', (resource.key,)))
+    ordinary = oc.learn_control(FakeInducer(), 'Check', occasions, roles)
+    aliased = oc.learn_control(FakeInducer(), 'Check', occasions,
+                              {**roles, 'duplicate': oc.Role('duplicate', oc.referring.RELATION,
+                                                           ('backward', 'in:0'), 1, oc.OWNER, path=True)})
+
+    def answer(model):
+        state, owner = occasions[0][:2]
+        bound, status = model.bind(state, owner)
+        literals = oc._literals(FakeInducer(), state, bound, status, paths=oc._paths(model.roles))
+        return model.predict(literals), set(model.admissible(literals, corroborated=True, hypothesis=oc.LIST))
+
+    assert answer(ordinary) == (oc.UNDETERMINED, set())
+    assert isinstance(aliased.roles['duplicate'], oc.Alias)
+    assert answer(aliased) == (oc.UNDETERMINED, set())
+    assert ordinary.fitted == aliased.fitted == len(occasions)
+    # A full-capability role remains able to learn this categorical task. This is a
+    # supplied-language control, not evidence that comparison-only paths learned it.
+    full_roles = {name: replace(role, path=False) for name, role in roles.items()}
+    full = oc.learn_control(FakeInducer(), 'Check', occasions, full_roles)
+    full_alias = oc.learn_control(FakeInducer(), 'Check', occasions,
+                                 {**full_roles, 'duplicate': oc.Role('duplicate', oc.referring.RELATION,
+                                                                   ('backward', 'in:0'), 1, oc.OWNER)})
+    assert answer(full) == answer(full_alias) == ('Allowed <>', {'Allowed <>'})
+
+
+def test_local_relationship_witness_does_not_require_global_membership_absence():
+    from dataclasses import replace
+    from semabi.compiler.abstract import AbsObj, AbstractState
+
+    owner = AbsObj(0, "record", {}, node=1)
+    old = AbsObj(1, "old", {"capacity": "4"}, refs={"in:0": owner.id}, node=None)
+    current = AbsObj(1, "current", {"capacity": "4"}, refs={"in:0": owner.id}, node=5)
+    state = AbstractState({o.id: o for o in (owner, old, current)}, {})
+    path = oc.Role("resource", oc.referring.RELATION, ("backward", "in:0"), 1,
+                   anchor=oc.OWNER, path=True)
+    model = oc.ControlOutcome("check", roles={oc.OWNER: oc.Role(oc.OWNER, "action", (), 0), "resource": path})
+    bound, status = model.bind(state, owner)
+    assert bound["resource"] is current and status["resource"] == "named"
+    assert state.objs[old.id].refs["in:0"] == owner.id, "local reading must not erase a belief"
+
+    # Two visible members with equal values are two possible targets, not one witness.
+    old.node = 6
+    assert model.bind(state, owner)[1]["resource"] == "ambiguous"
+    old.node = current.node = None
+    assert model.bind(state, owner)[1]["resource"] == "unnamed"
+    # An ordinary persistent relation query still sees the unresolved alternatives.
+    assert len(replace(path, path=False).denotation(state, {oc.OWNER: owner})) == 2
+
+
+def test_raw_categorical_relationship_is_observed_but_not_in_current_path_language():
+    """Crossed names/states isolate a real categorical task from alias coincidence.
+
+    The synthetic task allows a check exactly when its sole displayed resource is Ready.
+    Raw structure/fields/containment are fitted normally; the full-role arm is explicitly
+    supplied language assistance, not a claimed repair or end-to-end learned operation.
+    """
+    from dataclasses import replace
+    from semabi.compiler.observation import Node, Observation
+    from semabi.compiler.v2.graph import ObsGraph
+    from semabi.compiler.v2.hypotheses import Hypotheses
+    from semabi.compiler.v4.abstractor import V4Abstractor
+
+    def page(owner, resources):
+        nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'group', ''),
+                 Node(2, 1, 'heading', 'Task ' + owner), Node(3, 1, 'button', 'Check')]
+        for name, state in resources:
+            root = len(nodes)
+            nodes.extend([Node(root, 1, 'group', ''), Node(root + 1, root, 'heading', 'Resource ' + name),
+                          Node(root + 2, root, 'text', 'Availability'), Node(root + 3, root, 'text', state)])
+        return Observation(nodes)
+
+    # Every owner and related name occurs under both outcomes; no spelling, ordering,
+    # or constant numeric threshold can supply the categorical distinction.
+    rows = [(owner, [(resource, category)]) for owner in ('Alpha', 'Beta', 'Gamma')
+            for resource in ('Cedar', 'Elm', 'Oak') for category in ('Ready', 'Busy')]
+    coverage = [(owner, []) for owner in ('Alpha', 'Beta', 'Gamma')]
+    coverage += [(owner, [('Cedar', 'Ready'), ('Elm', 'Ready')]) for owner in ('Alpha', 'Beta', 'Gamma')]
+    graph = ObsGraph()
+    for owner, resources in [*rows, *coverage]:
+        obs = page(owner, resources)
+        graph.add(obs.structural_signature(), obs)
+    hypothesis = Hypotheses(graph)
+    hypothesis.fit()
+    abstractor = V4Abstractor(graph, hypothesis)
+    occasions = []
+    for owner_name, resources in rows:
+        state = abstractor.abstract(page(owner_name, resources))
+        owner = next(obj for obj in state.objs.values() if obj.node == 1)
+        resource = next(obj for obj in state.objs.values() if obj.node == 4)
+        assert resource.refs == {'in:' + str(owner.tid): owner.id}
+        assert resources[0][1] in resource.attrs.values()
+        occasions.append((state, owner, 'Allowed <>' if resources[0][1] == 'Ready' else 'Blocked <>',
+                          (resource.key,)))
+    roles = {oc.OWNER: oc.Role(oc.OWNER, 'action', (), owner.tid),
+             **oc.relation_roles(abstractor, owner.tid)}
+    path_name, path = next((name, role) for name, role in roles.items() if name != oc.OWNER)
+    assert len(roles) == 2 and path.path
+    supplied = {name: replace(role, path=False) for name, role in roles.items()}
+    variants = {
+        'no_relation': {oc.OWNER: roles[oc.OWNER]},
+        'one_path': roles,
+        'duplicate_path': {**roles, 'alias': replace(path, name='alias')},
+        'supplied_categories': supplied,
+        'supplied_categories_alias': {**supplied, 'alias': replace(path, name='alias', path=False)},
+    }
+    models = {name: oc.learn_control(FakeInducer(), 'Check', occasions, language)
+              for name, language in variants.items()}
+    assert isinstance(models['duplicate_path'].roles['alias'], oc.Alias)
+    assert {model.fitted for model in models.values()} == {18}, 'aliases do not add independent occasions'
+    for category, expected in [('Ready', 'Allowed <>'), ('Busy', 'Blocked <>')]:
+        state = abstractor.abstract(page('New', [('Fresh', category)]))
+        owner = next(obj for obj in state.objs.values() if obj.node == 1)
+        for name, model in models.items():
+            bound, status = model.bind(state, owner)
+            literals = oc._literals(FakeInducer(), state, bound, status, paths=oc._paths(model.roles))
+            answer = model.predict(literals)
+            assert answer == (expected if name.startswith('supplied_categories') else oc.UNDETERMINED)
+    # Equal projected categories do not make two displayed objects a unique witness.
+    for resources, expected in [([], 'unnamed'), ([('Fresh', 'Ready')], 'named'),
+                                ([('Fresh', 'Ready'), ('Other', 'Ready')], 'ambiguous'),
+                                ([('Fresh', 'Ready'), ('Other', 'Busy')], 'ambiguous')]:
+        state = abstractor.abstract(page('New', resources))
+        owner = next(obj for obj in state.objs.values() if obj.node == 1)
+        assert models['one_path'].bind(state, owner)[1][path_name] == expected
+
+
+def test_response_verification_checks_actual_known_branch_not_the_point_prediction():
+    from types import SimpleNamespace
+    from semabi.compiler.observation import Node, Observation
+    from semabi.compiler.semantic import SemanticArtifact
+    from semabi.compiler.v4.emission import Vocabulary
+
+    def page(text):
+        return Observation([Node(0, -1, "group", ""), Node(1, 0, "text", "A"),
+                            Node(2, 0, "text", "B"), Node(3, 0, "button", "Commit"),
+                            Node(4, 0, "status", text)])
+
+    before = page("Waiting")
+    model = oc.ControlOutcome("commit", events={"Accepted <>": 3, "Declined <>": 3},
+                              arg_roles={"Accepted <>": {0: oc.OWNER}, "Declined <>": {0: oc.OWNER}})
+    artifact = SemanticArtifact(SimpleNamespace(emissions=Vocabulary([before])), {"commit": model}, {})
+    prediction = {"control": "commit", "point": "Accepted <>",
+                  "bindings": {oc.OWNER: {"type": 1, "key": "A"}}}
+    observed = artifact.verify_response(before, page("Declined A"), 3, "commit", prediction=prediction)
+    assert observed["verified"], "a surprising known application refusal is still an observable result"
+    wrong = artifact.verify_response(before, page("Declined B"), 3, "commit", prediction=prediction)
+    assert wrong["recognized"] and not wrong["verified"]
+    assert wrong["argument_disagreements"]["0"] == {"expected": "A", "observed": "B"}
+    assert not artifact.verify_response(before, page("Novel A"), 3, "commit", prediction=prediction)["verified"]
+    assert not artifact.verify_response(before, before, 3, "commit", prediction=prediction)["verified"]
+
+
+def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monkeypatch):
+    """Disclosed development corpus: fit raw observations, carry semantics, query fresh pages.
+
+    This is a language/persistence boundary gate, not independent application evidence.
+    The HTTP onboarding and effect verifier are exercised by the service tests.
+    """
+    import copy
+    import json
+    from pathlib import Path
+    from semabi.compiler.evidence import EvidenceLog
+    from semabi.compiler.semantic import SemanticArtifact, fit_semantics
+    from semabi.compiler.v4 import consequence
+
+    root = Path(__file__).resolve().parents[1]
+    training = root / "docs/data/v4/transport/p43/falls2_1702"
+    evaluation = root / "docs/data/v4/transport/first_pass/dispatch/evaluation_v2"
+    original = fit_semantics(training)
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("loading/invocation must not refit")
+
+    monkeypatch.setattr(consequence, "fit", forbidden)
+    restored = SemanticArtifact.from_json(json.loads(json.dumps(original.to_json())))
+    operation = next(op for op in restored.operations() if op["comparison"])
+    control = operation["control"]
+    log = EvidenceLog(evaluation)
+    calls, supported, changed = 0, 0, 0
+    simulated = False
+    for step in log.steps:
+        if step.action.kind != "click" or step.action.target is None:
+            continue
+        page = log.obs(step.before)
+        if original.control_at(page, step.action.target) != control:
+            continue
+        calls += 1
+        expected = original.predict(page, step.action.target)
+        actual = restored.predict(page, step.action.target)
+        assert actual == expected
+        supported += actual["status"] == "supported"
+        if not simulated:
+            editables = restored.relevant_editables(page, step.action.target)
+            assert editables, "the learned comparison must expose its actual editable source"
+            editable = editables[0]
+            assert editable["value"] == page.node(editable["node"]).value
+            assert editable["provenance"][0]["field_node"] == editable["node"]
+            before_signature = page.structural_signature()
+            hypothetical = restored.simulate_edit(page, step.action.target, editable["node"], "999")
+            assert hypothetical["status"] == "represented"
+            assert hypothetical["owner_preserved"]
+            assert hypothetical["application_effect"] == "not executed"
+            assert hypothetical["prediction"]["point"] != actual["point"]
+            assert page.structural_signature() == before_signature
+            assert restored.predict(page, step.action.target) == actual
+            assert restored.owner_at(page, step.action.target)["key"] == actual["owner"]["key"]
+            # The response region is never an editable source, even if it says the
+            # same value as a learned field.
+            from semabi.compiler.v4 import emission
+            for status_node in emission.live_nodes(page):
+                assert restored.simulate_edit(page, step.action.target, status_node, "999")["status"] == "unavailable"
+            simulated = True
+        model = restored.outcomes[control]
+        ablated = copy.copy(model)
+        ablated.pairs = frozenset()
+        restored.outcomes[control] = ablated
+        missing_comparison = restored.predict(page, step.action.target)
+        restored.outcomes[control] = model
+        changed += (missing_comparison["point"], missing_comparison["alternatives"]) != (
+            actual["point"], actual["alternatives"])
+        # Repeated notices are not fresh evidence of a response, even if predicted.
+        assert restored.observe(page, page, control)["changed"] is False
+    assert calls == 8 and supported == 7
+    assert changed > 0, "the learned comparison must change an operational prediction"
+    assert simulated
+    assert restored.metadata == original.metadata

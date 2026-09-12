@@ -9,7 +9,62 @@ when the interface omits an HTML input type. Repeated observed effects establish
 an operation's limited support. Record reads and updates use a unique local
 Edit, Modify or Update action, directly or through a record control advertising
 a menu. Both are tested on two created records. A separate learned route can follow an exact same-origin record link to a unique matching value textbox, even when its label differs from the creation field. This path is separate from the
-relational research pipeline.
+relational research pipeline for those local-record operations. A second, integrated
+path now fits V4 from ordinary onboarding observations and publishes scoped
+`semantic_action` and `semantic_guarded_update` operations. It learns navigation
+and record/resource selection sequences, binds their current owners, and evaluates
+the fitted field comparisons before execution. Disclosed dispatch development
+has completed a relational check and a persisted guarded quantity update through
+HTTP, with independent target and sibling checks. This is not an independent-app
+transport assessment or a learned dispatch/start business-state transition.
+
+Use `--inspect` with the client to inspect a returned operation's learned
+conditions, prerequisites, output description and supported scope. Onboarding is
+still bounded: an unfamiliar layout may yield no operation. Semantic exploration
+can require a larger authorized action budget than the local creation path.
+All navigation replays, selections, attempted edits and reloads count. Fitting
+time and reused evidence steps are reported separately; explicit relearning can
+refit this connection's prior onboarding after a code repair without repeating
+its exploratory writes. Loading a published artifact after restart does not fit.
+
+For a returned guarded schema with `target`, `selection_2`, `value` and `expect`,
+the first two arguments identify exact headings within learned local rows;
+`value` supplies the new field value and `expect` selects a returned response
+alternative. Use the names and enum values actually returned by your connection.
+The operation simulates that value with the same fitted field/binding language
+used during learning. A requested response supported by all empirical alternatives
+can permit the fill; a point prediction alone cannot. This is an empirical guard
+requested by the caller, not a universal application prerequisite.
+
+`PREDICTED_REFUSAL` means the supported alternatives exclude the requested
+response. `PREDICTION_UNAVAILABLE` includes ambiguity and unavailable bindings;
+neither performs the guarded field fill. The learned navigation/selection prefix
+has already run and remains visible in the execution's action and write counts.
+This guard does not promise rollback or an atomic multi-step transaction.
+`APPLICATION_REFUSAL` is reserved for an actual refusal without an unresolved
+partial effect. A checking operation can return a confirmed negative answer;
+that differs from refusing to execute the checking operation.
+
+For semantic checks, `CONFIRMED` verifies a newly observed known response in
+its learned region, with any response arguments grounded to the intended objects.
+The learned checking slice also requires the action owner to remain observable
+after the action; navigational completion needs a different learned correspondence.
+For guarded updates it additionally requires the intended field after reopening
+and reload, bracketed by matching rendered collection inventories that include
+the target and neighboring rows, including duplicate-name occurrences. It finishes
+on that collection view. These are separate timed observations, not a claim of
+simultaneously known global state or a complete collection. An unrelated notice,
+repeated stale response, or several unresolved
+response regions cannot confirm completion. These are observed outcomes, not
+exclusive causal attribution under concurrent external activity. The current
+procedure language is a bounded sequence of observed clicks and fills; arbitrary
+branches, loops, JOIN and aggregates are not established by this slice.
+The local-record path selects among supplied creation/read/update procedure
+families, learning their fields, bindings and supported completion steps. The
+semantic path learns navigation/selection sequences from observed transitions;
+the conditional fill-and-check wrapper is supplied, while its relational field
+bindings, response alternatives and numeric conditions come from V4. Neither
+path claims unrestricted program induction.
 
 ## Start
 

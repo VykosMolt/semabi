@@ -29,6 +29,21 @@ from playwright.sync_api import sync_playwright
 
 from semabi.compiler.observation import Node, Observation
 
+SCOPE_STATE_JS = r"""
+    for (const [attribute, key] of [['aria-expanded','expanded'], ['aria-busy','busy'],
+                                   ['aria-selected','selected'], ['aria-pressed','pressed']]) {
+      const value = e.getAttribute(attribute);
+      if (value === 'true' || value === 'false') n[key] = value === 'true';
+    }
+    if (e.getAttribute('aria-pressed') === 'mixed') n.pressed = 'mixed';
+    if (e.tagName.toLowerCase() === 'details') n.expanded = e.open;
+    for (const [attribute, key] of [['aria-rowcount','row_count'], ['aria-rowindex','row_index'],
+                                   ['aria-setsize','set_size'], ['aria-posinset','pos_in_set']]) {
+      const value = e.getAttribute(attribute);
+      if (value !== null && /^-?\d+$/.test(value)) n[key] = Number(value);
+    }
+"""
+
 SNAPSHOT_JS = r"""
 () => {
   const roleOf = (e) => {
@@ -58,11 +73,17 @@ SNAPSHOT_JS = r"""
     if (['button','link','heading','text','listitem','cell','alert'].includes(role) && e.childElementCount===0) name = (e.textContent||'').replace(/\s+/g,' ').trim();
     else name = ownText(e);
     if (e.getAttribute('aria-label')) name = e.getAttribute('aria-label');
+    else {
+      const refs = (e.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean)
+        .map(id => document.getElementById(id)).filter(n => n && visible(n));
+      if (refs.length) name = refs.map(n => n.innerText || '').join(' ').replace(/\s+/g, ' ').trim();
+    }
     const n = { i: nodes.length, parent, role, name };
     const r = e.getBoundingClientRect(); n.bbox = [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)];
     if (t === 'input' || t === 'textarea') { if (role==='checkbox'||role==='radio') n.checked = !!e.checked; else n.value = e.value; if (e.placeholder) n.placeholder = e.placeholder; }
     if (t === 'select') { n.options = Array.from(e.options).map(o=>o.textContent.trim()); n.value = e.selectedIndex>=0 ? e.options[e.selectedIndex].textContent.trim() : ''; }
     if (e.getAttribute('aria-current')) n.current = true;
+    /* OBSERVATION_SCOPE */
     if (role==='group' && !name && e.childElementCount===0) return;
     nodes.push(n); handles.push(e);
     const idx = n.i;
@@ -72,7 +93,7 @@ SNAPSHOT_JS = r"""
   window.__semabi_nodes = handles;
   return nodes;
 }
-"""
+""".replace('/* OBSERVATION_SCOPE */', SCOPE_STATE_JS)
 
 
 _NAVIGATION_SIGNATURES = (

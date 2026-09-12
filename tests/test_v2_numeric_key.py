@@ -16,6 +16,41 @@ from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses
 
 
+def test_family_consistency_does_not_replace_agreed_keys_by_lexical_ties(monkeypatch):
+    from semabi.compiler.v2.hypotheses import UnitHyp, UnitInstance
+
+    for selected, rival in [('a', 'z'), ('z', 'a')]:
+        hypotheses = Hypotheses(ObsGraph())
+        units = []
+        for template in ('row[a]', 'row[b]'):
+            unit = UnitHyp(template, [
+                UnitInstance(str(i), 1, template, {selected: name, rival: alias}, {}, [])
+                for i, (name, alias) in enumerate([('Alpha', 'First'), ('Beta', 'Second')])],
+                key_slot=selected)
+            hypotheses._slot_stats(unit)
+            units.append(unit)
+        monkeypatch.setattr(hypotheses, '_families', lambda: [units])
+        hypotheses._family_keys()
+        assert [unit.key_slot for unit in units] == [selected, selected]
+        assert all(rival in unit.slots for unit in units)  # alternative evidence survives
+
+
+def test_family_consistency_repairs_disagreement_only_with_supported_common_key(monkeypatch):
+    from semabi.compiler.v2.hypotheses import UnitHyp, UnitInstance
+
+    hypotheses = Hypotheses(ObsGraph())
+    units = []
+    for template, local in [('row[a]', 'first_local'), ('row[b]', 'second_local')]:
+        unit = UnitHyp(template, [
+            UnitInstance(str(i), 1, template, {'common': name, local: alias}, {}, [])
+            for i, (name, alias) in enumerate([('Alpha', 'First'), ('Beta', 'Second')])], key_slot=local)
+        hypotheses._slot_stats(unit)
+        units.append(unit)
+    monkeypatch.setattr(hypotheses, '_families', lambda: [units])
+    hypotheses._family_keys()
+    assert [unit.key_slot for unit in units] == ['common', 'common']
+
+
 def build(*rows) -> Observation:
     return Observation([Node(i, p, r, n) for i, (r, n, p) in enumerate(rows)])
 

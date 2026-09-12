@@ -246,7 +246,8 @@ def test_authentication_openapi_and_body_validation(api):
     assert limits["properties"]["max_seconds"]["exclusiveMinimum"] == 0
     assert limits["properties"]["max_seconds"]["maximum"] == 600
     assert set(description["components"]["schemas"]["InvocationResult"]["properties"]["outcome"]["enum"]) == {
-        "CONFIRMED", "APPLICATION_REFUSAL", "FAILED_BEFORE_EFFECT", "UNCERTAIN"}
+        "CONFIRMED", "APPLICATION_REFUSAL", "FAILED_BEFORE_EFFECT", "UNCERTAIN",
+        "PREDICTED_REFUSAL", "PREDICTION_UNAVAILABLE"}
     assert "/v1/executions/{execution_id}" in description["paths"]
     assert "/v1/connections/{connection_id}/operations/{operation_id}/invoke" in description["paths"]
     assert api.service.token not in json.dumps(description)
@@ -260,6 +261,7 @@ def test_learning_requires_scope_and_cannot_inject_versions_or_expand_budgets(ap
     assert api.request("POST", f"/v1/connections/{disabled}/learn", {})[0] == 409
     connection_id = api.connect()
     for settings in ({"_operation_versions": {"create": 100}}, {"_existing_operations": [operation()]},
+                     {"_semantic_training_operations": [operation()]},
                      {"max_actions": 13}, {"max_writes": 4}, {"credentials": {}}):
         assert api.request("POST", f"/v1/connections/{connection_id}/learn", {"settings": settings})[0] == 400
     assert api.fake.settings == []
@@ -493,6 +495,138 @@ def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_repla
         api.close()
 
 
+@pytest.mark.parametrize('later_log', ['none', 'identical', 'changed_trial', 'ambiguous_unrecorded_step'])
+def test_http_relearning_uses_stale_semantic_training_without_replaying_old_procedures(
+        tmp_path, monkeypatch, later_log):
+    """Real service/runtime recovery; supplied fit result isolates evidence selection.
+
+    Historical artifacts are training provenance only. This test does not induce a
+    model or claim browser learning; any browser action during reuse is an error.
+    """
+    from copy import deepcopy
+    from types import SimpleNamespace
+    import test_operation_runtime as diagnostics
+    from semabi.compiler.browser import Primitive
+    from semabi.compiler.evidence import EvidenceLog
+    from semabi.compiler.runtime import Runtime
+    from semabi.compiler import semantic, semantic_runtime
+
+    browser_calls, captured_settings, fitted_steps, runtimes, acquisition_attempts = [], [], [], [], []
+
+    class NoExplorationBrowser:
+        allowed_origin = 'https://synthetic.invalid'
+
+        def __getattr__(self, name):
+            if name == 'close':
+                return lambda: None
+            def prohibited(*args, **kwargs):
+                browser_calls.append(name)
+                raise AssertionError('historical procedure must not be executed during pure refit')
+            return prohibited
+
+    def factory(directory):
+        runtime = Runtime(directory)
+        original_learn = runtime.learn
+        def learn(connection, settings, emit):
+            captured_settings.append(deepcopy(settings))
+            return original_learn(connection, settings, emit)
+        runtime.learn = learn
+        runtimes.append(runtime)
+        return runtime
+
+    def fit(directory):
+        fitted_steps.extend(step.to_json() for step in EvidenceLog(directory).steps)
+        return SimpleNamespace(metadata={'fit_seconds': 0}, operations=lambda: [], to_json=lambda: {})
+
+    monkeypatch.setattr(semantic, 'fit_semantics', fit)
+    # A scheduling spy isolates ambiguity handling; it supplies no trials or actions.
+    monkeypatch.setattr(semantic_runtime, 'acquire', lambda *args: acquisition_attempts.append(True))
+    api = HTTPHarness.__new__(HTTPHarness)
+    api.fake = SimpleNamespace(release=threading.Event())
+    api.service = Service(tmp_path / 'service', runtime_factory=factory)
+    try:
+        api.server = make_server(api.service, port=0)
+    except BaseException:
+        api.service.close(timeout=5)
+        raise
+    api.base = 'http://127.0.0.1:' + str(api.server.server_port)
+    api.thread = threading.Thread(target=api.server.serve_forever, kwargs={'poll_interval': 0.01}, daemon=True)
+    api.thread.start()
+    try:
+        connections = []
+        for _ in range(2):
+            connection, job = api.service.store.create_connection({
+                'url': NoExplorationBrowser.allowed_origin + '/',
+                'scope': {'exploration_enabled': True, 'max_actions': 20, 'max_writes': 10}}, {})
+            assert api.service.store.start_job(job)
+            api.service.store.finish_job(job, {'status': 'CONNECTED'})
+            runtimes[0].sessions[connection['id']] = NoExplorationBrowser()
+            connections.append(connection)
+        current, foreign = connections
+        log = EvidenceLog(runtimes[0].data_dir / current['id'] / 'evidence' / 'prior-onboarding')
+        trials = []
+        for owner in ('A', 'B'):
+            before = diagnostics._semantic_diagnostic_detail(owner, ('Waiting',)).observation
+            after = diagnostics._semantic_diagnostic_detail(owner, ('Recorded',)).observation
+            step = log.add_step(0, Primitive('click', 2), True, None, before, after)
+            trials.append({'before': step.before, 'after': step.after, 'node': 2, 'route': [],
+                           'action': {'kind': 'click', 'descriptor': {'role': 'button', 'label': 'Check'}}})
+        if later_log == 'ambiguous_unrecorded_step':
+            after = log.observations[trials[-1]['after']]
+            log.add_step(0, Primitive('reload'), True, None, after, after)
+        if later_log != 'none':
+            decoy = EvidenceLog(log.dir.parent / 'zz-unrelated-invocation')
+            for step in log.steps:
+                action = (Primitive('reload') if later_log == 'changed_trial' else
+                          Primitive('noop') if later_log == 'ambiguous_unrecorded_step' and step.step == len(log.steps) - 1
+                          else deepcopy(step.action))
+                decoy.add_step(0, action, True, None,
+                               log.observations[step.before], log.observations[step.after])
+
+        def historical(version, status, revision, count, support_trials):
+            artifact = operation(version)
+            artifact.update(id='semantic-history', kind='semantic_action', status=status,
+                            procedure={'return_context': {'entry_shape': 'retained', 'returns': []},
+                                       'navigation': [{'must_not_execute': True}]},
+                            support={'semantic_artifact': {'metadata': {
+                                'representation_revision': revision, 'fitted_steps': count}},
+                                     'trials': support_trials, 'edits': []})
+            return artifact
+
+        unrelated = operation()
+        unrelated['status'] = 'STALE'
+        for connection, artifacts in ((current, [unrelated,
+                historical(1, 'SUPERSEDED', 'older-reading', 1, trials[:1]),
+                historical(2, 'STALE', 'current-reading', len(log.steps), trials)]),
+                (foreign, [historical(99, 'ACTIVE', 'foreign-reading', 2, trials)])):
+            job = api.service.store.queue_job(connection['id'], 'learn', {})
+            assert api.service.store.start_job(job)
+            api.service.store.finish_job(job, {'status': 'COMPLETED'}, operations=artifacts)
+        assert api.service.store.operations(current['id']) == []
+        status, accepted = api.request('POST', f"/v1/connections/{current['id']}/learn",
+                                       {'settings': {'max_actions': 20, 'max_writes': 10}})
+        assert status == 202
+        job = api.completed(accepted)
+        assert job['status'] == 'COMPLETED', job
+        assert captured_settings[-1]['_existing_operations'] == []
+        history = captured_settings[-1].get('_semantic_training_operations', [])
+        assert [(item['version'], item['status']) for item in history] == [(2, 'STALE'), (1, 'SUPERSEDED')]
+        assert browser_calls == [], 'neither a fresh scan nor an old live procedure is authorized by artifact reuse'
+        if later_log == 'ambiguous_unrecorded_step':
+            assert fitted_steps == [], 'matching trial rows do not identify the rest of an ambiguous raw history'
+            assert acquisition_attempts == [True], 'ambiguous legacy evidence requires authorized acquisition'
+            assert job['result']['metrics'].get('reused_training_steps', 0) == 0
+        else:
+            assert fitted_steps == [step.to_json() for step in log.steps]
+            assert acquisition_attempts == []
+            assert job['result']['metrics']['reused_training_steps'] == 2
+        assert job['result']['metrics']['actions'] == 0
+        assert job['result']['operations'] == []
+        assert api.service.store.operations(current['id']) == [], 'refit did not reactivate stale procedures'
+    finally:
+        api.close()
+
+
 def test_store_has_one_owner_and_operation_publication_is_transactional(tmp_path):
     store = ArtifactStore(tmp_path / "service")
     try:
@@ -554,3 +688,119 @@ def test_example_client_sends_optional_invocation_limits_only_when_requested(tmp
     if supplied:
         expected["limits"] = {"max_actions": 4, "max_writes": 0, "max_seconds": 1.5}
     assert invoked == [expected]
+
+
+@pytest.mark.parametrize('fault', [None, 'wrong_owner', 'sibling_changed', 'stale_operation',
+                                 'postaction_owner_changed', 'verification_reload_sibling_changed'])
+def test_http_semantic_invocation_uses_real_runtime_and_independent_application_state(tmp_path, monkeypatch, fault):
+    """Supplied artifact setup; actual HTTP queue, Runtime invocation and verification.
+
+    This does not claim browser onboarding or fitting. Unlike FakeRuntime, the
+    controlled browser owns mutable application state and never supplies an outcome.
+    """
+    from types import SimpleNamespace
+    import test_operation_runtime as diagnostics
+    from semabi.compiler.runtime import Runtime, bind_contract
+
+    captured = {}
+
+    def capture_artifact(runtime, connection, artifact, arguments, emit):
+        captured.update(connection=connection, artifact=artifact, arguments=arguments)
+        return {'outcome': 'ARTIFACT_SETUP_ONLY'}
+
+    # Reuse the existing diagnostic artifact builder without invoking it locally.
+    # Restore Runtime.invoke before the service worker is created.
+    with monkeypatch.context() as setup:
+        setup.setattr(Runtime, 'invoke', capture_artifact)
+        _, browser = diagnostics._semantic_diagnostic(
+            tmp_path / 'artifact_setup', monkeypatch, guarded=True,
+            owner='B' if fault == 'wrong_owner' else None,
+            fault='sibling_changed' if fault == 'sibling_changed' else None)
+    browser.close = lambda: None
+    if fault == 'postaction_owner_changed':
+        original_act = browser.act
+
+        def switch_postaction_owner(action):
+            name = browser.surface.observation.node(action.target).name
+            result = original_act(action)
+            if name == 'Check':
+                browser.selected = 'B'
+                browser.surface = browser.detail(('Recorded',))
+            return result
+
+        browser.act = switch_postaction_owner
+    if fault == 'verification_reload_sibling_changed':
+        original_reload = browser.reload
+
+        def reload_with_sibling_effect():
+            surface = original_reload()
+            browser.values['B'] = '7'
+            return surface
+
+        browser.reload = reload_with_sibling_effect
+    artifact = captured['artifact']
+    if fault == 'stale_operation':
+        artifact['support']['policy_version'] = 'obsolete-diagnostic-policy'
+        bind_contract(artifact)
+
+    runtimes = []
+
+    def factory(directory):
+        runtime = Runtime(directory)
+        runtimes.append(runtime)
+        return runtime
+
+    api = HTTPHarness.__new__(HTTPHarness)
+    api.fake = SimpleNamespace(release=threading.Event())  # close() coordination only
+    api.service = Service(tmp_path / 'http_service', runtime_factory=factory)
+    try:
+        api.server = make_server(api.service, port=0)
+    except BaseException:
+        api.service.close(timeout=5)
+        raise
+    api.base = 'http://127.0.0.1:' + str(api.server.server_port)
+    api.thread = threading.Thread(target=api.server.serve_forever, kwargs={'poll_interval': 0.01}, daemon=True)
+    api.thread.start()
+    try:
+        connection, connect_job = api.service.store.create_connection(
+            {key: value for key, value in captured['connection'].items() if key != 'id'}, {})
+        assert api.service.store.start_job(connect_job)
+        api.service.store.finish_job(connect_job, {'status': 'CONNECTED'})
+        runtimes[0].sessions[connection['id']] = browser
+        learn_job = api.service.store.queue_job(connection['id'], 'learn', {})
+        assert api.service.store.start_job(learn_job)
+        api.service.store.finish_job(learn_job, {'status': 'COMPLETED'}, operations=[artifact])
+        status, accepted = api.request('POST', f"/v1/connections/{connection['id']}/operations/{artifact['id']}/invoke",
+                                       {'version': artifact['version'], 'arguments': captured['arguments']},
+                                       headers={'Idempotency-Key': 'real-semantic-diagnostic'})
+        assert status == 202
+        job = api.completed(accepted)
+        assert job['status'] == 'COMPLETED', job
+        status, execution = api.request('GET', '/v1/executions/' + accepted['execution_id'])
+        assert status == 200
+        result = execution['result']
+        if fault is None:
+            assert result['outcome'] == 'CONFIRMED', result
+            assert browser.values == {'A': '7', 'B': '9'}
+            assert browser.fills == browser.final_actions == 1
+        elif fault in {'sibling_changed', 'verification_reload_sibling_changed'}:
+            assert result['outcome'] == 'UNCERTAIN', result
+            assert browser.values == {'A': '7', 'B': '7'}
+            assert browser.fills == 1
+        elif fault == 'postaction_owner_changed':
+            assert result['outcome'] == 'UNCERTAIN', result
+            assert browser.values == {'A': '7', 'B': '9'}
+            assert browser.selected == 'B'
+            assert browser.fills == browser.final_actions == 1
+            assert result['operation_status'] == 'STALE'
+        else:
+            assert result['outcome'] != 'CONFIRMED', result
+            assert browser.values == {'A': '3', 'B': '9'}
+            assert browser.fills == browser.final_actions == 0
+            assert result['operation_status'] == 'STALE'
+            status, _ = api.request('POST', f"/v1/connections/{connection['id']}/operations/{artifact['id']}/invoke",
+                                    {'version': artifact['version'], 'arguments': captured['arguments']},
+                                    headers={'Idempotency-Key': 'new-request-after-suspension'})
+            assert status == 409
+    finally:
+        api.close()

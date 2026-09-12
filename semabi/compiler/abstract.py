@@ -144,6 +144,8 @@ class Diff:
     attr_changes: list[tuple[tuple[int, str], str, Any, Any]]  # (id, slot, old, new)
     rel_changes: list[tuple[tuple[int, str], str, Any, Any]]  # (id, 'parent'|slot, old, new)
     view_changes: dict[str, tuple[Any, Any]]
+    attr_revisions: list[tuple[tuple[int, str], str, Any, Any]] = field(default_factory=list)
+    rel_revisions: list[tuple[tuple[int, str], str, Any, Any]] = field(default_factory=list)
 
     @property
     def domain_changed(self) -> bool:

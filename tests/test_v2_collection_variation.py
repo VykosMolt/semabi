@@ -772,3 +772,39 @@ def test_a_slot_that_restates_the_units_own_key_is_not_an_attribute():
     assert not H._is_attribute(u, "button#0") and not H._is_attribute(u, "button#1")
     assert not H._is_attribute(u, "heading#0")
     assert H._is_attribute(u, "text#0") and H._is_attribute(u, "text#0@3") and H._is_attribute(u, "button#2")
+
+
+@pytest.mark.parametrize("sid", ["button#0", "button#0@3"])
+@pytest.mark.parametrize("reverse", [False, True])
+def test_restatement_keeps_a_minority_state_even_when_it_omits_the_name(sid, reverse):
+    H = Hypotheses.__new__(Hypotheses)
+    template = "group[](heading[_],button[_])"
+    pairs = [(name, f"Follow {name}") for name in ("Ada", "Bea", "Cal", "Dee")]
+    pairs.append(("Eve", "Unfollow"))
+    if reverse:
+        pairs.reverse()
+    unit = UnitHyp(template, [], key_slot="heading#0")
+    unit.instances = [UnitInstance(str(i), i, template, {"heading#0": name, sid: value}, {}, [])
+                      for i, (name, value) in enumerate(pairs)]
+    assert H._is_attribute(unit, sid)
+    # Omitting a name under the same remainder does not introduce a changing state.
+    for inst in unit.instances:
+        if inst.slots[sid] == "Unfollow":
+            inst.slots[sid] = "Follow"
+    assert not H._is_attribute(unit, sid)
+
+
+def test_repeated_and_duplicate_names_do_not_replace_evidence_of_the_remainder():
+    H = Hypotheses.__new__(Hypotheses)
+    template = "group[](heading[_],button[_])"
+    unit = UnitHyp(template, [], key_slot="heading#0")
+    unit.instances = [UnitInstance(str(i), i, template,
+                                  {"heading#0": name, "button#0": f"Open {name} for {name}"}, {}, [])
+                      for i, name in enumerate(("Ada", "Bea", "Ada", "Cal"))]
+    assert not H._is_attribute(unit, "button#0")
+    # Duplicate visible names have unresolved identity but still show a local state
+    # difference; neither their spelling nor the order of their rows erases it.
+    unit.instances[2].slots["button#0"] = "Close Ada for Ada"
+    assert H._is_attribute(unit, "button#0")
+    unit.instances.reverse()
+    assert H._is_attribute(unit, "button#0")

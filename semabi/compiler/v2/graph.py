@@ -9,6 +9,7 @@ occur: among siblings, across views, or across time.
 """
 from __future__ import annotations
 
+import hashlib
 import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
@@ -93,6 +94,7 @@ class TextTemplate:
 # at the same slot is content, whichever member it happens to be in.
 COLLECTIONS = {"table", "rowgroup", "list", "grid", "treegrid", "listbox", "menu", "tree"}
 WIDGET_ROLES = {"button", "link", "checkbox", "radio", "combobox", "textbox"}
+RESPONSE_ROLES = frozenset({"status", "alert"})
 
 
 class ObsGraph:
@@ -104,6 +106,10 @@ class ObsGraph:
     judge_by_collection: bool = True
 
     def __init__(self):
+        # Identity shape is independent of explicit response presentation. The
+        # nodes, their fields and their actions remain ordinary observations.
+        # A log may be a primary collection and is deliberately not projected.
+        self.response_independent_structure = True
         self.nodes: dict[tuple[str, int], NodeDesc] = {}
         self.obs: dict[str, Observation] = {}
         self.templates: dict[str, TextTemplate] = {}  # position -> template
@@ -116,7 +122,7 @@ class ObsGraph:
         self._declared_headers: set[str] = set()  # texts of header rows in a row group of their own
         self.listings: dict[str, frozenset[int]] = {}  # undeclared collections: containers of same-shaped children
         self._texts_at: dict[tuple, Counter] = defaultdict(Counter)  # leaf texts by (view, indexed position)
-        self._skeleton: dict[str, int] = {}  # observation -> its view skeleton
+        self._skeleton: dict[str, str] = {}  # observation -> stable view skeleton
         self._pooled_views: dict[tuple, TextTemplate] = {}
         self._seen: set[str] = set()   # every token the corpus read anywhere, headers and options included
         self._value_paths: set[str] | None = None
@@ -124,6 +130,49 @@ class ObsGraph:
         self.header: set[tuple[str, int]] = set()  # (sig, node) cells of a table's first row
         self.header_strings: dict[tuple[str, int], set[str]] = defaultdict(set)  # (table path, col) -> strings
         self.learning: bool = True  # False once fitted: read new observations, learn nothing from them
+
+    @staticmethod
+    def stable_skeleton(paths) -> str:
+        return "paths:" + hashlib.sha256(repr(sorted(set(paths))).encode()).hexdigest()
+
+    def view_skeleton(self, obs, paths) -> str:
+        excluded = set()
+        if self.response_independent_structure:
+            for node in obs.nodes:
+                if node.role in RESPONSE_ROLES:
+                    excluded.update(obs.subtree(node.i))
+        return self.stable_skeleton(path for node, path in paths.items() if node not in excluded)
+
+    def restore_stable_skeletons(self) -> None:
+        """Rekey legacy process-random indexes from their retained structural paths.
+
+        No observation, token statistic, or learned interpretation is added. The
+        caller restores the artifact's structural policy before this migration.
+        """
+        mapping = {}
+        for sig, old in self._skeleton.items():
+            obs = self.obs[sig]
+            paths = {node.i: self.nodes[(sig, node.i)].path for node in obs.nodes}
+            new = self.view_skeleton(obs, paths)
+            if old in mapping and mapping[old] != new:
+                raise ValueError("legacy view skeleton conflates distinct retained structures")
+            mapping[old] = new
+        self._skeleton = {sig: mapping[old] for sig, old in self._skeleton.items()}
+
+        def rekey(values, position):
+            result = {}
+            for key, value in values.items():
+                key = tuple(mapping.get(part, part) if i == position else part
+                            for i, part in enumerate(key))
+                if key in result:
+                    raise ValueError("legacy view skeleton migration would merge learned statistics")
+                result[key] = value
+            return result
+
+        self._texts_at = defaultdict(Counter, rekey(self._texts_at, 0))
+        self.templates_v = rekey(self.templates_v, 2)
+        self.variation_key = {key: (value[0], value[1], mapping.get(value[2], value[2]))
+                              for key, value in self.variation_key.items()}
 
     def data_set(self) -> set[str]:
         """Data tokens: numbers, and tokens that vary within a position, except tokens that
@@ -356,7 +405,7 @@ class ObsGraph:
             shapes[x] = obs.node(x).role + ("(" + ",".join(shapes[c] for c in ch) + ")" if ch else "")
         for n in obs.nodes:
             shapes.setdefault(n.i, n.role)
-        skel = hash(frozenset(paths.values()))  # which view this is (set of role paths)
+        skel = self.view_skeleton(obs, paths)
         listings = frozenset(x for x in shapes if self._listing(obs, x, shapes))
         self.listings[sig] = listings
         self._skeleton[sig] = skel

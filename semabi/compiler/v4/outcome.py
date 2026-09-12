@@ -117,6 +117,13 @@ class Alias:
     def anchor(self):
         return next((p.anchor for p in self.parts if p.anchor), None)
 
+    @property
+    def path(self):
+        # Several expressions for the same restricted role do not add nominal
+        # evidence. Preserve any full role's existing capability, but never create
+        # it merely by aligning two comparison-only paths through a message.
+        return all(getattr(part, "path", False) for part in self.parts)
+
     def denotation(self, state, bound: dict) -> list:
         for part in self.parts:
             hits = part.denotation(state, bound)
@@ -137,6 +144,14 @@ class Role:
 
     def denotation(self, state, bound: dict) -> list:
         here = [o for o in state.objs.values() if o.tid == self.tid]
+        if self.path:
+            # A comparison path reads the objects this observation displays. A holder
+            # displaying a new member need not prove that every previously seen member
+            # ceased to belong to it: those retained beliefs remain available to other
+            # questions, but do not compete with the local field occurrence being read.
+            # Lightweight callers without node provenance retain their existing scope.
+            here = [o for o in here if not hasattr(o, "node")
+                    or (isinstance(o.node, int) and o.node >= 0)]
         if self.kind == referring.SINGLETON:
             return here
         if self.kind == referring.PROPERTY:

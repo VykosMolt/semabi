@@ -9,7 +9,7 @@ from __future__ import annotations
 import time
 from urllib.parse import urlsplit
 
-from semabi.compiler.browser import ActionResult, Browser, Primitive
+from semabi.compiler.browser import ActionResult, Browser, Primitive, SCOPE_STATE_JS
 from semabi.compiler.observation import Node, Observation
 from semabi.compiler.surface import Surface, digest
 
@@ -111,7 +111,7 @@ SURFACE_JS = r"""() => {
     const role = roleOf(e), interactive = ['button','link','textbox','combobox','checkbox','radio','menu','menuitem'].includes(role);
     const paragraph = ['p', 'pre'].includes(tag) && !e.isContentEditable;
     const completeText = paragraph ? paragraphText(e) : null;
-    let name = interactive ? label(e) : completeText ?? ownText(e);
+    let name = interactive ? label(e) : (label(e) || (completeText ?? ownText(e)));
     if (!name && !paragraph && ['button','link','menuitem','heading','text','cell','alert','status','listitem'].includes(role))
       name = text(e.innerText);
     if (!name && role === 'button' && tag === 'input') name = text(e.value);
@@ -129,6 +129,7 @@ SURFACE_JS = r"""() => {
       n.value = e.selectedIndex >= 0 ? text(e.options[e.selectedIndex].textContent) : '';
     }
     if (e.getAttribute('aria-current')) n.current = true;
+    /* OBSERVATION_SCOPE */
     nodes.push(n); handles.push(e);
     if (interactive) controls[i] = {role, label:name, input_type:type, required:!!e.required,
       disabled:!!e.disabled || e.getAttribute('aria-disabled') === 'true', readonly:!!e.readOnly,
@@ -149,7 +150,7 @@ SURFACE_JS = r"""() => {
   }
   window.__semabi_nodes = handles;
   return {nodes, controls, forms, text_boundaries};
-}"""
+}""".replace('/* OBSERVATION_SCOPE */', SCOPE_STATE_JS)
 
 
 def origin_of(url: str) -> str:

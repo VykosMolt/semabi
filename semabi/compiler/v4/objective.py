@@ -39,7 +39,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
-from semabi.compiler.abstract import diff
+from semabi.compiler.abstract import AbstractState, diff
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.v2.abstractor import V2Abstractor
 from semabi.compiler.v2.graph import node_text
@@ -206,6 +206,9 @@ class Behaviour:
     # names and rendered values, which come from the page -- and drops object identities
     # and type ids, which are private to a reading and would make every pair differ.
     delta_signatures: dict[int, tuple] = field(default_factory=dict)
+    # Candidate-specific delayed observations, available for later attribution. These
+    # are deliberately excluded from effect signatures and the explanatory score.
+    revisions: dict[int, dict[str, Any]] = field(default_factory=dict)
 
     @property
     def errors(self) -> int:
@@ -332,6 +335,10 @@ def _drop_revisions(delta, prev) -> None:
     learned operator then 'explains' -- churn the fragmentation itself manufactures."""
     out_of_view = {oid for oid, o in prev.objs.items() if o.node is None or o.node < 0}
     if out_of_view:
+        # Keep delayed discoveries available for later attribution with additional
+        # evidence. They do not enter this adjacent step's effect explanation.
+        delta.attr_revisions.extend(c for c in delta.attr_changes if c[0] in out_of_view)
+        delta.rel_revisions.extend(c for c in delta.rel_changes if c[0] in out_of_view)
         delta.attr_changes = [c for c in delta.attr_changes if c[0] not in out_of_view]
         delta.rel_changes = [c for c in delta.rel_changes if c[0] not in out_of_view]
 
@@ -363,10 +370,25 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                 prev = state
                 continue
             delta = diff(prev, state)
+            # Local identity replacement is evidence about a reading even when the
+            # missing object's existence remains unknown. It must not require deleting
+            # the carried belief or become an application destruction effect.
+            visible_delta = diff(
+                AbstractState({oid: o for oid, o in prev.objs.items()
+                               if o.node is not None and o.node >= 0}, {}),
+                AbstractState({oid: o for oid, o in state.objs.items()
+                               if o.node is not None and o.node >= 0}, {}))
             name = (step.action.target_desc or {}).get("name") if step.action.target_desc else None
             delta.added = [o for o in delta.added
                            if o.id not in discovered and not brought_into_view(o, step.action.kind, name)]
             _drop_revisions(delta, prev)
+            if delta.attr_revisions or delta.rel_revisions:
+                out.revisions[step.step] = {
+                    "before": step.before, "after": step.after,
+                    "attributes": list(delta.attr_revisions),
+                    "relations": list(delta.rel_revisions),
+                    "attribution": "UNESTABLISHED",
+                }
             changed_domain = delta.domain_changed
             sensing = step.action.kind in SENSING_KINDS or (
                 step.action.kind == "click" and name in A.verified_view_controls)
@@ -390,9 +412,10 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                     out.visibility += 1
                     out.visibility_steps.append(step.step)
             if changed_domain and not phantom:
-                added = Counter(o.tid for o in delta.added)
-                removed = Counter(o.tid for o in delta.removed)
-                if set(added) & set(removed) or merely_rekeyed:
+                added = Counter(o.tid for o in visible_delta.added)
+                removed = Counter(o.tid for o in visible_delta.removed)
+                visible_rekeyed = any(c[1] == KEY_CHANGE for c in visible_delta.attr_changes)
+                if set(added) & set(removed) or merely_rekeyed or visible_rekeyed:
                     churned = True
                     out.churn += 1
                     out.churn_steps.append(step.step)

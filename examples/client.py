@@ -38,6 +38,8 @@ def main():
     parser.add_argument("--invoke-max-seconds", type=float,
                         help="Runtime elapsed limit up to 600 seconds, excluding queueing/authentication; in-flight work can overrun")
     parser.add_argument("--operation")
+    parser.add_argument("--inspect", action="store_true",
+                        help="Show learned conditions, prerequisites, supported scope and output schemas")
     parser.add_argument("--arguments", help="Optional JSON object using names in the learned argument_schema; omit to discover only")
     parser.add_argument("--idempotency-key", default=None)
     parser.add_argument("--timeout", type=float, default=300)
@@ -103,6 +105,13 @@ def main():
                                      "name": operation["name"], "kind": operation["kind"],
                                      "argument_schema": operation["argument_schema"]}
                                     for operation in operations]}, indent=2), flush=True)
+    if args.inspect:
+        print(json.dumps({"contracts": [{"id": operation["id"], "version": operation["version"],
+                         "output_schema": operation["output_schema"],
+                         "prerequisites": operation["prerequisites"], "scope": operation["scope"],
+                         "learned": operation.get("support", {}).get("learned"),
+                         "effect_checks": operation["effect_checks"]}
+                        for operation in operations]}, indent=2), flush=True)
     if arguments is None:
         print("Schema discovery complete; no invocation submitted.")
         return

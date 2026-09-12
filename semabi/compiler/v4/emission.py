@@ -38,6 +38,7 @@ objects, so an outcome class cannot be defined by the model that is about to be 
 from __future__ import annotations
 
 import re
+from collections import Counter
 from dataclasses import dataclass
 
 from semabi.compiler.observation import Observation
@@ -113,6 +114,61 @@ def live_text(obs: Observation) -> str | None:
     if not ns:
         return None
     return "\n".join(_text(obs.node(i)) for i in ns)
+
+
+@dataclass(frozen=True)
+class ResponseObservation:
+    """Local live-region occurrences; neither their indices nor changes identify a cause.
+
+    Keeping each region intact avoids splitting a multiline response into imaginary
+    channels. Repeated text and concurrent changes remain visible to a completion checker
+    even where the lifted event interface below has no distinguishable output.
+    """
+    before_regions: tuple[tuple[int, str], ...]
+    after_regions: tuple[tuple[int, str], ...]
+    newly_visible_texts: tuple[str, ...]
+    attribution: str = "UNESTABLISHED"
+
+
+def observe_response(before: Observation, after: Observation) -> ResponseObservation:
+    before_regions = tuple((i, _text(before.node(i))) for i in live_nodes(before))
+    after_regions = tuple((i, _text(after.node(i))) for i in live_nodes(after))
+    standing = Counter(text for _, text in before_regions)
+    newly_visible = []
+    for _, text in after_regions:
+        if standing[text]:
+            standing[text] -= 1
+        else:
+            newly_visible.append(text)
+    return ResponseObservation(before_regions, after_regions, tuple(newly_visible))
+
+
+def response_region_path(obs: Observation, node: int) -> tuple[tuple[str, int], ...]:
+    """Structural locator for a live region, independent of its response text.
+
+    Role/sibling ordinals are a correspondence hypothesis, not persistent identity.
+    Fitting must establish the path for a control across its observed owners; a changed
+    layout requires revalidation. Local node indices are never carried between pages.
+    """
+    path = []
+    for index in reversed([node, *obs.ancestors(node)]):
+        here = obs.node(index)
+        siblings = [i for i in obs.children(here.parent) if obs.node(i).role == here.role]
+        path.append((here.role, siblings.index(index)))
+    return tuple(path)
+
+
+def response_locations(before: Observation, after: Observation) -> list[dict]:
+    """Possible locations of newly visible response text.
+
+    An old text moved elsewhere is not evidence of re-emission. When one additional
+    occurrence duplicates a standing text, preserve every possible source: a completion
+    checker must not pick an arbitrary node just because it was later in traversal order.
+    """
+    response = observe_response(before, after)
+    novel = set(response.newly_visible_texts)
+    return [{"node": node, "path": response_region_path(after, node), "text": text}
+            for node, text in response.after_regions if text in novel]
 
 
 def header_cells(obs: Observation) -> set[int]:
@@ -220,22 +276,15 @@ def lift_event(text: str, *pages: Observation, vocabulary: "Vocabulary | None" =
 
 def observed(before: Observation, after: Observation,
              vocabulary: "Vocabulary | None" = None) -> Event | None:
-    """The output this transition produced, or ``None`` where the page does not say.
+    """A changed output surface, not proof of the action that caused it.
 
     ``None`` covers both an application with no live region and one whose live region did not
     change -- see the module docstring for why the second is not read as silence.
     """
-    a, b = live_text(before), live_text(after)
-    if b is None or a == b:
+    response = observe_response(before, after)
+    if not response.newly_visible_texts:
         return None
-    if a is not None and ("\n" in a or "\n" in b):
-        # Several live regions: what this interaction said is the line that was not standing
-        # before it -- dispatch's seal verdict stays on the page while the check answers
-        # beside it, and "Dispatch ready" is the output, not "Dispatch ready Seal held".
-        said = [line for line in b.split("\n") if line not in a.split("\n")]
-        if not said:
-            return None
-        b = "\n".join(said)
+    b = "\n".join(response.newly_visible_texts)
     return lift_event(b, after, before, vocabulary=vocabulary)
 
 
