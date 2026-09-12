@@ -170,7 +170,8 @@ class HTTPHarness:
                             headers={"Idempotency-Key": key} if key else None)
 
 
-@pytest.mark.parametrize('exit_reset', [False, True], ids=['repeated_same_and_different_targets', 'contradicted_next_exit'])
+@pytest.mark.parametrize('exit_reset', [False, True, 'stale_draft'],
+                         ids=['repeated_same_and_different_targets', 'contradicted_next_exit', 'restored_stale_draft'])
 def test_http_typed_updates_end_at_checked_state_and_guard_the_next_continuation(tmp_path, monkeypatch, exit_reset):
     """Ordinary induced artifact and real HTTP worker; application bits are independent.
 
@@ -180,11 +181,16 @@ def test_http_typed_updates_end_at_checked_state_and_guard_the_next_continuation
     from types import SimpleNamespace
     import test_operation_runtime as diagnostics
 
+    controlled_browser = (diagnostics._CheckboxRestoredDraftBrowser() if exit_reset == 'stale_draft'
+                          else diagnostics._CheckboxVerificationExitResetBrowser())
     with monkeypatch.context() as learning:
         runtime, learned_connection, browser, learned = diagnostics._learn_checkbox_records(
-            tmp_path / 'fit', learning, browser=diagnostics._CheckboxVerificationExitResetBrowser())
+            tmp_path / 'fit', learning, browser=controlled_browser)
     operation = diagnostics._checkbox_kind(learned, 'update_visible_record')
-    browser.reset_on_verification_exit = exit_reset
+    if exit_reset == 'stale_draft':
+        browser.restore_stale_drafts = True
+    else:
+        browser.reset_on_verification_exit = exit_reset
     browser.close = lambda: None
     api = HTTPHarness.__new__(HTTPHarness)
     api.fake = SimpleNamespace(release=threading.Event())
@@ -218,6 +224,11 @@ def test_http_typed_updates_end_at_checked_state_and_guard_the_next_continuation
             return execution['result']
 
         first = invoke(0, True)
+        if exit_reset == 'stale_draft':
+            assert browser.persisted_resets == [0]
+            assert [row['Pinned'] for row in browser.rows] == [False, False]
+            assert first['outcome'] != 'CONFIRMED', first
+            return
         assert first['outcome'] == 'CONFIRMED', first
         assert browser.rows[0]['Pinned'] is True and browser.rows[1]['Pinned'] is False
         assert browser.scene == 'editor' and browser.exit_resets == []

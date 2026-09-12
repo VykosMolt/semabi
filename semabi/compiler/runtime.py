@@ -181,8 +181,11 @@ class Trace:
         browser.goto(url)
         return self.read(browser)
 
-    def reload(self, browser) -> Surface:
-        self.budget.take()
+    def reload(self, browser, *, possible_write: bool = False) -> Surface:
+        self.budget.take(writing=possible_write)
+        if possible_write:
+            self.emit({"type": "write_intent", "action": {"kind": "reload"}})
+            self.possible_effect = True
         self.emit({"type": "reload"})
         self.budget.check_deadline()
         return self.observe(browser.reload())
@@ -936,7 +939,19 @@ class Runtime:
         session-local evidence, not an application identity or durable clean flag.
         """
         self._release_verified_editor(browser)
+        # Reopening may restore an unsaved client draft even after a collection
+        # reload. The intended editor itself must survive reload and expose the
+        # complete expected values; absence is not permission to reopen it again.
+        with self._capture_editor(browser, surface, procedure, values, trace) as (captured, retained):
+            fresh = trace.read(browser)
+            candidate = self._checked_editor(browser, fresh, procedure, captured, retained, trace)
+            self._guard_current_editor(fresh, selected_root=candidate["root"])
+            surface = trace.reload(browser, possible_write=True)
         candidate = self._record_form(surface, procedure, values[procedure["anchor"]])
+        if self._read_values(surface, candidate, procedure) != values:
+            raise StopOperation("Reloaded intended editor does not retain the expected typed values", stale=True)
+        self._guard_current_editor(surface, selected_root=candidate["root"])
+        reloaded_observation = surface.observation.structural_signature()
         trace.budget.check_deadline()
         receipt = {"procedure": deepcopy(procedure), "values": deepcopy(values),
                    "state": self._editor_state(surface, candidate), "version": None,
@@ -950,7 +965,8 @@ class Runtime:
             trace.emit({"type": "verified_editor_terminal", "observation": observation,
                         "target": values[procedure["anchor"]]})
             return {"values": deepcopy(values), "observation": observation,
-                    "fields": deepcopy(procedure["boolean_fields"]), "terminal_view": "verified_editor"}
+                    "fields": deepcopy(procedure["boolean_fields"]), "terminal_view": "verified_editor",
+                    "editor_reload": reloaded_observation, "verification": "direct_editor_reload_v1"}
         except Exception:
             self._release_verified_editor(browser)
             raise
@@ -1294,8 +1310,12 @@ class Runtime:
             # learned optional completion, reload, selected-owner reopening and
             # one prior clean-editor continuation (no terminal exit).
             continuation = int(browser in self._verified_editors)
-            self._reserve_record_actions(trace, 6 + requested + completions + 2 * menu + continuation,
-                                         3 + requested + completions + 2 * menu + continuation)
+            self._reserve_record_actions(trace, 7 + requested + completions + 2 * menu + continuation,
+                                         4 + requested + completions + 2 * menu + continuation)
+        elif procedure.get("boolean_fields"):
+            continuation = int(browser in self._verified_editors)
+            menu = int("menu_trigger" in procedure)
+            self._reserve_record_actions(trace, 3 + menu + continuation, 2 + menu + continuation)
         continued = self._continue_verified_editor(browser, trace, operation=operation)
         target = arguments[procedure["selector_argument"]]
         replacing = (operation["kind"] == "update_visible_record" and
@@ -1355,6 +1375,8 @@ class Runtime:
             evidence = procedure.get("boolean_trials", [])
             if procedure.get("checkbox_exit_preservation") != "exit_reload_reopen_v1":
                 raise StopOperation("Checkbox continuation has no declared observed exit procedure")
+            if procedure.get("checkbox_editor_reload") != "direct_editor_reload_v1":
+                raise StopOperation("Checkbox verification has no established intended-editor reload")
             for name, descriptor in boolean_fields.items():
                 by_owner = {}
                 for trial in evidence:
@@ -1362,6 +1384,8 @@ class Runtime:
                         value = trial["requested"]
                         if (type(value) is not bool or trial["readback"]["values"].get(name) is not value
                                 or trial["readback"]["fields"].get(name) != descriptor
+                                or trial["readback"].get("verification") != "direct_editor_reload_v1"
+                                or not trial["readback"].get("editor_reload")
                                 or trial["readback"].get("exit_preservation", {}).get("values", {}).get(name) is not value):
                             raise StopOperation("Checkbox persistence contrast is unverified")
                         by_owner.setdefault(trial["target"], set()).add(value)
@@ -1469,9 +1493,9 @@ class Runtime:
             operation["scope"]["checkbox_fields"] = (
                 "Known native boolean state in the selected retained editor; no label meaning or boolean creation claim")
             operation["prerequisites"].append("Uniquely bound native checkbox fields expose known boolean state")
-            operation["effect_checks"] = (["Typed fields read and rechecked in the final selected retained editor"]
+            operation["effect_checks"] = (["Typed fields read and rechecked in the final selected reloaded and retained editor"]
                 if reading else ["Text and anchor retain learned local slots after save and reload",
-                                 "All expected typed values rechecked in the reopened intended editor",
+                                 "All expected typed values rechecked after directly reloading the intended editor",
                                  "Rendered non-target state checked after save and reload, before final editor navigation"])
             operation["scope"]["terminal_view"] = (
                 "Final verified editor; no subsequent application action. A session-local unchanged-element receipt "
@@ -1479,6 +1503,8 @@ class Runtime:
                 "The receipt is invalid after edits, remount, incompatible version, reconnect, close or failed continuation.")
             operation["prerequisites"].append(
                 "Prior verified editor may be left only through its two-owner, both-value tested exit procedure")
+            operation["prerequisites"].append(
+                "The intended editor itself survives reload with the complete expected typed values; otherwise unestablished")
         if binding:
             operation["prerequisites"].append(
                 "One bound numeric context control retains its label, state, placement and DOM element during the call")
@@ -1644,8 +1670,8 @@ class Runtime:
             return
         menu = int("menu_trigger" in procedure)
         try:
-            self._reserve_record_actions(trace, 4 * len(fields) * (12 + 3 * menu),
-                                         4 * len(fields) * (7 + 3 * menu))
+            self._reserve_record_actions(trace, 4 * len(fields) * (13 + 3 * menu),
+                                         4 * len(fields) * (8 + 3 * menu))
         except StopOperation as error:
             emit({"type": "checkbox_extension_unestablished", "reason": str(error), "writes_started": False})
             return
@@ -1653,6 +1679,7 @@ class Runtime:
         extended["boolean_fields"] = fields
         extended["boolean_trials"] = []
         extended["checkbox_exit_preservation"] = "exit_reload_reopen_v1"
+        extended["checkbox_editor_reload"] = "direct_editor_reload_v1"
         extended["read_fields"].update(fields)
         extended["anchor_mode"] = "immutable"
         extended["update_arguments"] = [name for name in extended["update_arguments"]

@@ -3056,6 +3056,76 @@ class _CheckboxVerificationExitResetBrowser(_CheckboxRecordBrowser):
         return super().goto(url)
 
 
+class _CheckboxRestoredDraftBrowser(_CheckboxRecordBrowser):
+    """Persisted bit can reset on list reload while reopening restores a cached draft."""
+    restore_stale_drafts = False
+
+    def __init__(self):
+        super().__init__()
+        self.checkbox_drafts = {}
+        self.persisted_resets = []
+
+    def act(self, action):
+        name = self.surface.observation.node(action.target).name
+        selected = self.selected
+        result = super().act(action)
+        if name == 'Save' and selected is not None:
+            self.checkbox_drafts[selected] = self.pinned
+        elif name == 'Edit' and self.restore_stale_drafts and self.selected in self.checkbox_drafts:
+            self.pinned = self.checkbox_drafts[self.selected]
+        return result
+
+    def reload(self):
+        if self.restore_stale_drafts:
+            if self.scene == 'list':
+                for index, row in enumerate(self.rows):
+                    if row['Pinned'] is True:
+                        self.persisted_resets.append(index)
+                        row['Pinned'] = False
+            elif self.selected is not None:
+                # A direct editor reload discards the restored draft and reads persistence.
+                self.pinned = self.rows[self.selected]['Pinned']
+        return super().reload()
+
+
+def test_checkbox_learning_cannot_use_restored_editor_draft_as_persistence(tmp_path, monkeypatch):
+    browser = _CheckboxRestoredDraftBrowser()
+    browser.restore_stale_drafts = True
+    _, _, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch, browser=browser)
+    assert browser.persisted_resets, 'at least one true contrast really persisted then reset'
+    assert all(row['Pinned'] is False for row in browser.rows)
+    variants = [op for op in learned['operations'] if op['procedure'].get('boolean_fields')]
+    assert not variants, 'a restored draft must not establish two-owner persistence or exit preservation'
+
+
+def test_checkbox_update_cannot_confirm_a_restored_editor_draft(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_checkbox_records(
+        tmp_path, monkeypatch, browser=_CheckboxRestoredDraftBrowser())
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    browser.restore_stale_drafts = True
+    before = deepcopy(browser.rows)
+    result = runtime.invoke(connection, operation, {'target': before[0]['URL'], 'pinned': True}, lambda _: None)
+    assert browser.persisted_resets == [0]
+    assert browser.rows == before, 'independent persistence refutes requested True'
+    assert result['outcome'] != 'CONFIRMED', result
+
+
+def test_checkbox_different_target_continuation_discloses_prior_hidden_bit_loss(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_checkbox_records(
+        tmp_path, monkeypatch, browser=_CheckboxVerificationExitResetBrowser())
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    browser.reset_on_verification_exit = True
+    first = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL'], 'pinned': True}, lambda _: None)
+    assert first['outcome'] == 'CONFIRMED' and browser.rows[0]['Pinned'] is True
+    events = []
+    second = runtime.invoke(connection, operation, {'target': browser.rows[1]['URL'], 'pinned': True}, events.append)
+    assert second['outcome'] == 'CONFIRMED', second
+    assert [row['Pinned'] for row in browser.rows] == [False, True]
+    assert browser.exit_resets == [0]
+    assert any(event['type'] == 'write_intent' and event.get('action', {}).get('kind') == 'navigate' for event in events)
+    assert 'hidden-state preservation' in second['effect']['scope']
+
+
 def _learn_checkbox_records(tmp_path, monkeypatch, *, fault=None, budget=140, browser=None):
     ticks = count(0, 10)
     monkeypatch.setattr(runtime_module, 'time', SimpleNamespace(monotonic=lambda: next(ticks), sleep=lambda _: None))
@@ -3223,10 +3293,14 @@ def test_checkbox_update_reserves_reopen_verification_before_selection(tmp_path,
     assert (len(browser.actions), browser.navigation_count) == before
 
 
-@pytest.mark.parametrize('limit,value', [('max_actions', 8), ('max_writes', 4)])
+@pytest.mark.parametrize('limit,value', [('max_actions', 9), ('max_writes', 6)])
 def test_checkbox_mixed_procedure_reserves_declared_completion_before_selection(tmp_path, monkeypatch, limit, value):
     runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
     operation = _checkbox_kind(learned, 'update_visible_record')
+    connection['scope'][limit] = value
+    base = runtime.invoke(connection, operation,
+                          {'target': browser.rows[0]['URL'], 'description': 'Plain first update'}, lambda event: None)
+    assert base['outcome'] == 'CONFIRMED', base
     # A supplied completion contract isolates composition budgeting; this is not
     # an additional claim that this fixture discovered a completion widget.
     operation['procedure']['textbox_popups'] = {'description': {
@@ -3238,7 +3312,34 @@ def test_checkbox_mixed_procedure_reserves_declared_completion_before_selection(
     result = runtime.invoke(connection, operation,
                             {'target': browser.rows[0]['URL'], 'description': 'New completion #'}, lambda event: None)
     assert result['outcome'] == 'FAILED_BEFORE_EFFECT', result
+    assert 'budget' in result['effect']['reason']
     assert (len(browser.actions), browser.navigation_count) == before
+
+
+@pytest.mark.parametrize('fault', ['lost_editor', 'wrong_owner'])
+def test_checkbox_final_reload_requires_the_intended_editor_without_reopening_again(tmp_path, monkeypatch, fault):
+    runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    original = browser.reload
+    final_reload = []
+
+    def reload():
+        if browser.scene == 'editor':
+            final_reload.append(True)
+            if fault == 'lost_editor':
+                browser.scene, browser.selected = 'list', None
+            else:
+                browser.selected = 1
+                browser.fields = {name: browser.rows[1][name] for name in browser.labels}
+                browser.pinned = browser.rows[1]['Pinned']
+        return original()
+
+    monkeypatch.setattr(browser, 'reload', reload)
+    result = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL'], 'pinned': True}, lambda _: None)
+    assert result['outcome'] == 'UNCERTAIN' and result['operation_status'] == 'STALE'
+    assert final_reload == [True]
+    assert browser.scene == ('list' if fault == 'lost_editor' else 'editor')
+    assert not runtime._verified_editors
 
 
 @pytest.mark.parametrize('phase', ['reopen_owner', 'reload_neighbor', 'exit_neighbor', 'omitted_text'])
