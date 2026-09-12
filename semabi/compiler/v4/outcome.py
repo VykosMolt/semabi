@@ -517,6 +517,8 @@ class Evidence:
         need = 3 if corroborated else MIN_COVER
         used, states = 0, 0
         proofs = {}
+        covers = {}
+        cover_hits = 0
 
         class Exhausted(Exception):
             pass
@@ -528,11 +530,21 @@ class Evidence:
             used += amount
 
         def cover(condition):
+            nonlocal cover_hits
+            # Different founder triples can have the same exact condition.
+            # Share only its immutable full-row cover, never their protected
+            # founder sets or residual purity/support decisions. Cache work is
+            # charged; lifetime is this one query against these exact masks.
+            spend()
+            if condition in covers:
+                cover_hits += 1
+                return covers[condition]
             result = 0
             for i, mask in enumerate(self.masks):
                 spend()
                 if condition & mask == condition:
                     result |= 1 << i
+            covers[condition] = result
             return result
 
         def proof(program, founders, support):
@@ -663,6 +675,7 @@ class Evidence:
         return Admissibility(out, complete,
                              "exact alternative set" if complete else "LIST search budget exhausted",
                              {"checks": used, "budget": budget, "states": states,
+                              "cover_cache_hits": cover_hits, "cover_cache_entries": len(covers),
                               "rule_calls": 1, "rule_budgeted": False}, proofs)
 
     # ------------------------------------------------------------ the decision-list class

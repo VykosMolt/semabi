@@ -72,6 +72,21 @@ def test_retained_list_query_guard_cannot_replace_its_consumed_founder():
     assert result.complete and not result.options
 
 
+def test_repeated_condition_covers_keep_independent_founder_constraints():
+    facts, query = _ordering_rows()
+    facts = facts * 3
+    result = oc.Evidence(facts).admissibility(query, corroborated=True, hypothesis=oc.LIST)
+    assert result.complete and set(result.options) == _retained_oracle(facts, query)
+    _check_ordered_witnesses(facts, query, result)
+    assert result.work['cover_cache_hits'] > 0
+    # A second evidence set can intern the same bit positions but mean something
+    # different. Cover memoization must not survive between independent queries.
+    changed = [(state, 'Y', bound) for state, _, bound in facts]
+    again = oc.Evidence(changed).admissibility(query, corroborated=True, hypothesis=oc.LIST)
+    assert again.complete and set(again.options) == _retained_oracle(changed, query)
+    _check_ordered_witnesses(changed, query, again)
+
+
 @pytest.mark.parametrize('question,expected', [('open', {'Y'}), ('fresh', set())])
 def test_list_budget_exhaustion_is_neither_uniqueness_nor_empty_language(question, expected):
     evidence = oc.Evidence(rows(*[({'g': 'open'}, 'Y')] * 3,
