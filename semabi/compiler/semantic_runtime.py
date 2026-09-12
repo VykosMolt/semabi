@@ -106,7 +106,8 @@ def step_for(surface, node, route):
     return step
 
 
-def resolve_step(surface, step, arguments=None):
+def _step_matches(surface, step, arguments=None):
+    """Observation-local candidates; neither a choice nor permission to dispatch."""
     if "selector" not in step:
         hits = surface.resolve(step["descriptor"])
     else:
@@ -123,6 +124,11 @@ def resolve_step(surface, step, arguments=None):
                                if spec.get("full_control_label") else
                                [obs.node(i) for i in obs.subtree(region["root"])])) == 1]
         hits = sorted({node for root in roots for node in surface.resolve(descriptor, within=root)})
+    return hits
+
+
+def resolve_step(surface, step, arguments=None):
+    hits = _step_matches(surface, step, arguments)
     if len(hits) != 1:
         _stop("Scoped target has no match" if not hits else "Scoped target has multiple matches")
     if surface.controls[hits[0]]["disabled"]:
@@ -158,7 +164,8 @@ def procedure_context(surface):
 
 def act_step(browser, trace, surface, step, arguments=None):
     node = resolve_step(surface, step, arguments)
-    after = trace.act(browser, surface, Primitive(step["kind"], node, step.get("text")))
+    primitive = Primitive(step["kind"], node, step.get("text"))
+    after = trace.act(browser, surface, primitive)
     if step.get("postcondition"):
         selected = after.observation.node(resolve_step(after, step, arguments))
         if any(getattr(selected, name, None) != value for name, value in step["postcondition"].items()):
@@ -407,6 +414,13 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
         checkpoint()  # active route/cursor survives even interruption inside a replay
         return replay(browser, trace, entry, route, context=context, acquiring=True)
 
+    def completed_unit():
+        # Publish progress and clear its write fence in one durable checkpoint.
+        # Reaching a state during replay is not permission to repeat its effects
+        # after interruption before the acquisition unit was recorded.
+        frontier.pop("in_flight", None)
+        checkpoint()
+
     original_act = trace.act
 
     def fenced_act(browser, surface, primitive, **kwargs):
@@ -417,6 +431,7 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
                 or trace.budget.writes >= trace.budget.max_writes):
             _stop("Interaction budget exhausted")
         counts = (trace.budget.actions, trace.budget.writes)
+        prior_fence = deepcopy(frontier.get("in_flight"))
         frontier["in_flight"] = {"before": surface.observation.structural_signature(),
                                  "action": primitive.to_json(), "status": "DISPATCH_UNRESOLVED"}
         checkpoint()
@@ -425,10 +440,14 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
         except BaseException:
             if counts == (trace.budget.actions, trace.budget.writes):
                 # Budget/deadline rejection before dispatch is a clean interruption.
-                frontier.pop("in_flight", None)
+                if prior_fence is None:
+                    frontier.pop("in_flight", None)
+                else:
+                    frontier["in_flight"] = prior_fence
             checkpoint()
             raise
-        frontier.pop("in_flight", None)
+        # Keep the fence until the caller durably records its completed unit.
+        # This covers postconditions, trial construction and interrupted replay.
         checkpoint()
         return after
 
@@ -459,6 +478,23 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
             while active["button_index"] < len(active["buttons"]):
                 step = active["buttons"][active["button_index"]]
                 surface = revisit(route)
+                matches = _step_matches(surface, step)
+                trace.budget.check_deadline()
+                if len(matches) != 1:
+                    # This one candidate is unsupported on a settled page before
+                    # dispatch. Do not let it suppress independently resolvable
+                    # candidates, and do not treat a post-action failure this way.
+                    receipt = {"index": active["button_index"],
+                               "observation": surface.observation.structural_signature(),
+                               "steps": len(trace.log.steps),
+                               "status": "NO_MATCH" if not matches else "MULTIPLE_MATCHES",
+                               "matches": matches}
+                    active.setdefault("unsupported_buttons", []).append(receipt)
+                    active["button_index"] += 1
+                    completed_unit()
+                    emit({"type": "acquisition_candidate_unsupported", **receipt,
+                          "scope": "This observed candidate only; no action dispatched, not a permanent impossibility claim"})
+                    continue
                 node = resolve_step(surface, step)
                 before = surface
                 checkpoint()
@@ -481,7 +517,7 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
                             frontier["observed_priority"].append(signature)
                         queue.append({"route": new_route, "ancestors": [*ancestors, before_context]})
                 active["button_index"] += 1
-                checkpoint()
+                completed_unit()
             stable_buttons = active["stable_buttons"]
             if "numeric" not in active:
                 surface = revisit(route) if stable_buttons else surface
@@ -530,11 +566,11 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
                             numeric_trials[-1]["persisted"] = restored.observation.structural_signature()
                 active["numeric_results"].append(receipt)
                 active["numeric_index"] += 1
-                checkpoint()
+                completed_unit()
             frontier["completed"].append(key)
             frontier["completed_routes"][key] = active
             frontier["active"] = None
-            checkpoint()
+            completed_unit()
     finally:
         trace.act = original_act
         checkpoint()
@@ -670,8 +706,28 @@ def _validate_frontier(frontier, log, surfaces, trials, edges):
             index = item["button_index"]
             if not 0 <= index <= len(item["buttons"]):
                 raise ValueError("Invalid acquisition cursor")
-            for step in item["buttons"][:index]:
-                if not any(trial["route"] == route and trial["action"] == step for trial in trials):
+            unsupported = {}
+            for receipt in item.get("unsupported_buttons", []):
+                skipped_index = receipt["index"]
+                if type(skipped_index) is not int or not 0 <= skipped_index < index or skipped_index in unsupported:
+                    raise ValueError("Invalid unsupported acquisition candidate index")
+                observed = surfaces[receipt["observation"]]
+                endpoint = receipt["steps"]
+                if (type(endpoint) is not int or not len(route) < endpoint <= count
+                        or not log.steps[endpoint - 1].ok
+                        or log.steps[endpoint - 1].after != receipt["observation"]):
+                    raise ValueError("Unsupported candidate lacks its replay endpoint")
+                for expected, actual in zip(route, log.steps[endpoint - len(route):endpoint]):
+                    if (not actual.ok or actual.action.kind != expected["kind"] or actual.action.text != expected.get("text")
+                            or resolve_step(surfaces[actual.before], expected) != actual.action.target):
+                        raise ValueError("Unsupported candidate lacks its route replay")
+                matches = _step_matches(observed, item["buttons"][skipped_index])
+                if (len(matches) == 1 or receipt["matches"] != matches
+                        or receipt["status"] != ("NO_MATCH" if not matches else "MULTIPLE_MATCHES")):
+                    raise ValueError("Unsupported acquisition candidate lacks matching observed ambiguity or absence")
+                unsupported[skipped_index] = receipt
+            for position, step in enumerate(item["buttons"][:index]):
+                if position not in unsupported and not any(trial["route"] == route and trial["action"] == step for trial in trials):
                     raise ValueError("Completed acquisition action lacks a trial")
             for step in item["stable_buttons"]:
                 if step not in item["buttons"][:index] or not any(

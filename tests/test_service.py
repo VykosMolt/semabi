@@ -1549,6 +1549,56 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
         api.close()
 
 
+def test_http_onboarding_retains_unique_navigation_after_ambiguous_candidates(tmp_path, monkeypatch):
+    """Real HTTP Runtime/onboarding/fit; a rendered route, not a supplied API operation."""
+    from types import SimpleNamespace
+    import test_operation_runtime as diagnostics
+    from semabi.compiler import runtime as runtime_module
+    from semabi.compiler.runtime import Runtime
+
+    browser = diagnostics._AmbiguousAcquisitionBrowser()
+    browser.authenticate = lambda credentials: {'status': 'CONNECTED'}
+    monkeypatch.setattr(runtime_module, 'BrowserSession', lambda *args, **kwargs: browser)
+    monkeypatch.setattr(runtime_module, 'sync_playwright', lambda: SimpleNamespace(
+        start=lambda: SimpleNamespace(stop=lambda: None)))
+    api = HTTPHarness.__new__(HTTPHarness)
+    api.fake = SimpleNamespace(release=threading.Event())
+    api.service = Service(tmp_path/'service', runtime_factory=Runtime)
+    try:
+        api.server = make_server(api.service, port=0)
+    except BaseException:
+        api.service.close(timeout=5)
+        raise
+    api.base = 'http://127.0.0.1:' + str(api.server.server_port)
+    api.thread = threading.Thread(target=api.server.serve_forever, kwargs={'poll_interval': 0.01}, daemon=True)
+    api.thread.start()
+    try:
+        status, accepted = api.request('POST', '/v1/connections', {
+            'url': browser.allowed_origin+'/', 'scope': {'exploration_enabled': True,
+                                                        'max_actions': 40, 'max_writes': 10}})
+        assert status == 202 and api.completed(accepted)['status'] == 'COMPLETED'
+        prefix = '/v1/connections/'+accepted['id']
+        status, accepted = api.request('POST', prefix+'/learn', {
+            'settings': {'max_actions': 40, 'max_writes': 10}})
+        assert status == 202
+        learned = api.completed(accepted)
+        assert learned['status'] == 'COMPLETED', learned
+        assert browser.actions and all(action.target == 3 for action in browser.actions)
+        evidence = list((tmp_path/'service'/'connections').glob('*/evidence/*/learning.json'))
+        assert len(evidence) == 1
+        saved = json.loads(evidence[0].read_text())
+        assert any(trial['node'] == 3 and trial['action']['descriptor']['label'] == 'Inspect collection'
+                   for trial in saved['trials'])
+        completed = saved['context']['acquisition_frontier']['completed_routes']
+        root = next(item for item in completed.values() if item['route'] == [])
+        assert len(root['unsupported_buttons']) == 2
+        assert root['button_index'] == 3
+        assert learned['result']['metrics']['fit_passes'] == 1
+        assert learned['result']['operations'] == [], 'navigation alone does not establish a semantic API operation'
+    finally:
+        api.close()
+
+
 def test_http_required_only_creation_is_induced_and_guards_omitted_fields(tmp_path, monkeypatch):
     """Actual HTTP learn/catalog/invoke; only browser and connection setup are supplied.
 
