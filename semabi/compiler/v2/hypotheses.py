@@ -1381,15 +1381,18 @@ class Hypotheses:
 
     def _is_attribute(self, u: UnitHyp, sid: str) -> bool:
         """An own persistent slot that is not the key and does not restate it.  A slot whose
-        values are the unit's own key values -- a row's `Open Orchard` button, dissolved
-        into the row -- is the name said again, and an equality on it would be the spelling
-        memorised (`docs/v4_behaviour.md`)."""
+        value on each instance is that instance's own key, alone or under one constant label
+        -- a row's `Open Orchard` button, dissolved into the row -- is the name said again,
+        and an equality on it would be the spelling memorised (`docs/v4_behaviour.md`); a
+        label that varies with the instance (`Follow` against `Unfollow`) is a state and stays."""
         if sid == u.key_slot or sid.endswith("~") or sid.endswith("!") or "|" in sid:
             return False
         if not u.key_slot:
             return True
-        values = set(u.slots[sid].values)
-        return not values or len(values & u.primary_key_values()) / len(values) < 0.8
+        first = u.key_slot.split("|")[0]
+        pairs = [(ui.slots[sid], ui.slots.get(first)) for ui in u.instances if sid in ui.slots]
+        rest = [value.replace(key, "", 1).strip() for value, key in pairs if key and key in value]
+        return not pairs or len(rest) / len(pairs) < 0.8 or len(set(rest)) > 1
 
     def _slot_labels(self, t: str, sid: str) -> set[str]:
         """The label tokens of the node holding this slot, lower-cased: `Ticket 4` -> {ticket}."""

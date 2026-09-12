@@ -757,16 +757,18 @@ def test_a_colon_labelled_value_is_a_field_of_its_card_not_a_sentence_about_it()
 
 def test_a_slot_that_restates_the_units_own_key_is_not_an_attribute():
     # the card's button "Open Cedar run", read as content of the card, carries the card's
-    # own name: an equality on it would memorise the spelling the renaming attack changes
-    from semabi.compiler.v2.hypotheses import SlotStat
+    # own name under one constant label: an equality on it would memorise the spelling the
+    # renaming attack changes.  A label that varies with the instance is a state and stays
     H = Hypotheses.__new__(Hypotheses)
-    u = UnitHyp("group[](heading[_ run],text[_ depot],button[Open _ run])", [], key_slot="heading#0")
-    for sid, values in (("heading#0", ["Cedar", "Rowan", "Alder"]), ("button#0", ["Cedar", "Rowan", "Alder"]),
-                        ("text#0", ["North", "River", "Hill"]), ("text#0@3", ["7", "11", "20"])):
-        st = SlotStat(sid)
-        for v in values:
-            st.values[v] += 1
-        u.slots[sid] = st
-    assert not H._is_attribute(u, "button#0")
+    template = "group[](heading[_ run],text[_ depot],button[_])"
+    rows = [("Cedar", "North", "7", "Open Cedar run", "Cedar", "Follow"),
+            ("Rowan", "River", "11", "Open Rowan run", "Rowan", "Unfollow"),
+            ("Alder", "Hill", "20", "Open Alder run", "Alder", "Follow")]
+    u = UnitHyp(template, [], key_slot="heading#0")
+    for i, (name, depot, kg, button, bare, state) in enumerate(rows):
+        u.instances.append(UnitInstance("sig", i, template, {"heading#0": name, "text#0": depot, "text#0@3": kg,
+                                                             "button#0": button, "button#1": bare, "button#2": state}, {}, []))
+    H._slot_stats(u)
+    assert not H._is_attribute(u, "button#0") and not H._is_attribute(u, "button#1")
     assert not H._is_attribute(u, "heading#0")
-    assert H._is_attribute(u, "text#0") and H._is_attribute(u, "text#0@3")
+    assert H._is_attribute(u, "text#0") and H._is_attribute(u, "text#0@3") and H._is_attribute(u, "button#2")
