@@ -117,8 +117,12 @@ SURFACE_JS = r"""() => {
   };
   const walk = (e, parent) => {
     const tag = e.tagName.toLowerCase();
-    if (['script','style','option','title','head','noscript','template'].includes(tag) || !visible(e)) return;
-    if (tag === 'input' && e.type === 'hidden') return;
+    if (['script','style','option','title','head','noscript','template'].includes(tag)) return true;
+    // A zero-box branch (for example display:contents) may still contribute
+    // visible descendant text. Do not infer coverage from emitted nodes alone.
+    // Hidden text branches conservatively remain incomplete too.
+    if (!visible(e)) return !text(e.textContent);
+    if (tag === 'input' && e.type === 'hidden') return true;
     const role = roleOf(e), interactive = ['button','link','textbox','combobox','checkbox','radio','menu','menuitem'].includes(role);
     const paragraph = ['p', 'pre'].includes(tag) && !e.isContentEditable;
     const completeText = paragraph ? paragraphText(e) : null;
@@ -156,7 +160,10 @@ SURFACE_JS = r"""() => {
     // this affordance never follows it or retrieves an endpoint response.
     if (role === 'link' && tag === 'a' && e.hasAttribute('href')) controls[i].destination = e.href;
     if (tag === 'form') forms[i] = {role:'form'};
-    for (const child of e.children) walk(child, i);
+    let complete = true;
+    for (const child of e.children) if (!walk(child, i)) complete = false;
+    text_sources[i].descendant_text_complete = complete;
+    return complete;
   };
   walk(document.body, -1);
   for (const [index, control] of Object.entries(controls)) {

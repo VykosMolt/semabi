@@ -544,15 +544,30 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
 
 def _learning_surfaces(log):
     surfaces = {}
+    known_text = {}
     for line in (log.dir / "surfaces.jsonl").read_text().splitlines():
         item = json.loads(line)
         sig = item["observation"]
         if sig in log.observations:
+            sources = {int(k): v for k, v in item.get("text_sources", {}).items()}
+            known = known_text.setdefault(sig, {})
+            for node, source in sources.items():
+                earlier = known.setdefault(node, {})
+                if any(key in earlier and earlier[key] != value for key, value in source.items()):
+                    _stop("One raw observation signature has conflicting rendered text occurrences; recovery requires occurrence correspondence")
+                earlier.update(source)
+            if previous := surfaces.get(sig):
+                # Missing historical metadata cannot be filled in by a later
+                # occurrence. Retain only text evidence shared by every sample.
+                sources = {node: {key: value for key, value in source.items()
+                                  if previous.text_sources.get(node, {}).get(key) == value}
+                           for node, source in sources.items() if node in previous.text_sources}
             surfaces[sig] = Surface(log.observations[sig],
-                                    {int(k): v for k, v in item["controls"].items()}, {},
+                                    {int(k): v for k, v in item["controls"].items()},
+                                    {int(k): v for k, v in item.get("forms", {}).items()},
                                     item.get("settled", True),
                                     {int(k): v for k, v in item.get("text_boundaries", {}).items()},
-                                    text_sources={int(k): v for k, v in item.get("text_sources", {}).items()},
+                                    text_sources=sources,
                                     settling_reason=item.get("settling_reason"))
     return surfaces
 
@@ -1042,6 +1057,7 @@ def learn(runtime, connection, settings, trace, emit):
         return {"status": "UNESTABLISHED", "operations": [], "attempts": [],
                 "metrics": trace.metrics(), "invalidations": [], "repair": repair_report}
     _require_settled_step_endpoints(trace.log, emit)
+    _learning_surfaces(trace.log)  # Do not fit/reuse a product trace with conflicting text occurrences.
     artifact = reuse_semantics(trace.log.dir, fit_candidate) if fit_candidate else None
     fit_passes = 0 if artifact is not None else 1
     if artifact is None:

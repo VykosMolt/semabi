@@ -49,6 +49,7 @@ class Surface:
         if source is None:
             return key
         if (separate_descendant_text and source.get("name_from_descendants") is True
+                and source.get("descendant_text_complete") is True
                 and all(isinstance(self.text_sources.get(i, {}).get("own_text"), str)
                         for i in self.observation.subtree(node))):
             key = (key[0], "", *key[2:])

@@ -739,7 +739,7 @@ def test_semantic_nested_collection_keeps_parent_state_separate_from_intended_ch
 
 
 @pytest.mark.parametrize('fault', [None, 'sibling', 'remainder', 'control_text', 'explicit_label',
-                                  'missing_provenance', 'legacy'])
+                                  'missing_provenance', 'legacy', 'unobserved_text', 'unobserved_unchanged'])
 def test_native_nested_inventory_accounts_for_observed_text_sources(tmp_path, fault):
     from semabi.compiler.semantic_runtime import _inventory, _learning_surfaces
     from semabi.compiler.runtime import Trace, Budget
@@ -755,6 +755,11 @@ def test_native_nested_inventory_accounts_for_observed_text_sources(tmp_path, fa
         browser._page.route('https://synthetic.invalid/**', lambda route: route.fulfill(
             content_type='text/html', body=html))
         browser.goto()
+        if fault in {'unobserved_text', 'unobserved_unchanged'}:
+            browser._page.locator('#holder').evaluate('''e => {
+                const span=document.createElement('span');span.id='unobserved';
+                span.style.display='contents';span.textContent='Stable';e.append(span);
+            }''')
         if fault == 'explicit_label':
             browser._page.locator('#holder').evaluate('(e) => e.setAttribute("aria-label", e.innerText)')
         before = browser.read()
@@ -763,6 +768,8 @@ def test_native_nested_inventory_accounts_for_observed_text_sources(tmp_path, fa
             browser._page.locator('#' + fault).evaluate('(e) => e.textContent = "7"')
         if fault == 'control_text':
             browser._page.locator('#state').evaluate('(e) => e.textContent = "Unlocked"')
+        if fault == 'unobserved_text':
+            browser._page.locator('#unobserved').evaluate('(e) => e.textContent = "Changed"')
         if fault == 'explicit_label':
             browser._page.locator('#holder').evaluate('(e) => e.setAttribute("aria-label", e.innerText)')
         after = browser.read()
@@ -792,6 +799,29 @@ def test_native_nested_inventory_accounts_for_observed_text_sources(tmp_path, fa
             assert _inventory(restored[after.observation.structural_signature()]) == second
     finally:
         browser.close()
+
+
+def test_text_source_recovery_does_not_collapse_distinct_occurrences_or_enrich_missing_evidence(tmp_path):
+    from semabi.compiler.semantic_runtime import _learning_surfaces
+    from semabi.compiler.runtime import Trace, Budget, StopOperation
+    surface = _surface([Node(0, -1, 'listitem', 'Row'), Node(1, 0, 'button', 'Group')])
+    surface.text_sources = {0: {'own_text': '', 'name_from_descendants': False},
+                            1: {'own_text': 'Stable', 'name_from_descendants': False}}
+    changed = deepcopy(surface)
+    changed.text_sources[1]['own_text'] = 'Changed'
+    assert surface.observation.structural_signature() == changed.observation.structural_signature()
+    missing = deepcopy(surface)
+    missing.text_sources = {}
+    trace = Trace(tmp_path / 'trace', lambda event: None, Budget(10, 0))
+    trace.observe(surface)
+    trace.observe(missing)
+    trace.observe(surface)
+    restored = _learning_surfaces(trace.log)
+    assert restored[surface.observation.structural_signature()].text_sources == {}
+    trace.observe(changed)
+    with pytest.raises(StopOperation, match='conflicting rendered text occurrences'):
+        _learning_surfaces(trace.log)
+    assert len((trace.log.dir / 'surfaces.jsonl').read_text().splitlines()) == 4
 
 
 @pytest.mark.parametrize('arguments', [{'selection_2': 'Delete A'}, {'selection_2': 'Stop A'},
