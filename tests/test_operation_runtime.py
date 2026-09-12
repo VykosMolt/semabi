@@ -986,6 +986,76 @@ def test_semantic_runtime_return_never_explores_unestablished_exit(tmp_path, amb
     assert browser.actions == [] and trace.metrics()['possible_write_actions'] == 0
 
 
+@pytest.mark.parametrize('branch,fault', [((True, False), None), ((False, True), None),
+                                        ((True, True), None), ((True, True), 'unseen'),
+                                        ((True, True), 'cycle'), ((True, True), 'budget'),
+                                        ((True, True), 'write_budget')])
+def test_semantic_return_branches_only_when_every_observed_outcome_has_a_bounded_exit(tmp_path, branch, fault):
+    from semabi.compiler.runtime import Budget, Trace, StopOperation
+    from semabi.compiler.semantic_runtime import procedure_context, replay
+
+    class Browser(_StatefulReturnBrowser):
+        detail = True
+        unseen = False
+
+        def read(self):
+            if self.unseen:
+                return _surface([Node(0, -1, 'group', ''), Node(1, 0, 'checkbox', 'Unexpected', checked=True)])
+            if self.detail:
+                return _surface([Node(0, -1, 'group', ''), Node(1, 0, 'heading', 'Current record'),
+                                 Node(2, 0, 'button', 'Leave record')])
+            return super().read()
+
+        def act(self, action):
+            if not self.detail:
+                return super().act(action)
+            self.actions.append((procedure_context(self.read()), 'Leave record'))
+            self.detail = False
+            self.left, self.right = branch
+            self.unseen = fault == 'unseen'
+            return SimpleNamespace(ok=True, error=None)
+
+    browser = Browser()
+    detail = browser.read()
+    entry = procedure_context(_StatefulReturnBrowser().read())
+    transitions = []
+    for left, right in [(True, False), (False, True), (True, True)]:
+        state = _StatefulReturnBrowser(left, right)
+        before = state.read()
+        transitions.append({'before': procedure_context(detail), 'after': procedure_context(before),
+                            'descriptor': detail.descriptor(2)})
+        for node, control in before.controls.items():
+            if control['label'].startswith('Fold '):
+                destination = _StatefulReturnBrowser(
+                    False if control['label'].endswith('Left') else left,
+                    False if control['label'].endswith('Right') else right).read()
+                transitions.append({'before': procedure_context(before), 'after': procedure_context(destination),
+                                    'descriptor': before.descriptor(node)})
+    if fault == 'cycle':
+        transitions.append({'before': procedure_context(detail), 'after': procedure_context(detail),
+                            'descriptor': detail.descriptor(2)})
+    context = {'return_context_version': 2, 'entry_shape': entry, 'returns': transitions}
+    retained = deepcopy(context)
+    events = []
+    trace = Trace(tmp_path / 'observed-branch', events.append,
+                  Budget(3 if fault == 'budget' else 6, 2 if fault == 'write_budget' else 4))
+    if fault:
+        with pytest.raises(StopOperation, match={
+            'unseen': 'return transition changed', 'cycle': 'No supported return path',
+            'budget': 'Insufficient remaining budget', 'write_budget': 'Insufficient remaining budget'}[fault]):
+            replay(browser, trace, 'https://synthetic.invalid/', [], context=context)
+        assert len(browser.actions) == (1 if fault == 'unseen' else 0)
+    else:
+        result = replay(browser, trace, 'https://synthetic.invalid/', [], context=context)
+        assert procedure_context(result) == entry
+        assert len(browser.actions) == 1 + sum(branch)
+        choices = [event for event in events if event['type'] == 'semantic_return_choice']
+        assert choices[0]['rank'] == 3 and len(choices[0]['outcomes']) == 3
+        assert all(a['rank'] > b['rank'] for a, b in zip(choices, choices[1:]))
+    assert context == retained, 'runtime execution must not learn a new branch'
+    assert trace.metrics()['possible_write_actions'] == len(browser.actions)
+
+
 def test_semantic_return_context_keeps_native_selection_transition_without_layout_change(tmp_path):
     from semabi.compiler.runtime import Budget, Trace
     from semabi.compiler.semantic_runtime import procedure_context, replay, shape

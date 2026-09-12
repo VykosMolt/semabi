@@ -74,8 +74,12 @@ simultaneously known global state or a complete collection. An unrelated notice,
 repeated stale response, or several unresolved
 response regions cannot confirm completion. These are observed outcomes, not
 exclusive causal attribution under concurrent external activity. The current
-procedure language is a bounded sequence of observed clicks and fills; arbitrary
-branches, loops, JOIN and aggregates are not established by this slice.
+procedure language is a bounded sequence of observed clicks and fills. Returning
+to its entry view can branch over recorded destinations when every observed
+branch has a strictly shorter route to entry. The runtime observes the actual
+destination, reserves the worst-case return budget, and stops on an unseen
+transition; it does not explore or assume a retry will eventually succeed.
+Arbitrary branches, loops, JOIN and aggregates are not established by this slice.
 The local-record path selects among supplied creation/read/update procedure
 families, learning their fields, bindings and supported completion steps. The
 semantic path learns navigation/selection sequences from observed transitions;

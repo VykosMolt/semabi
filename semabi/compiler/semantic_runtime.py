@@ -170,24 +170,35 @@ def _return_context(surface, context):
     return procedure_context(surface) if context.get("return_context_version") == 2 else shape(surface)
 
 
-def _return_path(context, start, blocked):
-    """Shortest observed path to entry; ambiguous outgoing transitions supply none."""
-    outcomes = {}
+def _return_policy(context, blocked):
+    """Finite strong policy over observed outcomes, without a fairness assumption.
+
+    A view can hide navigation history: the same button may return to several
+    observed contexts. Admit it only when every recorded destination already
+    has a strictly shorter policy to entry. Cycles needing a lucky outcome,
+    unknown destinations, and blocked controls supply no terminating policy.
+    """
+    transitions = {}
     for edge in context["returns"]:
-        outcomes.setdefault((edge["before"], digest(edge["descriptor"])), set()).add(edge["after"])
-    pending, seen = deque([(start, [])]), {start}
-    while pending:
-        current, path = pending.popleft()
-        if current == context["entry_shape"]:
-            return path
-        for edge in context["returns"]:
-            key = (edge["before"], digest(edge["descriptor"]))
-            if (edge["before"] != current or key in blocked or len(outcomes[key]) != 1
-                    or edge["after"] in seen):
+        key = (edge["before"], digest(edge["descriptor"]))
+        transition = transitions.setdefault(key, {"descriptor": edge["descriptor"], "outcomes": set()})
+        transition["outcomes"].add(edge["after"])
+    reached, policy = {context["entry_shape"]}, {}
+    # Each successful layer adds at least one source context. This bound is
+    # independent of how many times an action was recorded during onboarding.
+    for rank in range(1, len({before for before, _ in transitions}) + 1):
+        layer = {}
+        for (before, descriptor), transition in sorted(transitions.items()):
+            if before in reached or (before, descriptor) in blocked:
                 continue
-            seen.add(edge["after"])
-            pending.append((edge["after"], [*path, edge]))
-    return None
+            if transition["outcomes"] <= reached:
+                layer.setdefault(before, {"descriptor": transition["descriptor"], "rank": rank,
+                                          "outcomes": sorted(transition["outcomes"])})
+        if not layer:
+            break
+        policy.update(layer)
+        reached.update(layer)
+    return policy
 
 
 def _return_choices(surface):
@@ -223,9 +234,15 @@ def replay(browser, trace, entry, route, arguments=None, *, context=None, acquir
         # also charges every navigation/selection, including unsuccessful exits.
         while _return_context(surface, context) != context["entry_shape"] and len(attempted) < 48:
             old_shape = _return_context(surface, context)
-            path = _return_path(context, old_shape, attempted)
-            if path:
-                descriptor = path[0]["descriptor"]
+            choice = _return_policy(context, attempted).get(old_shape)
+            if choice:
+                if (trace.budget.actions + choice["rank"] > trace.budget.max_actions
+                        or trace.budget.writes + choice["rank"] > trace.budget.max_writes
+                        or choice["rank"] > 48 - len(attempted)):
+                    _stop("Insufficient remaining budget for the observed return policy")
+                descriptor = choice["descriptor"]
+                trace.emit({"type": "semantic_return_choice", "before": old_shape, **choice,
+                            "scope": "All observed branches terminate; unseen outcomes are not supported"})
             elif acquiring:
                 choices = [(node, descriptor) for _, node, descriptor in _return_choices(surface)
                            if (old_shape, digest(descriptor)) not in attempted]

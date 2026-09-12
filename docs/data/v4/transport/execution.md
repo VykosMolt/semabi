@@ -13,17 +13,27 @@
   remain in their original receipts. Current-artifact offline ablation reproduces
   HTTP exactly: removing related binding or all ordered features makes prediction
   unavailable; comparisons alone still permit a relational scalar conjunction.
-  Workshopv2 continuation job `job_b99bb111b38248678aa1eff4fb2fb542` is RUNNING
+  Workshopv2 continuation job `job_b99bb111b38248678aa1eff4fb2fb542` COMPLETED
   under1200/900, same saved frontier/no reset, output
   `runs/product_semantic_workshop_v2/continued_frontier_f2c110f.json`.
   Acquisition stopped cleanly at2053 cumulative recorded actions/1800 writes,
   29 completed contexts,143 trials/32 edits;14 Start trials now follow attachment.
-  No in-flight fence remains. One fit started21:48:44UTC on2053 raw steps.
+  No in-flight fence remains. One fit on2053 raw steps/71 observations completed
+  22:16:05UTC in1641.414s, within its30minute budget, publishing4operations.
+  This continuation charged1022actions/900possiblewrites; raw counts are cumulative.
   Raw inspection found7 accepted/7 refused Start responses after attachment;
-  all14 retained an unrelated Release approved notice. This is not a fit claim.
-  Owned fit budget30minutes (22:18:44UTC); inspect before that deadline and stop
-  the owned job if exceeded, retaining raw evidence rather than allowing an
-  unbounded quiet-machine run. HTTP client timeout2400s is not a job-cancel claim.
+  all14 retained an unrelated Release approved notice. First live attached check
+  `attached_check_copper_f2c110f.json` failed before effect (1action/0writes/1.052s):
+  its recorded return control has3 possible destination contexts, each with a
+  known exit, but deterministic-only return planning rejected it. No application
+  response or independent effect check occurred. Active repair: finite strong
+  return policy admitting only controls whose every observed outcome has a
+  shorter exit; no fairness, runtime exploration, or unseen-branch support.
+  Known worst-case return actions/writes are reserved before its first click.
+  Bounded160s unchanged-source cost profile completed;39objective evaluations
+  dominate the sampled prefix, repeatedly processing71observations/2053steps.
+  This instrumented prefix is not a full-fit timing. Exact ephemeral reuse is
+  under investigation; no evidence subsampling or source-hash bypass authorized.
   Linkdingv3 ordinary onboarding published5ops in91actions/56possiblewrites/
   54.066s (authentication separate); unchanged caller still preflights0/16 eligible.
   Separate schema-selected partial/boolean/duplicate-title/restart/fresh/read
@@ -33,7 +43,8 @@
   OriginalU1/U2 have available update procedures but unsupported caller grammar;
   C1/C2 also need optional/default/create→boolean composition, R1/R2 need search
   and collection scope. Do not reclassify these all as learner failures.
-  Next: inspect workshop continuation's fit and actual evidence/barrier.
+  Next: independently check return-policy repair, reduce demonstrated repeated
+  fitting work if exact reuse is justified, then ordinary HTTP refit and calls.
   Linkding checks are complete and owned8864 is closed; no overlapping heavy
   fit or source changes in service. Main7fd791e adds publication diagnostics
   for language, binding, confirmation and persisted-edit barriers. Gates:
@@ -45,7 +56,10 @@
   creation checks passed onb0e95ec; actual merge19creation/publication checks
   passed/0.56s. No post-submit omitted-default, general optional-argument, or
   Kanboard navigation-success claim. Learned exact-state view-exit implementation
-  is active in isolation; required-only CREATE's independent HTTP check is pending.
+  is active in isolation. Required-only CREATE's independent ordinary HTTP check
+  integrated175388a: failed full trial retained, two narrower learning witnesses,
+  fresh invocation confirmed, excluded argument and changed defaults refused
+  before effect. Controlled browser only, not a live Kanboard success.
   LIST ordering integrated ataa3001e: residual search preserves founding query
   witnesses/source events and reports bounded incompleteness. Retained pilot
   21queries/45alternatives unchanged (max537 of100000new-search work units,
@@ -56,6 +70,15 @@
   9passed/0.37s, including an actual finite-artifact exhausted singleton refusing
   before field write. Two setup-only failures corrected diagnostic grounding;
   no production fix was needed. No broader subset/categorical language enabled.
+  Actuale11c273 runtime/service/outcome/admissible gate650passed/1deselected/45.35s;
+  excluded expensive P43 parity had just passed on33b0381/17.15s, not repeated.
+  Return-policy plus merged required-only HTTP focused gate12passed/0.26s;
+  affected semantic runtime/HTTP gate166passed/3.81s. Added separate write-budget
+  case:7branch checks passed/0.39s. Independent1200 finite-graph oracle matched
+  all winning contexts and minimum worst-case depths; unseen runtime transitions
+  remain rejected. Actual workshop23-edge graph supports a3-click worst case.
+  Reserve covers return clicks, not later route execution or elapsed-time promises.
+  Initial oracle import typo was a setup failure. These are separate tested snapshots.
   Patch-helper synthetic /tmp/.git quota failures are intermittent; code already
   written is retained. No workspace cleanup or sandbox-policy changes were made.
 - Source: resumed clean `85e37ce` on `v4-joint-observation-model`; product
