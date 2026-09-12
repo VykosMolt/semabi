@@ -3023,10 +3023,27 @@ class _CheckboxRecordBrowser(_EditableRecordBrowser):
         return super().reload()
 
 
-def _learn_checkbox_records(tmp_path, monkeypatch, *, fault=None, budget=140):
+class _CheckboxVerificationExitResetBrowser(_CheckboxRecordBrowser):
+    """Evaluator counterexample: list text omits the bit reset during exit."""
+    reset_on_verification_exit = False
+
+    def __init__(self):
+        super().__init__()
+        self.exit_resets = []
+
+    def goto(self, url):
+        if (self.reset_on_verification_exit and self.scene == 'editor'
+                and self.selected is not None and self.pinned is True
+                and self.rows[self.selected]['Pinned'] is True):
+            self.exit_resets.append(self.selected)
+            self.rows[self.selected]['Pinned'] = False
+        return super().goto(url)
+
+
+def _learn_checkbox_records(tmp_path, monkeypatch, *, fault=None, budget=140, browser=None):
     ticks = count(0, 10)
     monkeypatch.setattr(runtime_module, 'time', SimpleNamespace(monotonic=lambda: next(ticks), sleep=lambda _: None))
-    browser = _CheckboxRecordBrowser()
+    browser = browser or _CheckboxRecordBrowser()
     browser.checkbox_fault = fault
     runtime = Runtime(tmp_path)
     connection = {'id': 'checkbox', 'url': browser.allowed_origin + '/',
@@ -3060,6 +3077,78 @@ def test_checkbox_family_requires_two_owner_persisted_contrasts_and_preserves_te
     assert result['outcome'] == 'CONFIRMED' and result['effect']['values']['pinned'] is False
 
 
+def test_checkbox_learning_rejects_exit_that_resets_the_independently_persisted_bit(tmp_path, monkeypatch):
+    # The original evaluator on 7ffd0e1 observed two resets and false publication.
+    # The corrected learner stops at its first contradicted exit contrast.
+    browser = _CheckboxVerificationExitResetBrowser()
+    browser.reset_on_verification_exit = True
+    runtime, _, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch, browser=browser)
+    assert browser.exit_resets == [0]
+    assert all(row['Pinned'] is False for row in browser.rows)
+    assert len(learned['operations']) == 3
+    assert not any(op['procedure'].get('boolean_fields') for op in learned['operations'])
+    assert learned['attempts'][-1]['confirmed_trials'] == 0
+    assert 'persist through the learned editor exit' in learned['attempts'][-1]['reason']
+    assert not runtime._verified_editors
+
+
+def test_checkbox_update_has_no_effect_invalidating_exit_after_its_terminal_witness(tmp_path, monkeypatch):
+    runtime, connection, browser, learned = _learn_checkbox_records(
+        tmp_path, monkeypatch, browser=_CheckboxVerificationExitResetBrowser())
+    operation = _checkbox_kind(learned, 'update_visible_record')
+    browser.reset_on_verification_exit = True
+    before = deepcopy(browser.rows)
+    result = runtime.invoke(connection, operation, {'target': before[0]['URL'], 'pinned': True}, lambda _: None)
+    assert result['outcome'] == 'CONFIRMED', result
+    assert browser.exit_resets == [] and browser.scene == 'editor'
+    assert browser.rows == [{**before[0], 'Pinned': True}, before[1]]
+    assert result['effect']['witness']['checkbox_readback']['values']['pinned'] is True
+
+    # An exit on the next call is charged to that call. Reobserving its reset on
+    # the same target contradicts the learned exit, before another field write.
+    clicks, events = browser.checkbox_clicks, []
+    again = runtime.invoke(connection, operation, {'target': before[0]['URL'], 'pinned': True}, events.append)
+    assert again['outcome'] == 'UNCERTAIN' and again['operation_status'] == 'STALE'
+    assert browser.rows == before and browser.exit_resets == [0]
+    assert browser.checkbox_clicks == clicks
+    assert any(event.get('action', {}).get('kind') == 'navigate' for event in events if event['type'] == 'write_intent')
+
+
+@pytest.mark.parametrize('fault', ['draft', 'remount', 'version', 'restart', 'sibling'])
+def test_checkbox_clean_editor_receipt_cannot_discard_a_changed_or_unowned_editor(tmp_path, monkeypatch, fault):
+    runtime, connection, browser, learned = _learn_checkbox_records(tmp_path, monkeypatch)
+    operation = deepcopy(_checkbox_kind(learned, 'update_visible_record'))
+    if fault == 'draft':
+        browser.fields['Description'] = 'Preserve this newly edited draft'
+    elif fault == 'sibling':
+        browser.sibling_draft = 'Preserve another draft'
+    elif fault == 'remount':
+        monkeypatch.setattr(browser, 'nodes_retained', lambda *args: False)
+    elif fault == 'version':
+        operation['version'] += 1
+    else:
+        runtime = Runtime(tmp_path / 'restarted')
+        runtime.sessions[connection['id']] = browser  # No transfer of process-local receipts.
+    before = len(browser.actions), browser.navigation_count, deepcopy(browser.rows)
+    result = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL'], 'pinned': True}, lambda _: None)
+    assert result['outcome'] == 'FAILED_BEFORE_EFFECT', result
+    assert (len(browser.actions), browser.navigation_count, browser.rows) == before
+    assert not runtime._verified_editors
+    if fault == 'draft':
+        assert browser.fields['Description'] == 'Preserve this newly edited draft'
+
+
+def test_checkbox_clean_editor_handles_are_released_on_close(tmp_path, monkeypatch):
+    runtime, connection, browser, _ = _learn_checkbox_records(tmp_path, monkeypatch)
+    released, closed = [], []
+    original = browser.release_nodes
+    monkeypatch.setattr(browser, 'release_nodes', lambda nodes: (released.append(nodes), original(nodes))[1])
+    monkeypatch.setattr(browser, 'close', lambda: closed.append(True), raising=False)
+    runtime.close(connection['id'])
+    runtime.close(connection['id'])
+    assert len(released) == 1 and closed == [True] and not runtime._verified_editors
+
+
 @pytest.mark.parametrize('patch', [{'pinned': True}, {'pinned': False}, {'description': 'Preserve the checkbox'},
                                   {'pinned': True, 'description': 'A mixed typed patch'}])
 def test_checkbox_update_uses_known_state_and_checks_reopened_owner(tmp_path, monkeypatch, patch):
@@ -3074,7 +3163,8 @@ def test_checkbox_update_uses_known_state_and_checks_reopened_owner(tmp_path, mo
     assert browser.rows[1] == before[1]
     assert result['effect']['requested_changes'] == patch
     assert result['effect']['witness']['checkbox_readback']['values']['pinned'] is patch.get('pinned', False)
-    assert browser.scene == 'list'
+    assert browser.scene == 'editor'
+    assert result['effect']['witness']['checkbox_readback']['terminal_view'] == 'verified_editor'
 
 
 @pytest.mark.parametrize('fault', ['unknown', 'mixed', 'ignored', 'reset', 'collateral', 'sibling_draft', 'wrong_owner'])
@@ -3170,7 +3260,12 @@ def test_checkbox_verification_checks_reopen_owner_and_late_visible_state(tmp_pa
     monkeypatch.setattr(browser, 'reload', reload)
     monkeypatch.setattr(browser, 'goto', goto)
     result = runtime.invoke(connection, operation, {'target': browser.rows[0]['URL'], 'pinned': True}, lambda event: None)
-    assert result['outcome'] != 'CONFIRMED', result
+    if phase == 'exit_neighbor':
+        # The unsafe final exit is absent, not excused by a weaker verifier.
+        assert result['outcome'] == 'CONFIRMED', result
+        assert browser.scene == 'editor' and browser.rows[1]['Description'] != 'Changed during final exit'
+    else:
+        assert result['outcome'] != 'CONFIRMED', result
     if phase == 'omitted_text':
         assert browser.fields['Title'] == 'Intervening preserved-field draft' and browser.scene == 'editor'
 

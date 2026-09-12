@@ -171,8 +171,11 @@ class Trace:
         time.sleep(seconds)
         self.budget.check_deadline()
 
-    def navigate(self, browser, url: str) -> Surface:
-        self.budget.take()
+    def navigate(self, browser, url: str, *, possible_write: bool = False) -> Surface:
+        self.budget.take(writing=possible_write)
+        if possible_write:
+            self.emit({"type": "write_intent", "action": {"kind": "navigate", "url": url}})
+            self.possible_effect = True
         self.emit({"type": "navigation", "url": url})
         self.budget.check_deadline()
         browser.goto(url)
@@ -321,6 +324,7 @@ class Runtime:
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
         self.sessions: dict[str, BrowserSession] = {}
+        self._verified_editors: dict = {}
         self.source_sha256 = LOADED_SOURCE_SHA256.copy()
         self._playwright = None
 
@@ -329,7 +333,9 @@ class Runtime:
         for key in list(self.sessions):
             if connection_id is None or key == connection_id:
                 try:
-                    self.sessions.pop(key).close()
+                    browser = self.sessions.pop(key)
+                    self._release_verified_editor(browser)
+                    browser.close()
                 except BaseException as error:
                     if first_error is None:
                         first_error = error
@@ -779,6 +785,7 @@ class Runtime:
                        update_trials_remaining: int = 0,
                        completion_actions_per_trial: int = 0,
                        context_trial: dict | None = None) -> tuple[Surface, dict, dict]:
+        self._continue_verified_editor(browser, trace)
         required = {"form"} | (set() if procedure.get("anchor_link") else {"edit"})
         required |= {"menu"} if "menu_trigger" in procedure else set()
         if not discover and not required <= procedure.keys():
@@ -885,13 +892,88 @@ class Runtime:
             raise StopOperation("Loaded descriptor-bound editor values do not match the creation trial")
         return surface, record, values
 
-    def _leave_editor(self, browser, surface: Surface, procedure: dict, values: dict, trace: Trace) -> dict:
+    def _leave_editor(self, browser, surface: Surface, procedure: dict, values: dict, trace: Trace,
+                      *, possible_write: bool = False) -> dict:
         with self._capture_editor(browser, surface, procedure, values, trace) as (captured, retained):
             fresh = trace.read(browser)
             candidate = self._checked_editor(browser, fresh, procedure, captured, retained, trace)
             self._guard_current_editor(fresh, selected_root=candidate["root"])
-            trace.navigate(browser, procedure["readback_url"])
+            trace.navigate(browser, procedure["readback_url"], possible_write=possible_write)
         return captured
+
+    def _release_verified_editor(self, browser) -> None:
+        receipt = self._verified_editors.pop(browser, None)
+        if receipt is not None:
+            try:
+                browser.release_nodes(receipt["retained"])
+            except Exception:
+                pass
+
+    @staticmethod
+    def _verified_editor_nodes(surface: Surface, candidate: dict) -> list[int]:
+        return [candidate["root"], *(node for node in surface.observation.subtree(candidate["root"])
+                                     if node in surface.controls)]
+
+    def _check_verified_editor(self, browser, surface: Surface, receipt: dict, trace: Trace) -> dict:
+        procedure, values = receipt["procedure"], receipt["values"]
+        candidate = self._record_form(surface, procedure, values[procedure["anchor"]])
+        if self._editor_state(surface, candidate) != receipt["state"]:
+            raise StopOperation("Verified editor changed; preserving the current draft")
+        trace.budget.check_deadline()
+        if not browser.nodes_retained(receipt["retained"], self._verified_editor_nodes(surface, candidate)):
+            raise StopOperation("Verified editor elements no longer retain observed continuity", stale=True)
+        trace.budget.check_deadline()
+        self._guard_current_editor(surface, selected_root=candidate["root"])
+        if self._read_values(surface, candidate, procedure) != values:
+            raise StopOperation("Verified editor owner or typed values changed", stale=True)
+        return candidate
+
+    def _finish_verified_editor(self, browser, surface: Surface, procedure: dict, values: dict,
+                                trace: Trace) -> dict:
+        """Terminal observation; no application action follows within this call.
+
+        The retained handle licenses only a later guarded continuation. It is
+        session-local evidence, not an application identity or durable clean flag.
+        """
+        self._release_verified_editor(browser)
+        candidate = self._record_form(surface, procedure, values[procedure["anchor"]])
+        trace.budget.check_deadline()
+        receipt = {"procedure": deepcopy(procedure), "values": deepcopy(values),
+                   "state": self._editor_state(surface, candidate), "version": None,
+                   "retained": browser.retain_nodes(self._verified_editor_nodes(surface, candidate))}
+        self._verified_editors[browser] = receipt
+        try:
+            final = trace.read(browser)
+            self._check_verified_editor(browser, final, receipt, trace)
+            observation = final.observation.structural_signature()
+            receipt["observation"] = observation
+            trace.emit({"type": "verified_editor_terminal", "observation": observation,
+                        "target": values[procedure["anchor"]]})
+            return {"values": deepcopy(values), "observation": observation,
+                    "fields": deepcopy(procedure["boolean_fields"]), "terminal_view": "verified_editor"}
+        except Exception:
+            self._release_verified_editor(browser)
+            raise
+
+    def _continue_verified_editor(self, browser, trace: Trace, *, operation: dict | None = None) -> dict | None:
+        receipt = self._verified_editors.get(browser)
+        if receipt is None:
+            return
+        try:
+            if operation is not None and (receipt["procedure"] != operation["procedure"] or
+                                           receipt["version"] != operation["version"]):
+                raise StopOperation("Verified editor belongs to a different operation contract or version", stale=True)
+            if not receipt["procedure"].get("checkbox_exit_preservation"):
+                raise StopOperation("Clean-editor navigation has no learned typed-state preservation support")
+            surface = trace.read(browser)
+            self._check_verified_editor(browser, surface, receipt, trace)
+            trace.emit({"type": "verified_editor_continuation", "from_observation": receipt["observation"],
+                        "current_observation": surface.observation.structural_signature(),
+                        "scope": "New call's guarded learned exit; no hidden neighboring-state guarantee"})
+            self._leave_editor(browser, surface, receipt["procedure"], receipt["values"], trace, possible_write=True)
+            return {"values": deepcopy(receipt["values"]), "observation": receipt["observation"]}
+        finally:
+            self._release_verified_editor(browser)
 
     @staticmethod
     def _popup_indices(browser, retained, trace: Trace) -> list[int]:
@@ -1138,11 +1220,11 @@ class Runtime:
                     raise StopOperation("Application left the learned submit control disabled", refusal=True)
                 after = trace.act(browser, surface, Primitive("click", candidate["submit_node"]))
         return self._verify_updated_values(browser, after, procedure, values, old_anchor, captured, trace,
-                                           neighbors=neighbors)
+                                           neighbors=neighbors, check_exit=discover)
 
     def _verify_updated_values(self, browser, after: Surface, procedure: dict, values: dict,
                                old_anchor: str | None, captured: dict, trace: Trace,
-                               *, neighbors: list | None = None) -> tuple[dict, dict]:
+                               *, neighbors: list | None = None, check_exit: bool = False) -> tuple[dict, dict]:
         text_values = {name: value for name, value in values.items() if isinstance(value, str)}
         after, witness = self._witness(browser, after, text_values, procedure["anchor"], trace,
                                        procedure["effect_slots"], absent_value=old_anchor,
@@ -1165,15 +1247,27 @@ class Runtime:
             reopened, _, actual = self._record_editor(browser, procedure, values[procedure["anchor"]], trace)
             if actual != values:
                 raise StopOperation("Reopened intended record does not retain requested and preserved values", stale=True)
-            boolean_witness = {"values": actual, "observation": reopened.observation.structural_signature(),
-                               "fields": procedure["boolean_fields"]}
-            self._leave_editor(browser, reopened, procedure, actual, trace)
-            final = trace.read(browser)
-            final_record = record_witness(final, text_values, procedure["anchor"], procedure["effect_slots"])
-            if final_record is None or self._record_neighbors(final, final_record) != neighbors:
-                raise StopOperation("Record or neighboring state changed during verification exit")
+            exit_observation = None
+            if check_exit:
+                # Authorized learning tests the future clean-editor continuation.
+                # Runtime never appends this navigation after its final witness.
+                self._leave_editor(browser, reopened, procedure, actual, trace, possible_write=True)
+                exited = trace.reload(browser)
+                final_record = record_witness(exited, text_values, procedure["anchor"], procedure["effect_slots"])
+                if final_record is None or self._record_neighbors(exited, final_record) != neighbors:
+                    raise StopOperation("Record or neighboring state changed during learned editor exit")
+                exit_observation = exited.observation.structural_signature()
+                reopened, _, actual = self._record_editor(browser, procedure, values[procedure["anchor"]], trace)
+                if actual != values:
+                    raise StopOperation("Typed values did not persist through the learned editor exit", stale=True)
+            boolean_witness = self._finish_verified_editor(browser, reopened, procedure, actual, trace)
+            if exit_observation is not None:
+                boolean_witness["exit_preservation"] = {"after_exit_reload": exit_observation,
+                    "after_reopen": boolean_witness["observation"], "values": deepcopy(actual)}
             witness["checkbox_readback"] = boolean_witness
-            witness["neighbor_scope"] = "Matching rendered non-target state around verification; no complete collection or causal exclusivity claim"
+            witness["neighbor_observation"] = reloaded.observation.structural_signature()
+            witness["neighbor_scope"] = ("Matching rendered non-target state after save and reload, before final editor navigation; "
+                                         "not a current hidden-neighbor inventory or causal exclusivity claim")
         if old_anchor is not None:
             witness["old_anchor_absence"] = {"value": old_anchor,
                                             "after_submit_observation": submitted_observation,
@@ -1197,17 +1291,26 @@ class Runtime:
             completions = sum(name in arguments for name in procedure.get("textbox_popups", {}))
             menu = int("menu_trigger" in procedure)
             # Reserve the worst case including changed checkboxes, commit,
-            # learned optional completion, reload, selected-owner reopening and exit.
-            self._reserve_record_actions(trace, 7 + requested + completions + 2 * menu,
-                                         3 + requested + completions + 2 * menu)
+            # learned optional completion, reload, selected-owner reopening and
+            # one prior clean-editor continuation (no terminal exit).
+            continuation = int(browser in self._verified_editors)
+            self._reserve_record_actions(trace, 6 + requested + completions + 2 * menu + continuation,
+                                         3 + requested + completions + 2 * menu + continuation)
+        continued = self._continue_verified_editor(browser, trace, operation=operation)
         target = arguments[procedure["selector_argument"]]
         replacing = (operation["kind"] == "update_visible_record" and
                      procedure["anchor_mode"] == "replace_value")
         surface, record, values = self._record_editor(
             browser, procedure, target, trace,
             replacement_value=arguments[procedure["anchor"]] if replacing else None)
+        if (continued is not None and continued["values"][procedure["anchor"]] == target
+                and continued["values"] != values):
+            raise StopOperation("Typed state changed across the learned clean-editor continuation", stale=True)
         if operation["kind"] == "read_visible_record":
-            self._leave_editor(browser, surface, procedure, values, trace)
+            if procedure.get("boolean_fields"):
+                record["checkbox_readback"] = self._finish_verified_editor(browser, surface, procedure, values, trace)
+            else:
+                self._leave_editor(browser, surface, procedure, values, trace)
             effect = {"kind": "visible_record_read", "values": values,
                       "field_descriptors": procedure["read_fields"], "witness": record,
                       "scope": "Current descriptor-bound edit-form values for one exact local anchor in the rendered view"}
@@ -1231,12 +1334,15 @@ class Runtime:
                       "scope": "Same local anchor and requested field values in learned slots, retained after reload"}
             if procedure.get("boolean_fields"):
                 effect["scope"] = ("Text fields retain learned record slots after reload; typed fields checked in the "
-                                   "reopened intended editor before its learned exit. Only rendered neighboring state checked; "
+                                   "final retained intended editor, with no subsequent application action in this call. "
+                                   "Neighboring list state was checked before this final editor navigation; "
                                    "no atomicity, hidden-state preservation or exclusive causal attribution guarantee.")
             if replacing:
                 effect.update(kind="visible_record_value_replaced", before_witness=record,
                               old_anchor_absence=witness["old_anchor_absence"], identity="UNESTABLISHED",
                               scope="Local exact-value replacement in the inspected record view, retained after reload")
+        if browser in self._verified_editors:
+            self._verified_editors[browser]["version"] = operation["version"]
         return {"outcome": "CONFIRMED", "effect": effect, "metrics": trace.metrics()}
 
     def _record_operation(self, creation: dict, kind: str, procedure: dict,
@@ -1247,13 +1353,16 @@ class Runtime:
         boolean_fields = procedure.get("boolean_fields", {})
         if boolean_fields:
             evidence = procedure.get("boolean_trials", [])
+            if procedure.get("checkbox_exit_preservation") != "exit_reload_reopen_v1":
+                raise StopOperation("Checkbox continuation has no declared observed exit procedure")
             for name, descriptor in boolean_fields.items():
                 by_owner = {}
                 for trial in evidence:
                     if trial["field"] == name:
                         value = trial["requested"]
                         if (type(value) is not bool or trial["readback"]["values"].get(name) is not value
-                                or trial["readback"]["fields"].get(name) != descriptor):
+                                or trial["readback"]["fields"].get(name) != descriptor
+                                or trial["readback"].get("exit_preservation", {}).get("values", {}).get(name) is not value):
                             raise StopOperation("Checkbox persistence contrast is unverified")
                         by_owner.setdefault(trial["target"], set()).add(value)
                 if len([owner for owner, values in by_owner.items() if values == {False, True}]) < 2:
@@ -1360,10 +1469,16 @@ class Runtime:
             operation["scope"]["checkbox_fields"] = (
                 "Known native boolean state in the selected retained editor; no label meaning or boolean creation claim")
             operation["prerequisites"].append("Uniquely bound native checkbox fields expose known boolean state")
-            operation["effect_checks"] = (["Typed fields read in the selected retained editor and rechecked before the learned exit"]
+            operation["effect_checks"] = (["Typed fields read and rechecked in the final selected retained editor"]
                 if reading else ["Text and anchor retain learned local slots after save and reload",
                                  "All expected typed values rechecked in the reopened intended editor",
-                                 "Rendered non-target state unchanged through save, reload, reopen and exit"])
+                                 "Rendered non-target state checked after save and reload, before final editor navigation"])
+            operation["scope"]["terminal_view"] = (
+                "Final verified editor; no subsequent application action. A session-local unchanged-element receipt "
+                "may authorize the learned exit at the start of a later compatible call, charged as a possible write. "
+                "The receipt is invalid after edits, remount, incompatible version, reconnect, close or failed continuation.")
+            operation["prerequisites"].append(
+                "Prior verified editor may be left only through its two-owner, both-value tested exit procedure")
         if binding:
             operation["prerequisites"].append(
                 "One bound numeric context control retains its label, state, placement and DOM element during the call")
@@ -1529,14 +1644,15 @@ class Runtime:
             return
         menu = int("menu_trigger" in procedure)
         try:
-            self._reserve_record_actions(trace, 4 * len(fields) * (8 + 2 * menu),
-                                         4 * len(fields) * (4 + 2 * menu))
+            self._reserve_record_actions(trace, 4 * len(fields) * (12 + 3 * menu),
+                                         4 * len(fields) * (7 + 3 * menu))
         except StopOperation as error:
             emit({"type": "checkbox_extension_unestablished", "reason": str(error), "writes_started": False})
             return
         extended = deepcopy(procedure)
         extended["boolean_fields"] = fields
         extended["boolean_trials"] = []
+        extended["checkbox_exit_preservation"] = "exit_reload_reopen_v1"
         extended["read_fields"].update(fields)
         extended["anchor_mode"] = "immutable"
         extended["update_arguments"] = [name for name in extended["update_arguments"]
@@ -1558,7 +1674,7 @@ class Runtime:
                         requested = not original if round_index == 0 else original
                         expected = {**before, name: requested}
                         witness, _ = self._update_record(browser, surface, extended, before, expected, trace,
-                            requested_fields=[name], neighbors=record["neighbor_state"])
+                            requested_fields=[name], neighbors=record["neighbor_state"], discover=True)
                         extended["boolean_trials"].append({"field": name, "target": target, "requested": requested,
                                                           "readback": witness["checkbox_readback"]})
             published = []
@@ -1566,9 +1682,13 @@ class Runtime:
                 published.append(self._record_operation(creation, kind, extended,
                                  parents[kind]["support"]["trials"], settings))
             operations.extend(published)
+            if browser in self._verified_editors:
+                self._verified_editors[browser]["procedure"] = deepcopy(extended)
+                self._verified_editors[browser]["version"] = published[0]["version"]
             for operation in published:
                 emit({"type": "operation_learned", "id": operation["id"], "version": operation["version"]})
         except Exception as error:
+            self._release_verified_editor(browser)
             attempt = {"candidate": creation["id"], "stage": "checkbox_fields",
                        "confirmed_trials": len(extended["boolean_trials"]),
                        "reason": str(error) if isinstance(error, StopOperation) else "Checkbox experiment did not complete",
@@ -1606,6 +1726,7 @@ class Runtime:
         trace = self._trace(connection, emit, Budget(min(40, scope.get("max_actions", 40)),
                                                     min(25, scope.get("max_writes", 25)),
                                                     deadline=deadline))
+        browser = self.sessions.get(connection["id"])
         try:
             self._check_operation(operation)
             if operation["kind"].startswith("semantic_"):
@@ -1614,7 +1735,8 @@ class Runtime:
                 return invoke(self, self._browser(connection), operation, arguments, trace)
             validate_arguments(operation["argument_schema"], arguments)
             browser = self._browser(connection)
-            self._guard_current_editor(trace.read(browser))
+            if browser not in self._verified_editors or operation["kind"] == "create_visible_record":
+                self._guard_current_editor(trace.read(browser))
             if operation["kind"] != "create_visible_record":
                 return self._invoke_record(browser, operation, arguments, trace)
             procedure = operation["procedure"]
@@ -1638,6 +1760,7 @@ class Runtime:
                     "scope": "Unique local record in the current rendered view, retained after reload"},
                     "metrics": trace.metrics()}
         except StopOperation as error:
+            self._release_verified_editor(browser)
             outcome = "UNCERTAIN" if trace.possible_effect else "FAILED_BEFORE_EFFECT"
             # Refusal after fills cannot certify the absence of an autosaved partial effect.
             if error.refusal and not trace.possible_effect:
@@ -1647,6 +1770,7 @@ class Runtime:
                 result["operation_status"] = "STALE"
             return result
         except Exception as error:
+            self._release_verified_editor(browser)
             return {"outcome": "UNCERTAIN" if trace.possible_effect else "FAILED_BEFORE_EFFECT",
                     "effect": {"reason": "Browser or evidence recording failed", "error_type": type(error).__name__},
                     "metrics": trace.metrics()}

@@ -170,6 +170,77 @@ class HTTPHarness:
                             headers={"Idempotency-Key": key} if key else None)
 
 
+@pytest.mark.parametrize('exit_reset', [False, True], ids=['repeated_same_and_different_targets', 'contradicted_next_exit'])
+def test_http_typed_updates_end_at_checked_state_and_guard_the_next_continuation(tmp_path, monkeypatch, exit_reset):
+    """Ordinary induced artifact and real HTTP worker; application bits are independent.
+
+    Store/connection plumbing is supplied test setup, not unfamiliar-app evidence.
+    The final-exit reset is the evaluator's retained 7ffd0e1 counterexample.
+    """
+    from types import SimpleNamespace
+    import test_operation_runtime as diagnostics
+
+    with monkeypatch.context() as learning:
+        runtime, learned_connection, browser, learned = diagnostics._learn_checkbox_records(
+            tmp_path / 'fit', learning, browser=diagnostics._CheckboxVerificationExitResetBrowser())
+    operation = diagnostics._checkbox_kind(learned, 'update_visible_record')
+    browser.reset_on_verification_exit = exit_reset
+    browser.close = lambda: None
+    api = HTTPHarness.__new__(HTTPHarness)
+    api.fake = SimpleNamespace(release=threading.Event())
+    api.service = Service(tmp_path / 'service', runtime_factory=lambda directory: runtime)
+    try:
+        api.server = make_server(api.service, port=0)
+    except BaseException:
+        api.service.close(timeout=5)
+        raise
+    api.base = 'http://127.0.0.1:' + str(api.server.server_port)
+    api.thread = threading.Thread(target=api.server.serve_forever, kwargs={'poll_interval': 0.01}, daemon=True)
+    api.thread.start()
+    try:
+        connection, connecting = api.service.store.create_connection(
+            {key: value for key, value in learned_connection.items() if key != 'id'}, {})
+        assert api.service.store.start_job(connecting)
+        api.service.store.finish_job(connecting, {'status': 'CONNECTED'})
+        runtime.sessions[connection['id']] = runtime.sessions.pop(learned_connection['id'])
+        publishing = api.service.store.queue_job(connection['id'], 'learn', {})
+        assert api.service.store.start_job(publishing)
+        api.service.store.finish_job(publishing, {'status': 'COMPLETED'}, operations=[operation])
+        path = f"/v1/connections/{connection['id']}/operations/{operation['id']}/invoke"
+
+        def invoke(index, desired):
+            status, accepted = api.request('POST', path, {'version': operation['version'],
+                'arguments': {'target': browser.rows[index]['URL'], 'pinned': desired}})
+            assert status == 202
+            api.completed(accepted)
+            status, execution = api.request('GET', '/v1/executions/' + accepted['execution_id'])
+            assert status == 200
+            return execution['result']
+
+        first = invoke(0, True)
+        assert first['outcome'] == 'CONFIRMED', first
+        assert browser.rows[0]['Pinned'] is True and browser.rows[1]['Pinned'] is False
+        assert browser.scene == 'editor' and browser.exit_resets == []
+        assert first['effect']['witness']['checkbox_readback']['values']['pinned'] is True
+        if exit_reset:
+            second = invoke(0, True)
+            assert second['outcome'] == 'UNCERTAIN' and second['operation_status'] == 'STALE'
+            assert browser.rows[0]['Pinned'] is False and browser.exit_resets == [0]
+            before = len(browser.actions), browser.navigation_count
+            status, _ = api.request('POST', path, {'version': operation['version'],
+                'arguments': {'target': browser.rows[0]['URL'], 'pinned': True}})
+            assert status == 409
+            assert (len(browser.actions), browser.navigation_count) == before
+        else:
+            second = invoke(0, False)
+            third = invoke(1, True)
+            assert second['outcome'] == third['outcome'] == 'CONFIRMED'
+            assert [row['Pinned'] for row in browser.rows] == [False, True]
+            assert browser.scene == 'editor' and browser.selected == 1
+    finally:
+        api.close()
+
+
 @pytest.fixture
 def api(tmp_path):
     harness = HTTPHarness(tmp_path / "service")
