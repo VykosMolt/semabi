@@ -70,6 +70,13 @@
   HTTP tests exercise repeated same/different targets and next-exit reset→stale.
   Actual integratedec0da13 runtime/service/outcome/admissible gate:620 passed
   in60.02s, including native browser tests. This is not a whole-repository count.
+  Subsequent independent typed tests exposed a second false confirmation:
+  collection reload can reset the persisted bit while reopening restores a cached
+  editor draft. Three expected-safety tests fail (learning/runtime/actual HTTP),
+  retained in `runs/.checkbox-draft-a372-review`; the earlier620 pass did not test
+  this mechanism. Final-editor reload repair is active; Linkding rerun remains
+  held. Different-target continuation can lose a previously observed hidden bit;
+  existing scope discloses that collateral limit, not simultaneous preservation.
   Confirmation brackets an earlier detail witness with equal full observed local
   inventories including siblings; these precede terminal target verification.
   This is timed observational evidence, not atomicity, a global collection,

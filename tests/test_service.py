@@ -570,7 +570,7 @@ def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_repla
 @pytest.mark.parametrize('fault', [None, 'new_outcome', 'no_rivals', 'unrepresented',
                                   'actual_no_rivals', 'rejected_edit', 'sibling_changed',
                                   'no_write_budget', 'setup_only_budget', 'no_response_budget',
-                                  'terminal_reset'])
+                                  'terminal_reset', 'terminal_ambiguity'])
 def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effects(tmp_path, monkeypatch, fault):
     """Diagnostic artifact; real acquisition routing, budgets and observed persistence.
 
@@ -602,6 +602,16 @@ def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effec
             response=('Unseen completion',) if fault == 'new_outcome' else ('Recorded',))
     artifact = SemanticArtifact.from_json({})
     opportunities = []
+    if fault == 'terminal_ambiguity':
+        original_predict = artifact.predict
+
+        def ambiguous_terminal_prediction(*args, **kwargs):
+            prediction = original_predict(*args, **kwargs)
+            if browser.reloads >= 2:
+                prediction.update(status='ambiguous', alternatives={'Recorded': {}, 'Declined': {}})
+            return prediction
+
+        artifact.predict = ambiguous_terminal_prediction
 
     def opportunity(obs, node, *, editable_node=None, value=None):
         proposed = editable_node is not None
@@ -651,6 +661,9 @@ def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effec
             assert browser.values == {'A': '7', 'B': '9'}
             assert len(trials) == len(edits) == 1 and edits[0].get('persisted')
             assert edits[0]['persisted'] == browser.surface.observation.structural_signature()
+            if fault == 'terminal_ambiguity':
+                terminal = [event for event in events if event['type'] == 'semantic_terminal_target_witness']
+                assert terminal[-1]['prediction']['status'] == 'ambiguous'
             if fault == 'new_outcome':
                 assert 'Unseen completion' in json.dumps(report['observation'])
                 assert trials[0]['after'] != trials[0]['before']
