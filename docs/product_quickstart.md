@@ -17,6 +17,13 @@ the fitted field comparisons before execution. Disclosed dispatch development
 has completed a relational check and a persisted guarded quantity update through
 HTTP, with independent target and sibling checks. This is not an independent-app
 transport assessment or a learned dispatch/start business-state transition.
+Workshop development also exercises a learned record→resource picker→attachment
+route: the same record and value produced independently checked refusal and
+acceptance with different resources. The accepted case still had ambiguous
+predictions. Removing its learned related-object binding removed the acceptance
+alternative; removing comparisons alone left a constant-threshold explanation.
+This is evidence that learned relations affect prediction, not that the unique
+application rule or an advantage from targeting has been established.
 
 Use `--inspect` with the client to inspect a returned operation's learned
 conditions, prerequisites, output description and supported scope. Onboarding is

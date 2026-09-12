@@ -20,13 +20,13 @@
   Formerf2 service stopped gracefully after completed jobs; its preserved catalog
   and independent visible baseline remain in workshopv2. Return repair67dcc1c is
   included; no old artifact hashes or semantic answers were rewritten.
-  While fit runs, isolated populated-view exit repair remains under review:
+  Populated-view exit repair was developed separately during the fit:
   initial20controlledcases passed, then review exposed omitted row/scope owner
   context and link destination fidelity; these are not accepted as preservation.
   Candidateb8b8840 now repairs these plus sibling completeness, original creator
   draft protection and external native-form reference fidelity (unsupported).
   37focused/125affected non-native checks passed; independent ordinaryHTTP3/3
-  passed onb8b8840, tests82035bd awaiting integration. Original false preservation
+  passed onb8b8840. Repair/tests integrated asf5101a1/1dd28c5. Original false preservation
   acceptance is retained; setup-only sandbox/key-format failures remain separate.
   Root budget repair permits explicit64actions/48writes within connection scope,
   preserving40/25defaults and request idempotency/isolation. Guarded operations
@@ -36,7 +36,27 @@
   An initial test incorrectly expected no effect despite the selection prefix;
   corrected to UNCERTAIN with zero field/final writes, without status changes.
   Shared relmodel.py now participates in operation source invalidation.
-  Next: real workshop checks (currentec71 service), integrate exit/budget repairs,
+  Live Workshop ec71 checks now CONFIRMED: Cedar12/Copper12actions10possiblewrites
+  (6.124s HTTP), then same Cedar12/Iron13actions11writes (6.661s).
+  Independent13checks passed for each, including target/value/resource on reload,
+  unchanged collection membership/sibling quantities, and unique target reopening.
+  Copper predicted refusal and observed Job cannot start. Iron predicted AMBIGUOUS
+  (point refused; alternatives accepted/refused), then independently observed
+  Job accepted. Confirmation is not prediction correctness or exclusive causality.
+  Iron's accepted alternative uses a learned cross-object comparison, while a
+  missing-status rival still admits refusal. Do not claim unique learned condition.
+  Receipts: workshopv2/attached_check_{copper,iron}_ec71cb7{,_independent}.json.
+  Offline Iron ablation exactly reproduces HTTP inference. Removing the learned
+  related role or all ordered features removes acceptance, leaving a wrong sole
+  refusal; removing comparisons alone retains acceptance through resource18 and
+  span<19. This exposes partial-program support/omitted-row uncertainty, not a
+  unique rule. Ordinary checking execution itself is prediction-independent.
+  Generic existing ablation runner now supports checking traces and correlates
+  the complete observation-event sequence; its initial one-transition match
+  found3 traces (reused training included) and correctly failed before output.
+  Actual1dd28c5 runtime/HTTP gate621passed/27deselected/40.85s; native and artifact
+  checks are separate. Two guessed nonexistent test-file commands ran no tests.
+  Next: deployed guarded budget repair, live Kanboard development rerun on1dd28c5,
   and future exact-fit reuse. No retrospective fitted-artifact provenance repair.
   main46da49d additionally separates unused completion capability from typed READ
   (74 affected popup/checkbox tests passed/5.29s). Dispatch v6 raw refit reused559

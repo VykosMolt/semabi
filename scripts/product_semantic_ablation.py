@@ -40,30 +40,45 @@ def main():
     report = json.loads(args.report.read_text())
     job = report["invocation_job"]
     request = job["request"]
-    original = job["result"]["counterfactual"]
-    control = original["prediction_before"]["control"]
-    signature = original["prediction_before"]["observation"]
-    node, field = original["prediction_before"]["node"], original["field"]["node"]
+    guarded = "counterfactual" in job["result"]
+    original = job["result"]["counterfactual"] if guarded else job["result"]["prediction"]
+    prediction = original["prediction_before"] if guarded else original
+    control, signature, node = prediction["control"], prediction["observation"], prediction["node"]
+    field = original["field"]["node"] if guarded else None
+    if args.probe and not guarded:
+        parser.error("value probes require an actual guarded-edit execution")
     with sqlite3.connect(f"file:{args.database}?mode=ro", uri=True) as db:
         row = db.execute("SELECT artifact FROM operations WHERE connection_id=? AND id=? AND version=?",
                          (job["connection_id"], request["operation_id"], request["version"])).fetchone()
     operation = json.loads(row[0])
     frozen = operation["support"]["semantic_artifact"]
     evidence_root = args.database.parent / "connections" / job["connection_id"] / "evidence"
+    observed_sequence = [event["signature"] for event in job.get("events", [])
+                         if event.get("type") == "observation"]
     matches = []
     for folder in sorted(evidence_root.iterdir()):
         if not (folder / "observations.jsonl").is_file():
             continue
+        if observed_sequence:
+            surfaces = folder / "surfaces.jsonl"
+            if not surfaces.is_file() or [json.loads(line)["observation"]
+                    for line in surfaces.read_text().splitlines()] != observed_sequence:
+                continue
         log = EvidenceLog(folder)
-        if any(s.before == signature and s.action.kind == "type" and s.action.target == field
-               and s.action.text == request["arguments"]["value"] for s in log.steps):
+        if any(s.before == signature and (
+                s.action.kind == "type" and s.action.target == field
+                and s.action.text == request["arguments"]["value"] if guarded else
+                s.action.kind == "click" and s.action.target == node
+                and s.after == job["result"]["effect"]["after"]) for s in log.steps):
             matches.append((folder, log.obs(signature)))
     if len(matches) != 1:
-        raise ValueError(f"Expected one actual matching write trace, found {len(matches)}")
+        raise ValueError(f"Expected one actual matching execution trace, found {len(matches)}")
     folder, observation = matches[0]
     baseline = SemanticArtifact.from_json(frozen)
     model = baseline.outcomes[control]
-    relevant = sorted({literal[i] for rule in model.rules for literal in rule.condition
+    conditions = [rule.condition for rule in model.rules]
+    conditions.extend(option["condition"] for option in prediction.get("alternatives", {}).values())
+    relevant = sorted({literal[i] for condition in conditions for literal in condition
                        if literal[0] in {"attr_cmp_ge", "attr_cmp_lt"} for i in (1, 3)
                        if literal[i] != "owner"})
     if not relevant:
@@ -81,12 +96,17 @@ def main():
         elif arm == "all_ordered_features_unavailable":
             got.pairs = frozenset()
             got.ordered = {}
-        artifact.predict(observation, node, control)
-        simulation = artifact.simulate_edit(observation, node, field, request["arguments"]["value"])
-        results[arm] = {"guard_decision": decision(simulation, request["arguments"]["expect"]),
-                        "simulation": simulation}
-    if results["intact"]["simulation"] != original:
-        raise AssertionError("Offline intact simulation differs from actual HTTP counterfactual")
+        current = artifact.predict(observation, node, control)
+        if guarded:
+            simulation = artifact.simulate_edit(observation, node, field, request["arguments"]["value"])
+            results[arm] = {"guard_decision": decision(simulation, request["arguments"]["expect"]),
+                            "simulation": simulation}
+        else:
+            results[arm] = {"prediction": current,
+                            "execution_policy": "authorized checking action does not require a unique prediction"}
+    intact = results["intact"]["simulation" if guarded else "prediction"]
+    if intact != original:
+        raise AssertionError("Offline intact inference differs from actual HTTP inference")
     probes = {}
     for value in args.probe:
         artifact = SemanticArtifact.from_json(frozen)
@@ -102,15 +122,17 @@ def main():
               "representation_revision": frozen["metadata"]["representation_revision"],
               "relevant_comparison_roles": relevant,
               "intervention_scope": "Frozen training witnesses/rules retained; only named query bindings or ordered feature availability changed",
-              "intact_matches_actual_http_counterfactual": True,
+              "intact_matches_actual_http_inference": True,
+              "intact_matches_actual_http_counterfactual": True if guarded else None,
+              "inference_kind": "guarded_counterfactual" if guarded else "checking_prediction",
               "application_actions": 0, "fits": 0, "arms": results, "probes": probes}
     with args.output.open("x") as stream:
         json.dump(output, stream, indent=2, sort_keys=True)
         stream.write("\n")
     print(json.dumps({"output": str(args.output),
-                      "arms": {k: {"decision": v["guard_decision"],
-                                    "point": v["simulation"].get("prediction", {}).get("point"),
-                                    "alternatives": v["simulation"].get("prediction", {}).get("alternatives")}
+                      "arms": {k: {"decision": v.get("guard_decision"),
+                                    "point": v.get("prediction", v.get("simulation", {}).get("prediction", {})).get("point"),
+                                    "alternatives": v.get("prediction", v.get("simulation", {}).get("prediction", {})).get("alternatives")}
                                for k, v in results.items()},
                       "probes": {k: v["guard_decision"] for k, v in probes.items()}}, indent=2))
 
