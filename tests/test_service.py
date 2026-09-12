@@ -252,6 +252,127 @@ def test_http_typed_updates_end_at_checked_state_and_guard_the_next_continuation
         api.close()
 
 
+@pytest.mark.parametrize('fault', ['terminal_target', 'terminal_completeness', 'initial_draft'])
+def test_http_populated_exit_is_learned_and_checks_terminal_scope(tmp_path, monkeypatch, fault):
+    """Ordinary HTTP learning/invocation; only browser and connection setup are supplied.
+
+    Mutable rows and text-completeness state are independent checks, not supplied
+    operation schemas or procedure answers. This is controlled service evidence.
+    """
+    from itertools import count
+    from types import SimpleNamespace
+    import sys
+    import test_operation_runtime as diagnostics
+    from semabi.compiler import runtime as runtime_module
+    from semabi.compiler.runtime import Runtime
+
+    class Browser(diagnostics._PopulatedExitBrowser):
+        truncate_on_reload = False
+        truncated = False
+
+        def read(self):
+            surface = super().read()
+            if self.scene == 'source':
+                sibling = next(node.i for node in surface.observation.nodes if node.name == self.neighbor)
+                surface.text_boundaries[sibling] = None if self.truncated else self.neighbor
+            return surface
+
+        def reload(self):
+            if self.truncate_on_reload and self.scene == 'source':
+                self.truncated = True
+            return super().reload()
+
+    browser = Browser()
+    if fault == 'initial_draft':
+        browser.rows = [{'Name': 'Existing record', 'Identifier': ''}]
+        browser.scene, browser.selected = 'source', 0
+        browser.scope_value = 'Preserve this preexisting draft'
+        browser.current_url = browser.allowed_origin + '/preexisting-view'
+        browser.routes[browser.current_url] = 0
+
+    def factory(directory):
+        runtime = Runtime(directory)
+        runtime.release = threading.Event()  # Existing harness shutdown coordination only.
+        return runtime
+
+    monkeypatch.setattr(sys.modules[__name__], 'FakeRuntime', factory)
+    api = HTTPHarness(tmp_path / 'service')
+    try:
+        connection, connecting = api.service.store.create_connection(
+            {'url': browser.allowed_origin + '/', 'scope': {'exploration_enabled': True,
+                                                          'max_actions': 60, 'max_writes': 30}}, {})
+        assert api.service.store.start_job(connecting)
+        api.service.store.finish_job(connecting, {'status': 'CONNECTED'})
+        api.fake.sessions[connection['id']] = browser
+        prefix = '/v1/connections/' + connection['id']
+        initial_rows = deepcopy(browser.rows)
+        with monkeypatch.context() as learning_clock:
+            ticks = count(0, 10)
+            learning_clock.setattr(runtime_module, 'time', SimpleNamespace(
+                monotonic=lambda: next(ticks), sleep=lambda _: None))
+            status, accepted = api.request('POST', prefix + '/learn',
+                                          {'settings': {'max_actions': 60, 'max_writes': 30}})
+            assert status == 202
+            learned = api.completed(accepted)
+        status, catalog = api.request('GET', prefix + '/operations')
+        assert status == 200
+        if fault == 'initial_draft':
+            assert catalog['operations'] == []
+            assert 'draft' in learned['result']['reason']
+            assert browser.rows == initial_rows and browser.scope_value == 'Preserve this preexisting draft'
+            assert browser.actions == browser.route_actions == []
+            assert learned['result']['metrics']['possible_write_actions'] == 0
+            return
+        operation, = catalog['operations']
+        assert operation['kind'] == 'create_visible_record'
+        assert set(operation['argument_schema']['properties']) == {'name'}
+        assert operation['procedure']['populated_exit']
+        trials = operation['support']['trials']
+        assert len(trials) == 2 and len(browser.rows) == 3
+        assert learned['result']['attempts'][0]['confirmed_trials'] == 0
+        assert all(trial['exit_preservation']['route_contrast'] for trial in trials)
+        invocation = prefix + '/operations/' + operation['id'] + '/invoke'
+
+        def invoke(name):
+            status, accepted = api.request('POST', invocation,
+                {'version': operation['version'], 'arguments': {'name': name}},
+                headers={'Idempotency-Key': name.replace(' ', '-')})
+            assert status == 202, accepted
+            assert api.completed(accepted)['status'] == 'COMPLETED'
+            status, execution = api.request('GET', '/v1/executions/' + accepted['execution_id'])
+            assert status == 200
+            return execution['result']
+
+        prior = deepcopy(browser.rows)
+        result = invoke('Fresh HTTP populated-scope record')
+        assert result['outcome'] == 'CONFIRMED', result
+        assert browser.rows == prior + [{'Name': 'Fresh HTTP populated-scope record', 'Identifier': ''}]
+        assert browser.route_actions[-1] == ('reload', browser.current_url)
+        terminal = browser.read()
+        sibling = next(node.i for node in terminal.observation.nodes if node.name == browser.neighbor)
+        assert terminal.text_is_complete(sibling)
+        assert not result['effect']['exit_preservation']['route_contrast']
+        if fault == 'terminal_target':
+            browser.route_fault = 'wrong_owner'
+        else:
+            browser.truncate_on_reload = True
+        result = invoke('Must not be falsely confirmed')
+        assert result['outcome'] == 'UNCERTAIN' and result['operation_status'] == 'STALE', result
+        assert len(browser.rows) == 5 and browser.rows[:-1] == prior + [
+            {'Name': 'Fresh HTTP populated-scope record', 'Identifier': ''}]
+        assert browser.route_actions[-1] == ('reload', browser.current_url)
+        if fault == 'terminal_target':
+            assert browser.rows[-1]['Name'] == 'Wrong target'
+        else:
+            assert browser.rows[-1]['Name'] == 'Must not be falsely confirmed'
+            terminal = browser.read()
+            sibling = next(node.i for node in terminal.observation.nodes if node.name == browser.neighbor)
+            assert not terminal.text_is_complete(sibling)
+        assert browser not in api.fake._verified_editors
+    finally:
+        api.close()
+
+
 @pytest.fixture
 def api(tmp_path):
     harness = HTTPHarness(tmp_path / "service")
