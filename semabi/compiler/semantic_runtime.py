@@ -1057,7 +1057,10 @@ def learn(runtime, connection, settings, trace, emit):
         return {"status": "UNESTABLISHED", "operations": [], "attempts": [],
                 "metrics": trace.metrics(), "invalidations": [], "repair": repair_report}
     _require_settled_step_endpoints(trace.log, emit)
-    _learning_surfaces(trace.log)  # Do not fit/reuse a product trace with conflicting text occurrences.
+    # Like settling metadata, historical missing text-sidecar evidence is
+    # outside this admission guarantee, not an invented contradictory sample.
+    if (trace.log.dir / "surfaces.jsonl").exists():
+        _learning_surfaces(trace.log)
     artifact = reuse_semantics(trace.log.dir, fit_candidate) if fit_candidate else None
     fit_passes = 0 if artifact is not None else 1
     if artifact is None:
