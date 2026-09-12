@@ -470,6 +470,96 @@ def test_http_delayed_creation_samples_once_without_retrying_save(tmp_path, monk
         api.close()
 
 
+@pytest.mark.parametrize('phase', ['save', 'reload', 'completeness'])
+def test_http_learned_partial_text_update_checks_observed_siblings(tmp_path, monkeypatch, phase):
+    """Diagnostic browser/setup only; schema, procedure and witnesses are learned."""
+    from itertools import count
+    from types import SimpleNamespace
+    import sys
+    import test_operation_runtime as diagnostics
+    from semabi.compiler import runtime as runtime_module
+    from semabi.compiler.runtime import Runtime
+    class Browser(diagnostics._TextNeighborBrowser):
+        partial_neighbor = False
+
+        def act(self, action):
+            updating = (self.selected is not None and action.kind == 'click'
+                        and self.surface.observation.node(action.target).name == 'Save')
+            result = super().act(action)
+            if updating and self.neighbor_fault == 'completeness':
+                self.partial_neighbor = True
+            return result
+
+        def read(self):
+            surface = super().read()
+            if self.scene == 'list' and len(self.rows) > 1:
+                value = self.rows[1]['Description']
+                for node in surface.observation.nodes:
+                    if node.name == value:
+                        surface.text_boundaries[node.i] = None if self.partial_neighbor else value
+            return surface
+
+    browser = Browser()
+    def factory(directory):
+        runtime = Runtime(directory)
+        runtime.release = threading.Event()
+        return runtime
+    monkeypatch.setattr(sys.modules[__name__], 'FakeRuntime', factory)
+    api = HTTPHarness(tmp_path / 'service')
+    try:
+        connection, connecting = api.service.store.create_connection(
+            {'url': browser.allowed_origin + '/', 'scope': {'exploration_enabled': True,
+                                                          'max_actions': 60, 'max_writes': 30}}, {})
+        assert api.service.store.start_job(connecting)
+        api.service.store.finish_job(connecting, {'status': 'CONNECTED'})
+        api.fake.sessions[connection['id']] = browser
+        prefix = '/v1/connections/' + connection['id']
+        with monkeypatch.context() as clock:
+            ticks = count(0, 10)
+            clock.setattr(runtime_module, 'time', SimpleNamespace(monotonic=lambda: next(ticks), sleep=lambda _: None))
+            code, accepted = api.request('POST', prefix + '/learn', {'settings': {'max_actions': 60, 'max_writes': 30}})
+            assert code == 202
+            learned = api.completed(accepted)
+        assert learned['status'] == 'COMPLETED'
+        code, catalog = api.request('GET', prefix + '/operations')
+        assert code == 200
+        operation, = [op for op in catalog['operations'] if op['kind'] == 'update_visible_record']
+        assert not operation['procedure'].get('boolean_fields')
+        assert all(trial['witness']['neighbor_bracket']['before_edit'] for trial in operation['support']['trials'])
+
+        def invoke(arguments):
+            code, accepted = api.request('POST', prefix + '/operations/' + operation['id'] + '/invoke',
+                {'version': operation['version'], 'arguments': arguments})
+            assert code == 202, accepted
+            return api.completed(accepted)['result']
+
+        # Duplicate labels are insufficient targets; the ordinary learned URL
+        # argument resolves the record and omitted text must remain unchanged.
+        for row in browser.rows:
+            row['Title'] = 'Same displayed title'
+        before = deepcopy(browser.rows)
+        result = invoke({'target': before[0]['URL'], 'description': 'Fresh scoped HTTP description'})
+        assert result['outcome'] == 'CONFIRMED', result
+        assert browser.rows == [{**before[0], 'Description': 'Fresh scoped HTTP description'}, before[1]]
+        bracket = result['effect']['witness']['neighbor_bracket']
+        assert all(bracket[key] for key in ('before_edit', 'after_submit', 'after_reload'))
+        assert 'not a complete collection' in bracket['scope']
+        before, action_start = deepcopy(browser.rows), len(browser.actions)
+        browser.neighbor_fault = phase
+        result = invoke({'target': before[0]['URL'], 'title': 'Fresh requested HTTP title'})
+        assert result['outcome'] == 'UNCERTAIN', result
+        assert 'neighboring state changed' in result['effect']['reason']
+        assert browser.rows[0] == {**before[0], 'Title': 'Fresh requested HTTP title'}
+        if phase == 'completeness':
+            assert browser.rows[1] == before[1] and browser.partial_neighbor
+        else:
+            assert browser.rows[1]['Description'] != before[1]['Description']
+        assert browser.rows[1]['URL'] == before[1]['URL']
+        assert sum(action.kind == 'click' for action in browser.actions[action_start:]) == 2
+    finally:
+        api.close()
+
+
 @pytest.fixture
 def api(tmp_path):
     harness = HTTPHarness(tmp_path / "service")
