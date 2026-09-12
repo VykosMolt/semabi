@@ -2,6 +2,58 @@
 
 ## Integrated semantic product — active 2026-09-12
 
+- Milestone: carry observation-local response learning through a guarded Workshop
+  API write, then repair generic onboarding ambiguity and delayed post-write
+  observation handling. Continue development coverage after these checkpoints.
+- Acceptance: ordinary HTTP learning/publication, fresh arguments and changed
+  related resource, no handwritten semantic mapping, independently checked target
+  and neighbors, restart/revision behavior, and consequential binding/condition
+  ablation. Prediction, application response, observed effect and exclusive cause
+  stay distinct; neither ambiguity nor lost coverage is hidden.
+- Current main: 89f5806 plus a focused archived-sampling test awaiting commit.
+  763f660 is the validated shared prediction-state repair; 7591f90 adds reviewed
+  symmetric local-owner structure and checked-scope references. The latter has
+  controlled/retained evidence but no successful live Kanboard operation yet.
+- Decisions: response conditions use the same raw observation-local pre-state
+  in fit/query; Tracker belief/delta evidence remains separate. Partial states
+  cannot establish global emptiness. Exact fit reuse requires all five raw inputs,
+  recipe and shared code; workflow publication is rebuilt. Explicit invocation
+  ceilings64/48 preserve40/25 defaults and connection scope.
+- Validation: 763 candidate790 affected tests passed117.25s; additional38 light
+  research tests passed0.25s on equivalent research source. P43 is now5 correct
+  supported/0wrong/3ambiguous versus retained4117/0/1; all15 raw training/query
+  rows now agree. This is a disclosed coverage regression, not a competence gain.
+  Fixed42-occasion Workshop feature replay removes the stale-response refusal;
+  full ordinary Workshop validation is the active job below.
+- Operational evidence: frozen411 fullfit533.872s; ordinaryHTTP cachehit5.084s,
+  zero actions/fits, then actual service/browser restart cachehit6.003s. Ironcheck
+  confirmed after restart with13 independent checks. Guarded value10 stopped
+  PREDICTION_UNAVAILABLE without a field write;11 independent checks retain12.
+  Old operation on763 failedbeforeeffect0actions/0writes after source revision.
+- Exposure: Dispatch/Workshop/generated fixtures/Memos/linkding/Vikunja/Kanboard
+  are development. FreshRSS1.30.0 independently developed,16tasks selected before
+  setup; reserved411 run is complete0/16,0ops,0invokes. Caller grammar and first
+  ambiguous navigation proposal are separate barriers; no rescue/secondlearn.
+  FreshRSS is now development, not still reserved. Evaluatornative/UI and shared
+  agent context exposure are disclosed; there is no blind assessment claim.
+- Owned active job: Workshop job_6ebf69bdcdab46e8affb78fff4782cd6, started23:17:56UTC,
+  2053reusedrawsteps, clientexec18766/1800s budget. Frozen763 service8860,
+  runs/.product-local-prediction-763f660, PID1004117/exec29688, CPU0-7.
+  Output workshopv2/local_prediction_refit_763f660.json pending. No other heavyfit.
+  Respect unrelated8910; owned application/service processes remain documented
+  in retained details. Agent candidates use remainingCPU8-11 within12core cap.
+- Separable work: semantic_bridge owns safe pre-action ambiguous-proposal skips
+  in acquisition; observation_review owns one budgeted read-only resample after
+  a successful write's unsettled observation; fixture_evaluation owns independent
+  review and the queued retained pilot check. No automatic write retry permitted.
+- Next: inspect ordinary Workshop fit, invoke supported guarded write and check
+  independently, then restart/ablate. Integrate agent repairs only after their
+  discriminating tests; replay original development denominators unchanged.
+
+## Retained integrated checkpoint details — through 2026-09-12 23:20 UTC
+
+These are prior receipts and diagnoses, not the current job-status block.
+
 - Active checkpoint: frozen product763f660 runs on8860, seed8/CPU0-7,
   from `runs/.product-local-prediction-763f660`, service PID1004117/exec29688.
   NewordinaryWorkshoprefit job_6ebf69bdcdab46e8affb78fff4782cd6 started23:17:56UTC,

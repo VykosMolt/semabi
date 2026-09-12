@@ -177,6 +177,31 @@ def test_semantic_fit_cache_roundtrip_uses_exact_inputs_and_keeps_original_cost(
     assert semantic.reuse_semantics(log.dir, frozen) is None
 
 
+def test_archived_sampling_observation_does_not_become_a_fitted_transition_view(tmp_path):
+    """A resampled write may archive an unready sample without using it as an endpoint.
+
+    This checks ordinary fitting's existing reachable-view boundary, not a
+    general settled-view filter: an old Step pointing at an unready view still
+    requires a separately justified repair.
+    """
+    from semabi.compiler.evidence import EvidenceLog
+    from semabi.compiler.observation import Node, Observation
+    from semabi.compiler.semantic import fit_semantics
+
+    log = _fit_cache_log(tmp_path)
+    baseline = fit_semantics(log.dir)
+    sample = Observation([Node(0, -1, "group", ""),
+                          Node(1, 0, "heading", "Unready-only schema"),
+                          Node(2, 0, "textbox", "Unready-only field", value="Unready-only value")])
+    signature = log.add_observation(sample)
+    fitted = fit_semantics(log.dir)
+    assert signature in EvidenceLog(log.dir).observations
+    assert signature not in fitted.abstractor.G.obs
+    assert fitted.metadata["representation_revision"] == baseline.metadata["representation_revision"]
+    assert fitted.operations() == baseline.operations()
+    assert fitted.metadata["fit_provenance"] != baseline.metadata["fit_provenance"]
+
+
 @pytest.mark.parametrize('sidecar', ['probes.jsonl', 'probes.acquired.jsonl', 'field_theories_v4.json'])
 def test_semantic_fit_cache_sidecar_content_and_absence_are_inputs(tmp_path, sidecar):
     import json
