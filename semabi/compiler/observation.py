@@ -1,6 +1,7 @@
 """Observation representation: a flattened tree of visible UI nodes."""
 from __future__ import annotations
 
+from copy import deepcopy
 import hashlib
 import json
 from dataclasses import dataclass, field
@@ -60,11 +61,18 @@ class Observation:
     nodes: list[Node]
     url: str = ""
     _children: dict[int, list[int]] = field(default_factory=dict, repr=False)
+    _signature: str | None = field(default=None, repr=False, compare=False)
 
     def __post_init__(self):
         self._children = {}
+        self._signature = None
         for n in self.nodes:
             self._children.setdefault(n.parent, []).append(n.i)
+
+    def __deepcopy__(self, memo):
+        # A copy is a new observation: whatever it is mutated into afterwards
+        # (a hypothetical widget value) gets its own signature, not this one's.
+        return Observation(deepcopy(self.nodes, memo), self.url)
 
     def children(self, i: int) -> list[int]:
         return self._children.get(i, [])
@@ -147,9 +155,15 @@ class Observation:
                 and sorted(indices) == list(range(1, total + 1)))
 
     def structural_signature(self) -> str:
-        """Hash of (role, name, value, checked, structure) ignoring bbox."""
-        parts = [(n.parent, *n.key()) for n in self.nodes]
-        return hashlib.sha1(json.dumps(parts, sort_keys=True, default=str).encode()).hexdigest()[:16]
+        """Hash of (role, name, value, checked, structure) ignoring bbox.
+
+        Computed once per observation: the learner asks for it on every parse of
+        every page, and a fit on a history of nine-hundred-node pages spent its
+        hours hashing the same nodes again."""
+        if self._signature is None:
+            parts = [(n.parent, *n.key()) for n in self.nodes]
+            self._signature = hashlib.sha1(json.dumps(parts, sort_keys=True, default=str).encode()).hexdigest()[:16]
+        return self._signature
 
     def texts(self) -> set[str]:
         out = set()
