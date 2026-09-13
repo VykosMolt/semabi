@@ -464,131 +464,145 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
             if key in frontier["completed"]:
                 frontier["active"] = None
                 continue
-            surface = revisit(route)
-            signature = acquisition_priority_context(surface, route)
-            if signature not in frontier["observed_priority"]:
-                frontier["observed_priority"].append(signature)
-            initial_shape = procedure_context(surface)
-            if "buttons" not in active:
-                active.update(observation=surface.observation.structural_signature(),
-                              shape=shape(surface), buttons=_acquisition_buttons(surface, route),
-                              button_index=0, stable_buttons=[])
-            elif active["shape"] != shape(surface):
-                _stop("Acquisition partial route no longer reaches its observed context")
-            checkpoint()
-            while active["button_index"] < len(active["buttons"]):
-                step = active["buttons"][active["button_index"]]
+            try:
                 surface = revisit(route)
-                matches = _step_matches(surface, step)
-                trace.budget.check_deadline()
-                if len(matches) != 1:
-                    # This one candidate is unsupported on a settled page before
-                    # dispatch. Do not let it suppress independently resolvable
-                    # candidates, and do not treat a post-action failure this way.
-                    receipt = {"index": active["button_index"],
-                               "observation": surface.observation.structural_signature(),
-                               "steps": len(trace.log.steps),
-                               "status": "NO_MATCH" if not matches else "MULTIPLE_MATCHES",
-                               "matches": matches}
-                    active.setdefault("unsupported_buttons", []).append(receipt)
-                    active["button_index"] += 1
-                    completed_unit()
-                    emit({"type": "acquisition_candidate_unsupported", **receipt,
-                          "scope": "This observed candidate only; no action dispatched, not a permanent impossibility claim"})
-                    continue
-                node = resolve_step(surface, step)
-                before = surface
+                signature = acquisition_priority_context(surface, route)
+                if signature not in frontier["observed_priority"]:
+                    frontier["observed_priority"].append(signature)
+                initial_shape = procedure_context(surface)
+                if "buttons" not in active:
+                    active.update(observation=surface.observation.structural_signature(),
+                                  shape=shape(surface), buttons=_acquisition_buttons(surface, route),
+                                  button_index=0, stable_buttons=[])
+                elif active["shape"] != shape(surface):
+                    _stop("Acquisition partial route no longer reaches its observed context")
                 checkpoint()
-                try:
-                    after = act_step(browser, trace, before, step)
-                except PasswordBearingView as error:
-                    # The dispatched candidate reached a view that carries a password
-                    # control outside a login scope. Nothing is filled or clicked
-                    # there and no route continues from it; the next candidate is
-                    # reached by replay from the entry, where a lost session would
-                    # still stop the acquisition as before.
-                    receipt = {"index": active["button_index"],
-                               "observation": before.observation.structural_signature(),
-                               "steps": len(trace.log.steps), "status": "PASSWORD_BEARING_VIEW",
-                               "matches": matches, "reason": str(error)}
-                    active.setdefault("unsupported_buttons", []).append(receipt)
-                    active["button_index"] += 1
-                    completed_unit()
-                    emit({"type": "acquisition_candidate_unsupported", **receipt,
-                          "scope": "This observed candidate only; its view was recorded and left untouched, not a permanent impossibility claim"})
-                    continue
-                trials.append({"route": deepcopy(route), "action": step,
-                               "before": before.observation.structural_signature(),
-                               "after": after.observation.structural_signature(), "node": node})
-                before_context, next_shape = procedure_context(before), procedure_context(after)
-                if next_shape == before_context:
-                    if before.controls[node]["role"] != "radio":
-                        active["stable_buttons"].append(step)
-                elif len(route) < 6 and [*ancestors, before_context].count(next_shape) < 2:
-                    new_route = [*route, step]
-                    candidate = digest(new_route)
-                    if candidate not in frontier["queued"]:
-                        frontier["queued"].append(candidate)
-                        signature = acquisition_priority_context(after, new_route)
-                        queue = frontier["pending"] if signature not in frontier["observed_priority"] else frontier["deferred"]
-                        if signature not in frontier["observed_priority"]:
-                            frontier["observed_priority"].append(signature)
-                        queue.append({"route": new_route, "ancestors": [*ancestors, before_context]})
-                active["button_index"] += 1
-                completed_unit()
-            stable_buttons = active["stable_buttons"]
-            if "numeric" not in active:
-                surface = revisit(route) if stable_buttons else surface
-                active.update(numeric=_acquisition_numeric(surface) if stable_buttons else [], numeric_index=0,
-                              numeric_observation=surface.observation.structural_signature(), numeric_results=[])
-                checkpoint()
-            while active["numeric_index"] < len(active["numeric"]):
-                proposal = active["numeric"][active["numeric_index"]]
-                descriptor, value = proposal["descriptor"], proposal["value"]
-                surface = revisit(route)
-                hits = surface.resolve(descriptor)
-                receipt = {"status": "NO_UNIQUE_CONTROL", "observation": surface.observation.structural_signature()}
-                if len(hits) == 1:
+                while active["button_index"] < len(active["buttons"]):
+                    step = active["buttons"][active["button_index"]]
+                    surface = revisit(route)
+                    matches = _step_matches(surface, step)
+                    trace.budget.check_deadline()
+                    if len(matches) != 1:
+                        # This one candidate is unsupported on a settled page before
+                        # dispatch. Do not let it suppress independently resolvable
+                        # candidates, and do not treat a post-action failure this way.
+                        receipt = {"index": active["button_index"],
+                                   "observation": surface.observation.structural_signature(),
+                                   "steps": len(trace.log.steps),
+                                   "status": "NO_MATCH" if not matches else "MULTIPLE_MATCHES",
+                                   "matches": matches}
+                        active.setdefault("unsupported_buttons", []).append(receipt)
+                        active["button_index"] += 1
+                        completed_unit()
+                        emit({"type": "acquisition_candidate_unsupported", **receipt,
+                              "scope": "This observed candidate only; no action dispatched, not a permanent impossibility claim"})
+                        continue
+                    node = resolve_step(surface, step)
                     before = surface
-                    edited_node = hits[0]
                     checkpoint()
-                    surface = trace.act(browser, surface, Primitive("type", edited_node, value))
-                    receipt = {"status": "REJECTED_VALUE", "before": before.observation.structural_signature(),
-                               "after": surface.observation.structural_signature(), "node": edited_node}
+                    try:
+                        after = act_step(browser, trace, before, step)
+                    except PasswordBearingView as error:
+                        # The dispatched candidate reached a view that carries a password
+                        # control outside a login scope. Nothing is filled or clicked
+                        # there and no route continues from it; the next candidate is
+                        # reached by replay from the entry, where a lost session would
+                        # still stop the acquisition as before.
+                        receipt = {"index": active["button_index"],
+                                   "observation": before.observation.structural_signature(),
+                                   "steps": len(trace.log.steps), "status": "PASSWORD_BEARING_VIEW",
+                                   "matches": matches, "reason": str(error)}
+                        active.setdefault("unsupported_buttons", []).append(receipt)
+                        active["button_index"] += 1
+                        completed_unit()
+                        emit({"type": "acquisition_candidate_unsupported", **receipt,
+                              "scope": "This observed candidate only; its view was recorded and left untouched, not a permanent impossibility claim"})
+                        continue
+                    trials.append({"route": deepcopy(route), "action": step,
+                                   "before": before.observation.structural_signature(),
+                                   "after": after.observation.structural_signature(), "node": node})
+                    before_context, next_shape = procedure_context(before), procedure_context(after)
+                    if next_shape == before_context:
+                        if before.controls[node]["role"] != "radio":
+                            active["stable_buttons"].append(step)
+                    elif len(route) < 6 and [*ancestors, before_context].count(next_shape) < 2:
+                        new_route = [*route, step]
+                        candidate = digest(new_route)
+                        if candidate not in frontier["queued"]:
+                            frontier["queued"].append(candidate)
+                            signature = acquisition_priority_context(after, new_route)
+                            queue = frontier["pending"] if signature not in frontier["observed_priority"] else frontier["deferred"]
+                            if signature not in frontier["observed_priority"]:
+                                frontier["observed_priority"].append(signature)
+                            queue.append({"route": new_route, "ancestors": [*ancestors, before_context]})
+                    active["button_index"] += 1
+                    completed_unit()
+                stable_buttons = active["stable_buttons"]
+                if "numeric" not in active:
+                    surface = revisit(route) if stable_buttons else surface
+                    active.update(numeric=_acquisition_numeric(surface) if stable_buttons else [], numeric_index=0,
+                                  numeric_observation=surface.observation.structural_signature(), numeric_results=[])
+                    checkpoint()
+                while active["numeric_index"] < len(active["numeric"]):
+                    proposal = active["numeric"][active["numeric_index"]]
+                    descriptor, value = proposal["descriptor"], proposal["value"]
+                    surface = revisit(route)
                     hits = surface.resolve(descriptor)
-                    if len(hits) != 1 or surface.observation.node(hits[0]).value != value:
-                        emit({"type": "acquisition_rejected_edit", "field": descriptor, "value": value})
-                    else:
-                        receipt["status"] = "OBSERVED_VALUE"
-                        numeric_trials.append({"route": deepcopy(route), "descriptor": descriptor, "value": value,
+                    receipt = {"status": "NO_UNIQUE_CONTROL", "observation": surface.observation.structural_signature()}
+                    if len(hits) == 1:
+                        before = surface
+                        edited_node = hits[0]
+                        checkpoint()
+                        surface = trace.act(browser, surface, Primitive("type", edited_node, value))
+                        receipt = {"status": "REJECTED_VALUE", "before": before.observation.structural_signature(),
+                                   "after": surface.observation.structural_signature(), "node": edited_node}
+                        hits = surface.resolve(descriptor)
+                        if len(hits) != 1 or surface.observation.node(hits[0]).value != value:
+                            emit({"type": "acquisition_rejected_edit", "field": descriptor, "value": value})
+                        else:
+                            receipt["status"] = "OBSERVED_VALUE"
+                            numeric_trials.append({"route": deepcopy(route), "descriptor": descriptor, "value": value,
+                                                   "before": before.observation.structural_signature(),
+                                                   "after": surface.observation.structural_signature()})
+                            for step in stable_buttons:
+                                try:
+                                    node = resolve_step(surface, step)
+                                except Exception:
+                                    break
+                                before = surface
+                                checkpoint()
+                                surface = trace.act(browser, surface, Primitive("click", node))
+                                trials.append({"route": deepcopy(route), "action": step, "node": node,
                                                "before": before.observation.structural_signature(),
                                                "after": surface.observation.structural_signature()})
-                        for step in stable_buttons:
-                            try:
-                                node = resolve_step(surface, step)
-                            except Exception:
-                                break
-                            before = surface
+                                if procedure_context(surface) != initial_shape:
+                                    break
+                            restored = revisit(route)
                             checkpoint()
-                            surface = trace.act(browser, surface, Primitive("click", node))
-                            trials.append({"route": deepcopy(route), "action": step, "node": node,
-                                           "before": before.observation.structural_signature(),
-                                           "after": surface.observation.structural_signature()})
-                            if procedure_context(surface) != initial_shape:
-                                break
-                        restored = revisit(route)
-                        checkpoint()
-                        restored = reload_observed(browser, trace)
-                        hits = restored.resolve(descriptor)
-                        if len(hits) == 1 and restored.observation.node(hits[0]).value == value:
-                            numeric_trials[-1]["persisted"] = restored.observation.structural_signature()
-                active["numeric_results"].append(receipt)
-                active["numeric_index"] += 1
+                            restored = reload_observed(browser, trace)
+                            hits = restored.resolve(descriptor)
+                            if len(hits) == 1 and restored.observation.node(hits[0]).value == value:
+                                numeric_trials[-1]["persisted"] = restored.observation.structural_signature()
+                    active["numeric_results"].append(receipt)
+                    active["numeric_index"] += 1
+                    completed_unit()
+                frontier["completed"].append(key)
+                frontier["completed_routes"][key] = active
+                frontier["active"] = None
                 completed_unit()
-            frontier["completed"].append(key)
-            frontier["completed_routes"][key] = active
-            frontier["active"] = None
-            completed_unit()
+            except PasswordBearingView as error:
+                # The route itself now reaches a view carrying a password control
+                # outside a login scope (a form that stays expanded after the
+                # candidate that opened it). The context is unsupported as a whole:
+                # nothing more is done on it and the next pending route is taken.
+                receipt = {"route": key, "steps": len(trace.log.steps), "status": "PASSWORD_BEARING_VIEW",
+                           "reason": str(error)}
+                frontier.setdefault("unsupported_contexts", []).append(receipt)
+                frontier["completed"].append(key)
+                frontier["active"] = None
+                completed_unit()
+                emit({"type": "acquisition_context_unsupported", **receipt,
+                      "scope": "This observed route only; its view was recorded and left untouched, not a permanent impossibility claim"})
     finally:
         trace.act = original_act
         checkpoint()

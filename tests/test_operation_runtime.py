@@ -7118,15 +7118,20 @@ def test_semantic_preflight_stops_when_field_becomes_readonly_without_text_chang
 
 
 class _PasswordViewBrowser:
-    """One candidate leads to a view with a password control: a feed form, or the login page."""
+    """One candidate leads to a view with a password control: a feed form, or the login page.
+
+    With ``sticky`` the feed form stays expanded, so replaying the route lands on it too."""
     allowed_origin = 'https://synthetic.invalid'
 
-    def __init__(self, login):
-        self.login, self.actions = login, []
+    def __init__(self, login, sticky=False):
+        self.login, self.sticky, self.actions = login, sticky, []
         self.goto()
 
     def goto(self, url=None):
-        self.surface = _surface([Node(0, -1, 'group', ''), Node(1, 0, 'button', 'Add feed')])
+        if self.sticky and self.actions:
+            return
+        buttons = [Node(1, 0, 'button', 'Add feed')] + ([Node(2, 0, 'button', 'Refresh')] if self.sticky else [])
+        self.surface = _surface([Node(0, -1, 'group', ''), *buttons])
 
     def read(self):
         return self.surface
@@ -7171,3 +7176,22 @@ def test_semantic_acquisition_leaves_a_password_bearing_view_and_stops_only_on_a
     assert frontier['active'] is None and 'in_flight' not in frontier
     assert any(any(control['input_type'] == 'password' for control in json.loads(line)['controls'].values())
                for line in (trace.log.dir / 'surfaces.jsonl').read_text().splitlines())
+
+
+def test_semantic_acquisition_leaves_a_route_whose_view_stays_password_bearing(tmp_path):
+    # FreshRSS's feed form stays expanded after the click that opened its HTTP
+    # credentials, so the replay of the route lands on the password-bearing view:
+    # the whole context is unsupported and the acquisition ends without a stop
+    from semabi.compiler.runtime import Budget, Trace
+    from semabi.compiler.semantic_runtime import acquire
+
+    browser, trials, edits, context, events = _PasswordViewBrowser(False, sticky=True), [], [], {}, []
+    trace = Trace(tmp_path / 'acquire', events.append, Budget(6, 3))
+    acquire(browser, trace, 'entry', events.append, trials, edits, context)
+    kinds = [event['type'] for event in events if event['type'].startswith('acquisition_')]
+    assert kinds.count('acquisition_candidate_unsupported') == 1 and kinds.count('acquisition_context_unsupported') == 1
+    frontier = context['acquisition_frontier']
+    assert frontier['active'] is None and 'in_flight' not in frontier and not trials
+    assert [row['status'] for row in frontier['unsupported_contexts']] == ['PASSWORD_BEARING_VIEW']
+    assert [action.target for action in browser.actions] == [1]
+
