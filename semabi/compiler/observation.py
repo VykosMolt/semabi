@@ -61,7 +61,7 @@ class Observation:
     nodes: list[Node]
     url: str = ""
     _children: dict[int, list[int]] = field(default_factory=dict, repr=False)
-    _signature: str | None = field(default=None, repr=False, compare=False)
+    _signature: str | None = field(default=None, repr=False, compare=False, metadata={"transient": True})
 
     def __post_init__(self):
         self._children = {}

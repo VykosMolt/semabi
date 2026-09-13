@@ -128,8 +128,10 @@ def _pack(value):
         items = sorted(value, key=repr) if isinstance(value, (set, frozenset)) else value
         return {"$": type(value).__name__, "items": [_pack(v) for v in items]}
     if is_dataclass(value) and type(value).__name__ in _CLASSES:
+        # A transient field (an observation's cached signature) is derived from
+        # the others and is not part of the artifact.
         return {"$": type(value).__name__, "fields": {
-            f.name: _pack(getattr(value, f.name)) for f in fields(value)}}
+            f.name: _pack(getattr(value, f.name)) for f in fields(value) if not f.metadata.get("transient")}}
     raise TypeError(f"unsupported semantic artifact value: {type(value).__name__}")
 
 
@@ -157,7 +159,7 @@ def _public(value):
     if isinstance(value, (list, tuple, set, frozenset)):
         return [_public(v) for v in (sorted(value, key=repr) if isinstance(value, (set, frozenset)) else value)]
     if is_dataclass(value):
-        return {f.name: _public(getattr(value, f.name)) for f in fields(value)}
+        return {f.name: _public(getattr(value, f.name)) for f in fields(value) if not f.metadata.get("transient")}
     return value
 
 

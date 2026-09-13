@@ -722,13 +722,23 @@ class Inducer:
         return [t for t in targets if t not in before_keys and t in after_keys]
 
     def _affordance_keys(self, sig: str, st: AbstractState) -> set:
-        obs = self.log.obs(sig)
-        po = self.A.parsed(obs)
-        out = set()
-        for node, key in po.node_key.items():
-            ti = describe_target(self.A, st, obs, node)
-            out.add((ti.owner.id if ti and ti.owner else None, key))
-        return out
+        """The (owner, control) affordances one observation offers under one state.
+
+        Computed once per (observation, state): macro extension asks for a step's
+        affordances from every transition whose window holds the step, and each
+        answer walks every keyed node of a page against every object of the state.
+        The state is kept beside its answer so that its identity cannot be reused."""
+        cache = self.__dict__.setdefault("_affordance_cache", {})
+        key = (sig, id(st))
+        if key not in cache:
+            obs = self.log.obs(sig)
+            po = self.A.parsed(obs)
+            out = set()
+            for node, key_ in po.node_key.items():
+                ti = describe_target(self.A, st, obs, node)
+                out.add((ti.owner.id if ti and ti.owner else None, key_))
+            cache[key] = (st, out)
+        return cache[key][1]
 
     # ---------------------------------------------------------- lifting
     def lift(self, tr: Transition) -> None:
