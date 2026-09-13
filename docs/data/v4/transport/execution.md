@@ -129,18 +129,46 @@
   the fresh-record evidence, negative, retained (fresh_pine11_8e2fbf9*.json).
   FreshRSS development rerun cbcf933 terminal: FAILED_ALL16_RETAINED,0/16,
   0invocations; CONNECTED (3auth actions), then the one learning job stayed
-  RUNNING (737events) past the client's1800s budget -- TimeoutError, no retry;
-  the service is gone with the session, so the fit's end is unrecorded
-  (development_cbcf933/results.json, wall1805.9s). Retained pilot763 fresh
+  RUNNING (737events) past the client's1800s budget -- TimeoutError, no retry
+  (development_cbcf933/results.json, wall1805.9s). The frozen service's own
+  record (private/service_cbcf933/artifacts.sqlite3, read from a copy) closes
+  it: acquisition stopped at23:51:32UTC after228steps with 'Session requires
+  authentication; reconnect before invoking' (the password-bearing view), the
+  semantic fit on those228steps then ran23:51:32 ->04:33:05UTC (4h41m) and
+  completed with16semantic controls, every publication UNESTABLISHED at stage
+  language -- 'Current semantic publication requires a learned comparison' --
+  and no operation published (operations table empty; job COMPLETED, result
+  status UNESTABLISHED). Three separate barriers, none repaired here: the
+  acquisition's stop on an authentication view, a fit that outlives any client
+  budget by hours on a228-step history, and a publication language that has no
+  place for nominal operations without a comparison. Retained pilot763 fresh
   search remains RESOURCE_INCOMPLETE (900s,0/21). Owned services8860/8866/8865
   are all stopped; containers freshrss8882, kanboard8881, linkding stay up.
-- Next: integrate the reviewed native-CREATE omitted-choice candidate
-  (runs/.create-choice-policy-8e2fbf9:741passed in the worktree, its two
-  test_service failures are the worktree's missing examples/client.py, which
-  passes on main), then carry it through a bounded Kanboard development rerun
-  on the integrated commit with the original16-task denominator and all
-  setup/unsupported failures retained; FreshRSS after that, with the learning
-  stop diagnosed before any second onboarding.
+- Kanboard on the integrated9bdb295 (native-CREATE omitted-choice policy, commit
+  9bdb295; frozen worktree runs/.kanboard-development-9bdb295; driver
+  development_1dd28c5.py, unchanged): run development_9bdb295 (--no-supplemental)
+  TERMINAL_DEVELOPMENT_RUN, ONE published operation -- save_record_required_fields,
+  create_visible_record v1, argument name only, scope carrying the omitted-choice
+  policy text -- where17e1bb0 published none; onboarding31actions/22possible
+  writes/27.1s, two attempts unconfirmed ('Probe values lack a unique visible
+  record witness'; 'Record editing has no learned continuation from this populated
+  scope'), three probe projects created (native8 ->11projects, tasks unchanged).
+  Original16 unchanged0/16 (13UNSUPPORTED/3INPUT_UNESTABLISHED): the plan asks
+  for task-level reads/creates/updates and the one published operation creates a
+  project. Second run development_9bdb295_supplemental: same learning outcome
+  (31/22/27.9s, one operation, native11 ->14), then the authorized supplemental
+  schema-driven creation of a fresh project name: CONFIRMED,8actions/5possible
+  writes/5.6s, exit preservation direct reload,40compared regions; native
+  exactly_one_new_named_project, existing projects and tasks unchanged
+  (14 ->15). No supplemental success is credited to the16-task denominator.
+  The repair is established on the failure it was written for; task-level
+  operations remain unlearned and the literal caller unrouted.
+- Next: FreshRSS's three barriers in that order -- treat an authentication view
+  reached during acquisition as a resumable boundary rather than a stop, bound
+  the semantic fit's cost on long nominal histories, and give nominal operations
+  a publication route without a learned comparison -- each as a general repair
+  with a test before any second onboarding; then task-level record operations on
+  Kanboard (subtask/comment/category routes). Original denominators retained.
 
 ## Retained integrated checkpoint details — through 2026-09-12 23:20 UTC
 
