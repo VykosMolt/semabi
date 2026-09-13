@@ -2,15 +2,17 @@
 
 ## Integrated semantic product — active 2026-09-12
 
-- Milestone: carry observation-local response learning through a guarded Workshop
-  API write, then repair generic onboarding ambiguity and delayed post-write
-  observation handling. Continue development coverage after these checkpoints.
+- Milestone: guarded Workshop writes now confirmed; extend same-value changed
+  resource, fresh-record/restart evidence and repair generic native-form choice
+  drift. Continue development coverage after these checkpoints.
 - Acceptance: ordinary HTTP learning/publication, fresh arguments and changed
   related resource, no handwritten semantic mapping, independently checked target
   and neighbors, restart/revision behavior, and consequential binding/condition
   ablation. Prediction, application response, observed effect and exclusive cause
   stay distinct; neither ambiguity nor lost coverage is hidden.
-- Current main and frozen service: 17e1bb0. Integrated one-read resampling,
+- Frozen service: 17e1bb0; main additionally integrates reviewed8e2fbf9,
+  direct-update ancestor-text projection (79affected candidate checks passed).
+  Integrated one-read resampling,
   covered descendant-text projection, conflicting-occurrence admission, atomic
   acquisition cursor/fences and direct-text neighbor brackets. 6b18df8 adds
   independently reviewed per-query condition-cover reuse, not a larger budget.
@@ -56,7 +58,20 @@
   Diagnostic-only1m budget completes the old query at108168checks;6b18's unchanged
   100kbudget completes at37483 with identical alternatives/fullorderedwitnesses.
   This removes redundant cover scans, not founders, conditions or support tests;
-  no wall-time performance advantage claimed. New ordinary fit/API check pending.
+  no wall-time performance advantage claimed. Ordinary17refit completed:
+  570.205sHTTP/561.616sfit,2071reusedsteps,0newactions,4v9ops. FreshIron11 then
+  confirmed38actions/30possiblewrites/17.684s. Independent13checks:11PASS target,
+  value,station,reload,siblings;2FAIL expected transient response after terminal
+  reopening (evaluator expectation unsupported, original failure preserved).
+  NextIron12 confirmed38/30/17.599s; independent11terminalchecksPASS and separate
+  transientresponse watcherPASS (152pageGETreads/16.702s,0controlactions).
+  Watcherreview then strengthens initial-response-absence and atomic DOM sampling;
+  prioractual12 did start response-absent, but used separate locator reads.
+  Actual11ablation: intactsingletonaccepted37483checks/guardpermits; removing
+  comparisonroles or comparisonfeatures exhausts100k/guardunavailable. A disclosed
+  offline1m diagnostic completes each at103096checks with BOTH accepted/refused,
+  while intact remains accepted only. Allorderedabsent completeempty26449checks.
+  No runtimebudgetchange, unique-rule or universal prerequisite claim.
 - Exposure: Dispatch/Workshop/generated fixtures/Memos/linkding/Vikunja/Kanboard
   are development. FreshRSS1.30.0 independently developed,16tasks selected before
   setup; reserved411 run is complete0/16,0ops,0invokes. Caller grammar and first
@@ -64,9 +79,9 @@
   FreshRSS is now development, not still reserved. Evaluatornative/UI and shared
   agent context exposure are disclosed; there is no blind assessment claim.
 - Owned service8860: frozen17e1bb0, runs/.product-integrated-17e1bb0,
-  PID1064614/exec24486,CPU0-7,seed9. Workshopordinaryfit job742ceb37024f43cbaad52a7685679466
-  (prefix job_),client87371,2071reusedrawsteps,0newexploration,1800sclientbudget.
-  Output workshopv2/integrated_refit_17e1bb0.json pending. Previous61 service
+  PID1064614/exec24486,CPU0-7,seed9. Workshopordinaryfit job_742ceb37024f43cbaad52a7685679466,
+  client87371closed,2071reusedrawsteps,0newexploration,1800sclientbudget.
+  Output workshopv2/integrated_refit_17e1bb0.json complete. Previous61 service
   stopped gracefully after completed jobs; no artifact hash rewriting.
   FreshRSS development frozen cbcf933 service8866/exec2324,client50003,
   job_e0614b315d2449329b4bec1469ec2763,CPU8-9:230acquisitionactions/147writeintents,
@@ -80,17 +95,52 @@
 - Separable work: semantic_bridge owns frozen FreshRSS development run;
   Kanboard17 full16-task run terminal0/16,0ops,0invocations: auth3acts/4.313s,
   learn37acts/24possiblewrites/38.061s,0fit. Two first-Save resamples settled;
-  new failure is required-only form resolution/return. Native6→8projects, all
+  new failure is required-only form matching: both retries reached the correct
+  unique New-project form; only the untouched combobox's unselected option set
+  gained the newly created project. Selected defaults stayed identical. Full
+  identifier-witness failure remains valid and separate. Native6→8projects, all
   existingprojects/6tasks unchanged,43evaluatorreads0writes. Service8865closed.
-  fixture_evaluation diagnoses retained form failure; observation_review repairs
-  direct-text descendant-name parity using shared Surface projection (native
-  positive+4negatives confirmed; candidate not yet integrated).
+  fixture_evaluation independently reviews; observation_review implements scoped
+  native-CREATE omitted-choice matching. Selected default and structural binding
+  stay checked at each fill/Save; parameterized domains and record edits stay exact.
+  No global option erasure or claim that omitted options are semantically irrelevant.
   Original2x180/120 acquisition continuation now blocks mid-replay (job2zeroacts),
   while completed-unit resume passes; unfinished write-bearing units need
   reconciliation. No silent retry. CREATE/linked neighbor brackets remain separate.
-- Next: ordinaryWorkshop refit and fresh guardedwrite,
-  independent checks and ablation; carry general repairs through Kanboard and
-  FreshRSS with original denominators and all setup/unsupported failures retained.
+- Terminal state (recorded 2026-09-13 by the resuming agent; no job of this block
+  is running): Copper12 on17e1bb0 closed -- guarded_copper12 PREDICTED_REFUSAL
+  (7.6s HTTP), then the checking call observed 'Job cannot start' (7.8s), the
+  independent watcher PASS (210page reads/20.7s,0control actions) and the
+  independent terminal check PASS (13checks: immediate/reloaded target, quantity,
+  related, response; collection membership and sibling quantities unchanged;
+  unique target reopen). Receipts workshopv2/{guarded,check}_copper12_17e1bb0*.json.
+  Service then restarted on main8e2fbf9: the prior v9 operation invoked before
+  relearning FAILED_BEFORE_EFFECT ('evidence or runtime compatibility changed;
+  relearn its contract',0actions), republication rebuilt v10 operations
+  (learning job COMPLETED,8.9s HTTP), fresh baseline CAPTURED. Fresh-name
+  Pine11 (Open Pine task/Steel station, value11, expect accepted) ended
+  PREDICTION_UNAVAILABLE: 'several supported alternatives' at49143 of100k checks
+  -- accepted by the learned comparison (owner span < station work span) against
+  a refusal conjunction of nominal facts and span thresholds (>=4,10,12,...);
+  no field write attempted (11actions/9possible writes/5.1s); the watcher
+  UNESTABLISHED_NOT_OBSERVED (240reads/23.6s), consistent with no write. No
+  independent terminal check was run and none can be: the fixture state ended
+  with the session. A never-edited record does not establish the guard; this is
+  the fresh-record evidence, negative, retained (fresh_pine11_8e2fbf9*.json).
+  FreshRSS development rerun cbcf933 terminal: FAILED_ALL16_RETAINED,0/16,
+  0invocations; CONNECTED (3auth actions), then the one learning job stayed
+  RUNNING (737events) past the client's1800s budget -- TimeoutError, no retry;
+  the service is gone with the session, so the fit's end is unrecorded
+  (development_cbcf933/results.json, wall1805.9s). Retained pilot763 fresh
+  search remains RESOURCE_INCOMPLETE (900s,0/21). Owned services8860/8866/8865
+  are all stopped; containers freshrss8882, kanboard8881, linkding stay up.
+- Next: integrate the reviewed native-CREATE omitted-choice candidate
+  (runs/.create-choice-policy-8e2fbf9:741passed in the worktree, its two
+  test_service failures are the worktree's missing examples/client.py, which
+  passes on main), then carry it through a bounded Kanboard development rerun
+  on the integrated commit with the original16-task denominator and all
+  setup/unsupported failures retained; FreshRSS after that, with the learning
+  stop diagnosed before any second onboarding.
 
 ## Retained integrated checkpoint details — through 2026-09-12 23:20 UTC
 

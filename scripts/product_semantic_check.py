@@ -5,7 +5,10 @@ Fixture-specific labels and expected values belong to this evaluator, never to
 the learner. No application source, client stores, native API, or database is read.
 Capture/check visits the collection after recording the immediate and reloaded
 detail; those evaluator navigations are intrusive and clear a fixture assignment.
-Run only while onboarding and invocation are idle. Output files are never replaced.
+Capture/check run only while onboarding and invocation are idle. Watch mode only
+reloads the visible page to sample a transient response during one invocation;
+it never clicks a control or claims that the sampled response persists.
+Output files are never replaced.
 """
 from __future__ import annotations
 
@@ -42,8 +45,9 @@ def settle(page):
     raise RuntimeError("rendered surface did not settle within eight seconds")
 
 
-def detail(page, spec):
-    settle(page)
+def detail(page, spec, *, wait=True):
+    if wait:
+        settle(page)
     inputs = page.get_by_role("spinbutton", name=spec["quantity"], exact=True)
     relation = page.get_by_role("region", name=spec["relation"], exact=True)
     return {
@@ -105,6 +109,75 @@ def numeric_equal(actual, expected):
         return Decimal(actual) == Decimal(expected)
     except (InvalidOperation, ValueError):
         return False
+
+
+def watch(args):
+    """Independent bounded rendered-response sampling, not a product witness."""
+    fixture = urlsplit(args.url).path.strip("/")
+    if fixture not in FIXTURES:
+        raise ValueError("this evaluator only supports the disclosed development fixtures")
+    result = {"fixture": fixture, "url": args.url, "mode": "watch", "samples": [],
+              "boundary": "Independent browser; visible target/value/resource/response only",
+              "scope": "Expected response initially absent, later observed with target/value/resource in one DOM read; not persistence or exclusive causality",
+              "max_seconds": args.watch_seconds, "max_page_reads": 240,
+              "control_actions": 0, "page_read_attempts": 0}
+    started = monotonic()
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        try:
+            page = browser.new_page()
+            page.set_default_timeout(2000)
+            for _ in range(240):
+                if monotonic() - started >= args.watch_seconds:
+                    break
+                result["page_read_attempts"] += 1
+                try:
+                    page.goto(args.url, wait_until="domcontentloaded")
+                    # One synchronous DOM evaluation avoids combining locator
+                    # reads from different renders. These fixture-specific
+                    # visible selectors belong only to the evaluator.
+                    observed = page.locator("body").evaluate("""(body, spec) => {
+                        const visible = el => el.getClientRects().length > 0;
+                        const all = selector => [...body.querySelectorAll(selector)].filter(visible);
+                        const label = el => el.getAttribute('aria-label') ||
+                            [...(el.labels || [])].map(x => x.innerText.trim()).join(' ');
+                        const regions = all('[aria-label]').filter(el => el.getAttribute('aria-label') === spec.relation);
+                        return {headings: all('h1').map(el => el.innerText),
+                            quantities: all('input[type="number"]').filter(el => label(el) === spec.quantity).map(el => el.value),
+                            related_values: regions.flatMap(el => [...el.querySelectorAll('dd')].filter(visible).map(el => el.innerText)),
+                            responses: all('[role="status"]').map(el => el.innerText), surface: body.innerText};
+                    }""", FIXTURES[fixture])
+                except Exception as exc:
+                    result["samples"].append({"seconds": monotonic() - started,
+                                              "error": f"{type(exc).__name__}: {exc}"})
+                    result["verdict"] = "EVALUATOR_FAILURE"
+                    break
+                checks = {
+                    "target": observed["headings"] == [args.target],
+                    "quantity": len(observed["quantities"]) == 1 and numeric_equal(observed["quantities"][0], args.value),
+                    "related": bool(observed["related_values"]) and observed["related_values"][0] == args.related,
+                    "response": args.expected_response in observed["responses"],
+                }
+                result["samples"].append({"seconds": monotonic() - started,
+                                          "observed": observed, "checks": checks})
+                if len(result["samples"]) == 1:
+                    print(json.dumps({"watch_ready": True, "initial_checks": checks}), flush=True)
+                    if checks["response"]:
+                        result["verdict"] = "UNESTABLISHED_INITIAL_RESPONSE_PRESENT"
+                        break
+                elif all(checks.values()):
+                    result.update(verdict="PASS", checks=checks)
+                    break
+                sleep(0.05)
+        finally:
+            try:
+                browser.close()
+            except Exception as exc:
+                result.update(verdict="EVALUATOR_FAILURE", cleanup_error=f"{type(exc).__name__}: {exc}")
+    result.setdefault("verdict", "UNESTABLISHED_NOT_OBSERVED")
+    result["page_reads"] = sum("observed" in sample for sample in result["samples"])
+    result["elapsed_seconds"] = monotonic() - started
+    return result
 
 
 def evaluate(args):
@@ -191,11 +264,13 @@ def main():
     modes = parser.add_mutually_exclusive_group(required=True)
     modes.add_argument("--capture", action="store_true")
     modes.add_argument("--check", action="store_true")
+    modes.add_argument("--watch", action="store_true")
     parser.add_argument("--url", required=True)
     parser.add_argument("--target")
     parser.add_argument("--value")
     parser.add_argument("--related")
     parser.add_argument("--expected-response")
+    parser.add_argument("--watch-seconds", type=float, default=45)
     parser.add_argument("--terminal-view", choices=("detail", "collection"), default="detail",
                         help="Collection mode captures rows first, then opens/reloads the target; no relation/response claim")
     parser.add_argument("--baseline", type=Path)
@@ -203,12 +278,15 @@ def main():
     args = parser.parse_args()
     if args.check and (args.target is None or args.value is None):
         parser.error("--check requires --target and --value")
+    if args.watch and (any(value is None for value in (args.target, args.value, args.related, args.expected_response))
+                       or not 0 < args.watch_seconds <= 120):
+        parser.error("--watch requires target, value, related, expected-response and 0 < watch-seconds <= 120")
     if args.terminal_view == "collection" and (args.related is not None or args.expected_response is not None):
         parser.error("collection mode cannot check --related or --expected-response: opening the target resets them")
     if args.output.exists():
         parser.error("output already exists; choose a new evidence file")
     try:
-        result = evaluate(args)
+        result = watch(args) if args.watch else evaluate(args)
     except Exception as exc:
         result = {"verdict": "EVALUATOR_FAILURE", "error": f"{type(exc).__name__}: {exc}"}
     args.output.parent.mkdir(parents=True, exist_ok=True)

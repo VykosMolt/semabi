@@ -18,12 +18,18 @@ has completed a relational check and a persisted guarded quantity update through
 HTTP, with independent target and sibling checks. This is not an independent-app
 transport assessment or a learned dispatch/start business-state transition.
 Workshop development also exercises a learned record→resource picker→attachment
-route: the same record and value produced independently checked refusal and
-acceptance with different resources. The accepted case still had ambiguous
-predictions. Removing its learned related-object binding removed the acceptance
-alternative; removing comparisons alone left a constant-threshold explanation.
-This is evidence that learned relations affect prediction, not that the unique
-application rule or an advantage from targeting has been established.
+route. Earlier checking calls produced independently checked refusal and acceptance
+with different resources, while acceptance predictions remained ambiguous. After
+an authorized distinguishing edit and shared observation/search repairs, ordinary
+HTTP fitting on17e1bb0 publishes guarded operations that confirmed fresh values11
+and12. A separate browser observed the second call's transient response; terminal
+checks independently verified its target, value, related station and siblings.
+For the actual value11 query, removing the learned relation binding or comparisons
+changes the guard from permitted to unavailable. A larger, offline-only diagnostic
+search establishes acceptance and refusal alternatives for either ablation,
+versus acceptance alone intact. Constant-threshold rivals are retained, not
+declared impossible; this does not establish the unique application rule or an
+advantage from targeting. The original assessments remain development evidence.
 
 Use `--inspect` with the client to inspect a returned operation's learned
 conditions, prerequisites, output description and supported scope. Onboarding is
@@ -41,8 +47,18 @@ Legacy artifacts and changed inputs require a fit. Metrics distinguish current
 Unpublished semantic onboarding retains its pending routes, argument bindings,
 and partial progress across explicit learning calls. The route/depth limits apply
 across those calls; exhaustion is not complete application coverage. Clean budget
-stops can resume before the next fit. An unresolved dispatched action blocks
-further exploration until reconciliation, rather than silently retrying a write.
+stops at a completed acquisition unit can resume before the next fit. A dispatched
+write-bearing replay remains unresolved until its trial and progress cursor are
+recorded together; stopping midway blocks further exploration until reconciliation.
+Settled, pre-dispatch navigation candidates with zero or multiple matches can be
+recorded as unsupported and skipped during onboarding. Runtime invocation still
+stops on such ambiguity; a failed native action is never treated as a safe skip.
+
+After a successful native action, an unsettled observation can receive one
+budgeted read-only resample. The original sample is retained, and no click, fill,
+navigation or reload is repeated. A second unsettled read, exhausted budget or
+native action failure leaves the operation unconfirmed. Settling alone does not
+establish a response or effect: the usual target and postcondition checks still run.
 
 Guarded operations expose `scope.verification_budget`: a conservative allowance
 for the verification tail and its learned returns, in addition to the selection
@@ -70,6 +86,9 @@ bounded ordered-guard search leaves prediction unavailable, even if one outcome
 has been found. Completeness means exhaustive alternatives within the declared
 guard language—not a complete model of the application. `ordered_witnesses`
 shows the supporting programs and the training rows they leave unexplained.
+Exact condition covers are reused within a query; cache entries do not cross
+queries or change the hypothesis language. Reported checks are abstract search
+work, not a wall-time latency guarantee.
 
 `PREDICTED_REFUSAL` means the supported alternatives exclude the requested
 response. `PREDICTION_UNAVAILABLE` includes ambiguity and unavailable bindings;
@@ -106,6 +125,14 @@ semantic path learns navigation/selection sequences from observed transitions;
 the conditional fill-and-check wrapper is supplied, while its relational field
 bindings, response alternatives and numeric conditions come from V4. Neither
 path claims unrestricted program induction.
+
+Direct local-record text updates also compare the observed state outside the
+selected record before editing, after submission and after reload. Ancestor text
+that repeats the edited child's text is separated only when captured text
+provenance covers that subtree; meaningful parent text and sibling state remain
+checked. Missing provenance stays conservative. These timed neighbor checks do
+not establish a complete collection, hidden state, or exclusive causality, and
+do not extend automatically to creation or linked-value editing.
 
 Response fitting and live prediction use the same observation-local pre-state.
 Maintained beliefs still support effect analysis, but do not silently supply

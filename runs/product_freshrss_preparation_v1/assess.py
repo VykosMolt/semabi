@@ -1,5 +1,6 @@
 """Frozen reserved assessment using the existing literal caller, without task rescues."""
 import importlib.util
+import argparse
 import json
 import os
 from pathlib import Path
@@ -30,6 +31,17 @@ def save(path, value):
 
 
 def main():
+    global SOURCE, COMMIT, DIRECTORY
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source', type=Path, default=SOURCE)
+    parser.add_argument('--commit', default=COMMIT)
+    parser.add_argument('--run-name', default='assessment_411189b')
+    parser.add_argument('--development', action='store_true')
+    args = parser.parse_args()
+    assert args.run_name.replace('_', '').isalnum()
+    SOURCE, COMMIT = args.source.resolve(), args.commit
+    DIRECTORY = HERE / args.run_name
+    service_directory = HERE / 'private' / ('service_' + COMMIT[:7])
     sys.path.insert(0, str(SOURCE))
     from semabi.compiler import runtime
     assert Path(runtime.__file__).resolve().parent == SOURCE / 'semabi/compiler'
@@ -42,6 +54,7 @@ def main():
     assert plan['denominator'] == len(plan['tasks']) == 16
     DIRECTORY.mkdir(mode=0o700, exist_ok=False)
     freeze = {'source_commit': COMMIT, 'runtime_source_sha256': hashes,
+        'assessment_class': 'DISCLOSED_DEVELOPMENT' if args.development else 'RESERVED_INDEPENDENT_APPLICATION',
         'frozen_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         'caller': {'path': 'runs/product_assessment_development_v1/binding/binding.py',
                    'policy_version': binder.POLICY_VERSION, 'source_sha256': binder.SOURCE_SHA256,
@@ -54,22 +67,25 @@ def main():
         'task_plan': str(HERE / 'task_plan.json'), 'denominator': 16,
         'resources': {'service_port': 8866, 'cpuset': '8,9', 'application_memory_bytes': 1073741824},
         'exposure': 'Evaluator read official setup docs, rendered login/subscription/display UI and native OPML/SQLite schema/data. Learner gets only URL, private credentials, authorized UI actions and rendered observations. No FreshRSS source, native identity, expected answer or field mapping reaches learner. Shared context is not blind.',
-        'known_limit': 'Frozen411 includes a disclosed Workshop fitted/live feature mismatch; later unaccepted research candidates are excluded. This run measures the frozen whole stack, including the limited caller, not a claim that every unrouted task is impossible through API operations.',
+        'known_limit': ('This is a disclosed development rerun after the preserved reserved411 assessment; same16 requests and unchanged caller, no semantic rescues. ' if args.development else
+                        'Frozen411 includes a disclosed Workshop fitted/live feature mismatch; later unaccepted research candidates are excluded. ') +
+                       'This run measures the frozen whole stack, including the limited caller, not a claim that every unrouted task is impossible through API operations.',
         'baseline_comparison': 'NOT_RUN; no competence or speed superiority claim'}
-    save(HERE / 'assessment_freeze_411189b.json', freeze)
+    save(HERE / ('assessment_freeze_' + (args.run_name if args.development else '411189b') + '.json'), freeze)
     rows = [{**task, 'status': 'NOT_RUN', 'invoked': False, 'completed': False} for task in plan['tasks']]
     result = {'status': 'STARTED', 'denominator': 16, 'rows': rows, 'source_commit': COMMIT,
+              'assessment_class': freeze['assessment_class'],
               'native_checks': [], 'baseline_comparison': freeze['baseline_comparison'],
               'wrong_task_effects': 'UNMEASURED_NO_TASK_INVOCATIONS',
               'false_confirmations': 'UNDEFINED_WITHOUT_TASK_CONFIRMATIONS',
               'exposure': freeze['exposure'], 'resets': 0}
-    client = http.Client(SERVER, HERE / 'private/service_411189b/token', 1800)
+    client = http.Client(SERVER, service_directory / 'token', 1800)
 
     def native_snapshot(phase):
         began = time.monotonic()
-        native = '/tmp/semabi-assessment-' + phase + '.sqlite'
+        native = '/tmp/semabi-' + args.run_name + '-' + phase + '.sqlite'
         setup.cli('export-sqlite-for-user', '--user', setup.USER, '--filename', native)
-        path = HERE / 'private' / ('assessment_' + phase + '.sqlite')
+        path = HERE / 'private' / (args.run_name + '_' + phase + '.sqlite')
         assert not path.exists()
         setup.docker('cp', setup.CONTAINER + ':' + native, str(path))
         os.chmod(path, 0o600)

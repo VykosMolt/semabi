@@ -8,6 +8,7 @@ This is a feature-availability intervention, not a retraining comparison.
 from __future__ import annotations
 
 import argparse
+from dataclasses import asdict
 import json
 import os
 from pathlib import Path
@@ -18,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.semantic import SemanticArtifact
+from semabi.compiler.v4 import outcome
 
 
 def decision(simulation, expect):
@@ -36,7 +38,11 @@ def main():
     parser.add_argument("--database", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--probe", action="append", default=[])
+    parser.add_argument("--diagnostic-search-budget", type=int,
+                        help="Offline alternative enumeration only; never changes the HTTP guard or persisted artifact")
     args = parser.parse_args()
+    if args.diagnostic_search_budget is not None and not 0 < args.diagnostic_search_budget <= 1_000_000:
+        parser.error("diagnostic search budget must be between 1 and 1000000")
     report = json.loads(args.report.read_text())
     job = report["invocation_job"]
     request = job["request"]
@@ -113,6 +119,15 @@ def main():
         else:
             results[arm] = {"prediction": current,
                             "execution_policy": "authorized checking action does not require a unique prediction"}
+        if args.diagnostic_search_budget is not None:
+            queried = simulation["prediction"] if guarded else current
+            enumerated = got.admissibility({tuple(literal) for literal in queried["literals"]},
+                corroborated=True, hypothesis=outcome.LIST, search_budget=args.diagnostic_search_budget)
+            results[arm]["diagnostic_search"] = {
+                "scope": "Offline query alternatives with explicitly larger budget; not the actual HTTP decision",
+                "complete": enumerated.complete, "work": enumerated.work,
+                "alternatives": {event: asdict(vouch) for event, vouch in enumerated.options.items()},
+                "witnesses": enumerated.witnesses}
     intact = results["intact"]["simulation" if guarded else "prediction"]
     if intact != original:
         raise AssertionError("Offline intact inference differs from actual HTTP inference")
