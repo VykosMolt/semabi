@@ -279,6 +279,21 @@ are not established. Failed full-form probes remain in the learning record. A
 successful full-field proposal still ends the current bounded scan, so this is
 not general optional-argument support for every published creation operation.
 
+An untouched native choice control (a select with an observed selected default)
+may gain or reorder unselected options between trials, as Kanboard's project
+list does once a probe project exists. A `_required_fields` creation records an
+omitted-choice policy for such controls: only their unselected option labels and
+order may vary. The selected label, its unique observed correspondence, the
+native form binding and the observed flags stay exact and are rechecked before
+each fill and submission; parameterized domains and record edits stay exact.
+This is a structural tolerance, not evidence that the omitted option is
+semantically irrelevant, and a populated native result scope sharing the learned
+submit control may be refused as a possible retained draft. On the disclosed
+Kanboard development application, commit `9bdb295` published project creation
+by name where `17e1bb0` published nothing; the authorized supplemental call
+created exactly one new project with nothing else changed. The sixteen
+task-level requests of that plan remain unrouted (0/16).
+
 On the disclosed Linkding development application, frozen `f2c110f` published
 five operations in 91 onboarding actions (56 possible writes), taking 54.066s;
 authentication took a separate three actions and 4.182s. Eight schema-selected
