@@ -163,12 +163,68 @@
   (14 ->15). No supplemental success is credited to the16-task denominator.
   The repair is established on the failure it was written for; task-level
   operations remain unlearned and the literal caller unrouted.
-- Next: FreshRSS's three barriers in that order -- treat an authentication view
-  reached during acquisition as a resumable boundary rather than a stop, bound
-  the semantic fit's cost on long nominal histories, and give nominal operations
-  a publication route without a learned comparison -- each as a general repair
-  with a test before any second onboarding; then task-level record operations on
-  Kanboard (subtask/comment/category routes). Original denominators retained.
+- FreshRSS barriers, worked 2026-09-13 (resuming agent). (i) The view that
+  stopped the acquisition was the subscription form's 'HTTP password' field
+  among Feed URL, Title, HTTP username and more, on an authenticated page:
+  runtime.PasswordBearingView (a StopOperation) is raised when a password
+  control is present and BrowserSession._login_controls finds no login scope;
+  operations reaching such a view still stop; acquisition records the candidate
+  that led there as unsupported (PASSWORD_BEARING_VIEW), fills and clicks
+  nothing on it, and continues by replay from the entry, where a login scope
+  would still stop it. Test with a feed form and a login page (a48b00c).
+  (iii) An offline publication diagnostic on the 4h41m artifact with the
+  comparison gate lifted (frss_publish_diag.py): all16 controls fail at the
+  NEXT stage, binding -- 'No observed procedure trial resolves this control to
+  a learned-key owner' -- the 228-step acquisition never reached a keyed record
+  (11 distinct observations: navigation pages and forms); so the publication
+  language is not FreshRSS's first obstacle and stays as it is. (ii) Stack
+  samples of an offline refit put every sample's leaf in
+  Observation.structural_signature, recomputed by json+sha1 on every parse of
+  pages of up to 889 nodes from the inducer's macro extension; the signature is
+  now computed once per observation, a deep copy is its own observation
+  (semantic's hypothetical widget value), test_observation_signature.py; and the
+  inducer's macro extension asked for a step's affordances from every transition
+  whose window held the step, each answer walking every keyed node against every
+  state object -- now walked once per (observation, state)
+  (test_induce_affordance_memo.py). The same 228-step history refits in 82s
+  against 16892s, its artifact identical outside metadata (outcomes,
+  hypotheses, abstractor, vocabulary; frss_refit.py). Commits a48b00c, 3377ef4,
+  4b39fa0.
+- FreshRSS second and third onboardings (2026-09-13, disclosed development,
+  driver assess.py --development, service 8866 from a frozen worktree per
+  commit, native state 5/3/52 unchanged before and after each): on 4b39fa0
+  (i+ii) the run completed inside the client budget -- CONNECTED 3 actions/2.8s,
+  learning COMPLETED 354s: 231 actions/147 possible writes, the fit 109s on 228
+  steps -- but the acquisition still stopped at 228 steps: the skipped candidate
+  was recorded (PASSWORD_BEARING_VIEW, index 8, the 'Advanced' click) and the
+  next replay raised on the same view, because a replay first reads the page it
+  is about to leave. On db03287 (routes whose replay meets the view are
+  unsupported contexts) no stop, frontier exhausted at 23 visited contexts, but
+  17 contexts unsupported PASSWORD_BEARING_VIEW at 15:16:17-15:16:20 with the
+  same signature each time, steps still 228, distinct observations 11: the
+  pre-navigation read, not the app, was the obstacle. 89d1bf6 makes that read
+  tolerate a password-bearing view (Trace.read_leaving; a login scope still
+  stops); its run is development_89d1bf6. Publication stayed at stage language
+  (16 controls) on both, 0/16 unchanged (caller grammar).
+- development_89d1bf6 (15:24-15:33 UTC): the acquisition went past the form --
+  372 actions/244 possible writes, 365 steps (228 before), 10 contexts visited,
+  24 pending/16 deferred, one PASSWORD_BEARING_VIEW candidate and 56
+  MULTIPLE_MATCHES candidates (anonymous links) -- and stopped at 15:30:37 on a
+  new reason: a click on node 9 of the route Subscription management -> unlabeled
+  button -> heading-anchored selector returned ok=false with the settled page
+  unchanged before and after (signature 052f6359), leaving the write fence
+  DISPATCH_UNRESOLVED ('Browser interaction did not complete; effect requires
+  reconciliation'). The fit on 365 steps took 157s; still 11 distinct
+  observations, 16 semantic controls, publication at stage language, 0
+  operations, 0/16 (caller grammar); native state unchanged.
+- Next: two barriers, in order, each a policy question before a repair -- (a) a
+  failed native click whose settled page is identical before and after during
+  acquisition: the published policy says a failed native action is never a safe
+  skip, so continuing needs an explicit rule (the page identity as the evidence
+  of no effect) and a test; (b) coverage: 365 steps reach 11 distinct views
+  because anonymous links are unsupported candidates, so records (feeds,
+  articles) are never observed and nothing binds. Then Kanboard task-level
+  routes. Original denominators retained.
 
 ## Retained integrated checkpoint details — through 2026-09-12 23:20 UTC
 
