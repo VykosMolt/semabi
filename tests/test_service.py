@@ -1713,6 +1713,94 @@ def test_http_onboarding_retains_unique_navigation_after_ambiguous_candidates(tm
         api.close()
 
 
+@pytest.mark.parametrize('fault', ['selected', 'owner', 'own_draft'])
+def test_http_induced_creation_tolerates_only_unselected_choice_growth(tmp_path, monkeypatch, fault):
+    """Real HTTP learn/catalog/invoke, with browser and connection setup supplied only.
+
+    Independent mutable rows retain the failed full write, both required-only
+    trials, and a fresh call. No operation schema or procedure is supplied.
+    """
+    from itertools import count
+    from types import SimpleNamespace
+    import test_operation_runtime as diagnostics
+    from semabi.compiler import runtime as runtime_module
+    from semabi.compiler.runtime import Runtime
+
+    browser = diagnostics._GrowingOmittedChoiceBrowser()
+    browser.close = lambda: None
+    runtimes = []
+
+    def factory(directory):
+        runtime = Runtime(directory)
+        runtimes.append(runtime)
+        return runtime
+
+    api = HTTPHarness.__new__(HTTPHarness)
+    api.fake = SimpleNamespace(release=threading.Event())
+    api.service = Service(tmp_path/'service', runtime_factory=factory)
+    try:
+        api.server = make_server(api.service, port=0)
+    except BaseException:
+        api.service.close(timeout=5)
+        raise
+    api.base = 'http://127.0.0.1:' + str(api.server.server_port)
+    api.thread = threading.Thread(target=api.server.serve_forever, kwargs={'poll_interval': 0.01}, daemon=True)
+    api.thread.start()
+    try:
+        connection, connecting = api.service.store.create_connection(
+            {'url': browser.allowed_origin+'/', 'scope': {'exploration_enabled': True,
+                                                       'max_actions': 60, 'max_writes': 30}}, {})
+        assert api.service.store.start_job(connecting)
+        api.service.store.finish_job(connecting, {'status': 'CONNECTED'})
+        runtimes[0].sessions[connection['id']] = browser
+        prefix = '/v1/connections/'+connection['id']
+        with monkeypatch.context() as learning_clock:
+            ticks = count(0, 10)
+            learning_clock.setattr(runtime_module, 'time', SimpleNamespace(
+                monotonic=lambda: next(ticks), sleep=lambda _: None))
+            status, accepted = api.request('POST', prefix+'/learn', {'settings': {'max_actions': 60, 'max_writes': 30}})
+            assert status == 202
+            learned = api.completed(accepted)
+        assert learned['status'] == 'COMPLETED', learned
+        assert learned['result']['attempts'][0]['confirmed_trials'] == 0
+        assert 'unique visible record witness' in learned['result']['attempts'][0]['reason']
+        status, catalog = api.request('GET', prefix+'/operations')
+        assert status == 200
+        operation, = catalog['operations']
+        assert operation['kind'] == 'create_visible_record'
+        assert operation['argument_schema']['required'] == ['name']
+        assert set(operation['argument_schema']['properties']) == {'name'}
+        assert operation['procedure']['defaults'] == {'identifier': '', 'choice': 'Default'}
+        assert set(operation['procedure']['omitted_choice_policy']) == {'choice'}
+        assert len(operation['support']['trials']) == 2 and len(browser.rows) == 3
+        assert [row['Name'] for row in browser.rows[1:]] == [
+            trial['arguments']['name'] for trial in operation['support']['trials']]
+        before = deepcopy(browser.rows)
+        browser.choice_reverse = True
+        invocation = prefix+'/operations/'+operation['id']+'/invoke'
+        status, accepted = api.request('POST', invocation, {'version': operation['version'],
+            'arguments': {'name': 'Fresh HTTP choice population'}})
+        assert status == 202 and api.completed(accepted)['status'] == 'COMPLETED'
+        _, execution = api.request('GET', '/v1/executions/'+accepted['execution_id'])
+        assert execution['result']['outcome'] == 'CONFIRMED', execution
+        assert browser.rows == before + [{'Name': 'Fresh HTTP choice population', 'Identifier': ''}]
+        if fault == 'selected':
+            browser.choice_value = browser.rows[0]['Name']  # Valid unique domain member, wrong default.
+        elif fault == 'owner':
+            browser.choice_fault = 'owner'
+        else:
+            browser.fields['Name'] = 'Preserve this new draft'
+        before = deepcopy(browser.rows), len(browser.actions), deepcopy(browser.fields)
+        status, accepted = api.request('POST', invocation, {'version': operation['version'],
+            'arguments': {'name': 'Must not be created'}})
+        assert status == 202 and api.completed(accepted)['status'] == 'COMPLETED'
+        _, execution = api.request('GET', '/v1/executions/'+accepted['execution_id'])
+        assert execution['result']['outcome'] == 'FAILED_BEFORE_EFFECT', execution
+        assert (browser.rows, len(browser.actions), browser.fields) == before
+    finally:
+        api.close()
+
+
 def test_http_required_only_creation_is_induced_and_guards_omitted_fields(tmp_path, monkeypatch):
     """Actual HTTP learn/catalog/invoke; only browser and connection setup are supplied.
 

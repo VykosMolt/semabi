@@ -25,7 +25,7 @@ from semabi.compiler.browser import Primitive
 from semabi.compiler.browser_session import BrowserSession, origin_of
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.surface import (SUBMIT_WORDS, Surface, argument_name, digest, editor_scopes, form_candidates, form_state,
-                                     local_regions, matching_forms, relative_value_slots,
+                                     local_regions, matching_forms, omitted_choice_policy, relative_value_slots,
                                      visible_record_matches)
 
 
@@ -462,21 +462,27 @@ class Runtime:
         return surface
 
     @staticmethod
-    def _form(surface: Surface, descriptor: dict) -> dict:
-        forms = matching_forms(surface, descriptor)
+    def _form(surface: Surface, descriptor: dict, *, omitted_choices: dict | None = None) -> dict:
+        forms = matching_forms(surface, descriptor, omitted_choices=omitted_choices)
         if len(forms) != 1:
             raise StopOperation("Learned form is absent, ambiguous, or has changed prerequisites", stale=True)
         return forms[0]
 
+    def _creation_form(self, surface: Surface, procedure: dict, arguments: dict) -> dict:
+        policy = procedure.get("omitted_choice_policy", {})
+        if set(policy).intersection(arguments):
+            raise StopOperation("An omitted-choice policy cannot parameterize its selected default", stale=True)
+        return self._form(surface, procedure["form"], omitted_choices=policy)
+
     def _submit(self, browser, surface: Surface, procedure: dict, arguments: dict,
                 trace: Trace) -> Surface:
         for name, value in arguments.items():
-            candidate = self._form(surface, procedure["form"])
+            candidate = self._creation_form(surface, procedure, arguments)
             fields = [field for field in candidate["fields"] if field["argument"] == name]
             if len(fields) != 1:
                 raise StopOperation("Argument binding is ambiguous", stale=True)
             surface = trace.act(browser, surface, Primitive("type", fields[0]["node"], value))
-        candidate = self._form(surface, procedure["form"])
+        candidate = self._creation_form(surface, procedure, arguments)
         for field in candidate["fields"]:
             name = field["argument"]
             if name in arguments and field.get("value") != arguments[name]:
@@ -490,7 +496,7 @@ class Runtime:
         return trace.act(browser, surface, Primitive("click", candidate["submit_node"]))
 
     def _preconditions(self, surface: Surface, procedure: dict, arguments: dict) -> None:
-        candidate = self._form(surface, procedure["form"])
+        candidate = self._creation_form(surface, procedure, arguments)
         for field in candidate["fields"]:
             if field["argument"] in arguments:
                 if field.get("value"):
@@ -1202,10 +1208,18 @@ class Runtime:
     def _preserve_populated_exit(self, browser, surface: Surface, procedure: dict, arguments: dict,
                                  witness: dict, trace: Trace, *, acquire: bool) -> tuple[Surface, dict, dict]:
         populated = self._populated_scope(surface)
+        own_roots = {candidate["root"] for candidate in matching_forms(surface, procedure["form"],
+                     omitted_choices=procedure.get("omitted_choice_policy"))}
+        if procedure.get("omitted_choice_policy"):
+            # Guard-only suspicion: changed flags can remove a field from form
+            # proposals. The learned submit's native owner still must not make
+            # a populated creation draft disposable. This authorizes no exit.
+            own_roots.update(surface.controls[node]["form"]
+                for node in surface.resolve(procedure["form"]["submit"])
+                if surface.controls[node].get("form") in surface.forms)
         if populated is not None and any(
-                populated["root"] in surface.observation.subtree(candidate["root"])
-                or candidate["root"] in surface.observation.subtree(populated["root"])
-                for candidate in matching_forms(surface, procedure["form"])):
+                populated["root"] in surface.observation.subtree(root)
+                or root in surface.observation.subtree(populated["root"]) for root in own_roots):
             self._guard_current_editor(surface)  # Own submission did not establish that a changed input default is disposable.
         self._reserve_record_actions(trace, 3 if acquire else 1, 3 if acquire else 1)
         contract = procedure.get("populated_exit")
@@ -2258,6 +2272,10 @@ class Runtime:
                             procedure["defaults"] = {field["argument"]:
                                     field.get("checked") if field["role"] == "checkbox" else field.get("value")
                                     for field in candidate["fields"] if field["argument"] not in arguments}
+                            if trial == 0:
+                                policy = omitted_choice_policy(surface, candidate, arguments)
+                                if policy:
+                                    procedure["omitted_choice_policy"] = deepcopy(policy)
                             current = self._open(browser, procedure, trace, onboarding_exit=True)
                             self._preconditions(current, procedure, arguments)
                             if any(visible_record_matches(current, value) for value in arguments.values()):
@@ -2288,6 +2306,8 @@ class Runtime:
                                 raise StopOperation("Probe record did not persist through reload")
                             trials.append({"arguments": arguments, "witness": witness,
                                            "checked_defaults": deepcopy(procedure["defaults"]),
+                                           **({"checked_omitted_choice_policy": deepcopy(procedure["omitted_choice_policy"])}
+                                              if procedure.get("omitted_choice_policy") else {}),
                                            "precondition_observation": current.observation.structural_signature(),
                                            **({"exit_preservation": exit_evidence} if exit_evidence is not None else {})})
                         if procedure.get("populated_exit") and (len(trials) != 2 or
@@ -2330,6 +2350,14 @@ class Runtime:
                             operation["name"] += "_required_fields"
                             operation["scope"]["argument_policy"] = "Observed required text controls only; omitted controls retain checked pre-submit defaults"
                             operation["scope"]["unsupported"].append("Post-submit persistence or effects of omitted control values")
+                        if procedure.get("omitted_choice_policy"):
+                            operation["scope"]["omitted_choice_policy"] = (
+                                "Structural selected-default preservation for never-dispatched native choice controls: "
+                                "only unselected option labels/order may vary. Selected label, unique observed label "
+                                "correspondence, native form binding and observed flags remain exact. This is not "
+                                "empirical irrelevance, hidden option-value mapping, or post-submit default persistence. "
+                                "A populated native result scope sharing the learned submit descriptor may be refused "
+                                "conservatively as a possible retained creation draft.")
                         if procedure.get("populated_exit"):
                             operation["prerequisites"].append("Exact observed populated-scope state and two-context tested entry/return/reload procedure")
                             operation["scope"]["populated_exit"] = (

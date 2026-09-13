@@ -204,9 +204,62 @@ def form_candidates(surface: Surface) -> list[dict]:
     return list(unique.values())
 
 
-def matching_forms(surface: Surface, descriptor: dict) -> list[dict]:
-    return [candidate for candidate in form_candidates(surface)
-            if candidate["descriptor"] == descriptor]
+def _omitted_choice_state(surface: Surface, candidate: dict, field: dict) -> dict | None:
+    """Observed native selected-label state, not hidden option-value semantics."""
+    root, node = candidate["root"], field["node"]
+    control = surface.controls[node]
+    observed = surface.observation.node(node)
+    options = observed.options
+    if (root not in surface.forms or surface.controls[candidate["submit_node"]].get("form") != root
+            or control.get("form") != root or control.get("role") != "combobox"
+            or control.get("input_type") != "" or control.get("disabled") is not False
+            or control.get("readonly") is not False
+            or len(surface.resolve(field["descriptor"], within=root)) != 1
+            or not isinstance(options, list) or not all(isinstance(value, str) for value in options)
+            or options != control.get("options") or not isinstance(observed.value, str)
+            or options.count(observed.value) != 1):
+        return None
+    return {"node": {key: value for key, value in observed.to_json().items()
+                     if key not in {"i", "parent", "bbox", "options"}},
+            "control": {key: value for key, value in control.items() if key not in {"form", "options"}},
+            "owner": {"binding": "current_native_form", "form": surface.forms[root],
+                      "node": {key: value for key, value in surface.observation.node(root).to_json().items()
+                               if key not in {"i", "parent", "bbox"}}}}
+
+
+def omitted_choice_policy(surface: Surface, candidate: dict, arguments: dict) -> dict:
+    """Propose structural tolerance only for untouched, observed native defaults."""
+    return {field["argument"]: state for field in candidate["fields"]
+            if field["argument"] not in arguments
+            and (state := _omitted_choice_state(surface, candidate, field)) is not None}
+
+
+def matching_forms(surface: Surface, descriptor: dict, *, omitted_choices: dict | None = None) -> list[dict]:
+    """Exact contracts, except a declared omitted-choice selected-default policy."""
+    result = []
+    for candidate in form_candidates(surface):
+        actual = candidate["descriptor"]
+        if omitted_choices:
+            if not set(omitted_choices).issubset(field["argument"] for field in candidate["fields"]):
+                continue
+            fields = []
+            for field in candidate["fields"]:
+                name = field["argument"]
+                current = next(item for item in actual["fields"] if item["argument"] == name)
+                if name in omitted_choices:
+                    baseline = [item for item in descriptor["fields"] if item["argument"] == name]
+                    if len(baseline) != 1 or _omitted_choice_state(surface, candidate, field) != omitted_choices[name]:
+                        break
+                    current = {**current, "options": baseline[0]["options"]}
+                fields.append(current)
+            else:
+                actual = {**actual, "fields": sorted(fields, key=lambda value: value["argument"])}
+                if actual == descriptor:
+                    result.append(candidate)
+            continue
+        if actual == descriptor:
+            result.append(candidate)
+    return result
 
 
 def form_state(surface: Surface, root: int) -> dict | None:

@@ -2601,6 +2601,189 @@ class _OptionalProjectionBrowser(_RecordBrowser):
         return result
 
 
+class _GrowingOmittedChoiceBrowser(_OptionalProjectionBrowser):
+    """Native choice labels grow with records; selected default is not dispatched."""
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.choice_value = 'Default'
+        self.choice_reverse = False
+        self.choice_fault = None
+        self.change_after_type = False
+
+    def read(self):
+        surface = super().read()
+        nodes = surface.observation.nodes
+        index = len(nodes)
+        options = ['Default', *[row['Name'] for row in self.rows]]
+        if self.choice_reverse:
+            options.reverse()
+        if self.choice_fault == 'duplicate_selected':
+            options.append(self.choice_value)
+        if self.choice_fault == 'removed_selected':
+            options = [value for value in options if value != self.choice_value]
+        nodes.append(Node(index, 1, 'combobox', 'Choice', value=self.choice_value, options=options))
+        control = {'role': 'combobox', 'label': 'Choice', 'input_type': '', 'required': False,
+                   'disabled': False, 'readonly': False, 'min': None, 'max': None, 'max_length': None,
+                   'options': list(options), 'submit': False, 'form': 1}
+        if self.choice_fault == 'missing_options':
+            nodes[index].options = None
+        if self.choice_fault == 'inconsistent_options':
+            control['options'] = ['Different']
+        if self.choice_fault in {'required', 'disabled', 'readonly'}:
+            control[self.choice_fault] = True
+        if self.choice_fault == 'owner':
+            control['form'] = 0
+        if self.choice_fault == 'expanded':
+            nodes[index].expanded = True
+        if self.choice_fault == 'owner_state':
+            nodes[1].name = 'Different owner'
+        surface.controls[index] = control
+        if self.choice_fault == 'duplicate_descriptor':
+            nodes.append(Node(index + 1, 1, 'combobox', 'Choice', value=self.choice_value, options=options))
+            surface.controls[index + 1] = deepcopy(control)
+        surface.observation = Observation(nodes, surface.observation.url)
+        return surface
+
+    def act(self, action):
+        assert self.surface.observation.node(action.target).role != 'combobox', 'omitted means never dispatched'
+        result = super().act(action)
+        if action.kind == 'type' and self.change_after_type:
+            self.choice_value = 'Changed selected default'
+        return result
+
+
+@pytest.mark.parametrize('fault', [None, 'selected', 'duplicate_selected', 'required', 'owner', 'wrapped_label'])
+def test_native_omitted_choice_policy_checks_label_state_and_current_form(tmp_path, fault):
+    from semabi.compiler.surface import omitted_choice_policy
+    browser = BrowserSession('https://synthetic.invalid/')
+    html = '''<form><label>Name<input required></label><label for="choice">Choice</label><select id="choice">
+      <option>Default</option><option>Other</option></select><button>Save</button></form>
+      <form id="other"><span>Other owner</span></form>'''
+    if fault == 'wrapped_label':
+        html = html.replace('<label for="choice">Choice</label><select', '<label>Choice<select').replace(
+            '</select><button>', '</select></label><button>')
+    try:
+        browser._page.route('https://synthetic.invalid/**', lambda route: route.fulfill(
+            content_type='text/html', body=html))
+        browser.goto()
+        before = browser.read()
+        assert before.settled
+        candidate, = form_candidates(before)
+        policy = omitted_choice_policy(before, candidate, {'name': 'Fresh native value'})
+        assert len(policy) == 1
+        if fault != 'wrapped_label':
+            assert set(policy) == {'choice'}
+        browser._page.locator('#choice').evaluate('''e => {
+            e.add(new Option('Fresh unselected label'));
+            e.appendChild(e.options[1]);
+        }''')
+        if fault == 'selected':
+            browser._page.locator('#choice').select_option(label='Other')
+        if fault == 'duplicate_selected':
+            browser._page.locator('#choice').evaluate("e => e.add(new Option('Default'))")
+        if fault == 'required':
+            browser._page.locator('#choice').evaluate('e => e.required=true')
+        if fault == 'owner':
+            browser._page.locator('#choice').evaluate("e => e.setAttribute('form','other')")
+        after = browser.read()
+        assert after.settled and not matching_forms(after, candidate['descriptor'])
+        matched = matching_forms(after, candidate['descriptor'], omitted_choices=policy)
+        assert bool(matched) is (fault is None)
+        if fault is None:
+            Runtime(tmp_path)._preconditions(after, {'form': candidate['descriptor'],
+                'omitted_choice_policy': policy, 'defaults': {'choice': 'Default'}}, {'name': 'Fresh native value'})
+    finally:
+        browser.close()
+
+
+def test_omitted_native_choice_growth_keeps_failed_full_trial_and_two_required_trials(tmp_path, monkeypatch):
+    from semabi.compiler import surface as surface_module
+    with monkeypatch.context() as baseline:
+        baseline.setattr(runtime_module, 'omitted_choice_policy', lambda *_: {})
+        _, _, browser, learned = _learn_editable_records(
+            tmp_path / 'exact', baseline, browser=_GrowingOmittedChoiceBrowser())
+        assert not learned['operations'] and len(browser.rows) == 1
+        assert 'changed prerequisites' in learned['attempts'][1]['reason']
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path / 'policy', monkeypatch, browser=_GrowingOmittedChoiceBrowser())
+    operation = _learned_kind(learned, 'create_visible_record')
+    assert len(browser.rows) == 3 and learned['attempts'][0]['confirmed_trials'] == 0
+    assert operation['procedure']['defaults'] == {'identifier': '', 'choice': 'Default'}
+    assert set(operation['procedure']['omitted_choice_policy']) == {'choice'}
+    assert len(operation['support']['trials']) == 2
+    assert all(trial['checked_omitted_choice_policy'] == operation['procedure']['omitted_choice_policy']
+               for trial in operation['support']['trials'])
+    browser.choice_reverse = True
+    current = browser.read()
+    assert not surface_module.matching_forms(current, operation['procedure']['form']), 'exact contracts stay exact'
+    result = runtime.invoke(connection, operation, {'name': 'Fresh default-preserving record'}, lambda _: None)
+    assert result['outcome'] == 'CONFIRMED', result
+    assert browser.rows[-1] == {'Name': 'Fresh default-preserving record', 'Identifier': ''}
+    assert 'hidden option-value mapping' in operation['scope']['omitted_choice_policy']
+
+
+@pytest.mark.parametrize('fault', ['selected', 'duplicate_selected', 'removed_selected', 'missing_options',
+                                  'inconsistent_options', 'required', 'disabled', 'readonly', 'owner',
+                                  'owner_state', 'expanded', 'duplicate_descriptor'])
+def test_omitted_choice_policy_refuses_changed_selected_binding_and_metadata(tmp_path, monkeypatch, fault):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_GrowingOmittedChoiceBrowser())
+    operation = _learned_kind(learned, 'create_visible_record')
+    if fault == 'selected':
+        browser.choice_value = browser.rows[0]['Name']
+    else:
+        browser.choice_fault = fault
+    rows, actions = deepcopy(browser.rows), len(browser.actions)
+    result = runtime.invoke(connection, operation, {'name': 'Must not submit'}, lambda _: None)
+    assert result['outcome'] != 'CONFIRMED', result
+    assert browser.rows == rows and len(browser.actions) == actions
+
+
+@pytest.mark.parametrize('full', [False, True])
+def test_omitted_choice_default_is_rechecked_before_each_fill_and_save(tmp_path, monkeypatch, full):
+    runtime, connection, browser, learned = _learn_editable_records(
+        tmp_path, monkeypatch, browser=_GrowingOmittedChoiceBrowser(project_optional=full))
+    operation = _learned_kind(learned, 'create_visible_record')
+    browser.change_after_type = True
+    arguments = {'name': 'First fresh field'}
+    if full:
+        arguments['identifier'] = 'Second must remain empty'
+    rows, actions = deepcopy(browser.rows), len(browser.actions)
+    result = runtime.invoke(connection, operation, arguments, lambda _: None)
+    assert result['outcome'] != 'CONFIRMED'
+    assert browser.rows == rows
+    assert len(browser.actions[actions:]) == 1 and browser.actions[-1].kind == 'type'
+    assert browser.fields['Identifier'] == ''
+
+
+@pytest.mark.parametrize('fault', ['selected', 'required', 'disabled', 'owner'])
+def test_omitted_choice_policy_cannot_relax_parameterized_domain_or_own_editor_guard(tmp_path, fault):
+    from semabi.compiler.surface import omitted_choice_policy
+    browser = _GrowingOmittedChoiceBrowser()
+    surface = browser.read()
+    candidate, = form_candidates(surface)
+    assert omitted_choice_policy(surface, candidate, {'name': 'N', 'choice': 'Default'}) == {}
+    policy = omitted_choice_policy(surface, candidate, {'name': 'N'})
+    procedure = {'form': candidate['descriptor'], 'omitted_choice_policy': policy,
+                 'defaults': {'identifier': '', 'choice': 'Default'}}
+    runtime = Runtime(tmp_path)
+    with pytest.raises(runtime_module.StopOperation, match='cannot parameterize'):
+        runtime._creation_form(surface, procedure, {'choice': 'Default'})
+    browser.rows.append({'Name': 'Extra option', 'Identifier': ''})
+    browser.fields['Name'] = 'Own retained draft'
+    populated = browser.read()
+    assert matching_forms(populated, procedure['form']) == []
+    # Even a subsequently changed selected default cannot hide the overlapping
+    # creation form from the discard-draft guard.
+    if fault == 'selected':
+        browser.choice_value = 'Extra option'
+    else:
+        browser.choice_fault = fault
+    populated = browser.read()
+    with pytest.raises(runtime_module.StopOperation, match='draft|native control owner'):
+        runtime._preserve_populated_exit(browser, populated, procedure, {}, {}, None, acquire=True)
+
+
 def test_required_only_creation_retains_full_failure_and_checks_supplied_witnesses(tmp_path, monkeypatch):
     with monkeypatch.context() as baseline:
         baseline.setattr(runtime_module, 'creation_variants', lambda candidate: [candidate])
@@ -2793,6 +2976,29 @@ class _PopulatedExitBrowser(_OptionalProjectionBrowser):
 
     def close(self):
         self.generation += 1
+
+
+def test_omitted_choice_guard_keeps_distinct_result_scope_exit_supported(tmp_path, monkeypatch):
+    class Browser(_PopulatedExitBrowser):
+        def read(self):
+            surface = super().read()
+            if self.scene == 'entry':
+                nodes = surface.observation.nodes
+                index = len(nodes)
+                options = ['Default', *[row['Name'] for row in self.rows]]
+                nodes.append(Node(index, 1, 'combobox', 'Choice', value='Default', options=options))
+                control = _surface([Node(0, -1, 'combobox', 'Choice', value='Default', options=options)]).controls[0]
+                surface.controls[index] = {**control, 'form': 1}
+                surface.observation = Observation(nodes, surface.observation.url)
+            return surface
+    runtime, connection, browser, learned = _learn_editable_records(tmp_path, monkeypatch, browser=Browser())
+    operation = _learned_kind(learned, 'create_visible_record')
+    assert len(browser.rows) == 3
+    assert operation['procedure']['omitted_choice_policy'] and operation['procedure']['populated_exit']
+    result = runtime.invoke(connection, operation, {'name': 'Fresh distinct-scope record'}, lambda _: None)
+    assert result['outcome'] == 'CONFIRMED', result
+    assert browser.rows[-1]['Name'] == 'Fresh distinct-scope record'
+    assert browser.route_actions[-1] == ('reload', browser.current_url)
 
 
 class _PopulatedContextBrowser(_PopulatedExitBrowser):
