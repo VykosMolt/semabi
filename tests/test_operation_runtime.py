@@ -7130,14 +7130,16 @@ class _PasswordViewBrowser:
     def goto(self, url=None):
         if self.sticky and self.actions:
             return
-        buttons = [Node(1, 0, 'button', 'Add feed')] + ([Node(2, 0, 'button', 'Refresh')] if self.sticky else [])
-        self.surface = _surface([Node(0, -1, 'group', ''), *buttons])
+        self.surface = _surface([Node(0, -1, 'group', ''), Node(1, 0, 'button', 'Add feed'), Node(2, 0, 'button', 'Refresh')])
 
     def read(self):
         return self.surface
 
     def act(self, action):
         self.actions.append(action)
+        if action.target == 2:
+            self.surface = _surface([Node(0, -1, 'group', ''), Node(1, 0, 'heading', 'Refreshed')])
+            return SimpleNamespace(ok=True, error=None)
         if self.login:
             nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'textbox', 'Username'),
                      Node(2, 0, 'textbox', 'Password'), Node(3, 0, 'button', 'Login')]
@@ -7163,7 +7165,7 @@ def test_semantic_acquisition_leaves_a_password_bearing_view_and_stops_only_on_a
     from semabi.compiler.semantic_runtime import acquire
 
     browser, trials, edits, context, events = _PasswordViewBrowser(login), [], [], {}, []
-    trace = Trace(tmp_path / 'acquire', events.append, Budget(6, 3))
+    trace = Trace(tmp_path / 'acquire', events.append, Budget(12, 6))
     if login:
         with pytest.raises(StopOperation, match='Session requires authentication'):
             acquire(browser, trace, 'entry', events.append, trials, edits, context)
@@ -7171,7 +7173,11 @@ def test_semantic_acquisition_leaves_a_password_bearing_view_and_stops_only_on_a
     acquire(browser, trace, 'entry', events.append, trials, edits, context)
     unsupported = [event for event in events if event['type'] == 'acquisition_candidate_unsupported']
     assert len(unsupported) == 1 and unsupported[0]['status'] == 'PASSWORD_BEARING_VIEW'
-    assert [action.target for action in browser.actions] == [1] and not trials
+    # the page left behind is read once more on the way to the entry, and the next
+    # candidate is reached and acted on
+    assert [action.target for action in browser.actions][:2] == [1, 2] and trials
+    assert all(action.target != 1 for action in browser.actions[1:]), 'the skipped candidate is not retried'
+    assert not [event for event in events if event['type'] == 'acquisition_context_unsupported']
     frontier = context['acquisition_frontier']
     assert frontier['active'] is None and 'in_flight' not in frontier
     assert any(any(control['input_type'] == 'password' for control in json.loads(line)['controls'].values())

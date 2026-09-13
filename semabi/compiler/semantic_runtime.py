@@ -238,7 +238,7 @@ def _return_choices(surface):
 
 
 def replay(browser, trace, entry, route, arguments=None, *, context=None, acquiring=False):
-    before = trace.read(browser)
+    before = trace.read_leaving(browser)
     surface = trace.navigate(browser, entry)
     trace.log.add_step(0, Primitive("navigate", text=entry), True, None,
                        before.observation, surface.observation)

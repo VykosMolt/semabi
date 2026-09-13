@@ -195,6 +195,20 @@ class Trace:
         self.budget.check_deadline()
         return self.observe(browser.read())
 
+    def read_leaving(self, browser) -> Surface:
+        """Read the page about to be left by a navigation.
+
+        It is recorded and checked like any other, except that a password
+        control outside a login scope does not stop here: nothing is acted on
+        before the navigation, and a lost session shows on the page it leads to."""
+        self.budget.check_deadline()
+        surface = browser.read()
+        self._record_observation(surface)
+        try:
+            return self._check_observation(surface)
+        except PasswordBearingView:
+            return surface
+
     def pause(self, seconds: float) -> None:
         self.budget.check_deadline()
         if self.budget.deadline is not None:
