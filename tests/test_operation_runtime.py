@@ -7115,3 +7115,59 @@ def test_semantic_preflight_stops_when_field_becomes_readonly_without_text_chang
     assert browser.fills == browser.final_actions == 0
     assert browser.values == {'A': '3', 'B': '9'}
     assert result['outcome'] != 'CONFIRMED', result
+
+
+class _PasswordViewBrowser:
+    """One candidate leads to a view with a password control: a feed form, or the login page."""
+    allowed_origin = 'https://synthetic.invalid'
+
+    def __init__(self, login):
+        self.login, self.actions = login, []
+        self.goto()
+
+    def goto(self, url=None):
+        self.surface = _surface([Node(0, -1, 'group', ''), Node(1, 0, 'button', 'Add feed')])
+
+    def read(self):
+        return self.surface
+
+    def act(self, action):
+        self.actions.append(action)
+        if self.login:
+            nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'textbox', 'Username'),
+                     Node(2, 0, 'textbox', 'Password'), Node(3, 0, 'button', 'Login')]
+            self.surface = _surface(nodes, {2: {'input_type': 'password'}})
+        else:
+            nodes = [Node(0, -1, 'group', ''), Node(1, 0, 'textbox', 'Feed URL'), Node(2, 0, 'textbox', 'Title'),
+                     Node(3, 0, 'textbox', 'HTTP username'), Node(4, 0, 'textbox', 'HTTP password'),
+                     Node(5, 0, 'button', 'Add')]
+            self.surface = _surface(nodes, {1: {'input_type': 'url'}, 4: {'input_type': 'password'}})
+        return SimpleNamespace(ok=True, error=None)
+
+    def close(self):
+        pass
+
+
+@pytest.mark.parametrize('login', [False, True])
+def test_semantic_acquisition_leaves_a_password_bearing_view_and_stops_only_on_a_login_scope(tmp_path, login):
+    # FreshRSS's subscription form asks for the feed's HTTP credentials on an
+    # authenticated page: the candidate that reached it is unsupported and the
+    # acquisition goes on, nothing filled or clicked there.  A login scope is a
+    # lost session and still stops the acquisition.
+    from semabi.compiler.runtime import Budget, Trace, StopOperation
+    from semabi.compiler.semantic_runtime import acquire
+
+    browser, trials, edits, context, events = _PasswordViewBrowser(login), [], [], {}, []
+    trace = Trace(tmp_path / 'acquire', events.append, Budget(6, 3))
+    if login:
+        with pytest.raises(StopOperation, match='Session requires authentication'):
+            acquire(browser, trace, 'entry', events.append, trials, edits, context)
+        return
+    acquire(browser, trace, 'entry', events.append, trials, edits, context)
+    unsupported = [event for event in events if event['type'] == 'acquisition_candidate_unsupported']
+    assert len(unsupported) == 1 and unsupported[0]['status'] == 'PASSWORD_BEARING_VIEW'
+    assert [action.target for action in browser.actions] == [1] and not trials
+    frontier = context['acquisition_frontier']
+    assert frontier['active'] is None and 'in_flight' not in frontier
+    assert any(any(control['input_type'] == 'password' for control in json.loads(line)['controls'].values())
+               for line in (trace.log.dir / 'surfaces.jsonl').read_text().splitlines())

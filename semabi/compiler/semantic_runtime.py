@@ -387,6 +387,7 @@ def _acquisition_numeric(surface):
 
 
 def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
+    from semabi.compiler.runtime import PasswordBearingView
     """Bounded graph traversal. Observed view changes supply composition edges.
 
     Supplied search bounds: at most 48 contexts, depth six, at most two visits to
@@ -498,7 +499,24 @@ def acquire(browser, trace, entry, emit, trials, numeric_trials, context):
                 node = resolve_step(surface, step)
                 before = surface
                 checkpoint()
-                after = act_step(browser, trace, before, step)
+                try:
+                    after = act_step(browser, trace, before, step)
+                except PasswordBearingView as error:
+                    # The dispatched candidate reached a view that carries a password
+                    # control outside a login scope. Nothing is filled or clicked
+                    # there and no route continues from it; the next candidate is
+                    # reached by replay from the entry, where a lost session would
+                    # still stop the acquisition as before.
+                    receipt = {"index": active["button_index"],
+                               "observation": before.observation.structural_signature(),
+                               "steps": len(trace.log.steps), "status": "PASSWORD_BEARING_VIEW",
+                               "matches": matches, "reason": str(error)}
+                    active.setdefault("unsupported_buttons", []).append(receipt)
+                    active["button_index"] += 1
+                    completed_unit()
+                    emit({"type": "acquisition_candidate_unsupported", **receipt,
+                          "scope": "This observed candidate only; its view was recorded and left untouched, not a permanent impossibility claim"})
+                    continue
                 trials.append({"route": deepcopy(route), "action": step,
                                "before": before.observation.structural_signature(),
                                "after": after.observation.structural_signature(), "node": node})

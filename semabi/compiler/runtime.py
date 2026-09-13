@@ -120,6 +120,18 @@ class StopOperation(Exception):
         self.stale, self.refusal = stale, refusal
 
 
+class PasswordBearingView(StopOperation):
+    """A settled view carrying a password control outside any login scope.
+
+    FreshRSS's feed subscription form asks for the feed's HTTP credentials beside
+    the URL, title and headers of an authenticated page.  Such a view is never
+    filled or clicked, and an operation that reaches it stops as before; only
+    acquisition treats the candidate that led there as unsupported and goes on,
+    because the session itself has not been lost.  A view that is the login
+    scope (`BrowserSession._login_controls`) still stops as a lost session.
+    """
+
+
 @dataclass
 class Budget:
     max_actions: int
@@ -169,6 +181,8 @@ class Trace:
         if not surface.settled:
             raise StopOperation("Rendered observation did not stabilize")
         if any(control["input_type"] == "password" for control in surface.controls.values()):
+            if BrowserSession._login_controls(surface) is None:
+                raise PasswordBearingView("View carries a password control outside a login scope; not acted on")
             raise StopOperation("Session requires authentication; reconnect before invoking")
         self.budget.check_deadline()
         return surface
