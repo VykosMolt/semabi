@@ -1,168 +1,282 @@
-# SemABI — semantic interface induction from black-box interaction
+# SemABI
 
-The developing product exposes operations learned through a browser as a local
-HTTP API. See the [developer quickstart](docs/product_quickstart.md) for connection,
-bounded learning, schema discovery, invocation, and persisted reuse. Its initial
-coverage includes visible form creation, exact local reads, and text updates
-with read-back checks. The [fixed development assessment](docs/data/v4/transport/product/development_assessment_v1/README.md)
-and [first reserved assessment](docs/data/v4/transport/product/reserved_assessment_v1/README.md)
-retain limited task coverage and all failures. The reserved application stopped
-at authentication before learning. Broader workflows and application transfer
-remain under development.
+**Learning what an application does by operating it.**
 
-The research pipeline below investigates a more general relational model:
+SemABI drives an unfamiliar web application through an ordinary browser — click, type,
+select, reload, reset — and comes back with a typed relational model of what the
+application contains and what its controls do. It is given no source, no API, no schema,
+no documentation, no demonstrations of the task, and no action vocabulary. The learner
+itself runs no language model; the LLM baselines under `semabi/baselines/` exist only to
+compare against.
 
-Can an agent recover a typed relational action model of an unfamiliar application
-purely by interacting with its UI? No source, API, demonstrations, entity types,
-predicates, or action vocabulary are given; only rendered DOM/accessibility trees,
-primitive browser actions (click/type/select/reload/reset), and a resettable
-environment.
+The question it exists to answer is narrow and testable:
 
-## Layout
+> Can an agent recover a typed relational action model of an unfamiliar application
+> purely by interacting with its interface?
 
-```
-semabi/relmodel.py      domain-free typed relational action language (shared by evaluator and compiler)
-semabi/hidden/          EVALUATOR ONLY: hidden task domain + rule variants (standard/cascade/promote/weird)
-semabi/env/             local web app: one hidden state, three radically different UIs (kanban/table/list),
-                        label modes plain/obscured/misleading
-semabi/compiler/        BLACK-BOX SIDE (never imports hidden/env/eval; enforced by tests/test_boundary.py)
-  browser.py            Playwright wrapper: restricted observations + primitives
-  evidence.py           append-only interaction log (raw evidence is never discarded)
-  explorer.py           phase 1: novelty-weighted random exploration with reloads
-  parse.py              structural parser: repeated DOM units -> anonymous typed instances + slots
-  abstract.py           persistence (reload evidence), identity keys, containment/reference relations,
-                        abstract domain state, diffs with identity repair (renames)
-  belief.py             partial views: belief over scopes, view contexts, first-visit discovery
-  induce.py             macro segmentation, provenance, parameter lifting, quantified effects, operator
-                        clustering, precondition learning with competing explanations, view operators
-  active.py             phase 2: verification replays, precondition probes, affordance sweeps, surveys
-  ground.py             execute learned groundings on the live app (navigation through view operators)
-  planner.py            best-first planning on the learned model; execution with replanning/reconcile
-  model.py              export to the relational language + groundings
-  v2/                    observation/evidence proposals, factorized abstraction hypotheses,
-                        counterexamples, diagnostic interventions, and persistent belief
-  v4/correspondence.py  candidate-independent, outcome-masked, set-valued continuation of a raw
-                        node across one transition (no reading, no score, no tie-break)
-  v4/consequence.py     a reading's predicted delta checked at the structure the action affected
-  v4/conditional.py     is a held-out refutation a missing precondition, or an ontology that
-                        cannot express one?  chosen on the prefix, tested on the suffix
-  v4/emission.py        the live region as a transition *output*: a message split into a frame
-                        and the page values it names, by masking spans the page renders as
-                        whole values.  Not state, not a view change: a third category
-  v4/outcome.py         per control, an ordered list of guarded answers -- what the interface
-                        returns, learned by separate-and-conquer over the referring
-                        expressions the operators already have.  `Evidence.admissible` asks
-                        the other question exactly: which outcomes could *any* justified rule
-                        assign to this state?  `ControlOutcome.answer` is the ABI call --
-                        forced, several open, or nothing established, with the delta the
-                        branch owns and the objects the event is about
-semabi/eval/            scoring against hidden ground truth (paired-state alignment + behavioural simulation),
-                        held-out goals, direct model-vs-model comparison (crossui.py), generic scorer
-semabi/baselines/       screen-transition graph, LLM passive (claude -p), known action vocabulary
-semabi/eval/oracle*.py  EVALUATOR ONLY: oracle ladder (mention->entity annotations from instrumented
-                        gauntlet-v2 copies in experiments/oracle_apps/, fed to the unchanged V0 inducer;
-                        run_oracle.py / report_oracle.py; docs/v2_oracle.md)
-docs/                   frozen V0/V1 history plus V2 oracle, design, devlog, status, and machine results
+Python 3.12+ · Apache-2.0 · no paid API, no model weights, nothing leaves the machine
+
+---
+
+## See it work
+
+```bash
+uv venv --python 3.12 .venv && uv pip install -e .
+.venv/bin/python -m semabi.demo
 ```
 
-## Run
+Five seconds, no browser needed. The learner is handed 91 recorded interactions with a
+small dispatch application — a board of runs, a van to attach to each, a weight field and
+a button that answers *Dispatch ready* or *Dispatch unavailable* — and is asked what it
+learned:
 
 ```
-uv venv --python 3.12 .venv && uv pip install -e . && .venv/bin/playwright install chromium
-.venv/bin/python -m pytest -q
-# one full run: explore -> active experiments -> compile -> evaluate -> held-out goals
-.venv/bin/python -m semabi.run_pipeline --run runs/demo --ui kanban --labels plain --variant standard \
-    --episodes 3 --steps 30 --active-rounds 3 --active-budget 100 --goals 6
-cat runs/demo/model.txt    # learned model, groundings, hypotheses, slot statistics
-cat runs/demo/eval.txt
-# matrices, cross-UI comparison, baselines, report
+What it inferred
+──────────────────────────────────────────────────────────────────────────
+  No schema, field list or object type was supplied. These are its own.
+
+  type 0   identified by name: Cedar · Rowan · Alder
+            fields it reads: Packed weight (kg), Destination depot, Packed kg weight, and 7 more
+  type 1   identified by name: Swift · Panel · Box
+            fields it reads: Payload limit, Payload kg limit, carrier
+            appears inside type 0
+
+What it learned about the button
+──────────────────────────────────────────────────────────────────────────
+  Clicking Check dispatch answered Dispatch ready and Dispatch unavailable
+
+    if  Payload limit of the object shown inside it  >=  Packed weight (kg) of the object the button sits in
+    then the interface answers 'Dispatch ready'   (7 occasions)
+    otherwise it answers 'Dispatch unavailable'   (8 occasions)
+
+Tested on a session it never saw
+──────────────────────────────────────────────────────────────────────────
+   click  what the evidence allowed               what happened
+  ────────────────────────────────────────────────────────────────────────
+       1  Dispatch ready                          Dispatch ready          exact
+       2  Dispatch unavailable                    Dispatch unavailable    exact
+       …
+       6  Dispatch ready or Dispatch unavailable  Dispatch ready          ambiguous
+       …
+       8  Dispatch unavailable                    Dispatch unavailable    exact
+
+  7 exact · 1 ambiguous out of 8 clicks on that button
+```
+
+Nothing above is stored in the demo. The object types, their identity keys, the field
+labels, the comparison and every prediction are read out of a model fitted when you run
+it. Add `--live` to watch the whole thing happen for real:
+
+```bash
+.venv/bin/playwright install chromium
+.venv/bin/python -m semabi.demo --live
+```
+
+That starts the bundled application on a local port, drives a real browser through a
+demonstration of the workflow, then lets the learner choose about sixty interactions of
+its own, fit a model and be tested. Two minutes.
+
+### What that demo is actually showing
+
+1. **Objects, not widgets.** Nobody told it that a page is about a "run" or a "van". It
+   found two types, keyed them by the names the pages render, and worked out that one is
+   shown *inside* the other.
+2. **A comparison between two objects.** The rule it learned relates a field of the van
+   to a field of the run it is attached to. Single-object thresholds cannot express that,
+   and the fields are named by neither the application nor the learner.
+3. **An experiment it chose itself.** In live mode the log prints *the move that
+   matters*: the learner types a value **lower** than any it has seen. A number that has
+   only ever risen could be a clock rather than a size, and an order over a clock is an
+   order over time, so it declines to read one — until it makes the value fall itself. The
+   application never hints at this; the learner's own theory says which field to set.
+4. **Abstention.** Click 6 is not scored as a success. Two outcomes remained admissible
+   under the evidence and the model says so rather than guessing. Of the other 28 held-out
+   clicks, 26 are navigation with nothing to predict and 2 are a control seen too rarely to
+   establish anything — all reported, none hidden.
+
+It is a prepared fixture, and it is development evidence. What that is worth, and what it
+is not, is the subject of the rest of this README.
+
+---
+
+## How it works
+
+```mermaid
+flowchart LR
+  A["browser<br/>click · type · select<br/>reload · reset"] --> B["observation model<br/>what is a value,<br/>a label, a collection"]
+  B --> C["object model<br/>types · identity keys<br/>containment · references"]
+  C --> D["action model<br/>operators, preconditions,<br/>quantified effects"]
+  C --> E["outcome model<br/>what a control answers,<br/>and under which guard"]
+  D --> F["version space<br/>forced · several · nothing<br/>established"]
+  E --> F
+  F --> G["acquisition<br/>the next experiment<br/>worth running"]
+  G --> A
+```
+
+**The observation layer** decides what a rendered tree even contains: which text is a
+value and which a label, which repeated shapes are a collection, which values survive a
+reload and therefore belong to the thing rather than to the view. Most of the project's
+failures have lived here rather than in the induction.
+
+**The object layer** turns that into typed instances with identity keys, containment and
+references, so that "the same row" means something across pages and sessions.
+
+**The action layer** segments the interaction history into operators with parameters,
+preconditions and quantified effects, learned from the deltas that followed them.
+
+**The outcome layer** treats what the interface *says* as a third category, distinct from
+state change and from navigation: the message a control returns, split into a frame and
+the page values it names, with the guard under which it is returned.
+
+**The version space** answers the question the fitted rules cannot: over *all* rules the
+evidence justifies, which outcomes are still possible here? That is what lets the model
+answer "forced", "several remain" or "nothing is established" instead of always guessing.
+
+**Acquisition** closes the loop by choosing an interaction whose result would settle
+something open — the fall in the demo is one of those.
+
+---
+
+## What is established, and what is not
+
+The project keeps its negative results in the repository and cites them from here.
+
+| Line | What happened | Status |
+|---|---|---|
+| V0 / V1 | One hidden domain behind three radically different UIs; the model transfers across them | development benchmark |
+| V2 | Latent control families; frozen at `v2.0-causal-abstraction` | frozen, development-set gains only |
+| **V3** | The frozen V2 compiler against **six applications written by three independent authors** who never saw it: 2 produced no trace at all, and across the other four **19 of 29 hidden operators were exercised and 0 recovered**; all 96 goal candidates were untranslatable | **negative, pre-registered, kept** |
+| V3 diagnosis | Given a correct state layer the same inducer recovers 7–11 of those operators | the failure is the state abstraction, not the induction |
+| V4 | Joint identity and observation model; relational guards learned and transferred across interaction histories on prepared applications | development results, generalization unestablished |
+| Product | The same machinery behind a local HTTP API that publishes learned operations | partial coverage on real applications |
+
+Selected V4 measurements, all on applications prepared for the project and all reproducible
+from the retained traces:
+
+- **Cross-object joins.** On a harbour booking application, `Book pilot` and
+  `Allocate berth` learn comparisons between two bound objects and carry them to
+  interaction histories they were not fitted on: 15 / 15 / 0, 7 / 14 / 0 and 16 / 11 / 0
+  (forced right / several admissible / **wrong**) on three held-out corpora.
+- **Fresh interfaces.** On three generated applications the learner had never seen, two
+  now establish their hidden comparison; the dispatch result is the demo above. The
+  reservoir application does not, and why is written down.
+- **Sixteen metamorphic invariants at zero.** Rename every name, reverse every
+  collection, reverse every table's columns: the frozen models and the learner's own
+  verdicts do not move. Two earlier attempts failed these gates, which is how two of the
+  repairs were found.
+
+What is **not** established: transfer to an application nobody prepared for the project.
+That is the V3 result, it stands, and every V4 number above is development evidence until a
+reserved interface says otherwise.
+
+---
+
+## The product path: learned operations over HTTP
+
+The same compiler backs a small local service. It connects to an application, learns
+within a bounded budget of authorized UI actions, and publishes what it learned as
+operations with JSON schemas that an ordinary client can discover and invoke.
+
+```bash
+.venv/bin/python -m semabi.service --data-dir runs/service --port 8860 &
+
+# connect to a running application and learn within a bounded action budget
+.venv/bin/python examples/client.py --application-url http://127.0.0.1:8080 --learn
+
+# see what it published, then call one of the operations
+.venv/bin/python examples/client.py --connection <id> --inspect
+.venv/bin/python examples/client.py --connection <id> --operation <name> \
+    --arguments '{"title": "fresh record"}'
+```
+
+Each invocation reports what it predicted, what the application answered, what changed on
+the page and what it could not establish. On disclosed development applications it has
+published five operations on Linkding (eight schema-selected calls passed independent
+checks), one on Kanboard, and none on FreshRSS, whose sixteen requested tasks remain
+unrouted. The [developer quickstart](docs/product_quickstart.md) is the contract: what the
+scopes mean, what a guarded update checks before it writes, and what is deliberately
+refused.
+
+---
+
+## Repository layout
+
+```
+semabi/demo.py          the demonstration above
+semabi/compiler/        the black-box side: it only ever sees the browser
+  browser.py            restricted observations and primitives
+  evidence.py           append-only interaction log; raw evidence is never discarded
+  explorer.py           novelty-weighted exploration
+  parse.py abstract.py  structural parsing, persistence, identity keys, relations
+  induce.py             operators: segmentation, lifting, effects, preconditions
+  active.py             replays, precondition probes, affordance sweeps
+  planner.py model.py   planning on the learned model; export
+  v2/                   observation hypotheses, counterexamples, diagnostic interventions
+  v4/                   identity search, outcome models, version space, acquisition
+  runtime.py service.py the product path: published operations over HTTP
+semabi/env/             a local application with one hidden state and three different UIs
+semabi/hidden/          EVALUATOR ONLY: the hidden domain and its rule variants
+semabi/eval/            scoring against hidden ground truth; held-out goals; oracle ladder
+experiments/            generated fixture applications, including the demo's
+docs/                   the full record, including the failures
+runs/                   retained traces and outputs (gitignored)
+```
+
+The boundary between the two sides is mechanical: `semabi.compiler` may not import
+`hidden`, `env` or `eval`, and `tests/test_boundary.py` checks imports and endpoint
+strings statically. Hidden state is written by an evaluator-side hook into a file the
+compiler never reads.
+
+---
+
+## Running more than the demo
+
+```bash
+.venv/bin/python -m pytest -q                      # the suite
+
+# one full research run: explore -> active experiments -> compile -> evaluate -> goals
+.venv/bin/python -m semabi.run_pipeline --run runs/one --ui kanban --labels plain \
+    --variant standard --episodes 3 --steps 30 --active-rounds 3 --goals 6
+cat runs/one/model.txt runs/one/eval.txt
+
+# matrices over UIs, label modes and seeds, then the report
 .venv/bin/python -m semabi.run_matrix --labels plain,obscured,misleading --seeds 0,1 --prefix final
 .venv/bin/python -m semabi.run_crossui_all --prefix final
-.venv/bin/python -m semabi.run_baselines --runs runs/final_standard_plain_kanban_s0 ...
 .venv/bin/python -m semabi.report
-# oracle ladder on gauntlet-v2 (experiments/oracle_apps/run_all.sh first)
-.venv/bin/python -m semabi.run_oracle explore --base http://127.0.0.1:8800 --run runs/oracle/grok_01_apiary
-.venv/bin/python -m semabi.run_oracle ladder --run runs/oracle/grok_01_apiary --rungs base,A,B,Bv,C,D,K
-.venv/bin/python -m semabi.report_oracle
-# compile/refine one V2 trace; see --help for probe execution modes
-.venv/bin/python -m semabi.run_v2_refine --help
-# regenerate the evaluator-only V2 development ablation report
-.venv/bin/python -m semabi.eval.v2_ablation --help
-# build custody-safe matched primitive-prefix curves from retained traces
-.venv/bin/python -m semabi.eval.v2_budget_curve --help
 ```
 
-The evaluator/compiler boundary: `semabi.compiler` sees only the browser. Hidden
-state is recorded by an evaluator-side hook (`semabi/eval/recorder.py`) into
-`hidden.jsonl`, which the compiler never reads. `tests/test_boundary.py` checks
-imports and endpoint strings statically.
+`scripts/` holds the batch jobs behind the retained results (`v4_open_world_batch.sh`,
+`v4_outcome_batch.sh`, `v4_admissible_batch.sh` and the rest); `HOUSEKEEPING.md` says
+where outputs are allowed to live and what is kept.
 
-Current V2 status is in `docs/v2_status.md`. Its reported gains are on the already-seen
-gauntlet-v2 development set, not a fresh result. V2 keeps the V0 effect language frozen,
-and this repository must not author the independently commissioned next gauntlet.
+---
 
-The fresh result exists and is negative. `docs/v3_protocol.md` (pre-registered),
-`docs/v3_result.md` (the ordinary run of the frozen `v2.0-causal-abstraction` compiler
-against six applications written by three independent authors who never saw it) and
-`docs/v3_diagnosis.md` (oracle localization afterwards). Two of the six applications
-produced no trace at all; on the other four, 19 hidden operators were exercised and none
-was recovered. Given a correct state layer the frozen V0 inducer recovers 7-11 of them, so
-the failure is the state abstraction, not the induction.
+## How the results are kept honest
 
-V4 follows that line, and its results carry an information boundary as well as a number.
-`docs/v4_chronology.md` established which: the observation model in earlier V4 runs could read
-held-out observations while claiming to be a prefix fit, so those results are transductive at
-the observation-model layer whatever they say. Three regimes are now named in the code and
-every fit and scored result carries the one that produced it. `docs/v4_handoff.md` remains the
-custody and protocol record.
+- **Pre-registration.** Protocols and expectations are written before the run that tests
+  them, and deviations are recorded as deviations (`docs/v3_protocol.md` is the clearest
+  example).
+- **An information boundary in the code.** Every fit and every scored result carries the
+  regime that produced it, after an earlier round of V4 results turned out to be
+  transductive at the observation-model layer. That is recorded in
+  `docs/v4_chronology.md` rather than quietly fixed.
+- **Metamorphic attacks before retention.** Renaming, member reversal and column reversal
+  run as a gate; a result that moves under them is not retained.
+- **Failures kept.** Rejected mechanisms, failed batteries and refuted explanations stay
+  in the record with the evidence that refuted them.
 
-The latest continuation is [`docs/v4_retained.md`](docs/v4_retained.md), through
-Part XIX (2026-09-07), with experiment records in
-[`docs/data/v4/prequential/campaign_notes.md`](docs/data/v4/prequential/campaign_notes.md).
-It carries the joint field comparisons, the acquisition experiments that test coincidental
-rules, and the completed battery #9 review. The last experiment withdrew the explanation
-of the remaining ambiguity as rule ordering; competing conjunctions still fit the evidence.
-These remain development results, with fresh generalization unestablished.
+## Reading the record
 
-`docs/v4_ties.md` precedes that continuation.  It makes ORDERED a per-field theory -- proposed for a numeric field, adopted only by a justified ordered rule, never for a key -- which reaches blend's committed gallons and no other field and lets the frozen model force bottling at 5, 6 and 9, values no history showed; and it turns the search's surviving identity ties into experiments: which ties a known interaction can decide, read off the operators; the plan with both readings' predictions written before acting; the run on the live application; and the verdict on the experiment's own terms, once the objective was given the term a collision produces (a key that has to fall back on position).  Before it, `docs/v4_columns.md`  It runs the smallest legitimate metamorphic attack on column position -- every table's columns reversed, header and field together -- finds four places where the observation model read a column's position as part of a cell's meaning (unit templates, slot ids, the in-column data judgement, UI leaf slots), repairs them, and certifies the frozen models and the learner invariant under the attack on every application with a table.  Before it, `docs/v4_frontier.md`  It traces the seventy vet actions the previous report could not bind to a single missing fact -- the navigation tabs were never probed, so every tab switch was learned as a domain action -- acquires the probes on a fresh instance, and finds that the two readings then converge and that most of vet's and cellar's durable ledgers were navigation; runs the frozen Bottle discrimination on the live application at an unseen magnitude, where the ordered hypothesis is right and the learned equality guard is refuted; and locates what is left of vet in two identity decisions made structurally and never revised by behaviour.  Before it, `docs/v4_selection.md`  It makes the behavioural quotient provisional under finite evidence, shows that completed behaviour before the cut can choose among structurally proposed readings without circularity -- it rejects vet's form-field type, and the suffix agrees -- while no candidate reading of vet is right, and inventories the evidence behind blend's three relational guards.  Before it, `docs/v4_behaviour.md`  It states semantic equivalence in SemABI as a behavioural quotient, shows that the `Open` witness is not an ambiguity behaviour needs resolved, decomposes the clean durable-effect contradictions by the layer that made them, and extends the renaming instrument to the durable ledger, where it found and removed the last memorised spelling.  Before it, `docs/v4_collections.md`  It certifies two symmetries of the frozen model on every application -- renaming of every name, and reversal of every collection's members -- makes blend's draw records objects by their ticket number, judges a table's columns in the column rather than by the application's vocabulary, and finds the cardinality guard to be a total the type inventory cannot count.  Before it, `docs/v4_open_world.md`  It found that the observation model's judgement of which text is a value was made per row over time, so every constant cell of a stable listing was a label and every row its own type; judged across the members of a collection, harbour goes from eleven entity types to five and its refusals from 53 to none.  Before it, `docs/v4_identity.md`  It opened on whether "forced" means what it claims and
-found that the version space's search is exact for its class, that the class it quantified over
-was not the ordered-guard class the learner declares (both are now named, and the ABI answers
-for the declared one), and that the confident errors the previous run had triaged as search and
-language gaps were, but for five, clicks on five different buttons that the *control identity*
-had pooled as one -- the frozen control families were never applied to a page the induction had
-not read, on any application.  Repaired, blend's operator ledger goes from 25 right / 48 wrong /
-174 unbound to 103 / 41 / 41, and the forced-wrong residue is four events the prefix never saw,
-one guard the application checks after another, and on harbour two states that were traced to
-a reference slot the reading had typed to an entity it could never resolve against -- repaired,
-and the first counterexample in the project to close the loop from the layer it blamed back to
-a relearned model.  An entity whose name contains a word the prefix never used is now an
-object on the pages that render it.  Every held-out number in the three documents below predates
-this and is superseded where they disagree.
+| Document | What it covers |
+|---|---|
+| [`docs/results.md`](docs/results.md) | V0/V1: the original question, benchmark and numbers |
+| [`docs/v2_status.md`](docs/v2_status.md) | V2 and its freeze |
+| [`docs/v3_protocol.md`](docs/v3_protocol.md) · [`docs/v3_result.md`](docs/v3_result.md) · [`docs/v3_diagnosis.md`](docs/v3_diagnosis.md) | the fresh benchmark, the negative result, and where it localizes |
+| [`docs/v4_retained.md`](docs/v4_retained.md) | the V4 line to date, part by part, with what each repair cost |
+| [`docs/v4_handoff.md`](docs/v4_handoff.md) | custody and protocol for the V4 campaigns |
+| [`docs/product_quickstart.md`](docs/product_quickstart.md) | the HTTP service: scopes, guards, and what it refuses |
+| [`docs/related_work.md`](docs/related_work.md) | where this sits relative to existing work |
 
-`docs/v4_sections.md` precedes it.  A version space cannot know what its language cannot
-say, and cellar's halls -- rendered as a heading over prose rather than as table rows -- were
-not objects at all, so no rule could mention one.  Objecthood is now the question the compiler
-already asked of subtrees ("does this shape recur with a filling that varies?") asked of spans
-of siblings as well, which makes the halls entities with identity and attributes and gives the
-effect layer two more operators.  It leaves the outcome layer bit-identical, and why it does is
-the more useful half of the result.  `semabi/eval/v4_inadequacy.py` splits forced-and-wrong
-predictions into language gaps and search gaps: on blend, 3 and 29.
+## Licence
 
-`docs/v4_admissibility.md` precedes it.  A decision list is a point hypothesis, and the
-width of its claims was free: a default fitted on two occasions predicted over every state no
-guard caught.  The version space over justified rules is computed exactly instead, so the model
-answers when the evidence forces one outcome, returns the set when several remain, and refuses
-where nothing is established -- on blend the chosen list answered 79 such states and was wrong
-on 69 of them.  It also carries the first acquisition in this project executed against a
-running application rather than replayed, and four repairs for the sparse controls that were
-implemented, measured on every application, and falsified: the version space is sound about
-whether a rule is justified and indifferent about by what, and neither enlarging, restricting
-nor ranking its language fixes that.  Asking it *which* condition it had used did find something
--- an identity constant reaching the evidence through the acquisition path, since closed.
-
-`docs/v4_outcomes.md` precedes it, and continues the chronology rather than replacing it: an
-interaction can return an observable result without the state transition it was aimed at
-happening, and until that run the action model had nowhere to put it. Blend's outcome model
-predicts which of six events `Record draw` returns, with the objects it names, on a held-out
-suffix and on a second interaction history. Where any two of these documents disagree about a
-number, the later one is later; `scripts/v4_outcome_batch.sh` regenerates the outcome ones.
+Apache-2.0. See [LICENSE](LICENSE).
