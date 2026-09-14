@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/moloch/semabi
+cd /home/moloch/semabi/semabi
 for r in final_standard_plain_kanban_s0 final_standard_plain_table_s0 final_standard_plain_list_s0 \
          final_standard_obscured_kanban_s0 final_standard_obscured_table_s0 final_standard_obscured_list_s0 \
          final_standard_misleading_kanban_s0 final_standard_misleading_table_s0 final_standard_misleading_list_s0 \

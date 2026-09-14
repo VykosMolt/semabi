@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/moloch/semabi
+cd /home/moloch/semabi/semabi
 port=9300
 for d in runs/final_*_s[01]; do
   n=$(basename $d); IFS=_ read -r _ variant labels ui seed <<< "$n"; seed=${seed#s}

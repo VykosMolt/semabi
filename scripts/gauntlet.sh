@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/moloch/semabi
+cd /home/moloch/semabi/semabi
 i=0
 for d in $(ls -d ~/semabi-gauntlet/apps/*/); do
   name=$(basename $d)
