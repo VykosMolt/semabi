@@ -1,13 +1,10 @@
-"""Contract-compliance and executable-correctness check for an independently authored app.
-
-Evaluator side, run once per application *before* the benchmark is frozen and before the
-compiler is ever pointed at it.  It checks only what the contract promises: the endpoints
-exist and answer, the state is deterministic in the seed, the schema is fixed across
-seeds, the declared domain is well formed and non-trivial, the page does not leak the
-evaluator's own description to the learner, and the page is observable and clickable
-through the ordinary rendered boundary.
-
-It deliberately does not compile, score, or predict anything about the learner.
+"""Checks contract compliance and executable correctness for an independently authored
+app, run once before the benchmark is frozen and before the compiler is ever pointed at
+it. Checks only what the contract promises: endpoints exist and answer, state is
+deterministic in the seed, the schema is fixed across seeds, the declared domain is well
+formed and non-trivial, the page does not leak the evaluator's own description, and the
+page is observable and clickable through the ordinary rendered boundary. Does not compile,
+score, or predict anything about the learner.
 """
 from __future__ import annotations
 
@@ -181,8 +178,8 @@ def check(app_dir: Path, port: int, skip_browser: bool = False) -> dict:
             return (tuple(sorted({o["type"] for o in objs})),
                     tuple(sorted({(o["type"], k) for o in objs for k in o.get("attrs", {})})),
                     tuple(sorted(snap["state"].get("rels", {}))))
-        # the declared schema is fixed by construction (one /_evaluator/domain); what can
-        # legitimately differ between seeds is which types happen to have instances
+        # the declared schema is fixed by construction; what can legitimately differ
+        # between seeds is which types happen to have instances
         if schema(s7a) != schema(s8):
             result["info"]["instantiated_schema_differs_between_seeds"] = {
                 "seed7": [list(x) for x in schema(s7a)], "seed8": [list(x) for x in schema(s8)]}

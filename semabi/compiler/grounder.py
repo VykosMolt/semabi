@@ -1,14 +1,11 @@
-"""V1 front end, part 3: schema-driven grounding.
+"""V1 front end, part 3: apply a grounding schema to observations.
 
-Applies a grounding schema (see schema_llm) to observations, producing the same
-ParsedObs / TypeInfo structures V0's abstractor, inducer, active explorer and
-planner consume, so that everything downstream of object grounding is reused.
+Produces the same structures V0's abstractor, inducer, explorer and planner already
+consume, so everything downstream of grounding is reused.
 
-Entities get a canonical key: the key attribute if the unit shows it, else a
-value derived through a correspondence (e.g. name -> code), with ordinal
-disambiguation among same-valued siblings. Relations are slots `ref:<name>`
-holding the target's key. Context (selected entity) slots are statics holding
-the target's key. Per-type visibility comes from the schema ("all" listings).
+An entity's key is its key attribute where the unit shows it, otherwise a value reached
+through a correspondence, with an ordinal to separate same-valued siblings. Relations are
+slots holding the target's key; per-type visibility comes from the schema.
 """
 from __future__ import annotations
 

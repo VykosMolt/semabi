@@ -51,10 +51,9 @@ def _cost_breakdown(compiled, run_dir: Path) -> dict:
         observations += 1
     recurrent_static = {name for name, count in presence.items()
                         if observations and count >= 0.9 * observations}
-    # Cost attribution is narrower than semantic probe classification.  A DOMAIN action
-    # can be misclassified VIEW by sparse reload evidence (for example a detail action),
-    # while recurrent outside-unit controls are the controls the survey policy actually
-    # traverses.  Preserve probe labels separately but do not charge them as surveys.
+    # Cost attribution is narrower than semantic probe classification: a DOMAIN action
+    # can be misclassified VIEW by sparse reload evidence. Preserve probe labels
+    # separately but do not charge them as surveys.
     view_names = recurrent_static
     view_steps = {
         step.step for step in compiled.log.steps
@@ -90,7 +89,7 @@ def _cost_breakdown(compiled, run_dir: Path) -> dict:
 def evaluate_stability_run(run_dir: Path, min_support: int = 2) -> dict:
     run_dir = Path(run_dir)
 
-    # Boundary invariant: produce all compiler objects before evaluator custody opens
+    # Produce all compiler objects before evaluator custody opens
     # oracle.jsonl or hidden_domain.json.
     compiled = compile_v2(
         run_dir, min_support=min_support, llm=None, apply_refinements=False,

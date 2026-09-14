@@ -1,35 +1,16 @@
-"""Candidate-versus-baseline differential predictive evidence.
+"""Does a refinement actually predict anything the baseline does not?
 
-A refinement-introduced schema is *structurally* new when no baseline schema has the same
-lifted action and effect.  That is not the same as being *behaviorally* new: the baseline
-may attach the same information to a different entity and predict exactly the same
-rendered outcome on every state the traces reach.  Structural novelty is therefore not
-evidence that the refinement adds predictive content.
+A new schema is structurally new when no baseline schema has the same action and effect.
+That is not the same as behaviourally new: the baseline may attach the same information to
+a different entity and predict the same thing everywhere the traces reach.
 
-This module answers the only question that separates the two:
+So this asks the one question that separates them: where the candidate and the baseline
+predict differently, which one did the environment agree with? Both are compiled from the
+same held-out trace, paired by step, and checked against the same page. A model is WRONG
+at a step where an applicable schema was contradicted, CORRECT where one was confirmed and
+none contradicted, and SILENT where it predicts nothing.
 
-    on held-out situations where the candidate and the baseline predict differently,
-    which prediction did the environment select?
-
-Both models are compiled from the *same* held-out trace, so their occurrences are paired
-by step index and both are checked against the same rendered after-state.  A model's
-verdict on one held-out transition is
-
-* ``WRONG``   - some applicable determinate schema of that model was CONTRADICTED there
-                (a false claim is a failure even if another schema of the same model
-                matched; such cases are flagged ``mixed``);
-* ``CORRECT`` - no contradiction and at least one confirmed applicable schema;
-* ``SILENT``  - the model makes no determinate prediction there.
-
-Divergence in the two critical categories needs no separate "the predictions differ"
-test: one model matched the rendered outcome and the other did not, so they cannot have
-predicted the same thing.  For the two agreeing categories the distinction between
-``SAME_PREDICTION`` and ``BOTH_CORRECT`` is approximate - it compares grounded claims by
-the rendered DOM node they touch (see ``validation.claim_key``) - and neither counts as
-differential evidence, so the approximation cannot manufacture a win.
-
-Nothing here participates in promotion.  The gate in ``validation.cross_validate`` is
-unchanged; this is reporting.
+Nothing here promotes anything: this is reporting.
 """
 from __future__ import annotations
 

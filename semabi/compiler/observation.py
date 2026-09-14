@@ -102,12 +102,10 @@ class Observation:
         return out
 
     def collection_scope(self, root: int) -> tuple | None:
-        """The visible query/selection context of one rendered collection.
+        """The visible query or selection context of one rendered collection.
 
-        This is an observation-local scope, not a global object identity. Member controls
-        are excluded because changing the members must not itself change the query scope.
-        The caller must separately establish correspondence of the collection's holder.
-        """
+        Local to the observation, not a global identity. Member controls are excluded, so
+        changing the members cannot change the scope."""
         holder = self.node(root)
         if holder.role not in COLLECTION_ROLES:
             return None
@@ -128,12 +126,11 @@ class Observation:
                             for a in self.ancestors(n.i)[:self.ancestors(n.i).index(root)])]
 
     def complete_collection(self, root: int) -> bool:
-        """Explicit ARIA enumeration covers this scope; rendered multiplicity does not.
+        """An explicit ARIA count covers this scope; how many rows are rendered does not.
 
-        rowcount/rowindex include header rows. Unknown totals, missing indices, nested
-        collections, busy or collapsed regions cannot establish absence. The declaration
-        is interface evidence, not a guarantee about hidden application state.
-        """
+        Row counts include headers. Unknown totals, missing indices, nested collections and
+        busy or collapsed regions establish no absence. This is interface evidence, not a
+        guarantee about hidden state."""
         if self.collection_scope(root) is None:
             return False
         affected = self.subtree(root) + self.ancestors(root)

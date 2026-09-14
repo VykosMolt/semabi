@@ -1,7 +1,6 @@
-"""One table over the V4 development evidence.
-
-Development evidence on gauntlet-v3, never fresh generalization.  Coverage, precision,
-object-layer quality and cost stay separate columns; there is no combined score.
+"""One table over the V4 development evidence, never fresh generalization. Coverage,
+precision, object-layer quality and cost stay separate columns; there is no combined
+score.
 """
 from __future__ import annotations
 

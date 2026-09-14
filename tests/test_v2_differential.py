@@ -1,12 +1,9 @@
-"""Adversarial tests for candidate-versus-baseline differential predictive evidence.
+"""Tests for candidate-versus-baseline differential predictive evidence.
 
-The claim under test is narrow: a refined abstraction adds *behavioral* information only
-when the environment selects its prediction over the unrefined model's on the same
-held-out transition.  These tests attack the ways a reporting bug could manufacture that
-claim: structural difference counted as novelty, silence counted as a loss, a shared
-schema credited to the refinement, a pairing gap counted as model silence, and a
-reference-slot rename counted as a divergent prediction.
-"""
+Checks a refined abstraction is only credited with adding behavioral information when
+the environment actually selects its prediction over the unrefined model's, guarding
+against reporting bugs like structural difference counted as novelty, silence counted
+as a loss, or a shared schema credited to the refinement."""
 from semabi.compiler.abstract import AbsObj, AbstractState, Diff, SlotInfo, TypeInfo
 from semabi.compiler.induce import ActT, EffT, Locator
 from semabi.compiler.v2 import differential as D

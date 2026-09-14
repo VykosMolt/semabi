@@ -44,11 +44,11 @@ def _contexts(observations, key: str) -> list[str]:
 def run_context_validation_probe(source_run: Path, validation_run: Path, base: str,
                                  decision: dict[str, Any], seed: int,
                                  browser_hook=None, max_context_trials: int = 3) -> dict:
-    """Vary both container and entity, then test a frozen context-move prediction.
+    """Vary both container and entity, then test a frozen prediction about a context move.
 
-    Candidate controls are discovered only through rendered roles/names and the source
-    decision's recorded action/view affordances.  The selected entity key and reset seed
-    must be absent from the evidence that supported the provisional decision.
+    Candidate controls are found only through rendered roles and names, and through the
+    affordances the earlier decision recorded. The entity key and reset seed used here must
+    be absent from the evidence that supported that decision.
     """
     if decision.get("kind") != "ATTACH_CONTEXT_MEMBERSHIP":
         raise ValueError("context validation requires ATTACH_CONTEXT_MEMBERSHIP")

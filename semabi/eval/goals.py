@@ -1,5 +1,5 @@
-"""Held-out goals: generated in hidden terms, translated into the learned
-vocabulary through the evaluation mapping, and checked against hidden state."""
+"""Held-out goals, generated in hidden terms, translated into the learned vocabulary
+through the evaluation mapping, and checked against hidden state."""
 from __future__ import annotations
 
 import random
@@ -50,7 +50,7 @@ def translate_goal(goal: HGoal, hidden_state: rm.State, hidden_dom: rm.Domain, l
         if hid.startswith("NEW:"):
             # object that will be created with that key
             name = hid[4:]
-            # learned type with key attr mapping to the hidden type's key attr: any project-like type
+            # learned type with a key attr mapping to the hidden type's key attr
             return name
         o = hidden_state.objects.get(hid)
         if o is None:

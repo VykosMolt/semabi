@@ -1,5 +1,5 @@
-"""Oracle ladder on gauntlet-v2 (evaluator-only structure exposed to the frozen
-V0 operator learner; see docs/v2_oracle.md).
+"""Oracle ladder: hand the frozen V0 operator learner structure it could not have learned
+itself, and measure what that buys (docs/v2_oracle.md).
 
     explore  : frozen explorer (view sweep + random phase) on an instrumented app,
                recording hidden state + mention annotations (semabi/eval/oracle_hook.py)

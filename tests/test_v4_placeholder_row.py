@@ -1,9 +1,6 @@
-"""A row not shaped like the header row -- the one spanning cell of "No draws recorded." --
-is not a member of the table's columns.  Given the first column's name by its offset, the
-placeholder's words entered that column, where against a single ticket they made the
-column's own label vary: `Ticket 1` split into a word and a number, the number became
-`cell@Ticket#1`, and a key named by that split did not transport to an author whose thirty
-tickets outvoted the placeholder (`docs/v4_ties.md`)."""
+"""Tests that a placeholder row (a spanning "No draws recorded." cell), which isn't
+shaped like the header row, isn't treated as a member of the table's columns and
+doesn't leak into another row's key."""
 from __future__ import annotations
 
 from semabi.compiler.observation import Node, Observation
@@ -52,9 +49,8 @@ def test_a_placeholder_rows_cell_stands_in_no_column():
 
 
 def test_a_one_valued_columns_label_does_not_vary_against_the_placeholder():
-    """Every draw the history showed read `Ticket 1`, one at a time; the empty table read
-    `No draws recorded.`.  The word `Ticket` is the column's label, and the number its
-    only value -- one data span, `cell@Ticket#0`, not two."""
+    """Checks a one-valued column's label doesn't vary against the placeholder row: it
+    stays one data span, not split into a word and a number."""
     empty = _page([], placeholder="No draws recorded.")
     one = _page([{"Ticket": "Ticket 1", "Amount": "2 gal", "From vat": "West Ridge"}])
     another = _page([{"Ticket": "Ticket 1", "Amount": "1 gal", "From vat": "Block 12"}])

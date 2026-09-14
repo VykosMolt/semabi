@@ -1,11 +1,9 @@
-"""Withholding a union is an identity hypothesis: proposed, pinned, judged, carried.
+"""Tests that withholding a union is a real identity hypothesis: proposed, pinned,
+judged, and carried.
 
-Two families whose keys overlap are unioned into one entity type by structure alone
-(`Hypotheses._build_entity_types`), and behaviour could not contradict it: an appointment
-row that names its patient became the patient, a tab switch read as deleting patients and
-creating appointments, and a check-in on one of a patient's two appointments was silent.
-The union is now a decision the reading carries and the search judges (`docs/v4_frontier.md`).
-"""
+Before this, two families whose keys overlap were always unioned into one entity type
+by structure alone, and behaviour could never contradict that union. The union is now
+a decision the reading carries and the search can judge."""
 from __future__ import annotations
 
 from types import SimpleNamespace

@@ -107,11 +107,10 @@ def _lit(l: tuple, A: Abstractor, rels: dict, ptypes: dict[str, Any]) -> rm.Lite
         r = rels.get((tid, l[2]))
         return rm.RelHolds(r, l[1], l[3], negate=(k == "ref_ne")) if r else None
     if k in ("ref_null", "ref_set"):
-        # "this object's reference slot points at nothing" is the existing relation predicate
-        # with an unbound target, so no new predicate is needed: RelHolds resolves a literal
-        # None straight through and get_rel returns None for an unset slot.  Without this the
-        # condition would govern applicability everywhere except the planner, which would
-        # cheerfully plan the action the model has just learned it cannot take.
+        # "this reference points at nothing" is the existing relation predicate with an
+        # unbound target, so no new predicate is needed. Without it the condition would
+        # hold everywhere except in the planner, which would then plan the very action the
+        # model had just learned it cannot take.
         r = rels.get((ptypes[l[1]], l[2]))
         return rm.RelHolds(r, l[1], None, negate=(k == "ref_set")) if r else None
     if k in ("parent_null", "parent_set"):
@@ -228,16 +227,11 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
                 vals += list(e.args)
             return any(isinstance(v, str) and v.startswith("?new") and v not in created for v in vals)
         effects = [e for e in effects if not mentions_unbound(e)]
-        # Which parameters the grounding actually carries.  The rest are constrained by the
-        # preconditions and nothing else, so a caller has to derive them from the state it is
-        # in rather than choose them -- and without saying so the exported operator would look
-        # as though every object it touches is an argument the agent gets to pick.
-        # Only what the *concrete interaction* carries: the owner of the clicked control, and
-        # a value the caller types or selects.  A `context` act is not that.  It is a view
-        # condition the lifter synthesises when an effect value happened to be displayed
-        # somewhere -- including, now, an object the emitted message names -- and treating its
-        # argument as supplied would export an operator claiming a parameter is the caller's
-        # to pick when `action_binding` will not supply it and a query has to find it.
+        # Which parameters the grounding actually carries: the owner of the clicked
+        # control, and a value the caller types or selects. The rest are fixed by the
+        # preconditions, so a caller derives them from the state rather than choosing them.
+        # A `context` act is not carried either: it is a view condition the lifter adds
+        # when an effect value happened to be displayed somewhere.
         supplied = tuple(p for p in (
             [a.owner for a in op.acts if a.owner and a.kind != "context"]
             + [a.arg for a in op.acts if a.arg and a.kind != "context"])

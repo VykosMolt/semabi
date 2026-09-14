@@ -1,25 +1,15 @@
-"""Can behaviour before the cut choose among readings, and does what comes after agree?
+"""Checks whether behaviour before the cut can choose among candidate readings, and
+whether what comes after agrees. Scores each reading with the V4 objective on the prefix
+(what a causal model may learn from) and with the durable-effect ledger on the suffix
+(never seen during selection); a reading preferred on both is earned, refused on both is
+rejected, and disagreement is reported rather than resolved. The cut keeps this
+non-circular: the objective reads nothing after it, the ledger nothing before it. Readings
+are data here, never changed or fit.
 
-A reading -- which recurring structures are objects and what names them -- is proposed from
-page structure alone (`semabi.compiler.v4.identity`).  Several are always plausible, and the
-question this instrument asks of each is the one a black-box learner can legitimately ask:
-what does the V4 objective (`semabi.compiler.v4.objective`) make of it on the **prefix**,
-the completed transitions a causal model may learn from, and what does the durable-effect
-ledger make of it on the **suffix**, which the selection never saw.  A reading the prefix
-objective prefers and the suffix confirms is a distinction that earned its place; a reading
-the objective refuses that the suffix also punishes is a distinction behaviour rejects;
-and where the two disagree, the instrument says so rather than choosing.
-
-Circularity is kept out by the cut: the objective reads nothing after it, and the ledger
-reads nothing before it.  Nothing here changes a reading or fits one; readings are data, and
-this compares them.
-
-Three views: every candidate reading in a chain manifest; the chosen reading with each of
-its keyed families read as no entity in turn (`--ablate`), which asks of every type
-whether the evidence before the cut wanted it; and one family of a reading keyed by each
-of several slots in turn (`--rekey` with `--slots`), which asks whether the key the search
-chose is the key the transitions preserve -- vet's appointments keyed by patient and status
-re-key at every status change, keyed by patient and reason they do not (`docs/v4_frontier.md`).
+Three views: every candidate reading in a chain manifest; the chosen reading with each
+keyed family read as no entity in turn (`--ablate`); and one family re-keyed by each of
+several slots in turn (`--rekey` with `--slots`), to check whether the search's chosen key
+is the one the transitions actually preserve.
 """
 from __future__ import annotations
 

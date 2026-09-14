@@ -1,10 +1,9 @@
-"""What a history a reading was not fitted to is allowed to conclude.
+"""Tests for what a fresh history is allowed to conclude about a reading it wasn't
+fitted to.
 
-The rule these tests pin is the one the V4 checkpoint was missing: explaining more steps is
-what the source history was chosen for and is exactly what does not travel, so it must not
-decide a transfer comparison.  Contradiction is what eliminates; silence proves nothing;
-and where the comparison history says nothing about the difference, the ambiguity is kept.
-"""
+Explaining more steps is what the source history was chosen for, so it must not decide a
+transfer comparison. Contradiction eliminates; silence proves nothing; and where the
+comparison history says nothing, the ambiguity is kept."""
 from itertools import permutations
 from fractions import Fraction
 from types import SimpleNamespace
@@ -93,7 +92,7 @@ def test_explaining_more_steps_does_not_win_a_transfer_comparison():
 
 
 def test_a_rival_that_says_nothing_at_all_decides_nothing():
-    """The companion of the test above: silence is not evidence in either direction."""
+    """Checks silence is not evidence in either direction."""
     left = _ev("left", {1: "EXPLAINED", 2: "EXPLAINED", 3: "EXPLAINED", 4: "CHURN"})
     mute = _ev("mute", {1: "SILENT", 2: "SILENT", 3: "SILENT", 4: "SILENT"})
     assert not mute.makes_predictions
@@ -130,9 +129,8 @@ def test_the_differential_only_records_steps_the_readings_disagree_about():
 
 
 def test_a_reading_that_could_not_be_instantiated_cannot_win_on_cheapness():
-    """The failure this rule exists to prevent: on harbour every candidate tied at zero
-    errors, so cost decided, and the winner was a reading two of whose five families the
-    destination never rendered -- cheap because it was untested."""
+    """Checks a reading can't win on cheapness alone when it was never tested,
+    because the destination never rendered some of its families."""
     full = _ev("full", {1: "EXPLAINED", 2: "EXPLAINED"}, complexity=102, applicability=1.0)
     partial = _ev("partial", {1: "EXPLAINED", 2: "EXPLAINED"}, complexity=12, applicability=0.6)
     decision = decide(full, partial)
@@ -141,10 +139,9 @@ def test_a_reading_that_could_not_be_instantiated_cannot_win_on_cheapness():
 
 
 def test_identical_behaviour_is_an_equivalence_not_a_defeat():
-    """Cost decided this pair until docs/v4_retained.md: a reading that said the same
-    thing, in the same observable deltas, at every step has not been beaten by anything,
-    and parsimony may choose which spelling of the class travels but may not eliminate a
-    reading the projection never distinguished."""
+    """Checks a reading that says the same thing, in the same observable deltas, at
+    every step is not treated as beaten by a cheaper rival: parsimony may pick which
+    spelling travels but may not eliminate an undistinguished reading."""
     same = {1: "EXPLAINED", 2: "SILENT"}
     cheap = _ev("cheap", same, complexity=10)
     dear = _ev("dear", same, complexity=40)
@@ -184,9 +181,9 @@ def test_an_equivalence_class_of_survivors_selects_its_cheapest_member():
 
 
 def test_an_identity_that_separates_nothing_it_names_is_refuted_by_the_fresh_history():
-    """The harbour case. A two-valued yes/no column was pinned as the identity of rows.
-    It contradicts nothing, churns nothing and leaks nothing -- a merging key does not
-    contradict, it merely fails to separate -- so nothing in the error terms noticed."""
+    """Checks an identity that separates nothing it names, like a two-valued
+    yes/no column pinned as a row identity, is refuted even though it contradicts
+    nothing on its own."""
     same = {1: "EXPLAINED", 2: "EXPLAINED"}
     merging = _ev("merging", same)
     merging.separation = [_sep("row[_]", "cell#0@4", 0, 40)]
@@ -206,9 +203,8 @@ def test_an_untested_identity_claim_is_not_counted_against_a_reading():
 
 
 def test_a_confirmed_identity_claim_beats_making_no_claim_at_all():
-    """Otherwise the rule can only eliminate, and the most silent reading survives every
-    comparison it does not lose. Silence winning by default is the same error as coverage
-    winning by default, pointing the other way."""
+    """Checks a confirmed identity claim beats making no claim, so the most silent
+    reading can't win every comparison by default."""
     same = {1: "EXPLAINED", 2: "EXPLAINED"}
     committed = _ev("committed", same)
     committed.separation = [_sep("row[_]", "cell#0", 40, 40)]
@@ -460,7 +456,7 @@ def test_exact_applicability_fraction_survives_report_reconstruction():
 
 
 def test_current_production_report_reconstructs_canonical_applicability_fraction():
-    """A runner-style report must retain the exact fraction from Transport."""
+    """Checks a runner-style report retains the exact fraction from Transport."""
     behaviour = SimpleNamespace(
         contradictions=0,
         churn=0,

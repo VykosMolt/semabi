@@ -1,50 +1,22 @@
-"""What in the later observation is the continuation of this raw structure?
+"""Which part of the later page is the continuation of this part of the earlier one?
 
-A reading's semantic delta says an object's slot took a new value.  Checking that against
-the page needs an answer to a question the reading cannot be allowed to answer: *which* part
-of the later observation is the thing it was talking about.  The page-global check in
-:mod:`semabi.compiler.v4.prospective` avoids the question by asking only whether the value
-appeared anywhere, which is far too weak -- a value gained in an untouched row confirms a
-prediction about a row that never changed.  Scoping the check needs correspondence.
+A predicted change is about a particular thing on the page, so checking it needs to know
+which node in the later observation is that thing. Asking only whether the value turned up
+anywhere is far too weak: a value gained in an untouched row would confirm a prediction about
+a row that never changed.
 
-The correspondence has to live *below* the competing readings.  Harbour's live disagreement
-is over what the page's entities are: one reading names each table row by its identifying
-column, the other keeps rows keyed by a column that does not identify them and additionally
-makes every bare cell an entity named by its own rendered text.  A correspondence rule that
-relocates rows assumes the first answer and one that relocates cells assumes the second, so
-this module knows nothing about readings, objects, keys or families.  It works on :class:`Observation` alone: roles,
-rendered text, values, and tree structure.
+This has to work below the competing readings, so it knows nothing about objects, keys or
+types -- only roles, rendered text, values and tree shape. The field a prediction is about is
+hidden while the match is made, and hidden from every ancestor too, or the match would be
+found by the very property being tested and would fail exactly when the prediction is true.
+Position on screen is deliberately unused: boxes are mostly stable but not always, and a
+tolerance would be the arbitrary rule this module exists to do without.
 
-**Outcome masking.**  The feature a prediction is about may not be used to find the thing
-the prediction is about.  If a reading predicts a cell's text becomes ``'open'``, then that
-cell's text is unavailable evidence -- otherwise the correspondence would be found by the
-very property being tested, and would fail exactly when the prediction is true.  Masking is
-per node and per field, and it propagates: a masked node's text is hidden from its own
-descriptor and from every ancestor descriptor that contains it.  On the later observation
-nothing is masked, because which node is the continuation is not yet known; the mask is a
-wildcard that matches whatever is there.
-
-Geometry is deliberately not used.  ``Node.bbox`` is recorded and would be strong evidence
-where content fails, but on the transitions that matter it is only mostly stable: of 816 true
-correspondents across the blend history's node-adding transitions, 26 have a different box.
-Using it as hard evidence would invent that many failures to relocate, and using it softly
-needs a tolerance -- which is the arbitrary rule this module exists to do without.
-
-**Ambiguity is preserved.**  Correspondence is set-valued.  Where the admissible evidence
-does not single out one continuation, every admissible one is returned and the status is
-``AMBIGUOUS``; where nothing is admissible the status is ``NONE``.  There is no score, no
-threshold, and no tie-break: a forced wrong match manufactures semantic refutations, which
-is a worse failure than saying nothing.
-
-**How a continuation is found.**  Descent from the root along the pre-node's ancestor chain.
-At each level the parent's children are aligned to the corresponding parent's children by an
-order-preserving alignment (longest common subsequence under a compatibility predicate,
-which is where the wildcard enters).  A pre-child's admissible continuations are the
-post-children it is matched to in *some* optimal alignment; if it can also be left unmatched
-by an optimal alignment, that counts as ambiguity too.  Levels are aligned on the strongest
-descriptor that places the target at all -- full masked subtree, then a depth-two local
-summary, then role and whether it has descendants -- and the backoff is per level and
-recorded, never used to break a tie.
+Matching descends from the root along the node's ancestors, aligning each parent's children
+to the corresponding parent's children in order, on the strongest description that places the
+node at all. Where the evidence does not single out one continuation, every admissible one is
+returned and the status is ``AMBIGUOUS``; where none is admissible it is ``NONE``. There is no
+score and no tie-break: a forced wrong match manufactures refutations.
 """
 from __future__ import annotations
 
@@ -78,9 +50,8 @@ FIELDS = ("name", "value", "checked", "options", "placeholder", "current")
 def outcome_field(node: Node) -> str:
     """The field a slot value is read from, and therefore the field a prediction masks.
 
-    Mirrors :func:`semabi.compiler.parse.leaf_value`, which is what the abstractor reads
-    when it fills a slot: a combobox's slot value is its ``value``, a checkbox's is
-    ``checked``, and everything else is the rendered ``name``.
+    Mirrors :func:`semabi.compiler.parse.leaf_value`: a combobox's ``value``, a checkbox's
+    ``checked``, and for everything else the rendered ``name``.
     """
     if node.role in ("checkbox", "radio"):
         return "checked"
@@ -129,11 +100,10 @@ def _fields(obs: Observation, i: int, masked: Mapping[int, frozenset[str]]) -> t
 
 
 class _Descriptors:
-    """Descriptor computation with a per-observation cache for the unmasked case.
+    """Descriptor computation, with the unmasked results cached per observation.
 
-    Only nodes on the path from the root to a masked node have mask-dependent descriptors;
-    every other subtree is identical whether or not a mask is in force, so the expensive
-    deep descriptors are computed once per observation and reused across predictions.
+    Only nodes between the root and a masked node have mask-dependent descriptors, so the
+    expensive deep ones are computed once and reused across predictions.
     """
 
     def __init__(self) -> None:
@@ -161,10 +131,9 @@ class _Descriptors:
     def shape(obs: Observation, i: int) -> tuple:
         """Role and whether the node has descendants, and nothing else.
 
-        Deliberately blind to how many children there are: a container that gained or lost a
-        row still has to be matchable, since it is the level *below* it that carries the
-        evidence.  A correspondence that gets no further than this layer is positional, and
-        callers that care should read :attr:`Correspondence.layers`.
+        Blind to how many children there are on purpose: a container that gained or lost a
+        row still has to be matchable, since the evidence is one level below it. A match that
+        gets no further than this layer is positional; see :attr:`Correspondence.layers`.
         """
         return (obs.node(i).role, bool(obs.children(i)))
 
@@ -195,20 +164,14 @@ def admissible_matches(n: int, m: int, match: Callable[[int, int], bool],
                        tolerance: int = 0) -> tuple[dict[int, set[int]], list[bool]]:
     """Order-preserving alignment, reporting every match a good alignment can make.
 
-    Returns, for each left index, the set of right indices it is paired with in at least one
-    alignment within ``tolerance`` of the maximum length, and whether such an alignment can
-    leave it unpaired.  Taking the union over co-optimal alignments rather than one of them is
-    what keeps genuine ambiguity visible instead of resolving it by an arbitrary preference.
+    For each left index: the right indices it is paired with in at least one alignment within
+    ``tolerance`` of the longest, and whether such an alignment can leave it unpaired. Taking
+    the union over equally good alignments rather than one of them keeps real ambiguity
+    visible instead of resolving it by preference. A left index with exactly one partner is
+    determined; more than one, and the evidence does not fix the pairing.
 
-    This is the sequence-alignment notion of a *safe* pairing (Grigorjew et al., 2023, after
-    Naor and Brutlag, 1994): a partial solution is safe when it appears in every optimal path
-    of the alignment graph, and their generalisation admits paths within a suboptimality
-    budget as well, on the observation that the single best-scoring alignment is not reliably
-    the right one.  A left index with exactly one admissible partner here is safe in that
-    sense; more than one, and the evidence does not determine the pairing.  ``tolerance`` is
-    the suboptimality budget.  Widening it can only add admissible continuations, so it can
-    only turn a refutation into a ``POSSIBLE`` -- which makes it a one-directional robustness
-    check on any refutation this instrument reports.
+    Widening ``tolerance`` can only add continuations, so it can only turn a refutation into a
+    ``POSSIBLE`` -- which makes it a one-way robustness check on anything reported here.
     """
     suffix = [[0] * (m + 1) for _ in range(n + 1)]
     for i in range(n - 1, -1, -1):
@@ -268,10 +231,10 @@ def correspond(pre_obs: Observation, post_obs: Observation, pre_index: int,
                ) -> Correspondence:
     """Admissible continuations of ``pre_index`` in ``post_obs``, given the masked fields.
 
-    ``ladder`` restricts the backoff.  A caller asking whether a structure *survived* must not
-    let the descent fall through to the layer that matches on role and position alone: a panel
-    replaced by a different panel of the same shape would then look like the same panel, and
-    the answer to "is it gone" would always be no.
+    ``ladder`` restricts the fallback. A caller asking whether a structure *survived* must not
+    let the descent reach the layer that matches on role and position alone: a panel replaced
+    by a different panel of the same shape would look like the same panel, and the answer to
+    "is it gone" would always be no.
     """
     masked = dict(masked or {})
     desc = descriptors or _Descriptors()

@@ -1,13 +1,9 @@
-"""Objecthood for entities an interface renders as a span of siblings.
+"""Tests for objecthood over entities an interface renders as a span of siblings,
+not a single node.
 
-Cellar's halls are a heading, a line of prose and a table, three times, flat inside one group.
-No node has a hall's extent, so no template recurs per hall, so the abstraction could not form
-the concept at all -- which is why `Move vessel`'s outcome rule could not mention a hall.
-
-`sections` asks the question `find_unit_types` already asks of nodes -- does this shape recur
-with a filling that varies -- of sibling spans as well.  These pin that it is that question and
-not a list of tags, and that it declines the things it should.
-"""
+`sections` asks the same question `find_unit_types` asks of nodes -- does this shape
+recur with a filling that varies -- of sibling spans instead. Checks it's that
+question, not a list of tags, and that it declines the spans it should."""
 from __future__ import annotations
 
 from semabi.compiler.observation import Node, Observation
@@ -28,7 +24,8 @@ def graph(obs) -> tuple[ObsGraph, str]:
 
 
 def halls() -> Observation:
-    """Three heading/prose/table spans flat under one group, as cellar renders them."""
+    """Three heading/prose/table spans flat under one group, as cellar renders
+    them."""
     rows = [("group", "", -1), ("heading", "Cellar: halls and vessels", 0)]
     for name, temp in (("Press Hall", "Temperature 20 C"), ("Tank Yard", "Temperature 17 C"),
                        ("Cold Store", "Temperature 9 C")):
@@ -48,9 +45,8 @@ def test_a_span_of_siblings_can_be_an_object():
 
 
 def test_a_run_of_form_controls_is_not_an_object():
-    """The same parent shape with labels instead of values.  Cellar's move form is
-    `text combobox text combobox button`; its texts are labels, so the filling does not vary
-    between spans and the span is chrome rather than an entity."""
+    """Checks a run of form controls, whose texts are labels rather than varying
+    values, is not treated as an object."""
     obs = build(("group", "", -1),
                 ("text", "Vessel", 0), ("combobox", "", 0),
                 ("text", "Hall", 0), ("combobox", "", 0),
@@ -68,8 +64,8 @@ def test_a_span_that_never_varies_is_one_object_not_many():
 
 
 def test_normalise_appends_and_keeps_every_index():
-    """A recorded action names a node by index.  Containers are appended, never inserted, so
-    the page a step refers to still contains what it referred to."""
+    """Checks span containers are appended, never inserted, so a recorded action's
+    node index still refers to the same thing."""
     obs = halls()
     G, sig = graph(obs)
     out = sections.normalise(G, sig, obs)
@@ -84,8 +80,8 @@ def test_normalise_appends_and_keeps_every_index():
 
 
 def test_normalise_is_idempotent():
-    """Once each span has a container the spans are single nodes, which `candidates` declines
-    as already-handled subtrees.  The corpus pass may therefore run more than once."""
+    """Checks running normalise twice is a no-op, since a span with a container is
+    already a single node that `candidates` declines to touch again."""
     obs = halls()
     G, sig = graph(obs)
     once = sections.normalise(G, sig, obs)

@@ -84,14 +84,10 @@ class V2Abstractor(Abstractor):
     def resolve(self, tid: int, v: str) -> str | None:
         """A referenced entity named by its primary key: the unique full key, else None.
 
-        The registry maps a key's first component to the full keys the *fitting* pages
-        rendered, which is what a composite key needs.  It was also the only route for a
-        simple key, so a reference to an object the prefix never rendered -- a vat, ticket or
-        patient that exists only after the cut -- resolved to nothing however plainly the page
-        named it.  Where a type's keys are simple (every registered full key is its own first
-        component) a value the registry has not seen names the object by its key, exactly as a
-        seen one does; the registry is consulted for ambiguity, not for permission.
-        """
+        The registry maps a key's first part to the full keys the fitting pages rendered,
+        which is what a composite key needs. Where a type's keys are simple, a value the
+        registry has not seen still names the object: the registry settles ambiguity, it
+        does not grant permission."""
         full = self.registry.get(tid, {}).get(v)
         if full and len(full) == 1:
             return next(iter(full))
@@ -196,12 +192,9 @@ class V2Abstractor(Abstractor):
     def _resolve_split_entity(H, spec: dict, role: str) -> int | None:
         """Resolve a record-split endpoint in this run.
 
-        Entity tids in a stored decision are run-local.  When the decision records the
-        endpoint's unit templates, the entity type realising any of those templates in
-        the current run is used; a stored tid is accepted only as a legacy fallback when
-        no template information exists (same-run replay).  Ambiguous or absent
-        resolutions leave the split unapplied rather than attaching it positionally.
-        """
+        Type ids in a stored decision are local to the run that made it, so the endpoint is
+        found by its unit templates. A stored id is a legacy fallback. An ambiguous or
+        missing resolution leaves the split unapplied rather than guessing by position."""
         templates = spec.get(f"{role}_entity_templates")
         if templates:
             hits = {tid for tid, et in H.entity_types.items() if set(et.units) & set(templates)}
@@ -245,20 +238,15 @@ class V2Abstractor(Abstractor):
         return sig
 
     def freeze(self) -> "V2Abstractor":
-        """Stop learning.  From here the model reads observations and is not changed by them.
+        """Stop learning. From here the model reads observations and is not changed by them.
 
-        Fitting is over by the time this is called; what remains is interpretation, and the
-        distinction matters because ``ensure`` puts every observation it is asked to read into
-        the observation graph.  Without this, transforming a held-out page contributed its text
-        to the data-token vocabulary the model uses to decide what counts as a value -- on
-        harbour it added three tokens, one of them a word the prefix had never seen used as
-        data.  Then the answer to "how does this model read the suffix" depended on how much of
-        the suffix it had already read.
+        Reading a page adds it to the observation graph, so without this a held-out page
+        contributed its text to the vocabulary the model uses to decide what counts as a
+        value, and how the model read the suffix depended on how much of the suffix it had
+        already read.
 
-        The lazily induced control families are resolved here rather than left to a first
-        access that might happen after held-out observations were in the graph.  Deferred work
-        against mutable state is the same leak wearing a different hat.
-        """
+        Control families are resolved here rather than on first access, which might happen
+        after held-out pages were in the graph."""
         self.controls            # resolve before the graph can gain anything else
         self.G.learning = False
         self.emissions.freeze()
@@ -312,12 +300,9 @@ class V2Abstractor(Abstractor):
     def _rendered_value(self, ui: UnitInstance, sid: str) -> str | None:
         """What a slot's node renders as one value, for identity and reference.
 
-        `data_tokens` segments a node's text into value spans and keeps a number apart from a
-        name beside it, which is right for an attribute cell and wrong for a name: a vat called
-        `Block 12` was keyed `Block`, two such vats collided, and a ticket's reference to it
-        never matched.  Where the node's text is nothing but data, the value it renders is the
-        whole of it.  Nodes with a constant token keep their first span, as before.
-        """
+        `data_tokens` splits a node's text into spans, which is right for an attribute cell
+        and wrong for a name: a vat called "Block 12" would be keyed "Block". Where the
+        text is nothing but data, the whole of it is the value."""
         v = ui.slots.get(sid)
         node = ui.slot_nodes.get(sid) if hasattr(ui, "slot_nodes") else None
         if v is None or node is None:
@@ -717,13 +702,11 @@ class V2Abstractor(Abstractor):
         return V2Tracker(self)
 
     def complete_types(self, obs: Observation, po: ParsedObs) -> set[int]:
-        """No rendered collection establishes the entire extension of an object type.
+        """No rendered collection establishes the whole extension of a type.
 
-        Sibling multiplicity previously declared type-wide absence. A filtered/paginated
-        collection has exactly that structure, and even a complete local collection says
-        nothing about another holder's objects. Scoped membership is checked separately.
-        Explicit complete-type providers remain possible through the tracker interface.
-        """
+        A filtered or paginated collection looks exactly like a complete one, and even a
+        complete local collection says nothing about another holder's objects. Scoped
+        membership is checked separately."""
         return set()
 
     def fit_view_controls(self, log: EvidenceLog) -> None:

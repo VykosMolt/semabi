@@ -1,15 +1,9 @@
-"""What a control's label says, against what the control does.
-
-A control's rendered label carries words the vocabulary reads as data -- an entity's name,
-and sometimes a word that is also a value somewhere on the page.  Blend's `Open North Wall`
-is the case: `Open` is the gate value in the vats table and the first word of the button,
-and no judgement over tokens can call it a label on the button and a value in the cell.
-Whether that matters is a question about behaviour, and this answers it: for every control
-family, the tokens masked as data in its rendered labels, the values its learned effects
-write, and which masked tokens are values the family writes.  A masked token the family
-writes is the action's *argument* -- `Open` is what the button sets the gate to -- and the
-family is one control whichever way the token is read.  Nothing here changes a reading;
-it reports what the completed history says a word in a label is for.
+"""Compares what a control's label says against what the control does. A rendered label
+can carry a word that is also a value elsewhere on the page, and whether that matters is a
+question about behaviour: for every control family, this reports the tokens masked as data
+in its labels, the values its learned effects write, and which masked tokens are also
+values the family writes, meaning the token is really the action's argument. Nothing here
+changes a reading; it reports what the history says a word in a label is for.
 """
 from __future__ import annotations
 

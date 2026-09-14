@@ -1,44 +1,17 @@
-"""Is what survived the learner's own repair a missing condition, or an ontology's limit?
+"""Is a refuted rule a missing condition, or a reading that cannot express one?
 
-This module was the repair.  It is now the residual check on one, because the learner
-installs preconditions itself: ``learn_pre`` picks literals true in every positive and false
-in the counterexamples it was given, and since the literal language covers a bound object's
-reference slots it finds the conditions that used to be supplied from outside.  What is left
-here is the question that remains after that -- of the contradictions the fitted model still
-makes on held-out steps, is there a further condition, expressible in the reading's own
-pre-action vocabulary and chosen without seeing the suffix, that the greedy cover missed?
+A held-out refutation says a rule predicted something that did not happen, not why. Either
+the rule needed one more condition, or the reading's objects do not carry the state the
+effect depends on -- and only the second is evidence against the reading. On the harbour
+application, closing a berth fails while a call holds it: if objects are rows the holding
+call is an attribute of the object the rule binds, so the condition can be stated; if objects
+are individual cells it cannot.
 
-A reading with none has been refuted with its repairs already applied.
-
-Is a refuted rule a missing condition, or an ontology that cannot express one?
-
-A prospective refutation says a rule made a false prediction.  It does not say why.  Two very
-different things produce one: the learner under-specified a rule whose antecedent needed one
-more literal, and a reading whose objects do not carry the state the effect actually depends
-on.  Only the second is evidence against the reading.
-
-Harbour has a clean instance.  Clicking ``Close`` on a berth normally closes it, but the
-application refuses while a call holds the berth, and a rule fitted only on the successful
-clicks predicts a change that does not happen.  Under a reading whose objects are rows, the
-holding call is an attribute of the very object the rule is bound to, so a precondition on it
-is expressible.  Under a reading whose objects are the individual cells it is not.
-
-The test has to be prospective or it says nothing: any partition of a finished dataset can be
-described after the fact.  So the refinement is chosen from the *prefix* the rules were fitted
-on -- the same evidence the learner had -- frozen, and then applied to the held-out suffix.
-The question asked of the suffix is whether the frozen literal removes refutations there
-without discarding the successes, which a post-hoc partition is under no obligation to do.
-
-Literals are drawn from the reading's own attribute vocabulary for the objects the rule binds,
-so a reading is offered exactly the repair its ontology supports and no other.  Where several
-literals separate the prefix equally well, all of them are kept and reported: choosing one
-would be an arbitrary rule, and where they disagree on the suffix that disagreement is the
-result.  Conditional-SAM (Mordoch, Scala, Stern and Juba, 2024) reaches the same place from
-the planning side -- when several conjunctions remain possible antecedents of an observed
-effect it refuses to apply the action in the ambiguous region rather than choosing one -- and
-its hardness result is the reason the search here is over single literals: learning safe
-conditional effects needs exponentially many samples unless the antecedent size is bounded,
-and one is the standard tractable bound.
+The check has to be prospective, since any split of a finished dataset can be described after
+the fact. So a condition is chosen from the prefix the rules were fitted on, frozen, and then
+applied to the held-out suffix. Candidates come from the reading's own attributes, and only
+single conditions are tried. Where several separate the prefix equally well all are kept:
+choosing one would be arbitrary, and where they disagree on the suffix that is the answer.
 """
 from __future__ import annotations
 
@@ -63,11 +36,10 @@ def _holds(context: tuple[tuple[str, Any], ...], key: str, value: Any, negated: 
 
 def separating_literals(supported: list[ScopedPrediction], refuted: list[ScopedPrediction]
                         ) -> list[tuple[str, Any, bool]]:
-    """Literals over the bound objects that hold in every success and no failure.
+    """Conditions over the bound objects that hold in every success and no failure.
 
-    A rule with no successes to keep has no repair available, only a retreat: every literal
-    true of none of its (empty) successes and none of its failures separates it vacuously, and
-    reporting that as a repair would credit a rule for being switched off.
+    A rule with no successes left has no repair available, only a retreat: every condition
+    separates it vacuously, and reporting that would credit a rule for being switched off.
     """
     if not supported:
         return []
@@ -96,12 +68,10 @@ def refine(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
 
     by_op_prefix: dict[str, list[ScopedPrediction]] = defaultdict(list)
     by_op_suffix: dict[str, list[ScopedPrediction]] = defaultdict(list)
-    # Both page checks, so that a reading whose rules only say what goes away is analysed
-    # rather than silently reported as having nothing to explain.
-    # Only predictions whose assignment the pre-state determined.  Where several assignments
-    # were open the recorded context belongs to one representative of them, and choosing a
-    # condition from a representative would be choosing it from an object that may not be the
-    # one the rule acted on -- which is the leak the binder exists to close.
+    # Both page checks, so a reading whose rules only say what goes away is still analysed.
+    # Only predictions the pre-state determined: where several assignments were open the
+    # recorded context belongs to just one of them, and a condition chosen from it may be
+    # chosen from an object the rule never acted on.
     def grounded(p) -> bool:
         return (p.kind in PAGE_CHECKS and p.verdict in (SUPPORTED, REFUTED)
                 and p.binding_status in ("", "UNIQUE"))
@@ -140,8 +110,8 @@ def refine(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
                                                  if not _holds(p.context, k, v, neg)])}
             for k, v, neg in literals]
         if literals:
-            # Where several literals separate the prefix equally well the summary counts what
-            # they agree on; a disagreement is reported rather than settled by taking one.
+            # Where several conditions separate the prefix equally well the summary counts
+            # what they agree on; a disagreement is reported rather than settled by picking one.
             for p in suf_rows:
                 votes = {_holds(p.context, k, v, neg) for k, v, neg in literals}
                 if votes == {True}:
@@ -177,12 +147,9 @@ CLEAN = "NO_REFUTATION_TO_EXPLAIN"
 def repaired_completely(row: dict) -> bool:
     """Did the frozen condition remove every held-out refutation at no cost in support?
 
-    Both halves matter and neither is a threshold.  A condition that removes refutations by
-    making the rule fire less often has not explained anything -- it has retreated -- so the
-    supports it keeps must be all of them.  A condition that keeps the supports but leaves a
-    refutation has not accounted for the failure either.  Only a rule gap satisfies both, and
-    a reading whose ontology does not carry the state the effect depends on cannot: there is
-    no literal in its vocabulary to choose.
+    Both halves matter. A condition that removes refutations by making the rule fire less
+    often has retreated rather than explained, so it has to keep all of its supports. One that
+    keeps them and still leaves a refutation has not accounted for the failure either.
     """
     before, after = row["suffix_before_refinement"], row["suffix_after_refinement"]
     if not before.get(REFUTED):
@@ -195,11 +162,8 @@ def repaired_completely(row: dict) -> bool:
 def explain(rows: list[dict]) -> str:
     """What a reading's held-out refutations mean, across the histories it was run on.
 
-    This is the line between "the learner under-specified a rule" and "the reading cannot say
-    what the effect depends on", and it is the only thing that makes a prospective
-    contradiction fit to eliminate with.  A refutation a prefix-chosen condition repairs is
-    evidence about the rule; one that no literal in the reading's own vocabulary repairs is
-    evidence about the reading.
+    A refutation that a prefix-chosen condition repairs is evidence about the rule; one that
+    nothing in the reading's own vocabulary repairs is evidence about the reading.
     """
     refuted = [r for r in rows if r["suffix_before_refinement"].get(REFUTED)]
     if not refuted:

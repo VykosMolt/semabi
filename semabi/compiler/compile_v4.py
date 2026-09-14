@@ -26,18 +26,13 @@ READINGS_FILE = "identity_readings_v4.json"
 def _normalise_sections(log: EvidenceLog, stats_from: EvidenceLog | None = None) -> None:
     """Re-read this log's pages with heading-delimited sections made explicit, in place.
 
-    Two passes are needed and one suffices.  Deciding that a span of siblings is an object
-    requires knowing which of its tokens are *data*, which is a corpus statistic and is not
-    complete until every page is in a graph; and the containers `normalise` appends carry no
-    text, so the statistics are unchanged afterwards and the fixed point is immediate.
+    Deciding that a span of siblings is an object needs to know which tokens are data,
+    which is a corpus statistic and is not complete until every page is in a graph. The
+    containers added here carry no text, so the statistics do not move afterwards.
 
-    The rewrite happens on the log rather than on the graph because a signature must name
-    exactly one `Observation` everywhere.  Holding a normalised page in the graph while callers
-    still passed the raw one around meant two objects with different node counts and the same
-    signature, and an index taken from one and applied to the other is out of range.  The
-    containers are appended, so every node keeps the index it had and a recorded action target
-    still names the element it named.
-    """
+    The rewrite happens on the log rather than the graph because a signature must name
+    exactly one page everywhere. Containers are appended, so every node keeps its index and
+    a recorded action still names the element it named."""
     # Which tokens count as *data* is a corpus statistic, and under a regime it is the
     # regime's corpus: `stats_from` is the prefix the model is allowed, so a page's section
     # structure is decided by evidence that existed before the action it is read for.

@@ -1,10 +1,9 @@
-"""A widget is the editor of a value shown elsewhere when that value follows it.
+"""Tests that a widget is recognised as the editor of a value shown elsewhere, when
+that value follows the widget's changes.
 
-On the dispatch interface a run's weight is typed into a numeric input on its page and
-shown as text on its card; the page is never reloaded, so reload persistence never
-speaks.  The card's text follows the widget: equal whenever the two are next observed
-for the same run, never unequal, and once equal to a value the widget was changed to.
-That is the same evidence a reload gives, from the interface's own rendering."""
+Checks the same evidence a reload would give -- the two are always equal when next
+observed together, never unequal, and once equal after the widget changes -- can come
+from the interface's own rendering when no reload ever happens."""
 from semabi.compiler.observation import Node, Observation
 from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses

@@ -1,9 +1,8 @@
 """Execute one discriminating probe and let behaviour decide between two identity readings.
 
-Compiler side: it reads rendered evidence and drives the browser, and never reads hidden
-state.  The loop is the whole point of V4 -- an undecided reading of what the objects are
-becomes an experiment, the experiment becomes evidence, and the evidence decides -- so the
-before and after scores of *both* readings are recorded whatever they turn out to be.
+Compiler side: reads rendered evidence and drives the browser, never hidden state. An
+undecided reading becomes an experiment, the experiment becomes evidence, and the
+evidence decides -- so the before and after scores of both readings are always recorded.
 """
 from __future__ import annotations
 
@@ -25,9 +24,8 @@ def _score(run_dir: Path, identity: dict[str, str | None] | None, max_steps: int
 def _acquire(a, run_dir: Path, log: EvidenceLog, H, G, result, report: dict) -> None:
     """Collect a named missing observation rather than settle a disagreement.
 
-    An ambiguity that survives because nobody ever reloaded the page while the family was
-    on screen is not a hard problem; it is an uncollected observation.  What can be acquired
-    is small and the limits are reported as limits.
+    An ambiguity that survives only because nobody reloaded the page while the family
+    was on screen is an uncollected observation, not a hard problem.
     """
     from semabi.compiler.v4 import sufficiency
     targeted = sufficiency.targeted_families(H, log)
@@ -180,9 +178,8 @@ def main() -> None:
             res = browser.act(primitive)
             after = browser.observe()
             log.add_step(browser.episode, primitive, res.ok, res.error, before, after)
-            # and then ask the application whether what just changed was a fact about the
-            # world or about the screen: a reload keeps the one and forgets the other.  Two
-            # primitives, and the second is the one that decides.
+            # then ask whether what just changed was a fact about the world or about the
+            # screen: a reload keeps the one and forgets the other. The reload decides.
             reload_primitive = Primitive("reload")
             reload_res = browser.act(reload_primitive)
             settled = browser.observe()
@@ -200,11 +197,8 @@ def main() -> None:
                 "right": {"key_slot": question.right.key_slot, "before": right_before.to_json(),
                           "after": right_after.to_json()},
             }
-            # a probe is an experiment about one prediction, so it is settled on its own
-            # evidence: whichever reading the two new steps newly contradict is the one the
-            # application has just refuted.  Global dominance is the wrong question here --
-            # two readings can stay Pareto-incomparable over a whole trace while one of them
-            # has just been shown to claim a domain fact that a reload forgot.
+            # A probe is settled on its own evidence: whichever reading the two new steps
+            # newly contradict is the one just refuted, regardless of the trace overall.
             def hurt(before_score, after_score) -> dict:
                 return {"contradictions": after_score.contradictions - before_score.contradictions,
                         "churn": after_score.churn - before_score.churn,

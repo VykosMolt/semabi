@@ -1,14 +1,9 @@
-"""The observation layer must survive an action that replaces the document.
+"""Tests that the observation layer survives an action that replaces the document
+(e.g. a full-page navigation), rather than crashing.
 
-Two of the six gauntlet-v3 applications answer every action with
-``fetch(...).then(() => location.href = ...)``.  Under V2 that ended the run on the first
-such action with ``Execution context was destroyed`` and no trace was produced at all
-(docs/v3_result.md, docs/data/v3/crash_navigation.json).  These tests use a minimal
-fixture that reproduces the pattern generically -- no gauntlet-v3 code, no application
-specific waiting -- and check the four things the fix has to get right: the observation
-survives, it is the *new* page, a permanent browser error is still raised, and primitive
-accounting is untouched by the retries.
-"""
+Checks the four things the fix has to get right: the observation survives, it is the
+new page, a permanent browser error is still raised, and primitive accounting is
+untouched by the retries."""
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from types import SimpleNamespace

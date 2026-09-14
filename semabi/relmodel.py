@@ -1,12 +1,11 @@
 """Domain-free typed relational action language.
 
-Used both by the hidden evaluator domains and by the compiler's learned
-models, so that the two can be compared structurally. Contains no domain
-content.
+Used by both the hidden evaluator domains and the compiler's learned models,
+so the two can be compared directly. Contains no domain content.
 
 A State is a set of typed objects with attributes plus functional binary
-relations. Operators have typed parameters, preconditions (conjunction of
-literals) and effects (ordered list of primitive effects).
+relations. Operators have typed parameters, preconditions (a conjunction of
+literals), and effects (an ordered list of primitive effects).
 """
 from __future__ import annotations
 
@@ -194,12 +193,12 @@ RETURNED = "?returned"     # where `apply_effects` puts what the interaction ans
 class Emit:
     """An observable output the interaction returns, with the objects it names.
 
-    Not a state change.  An interface operation can answer -- "already bottled", "nothing
-    chosen in the vessel list" -- without the transition it was aimed at happening, and that
-    answer is part of the contract: a caller that plans against this model needs to know which
-    invocations return rather than act.  The event's ``frame`` is whatever recurred once the
-    page's own data was masked out of the message, so it is not an English label the compiler
-    was given; the arguments are parameters of the operator, so it is not a sentence either.
+    Not a state change. An interface operation can answer ("already bottled", "nothing
+    chosen") without its intended transition happening, and a caller planning against
+    this model needs to know which invocations return rather than act. The event's
+    ``frame`` is whatever text recurred once the page's own data was masked out; it is
+    not a label the compiler was given, and the arguments are operator parameters, not
+    a sentence.
     """
     frame: str
     args: tuple = ()
@@ -373,11 +372,10 @@ def derive_bindings(op: Operator, state: State, supplied: dict[str, Any],
                     limit: int = 64) -> list[dict[str, Any]]:
     """Complete a partial binding by solving the operator's preconditions against a state.
 
-    The executable half of the same idea the compiler's binder uses when it evaluates a learned
-    rule against a recorded transition: the parameters the interaction supplies fix part of the
-    query and the preconditions determine the rest.  Every completion is returned, because
-    several of them mean the state does not say which one the operator would act on -- and an
-    agent that picked one anyway would be guessing, not planning.
+    The supplied parameters fix part of the query; the preconditions determine the
+    rest. Every completion is returned, because more than one means the state does
+    not say which object the operator would act on, and picking one anyway would be
+    guessing, not planning.
     """
     unbound = [(name, kind) for name, kind in op.params
                if name not in supplied and kind not in ("str", "int", "bool")]
@@ -409,12 +407,9 @@ def unique_binding(op: Operator, state: State, supplied: dict[str, Any],
                    limit: int = 64) -> dict[str, Any] | None:
     """The one completion this state admits, or ``None`` when it admits any other number.
 
-    The safe way to use :func:`derive_bindings`, made executable rather than advisory.  Several
-    completions mean the state does not say which objects the operator would act on, and none
-    means it does not apply; in both cases there is nothing for a planner to do that is not a
-    guess.  Refusing is the whole point -- a caller that took the first completion would be
-    choosing an object the model never identified, and on a real reading that has been measured
-    to be the wrong object more often than not.
+    Several completions mean the state does not say which objects the operator would
+    act on; none means it does not apply. Refusing in both cases is the point: taking
+    the first completion would pick an object the model never identified.
     """
     found = derive_bindings(op, state, supplied, limit=limit)
     return found[0] if len(found) == 1 else None
@@ -452,7 +447,7 @@ def check_pre(op: Operator, domain: Domain, state: State, binding: dict[str, Any
 
 def apply_effects(op: Operator, state: State, binding: dict[str, Any]) -> tuple[State, dict[str, Any]]:
     """Canonical order: quantified (*Incoming) effects are applied before deletions so
-    that the written order of effects does not change the semantics."""
+    the written order of effects does not change the outcome."""
     s = state.copy()
     b = dict(binding)
     ordered = [e for e in op.effects if isinstance(e, (DeleteIncoming, MoveIncoming, SetAttrIncoming))] + \
@@ -483,9 +478,8 @@ def apply_effects(op: Operator, state: State, binding: dict[str, Any]) -> tuple[
                 if x in s.objects:
                     s.objects[x].attrs[e.attr] = val
         elif isinstance(e, Emit):
-            # An output changes no state.  It is returned instead, under a reserved binding
-            # key, so that a caller planning against this model can see that an operation
-            # answers rather than acts -- which is the whole reason the effect exists.
+            # An output changes no state. It is returned under a reserved binding key so
+            # a planner can see that this operation answers rather than acts.
             b.setdefault(RETURNED, []).append(
                 (e.frame, tuple(_resolve(v, b) for v in e.args)))
         else:

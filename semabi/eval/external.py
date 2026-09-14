@@ -1,13 +1,7 @@
-"""Evaluation against an EXTERNAL environment (e.g. the gauntlet apps) that
-exposes `/_evaluator/state` and `/_evaluator/domain` but no executable hidden
-operator semantics. Scoring is trace-based:
-
-* types / attributes / relations: paired-state alignment (as in matching.align);
-* operators: every hidden transition recorded during exploration (one hidden
-  operator applied successfully) must be *explained* by some learned operator
-  whose application to the translated pre-state yields the translated post-state;
-  failed hidden attempts must be rejected by the learned counterpart's precondition;
-* planning: goals are atoms that held in previously observed reachable states.
+"""Evaluates against an external environment that exposes `/_evaluator/state` and
+`/_evaluator/domain` but no executable hidden operator semantics. Scoring is trace-based:
+types/attributes/relations by paired-state alignment, operators by whether a learned
+operator explains each recorded transition, and goals from atoms seen in reachable states.
 """
 from __future__ import annotations
 
@@ -28,15 +22,14 @@ def fetch(url: str) -> dict:
     return json.loads(urllib.request.urlopen(url, timeout=10).read())
 
 
-LINK_DERIVED: dict[str, list[tuple[str, str, str, str]]] = {}  # domain name -> [(derived rel, link type, rel_from, rel_to)]
-LINK_FLAGS: dict[str, list[tuple[str, str, str]]] = {}  # domain name -> [(flag attr, type, link rel)]
+LINK_DERIVED: dict[str, list[tuple[str, str, str, str]]] = {}  # domain -> [(derived rel, link type, rel_from, rel_to)]
+LINK_FLAGS: dict[str, list[tuple[str, str, str]]] = {}  # domain -> [(flag attr, type, link rel)]
 
 
 def domain_from_description(j: dict) -> rm.Domain:
-    """Hidden domain plus *derived* relations/attributes for link types: a type L with
-    relations r1: L->A and r2: L->B also induces A->B (`r1~r2`), B->A and boolean
-    flags `has_<r1>` on A / `has_<r2>` on B. A learner that represents the link as
-    a reference between A and B (plus a flag) is then structurally comparable."""
+    """Hidden domain plus derived relations/attributes for link types: a type L with
+    relations r1: L->A and r2: L->B also induces A->B, B->A, and boolean flags on A/B,
+    so a learner that represents the link as a direct reference stays comparable."""
     types = {t["name"]: rm.TypeDef(t["name"], dict(t.get("attrs", {}))) for t in j["types"]}
     rels = {r["name"]: rm.RelationDef(r["name"], r["src"], r["dst"]) for r in j.get("relations", [])}
     ops = {o["name"]: rm.Operator(o["name"], [tuple(p) for p in o.get("params", [])]) for o in j.get("operators", [])}
@@ -71,7 +64,7 @@ def state_from_json(j: dict, domain_name: str | None = None) -> rm.State:
         for a, b in d.items():
             if b is not None:
                 s.set_rel(r, str(a), str(b))
-    # derived relations / flags through link objects
+    # derived relations/flags through link objects
     dn = domain_name or next(iter(LINK_DERIVED), None)
     for dname, L, r1, r2 in LINK_DERIVED.get(dn, []):
         for link in s.of_type(L):
@@ -93,7 +86,7 @@ class OpScore:
     explained_by: Counter = field(default_factory=Counter)
     n_fail: int = 0
     rejected: int = 0  # failed attempts the learned counterpart also rejects
-    unbound_fail: int = 0  # failures we could not bind to the counterpart
+    unbound_fail: int = 0  # failures that could not be bound to the counterpart
     invisible: int = 0  # successes with no change in the learned vocabulary
 
 
@@ -103,8 +96,8 @@ def _bindings(dom: rm.Domain, s: rm.State, op: rm.Operator, pool: list[str]):
 
 def explain_transitions(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping, hidden_states: list[dict],
                         max_bindings: int = 4000) -> tuple[dict[str, OpScore], Counter]:
-    """For each recorded step whose hidden log grew by one successful operation,
-    search for a learned operator reproducing the translated post-state."""
+    """For each step whose hidden log grew by one success, look for a learned
+    operator that reproduces the translated post-state."""
     scores: dict[str, OpScore] = {h: OpScore(h) for h in hidden_dom.operators}
     used_learned: Counter = Counter()
     ld = learned.domain
@@ -125,7 +118,7 @@ def explain_transitions(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping
                 l1, _ = translate_state(hs1, hidden_dom, learned, m)
                 target = canonical_keys(l1, learned)
                 if canonical_keys(l0, learned) == target:
-                    scores[h].invisible += 1  # no change in the learned vocabulary (e.g. latent attribute)
+                    scores[h].invisible += 1  # no change in the learned vocabulary
                     continue
                 pool = sorted({v for o in hs1.objects.values() for v in o.attrs.values() if isinstance(v, str)} - {""})
                 found = None
@@ -155,9 +148,8 @@ def explain_transitions(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping
 
 
 def check_failures(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping, hidden_states: list[dict], scores: dict[str, OpScore]) -> None:
-    """Failed hidden attempts: the learned counterpart (dominant explainer) should be
-    inapplicable under the corresponding binding. Binding correspondence is found by
-    value: hidden object args map to learned ids, strings stay strings."""
+    """Failed hidden attempts: the dominant learned counterpart should be inapplicable
+    under the corresponding binding, found by value (object args map to learned ids)."""
     ld = learned.domain
     prev = None
     for rec in hidden_states:
@@ -170,7 +162,7 @@ def check_failures(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping, hid
                 lop = ld.operators[ln]
                 hs0 = state_from_json(prev["state"])
                 l0, idmap = translate_state(hs0, hidden_dom, learned, m)
-                # candidate learned bindings consistent with the hidden args' values
+                # candidate learned bindings consistent with the hidden values
                 hvals = []
                 for v in entry.get("args", {}).values():
                     if isinstance(v, str) and v in hs0.objects:
@@ -193,9 +185,8 @@ def check_failures(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping, hid
 
 
 def goals_from_trace(hidden_states: list[dict], hidden_dom: rm.Domain, rng: random.Random, n: int = 6, max_atoms: int = 3) -> list[dict]:
-    """Goals = atoms true in a reachable state of an exploration episode (>= 3
-    successful operations after the reset) but false in that episode's initial
-    state. Returns dicts with the seed episode and hidden atoms."""
+    """Goals are atoms true in a reachable state (>= 3 successes after reset) but
+    false in that episode's initial state."""
     by_ep: dict[int, list[dict]] = defaultdict(list)
     for rec in hidden_states:
         by_ep[rec["episode"]].append(rec)
@@ -278,7 +269,7 @@ def translate_goal_generic(goal: list[tuple], hs: rm.State, hidden_dom: rm.Domai
                 continue
             hit = [(a, vmap) for (L2, a), (b2, vmap) in m.attr_map.items() if L2 == L and b2 == b]
             if not hit:
-                continue  # attribute unknown to the learner: dropped from the goal (reported as partial)
+                continue  # attribute unknown to the learner: dropped, reported as partial
             a, vmap = hit[0]
             if v not in vmap:
                 return None
@@ -316,7 +307,7 @@ def translate_goal_generic(goal: list[tuple], hs: rm.State, hidden_dom: rm.Domai
             if l is None or attrs is None:
                 return None
             if not attrs:
-                return None  # latent / unknown attribute
+                return None  # latent or unknown attribute
             for a, lv in attrs.items():
                 if a == learned.key_slots[inv_type[o.type]]:
                     out.append(("exists", inv_type[o.type], {a: lv}, {}))

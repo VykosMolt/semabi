@@ -1,55 +1,22 @@
-"""Did the structure this action affected exhibit the consequence the reading predicted?
+"""Did the thing this action touched do what the reading predicted?
 
-:mod:`semabi.compiler.v4.prospective` fits a reading's action-effect rules on a chronological
-prefix and checks their claims against the later page.  Its outcome test is page-global --
-"did the page gain an occurrence of this value" -- which is too weak to separate readings: a
-value gained in an untouched row confirms a prediction about a row that never changed, and a
-reading whose rules fire on the wrong object collects support it has not earned.
+`prospective` checks a prediction against the whole later page, which is too weak: a
+value that appears in an untouched row confirms a claim about a row that never changed.
+Here a prediction names one raw node and the check asks what that node became.
 
-This module keeps the prefix/suffix protocol and replaces the outcome test with a scoped one.
-A prediction names a raw node -- the node whose rendered text the effect's slot is read from
--- and the check asks whether *that node's continuation* took the predicted value.  The
-continuation comes from :mod:`semabi.compiler.v4.correspondence`, which works on the raw
-accessibility tree and knows nothing about readings, and is computed with the predicted field
-masked, so the property under test cannot be what locates the thing it is measured on.
+Where the node went comes from `correspondence`, which reads the raw page, knows nothing
+about any reading, and is computed with the predicted field hidden, so the property being
+tested cannot be what finds the thing it is tested on. The rules are fitted on a strict
+earlier prefix, and the value is compared against the raw later page.
 
-Three things keep this non-circular.
+The reading is used only for the earlier state: which object the rule is about, and
+whether its precondition held. IDENTITY is the one verdict that consults the reading
+afterwards, because that claim is about the reading's own naming; it is reported apart
+from VALUE so a conclusion can be read without it.
 
-* The rules are fitted on a strict chronological prefix; nothing about the evaluated step
-  reached them.
-* The correspondence is candidate-independent and outcome-masked.  Harbour's readings
-  disagree about what the page's entities are -- rows named by their identifying column, or
-  rows named by a column that does not identify them plus every bare cell as an entity named
-  by its own text -- and the correspondence layer commits to neither: it relocates whichever
-  raw node the reading's own effect points at, using roles, structure and the *other*
-  rendered text around it.
-* The ``VALUE`` verdict compares against ``Node.name``/``Node.value`` in the later raw
-  observation, which no reading computes.
-
-The reading is used for exactly two things, both about the *earlier* state: which object the
-rule is about, and whether the rule's precondition holds.  That is the prediction's antecedent
-and it has to come from the reading; the consequent is checked on the raw page.
-
-``IDENTITY`` is the one verdict that consults the reading on the later observation, and only
-because the claim itself is about the reading's own naming: a reading whose entity names
-collide predicts *which copy* an object becomes (``id := 'open#3'``).  Applying the reading's
-key function to an unmodified later page is not the reading confirming itself -- the page is
-the arbiter and the reading cannot influence it -- but it is reported separately from
-``VALUE`` so that a conclusion can be read without it.
-
-There are two page checks, because readings differ in what they are willing to claim.
-``VALUE`` asks whether the node an effect names took the predicted text; ``EXISTENCE`` asks
-whether the structure that rendered an object still renders it, which is the only claim some
-readings make at all.  And each is scored under two readings of a rule's antecedent: what the
-rule asserts, and what its positives attested.  Whether a refutation counts against the
-representation or against the precondition learner is not decidable from the verdict, so both
-are reported rather than one being chosen.
-
-Set-valued correspondence propagates into the verdict.  ``SUPPORTED`` means every admissible
-continuation shows the predicted consequence, ``REFUTED`` that none does, ``POSSIBLE`` that
-some do and some do not, and ``UNKNOWN`` that the correspondence itself did not settle
-anything.  A forced choice among admissible continuations would manufacture refutations, so
-there is no tie-break anywhere in this path.
+Verdicts carry the uncertainty of the correspondence: SUPPORTED where every possible
+continuation shows the predicted result, REFUTED where none does, POSSIBLE where they
+differ, UNKNOWN where the correspondence settled nothing. Nothing is tie-broken.
 """
 from __future__ import annotations
 
@@ -179,23 +146,14 @@ class ScopedResult:
     PAGE_CHECKS = (VALUE, EXISTENCE, OUTPUT, CREATION)
 
     def signature(self, kind: str | tuple[str, ...] = PAGE_CHECKS) -> list[tuple]:
-        """What this reading predicted, where, and how it came out -- in raw page terms.
+        """What this reading predicted, where, and how it came out, in raw page terms.
 
-        ``(step, raw node, expected text, verdict)``.  Every component is either an index into
-        the recorded observation or a string the page either renders or does not, so two
-        readings' signatures are directly comparable without translating one's vocabulary into
-        the other's -- and the expected value is the claim *as tested*, so a reading that says
-        ``'open#3'`` and one that says ``'open'`` are compared on the page claim they share.
-        Readings whose signatures are equal made the same claims about the same places and
-        were right and wrong in the same way: they are one predictive class under this
-        instrument, whatever their ontologies say.
+        (step, raw node, expected text, verdict). Every part is either an index into the
+        recorded page or a string the page does or does not show, so two readings can be
+        compared without translating one vocabulary into the other. Readings with equal
+        signatures made the same claims in the same places.
 
-        Only predictions the instrument actually decided are signed.  A rule that did not fire
-        made no claim, and counting non-claims would make the signature a function of how many
-        rules were fitted rather than of what was predicted.  Both page checks are covered and
-        the reading-relative one is not: on the veterinary clinic every rule any reading fits
-        is about an object appearing or going away, so a signature over value claims alone
-        would call four readings indistinguishable by saying nothing about any of them.
+        Only decided predictions are signed: a rule that never fired made no claim.
         """
         kinds = (kind,) if isinstance(kind, str) else tuple(kind)
         # A prediction the pre-state could not bind has no node to name; -1 keeps the
@@ -214,11 +172,9 @@ class ScopedResult:
     def binding_summary(self) -> dict[str, Any]:
         """How well each reading's own rules pin down the object the action affected.
 
-        Not a score: the count of assignments its preconditions fail to exclude.  A reading
-        whose action arguments and learned relations determine the affected object binds
-        uniquely; one that cannot relate the control to the object it changes leaves every
-        object of the type open, and that shows up here rather than in a verdict.
-        """
+        Not a score: the count of assignments its preconditions fail to exclude. A reading
+        that cannot relate the control to the object it changes leaves every object of the
+        type open, and that shows up here rather than in a verdict."""
         rows = [p for p in self.predictions if p.kind in (VALUE, EXISTENCE)]
         status = Counter(p.binding_status for p in rows if p.binding_status)
         sizes = [p.bindings for p in rows if p.bindings]
@@ -245,18 +201,14 @@ class ScopedResult:
     def schema(self) -> dict[str, Any]:
         """Are the operators well-formed action schemas, in the STRIPS+ sense?
 
-        STRIPS+ (Gosgens/Geffner and the SIFT line; see docs/related_work.md) splits an action
-        schema's variables three ways: *explicit* ones the action carries, *implicit* ones the
-        preconditions determine uniquely from those, and *existential* ones that need only be
-        satisfiable.  The first two may appear in effects; the third may not, and the reason is
-        exactly the one this run measured -- an effect on an object the state does not pin down
-        does not say which object changes, so it is not a claim about the world.
+        A schema's variables are either carried by the action, determined by its
+        preconditions, or merely satisfiable. The first two may appear in effects; the
+        third may not, because an effect on an object the state does not pin down does
+        not say which object changes.
 
-        This reports the same question of what was actually learned.  A derived parameter counts
-        as determined when every occasion the rule fired left it pinned; an operator is
-        ill-formed when an undetermined parameter appears in one of its effects.  It is a
-        property of the reading and its trace, not a verdict on any prediction.
-        """
+        This reports what was actually learned: a parameter counts as determined when
+        every occasion the rule fired left it pinned, and an operator is ill-formed when
+        an undetermined parameter appears in one of its effects."""
         operators, ill = {}, []
         for name, row in sorted(self.schema_evidence.items()):
             params = {}
@@ -311,14 +263,10 @@ class ScopedResult:
 # ---------------------------------------------------------------- the reading bridge
 
 def slot_nodes(A, obs) -> dict[tuple[int, str], int]:
-    """``(instance root, slot name) -> raw node``: where each slot's value is rendered.
+    """(instance root, slot name) -> the raw node the slot's value is read from.
 
-    The abstractor already records this while parsing -- ``UnitInstance.slot_nodes`` maps a
-    template slot to the node it was read from, and ``attr_name`` is the same function that
-    turned that slot into the attribute name an effect refers to.  Reusing both is what makes
-    an effect on ``attr:cell#0@5`` resolvable to a concrete cell rather than to a page-wide
-    text search.
-    """
+    The abstractor already records this while parsing, which is what makes an effect on a
+    slot resolvable to one cell rather than to a page-wide text search."""
     sig = A.ensure(obs)
     out: dict[tuple[int, str], int] = {}
     for ui in A.H.parse_units(sig):
@@ -337,19 +285,11 @@ def slot_nodes(A, obs) -> dict[tuple[int, str], int]:
 
 
 def action_local(obs, clicked: int, node: int) -> bool:
-    """Is the node this rule is about inside the same table row as the control that was clicked?
+    """Is the node this rule is about in the same table row as the control that was clicked?
 
-    Not a verdict, a diagnosis.  A reading whose objects contain the clicked control names the
-    object the action was on; a reading whose objects do not can only name one by a value, and
-    then it names whichever object on the page carries that value.  Recording where each
-    prediction landed relative to the click separates "the rule was wrong about this object"
-    from "the rule was about a different object entirely", which are different failures and
-    only the second is about the ontology.
-
-    Rows are the containment the applications in this corpus use; where the click has no
-    enclosing row this is the whole document and the answer is trivially true, which the
-    caller can see from the click itself.
-    """
+    A diagnosis, not a verdict. It separates "the rule was wrong about this object" from
+    "the rule was about a different object entirely"; only the second is about the
+    reading. Where the click has no enclosing row the answer is trivially true."""
     def scope(index: int) -> int:
         for ancestor in obs.ancestors(index):
             if obs.node(ancestor).role == "row":
@@ -374,18 +314,12 @@ def _single_click_operators(operators) -> dict[str, list]:
 
 
 def clicked_control(A, obs, step) -> str:
-    """The control identity a rule's locator names, for the control this step clicked.
+    """Which control family a rule's locator names, for the control this step clicked.
 
-    A ``Locator.slot`` is the control's *family* under the reading, which is the rendered label
-    where the abstractor keys controls by label and a latent family key where it does not.
-    Comparing a rule's slot against the clicked node's rendered role and name therefore works
-    on an application whose buttons are labelled distinctly and silently matches nothing on one
-    whose buttons the abstractor groups: on the cellar application every single-click rule any
-    reading fits is for the family ``button#button`` while every held-out click is
-    ``button:Lots`` or ``button:Bottle``, so the instrument reported nothing at all and looked
-    like a fact about cellar.  Asking the abstractor which family the clicked node belongs to
-    is what the locator meant in the first place.
-    """
+    A locator names a family, which is the rendered label where controls are keyed by
+    label and a learned family key where they are not. Comparing the slot against the
+    clicked node's label alone matches nothing on an application whose buttons are
+    grouped, so ask the abstractor which family the node belongs to."""
     target = step.action.target
     if target is not None:
         family = A.control_family(obs).get(target)
@@ -395,17 +329,11 @@ def clicked_control(A, obs, step) -> str:
 
 
 def _owner_object(A, po, state, node: int):
-    """The persistent object the clicked control sits in, as the inducer names it.
+    """The object the clicked control sits in, as the inducer names it.
 
-    This matched the innermost instance's root against the objects' nodes and stopped.  A
-    button that is a *mention* of an entity -- blend's `Close North Wall` is a recurring unit
-    of its own, keyed by the vat's name and read as the vat's type -- is an instance whose
-    key names the row's object while its node does not, so the click had no owner and no
-    literal about the vat could reach a rule: `Close` established nothing at every one of its
-    sixteen held-out states.  `induce.describe_target` has always resolved the owner by
-    ``(type, key)`` as well and walked up to the enclosing instance when neither is an object;
-    the scorer now does the same, so a prediction is bound the way the rule was learned.
-    """
+    Resolved by (type, key) as well as by node: a button that is itself a mention of an
+    entity has a key that names the row's object while its node does not, and matching
+    nodes alone left such clicks with no owner at all."""
     idx = po.node_instance.get(node)
     by_node = {o.node: o for o in state.objs.values()}
     while idx is not None:
@@ -425,17 +353,9 @@ def action_binding(A, po, state, op, clicked: int) -> tuple[dict[str, Any], str]
     """The parameters the concrete action supplies, and nothing else.
 
     A reading whose objects contain the clicked control can say which object the action is
-    about; a reading whose objects do not contain it supplies nothing here, and everything its
-    rule mentions has to be solved for.  That difference is a fact about the readings.
-
-    Only the owner of the clicked node.  A typed or selected string *was* carried by the
-    action, and binding it here would let literals about it be decided instead of left open --
-    but the value lives on the concrete step rather than on the rule, and this is not given the
-    step.  The cost is measured and small: 53 bindings corpus-wide come back ``POSSIBLE`` for
-    want of a string, all on one application, against 7581 fully decided.  Until that is worth
-    the plumbing, the string is treated as never supplied, which keeps such a rule from being
-    refuted on a literal nothing here could evaluate.
-    """
+    about; one whose objects do not supplies nothing here. A typed or selected string was
+    also carried by the action, but it lives on the step rather than on the rule and is not
+    passed in, so it counts as never supplied rather than as refuting a rule."""
     binding: dict[str, Any] = {}
     core = op.core()[0]
     if core.owner and core.loc is not None and core.loc.owner_tid is not None:
@@ -450,33 +370,22 @@ def bindings_for(A, po, state, op, clicked: int, applicability: str,
                  queries: dict | None = None) -> tuple[Any, str]:
     """Every assignment of the rule's parameters this pre-action state leaves open.
 
-    The literals are the ones the applicability mode already uses, so binding and applicability
-    are one question asked once: an assignment is admissible exactly when it satisfies what
-    decides whether the rule applies.
+    An assignment is admissible exactly when it satisfies what decides whether the rule
+    applies, so binding and applicability are one question asked once.
 
-    A learned referring query, where the rule has one, is asked first.  That is the whole point
-    of having learned it: the rule says which object it is about, and enumerating the objects
-    the preconditions merely fail to exclude is what it was learned instead of.  A query that
-    names exactly one object pins it; one that names none or several pins nothing and the
-    enumeration proceeds as before, because a referring expression that does not refer here is
-    not evidence about which object the rule meant.
-
-    The query never decides *whether* the rule applies -- only which object it is about.
-    Applicability remains the preconditions, asked of the assignment.
-    """
+    A learned referring query is asked first, which is what it was learned for. If it names
+    exactly one object that object is used; if it names none or several, the enumeration
+    proceeds. The query never decides whether the rule applies, only what it is about."""
     supplied, why = action_binding(A, po, state, op, clicked)
     if why:
         return None, why
     named = _named_by_query(op, state, supplied, queries)
     unnamed = [v for v in (queries or ()) if v not in named and v not in supplied]
     if unnamed:
-        # The rule learned a way to say which object it is about and that way does not resolve
-        # here.  Falling through to enumeration answers a different question -- which objects
-        # the preconditions fail to exclude -- and on blend that is where the model does its
-        # wrong firing: abstaining instead cuts contradictions by 74% and takes precision from
-        # 21% to 37%, and on the steps where the application performs the action it stops being
-        # wrong at all.  UNNAMED rather than NONE, because "I cannot tell which object" is not
-        # "the rule does not apply here": one is about the model, the other about the page.
+        # The rule learned a way to say which object it is about, and it does not resolve
+        # here. Enumerating instead would answer a different question -- which objects the
+        # preconditions fail to exclude -- so abstain. UNNAMED rather than NONE: "I cannot
+        # tell which object" is not "the rule does not apply".
         return binding.Bindings(
             binding.UNNAMED, (),
             "the rule's referring expression names no single object here: "
@@ -532,47 +441,24 @@ a key-slot identity constant.  They remain callable so retained artifacts can be
 
 
 def applicable_literals(op, mode: str) -> list[tuple]:
-    """The literals a rule's antecedent is taken to require.
+    """The conditions a rule's antecedent is taken to require.
 
-    ``learn_pre`` keeps a *minimal* precondition -- just enough to exclude the negatives it
-    saw -- so a rule asserts less than the conditions it was actually observed under.  Firing
-    it outside those conditions is extrapolation, and on an application with derived counters
-    it is nearly always false: a rule fitted on one transition predicts ``gallons := 3``
-    whatever the vat held.  Whether that counts against the *reading* or against the
-    precondition learner is not decidable from the verdict, so both readings are run both
-    ways: ``asserted`` is the rule as stated, ``attested`` restricts it to the attribute
-    values that held in every positive it was fitted on.
+    `learn_pre` keeps a minimal precondition, just enough to exclude the negatives it saw,
+    so a rule asserts less than the conditions it was observed under. Firing it outside
+    them is extrapolation. Whether that counts against the reading or against the
+    precondition learner cannot be read off the verdict, so both are available:
+    `asserted` is the rule as stated, `attested` also requires the attribute values that
+    held in every positive.
 
-    Only the attribute literals of ``common`` are added.  Its structural literals are not
-    checkable for every binding, and dropping an unverifiable restriction makes a rule fire
-    more often, which is the direction that invents refutations -- so they are left out of
-    ``asserted`` and reported rather than assumed.
+    Only attribute conditions are added. Structural ones cannot be checked for every
+    binding, and dropping an unverifiable restriction makes a rule fire more often, which
+    is the direction that invents refutations.
 
-    **``attested`` and ``generative`` are retired as authoritative modes.** Both add
-    ``op.common``, whose literals ``learn_pre`` deliberately declines to put in ``op.pre``:
-    equalities on a key slot ("identity constants never generalise"), constants of an object
-    seen once, constants of mutable free text.  ``memorises_the_fitting_instance`` now names
-    those refusals in one place, because having them inline in the greedy cover is why this
-    function could re-admit what they rejected without anyone noticing.
-
-    The ablation that settled it ran three literal sets over identical firings -- ``op.pre``,
-    ``op.pre`` plus only the additions no refusal covers, and ``op.pre`` plus everything.  The
-    middle set is indistinguishable from the first on every firing of harbour (264) and cellar
-    (92); and of the 145 harbour and 86 cellar verdict changes the full set produces, every
-    single one is caused by a key-slot identity constant, on operators fitted mostly to one
-    transition.  So what the mode does is enforce "this rule applies to the object that had
-    this name during training", which is the memorised-key binding the binder replaced.
-
-    ``generative`` is the third reading, and it is the one the literature argues for.  SYNTH
-    (arXiv:2508.21449, and see docs/related_work.md) builds an action's precondition as a
-    *binding query* that determines the implicit arguments, conjoined with the atoms that held
-    in every state where the action was applied -- and proves the result applicable exactly
-    when the hidden action is.  ``common`` is that second part, computed the same way.
-    ``op.pre`` is neither: it is a greedy discriminative cover, kept because it excludes the
-    negatives, and it has no counterpart in that construction.  So ``generative`` drops it and
-    keeps only what was observed to hold, which is the mode in which "the rule did not apply
-    here" means what it says.
-    """
+    `attested` and `generative` are no longer authoritative. Both re-admit conditions the
+    precondition learner deliberately refuses (equalities on a key, constants of an object
+    seen once), and an ablation showed every verdict they change comes from one of those:
+    in effect they say "this rule applies to the object that had this name during
+    training"."""
     if mode == GENERATIVE:
         return [literal for literal in sorted(getattr(op, "common", ()) or (), key=str)
                 if len(literal) == 4 and literal[0] in ("attr", "attr_ne")]
@@ -587,22 +473,15 @@ def applicable_literals(op, mode: str) -> list[tuple]:
 
 
 def preconditions_hold(A, state, op, values, mode: str = ASSERTED) -> tuple[bool, str]:
-    """Does the rule's antecedent hold, exactly, for this one complete assignment?
+    """Does the rule's antecedent hold, exactly, for one complete assignment?
 
-    The same semantics the binder uses when it solves for assignments, applied to one that is
-    already complete.  Keeping a second implementation here is how the two would drift, and a
-    binder that admitted an assignment the checker then rejected would be the worst of both.
+    The same semantics the binder uses, applied to an assignment that is already complete.
+    A condition this state cannot decide leaves the rule un-fired: over-firing invents
+    refutations, under-firing only costs coverage.
 
-    A literal this state cannot decide leaves the rule un-fired.  Over-firing invents
-    refutations; under-firing only costs coverage, which is reported.
-
-    Nothing on the prediction path calls this any more: since the binder solves the
-    preconditions to find an assignment in the first place, every assignment it hands back has
-    already satisfied them, and re-checking would only ask the same question twice.  What it
-    still buys is an independent way to ask that question of an assignment nobody derived --
-    which is what the tests do, and what an outside caller holding a candidate binding would
-    want.  It delegates rather than reimplementing, so it cannot answer differently.
-    """
+    Nothing on the prediction path calls this, since the binder has already satisfied the
+    preconditions. It exists for a caller holding a binding nobody derived, and delegates
+    rather than reimplementing so the two cannot disagree."""
     state.types = getattr(state, "types", None) or A.types
     for literal in applicable_literals(op, mode):
         missing = [x for x in literal[1:]
@@ -642,18 +521,10 @@ def _why_not(literal: tuple) -> str:
 def binding_context(binding) -> tuple[tuple[str, Any], ...]:
     """Everything the reading says about the objects the rule was bound to.
 
-    This is the space a conditional refinement may be drawn from -- and it is drawn from the
+    This is what a conditional refinement may be drawn from, and it comes from the
     reading's own vocabulary, so a reading that cannot see the distinguishing state cannot
-    be rescued by one.  Recorded on every prediction so the search in
-    :mod:`semabi.compiler.v4.conditional` never needs to re-run the fit.
-
-    References belong here as much as attributes.  Harbour's berth rows do not carry the
-    holding call as an attribute -- the abstractor resolves that cell to a *reference* to the
-    call -- so a search offered only attributes concluded that nothing in the reading's
-    vocabulary separated its successes from its failures, when the one thing that does was
-    sitting in ``refs``.  A reference's target is recorded by the key it points at, or
-    ``None``, which is exactly the distinction a precondition would need to make.
-    """
+    be rescued by one. References belong here as much as attributes: a cell that resolves
+    to another object is often the one thing that separates success from failure."""
     out: list[tuple[str, Any]] = []
     for param, obj in sorted(binding.items()):
         out.append((f"{param}.id", obj.key))
@@ -666,13 +537,10 @@ def binding_context(binding) -> tuple[tuple[str, Any], ...]:
 
 @dataclass
 class Fit:
-    """One compiled reading on one prefix, reusable across scorings.
+    """One compiled reading on one prefix, reused across scorings.
 
-    Compiling is the whole cost of this instrument -- around a minute for harbour, against
-    milliseconds for every correspondence in the run -- so the applicability modes, the
-    mutation controls and the prefix/suffix halves all score the same fit rather than
-    repeating it.  Nothing about the evaluated steps enters here.
-    """
+    Compiling is the whole cost of this instrument, so the applicability modes, the
+    controls and both halves of the trace score the same fit rather than repeating it."""
     reading: Any
     abstractor: Any
     operators: list
@@ -690,21 +558,18 @@ class Fit:
 def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
         min_support: int = 2, regime: str = FROZEN_PREFIX, read_outputs: bool = True,
         permute_outcomes: int | None = None, subject_restricted: bool = False) -> Fit:
-    """Compile one reading on the evidence one regime says was available, and freeze it.
+    """Compile one reading on the evidence a regime says was available, and freeze it.
 
-    The regime *is* the information boundary; there is one place that turns it into a view of
-    the trace, so a result cannot be produced under a boundary nobody named.
+    The regime is the information boundary, and there is one place that turns it into a
+    view of the trace, so no result can be produced under a boundary nobody named.
 
-    ``FROZEN_PREFIX`` fits the observation model from prefix observations only, then never
-    updates: zero-shot generalisation beyond the cut.  ``TRANSDUCTIVE`` lets the whole retained
-    trace build the schema while still learning transitions from the prefix; it measures how
-    much of a result the suffix representation was responsible for and is never prospective
-    evidence.  ``CAUSAL_PREQUENTIAL`` is the boundary an agent actually faces -- every completed
-    transition and the page in front of it, and nothing about how the action turns out.
+    FROZEN_PREFIX fits the observation model on prefix pages only and never updates.
+    TRANSDUCTIVE lets the whole trace build it, which measures how much of a result the
+    later pages were responsible for and is never prospective evidence.
+    CAUSAL_PREQUENTIAL is what an agent actually faces: every completed transition and
+    the page in front of it, and nothing about how the action turns out.
 
-    ``at`` names the cut in steps, which is what a prequential loop wants; ``split`` names it as
-    a fraction, which is what a held-out experiment wants.
-    """
+    `at` names the cut in steps, `split` as a fraction."""
     from semabi.compiler.compile_v4 import compile_v4
     from semabi.compiler.evidence import EvidenceLog
 
@@ -717,10 +582,9 @@ def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
     slice_at = {FROZEN_PREFIX: full.through,
                 TRANSDUCTIVE: full.transductively_through,
                 CAUSAL_PREQUENTIAL: full.before_action}[regime]
-    # Sections are decided from the regime's own corpus and then applied to every page, so a
-    # held-out page is read under the frozen ontology rather than one that saw it.  Slicing
-    # happens afterwards because the rewrite re-keys signatures, and the views must carry the
-    # rewritten ones.
+    # Sections are decided from this regime's own pages and then applied to every page, so a
+    # held-out page is read under a frozen ontology. Slicing happens afterwards because the
+    # rewrite re-keys signatures.
     from semabi.compiler.compile_v4 import _normalise_sections
     _normalise_sections(full, stats_from=slice_at(cut))
     prefix = slice_at(cut)
@@ -730,19 +594,15 @@ def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
     # whichever regime built it: a transductive schema is a diagnostic, not a licence to keep
     # learning while it scores.
     compiled.inducer.A.freeze()
-    # The referring queries are part of the model, not a diagnostic run over it: a rule that
-    # names an object the action does not supply has to say which object before it can predict
-    # anything.  The inducer now learns them before its preconditions -- a counterexample has
-    # to be read with the same query the rule will be executed with -- so this is normally the
-    # model's own set; the fallback covers a caller that compiled without one.
+    # The referring queries are part of the model: a rule that names an object the action
+    # does not supply has to say which object before it can predict anything. The inducer
+    # learns them before its preconditions; this fallback covers a caller without them.
     queries = compiled.inducer.queries or _learn_queries(compiled.inducer,
                                                         compiled.inducer.operators)
-    # `log` is the whole trace because scoring has to reach the steps being predicted.
-    # `evidence` is what the model was allowed to learn from, kept so that the frontier is
-    # something a caller can check rather than something it has to trust.
-    # The outcome layer sits over the operators rather than inside them: what an interaction
-    # returns is one of a set of alternatives, and alternatives are learned as an ordered list
-    # (see `semabi.compiler.v4.outcome`), not as independently guarded rules.
+    # `log` is the whole trace because scoring has to reach the steps being predicted;
+    # `evidence` is what the model was allowed to learn from, kept so a caller can check the
+    # boundary rather than trust it. The outcome layer sits over the operators: what a click
+    # returns is one of a set of alternatives, learned as an ordered list.
     outcomes = (outcome.learn(compiled.inducer, permute=permute_outcomes,
                               subject_restricted=subject_restricted)
                 if read_outputs else {})
@@ -756,10 +616,9 @@ def _learn_queries(inducer, operators) -> dict:
 
     out: dict[str, dict] = {}
     for op in operators:
-        # What a prediction will actually have in hand.  `action_binding` supplies the owner of
-        # the clicked control and nothing else: a typed or selected string was carried by the
-        # concrete step, and the rule is not given the step.  Treating such a variable as
-        # supplied told this search there was nothing to look for.
+        # What a prediction will actually have in hand: the owner of the clicked control and
+        # nothing else. Treating a typed string as supplied told this search there was
+        # nothing to look for.
         core = op.core()
         bound = {core[-1].owner} if core and core[-1].owner else set()
         enabling = {a.owner for a in core[:-1] if a.owner} - bound
@@ -790,10 +649,8 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
           correspondence: str = MASKED) -> ScopedResult:
     """Check a fitted reading's rules against the raw page, where each one lands.
 
-    ``evaluate_on`` exists for the conditional-refinement search, which needs the same
-    verdicts computed over the *prefix* -- the part a refinement may be chosen from.  It never
-    changes what the rules were fitted on.
-    """
+    `evaluate_on` lets the conditional search ask for the same verdicts over the prefix.
+    It never changes what the rules were fitted on."""
     A, operators, full, cut = model.abstractor, model.operators, model.log, model.cut
     reading, split = model.reading, model.split
     by_control = _single_click_operators(operators)
@@ -833,12 +690,9 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
         bridge = bridges.get(id(pre))
         if bridge is None:
             bridge = bridges[id(pre)] = slot_nodes(A, pre)
-        # One transition, so a relocation depends only on which node is being relocated: every
-        # admissible assignment of every rule at this step asks about the same pair of
-        # observations.  Where a rule leaves dozens of assignments open that is the same
-        # correspondence recomputed dozens of times, and it is the whole cost of scoring -- on
-        # cellar's loosest reading the binder itself takes 0.2s of a 290s scoring pass.  The
-        # cache lives for one step so that no observation identity outlives it.
+        # Within one step every assignment of every rule asks about the same pair of pages,
+        # so relocation depends only on the node. That recomputation is the whole cost of
+        # scoring. The cache lives for one step so no page outlives it.
         step_relocate = _for_one_step(relocate)
         step_gone = _for_one_step(gone)
         for op in rules:
@@ -873,11 +727,9 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                     continue
                 assignments = bound.admissible
                 if kind is CREATION:
-                    # A creation claim is about the values the new object will carry, and two
-                    # assignments that resolve them the same way are one claim.  Evaluating
-                    # them separately made a rule with a hundred open assignments ask the same
-                    # question a hundred times, which is most of a scoring pass on a reading
-                    # that pins nothing.
+                    # A creation claim is about the values the new object will carry, so two
+                    # assignments that resolve them the same way are one claim. Evaluating
+                    # them separately asked the same question a hundred times.
                     assignments = _distinct_by(assignments,
                                                lambda a: _creation_values(eff, a))
                 parts = [_under_one_binding(base, A, bridge, pre, post, step, op, eff,
@@ -892,12 +744,10 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
 
 
 def _for_one_step(match):
-    """``match`` memoised on the node, for the one transition it is about.
+    """`match` memoised for the one transition it is about.
 
-    Correspondence is a pure function of the two observations and the node, and within a step
-    the observations do not change.  Keying on the node alone means no observation identity is
-    held past the step that produced it, which keying on ``id()`` would have risked.
-    """
+    Correspondence depends only on the two pages and the node, and within a step the pages
+    do not change. Keying on the node alone keeps no page alive past its own step."""
     seen: dict[int, Any] = {}
 
     def once(pre, post, node):
@@ -938,10 +788,8 @@ def _record_schema(result: ScopedResult, op, bound) -> None:
 def _claim(op, eff, mutate):
     """What this effect asserts about the page, or ``None`` if it asserts nothing testable."""
     if eff.kind == "emit":
-        # The claim is about the live region after the action: which event it reads, and about
-        # which objects.  Unlike the state checks it needs no correspondence -- the live region
-        # is one positionally stable node and the claim is about its content, not about
-        # following a node through a transition.
+        # The claim is about the live region after the action: which event it reads, and
+        # about which objects. No correspondence needed: the region is one stable node.
         return OUTPUT, eff.slot, (mutate(eff.slot) if mutate else eff.slot)
     if eff.kind == "add":
         # The claim is that the page will render a structure it did not render before, carrying
@@ -1022,19 +870,14 @@ def _aggregate(base: ScopedPrediction, parts: list[ScopedPrediction], bound
                ) -> ScopedPrediction:
     """One verdict for the rule at this step, over every assignment still open.
 
-    The rule fired once.  Several admissible assignments are competing hypotheses about which
-    instantiation that was, not a claim that each of them received the effect, so a single
-    assignment whose consequence holds is enough to stop a refutation -- the hidden one might
-    have been that one.  Refuting therefore requires *every* admissible assignment to be
-    contradicted, and an assignment that could not be tested at all counts against refuting
-    rather than for it.  Where the enumeration was cut short, "every" was never established.
-    """
+    The rule fired once. Several open assignments are competing guesses about which one it
+    was, not a claim about each, so one assignment whose consequence holds stops a
+    refutation. Refuting requires every open assignment to be contradicted, and an
+    assignment that could not be tested counts against refuting."""
     decided = [p for p in parts if p.verdict in (SUPPORTED, REFUTED, POSSIBLE)]
     verdicts = {p.verdict for p in parts}
-    # The witness reported is representative of the aggregate rather than of its best case: a
-    # supported assignment stands for a supported verdict, and for anything else the first
-    # assignment that was decided at all, so an ambiguous result does not quote the one
-    # instantiation that happened to work.
+    # The witness quoted stands for the aggregate, not for its best case: a supported
+    # assignment where the verdict is supported, otherwise the first one decided at all.
     winner = (next((p for p in parts if p.verdict == SUPPORTED), None)
               if verdicts == {SUPPORTED} else None)
     winner = winner or (decided[0] if decided else (parts[0] if parts else base))
@@ -1100,14 +943,11 @@ def _aggregate_identity(base: ScopedPrediction, parts: list[ScopedPrediction], b
 
 
 def matcher(kind: str, corresponder):
-    """The correspondence rule to check predictions against, including the broken ones.
+    """Which correspondence rule to check predictions against, including the broken ones.
 
-    A conclusion that survives every one of these is not evidence about the instrument, and a
-    conclusion that only appears under one of them is evidence about the instrument rather
-    than about the readings.  ``unmasked`` lets the correspondence use the very property the
-    prediction is about; ``same_index`` is the null hypothesis that these applications
-    re-render in place, which most transitions in this corpus satisfy.
-    """
+    A conclusion that survives all of them is not an artefact of the instrument; one that
+    appears under only one of them is. `unmasked` lets the correspondence use the very
+    property being predicted; `same_index` assumes the page re-renders in place."""
     if kind == NEAR_OPTIMAL:
         wider = corr.Corresponder(corresponder.descriptors, tolerance=1)
         return lambda pre, post, node: wider(pre, post, node, corr.mask_outcome(pre, node))
@@ -1136,11 +976,9 @@ def _rendered_as(value) -> str | None:
 def _model_summary(operators) -> dict[str, Any]:
     """What the fit itself looks like, carried alongside the verdicts.
 
-    A refutation count says nothing about whether the model was given the repairs the learner
-    can make.  These are the facts that say so: how many counterexamples the learner could not
-    explain after installing preconditions, which forms of literal it used, and how many effect
-    values it had to leave undetermined because the action does not fix them.
-    """
+    A refutation count says nothing about whether the learner was given the repairs it can
+    make. These are the facts that do: counterexamples left unexplained, the forms of
+    condition used, and how many effect values the action does not fix."""
     vocabulary: Counter = Counter()
     undetermined = 0
     for op in operators:
@@ -1161,19 +999,13 @@ def _model_summary(operators) -> dict[str, Any]:
 def _existence_prediction(A, bridge, pre, post, step, control, op, binding, eff, gone):
     """A rule that says an object goes away, checked where that object was rendered.
 
-    Some readings' whole action-effect model is about existence: on the veterinary clinic
-    every fitted rule is a view switch that makes objects appear and disappear, and not one of
-    them predicts what anything will say.  A value check reports nothing there, which is
-    correct and uninformative -- so the same correspondence answers the other question, by
-    relocating the node that rendered the object's own name and asking whether the thing that
-    continued it still says that name.
+    Some readings are entirely about existence: every fitted rule makes objects appear or
+    disappear and none predicts what anything will say. A value check reports nothing
+    there, so the same correspondence answers the other question instead, by relocating
+    the node that rendered the object's name and asking whether it still says it.
 
-    Nothing is masked: the prediction is about the object being gone, not about a field
-    taking a value, so its rendered identity is evidence rather than the answer.  The
-    correspondence rule chosen for the value check does not apply here either -- survival is
-    always asked with the content layers, because that restriction is part of what the
-    question means rather than a setting.
-    """
+    Nothing is masked here: the claim is that the object is gone, so its rendered name is
+    evidence rather than the answer."""
     subject = binding.get(eff.obj)
     if subject is None or subject.node is None or subject.node < 0:
         return None
@@ -1211,18 +1043,15 @@ def _existence_prediction(A, bridge, pre, post, step, control, op, binding, eff,
 
 def _output_prediction(pred: ScopedPrediction, A, post, eff, assignment, predicted: str
                        ) -> ScopedPrediction:
-    """Did the live region read the event this rule said it would, about these objects?
+    """Did the live region say the event this rule predicted, about these objects?
 
-    The claim is checked against the raw post-state page, lifted by the same frozen vocabulary
-    the model was fitted under, and the reading contributes only the *antecedent*: which
-    objects it thinks the interaction was about.  So this asks two things at once and reports
-    them as one verdict, which is deliberate -- an event predicted about the wrong object is
-    not a correct prediction, and a reading whose names for objects are not the names the
-    application prints has been contradicted by the application.
+    Checked against the raw later page, lifted by the same frozen vocabulary the model was
+    fitted with. The reading supplies only which objects it thinks the click was about, so
+    this asks two things at once on purpose: an event predicted about the wrong object is
+    not a correct prediction.
 
-    There is no correspondence layer here.  A live region is a single positionally stable node
-    and the claim is about what it says, not about following a node across a transition.
-    """
+    No correspondence layer: a live region is one stable node and the claim is about what
+    it says, not about following a node across a change."""
     observed = emit_mod.live_text(post)
     if observed is None:
         pred.verdict = NOT_APPLICABLE
@@ -1283,12 +1112,10 @@ def _output_prediction(pred: ScopedPrediction, A, post, eff, assignment, predict
 
 
 def _nodes_rendering(obs, value: str) -> frozenset:
-    """Nodes whose subtree renders ``value``, memoised on the observation.
+    """Nodes whose subtree renders `value`, memoised per page.
 
-    One pass per distinct value per observation.  Doing it per *claim* instead was the
-    difference between a test that runs and one that does not: a rule with a hundred admissible
-    assignments asks a hundred different value sets of the same two pages.
-    """
+    One pass per distinct value per page. Doing it per claim instead is the difference
+    between a test that runs and one that does not."""
     from semabi.compiler.v4.emission import tokens as _tokens
 
     index = getattr(obs, "_rendering_index", None)

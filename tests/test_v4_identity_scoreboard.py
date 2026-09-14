@@ -1,5 +1,5 @@
-"""The identity scoreboard scores only what every candidate addresses; volume is
-provenance, never units (docs/v4_retained.md, Parts XIII-XV)."""
+"""Tests that the identity scoreboard scores only what every candidate addresses,
+treating volume as provenance rather than as scoring units."""
 from semabi.eval.v4_identity_scoreboard import score
 
 
@@ -8,8 +8,8 @@ def _claims(state, emission):
 
 
 def test_a_finer_ontology_cannot_win_by_vocabulary():
-    """The twin ledger's shape: both candidates are right about every atom they share;
-    the finer one makes creation claims the coarser cannot.  No coverage difference."""
+    """Checks a finer ontology can't win purely by making extra vocabulary claims
+    when it's right about every atom it shares with a coarser candidate."""
     coarse = _claims({"1|VALUE|7": ["SUPPORTED", "wet"]}, {1: "right"})
     fine = _claims({"1|VALUE|7": ["SUPPORTED", "wet"], "1|CREATION|9": ["SUPPORTED", "new"]}, {1: "right"})
     board = score({"coarse": coarse, "fine": fine}, {})
@@ -38,7 +38,8 @@ def test_unchecked_support_earns_no_coverage_and_emission_is_counted_only_where_
 
 
 def test_an_empty_shared_surface_cannot_separate_anyone():
-    """vet's development history: fifteen atoms, all candidates alike -- here, none."""
+    """Checks an empty shared surface, where every candidate agrees, can't separate
+    any of them."""
     a = _claims({"1|VALUE|7": ["SUPPORTED", "x"]}, {})
     b = _claims({"2|VALUE|8": ["SUPPORTED", "y"]}, {})
     board = score({"a": a, "b": b}, {})

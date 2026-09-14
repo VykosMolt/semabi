@@ -1,5 +1,5 @@
-"""The member-reversal transform of `semabi.eval.v4_metamorphic`, pinned so that a difference
-it reports is the model's and not the instrument's."""
+"""Tests the member-reversal transform of `semabi.eval.v4_metamorphic`, so a
+difference it reports is the model's, not the instrument's own artifact."""
 from __future__ import annotations
 
 from semabi.eval import v4_metamorphic as mm

@@ -1,22 +1,12 @@
-"""Two corrections to the transfer rule, and the properties that justify them.
+"""Tests for two corrections to the transfer rule.
 
-Both were found by inspecting the retained V4 survivor sets rather than by reading the
-code, and both are narrow.
+C1: asymmetric applicability makes credit incomparable, not refutation. A claim that
+couldn't be instantiated leaves the reading silent there, and silence is never WRONG, so
+a less-instantiated reading can't manufacture refutations of its rival.
 
-C1  Asymmetric applicability makes *credit* incomparable, not *refutation*.  A claim that
-    could not be instantiated leaves the reading SILENT there, and silence is never
-    classified WRONG, so a less instantiated reading cannot manufacture refutations of its
-    rival.  The old rule refused every comparison whenever applicability differed, which
-    exempted exactly the readings that restructure the object inventory -- promotion above
-    all, since promoting a leaf changes which families exist at the destination and so
-    always lowers applicability.  On all three retained applications the promoted candidate
-    survived with zero wins and zero losses: it was never compared to anything.
-
-C2  Silence is not evidence in either direction.  The old rule stopped only when *neither*
-    reading made predictions, so a reading that asserts no identity anywhere -- never
-    contradicted, because it never claims anything -- defeated every rival that risked a
-    claim.
-"""
+C2: silence is not evidence in either direction. A reading that asserts no identity
+anywhere, and so is never contradicted, must not defeat every rival that risked a
+claim."""
 from itertools import combinations
 
 import pytest
@@ -47,7 +37,7 @@ WHOLE = {"numerator": 1, "denominator": 1}
 # --------------------------------------------------------------------------- C1
 
 def test_a_partly_instantiated_reading_is_still_refuted_where_its_rival_is_not():
-    """The correction.  Before it this pair returned INCONCLUSIVE_ASYMMETRIC_APPLICABILITY."""
+    """Checks a partly instantiated reading is still refuted where its rival is not."""
     partial = _ev("partial", {1: "CHURN", 2: "CHURN", 3: "EXPLAINED", 4: "SILENT"},
                   applicability_fraction=PARTIAL)
     # the rival must itself say something, or C2 correctly refuses to weigh them at all
@@ -60,7 +50,8 @@ def test_a_partly_instantiated_reading_is_still_refuted_where_its_rival_is_not()
 
 
 def test_credit_is_still_incomparable_when_applicability_differs():
-    """Explaining more is exactly what does not travel, and it is not made comparable."""
+    """Checks credit stays incomparable when applicability differs, since explaining
+    more is exactly what doesn't travel."""
     partial = _ev("partial", {1: "EXPLAINED", 2: "EXPLAINED", 3: "EXPLAINED"},
                   applicability_fraction=PARTIAL)
     whole = _ev("whole", {1: "SILENT", 2: "SILENT", 3: "EXPLAINED"},
@@ -69,7 +60,8 @@ def test_credit_is_still_incomparable_when_applicability_differs():
 
 
 def test_both_refuted_under_asymmetry_stays_inconclusive():
-    """Counting *how many* refutations each has is a comparison the handicap can distort."""
+    """Checks two readings both refuted under asymmetry stay inconclusive, since
+    counting refutations would let the handicap distort the comparison."""
     partial = _ev("partial", {1: "CHURN", 2: "CHURN", 3: "SILENT"},
                   applicability_fraction=PARTIAL)
     whole = _ev("whole", {1: "SILENT", 2: "SILENT", 3: "VISIBILITY"},
@@ -84,13 +76,9 @@ def test_neither_refuted_under_asymmetry_stays_inconclusive():
 
 
 def test_refuted_here_is_monotone_under_instantiating_less():
-    """The property C1 rests on: silence cannot manufacture a refutation.
-
-    Replacing any of a reading's verdicts by silence -- which is what failing to
-    instantiate a claim does -- can only lower the count of steps where it is wrong and
-    its rival is not.  So a reading still refuted despite the handicap is genuinely
-    refuted.
-    """
+    """Checks silence can't manufacture a refutation: replacing a verdict with
+    silence can only lower the count of steps a reading is wrong, so one still refuted
+    despite the handicap is genuinely refuted."""
     rival = _ev("rival", {i: "SILENT" for i in range(1, 9)})
     full = {1: "CHURN", 2: "VISIBILITY", 3: "EXPLAINED", 4: "SPURIOUS",
             5: "CONTRADICTION", 6: "EXPLAINED", 7: "CHURN", 8: "SILENT"}
@@ -103,7 +91,8 @@ def test_refuted_here_is_monotone_under_instantiating_less():
 
 
 def test_asymmetry_correction_does_not_reverse_a_symmetric_verdict():
-    """The correction adds a decision only where the old rule refused one."""
+    """Checks the correction only adds a decision where the old rule refused one,
+    without reversing a symmetric verdict."""
     left = _ev("left", {1: "CHURN", 2: "EXPLAINED", 3: "SILENT"})
     right = _ev("right", {1: "SILENT", 2: "SILENT", 3: "EXPLAINED"})
     assert decide(left, right).outcome == "RIGHT"
@@ -116,7 +105,7 @@ def _null(steps):
 
 
 def test_a_reading_that_asserts_nothing_cannot_defeat_one_that_does():
-    """The correction.  Before it the null reading won this pair outright."""
+    """Checks a reading that asserts nothing can't defeat one that does."""
     null = _null(4)
     speaks = _ev("speaks", {1: "EXPLAINED", 2: "CHURN", 3: "EXPLAINED", 4: "EXPLAINED"})
     assert not null.makes_predictions

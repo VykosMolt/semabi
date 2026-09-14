@@ -1,6 +1,6 @@
-"""A surviving identity tie is decidable exactly when a known interaction touches a contested
-value -- writes it, makes an instance that can share it, or re-types the family -- and is
-provisionally quotient-equivalent otherwise (`docs/v4_ties.md`)."""
+"""A surviving identity tie is decidable when a known interaction touches the
+contested value: writes it, makes an instance that can share it, or re-types the
+family. Otherwise it stays open (see docs/v4_ties.md)."""
 from __future__ import annotations
 
 from types import SimpleNamespace
@@ -45,8 +45,8 @@ def test_a_target_is_found_by_role_name_and_ordinal():
 
 
 def test_an_experiment_is_decided_on_its_own_terms(monkeypatch, tmp_path):
-    """A change both readings suffer alike -- the reload, a count that moved -- is no evidence
-    between them; only the terms the experiment is about decide (`docs/v4_ties.md`)."""
+    """Checks a change both readings suffer alike, like a reload or a shared count, is
+    not evidence between them; only the terms the experiment is about decide."""
     from semabi.eval import v4_tie_experiment as exp
     from semabi.compiler.v4.objective import Behaviour
     scores = {"A": Behaviour(explained=3, churn=1, positional=0), "B": Behaviour(explained=3, churn=1, positional=5)}
@@ -63,10 +63,9 @@ def test_an_experiment_is_decided_on_its_own_terms(monkeypatch, tmp_path):
 
 
 def test_reachable_is_not_identifiable_unless_the_history_separates_the_keys():
-    """Harbour's calls: `Schedule call` makes a call for a vessel, and every call it made
-    carried the vessel's own length -- the maker touches the family and never reaches a
-    state where two calls share a length but not a vessel.  That tie is reachable and not
-    discriminating; `Status`, which every new call shares, is."""
+    """Checks a tie that's reachable but never discriminated, because every call keeps
+    the vessel's own length, is left undecided, while a tie every call could separate
+    is decided."""
     rows = [{"cell@Vessel#0": "Selkie", "cell@Length overall#0": "64 m", "cell@Status#0": "expected"},
             {"cell@Vessel#0": "Kestrel", "cell@Length overall#0": "71 m", "cell@Status#0": "expected"},
             {"cell@Vessel#0": "Selkie", "cell@Length overall#0": "64 m", "cell@Status#0": "alongside"}]
@@ -102,9 +101,8 @@ def _row(step, verdict, admissible=("x",)):
 
 
 def test_a_retained_history_decides_only_by_dominance_where_readings_disagree():
-    """The differential discipline applied to a history: steps both readings treat alike
-    say nothing; on the steps where they differ, a side wins only by predicting strictly
-    more of what the application returned while getting nothing more wrong."""
+    """Checks a history decides only where readings disagree, and only for the side
+    that predicts strictly more without predicting anything wrong."""
     right, wrong = ties.ESTABLISHED_RIGHT, ties.ESTABLISHED_WRONG
     none = "no outcome is established for this state"
     # left predicts two steps the other leaves unestablished, nothing more wrong: decided
@@ -136,9 +134,8 @@ def test_a_retained_history_decides_only_by_dominance_where_readings_disagree():
 
 
 def test_a_claim_with_its_arguments_outweighs_the_event_alone():
-    """A reading that names the created call's fresh name and the owner, checked against
-    the page, has said more than one that names the frame alone -- and the first version
-    of this comparison could not see it (docs/v4_retained.md)."""
+    """Checks a reading naming a created call's name and owner outweighs one naming
+    just the event, since it says more when checked against the page."""
     right = ties.ESTABLISHED_RIGHT
     args_row = {"step": 1, "verdict": right, "admissible": ["x"],
                 "level": "with its arguments", "arguments": {0: "fresh", 1: "Selkie"}}
@@ -164,10 +161,8 @@ def _fp_prep(script):
 
 
 def test_the_fixpoint_loop_re_derives_a_verdict_its_base_outgrew():
-    """The harbour button flip, as a policy: a verdict derived on the poorer base is
-    lifted when the base moves and re-derived on the richer one, and the loop settles at
-    the same endpoint whichever question went first (the seven-schedule order attack,
-    in miniature)."""
+    """Checks a verdict derived on a poorer base is re-derived once the base grows,
+    and settles at the same point regardless of which question is asked first."""
     Q_OV = {"family": "ov", "left": None, "right": "V"}
     Q_BTN = {"family": "btn", "left": None, "right": "B"}
     base00 = ((), (("btn", "None"),), (("ov", "None"),), (("btn", "None"), ("ov", "None")))
@@ -195,14 +190,10 @@ def test_the_fixpoint_loop_re_derives_a_verdict_its_base_outgrew():
 
 
 def test_two_verdicts_that_defeat_each_others_premise_stay_open():
-    """If two mutually dependent decisions cannot settle without an update order, the
-    order gets no semantic authority: each re-derivation here flips a key and the
-    verdict state recurs.  The WHOLE orbit is then in dispute -- both commitments are
-    lifted and preserved open, not only the one whose re-derivation happened to close
-    the loop -- and the loop runs on to quiescence, so an independent question posed
-    after the dance still reaches its verdict instead of being abandoned with the
-    dispute.  (The closer-only lift failed both halves by schedule: two residues from
-    nine worklist orders in the scripted battery, one after the orbit policy.)"""
+    """Checks that when two decisions depend on each other and can't settle without an
+    update order, both stay open rather than one being arbitrarily preferred. The loop
+    still reaches quiescence, so an independent question posed afterward still gets its
+    verdict."""
     QA = {"family": "a", "left": None, "right": "X"}
     QB = {"family": "b", "left": None, "right": "Y"}
     QC = {"family": "c", "left": None, "right": "Z"}    # independent, posed last
@@ -277,8 +268,8 @@ def test_transitive_dominance_yields_a_unique_survivor_and_a_cycle_refutes_nothi
 
 
 def _sibling_sensitive(question_order):
-    """harbour at step 188 in miniature: the pairwise verdict V-vs-L depends on whether a
-    SIBLING row (F, N refuted) is already in the base; N always loses to V."""
+    """Checks a pairwise verdict can depend on whether a sibling row is already in
+    the base."""
     Q = {"N": {"family": "F", "left": "V", "right": "N"},
          "L": {"family": "F", "left": "V", "right": "L"}}
     def prep(rows):
@@ -297,9 +288,8 @@ def _sibling_sensitive(question_order):
 
 
 def test_the_sequential_loop_is_order_dependent_where_the_tournament_is_not():
-    """The worklist order is the question order prep returns.  Two orders, two sequential
-    endpoints -- the defect the six-schedule attack found -- and one tournament endpoint,
-    judged on the base with no rows of the family present."""
+    """Checks the sequential worklist order changes the endpoint while the tournament
+    resolution doesn't."""
     ends_seq, ends_tour = set(), set()
     for order in (("N", "L"), ("L", "N")):
         prep, derive = _sibling_sensitive(order)
@@ -311,9 +301,8 @@ def test_the_sequential_loop_is_order_dependent_where_the_tournament_is_not():
 
 
 def test_a_candidate_posed_only_against_the_survivor_is_judged_in_a_second_round():
-    """The search poses ties against a family's current key, so a candidate can surface only
-    once a survivor has emerged (harbour's calls: Length overall is posed against Vessel,
-    never against None).  Rounds accumulate the posed candidates on the same neutral base."""
+    """Checks a candidate is only posed once a survivor exists, so ties accumulate
+    over rounds against the same base."""
     def prep(rows):
         refuted = {k for f, k in ((r["family"], str(r["key_slot"])) for r in rows) if f == "F"}
         qs = ([{"family": "F", "left": None, "right": "V"}, {"family": "F", "left": None, "right": "C"}]
@@ -330,10 +319,8 @@ def test_a_candidate_posed_only_against_the_survivor_is_judged_in_a_second_round
 
 
 def test_the_closure_over_schedules_keeps_what_every_order_agrees_on():
-    """Two self-consistent worlds (harbour at step 188): the base fingerprint sees only F's
-    rows, but which candidates the search poses for F depends on whether G's row is present.
-    F first: {a, b}, a survives.  G first: {a, b, c}, c beats a.  Neither order has
-    authority; the closure is their intersection and F:a is reported as order-disputed."""
+    """Checks that when two evaluation orders disagree on a candidate's outcome, the
+    closure reports it as order-disputed instead of picking one order's answer."""
     def prep(rows):
         have = {(r["family"], str(r["key_slot"])) for r in rows}
         f_ref = sorted(k for f, k in have if f == "F")
@@ -380,9 +367,8 @@ def _claim(kind, node, verdict, expected="x", slot="s"):
 
 
 def test_vocabulary_asymmetry_is_provenance_not_evidence():
-    """The twin ledger: the finer ontology makes CREATION claims the coarser one never
-    makes, and both are right about every atom they share.  Open, with the asymmetry
-    counted."""
+    """Checks a finer ontology's extra claims, absent from a coarser one, are left
+    open rather than counted as a disagreement."""
     shared = [_claim("VALUE", 7, "SUPPORTED")]
     d = ties.retro_decision_shared([_srow(1, state=shared + [_claim("CREATION", 9, "SUPPORTED")])],
                                    [_srow(1, state=shared)])

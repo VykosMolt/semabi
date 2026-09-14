@@ -1,28 +1,10 @@
 """Does a learned referring query still name one object on evidence it was not learned from?
 
-A query found on the fitting evidence is a hypothesis, not a capability.  Three claims have to
-stay separate, and the order they are asked in is the whole discipline:
-
-``QUERY_FOUND_ON_PREFIX``
-    the fitting evidence produced a legitimate query for this variable.
-
-``PROSPECTIVELY_DETERMINATE``
-    on held-out states where the rule is applicable *for reasons other than the query*, the
-    query names exactly one object.  Naming none is an incomplete query; naming several is not
-    a referring expression at all.
-
-``PROSPECTIVELY_EFFECT_CORRECT``
-    the object the query picked out, chosen before the outcome was seen, is the one that
-    subsequently bore the predicted effect.
-
-Effect correctness may never choose the target.  The target is frozen from the pre-state and
-then the post-state is allowed to disagree with it, which is what makes a wrong answer here a
-refutation rather than a miss.
-
-Applicability is decided without the query.  Only the learned literals whose parameters the
-concrete action supplies are checked, because those are the conditions the action alone
-determines; a literal about an object the query is supposed to find cannot be part of deciding
-whether there was an opportunity to ask.
+A query found on the fitting evidence is a hypothesis, not a capability. Checks, in order:
+whether the fitting evidence produced a legitimate query (``QUERY_FOUND_ON_PREFIX``); whether
+it names exactly one object on held-out states where the rule applies for reasons other than
+the query (``PROSPECTIVELY_DETERMINATE``); and whether that object, chosen before the outcome
+was seen, is the one that actually bore the predicted effect (``PROSPECTIVELY_EFFECT_CORRECT``).
 """
 from __future__ import annotations
 
@@ -44,11 +26,8 @@ EFFECT_CORRECT = "the object it named bore the effect"
 EFFECT_WRONG = "the object it named did not bear the effect"
 EFFECT_UNKNOWN = "the post-state does not say"
 
-# When the named object did not bear the effect, two very different things may have happened,
-# and a report that does not separate them cannot tell a bad referring expression from a bad
-# rule.  Either some other object of the right type did change in the predicted way -- then the
-# query picked the wrong one -- or nothing did, and the rule was making a claim the application
-# does not honour, which is not the query's fault at all.
+# When the named object did not bear the effect: either another object of the right type
+# did (the query picked wrong), or none did (not the query's fault).
 QUERY_PICKED_WRONG = "another object of its type bore the effect instead"
 RULE_UNBORNE = "no object of its type bore the effect"
 
@@ -56,12 +35,9 @@ RULE_UNBORNE = "no object of its type bore the effect"
 def action_bound(op) -> set[str]:
     """The parameters a *prediction* will have in hand, which is fewer than the rule mentions.
 
-    `action_binding` supplies the owner of the clicked control and nothing else.  A typed or
-    selected string was carried by the concrete step, and the rule is not given the step, so a
-    variable that only an act argument names is one the predictor still has to find -- exactly
-    the case a referring query exists for.  Counting it as supplied told `learn_ref` there was
-    nothing to look for: on blend that is 55 of 86 object parameters, and on harbour none,
-    which is why harbour's numbers do not move when this is corrected.
+    `action_binding` supplies only the clicked control's owner. A typed or selected string
+    was carried by the concrete step but the rule isn't given the step, so a variable only
+    an act argument names is one the predictor still has to find.
     """
     return {a.owner for a in op.core() if a.owner}
 
@@ -73,8 +49,8 @@ def _params(lit) -> set[str]:
 def independently_applicable(op, state, supplied: dict) -> bool:
     """Do the learned conditions the action alone settles hold here?
 
-    Literals mentioning a parameter the action does not supply are skipped rather than assumed:
-    checking them would need the very binding the query is being asked to provide.
+    Literals mentioning a parameter the action doesn't supply are skipped, since checking
+    them would need the binding the query is being asked to provide.
     """
     for lit in op.pre:
         if not _params(lit) <= set(supplied):
@@ -101,13 +77,9 @@ def independently_applicable(op, state, supplied: dict) -> bool:
 def _effect_on(op, var, target, before, after) -> str:
     """Did the frozen target bear what the rule said would happen to it?
 
-    An effect value is not always a constant.  Where the same action family wrote a slot with
-    different constants in different transitions, the inducer keeps a sentinel meaning *the
-    action does not determine this value*, and the honest content of the claim is that the slot
-    changes rather than what it changes to.  Comparing a rendered `*` against the observed
-    value would fail every time and report a perfect refutation rate, which is how this was
-    caught.  A parameter reference is treated the same way: the rule says which object, not
-    which string.
+    An effect value isn't always a constant: where the inducer marks a slot as
+    action-determined rather than a fixed value, the claim is only that it changes, and
+    the comparison must respect that rather than compare against a placeholder.
     """
     from semabi.compiler.induce import VARIES
 
@@ -191,7 +163,7 @@ def evaluate(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
                 determinacy[NO_OPPORTUNITY] += 1
                 continue
             # Queries may refer from one another, so ask them in an order that lets a
-            # determined variable become an anchor, and never let an undetermined one.
+            # determined variable become an anchor, never an undetermined one.
             pending = dict(queries)
             progress = True
             while progress and pending:
@@ -202,9 +174,8 @@ def evaluate(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
                     del pending[var]
                     progress = True
                     hits = q.denotation(op, before, known)
-                    # Naming one object out of one is not a referring expression doing work.
-                    # The count of candidates is what says whether a correct answer was a
-                    # choice, so it is recorded wherever the query determines something.
+                    # Naming one object out of one isn't a referring expression doing work;
+                    # the candidate count says whether a correct answer was a real choice.
                     candidates[len([o for o in before.objs.values()
                                     if o.tid == op.params.get(var)])] += 1
                     if len(hits) == 1:

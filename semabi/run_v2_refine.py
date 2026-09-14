@@ -1,7 +1,7 @@
 """Run one local counterexample-guided V2 abstraction refinement loop.
 
-This command is compiler-side: it reads rendered evidence and controls the browser,
-but never reads hidden state or evaluator annotations.
+Compiler-side: reads rendered evidence and controls the browser, but never reads
+hidden state or evaluator annotations.
 """
 from __future__ import annotations
 
@@ -172,7 +172,7 @@ def _run_correspondence_probe(explorer, browser, A, component, seed: int) -> dic
     explorer.note(obs)
 
     # Navigate using only the already discovered static-control set until the bridge
-    # representation is visible.
+    # is visible.
     def bridge_units(current):
         sig = A.ensure(current)
         return [ui for ui in A.H.parse_units(sig) if ui.template == bridge["bridge_template"]]
@@ -259,10 +259,9 @@ def _run_equal_key_reveal_probe(explorer, browser, A, component, seed: int) -> d
 
     def matches_source(sig, node):
         observed_template = A.H.template(sig, node.i)
-        # A fresh reset can introduce a key token absent from the fitted data vocabulary,
-        # turning ``button[_]`` into a literal template temporarily.  Role plus the local
-        # lexical proposal may select it for the probe; only the rich equal-key reveal can
-        # accept it, and the refreshed fit then records its exact template/node provenance.
+        # A fresh reset can introduce a key token missing from the fitted vocabulary,
+        # turning ``button[_]`` into a literal template temporarily. Only the rich
+        # equal-key reveal can accept it; the refreshed fit records where it came from.
         return observed_template == source_template or "[_]" in source_template
 
     obs = browser._last_obs or browser.observe()
@@ -288,18 +287,16 @@ def _run_equal_key_reveal_probe(explorer, browser, A, component, seed: int) -> d
                 continue
             key = node.name
             prefix = lexical_prefix(key)
-            # Reset seeds legitimately introduce unseen entity keys.  A shared leading
-            # lexical token is only a proposal prior; the executed equal-key rich reveal
-            # below remains the evidence that can accept the association.
+            # Reset seeds legitimately introduce unseen entity keys. A shared leading
+            # token is only a hint; the equal-key rich reveal below is what can accept it.
             if key in observed_keys or prefix in observed_prefixes:
                 out.append((node.i, key))
         return out
 
     if not source_units(obs):
-        # One unresolved mention can sit behind another contextual mention.  Try a small
-        # generic sensing expansion using units from the same proposal template, stopping
-        # as soon as the target candidate set appears.  The final reload/survey still
-        # rejects the whole sequence if any persistent domain state leaked.
+        # One unresolved mention can sit behind another. Try a small sensing expansion
+        # using units from the same template, stopping once the target set appears.
+        # The final reload/survey still rejects the sequence if state leaked.
         obs = explorer.step(obs, episode, Primitive("reload"))
         explorer.note(obs)
         current_sig = A.ensure(obs)
@@ -605,9 +602,9 @@ def _run_context_probe(explorer, browser, A, component, seed):
 
     replay_prefix = scope.get("replay_prefix", [])
     if replay_prefix:
-        # Replay the complete rendered navigation/selection prefix recovered from the
-        # counterexample.  The source-context mention can be non-actionable text in the
-        # selected detail view, so clicking the mention itself is not a semantic premise.
+        # Replay the full rendered navigation/selection prefix from the counterexample.
+        # The source-context mention can be non-actionable text in the detail view, so
+        # clicking it is not assumed to mean anything.
         for action in replay_prefix:
             obs = replay_rendered_action(obs, action)
             if obs is None:
@@ -628,8 +625,8 @@ def _run_context_probe(explorer, browser, A, component, seed):
         sources = live_mentions(obs, scope["source_context"])
         if not sources:
             return None
-        # Prefer the actionable mention; containers remain candidate observations but are
-        # not directly clicked when a child control carries the same key.
+        # Prefer the actionable mention; containers stay candidates but are not clicked
+        # when a child control carries the same key.
         sources.sort(key=lambda i: (obs.node(i).role not in ("button", "link"), i))
         before_sig = obs.structural_signature()
         obs = explorer.step(obs, episode, Primitive("click", sources[0]))
@@ -716,9 +713,9 @@ def _run_context_probe(explorer, browser, A, component, seed):
 
 def _run_context_loop(run_dir, base, seed, baseline, before_counterexamples, components,
                       browser_hook=None):
-    # Prefer a candidate whose alternative representation had to be deliberately
-    # rediscovered after the action.  Immediate context swaps are usually ordinary view
-    # transitions; delayed reveal after sensing is the stronger persistence ambiguity.
+    # Prefer a candidate whose alternative representation had to be rediscovered after
+    # the action. Immediate context swaps are usually ordinary view transitions;
+    # delayed reveal after sensing is the stronger case.
     components.sort(key=lambda c: (-int(c.scope.get("destination_is_non_actionable", False)),
                                    -c.scope.get("max_reveal_delay", 0),
                                    -len(c.counterexample_steps), c.id))
@@ -741,9 +738,8 @@ def _run_context_loop(run_dir, base, seed, baseline, before_counterexamples, com
     if intervention["status"] != "DOMAIN":
         raise RuntimeError("the context-membership intervention remained UNDETERMINED")
 
-    # Refit before accepting anything.  The probe's final domain action must itself be an
-    # eligible UNGROUNDED counterexample under the point model, and the new observation
-    # signatures provide the exact assignment provenance used by the decision.
+    # Refit before accepting anything. The probe's final action must itself be an
+    # eligible UNGROUNDED counterexample under the point model.
     refreshed = compile_v2(run_dir, llm=None, apply_refinements=False, write_diagnostics=False)
     refreshed_counterexamples = classify(refreshed.abstractor, refreshed.log)
     refreshed_components = build_components(
@@ -823,8 +819,8 @@ def run_loop(run_dir: Path, base: str, seed: int = 0, max_attempts: int = 6,
 
     browser = Browser(base.rstrip("/") + "/", base.rstrip("/") + "/reset")
     explorer = SurveyExplorer(browser, baseline.log, seed=seed, survey_prob=0.0)
-    # Reuse the broad trace to identify static navigation controls; no semantic label is
-    # imported and no diagnostic action displaces the already collected coverage trace.
+    # Reuse the broad trace to identify static navigation controls; no semantic label
+    # is imported and no diagnostic action displaces the collected coverage trace.
     for obs in baseline.log.observations.values():
         explorer.note(obs)
     result = None
@@ -844,8 +840,8 @@ def run_loop(run_dir: Path, base: str, seed: int = 0, max_attempts: int = 6,
                 explorer.default_skeleton = explorer.skeleton(obs)
             obs, _ = explorer.survey(obs, episode)
             explorer.post_reload_views = dict(explorer.last_view_obs)
-            # Surveys may finish on another view; reload returns to the default view where
-            # the counterexample's structural component was originally observed.
+            # Surveys may finish on another view; reload returns to the default view
+            # where the counterexample was originally observed.
             obs = explorer.step(obs, episode, Primitive("reload"))
             explorer.note(obs)
             targets = _candidate_targets(baseline.abstractor, obs, component)
@@ -878,11 +874,10 @@ def run_loop(run_dir: Path, base: str, seed: int = 0, max_attempts: int = 6,
     assert decision is not None
     bridge = decision.target.get("correspondence_bridge")
     if correspondence and correspondence.get("view_invariance_supported") and bridge:
-        # Refit the proposal layer over the augmented trace.  The persistence attempts and
-        # the identity probe introduce new observation signatures; an old point-in-time
-        # override list would leave those mentions unassociated.  The accepted intervention
-        # authorizes only the same local bridge, while the refreshed proposal supplies all
-        # observation-scoped instances now supported by the accumulated action history.
+        # Refit the proposal layer over the augmented trace. The persistence attempts
+        # and identity probe add new observation signatures that an old override list
+        # would leave unassociated. The accepted intervention authorizes only the same
+        # local bridge; the refreshed proposal covers everything the history now supports.
         refreshed = compile_v2(run_dir, llm=None, apply_refinements=False, write_diagnostics=False)
         refreshed_components = build_components(
             refreshed.abstractor,
@@ -911,9 +906,9 @@ def run_loop(run_dir: Path, base: str, seed: int = 0, max_attempts: int = 6,
                          include_provisional_refinements=True)
     after_counterexamples = classify(refined.abstractor, refined.log)
     after_status = {c.step: c.status for c in after_counterexamples}
-    # One representative counterexample was selected for this intervention.  Other
-    # structurally equivalent events may become representable too, but they are not
-    # counted as independently attempted/resolved examples.
+    # One representative counterexample was selected for this intervention. Other
+    # equivalent events may become representable too, but are not counted as
+    # independently attempted or resolved.
     selected_steps = component.counterexample_steps[:1]
     affected_steps = component.counterexample_steps
     resolved = [s for s in selected_steps if before_status.get(s) == "UNGROUNDED" and after_status.get(s) == "EXPLAINED"]

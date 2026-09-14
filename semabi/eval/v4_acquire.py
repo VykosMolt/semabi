@@ -1,29 +1,8 @@
 """Acquire the observation the model's own uncertainty asks for, from the running application.
 
-`docs/v4_chronology.md` closed the question of active *discrimination* between semantic
-readings: across the retained opportunities no two viable readings made opposing grounded
-predictions, so a distinguishing experiment had nothing to execute.  That conclusion was about
-readings.  The outcome model is a different object and it does have unresolved hypotheses:
-`semabi.eval.v4_admissible` finds 57 of blend's 248 held-out actions where several outcome
-models remain legitimate under the evidence, and at such a state the application's answer is
-exactly the observation that would settle it.
-
-So this drives the application.  It is not a replay: the app is started from this machine's
-copy of the benchmark, reset to a seed the retained trace never used, and driven through the
-same primitive interface the compiler is restricted to -- observe the page, choose a
-*discriminating* state, click, read what came back.  The acquired occasions are completed
-transitions and enter the evidence the way every other occasion does.
-
-The stopping rule is the model's, not a budget: it acts where its admissible set has more than
-one member and stops when it cannot find such a state within its step allowance.  A run that
-acquires nothing is a result -- it says the uncertainty this model reports is not reachable by
-this exploration -- and is reported rather than retried until something happens.
-
-Chronology.  The acquired evidence is causally later than the actions that produced it and
-causally independent of the retained suffix it is afterwards measured on: a different seed, a
-different session, and the frozen abstractor only ever *reads* the live pages.  What the refit
-must not do is see the retained suffix, and it does not: only the prefix occasions and the
-acquired ones are fitted.
+Drives the live application (not a replay), acting where the outcome model has more than one
+admissible outcome, and reads back what happened. Acquired occasions are added as fresh
+evidence to the frozen prefix; the retained suffix used to measure the refit is never seen.
 """
 from __future__ import annotations
 
@@ -44,7 +23,7 @@ OUT = ROOT / "docs/data/v4"
 
 
 def _model_state(model, obs):
-    """Read a live page with the frozen model.  Reading is not learning; nothing is fitted."""
+    """Read a live page with the frozen model. Reading is not learning; nothing is fitted."""
     A = model.abstractor
     return A.abstract(obs), A.parsed(obs)
 
@@ -59,10 +38,8 @@ def _target(obs, name: str) -> int | None:
 def _targets(A, obs, name: str, control_key: str) -> list[int]:
     """Every button on the page that is this control: by exact name, or by identity.
 
-    A control such as blend's `Close _` renders one button per vat, each named with the vat
-    (`Close North Wall`), so no single rendered name addresses it; the frozen control
-    identity does (`docs/v4_identity.md`), and the driver then chooses among the buttons by
-    what the model says at each -- which is the choice the acquisition is about.
+    Some controls render one button per instance (e.g. `Close North Wall`), so no single
+    name addresses them; the frozen control identity does.
     """
     exact = _target(obs, name)
     if exact is not None:
@@ -74,12 +51,7 @@ def _targets(A, obs, name: str, control_key: str) -> list[int]:
 
 
 def _name_the_unnamed(browser, obs, got, status, turn) -> bool:
-    """Set the select a currently-unnamed role reads, if the page renders one.
-
-    ``Role.form[0]`` is the static slot the selection query looks at, and the parse maps that
-    slot back to the node it was read from, so a role and a combobox on the page can be lined
-    up without guessing from labels.
-    """
+    """Set the select a currently-unnamed role reads, if the page renders one."""
     unnamed = sorted(name for name, how in status.items()
                      if how == "unnamed" and name in got.roles)
     if not unnamed:
@@ -111,15 +83,7 @@ def _selects(obs) -> list[int]:
 
 def contested(got, literals, options) -> bool:
     """A state where the list's own guard fires for one event while a justified rule
-    vouches for another.
-
-    Acting where the admissible set merely has two members found new behaviour before it
-    narrowed anything (P30): the states that falsify a coincidence are the ones that hold
-    its supporting value fixed while the factor the application actually checks differs.
-    The decision list is where that factor is written down -- *the selection names a
-    pilot* -- so a state where its guard fires and a rival vouch still stands is one where
-    the answer refutes either the vouch or the guard, and cannot leave both.  A guard with
-    no condition is the list's residue and names no factor."""
+    vouches for another. Such a state refutes either the guard or the vouch."""
     fired = next((r.event for r in got.rules
                   if r.condition and all(l in literals for l in r.condition)), None)
     return fired is not None and any(event != fired for event in options)
@@ -129,9 +93,9 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
             budget: int = 40, want: int = 12, policy: str = "uncertain", log=print) -> dict:
     """Drive the application, acting where the model does not know the outcome.
 
-    ``policy="any"`` is the control: the same driver, the same application, the same seed and
-    the same number of usable observations, acting without consulting the admissible set.  It
-    is what separates "acting where the model is unsure helped" from "more data helped".
+    ``policy="any"`` is the control: same driver and application, but acting without
+    consulting the admissible set, to separate "acting where unsure helped" from "more
+    data helped".
     """
 
     got = model.outcomes.get(control_key)
@@ -154,10 +118,8 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
             candidates = _targets(A, obs, button, control_key)
             node = candidates[0] if candidates else None
             if node is None:
-                # The control is not on this page.  Cellar renders its operations across three
-                # views, so an exploratory click can navigate away from the one being studied;
-                # giving up there ended a 200-step budget after two states.  Press something
-                # and look again.
+                # The control is not on this page. Press something and look again rather
+                # than giving up, since an exploratory click can navigate away from it.
                 elsewhere = [n.i for n in obs.nodes if n.role == "button"]
                 if not elsewhere:
                     break
@@ -166,9 +128,8 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                 obs = browser.observe()
                 continue
             from semabi.compiler.v4.consequence import _owner_object
-            # Among the buttons that are this control, prefer one where the model is unsure
-            # (or, under the coverage policy, where nothing is established): the acquisition
-            # is worth making at that one.
+            # Prefer a button where the model is unsure (or, under the coverage policy,
+            # where nothing is established).
             chosen = None
             for cand in candidates:
                 o_ = _owner_object(A, po, state, cand)
@@ -191,16 +152,12 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                     break
             node, owner, bound, status, options, _ = chosen
             visited[len(options)] += 1
-            # Two kinds of not knowing, and they justify acting for different reasons.
-            # `uncertain` acts where several outcomes remain admissible: a real disagreement
-            # between hypotheses, which the application's answer settles.  `unestablished`
-            # acts where *nothing* is admissible: not a disagreement but a coverage gap, which
-            # is the weaker justification and the one cellar's controls actually present.
+            # `uncertain` acts where several outcomes remain admissible (a real
+            # disagreement); `unestablished` acts where nothing is admissible (a coverage
+            # gap, the weaker justification).
             if policy == "corroborate":
-                # An event the control returned exactly once cannot found a rule -- the
-                # `ONCE` case of `v4_inadequacy` -- and the model can see that from the
-                # inside.  A state that satisfies everything the single occasion did is where
-                # a second occasion of the event would make a pure pair; act there.
+                # An event returned only once cannot found a rule. Act where a second
+                # occurrence of that event would make a pure pair.
                 here = frozenset(oc.query_literals(model, got, state, bound, status))
                 ev = got.evidence
                 lone = [i for e, idxs in ev.by_event.items() if len(idxs) < oc.MIN_COVER
@@ -212,10 +169,8 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
             else:
                 discriminating = (len(options) > 1 if policy != "unestablished"
                                   else not options)
-            # Asking the same question twice acquires nothing.  Under the coverage policy
-            # nothing is ever established, so without this the driver clicks at every turn and
-            # never explores -- which is what it did on cellar, pressing `Move vessel` with
-            # nothing selected twenty times and learning only that nothing was selected.
+            # Asking the same question twice acquires nothing. Without this the driver
+            # would click the same unproductive state on every turn.
             fresh = frozenset(
                 oc.query_literals(model, got, state, bound, status)) not in asked
             if (discriminating and fresh
@@ -242,11 +197,8 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                     f"outcome(s) were admissible -> {acquired[-1]['frame']!r}")
                 turn += 1
                 obs = after_obs
-                # Acting twice on the same selection makes the application repeat itself, and
-                # a live region that does not move delivers no event (see `emission.observed`).
-                # Eighteen of the first twenty-four acquisitions came back empty for exactly
-                # that reason.  So the selection is rotated after acting: the acquisition is
-                # only worth making if the channel can carry the answer.
+                # A live region that does not move delivers no event, so the selection is
+                # rotated after acting to keep the channel able to carry the answer.
                 for sel in _selects(obs):
                     opts = [o for o in (obs.nodes[sel].options or ())
                             if o != obs.nodes[sel].value]
@@ -256,24 +208,14 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                         obs = browser.observe()
                         break
                 continue
-            # First, name what the model says this control reads.  A role that names nothing
-            # is a condition the application talks about -- *Nothing chosen in the vessel
-            # list.* -- and a driver that never fills the selects keeps re-asking it: cellar
-            # returned that same refusal on 19 of 20 acquisitions.  The referring expressions
-            # the model already learned say which control feeds which role, so the exploration
-            # uses them rather than rotating selects blindly.  This is the model steering its
-            # own acquisition, and it reads only the pre-state.
+            # Fill in a select the model says this control reads, using the referring
+            # expressions it already learned, rather than rotating selects blindly.
             if _name_the_unnamed(browser, obs, got, status, turn):
                 obs = browser.observe()
                 turn += 1
                 continue
-            # Not a discriminating state, and not this turn's exercise of the control.  Move.
-            # Changing a select alone only changes which
-            # objects the referring expressions name; the states where this model is unsure
-            # are ones the *world* has been moved into, so the exploration has to act as well.
-            # Which primitive is taken does not matter to the result -- it is how the state is
-            # reached, not what is measured -- so it alternates deterministically between
-            # rotating a select and pressing some other button of the page.
+            # Not a discriminating state. Move: alternate between rotating a select and
+            # pressing some other button, since which primitive is taken doesn't matter.
             selects, buttons = _selects(obs), [n.i for n in obs.nodes
                                                if n.role == "button" and n.i != node]
             picked = None
@@ -299,7 +241,7 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
 
 def refit_with(model, control_key: str, acquired: list[dict],
                only_discriminating: bool = False) -> oc.ControlOutcome:
-    """The same control's evidence, plus what was acquired.  Nothing else changes."""
+    """The same control's evidence, plus what was acquired. Nothing else changes."""
     got = model.outcomes[control_key]
     rows = list(got.evidence.rows_for_refit()) if hasattr(got.evidence, "rows_for_refit") else []
     extra = []

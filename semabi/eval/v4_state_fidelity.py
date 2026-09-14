@@ -1,22 +1,8 @@
-"""Does the abstract state say what the page it was read from says?
-
-An audit of the observation model that needs no ground truth and no reading-specific
-knowledge: for every object the reading places at a raw node, every attribute it carries must
-be *rendered somewhere in that object's own subtree*.  A value that is not on the page under
-the object it is attributed to is a value the model is asserting on its own authority.
-
-This exists because one of them changed a conclusion.  Under blend's promoted reading,
-``Festival White`` -- whose State cell reads ``In cask`` -- carries ``attr:cell#0@5 =
-'Bottled'``, which is what that cell said several actions earlier.  The slot a cell lands in
-depends on its *text*: ``In cask`` yields a labelled slot ``cask#0 = 'In'`` while ``Bottled``
-has no label token and lands in a positional ``cell#0@5``, so a column whose value changes
-shape moves between slots and the vacated one keeps the old value.  Every precondition learner
-downstream then sees a blend that is both in cask and bottled, which is why the conditions it
-picks look incidental: on that evidence they are.
-
-Reported per application as a rate, with witnesses, and separately for slots that are stale
-(the value was rendered there earlier) and slots that were never rendered under this object at
-all.
+"""Audits the observation model without ground truth: for every object a reading places
+at a raw node, every attribute it carries must be rendered somewhere in that object's own
+subtree. A value not on the page under its object is one the model asserts on its own
+authority. Reported per application as a rate, with witnesses, and separately for slots
+that are stale versus slots that were never rendered under this object at all.
 """
 from __future__ import annotations
 
@@ -36,7 +22,7 @@ OUT = ROOT / "docs/data/v4"
 def _rendered(obs, root: int) -> set[str]:
     """Every string the subtree under ``root`` renders, plus its tokens.
 
-    Tokenised the way messages are: a value rendered inside a longer text is rendered.
+    Tokenised the way messages are, so a value inside a longer text still counts as rendered.
     """
     from semabi.compiler.v4.emission import tokens as _tokens
 
@@ -54,17 +40,15 @@ def _rendered(obs, root: int) -> set[str]:
 def fidelity(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
              regime: str = csq.FROZEN_PREFIX, limit: int | None = None,
              tracked: bool = False) -> dict:
-    """``tracked`` audits the states the *learner* saw rather than the parse of each page.
+    """``tracked`` audits the states the learner saw, not the parse of each page.
 
-    They are not the same object and only the second had ever been checked.  Between them sits
-    the belief tracker, which carries an object's attributes across observations so that a view
-    showing half the page does not read as half the world disappearing.  What it must not do is
-    carry a slot the object still renders *differently*.
+    Between them sits the belief tracker, which carries an object's attributes across
+    observations so a partial view does not read as the world disappearing. What it must
+    not do is carry a slot the object still renders differently.
 
-    A slot whose value is never found under its object in any observation is *derived* rather
-    than read -- the column a cell sits in, a provenance tag -- and its absence from the
-    rendering is not staleness.  Reported separately, because conflating the two said harbour
-    was 10% stale when every one of its 468 was ``attr:col = 'Call'``, the name of a column.
+    A slot whose value is never found under its object in any observation is derived rather
+    than read (a column a cell sits in, a provenance tag), and its absence is not staleness,
+    so it is reported separately.
     """
     from semabi.eval.v4_consequence_run import _candidates
 

@@ -13,10 +13,8 @@ def forbidden(name: str) -> bool:
 
 
 def compiler_files():
-    # The V2 compiler lives in nested packages.  A shallow glob left exactly the new
-    # decision/refinement boundary outside this gate.  The compiler-side runners drive the
-    # browser and must be inside it too: V4's probe runner executes experiments against a
-    # live application and would be the natural place for hidden state to leak in.
+    # A shallow glob would miss nested packages and the compiler-side runners, which
+    # drive the browser and are the natural place for hidden state to leak in.
     runners = [
         REPO / "scripts" / "v4_freeze_source_candidates.py",
         REPO / "scripts" / "v4_freeze_chain_manifest.py",

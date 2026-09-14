@@ -43,14 +43,9 @@ def _evidence(rows: dict) -> list[transfer.TransferEvidence]:
 
 
 def test_retained_frontier_summary_binds_its_reports():
-    """The summary is generated from the reports, so this pins that it still describes them.
-
-    It deliberately does not hardcode the survivor counts or the selected readings.  The
-    payload is a finding, not a fixture: an earlier version of this test asserted
-    ``selected is None`` for every application, which turned the result of the day into an
-    invariant and would have had to be "fixed" the moment the mechanism improved.  What is
-    invariant is the relationship between outcome, survivors and selection.
-    """
+    """Checks the summary still describes the reports it's generated from, without
+    hardcoding the survivor counts or selected readings, since those are findings, not
+    fixed invariants."""
     summary = json.loads((DATA / "frontier_summary.json").read_text())
     assert summary["schema"] == "semabi.v4.authenticated-frontier-summary.v2"
     assert summary["custody_timing"] == "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED"
@@ -122,16 +117,9 @@ def test_retained_reports_bind_the_manifest_bytes_they_replay():
 
 
 def test_retained_manifests_are_consistent_with_the_compiler_they_name():
-    """The manifests name the compiler that produced them.
-
-    Two states are honest.  Freshly frozen -- as they are after `docs/v4_columns.md`
-    regenerated every one of them on the header-named template scheme -- they load, and
-    the three roles of every chain consumed three different histories.  Once the compiler
-    moves on without a re-freeze they must *refuse*, and the refusal must point at a real
-    divergence: a named file whose hash genuinely differs from the recorded one, or a file
-    set the compiler has since gained.  What is never acceptable is a manifest that loads
-    against a compiler it does not describe, or a refusal about nothing.
-    """
+    """Checks a manifest either loads cleanly when freshly frozen, or refuses with a
+    real divergence (a hash mismatch or a gained file) once the compiler moves on. It
+    must never load against a compiler it doesn't describe, or refuse for no reason."""
     manifest_dir = DATA / "manifests"
     outcomes = []
     for path in sorted(manifest_dir.glob("*_source_candidates.json")):

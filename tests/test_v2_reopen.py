@@ -1,10 +1,9 @@
-"""The predictive-failure half of the V2 loop.
+"""Tests the predictive-failure half of the V2 loop.
 
-Demoting a MISPREDICTED decision is not enough: unless the refuted hypothesis is removed
-from contention, the next refinement pass re-selects it and the counterexample teaches
-nothing.  These tests pin that the failure reopens the originating component and that the
-next selection and acceptance land on a *different* alternative.
-"""
+Demoting a MISPREDICTED decision isn't enough: the refuted hypothesis must be removed
+from contention, or the next refinement pass just re-selects it. Checks a failure
+reopens the originating component and the next selection lands on a different
+alternative."""
 import json
 
 from semabi.compiler.v2.refinement import (
@@ -104,8 +103,8 @@ def test_reopening_is_idempotent_and_keeps_earlier_contradictions(tmp_path):
 
 
 def test_a_refit_cannot_return_a_refuted_hypothesis_to_contention(tmp_path):
-    """Every diagnostic compile rebuilds components from scratch; without this the
-    predictive counterexample is erased before the next refinement pass reads it."""
+    """Checks a refit can't return a refuted hypothesis to contention, since every
+    diagnostic compile rebuilds components from scratch."""
     write_components(tmp_path, [_component()])
     reopen_from_predictive_counterexamples(tmp_path, [_decision("MISPREDICTED")], {"ref-1"},
                                            {"test_run": "runs/x"})

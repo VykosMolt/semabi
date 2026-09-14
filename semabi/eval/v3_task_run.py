@@ -1,13 +1,11 @@
-"""Held-out task execution for a compiled V2 model on an external application.
-
-Evaluator side.  The compiler is used exactly as frozen: `compile_v2` produces the model
-and groundings, `ground.Live` executes them and `planner.execute_goal` plans on the
-learned model alone.  Everything this module adds is evaluator-only and never reaches the
-compiler: the hidden states recorded by `oracle_hook`, the alignment between hidden and
-learned vocabulary, and the goals themselves, which are drawn from states the exploration
-actually reached and then translated into the learner's own vocabulary through that
-alignment.  A goal that cannot be translated is reported as untranslatable, which is a
-statement about the learned model's coverage, not a planning failure.
+"""Runs held-out tasks for a compiled V2 model on an external application, evaluator
+side. The compiler is used exactly as frozen: `compile_v2` produces the model and
+groundings, `ground.Live` executes them, and `planner.execute_goal` plans on the learned
+model alone. Everything else added here is evaluator-only and never reaches the compiler:
+hidden states from `oracle_hook`, the alignment between hidden and learned vocabulary, and
+goals drawn from reached states and translated through that alignment. A goal that cannot
+be translated is reported as untranslatable, a statement about coverage, not a planning
+failure.
 """
 from __future__ import annotations
 

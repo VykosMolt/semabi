@@ -1,8 +1,7 @@
-"""V4's abstractor boundary for retained compiler evidence.
+"""The V2 abstractor, reading probe records parsed from retained bytes.
 
-The V2 abstractor remains frozen.  Ordinary live ``EvidenceLog`` objects retain the V2
-implementation, while a retained V4 log supplies already parsed probe records so this
-adapter never reopens ``probes.jsonl`` (or any other path) during compilation.
+The V2 abstractor itself is frozen. A live log keeps the V2 path exactly; a retained V4 log
+hands over already-parsed probe records, so this adapter never opens a file.
 """
 from __future__ import annotations
 
@@ -74,15 +73,14 @@ class V4Abstractor(V2Abstractor):
         return state
 
     def fit_view_controls(self, log: EvidenceLog) -> None:
-        # Live/development logs have no retained record graph and keep the exact V2 path.
+        # A live log has no retained records and takes the V2 path unchanged.
         probe_records = getattr(log, "probe_records", None)
         if probe_records is None:
             super().fit_view_controls(log)
             return
 
-        # This is the frozen V2 implementation below.  The only input difference is that
-        # retained probe JSONL was parsed by frozen_evidence.from_bytes before this method
-        # was called; no pathname or filesystem operation is permitted on this branch.
+        # The V2 code, unchanged. The only difference is that the probe records were parsed
+        # before this was called, so nothing on this branch touches the filesystem.
         probe_status: dict[str, set[str]] = defaultdict(set)
         probe_by_step: dict[int, dict] = {}
         probe_by_key: dict[tuple, list[dict]] = defaultdict(list)
@@ -115,10 +113,8 @@ class V4Abstractor(V2Abstractor):
                 if (len(sensing_key) >= 3 and sensing_key[0] == "click"
                         and sensing_key[1] == "button"):
                     probe_status[sensing_key[2]].add("VIEW")
-        # A controlled persistence result also supplies evidence for earlier occurrences of
-        # the exact same compiler-visible affordance key.  Keep the originating probe step
-        # and scope explicit; DOMAIN dominates, while VIEW is generalized only when every
-        # matching probe is VIEW.
+        # A persistence result also covers earlier occurrences of the same affordance key.
+        # DOMAIN wins; VIEW generalizes only when every matching probe said VIEW.
         for step in log.steps:
             if step.step in probe_by_step or step.action.target is None:
                 continue
@@ -201,9 +197,8 @@ class V4Abstractor(V2Abstractor):
         self.verified_view_controls = view_names - domain_names
         self.verified_domain_controls = domain_names
         self.heuristic_view_controls = heuristic - domain_names
-        # Consistency under a collapsed abstraction is not evidence that an action is
-        # sensing-only: that exact fallback hid successful domain actions on blind apps.
-        # Only executed reload/survey probes can certify the control used by the inducer.
-        # Heuristic candidates remain available for intervention selection and provenance.
+        # Do not read consistency under a collapsed abstraction as proof that an action only
+        # senses: that once hid real domain actions. Only an executed reload or survey probe
+        # certifies a control; the rest stay candidates for choosing an intervention.
         self.view_controls = set(self.verified_view_controls)
         self.cat = type("Cat", (), {"view_controls": self.view_controls})()

@@ -1,10 +1,6 @@
-"""Structural + behavioral matching of a learned model against the hidden domain.
-
-Names are never compared. Types are aligned through paired (hidden, learned)
-states recorded during exploration; attributes/relations through value
-co-variation on paired objects; operators through simulation: apply the hidden
-operator and the candidate learned operator to translated states and compare
-applicability and outcomes.
+"""Matches a learned model against the hidden domain structurally and behaviorally.
+Names are never compared: types align through paired states, attributes/relations
+through value co-variation, and operators through simulating both on translated states.
 """
 from __future__ import annotations
 
@@ -21,29 +17,27 @@ from semabi.compiler.model import LearnedModel
 @dataclass
 class Mapping:
     type_map: dict[str, str] = field(default_factory=dict)  # learned type -> hidden type
-    key_attr: dict[str, str] = field(default_factory=dict)  # learned type -> hidden attr that equals the key
-    attr_map: dict[tuple[str, str], tuple[str, dict]] = field(default_factory=dict)  # (L, a) -> (hidden attr, value map hidden->learned)
+    key_attr: dict[str, str] = field(default_factory=dict)  # learned type -> hidden attr equal to the key
+    attr_map: dict[tuple[str, str], tuple[str, dict]] = field(default_factory=dict)  # (L, a) -> (hidden attr, value map)
     rel_map: dict[str, str] = field(default_factory=dict)  # learned rel -> hidden rel
     attr_as_rel: dict[tuple[str, str], str] = field(default_factory=dict)  # (L, a) -> hidden rel (attr holds target key)
-    op_map: dict[str, tuple[str, dict[str, str], float, float]] = field(default_factory=dict)  # hidden op -> (learned op, param map h->l, pre_agree, eff_agree)
+    op_map: dict[str, tuple[str, dict[str, str], float, float]] = field(default_factory=dict)  # hidden op -> (learned op, param map, pre_agree, eff_agree)
     _learned: Any = None  # the learned model (for link keys)
-    rel_inverse: set = field(default_factory=set)  # learned relations that represent the hidden one from the target side
+    rel_inverse: set = field(default_factory=set)  # learned relations representing the hidden one from the target side
 
     def hidden_types_covered(self) -> set[str]:
         return set(self.type_map.values())
 
 
-# --------------------------------------------------------------------------
 # Alignment from paired states
-# --------------------------------------------------------------------------
 
 
-LINK_KEY = "__link"  # key_attr marker: the learned key is composed of the keys of the objects the link refers to
+LINK_KEY = "__link"  # key_attr marker: the learned key is composed of the linked objects' keys
 
 
 def hidden_key(o: rm.Obj, spec: str) -> Any:
-    """Value of a key specification on a hidden object: a hidden attribute, or several
-    joined by '|' (composite keys the learner uses to separate duplicate names)."""
+    """Value of a key spec on a hidden object: a hidden attribute, or several joined
+    by '|' for composite keys that separate duplicate names."""
     if spec == LINK_KEY:
         return None
     if "|" in spec:
@@ -55,7 +49,7 @@ def hidden_key(o: rm.Obj, spec: str) -> Any:
 
 
 def link_key(h: rm.State, o: rm.Obj, L: str, m: Mapping, learned: LearnedModel) -> str | None:
-    """Expected learned key of a hidden link object: sorted 'L2:key2' of its endpoints."""
+    """Expected learned key of a hidden link object: sorted endpoint keys."""
     spec = learned.meta.get("link_types", {}).get(L)
     if not spec:
         return None
@@ -77,7 +71,7 @@ def link_key(h: rm.State, o: rm.Obj, L: str, m: Mapping, learned: LearnedModel) 
 
 
 def _pair_objects(h: rm.State, l: rm.State, m: Mapping) -> dict[str, str]:
-    """learned obj id -> hidden obj id, by key equality (attribute, composite or link key)."""
+    """Learned obj id -> hidden obj id, by key equality."""
     out = {}
     for L, H in m.type_map.items():
         ka = m.key_attr[L]
@@ -99,7 +93,7 @@ def _pair_objects(h: rm.State, l: rm.State, m: Mapping) -> dict[str, str]:
 
 
 def _learned_key(l: rm.State, L: str, o: rm.Obj) -> str:
-    # learned object ids are "L:key"; key attr is the attr whose value equals the id suffix
+    # learned object ids are "L:key"; key attr is the attr equal to the id suffix
     suffix = o.id.split(":", 1)[1]
     for a, v in o.attrs.items():
         if v == suffix:
@@ -113,7 +107,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
     m._learned = learned
     ld = learned.domain
     link_types = learned.meta.get("link_types", {})
-    # 1. types via key/attr set overlap; key specs are single str attributes or pairs joined by '|'
+    # 1. types via key/attr set overlap; key specs are attributes, possibly joined by '|'
     scores = []
     for L, lt in ld.types.items():
         if L in link_types:
@@ -123,8 +117,8 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
             strs = [a for a, kind in ht.attrs.items() if kind == "str"]
             specs = list(strs) + [f"{a}|{b}" for a in strs for b in ht.attrs if a != b]
             for spec in specs:
-                # the learned state may be a partial belief (objects out of view): score by
-                # precision of learned keys against hidden values, Jaccard as tie-breaker
+                # the learned state may be a partial belief: score by precision of learned
+                # keys against hidden values, with Jaccard as tie-breaker
                 ps, js = [], []
                 for h, l in pairs:
                     lk = set(o.attrs.get(kl) for o in l.of_type(L))
@@ -143,8 +137,8 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
         m.type_map[L] = H
         m.key_attr[L] = spec
         used_h.add(H)
-    # 1b. link types: learned objects keyed by their endpoints <-> hidden types whose
-    # relations point at the aligned counterparts
+    # 1b. link types: learned objects keyed by their endpoints match hidden types
+    # whose relations point at the aligned counterparts
     for L, lrels in link_types.items():
         if L in m.type_map:
             continue
@@ -155,7 +149,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
             hrels = [r for r, rd in hidden_dom.relations.items() if rd.src == H and "~" not in r]
             if len(hrels) < 2:
                 continue
-            # try every assignment of the learned endpoint relations to hidden relations
+            # try every assignment of learned endpoint relations to hidden relations
             import itertools
             for combo in itertools.permutations(hrels, len(lrels)):
                 trial = Mapping(type_map=dict(m.type_map), key_attr=dict(m.key_attr))
@@ -211,7 +205,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
             if best:
                 m.attr_map[(L, a)] = (best[1], best[2])
                 continue
-            # attr holding the key of a related object?
+            # attribute holding the key of a related object?
             for rname, r in hidden_dom.relations.items():
                 if r.src != H:
                     continue
@@ -250,7 +244,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                     if lt is None and ht is None:
                         hit += 1
                     elif lt is not None:
-                        # resolve the learned target by key (it may not be listed in this view)
+                        # resolve the learned target by key: it may not be listed in this view
                         tgt_h = po.get(lt)
                         if tgt_h is None:
                             L2 = lrel.dst
@@ -262,8 +256,8 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                 m.rel_map[lr] = hr
         if lr in m.rel_map:
             continue
-        # inverse representation: the learner shows the relation from the other side
-        # (a gate's occupant for a flight's stand); accepted when the inverse is consistent
+        # inverse representation: the learner shows the relation from the other side,
+        # accepted when the inverse is consistent
         for hr, hrel in hidden_dom.relations.items():
             if "~" in hr or hrel.dst != m.type_map[lrel.src] or hrel.src != m.type_map[lrel.dst]:
                 continue
@@ -294,13 +288,11 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
     return m
 
 
-# --------------------------------------------------------------------------
 # Translation hidden -> learned
-# --------------------------------------------------------------------------
 
 
 def translate_state(h: rm.State, hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping) -> tuple[rm.State, dict[str, str]]:
-    """Returns learned state and hidden id -> learned id map."""
+    """Returns the learned state and a hidden id -> learned id map."""
     l = rm.State()
     idmap: dict[str, str] = {}
     inv_type = {H: L for L, H in m.type_map.items()}
@@ -310,7 +302,7 @@ def translate_state(h: rm.State, hidden_dom: rm.Domain, learned: LearnedModel, m
             continue
         key = link_key(h, o, L, m, learned) if m.key_attr[L] == LINK_KEY else hidden_key(o, m.key_attr[L])
         if key is None and m.key_attr[L] == LINK_KEY:
-            continue  # a link whose endpoints the learner does not know cannot be named
+            continue  # a link whose endpoints are unknown cannot be named
         lid = f"{L}:{key}"
         attrs = {learned.key_slots[L]: key}
         for a in learned.domain.types[L].attrs:
@@ -322,7 +314,7 @@ def translate_state(h: rm.State, hidden_dom: rm.Domain, learned: LearnedModel, m
                 if hv in vmap:
                     attrs[a] = vmap[hv]
                 elif vmap and all(k == v for k, v in vmap.items()):
-                    attrs[a] = hv  # identity map (free text): pass unseen values through
+                    attrs[a] = hv  # free text: pass unseen values through unchanged
                 else:
                     attrs[a] = None
             elif (L, a) in m.attr_as_rel:
@@ -354,9 +346,7 @@ def canonical_keys(s: rm.State, learned: LearnedModel) -> tuple:
     return (objs, rels)
 
 
-# --------------------------------------------------------------------------
 # Operator matching by simulation
-# --------------------------------------------------------------------------
 
 
 @dataclass
@@ -395,8 +385,8 @@ def _param_bijections(hop: rm.Operator, lop: rm.Operator, m: Mapping):
 
 def simulate_match(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping, hop: rm.Operator, lop: rm.Operator,
                    pm: dict[str, str], states: list[rm.State], rng: random.Random, n_samples: int = 60) -> tuple[float, float, int]:
-    """Balanced sampling: half of the samples from bindings where the hidden
-    precondition holds, half where it does not (when available)."""
+    """Balanced sampling: half the samples from bindings where the hidden
+    precondition holds, half where it does not, when available."""
     pool = ["zz1", "zz2", ""]
     applicable, inapplicable = [], []
     for h in states:
@@ -430,7 +420,7 @@ def simulate_match(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping, hop
             try:
                 l2_pred, _ = rm.apply_effects(lop, l, lb)
             except (KeyError, TypeError):
-                continue  # malformed effect (e.g. unbound parameter): counts as a mismatch
+                continue  # malformed effect, e.g. unbound parameter: counts as a mismatch
             l2_true, _ = translate_state(h2, hidden_dom, learned, m)
             if canonical_keys(l2_pred, learned) == canonical_keys(l2_true, learned):
                 eff_ok += 1
@@ -460,9 +450,7 @@ def match_operators(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping, st
     return results
 
 
-# --------------------------------------------------------------------------
 # Metrics
-# --------------------------------------------------------------------------
 
 
 def evaluate(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.State, rm.State]], states: list[rm.State],

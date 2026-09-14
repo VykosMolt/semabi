@@ -617,11 +617,8 @@ def _closure_file() -> str:
 
 @contextlib.contextmanager
 def _installed_cache(relative: str, data: bytes, cache_root: Path, optimization: str = ""):
-    """Install one bytecode cache for a closure file and always restore the original.
-
-    Bytecode stays inside the test-owned cache root. The authenticated ``.py`` source
-    and its mtime are never modified, which is the condition the repair defends against.
-    """
+    """Installs one bytecode cache for a closure file and always restores the
+    original. The authenticated ``.py`` source and its mtime are never modified."""
 
     previous_prefix = sys.pycache_prefix
     try:
@@ -671,11 +668,9 @@ def _hash_pyc(code, source_hash: bytes, *, flags: int = 0b1) -> bytes:
 
 
 def test_live_divergent_bytecode_cache_is_rejected(tmp_path):
-    """A forged cache the interpreter would execute must fail authentication.
-
-    Source hashing alone cannot see this: the ``.py`` bytes and the checkout stay
-    untouched while the executed decision procedure is replaced.
-    """
+    """Checks a forged bytecode cache the interpreter would execute fails
+    authentication, since source hashing alone can't see it: the ``.py`` bytes stay
+    untouched while the executed code is replaced."""
 
     relative = _closure_file()
     stat_result = (ROOT / relative).stat()
@@ -718,13 +713,9 @@ def test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected(tmp_path):
 
 
 def test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list(tmp_path):
-    """Cache variants are enumerated from the cache directory, not from a fixed tuple.
-
-    Round-four review found the previous fixed ``('', '1', '2')`` could not be
-    exhaustive: ``-OOO`` writes ``opt-3`` and ``cache_from_source`` accepts any
-    alphanumeric token.  A level whose bytecode ``compile`` cannot reproduce is now
-    refused rather than skipped, and a level it can reproduce is compared.
-    """
+    """Checks cache variants are enumerated from the cache directory rather than a
+    fixed tuple, since optimization levels beyond ``('', '1', '2')`` exist (e.g.
+    ``-OOO`` writes ``opt-3``)."""
 
     relative = _closure_file()
     stat_result = (ROOT / relative).stat()
@@ -823,12 +814,8 @@ def test_non_authoritative_source_diagnostics_label_is_enforced(tmp_path):
 
 
 def test_source_summary_key_sets_are_exact_not_merely_sufficient(tmp_path):
-    """A subset check would let unbound provenance be smuggled back in beside the label.
-
-    Round-four review found the exact-key guard had no test that fails when it is
-    relaxed: every existing case removed a key, which a subset check also rejects.
-    These two cases add one, which only an exact check rejects.
-    """
+    """Checks the key-set guard is exact, not just a subset check: adding an extra
+    key must also be rejected, not only removing one."""
 
     _source, manifest, _payload = _source_manifest(tmp_path)
 

@@ -1,9 +1,6 @@
-"""A retained refutation binds to what its slot held, not to the slot's name.
-
-Blend's `cell@Ticket#0` was the word "Ticket" while a placeholder row made the column's
-label vary, and the number once that was repaired.  A refutation applied by name would
-have followed the name to a hypothesis the experiment never tested -- and blocked the key
-the experiment supported (`docs/v4_ties.md`)."""
+"""Tests that a retained refutation binds to what its slot actually held, not to
+the slot's name, so it can't follow a renamed slot to a hypothesis the experiment
+never tested."""
 from __future__ import annotations
 
 import json

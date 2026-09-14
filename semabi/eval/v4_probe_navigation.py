@@ -1,24 +1,14 @@
-"""Persistence probes for the controls the explorer never probed: click, reload, look.
+"""Runs persistence probes for controls the explorer never probed: click, reload, look.
 
-The inducer treats a click as a domain action unless an executed probe has certified it as
-sensing -- interface state that does not survive a reload -- and heuristics may not certify
-it, because consistency under a collapsed abstraction once hid real domain actions.  That
-policy is right, and it leaves a control whose status was never probed in the domain.  Vet's
-navigation tabs (`Clients`, `Appointments`, `Vets`) and cellar's (`Cellar`, `Lots`, `Intake`)
-were clicked hundreds of times in their traces and never followed by a reload, so their
-status was unknown, and every object type rendered per view acquired create and delete
-effects on navigation: an operator of support 68 that "deletes three cells" when `Vets` is
-pressed, fifty-three contradictions in vet's durable ledger, and seventy actions the clean
-reading could not bind (`docs/v4_frontier.md`).
+The inducer treats an unprobed click as a domain action by default, which is correct policy
+but leaves navigation controls that were clicked often and never followed by a reload with
+an unknown status, sometimes acquiring spurious create/delete effects.
 
-This runs the explorer's own probe for named buttons on a fresh instance of the application:
-click the button from a view other than its own, reload, and compare what the reload shows
-with what the previous reload showed.  The same page means nothing persisted -- the click
-was interface state, `VIEW`; a different page means something did, `DOMAIN`; a click that
-changed no view is `UNDETERMINED`.  The records go to ``probes.acquired.jsonl`` beside the
-run's own ``probes.jsonl``, labelled, so that the retained evidence stays as recorded and
-`V2Abstractor.fit_view_controls` reads both.  A probe is a fact about a control, not about
-any state of the history, and it is the same kind of evidence the explorer's probes are.
+This runs the explorer's own probe for named buttons on a fresh instance: click the button
+from another view, reload, and compare with what the previous reload showed. Same page means
+nothing persisted (`VIEW`); a different page means something did (`DOMAIN`); no view change
+is `UNDETERMINED`. Records go to ``probes.acquired.jsonl`` beside the run's own
+``probes.jsonl``, and `V2Abstractor.fit_view_controls` reads both.
 """
 from __future__ import annotations
 
@@ -32,10 +22,9 @@ from semabi.compiler.v2.score import _same_view
 
 def probe(base: str, seed: int, names: list[str], *, attempts: int = 3,
           via: str | None = None) -> list[dict]:
-    """``via`` names a button to click first from the reloaded page: harbour's `Record
-    departure` sits in a call's detail panel, opened by the call's own button on the board.
-    The prerequisite is part of the record; the verdict is still about what survives the
-    reload afterwards, read against what a reload shows by default."""
+    """``via`` names a button to click first, to reach a control that needs a prerequisite
+    step (e.g. opening a detail panel). The verdict is still about what survives the reload,
+    read against what a reload shows by default."""
     browser = Browser(base + "/", base + "/reset")
     records: list[dict] = []
     try:

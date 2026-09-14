@@ -1,15 +1,10 @@
 """Why does a survivor set have more than one member?
 
-A frontier that ends with several undefeated readings says only that the comparison
-history did not order them.  It does not say *why*, and the reasons are not the same kind
-of thing.  Two readings can coexist because the history never put them to the same test,
-because each is better on a different family, because one explains more and errs more, or
-because they said exactly the same thing everywhere.  Only the last is behavioural
-equivalence, and only some of the others could be settled by acting on the application.
-
-This is a development diagnostic over retained reports.  It decides nothing and is not part
-of the compiler's transfer closure; it exists so that the next mechanism is chosen from what
-the survivor sets actually contain.
+A frontier with several undefeated readings says only that the comparison history did not
+order them, not why. This is a development diagnostic over retained reports: it decides
+nothing and isn't part of the compiler's transfer closure, but classifies the reason two
+readings coexist (untested, different families, an error/explanation tradeoff, or genuine
+behavioural equivalence on this history).
 """
 from __future__ import annotations
 
@@ -54,9 +49,8 @@ def _fraction(evidence: transfer.TransferEvidence) -> Fraction:
 def axes(diff: transfer.Differential) -> dict[str, int]:
     """Per-step refutation and explanation advantage, in both directions.
 
-    ``refuted`` counts steps where a reading is wrong and its rival is not.  ``explains``
-    counts steps where it accounted for what happened and its rival did not.  Both are
-    computed on the same shared step index, so neither depends on the object inventory.
+    ``refuted`` counts steps where a reading is wrong and its rival isn't; ``explains``
+    counts steps where it accounted for what happened and its rival didn't.
     """
     c = diff.counts
     return {
@@ -70,9 +64,8 @@ def axes(diff: transfer.Differential) -> dict[str, int]:
 def family_difference(left_reading: dict, right_reading: dict) -> dict[str, Any]:
     """Which decisions actually differ, and whether the readings are rivals at all.
 
-    Two readings that change *different* families are composable rather than competing:
-    the candidate space simply cannot express taking both.  That is not ambiguity about
-    the world, it is a gap in what was proposed.
+    Two readings that change different families are composable rather than competing: the
+    candidate space simply cannot express taking both.
     """
     lf = {k: v["key_slot"] for k, v in left_reading["families"].items()}
     rf = {k: v["key_slot"] for k, v in right_reading["families"].items()}
@@ -153,17 +146,10 @@ def classify_pair(left: transfer.TransferEvidence, right: transfer.TransferEvide
 def behavioural_classes(evidence: dict[str, transfer.TransferEvidence]) -> list[list[str]]:
     """Group readings whose per-step verdict map is identical.
 
-    This is indistinguishability *by the transfer objective, on the steps this history
-    actually took*.  It is deliberately not called equivalence.  Two readings can agree on
-    every verdict while positing different object deltas behind them -- they induce
-    different models, with different complexity -- so identical verdicts are necessary for
-    behavioural equivalence and not sufficient for it.  Separating readings inside one of
-    these classes needs predictions at delta granularity, which the verdict vocabulary does
-    not carry, or an interaction this history never performed.
-
-    What the classes do establish is the operative fact: the comparison mechanism cannot
-    tell these readings apart on this evidence, so any preference between them came from
-    identity claims or from representational cost, not from behaviour.
+    Deliberately not called equivalence: two readings can agree on every verdict while
+    positing different object deltas behind them, so identical verdicts are necessary but
+    not sufficient for behavioural equivalence. This just says the comparison mechanism
+    cannot tell them apart on this evidence.
     """
     groups: dict[tuple, list[str]] = {}
     for name in sorted(evidence):
@@ -184,9 +170,8 @@ def atlas(report_path: Path, *, survivors_only: bool = True) -> dict[str, Any]:
         for b in names[i + 1:]:
             pairs.append(classify_pair(evidence[a], evidence[b], readings[a], readings[b]))
     classes = behavioural_classes(evidence)
-    # the report carries the finer, delta-level classes; the verdict classes above are what
-    # the comparison rule can actually see.  Where a verdict class splits into several
-    # delta classes, the rule was blind to a difference the abstraction had already made.
+    # The report carries finer delta-level classes; where a verdict class splits into
+    # several of them, the comparison rule was blind to a difference already in the state.
     delta = report.get("indistinguishable_classes")
     refinement = None
     if delta:

@@ -11,7 +11,7 @@ from semabi.compiler.v4 import manifests, source_candidates
 def freeze(source: Path, output: Path, *, repo_root: Path | None = None) -> dict:
     source = Path(source)
     output = Path(output)
-    # Freeze and consume SOURCE before search.  The parser receives descriptor-bound
+    # Freeze and consume SOURCE before search. The parser receives descriptor-bound
     # immutable bytes and never reopens the run directory while candidates are generated.
     root = manifests._repo_root(repo_root)
     initial_snapshot = manifests.custody.snapshot_run(source, "SOURCE")

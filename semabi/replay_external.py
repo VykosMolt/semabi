@@ -1,12 +1,10 @@
 """Corrected replay of stored V1 gauntlet runs (measurement audit, docs/v2_oracle.md).
 
-The V1 evaluation paired hidden.jsonl line i with evidence-log step i, but the
-hidden recorder also logged the reset inside `view_sweep` that the evidence log
-does not contain, so the hidden states were one step ahead. This script
-re-evaluates a stored run from its own trace and cached schema (no exploration,
-no LLM call) with both pairings and reports the difference. Operator
-explanation uses the hidden trace alone and is unaffected; type/attribute/
-relation alignment is what can move."""
+The V1 evaluation paired hidden.jsonl line i with evidence-log step i, but the hidden
+recorder also logged a reset the evidence log doesn't contain, so the hidden states
+were one step ahead. This re-evaluates a stored run with both pairings and reports
+the difference. Operator explanation is unaffected; type/attribute/relation
+alignment is what can move."""
 from __future__ import annotations
 
 import argparse
@@ -21,11 +19,11 @@ from semabi.eval.recorder import load_hidden
 
 def evaluate(run_dir: Path, offset: int) -> dict:
     from semabi.eval import external as ext
-    ext.LINK_DERIVED.clear()  # derived link relations are registered per domain name and looked up by
-    ext.LINK_FLAGS.clear()  # first registration: one app per process in normal runs, cleared here
+    ext.LINK_DERIVED.clear()  # registered per domain name on first registration; one app
+    ext.LINK_FLAGS.clear()    # per process normally, so clear both here between runs
     desc = json.loads((run_dir / "hidden_domain.json").read_text())
     hidden_dom = domain_from_description(desc)
-    C = compile_v1(run_dir, min_support=2)  # schema.json cached -> deterministic, identical model
+    C = compile_v1(run_dir, min_support=2)  # schema.json is cached, so the model is deterministic
     hidden = load_hidden(run_dir)
     n = min(len(hidden) - offset, len(C.log.steps))
     pairs = [(state_from_json(hidden[i + offset]["state"]), C.visible_state_after(i)) for i in range(n)]

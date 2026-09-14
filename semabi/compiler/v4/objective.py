@@ -1,35 +1,19 @@
 """What makes one reading of the world better than another, without hidden truth.
 
-V2's default refinement objective rewarded regular, well-supported operator hypotheses.
-A wrongly keyed family maximises exactly that: if a form's key is its field label, every
-edit deletes one object and creates another, which is a perfectly regular, highly supported
-two-effect operator.  gauntlet-v3 produced nine such operators on one application and every
-one of them was spurious.
+A reading is scored on whether it explains what the application actually did.
+The parts are compared in order, never as a weighted sum, so coverage cannot buy
+a contradiction:
 
-The V4 objective asks instead whether the reading explains what the application actually
-did, and is compared lexicographically rather than as a weighted sum, so that no amount of
-apparent coverage buys a hard contradiction:
-
-    1. contradictions   a pure sensing action changed the domain state           (must be 0)
-    2. explained        (maximised) actions that changed unit content and registered a
-                        domain change which is not merely a re-keying
-    3. churn + spurious + visibility   (minimised) registered changes with nothing behind them
-    4. unexplained      an action changed the page inside units and registered nothing
+    1. contradictions   a pure sensing action changed the state      (must be 0)
+    2. explained        (maximised) actions that changed what a unit shows and
+                        registered a real change, not just a re-keying
+    3. churn + spurious + visibility   (minimised) changes with nothing behind them
+    4. unexplained      the page changed inside units and nothing registered
     5. complexity       (minimised) types, attributes and references
 
-`visibility` is the third of these and the one the V3 diagnosis put at the centre for one
-of its two instrumented applications: objects that appear or disappear at a step where the
-page changed to a different view.  Not being rendered any more is not evidence of having
-ceased to exist, so a reading that invents a creation or a deletion whenever the view
-changes is paying for it here.  The rule names no layout: the views are told apart by the
-same role-path overlap the reload check already used.
-
-Churn -- one step both creating and destroying objects of the same type -- is what a
-re-keyed identity looks like: editing the value that was mistaken for the identity destroys
-one object and creates another.  It is a prior rather than a law, since an application may
-genuinely replace an object, so it is not counted as an explanation and is penalised, but
-it never outranks explanation.  If it did, the reading that claims no entities at all would
-win every comparison: it has no churn because it has nothing.
+Two failures this is built to refuse: a reading that posits no objects has no
+errors because it has nothing, and a reading keyed on an edited field explains
+every edit because every edit looks like a new object.
 """
 from __future__ import annotations
 
@@ -52,12 +36,9 @@ KEY_CHANGE = "__key__"
 
 
 def _represented_widget_spans(A: V2Abstractor, obs) -> dict[tuple, str]:
-    """Persistent attribute spans paired by rendered own keys, before association.
+    """Widget values paired with the owner whose key the page renders beside them.
 
-    A source slot must uniquely supply an actual emitted attribute of a uniquely
-    represented owner. Reference expansion, record/mention transformations and
-    attachments without an own-field witness are outside this added channel.
-    """
+    The owner and the source slot must both be unique on the page."""
     H = A.H
     if not H.persistent_widgets:
         return {}
@@ -130,10 +111,8 @@ def _represented_widget_spans(A: V2Abstractor, obs) -> dict[tuple, str]:
                     or not name.startswith("attr:")
                     or name not in owner.slots or owner.slots[name][1] != ui.slots[sid]):
                 continue
-            # Compare this exact data span, not the widget's whole value: a
-            # persistent numeric span in '4 red' cannot explain '4 blue'.  The span is
-            # the entity's, not the template's: a page variant that gains or loses its
-            # status line renders the same owner and the same field.
+            # Key by the entity, not the template: a page variant that gains or loses a
+            # status line still shows the same owner and the same field.
             result[(et_id, witness[1], witness[2], sid, name)] = ui.slots[sid]
     return result
 
@@ -148,14 +127,11 @@ def _changed_inside_units(A: V2Abstractor, log: EvidenceLog, step) -> bool:
 
 
 def observable_delta_signature(delta) -> tuple:
-    """The part of a state delta stated in rendered slots and values.
+    """The part of a change that the page itself showed: which slot, and between which
+    values.
 
-    ``added`` and ``removed`` reduce to counts because an object's identity is private to
-    the reading that posited it, and relation slots reduce to a count because ``rel:N``
-    names a type id, which two readings can number differently while positing the same
-    change.  What survives is what the page showed: the slot that changed and the values
-    it changed between.
-    """
+    Object identities and type ids are dropped: they belong to the reading, and two
+    readings can number them differently while saying the same thing."""
     attrs: Counter = Counter()
     keyings = 0
     for _oid, slot, old, new in delta.attr_changes:
@@ -172,19 +148,13 @@ class Behaviour:
     contradictions: int = 0
     churn: int = 0
     visibility: int = 0
-    # one object, two mentions on one page that disagree about a value: the reading names
-    # two things with one name, and the merge is hiding a change (vet's two appointments
-    # for one patient, keyed by the patient: a check-in on the second is silent)
+    # two mentions on one page that disagree about a value: one name for two things,
+    # which hides a change
     conflicts: int = 0
-    # the arguments of what the interface said -- "Returned 2 gal to Orchard from Picnic" --
-    # that are values of objects the reading posits: a reading under which the interface's
-    # own words about an action refer to its objects, against one where they refer to nothing
+    # words in the interface's own message that name objects this reading posits
     named: int = 0
-    # instances the reading's key did not name: a sibling carried the same value and the
-    # instance was told apart by its position.  Blend's draws keyed by their amount, a
-    # patient's two appointments keyed by the patient: a key that fails to name is a
-    # position in disguise, and every retained attack on presentation coordinates says a
-    # position is not a name
+    # instances the key failed to tell apart, so position did it instead: a key that
+    # needs position is not a name
     positional: int = 0
     unexplained: int = 0
     spurious: int = 0
@@ -195,35 +165,26 @@ class Behaviour:
     churn_steps: list[int] = field(default_factory=list)
     contradiction_steps: list[int] = field(default_factory=list)
     visibility_steps: list[int] = field(default_factory=list)
-    # what this reading said about each step, so that two readings can be compared where
-    # they actually disagree rather than by their totals
+    # what this reading said about each step, so two readings can be compared where they
+    # disagree rather than by their totals
     verdicts: dict[int, str] = field(default_factory=dict)
-    # and *what* it said changed there.  The verdict records whether a reading accounted
-    # for a step; it does not record the content of the account, so two readings that
-    # disagree about which rendered values belong to tracked objects can receive the same
-    # verdict at every step of a long history.  On blend_book that hides a difference at
-    # four steps.  The signature below keeps the observable part of the delta -- slot
-    # names and rendered values, which come from the page -- and drops object identities
-    # and type ids, which are private to a reading and would make every pair differ.
+    # and what it said changed there. Two readings can give the same verdict everywhere
+    # and still disagree about which values moved, so keep the observable part too.
     delta_signatures: dict[int, tuple] = field(default_factory=dict)
-    # Candidate-specific delayed observations, available for later attribution. These
-    # are deliberately excluded from effect signatures and the explanatory score.
+    # delayed observations kept for later attribution; never scored
     revisions: dict[int, dict[str, Any]] = field(default_factory=dict)
 
     @property
     def errors(self) -> int:
-        """Registered changes with nothing behind them: contradictions, re-keyings,
-        visibility artifacts and deltas at steps where no unit content changed."""
+        """Changes registered with nothing behind them."""
         return (self.contradictions + self.churn + self.spurious + self.visibility
                 + self.conflicts + self.positional)
 
     def delta_signature_digest(self) -> str:
-        """Identity of everything this reading said changed, over the whole history.
+        """A digest of everything this reading said changed.
 
-        Two readings with equal digests were indistinguishable at delta granularity here.
-        That is a statement about *this* history and this vocabulary, not about the
-        readings: an interaction the history never performed can still tell them apart.
-        """
+        Equal digests mean the two readings agreed on this history. Another interaction
+        could still tell them apart."""
         payload = json.dumps([[step, self.delta_signatures[step]]
                               for step in sorted(self.delta_signatures)],
                              sort_keys=True, separators=(",", ":"), default=str)
@@ -235,27 +196,17 @@ class Behaviour:
         return (self.errors, -self.explained, self.delta_atoms, self.unexplained, self.complexity)
 
     def better_than(self, other: "Behaviour") -> bool:
-        """A strict improvement in (explanation up, error down), never a trade between them.
+        """Better only by explaining more or erring less, never by trading one for the other.
 
-        A weighted sum would let one be bought with the other, and both directions of that
-        trade are exactly the failures to avoid: a reading that claims no entities has no
-        errors because it has nothing, and a reading that re-keys everything explains every
-        step because every step looks like a creation.  So a move is accepted only when it
-        does not lose explanation and reduces error, or gains explanation without adding
-        error; complexity breaks an otherwise exact tie.
-        """
+        Accept a move that keeps explanation and reduces error, or gains explanation
+        without adding error. Complexity breaks an exact tie."""
         if self.explained >= other.explained and self.errors < other.errors:
             return True
         if self.explained > other.explained and self.errors <= other.errors:
             return True
         if (self.explained, self.errors) == (other.explained, other.errors):
-            # same explanatory power, same errors: first, the reading under which more of
-            # what the interface *said* refers to objects it posits -- blend's draws explain
-            # no extra step (a draw's gallons already move) but every "Returned 2 gal to
-            # Orchard from Picnic" names one -- then the reading that says what happened in
-            # fewer atomic changes.  One action that adds a thing is a create; the same
-            # action read as a shift of several rendered values is the same event spelled
-            # out at greater length, and length is what a description pays for.
+            # Equal on both: prefer the reading whose objects the interface's own messages
+            # name, then the one that says what happened in fewer changes.
             if self.named != other.named:
                 return self.named > other.named
             if self.delta_atoms != other.delta_atoms:
@@ -370,9 +321,8 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                 prev = state
                 continue
             delta = diff(prev, state)
-            # Local identity replacement is evidence about a reading even when the
-            # missing object's existence remains unknown. It must not require deleting
-            # the carried belief or become an application destruction effect.
+            # One object replaced by another on the page is evidence about the reading,
+            # without claiming the missing one ceased to exist.
             visible_delta = diff(
                 AbstractState({oid: o for oid, o in prev.objs.items()
                                if o.node is not None and o.node >= 0}, {}),
@@ -398,9 +348,8 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                                 and name in getattr(A, "verified_domain_controls", set()))
 
             churned = phantom = False
-            # the abstractor's identity repair reports a destroyed-and-created pair as one
-            # object under a new key; a step that registers nothing else is the re-keying
-            # the churn term is for, not an explanation
+            # A step whose only change is the key is a re-keying, which counts as churn
+            # rather than as something explained.
             rekeyings = sum(1 for c in delta.attr_changes if c[1] == KEY_CHANGE)
             merely_rekeyed = bool(rekeyings) and rekeyings == len(delta.attr_changes) and not (
                 delta.added or delta.removed or delta.rel_changes)

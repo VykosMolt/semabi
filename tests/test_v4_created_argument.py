@@ -1,12 +1,8 @@
-"""An argument that names the object the interaction creates.
+"""Tests for the argument that names an object an interaction creates.
 
-Harbour's `Schedule call` answers *Call C-107 opened for Selkie*.  No pre-state role can name
-`C-107`: nothing on the board was called that.  Left unclaimed, the answer was a sentence
-with a hole; scored as a value to predict, it could only be wrong.  What the evidence
-supports is a different claim -- that the first argument is the name of the object the click
-brings into being, and a name nothing on the board had -- and that claim is invariant under
-any renaming of the calls, which is what a fresh value is (`semabi.eval.v4_renaming`).
-"""
+Checks the created argument is recognised as the name of a fresh object the click
+brings into being, rather than treated as a value to predict from pre-state roles that
+can never name it. The claim must hold under any renaming of the created objects."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -64,11 +60,8 @@ def test_schedule_call_claims_a_fresh_name_and_the_held_out_calls_are_fresh():
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_an_identifying_token_is_never_an_emission_constant():
-    """op13 said 'cannot sign off while booked for call C-102' with C-102 as a fitted
-    constant -- one occasion, the call off the board, the spelling memorised -- and the
-    renaming instrument refuted it twelve times the moment call ids became keys.  A token
-    that identifies a tracked entity is an argument to determine or leave undetermined,
-    never part of the rule's spelling."""
+    """Checks a token that identifies a tracked entity is treated as an argument to
+    determine, never memorised as part of a rule's fitted spelling."""
     from semabi.compiler.v4.consequence import fit
     from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
 

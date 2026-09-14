@@ -1,22 +1,7 @@
-"""Is verdict agreement really behavioural agreement?
-
-The transfer comparison compares readings through a per-step verdict -- EXPLAINED, CHURN,
-VISIBILITY, SILENT and so on.  That vocabulary is coarse on purpose: it is what the
-objective needs in order to say whether a reading accounted for what happened.  It is not
-obviously fine enough to say two readings accounted for it *the same way*, and the retained
-frontiers contain classes of readings whose verdict maps are identical at every step of an
-800-step history while inducing models of different complexity.
-
-This probe asks the finer question, in vocabulary that survives a change of object
-inventory.  A state delta names slots and rendered values, not just object identities, so
-the tuple ``(slot, old, new)`` is observable rather than latent.  Two readings agreeing on
-every verdict but disagreeing on the observable content of the delta behind it are
-distinguishable at delta granularity, and the verdict vocabulary is what is hiding it.
-
-Object identities and type ids are deliberately excluded from the signature: they are
-private to a reading, so including them would make every pair of distinct readings
-"differ" and the probe would answer its own question trivially.
-"""
+"""Checks whether two readings that agree on every per-step verdict actually describe
+the same state changes, using observable slots and values rather than the coarser
+verdict vocabulary. Object identities and type ids are excluded since they are private
+to a reading and would make every pair look different."""
 from __future__ import annotations
 
 import json
@@ -28,16 +13,15 @@ from semabi.compiler.abstract import diff
 from semabi.compiler.compile_v4 import compile_v4
 from semabi.compiler.v4 import manifests
 
-# a rename is the abstractor's identity repair: the same object under a new key
+# a rename: the abstractor keeps the same object under a new key
 KEY_CHANGE = "__key__"
 
 
 def _observable_signature(delta) -> tuple:
     """The part of a state delta stated in rendered slots and values.
 
-    ``added``/``removed`` are reduced to counts because an object's identity is private
-    to the reading that posited it, while an attribute change carries the slot name and
-    both rendered values, which come from the page.
+    ``added``/``removed`` are reduced to counts since object identity is private
+    to the reading; an attribute change carries the slot name and both values.
     """
     attrs = Counter()
     keyings = 0
@@ -46,17 +30,14 @@ def _observable_signature(delta) -> tuple:
             keyings += 1
             continue
         attrs[(slot, repr(old), repr(new))] += 1
-    # ``rel:N`` names a *type id*, which is private to a reading: two readings can posit
-    # the same relational change and number the types differently.  Only the count of
-    # relational changes survives into the observable signature.  A first version of this
-    # probe kept the slot names and reported three distinct classes on blend_book; every
-    # one of those differences was type numbering, not a difference about the world.
+    # ``rel:N`` names a type id, private to a reading: two readings can posit the same
+    # relational change and number the types differently. Only the count survives here.
     return (len(delta.added), len(delta.removed), keyings,
             tuple(sorted(attrs.items())), len(delta.rel_changes))
 
 
 def step_signatures(run_dir: Path, reading, min_support: int = 2) -> dict[int, tuple]:
-    """Replay one reading over one history and record what it says changed at each step."""
+    """Replay a reading over a history and record what it says changed at each step."""
     compiled = compile_v4(Path(run_dir), min_support=min_support, write_diagnostics=False,
                           pinned=reading)
     log, A = compiled.log, compiled.abstractor
@@ -81,7 +62,7 @@ def step_signatures(run_dir: Path, reading, min_support: int = 2) -> dict[int, t
 
 def compare(manifest_path: Path, run_dir: Path, names: list[str] | None = None,
             min_support: int = 2) -> dict[str, Any]:
-    """Group the frozen readings by observable delta signature, and by verdict class."""
+    """Group the readings by observable delta signature, and by verdict class."""
     source = manifests.load_source_manifest(Path(manifest_path))
     candidates = {c.name: c for c in source.candidates}
     chosen = names or sorted(candidates)

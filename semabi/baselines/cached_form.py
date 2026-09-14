@@ -1,12 +1,9 @@
-"""Cached-form replay with shared acquisition from SemABI operation artifacts.
+"""Cached-form replay baseline: reuses SemABI's discovered operation artifacts.
 
-Both comparison arms must be charged for SemABI's acquisition and artifact
-assistance. This is a conditional replay baseline, not independent onboarding.
-It consumes discovered navigation and control descriptors, substitutes supplied
-arguments, and reports DISPATCHED after cached reading, a completed submit action,
-or a learned linked-value commit sequence. It does not infer form contracts,
-learn operations, verify effects, reload, or retry writes.
-Unsupported operation families remain unsupported in the task denominator.
+Not independent onboarding: this consumes discovered navigation and control
+descriptors, substitutes supplied arguments, and reports DISPATCHED after a cached
+reading, a completed submit, or a learned linked-value commit sequence. It does not
+infer form contracts, learn operations, verify effects, reload, or retry writes.
 
 Example::
 
@@ -14,9 +11,9 @@ Example::
         --application-url http://127.0.0.1:8000/ --credentials-file credentials.json \
         --arguments '{"value":"A new value"}' --output-dir runs/baseline_attempt1
 
-The output directory must be new. Evidence contains credential-redacted raw
-observations captured only after authentication. Independent evaluation must
-establish whether a dispatched action completed the requested business task.
+The output directory must be new. Evidence is credential-redacted and captured only
+after authentication. Whether a dispatched action completed the task is left to
+independent evaluation.
 """
 from __future__ import annotations
 
@@ -310,7 +307,7 @@ class _Replay:
         submit = self.resolve(surface, procedure["submit"])
         if len(set(bindings.values())) != len(bindings) or submit in bindings.values():
             raise _Stop("Cached arguments do not resolve to distinct controls")
-        # Native ownership is current UI metadata; no learned form shape is matched.
+        # Native ownership comes from current UI metadata; no learned form shape is used.
         owners = [surface.controls[node].get("form") for node in [*bindings.values(), submit]]
         if any(owner is not None for owner in owners) and any(owner != owners[-1] for owner in owners):
             raise _Stop("Cached controls do not share one native form")
@@ -427,8 +424,8 @@ class _Replay:
                                 ("retain_nodes", "nodes_retained", "release_nodes")):
             raise _Stop("Observed editor element continuity is unavailable", unsupported=True)
         target = arguments[procedure["selector_argument"]]
-        # Shared generic Surface parsing selects a current local record; learned
-        # effect slots and full form contracts are deliberately not consumed.
+        # Generic Surface parsing selects a current local record; learned effect
+        # slots and full form contracts are deliberately not used.
         records = visible_record_matches(surface, target)
         if len(records) != 1:
             raise _Stop("Cached target record is missing or ambiguous")
@@ -482,8 +479,8 @@ class _Replay:
                             if not callable(getattr(self.browser, "press_retained", None)):
                                 raise _Stop("Cached completion dispatch is unavailable", unsupported=True)
                             self.stage = "completion"
-                            # Replay the observed optional step; this baseline does
-                            # not infer full form contracts or verify business effects.
+                            # Replay the observed optional step; this baseline does not
+                            # infer full form contracts or verify effects.
                             self.act(surface, Primitive("press", node, "Escape"), allowed_origin,
                                      retained=retained, retained_offset=nodes.index(node))
         finally:
@@ -665,7 +662,7 @@ class _Replay:
             with os.fdopen(descriptor, "w") as stream:
                 stream.write(json.dumps(result, indent=2, allow_nan=False) + "\n")
         except BaseException as error:
-            # Never let the CLI turn lost post-action evidence into a pre-action failure.
+            # Never let lost post-action evidence be reported as a pre-action failure.
             result["outcome"] = "UNKNOWN" if self.possible_action else "FAILED"
             result["reason"] = "Execution evidence could not be finalized"
             result["evidence_error_type"] = type(error).__name__
@@ -680,13 +677,13 @@ def replay(operation: dict, arguments: dict, *, application_url: str, credential
            browser_factory=None) -> dict:
     """Run one replay, with fresh browser state and no automatic write retry.
 
-FAILED means no replay action was attempted; authentication may have occurred.
-UNKNOWN means a replay action may have changed state. Navigation clicks and
-field edits conservatively count as possible writes. Raw authentication views
-and actions carrying credentials are excluded from the evidence log.
-The execution deadline includes connection and authentication. It is checked
-between browser calls; an in-flight call may finish after it expires.
-"""
+    FAILED means no replay action was attempted; authentication may have occurred.
+    UNKNOWN means a replay action may have changed state (navigation clicks and field
+    edits count as possible writes). Raw authentication views and actions carrying
+    credentials are excluded from the evidence log. The execution deadline includes
+    connection and authentication; it is checked between browser calls, so an
+    in-flight call may finish after it expires.
+    """
     if (type(max_actions) is not int or type(max_writes) is not int
             or max_actions < 0 or max_writes < 0):
         raise ValueError("Action and write budgets must be nonnegative integers")

@@ -2,9 +2,8 @@
 """Frozen, observation-only measurement for the fresh-interface campaign.
 
 ``prepare`` reads initial training evidence only. ``score`` fits each frozen reading
-on the supplied training history before attaching a separate evaluation history.
+on the supplied training history, then attaches a separate evaluation history.
 Application implementations and oracle metadata are never inputs to this module.
-The shared identity scoreboard is descriptive; it does not select an ontology.
 """
 from __future__ import annotations
 
@@ -76,8 +75,8 @@ def permitted_runtime_path(relative: str) -> bool:
             or any(part in {"experiments", "hidden", "env", "oracle"} for part in rel.parts)):
         return False
     try:
-        # Prefix checks below must name the real path, not a traversal or a symlink
-        # redirect that reaches a sealed file even while remaining inside the repo.
+        # Prefix checks below need the real path, not a traversal or symlink redirect
+        # that reaches a sealed file while still looking like it's inside the repo.
         if (ROOT / rel).resolve().relative_to(ROOT).as_posix() != relative:
             return False
     except (ValueError, OSError, RuntimeError):
@@ -97,7 +96,7 @@ def verify_freeze(path: Path | None) -> dict:
     if refused:
         raise RuntimeError(f"non-learner paths in runtime freeze section: {refused}")
     # sealed_evaluator_files contains metadata only. Its bytes are verified by the
-    # independent evaluator; neither initial preparation nor learning opens them.
+    # independent evaluator; neither preparation nor learning opens them.
     changed = [name for name, expected in manifest["files"].items()
                if not (ROOT / name).is_file() or file_digest(ROOT / name) != expected]
     if changed:
@@ -158,8 +157,8 @@ def prepare(train: Path, out_dir: Path, *, freeze: Path | None = None) -> dict:
     raw = (Path(train) / "identity_refutations_v4.json")
     refutations = custody.parse_refutations(raw.read_bytes() if raw.is_file() else None)
     records = custody.parse_refutation_records(raw.read_bytes() if raw.is_file() else None)
-    # Enumerating the generator's entire existing neighborhood supplies an exact omission
-    # inventory. Only its first MAX_CANDIDATES enter the frozen experimental candidate set.
+    # Enumerating the generator's full existing neighborhood gives an exact omission
+    # inventory. Only its first MAX_CANDIDATES enter the frozen candidate set.
     result, all_candidates, notes, _H, _G = source_candidates.source_candidates(
         Path(train), log, max_candidates=sys.maxsize,
         refuted=refutations, records=records)
@@ -325,13 +324,12 @@ def score_model(model, evaluation: EvidenceLog, *, fit_error=None) -> tuple[dict
     """Attach raw evaluation observations to the already-frozen live transformation.
 
     No call to _normalise_sections may pool evaluation text into training statistics.
-    This is the same Browser.observe -> A.abstract surface used for live acquisition.
     """
     fitted = None if model is None else model_record(model)
     scored = None if model is None else replace(model, log=evaluation, cut=0)
     state_errors, state_by_step, predictions = [], [], []
-    # The scoring unit is one attempted primitive. A learner exception at one
-    # state must not erase successful checks or remove later opportunities.
+    # The scoring unit is one attempted primitive. A learner exception at one state
+    # must not erase successful checks or remove later opportunities.
     for step in evaluation.steps:
         if step.action.kind != "click":
             continue
@@ -364,8 +362,8 @@ def score_model(model, evaluation: EvidenceLog, *, fit_error=None) -> tuple[dict
                   "episode": step.episode, "before": step.before, "after": step.after,
                   "action": step.action.to_json()}
         if step.action.target is None:
-            # A scripted target that cannot be found is an evaluation opportunity the
-            # instrument failed to reach. It remains in every click denominator.
+            # A scripted target that cannot be found is an opportunity the instrument
+            # failed to reach. It remains in every click denominator.
             for rows in ledgers.values():
                 rows.append({**common, "step": step.step, "control": None,
                              "verdict": oc.NO_MODEL,

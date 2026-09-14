@@ -1,16 +1,12 @@
-"""Data association across representations by co-change.
+"""Matching mentions across views by what happens to them.
 
-Two mentions in different views are the same latent entity if what happens to one
-happens to the other: when the filling of unit A's instance `a` changes (or `a`
-appears / disappears) in the interval between two visits of A's region, and unit
-B's instance `b` changes in an overlapping interval, (a, b) co-changed. Repeated,
-consistent co-change with no conflicting partner is evidence for the alias a ~ b.
+Two mentions in different views are the same entity if what happens to one happens to the
+other: both change, appear or disappear in overlapping intervals. Repeated co-change with
+no conflicting partner is evidence for the match.
 
-This is the verifier for correspondences proposed by anything else (an LLM
-guessing that "T.S." abbreviates "Two Sisters", a key overlap) and a proposer of
-its own. Every alias carries a status: UNTESTED (proposed only), SUPPORTED (>= 2
-consistent co-change events), CONTRADICTED (co-change with a different partner
-while this one stayed unchanged), UNRESOLVED (evidence both ways).
+This verifies matches proposed elsewhere and proposes its own. Each carries a status:
+untested, supported by two or more consistent events, contradicted by a co-change with a
+different partner, or unresolved where the evidence goes both ways.
 """
 from __future__ import annotations
 

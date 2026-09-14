@@ -1,19 +1,13 @@
 """Entity-type hypotheses over recurring unit templates.
 
-Deterministic proposers only (no LLM here):
-  * a unit type is a recurring template whose instances carry *own* data tokens
-    (tokens not inside a nested unit instance);
-  * its key slot is the own slot whose values identify the instance (unique among
-    co-present instances under the same parent, non-numeric, recurring over time);
-  * two unit types with overlapping key values are the same entity type unless
-    that identification is contradicted (one observation would then show one
-    entity twice with different attribute values): then the second type is a
-    *link* type keyed by (enclosing entity, own key) that references the first;
-  * a non-key slot whose values are keys of another type is a reference slot;
-  * a unit type nested in another entity type's instances has a containment
-    relation to it.
-Every decision is recorded with its evidence so that later counterexamples can
-revise it.
+A unit type is a recurring template whose instances carry data of their own. Its key is
+the slot whose values identify an instance: unique among siblings, not a number, and
+recurring over time. Two types whose key values overlap are one entity unless a single
+page shows that entity twice with different values, in which case the second is a link
+type keyed by (enclosing entity, own key). A non-key slot holding another type's keys is
+a reference, and a type nested inside another is contained by it.
+
+Every decision is recorded with its evidence so a later counterexample can revise it.
 """
 from __future__ import annotations
 
@@ -218,10 +212,9 @@ class Hypotheses:
                         sid = base
                 owner.slots[sid] = tok
                 owner.slot_nodes[sid] = i
-        # a unit whose only persistent content is one nested mention (a cell holding a tape
-        # button and a colour select) is that mention's frame: its slots belong to the mention.
-        # So is a unit whose only words are the mention's -- a list item holding a job's
-        # button and its measurement: the number no more names the item than a select does
+        # A unit whose only persistent content is one nested mention is that mention's
+        # frame: its slots belong to the mention. So is a unit whose only words are the
+        # mention's, such as a list item holding a button and one measurement.
         for ui in list(insts):
             own_persistent = [k for k in ui.slots if not k.endswith("~")]
             unit = self.units.get(ui.template)
@@ -242,11 +235,9 @@ class Hypotheses:
                 child.slots[nk] = v
                 child.slot_nodes[nk] = ui.slot_nodes[k]
             ui.slots = {}
-        # Explicit, evidence-backed attachment refinements.  A widget initially belongs to
-        # the enclosing recurring unit because that is the only safe structural default.
-        # A refinement may instead attach it to the unique keyed mention sharing its local
-        # parent (for example, a button mention paired with one value widget).  The rule is
-        # relational and local; it does not name an application or layout family.
+        # A widget belongs to its enclosing recurring unit by default, which is the only
+        # safe guess. A refinement may attach it instead to the one keyed mention sharing
+        # its local parent. The rule is local and names no application or layout.
         for owner in list(insts):
             for sid in list(owner.slots):
                 target_template = self.slot_attachments.get((owner.template, sid.rstrip("~")))
@@ -383,10 +374,9 @@ class Hypotheses:
             if self.allowed == keyed:
                 break
             self.allowed = keyed
-        # Association evidence is observation-local, so it cannot safely be folded into
-        # the raw token stream before a unit's key slot is known.  Apply supported key
-        # correspondences to the fitted instances now, before key overlap proposes entity
-        # merges.  Runtime parsing applies the same map in ``parse_units``.
+        # Association evidence is local to one page, so it cannot be folded into the raw
+        # tokens before a unit's key is known. Apply supported key correspondences to the
+        # fitted instances now, before key overlap proposes merges.
         self._apply_key_associations()
         self._build_entity_types()
         self.frozen = True
@@ -764,11 +754,9 @@ class Hypotheses:
             self._slot_stats(u)
 
     def _mirror_widgets(self) -> None:
-        """A widget whose value a persistent slot of a corresponding unit follows -- the
-        run's weight typed on its page, then shown on its card -- is that value's editor:
-        domain state shown in a widget, established without a reload.  Correspondence is
-        the one entity types are built on: the widget's unit keyed by the other unit's
-        key values, or naming them in one of its persistent slots."""
+        """A widget whose value a persistent slot of a matching unit follows is that value's
+        editor: state shown in a widget, established without a reload. The match is the one
+        entity types are built on, by key or by a slot naming it."""
         if not self.step_sigs:
             return
         families: dict[str, list[UnitHyp]] = {}
@@ -1091,14 +1079,10 @@ class Hypotheses:
             if best is None or score > best[0] + 0.1 or (abs(score - best[0]) <= 0.1 and self._slot_order(uh, sid) < self._slot_order(uh, best[1])):
                 best = (score, sid, fd)
         if best is None and self.numeric_keys_as_last_resort:
-            # Nothing textual identifies this unit.  A number may: blend's draw rows carry
-            # `Ticket 4`, unique among the rows, the same number standing with the same
-            # draw on every page, and the interface acts on the row by that number.  A
-            # number is refused above because in most tables it is an amount, and an amount
-            # can be unique by coincidence; here it is admitted only where no word does the
-            # job, on the same evidence a word is admitted on -- uniqueness among siblings,
-            # and determining the rest of the row -- so that a recurring structure with
-            # numeric identity is not read as slots of whatever encloses it.
+            # Nothing textual identifies this unit, but a number may: rows numbered by a
+            # ticket the interface itself acts on. Numbers are refused above because in most
+            # tables they are amounts, and an amount can be unique by coincidence. Admitted
+            # here only where no word does the job, on the same evidence a word needs.
             for sid, st in uh.slots.items():
                 if sid.endswith("~") or sid.endswith("!") or sid == "col" or "|" in sid or st.n < 0.8 * n_inst:
                     continue
@@ -1257,10 +1241,9 @@ class Hypotheses:
                 if frozenset((a.template, b.template)) in self.withheld_unions:
                     a.evidence.append(f"key overlaps {b.template[:40]} but the union is withheld: two kinds")
                     continue
-                # contradiction: a unit type whose key repeats within one observation (different
-                # parents) cannot be the same entity as one where it does not -> link type;
-                # likewise a unit that comes into existence while the other already showed the
-                # key (a loan row appearing for an existing artifact) is a new object, not a view
+                # A key that repeats within one observation under different parents cannot
+                # be the same entity, so the second type is a link. So is a unit that comes
+                # into existence while the other already showed the key.
                 for u, other in ((a, b), (b, a)):
                     rule = "col" in u.slots or self._repeats_in_obs(u) or self._created_later(u, other)
                     if rule != (u.template in self.force_link):
@@ -1327,11 +1310,9 @@ class Hypotheses:
         for et in self.entity_types.values():
             for t in et.units:
                 keys_of[et.tid] |= self.units[t].key_values()
-        # A link type's key is borrowed from the type it overlaps, so a column whose values
-        # match the link's keys matches the origin's keys just as well -- and where the link
-        # also keys an empty cell, better, which is how harbour's `Current call` column came to
-        # reference the call *cells* rather than the calls, and a ship's reference to the call
-        # it holds resolved to nothing on every page.  A reference is to the origin.
+        # A link type borrows its key from the type it overlaps, so a column matching the
+        # link's keys matches the origin's just as well, and better where the link also keys
+        # an empty cell. A reference is to the origin.
         origin: dict[int, int] = {}
         for t, other in links.items():
             hops = 0
@@ -1392,11 +1373,11 @@ class Hypotheses:
                         et.evidence.append(f"{t[:30]} nested in T{ptid} ({c}/{len(self.units[t].instances)})")
 
     def _is_attribute(self, u: UnitHyp, sid: str) -> bool:
-        """An own persistent slot that is not the key and does not restate it.  A slot whose
-        value on each instance is that instance's own key, alone or under one constant label
-        -- a row's `Open Orchard` button, dissolved into the row -- is the name said again,
-        and an equality on it would be the spelling memorised (`docs/v4_behaviour.md`); a
-        label that varies with the instance (`Follow` against `Unfollow`) is a state and stays."""
+        """An own persistent slot that is neither the key nor a restatement of it.
+
+        A slot whose value on each instance is that instance's own key, alone or under one
+        constant label, is the name said again, and a condition on it would memorise the
+        spelling. A label that varies with the instance is a state and stays."""
         if sid == u.key_slot or sid.endswith("~") or sid.endswith("!") or "|" in sid:
             return False
         if not u.key_slot:
@@ -1440,14 +1421,9 @@ class Hypotheses:
     def _parent_key(self, ui: UnitInstance) -> str | None:
         """The key of the unit instance enclosing this one, on the page it stands on.
 
-        This searched the fitting instances of the parent's unit type for the page and root,
-        and so answered for a fitted page and never for a held-out one: on every page of
-        another seed, harbour's call buttons -- link objects keyed by their row and column --
-        had no key and were not objects, and a click on one had no owner.  The page being
-        read has its own instances (`parse_units` keeps the last parse of each page); the
-        fitting instances are consulted first because the fit may have rewritten their keys
-        to a canonical spelling, and a held-out parse applies the same aliases itself.
-        """
+        The fitting instances are consulted first because the fit may have rewritten their
+        keys to a canonical spelling; otherwise the page's own parse answers, which is what
+        makes this work on a page the fit never saw."""
         if ui.parent_root is None:
             return None
         pt = self.template(ui.sig, ui.parent_root)

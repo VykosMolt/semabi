@@ -1,32 +1,13 @@
 """Is the frozen model invariant under a consistent renaming of the values that only identify?
 
-A name that functions as identity carries no meaning in its spelling: the application would
-behave the same if every vessel, berth, pilot and call had been called something else, as long
-as it was called that everywhere.  Register-automata learning takes this as the definition of
-data (Aarts et al.; Howar et al.): a value is memorable when future behaviour depends on its
-identity, and identity is what survives a bijective renaming.  Six defects found in
-`docs/v4_identity.md` and the one in `docs/v4_open_world.md` were each a dependence on the
-concrete spelling or location of a fitting value -- a key the registry had to have seen, a
-name the vocabulary had to have met, a flag standing in for a name -- and each was found by
-a held-out page that happened to differ.  This makes the difference on purpose.
+A name that functions as identity should carry no meaning in its spelling: behaviour should
+be unchanged if every key value were spelled differently but consistently. Fits a model,
+renames every key value the model reads on a second history's pages, and compares verdicts
+before and after. A verdict that changes is a place where the model read the spelling.
 
-The instrument fits a model on one history, takes a second history, renames every key value
-the frozen model reads on that history's pages -- consistently across every page, message,
-option and typed value -- and asks the version space and the decision list at every click of
-both.  A verdict that changes is a place where the model read the spelling.  Two renamings:
-
-``fresh``
-    every key becomes a name the fitting corpus never saw, of the same token shape
-    (letters for letters, digits for digits).  This is the open-world case: a new seed.
-
-``permute``
-    keys of one type and one token shape are cycled among themselves, so every name is one
-    the corpus knows, standing where another stood.  This is the closed-world case, and
-    any difference here is a name treated as a word.
-
-Only the pages, the messages and the actions are renamed.  Nothing about the fitted model
-changes, and nothing here reads an outcome to decide what to rename: the keys are what the
-frozen abstraction reads off each page before any action on it.
+``fresh`` renames every key to one the fitting corpus never saw (open-world: a new seed).
+``permute`` cycles keys of the same type among themselves (closed-world: any difference means
+a name was treated as a word).
 """
 from __future__ import annotations
 
@@ -90,7 +71,7 @@ def _fresh_token(token: str, rng: random.Random, taken: set[str]) -> str:
 
 
 def renaming(keys: dict[int, set[str]], mode: str, seen: set[str], seed: int) -> dict[str, str]:
-    """Key value -> its new spelling.  Injective; longest keys are applied first."""
+    """Key value -> its new spelling. Injective; longest keys are applied first."""
     rng = random.Random(seed)
     out: dict[str, str] = {}
     if mode == FRESH:
@@ -110,8 +91,7 @@ def renaming(keys: dict[int, set[str]], mode: str, seen: set[str], seed: int) ->
         return out
     if mode == PERMUTE:
         # Only keys that contain no other key are permuted as strings; a key that mentions
-        # another -- blend's `Open Creek Bed` button, keyed by its whole label -- follows
-        # the renaming of the key it mentions, or the renaming would not be consistent.
+        # another follows the renaming of the key it mentions, to stay consistent.
         every = {k for ks in keys.values() for k in ks}
         pat = {k: re.compile(r"(?<![A-Za-z0-9])" + re.escape(k) + r"(?![A-Za-z0-9])")
                for k in every}
@@ -154,15 +134,9 @@ def _substituter(mapping: dict[str, str]):
 def _declaration_nodes(nodes: list[dict]) -> set[int]:
     """Cells of each table's first row: the interface's declarations, not values.
 
-    Vet keys its detail panel by field labels -- `Patient`, `Owner`, `Reason` are the
-    *identities* of that family's rows -- which put those tokens into the renaming class,
-    and a token-level substitution then rewrote the appointments table's own column
-    header.  A renamed header is a changed grammar: the parse names columns by it, every
-    appointment row stopped instantiating, and seventy-one ledger claims collapsed to
-    UNKNOWN/NOT_APPLICABLE (`docs/v4_retained.md`).  The member-reversal instrument
-    already refuses to move a table's first row for the same reason; renaming now refuses
-    to respell it.  A token that identifies is renamed where it identifies -- the detail
-    panel's key cells included -- and left alone where the interface declares it."""
+    A renamed column header is a changed grammar: the parse names columns by it, and
+    every row under it would stop instantiating. A token that identifies is renamed
+    where it identifies, and left alone where the interface declares it."""
     children: dict[int, list[int]] = {}
     role = {n["i"]: n["role"] for n in nodes}
     parent = {n["i"]: n["parent"] for n in nodes}
@@ -192,7 +166,7 @@ def _declaration_nodes(nodes: list[dict]) -> set[int]:
 def rename_run(src: Path, dst: Path, mapping: dict[str, str]) -> None:
     """A copy of a run with every text renamed: pages, actions, typed values.
 
-    Except the declarations: see `_declaration_nodes`."""
+    Except the declarations; see `_declaration_nodes`."""
     sub = _substituter(mapping)
     if dst.exists():
         shutil.rmtree(dst)
@@ -245,8 +219,8 @@ def _verdicts(model, log) -> list[dict]:
 
 def _ledger(model, log) -> dict[int, list]:
     """The durable-effect layer's verdicts at every held-out step, by the rule that made
-    them.  A rule whose precondition names a spelling -- `id(?o0) != 'North Wall'` -- fires
-    differently once the vat is called something else, and this is where it shows."""
+    them. A rule whose precondition names a spelling fires differently once renamed, and
+    this is where it shows."""
     m = replace(model, log=log, cut=0)
     out: dict[int, list] = {}
     for p in csq.score(m).predictions:

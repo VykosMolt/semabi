@@ -1,14 +1,9 @@
-"""What the evidence establishes under the boundary a deployed agent faces.
-
-`v4_admissible` fits one model at a cut and asks it about everything after.  This rebuilds the
-model before each scored action from exactly what had been observed when that action was
-chosen -- every completed transition and the page in front of the agent, nothing about how the
-action turns out -- and asks the version space at that action, under both hypothesis classes.
-A minute a fit, hence the stride; a stride skips the *question*, never the evidence.
-
-The number this produces is the honest one for the forced answer: not "a model fitted on half
-the trace, asked about the other half" but "the model an agent would have had, at the moment
-it acted".
+"""Reports what the evidence establishes under the boundary a deployed agent actually
+faces. Unlike `v4_admissible`, which fits one model at a cut, this rebuilds the model
+before each scored action from exactly what had been observed when it was chosen, and asks
+the version space at that action under both hypothesis classes. A stride skips actions to
+save fitting time, never evidence: the number produced is the model an agent would have had
+at the moment it acted, not one fitted on half the trace and asked about the other half.
 """
 from __future__ import annotations
 

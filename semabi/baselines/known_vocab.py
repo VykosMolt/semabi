@@ -184,9 +184,9 @@ def learn(base: str, hidden: rm.Domain, trials_per_op: int, rng: random.Random) 
             by_eff[eff].append((s, b))
         if not by_eff:
             continue
-        # each distinct effect template becomes an operator variant; the empty effect is failure.
-        # Vacuous merge: a template that differs from another only by forall-effects whose anchor
-        # sets were empty in all its transitions is the same operator.
+        # each distinct effect template becomes an operator variant, and an empty effect means
+        # failure. Two templates differing only by effects over a set that was always empty
+        # are the same operator.
         def anchor_empty(eff_extra, s, b):
             for e in eff_extra:
                 r, p = e[1], e[2]

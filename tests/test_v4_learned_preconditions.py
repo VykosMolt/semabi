@@ -1,21 +1,9 @@
-"""Conditions the learner discovers from its own counterexamples, and installs itself.
+"""Tests for preconditions the learner infers from its own counterexamples.
 
-``learn_pre`` already collects, for every operator, the transitions with the same action that
-did *not* produce its effect, and already records how many of them it cannot explain.  What it
-could not do was say certain things about the object the action was bound to, and the thing it
-could not say was the one harbour needed.  These tests cover the language, the discipline that
-keeps a discovered condition honest, and the route from a learned literal to the planner.
-
-What a pass establishes, and what it does not:
-
-* a learned precondition is part of the *model* -- it decides applicability before any outcome
-  is seen, and it reaches the exported relational operator.  It is not an evaluation filter.
-* a condition is only ever drawn from literals true in **every** positive, so a condition that
-  would discard the rule's own successes is not in the candidate set at all.  That is what
-  makes vacuous repair structurally impossible here rather than merely discouraged.
-* nothing establishes that a learned condition is *the* semantic precondition of the
-  application.  It establishes that it separates the evidence the learner had.
-"""
+Covers the language for stating a learned condition, the rule that keeps it honest, and
+how a learned literal reaches the planner. A learned precondition is part of the model,
+not an evaluation filter, and can only come from literals true in every positive
+example, so it can never discard a rule's own successes."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -74,13 +62,8 @@ def operator(positives, negatives):
 # ------------------------------------------------------------------ the missing sentence
 
 def test_a_single_bound_object_can_say_that_a_reference_points_at_nothing():
-    """The gap that cost harbour its condition.
-
-    Establishes that the literal language covers a *unary* fact about a bound object's
-    reference slot.  Before this, reference facts were only produced by relating one bound
-    parameter to another, so a rule binding one object -- which harbour's Close rule does --
-    had no way to express the condition its own counterexamples turned on.
-    """
+    """Checks a literal can state a fact about one bound object's own reference slot,
+    not just a relation between two bound parameters."""
     ind = inducer()
     op = operator([], [])
     free = ind._literals(op, transition(state(berth(held=None)), {"?o0": (BERTH, "S1")}))
@@ -93,11 +76,8 @@ def test_a_single_bound_object_can_say_that_a_reference_points_at_nothing():
 # ------------------------------------------------------------------ discovery
 
 def test_a_condition_that_varies_over_time_for_one_object_is_discovered_and_installed():
-    """Establishes the whole mechanism in miniature, through the real ``learn_pre``.
-
-    The same object succeeds while a reference slot is empty and fails while it is filled.
-    The learner must pick the reference condition, and must end with nothing unexplained.
-    """
+    """Runs the real ``learn_pre`` on a case where a reference slot's presence decides
+    success, and checks it picks that condition and explains every failure."""
     ind = inducer()
     positives = [transition(state(berth(held=None)), {"?o0": (BERTH, "S1")}, s) for s in (0, 1, 2)]
     negatives = [transition(state(berth(held="C-101")), {"?o0": (BERTH, "S1")}, s) for s in (3, 4, 5)]
@@ -108,9 +88,8 @@ def test_a_condition_that_varies_over_time_for_one_object_is_discovered_and_inst
 
 
 def test_a_failure_nothing_in_the_state_distinguishes_is_left_unexplained():
-    """The irreparable case.  Establishes that the learner does not manufacture a condition
-    when the pre-states of its successes and failures are identical: there is nothing to
-    discover, and inventing something would be a repair that explains nothing."""
+    """Checks the learner leaves failures unexplained rather than inventing a condition
+    when successes and failures look identical."""
     ind = inducer()
     same = {"?o0": (BERTH, "S1")}
     positives = [transition(state(berth(held=None)), same, s) for s in (0, 1, 2)]
@@ -122,13 +101,8 @@ def test_a_failure_nothing_in_the_state_distinguishes_is_left_unexplained():
 
 
 def test_a_condition_that_would_discard_a_success_is_never_a_candidate():
-    """The anti-vacuity guarantee, and it is structural rather than a rule applied afterwards.
-
-    Candidate conditions come from the intersection of the literals of *every* positive, so a
-    literal that fails on even one success cannot be selected.  Here two successes disagree
-    about the reference slot; the learner cannot use it, and says so by leaving the failures
-    unexplained rather than by silencing the rule.
-    """
+    """Checks a condition is never selected if it fails on one of the rule's own
+    successes, since candidates only come from what every success agrees on."""
     ind = inducer()
     positives = [transition(state(berth(held=None)), {"?o0": (BERTH, "S1")}, 0),
                  transition(state(berth(held="C-9")), {"?o0": (BERTH, "S1")}, 1)]
@@ -142,9 +116,8 @@ def test_a_condition_that_would_discard_a_success_is_never_a_candidate():
 # ------------------------------------------------------------------ reaching the planner
 
 def test_a_learned_reference_condition_becomes_a_planning_precondition():
-    """Establishes that the condition governs applicability everywhere, not only in the
-    consequence check.  Without the translation the planner would still schedule the action
-    the model has just learned it cannot take."""
+    """Checks a learned condition also governs planning, not just the consequence check,
+    so the planner won't schedule an action the model knows it can't take."""
     from semabi import relmodel as rm
     from semabi.compiler.model import _lit
 
@@ -175,26 +148,10 @@ def _close_and_reopen(regime, split=0.5):
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_harbour_learns_the_condition_for_close_and_not_for_reopen():
-    """The finding, from the real evidence, at the level of the learned rules.
-
-    Establishes that the condition is discovered by fitting alone and that it is specific:
-    closing a berth requires no call to hold it, reopening one does not, and the learner is
-    told neither.  A condition adopted by every rule of the family would be the signature of a
-    device for suppressing errors rather than a fact about the application.
-
-    This is asserted under the transductive regime because that is the regime that produced
-    it.  What it establishes is that the *language and the discipline* can find the condition
-    from evidence alone; it is not a claim that a prefix model finds it, which is the subject
-    of the next test.
-
-    Once observable outputs existed the ``Close`` family stopped being one rule.  It is now
-    three branches -- the state change, *"cannot be closed while call C-101 holds it"*, and
-    *"is already closed"* -- and the condition belongs to the first of them.  Asserting it of
-    every rule in the family, which is what this test used to do, would now be asserting that
-    the refusal branch also requires no call to hold the berth, which is the opposite of what
-    that branch is.  So the claim is made where it belongs, and the complementary one is made
-    too: the branch that announces the refusal requires the reference to be *set*.
-    """
+    """Checks the condition for Close is found from real evidence and is specific to the
+    state-change branch of Close, not copied onto every rule in the family (which would
+    be error suppression, not a fact about the action). The complementary branch, which
+    reports that a call already holds the berth, requires the opposite: the reference set."""
     from semabi.compiler.v4.consequence import TRANSDUCTIVE
 
     _, close, reopen = _close_and_reopen(TRANSDUCTIVE)
@@ -202,9 +159,8 @@ def test_harbour_learns_the_condition_for_close_and_not_for_reopen():
     changing = [op for op in close
                 if any(e.kind == "set" and e.new == "closed" for e in op.effs)]
     assert changing, "no Close rule asserts the state change"
-    # *no call holds it*: the berth's own reference is null, or nothing refers to the berth
-    # -- the same fact from the two sides of the relation, and which the learner names
-    # depends on which side the reading renders (`docs/v4_open_world.md`)
+    # "no call holds it" can be read from either side of the same relation; which side
+    # the learner names depends on which side the reading renders (docs/v4_open_world.md).
     assert all(any(l[0] in ("ref_null", "empty") and l[1] == "?o0" for l in op.pre)
                for op in changing)
     refusing = [op for op in close if any(l[0] == "ref_set" for l in op.pre)]
@@ -217,20 +173,8 @@ def test_harbour_learns_the_condition_for_close_and_not_for_reopen():
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_the_condition_for_close_is_available_to_a_half_trace_prefix_model():
-    """And it is now, for the reason the previous version of this test named.
-
-    This test used to assert the opposite: under a half-trace schema the berth's reference
-    resolved to nothing anywhere, so the literal separated no counterexample.  Its docstring
-    diagnosed why -- the reference was typed to the cell in the Call column, whose composite
-    key the berth's rendered value never matched, and a call the prefix never rendered as a
-    row was not in the registry a reference resolves through.  Both are repaired
-    (`docs/v4_identity.md`): a reference lands on the type a link borrows its key from, and an
-    unseen simple key names its object.  The condition reappears from the prefix alone.
-
-    The chronology guard this test doubled as is `tests/test_v4_outcome_chronology.py`, which
-    deletes the future from disk and requires an identical model; the reference resolves from
-    the prefix's own registry and the page in front of the agent, and that test passes.
-    """
+    """Checks the condition is still found when the state comes from a prefix instead of
+    the full trace, now that references resolve through the prefix's own registry."""
     from semabi.compiler.v4.consequence import FROZEN_PREFIX
 
     model, close, reopen = _close_and_reopen(FROZEN_PREFIX)
@@ -238,9 +182,7 @@ def test_the_condition_for_close_is_available_to_a_half_trace_prefix_model():
     assert any(l[0] in ("ref_null", "empty") and l[1] == "?o0" for op in close for l in op.pre)
     assert all(op.unexplained_negatives == 0 for op in close)
 
-    # The counterexamples now show what holds the berth: at least one of them binds a berth
-    # that a call refers to, or whose own Call reference is set -- whichever side of the
-    # relation the reading renders -- which is what the literal separates them on.
+    # A counterexample must bind a berth a call refers to, or whose own reference is set.
     A, I = model.abstractor, model.inducer
     held = 0
     for op in close:
@@ -274,13 +216,8 @@ def rule(name, effs, support=1):
 
 
 def test_a_value_the_action_does_not_determine_is_generalised_and_the_rules_merge():
-    """The memorised-constant defect, and the smallest honest repair for it.
-
-    Two rules for one action write the same slot with different constants and neither
-    constant came from the action.  They are the same rule seen twice: keeping them apart
-    asserts two claims that can only be right by coincidence, and leaves each with one
-    transition of support -- too little to learn a precondition from.
-    """
+    """Checks two rules that write the same slot with different unrelated constants get
+    merged into one rule, instead of being kept apart as if they were different rules."""
     from semabi.compiler.induce import VARIES
 
     ind = inducer()
@@ -293,9 +230,8 @@ def test_a_value_the_action_does_not_determine_is_generalised_and_the_rules_merg
 
 
 def test_a_value_the_action_does_determine_is_left_alone():
-    """The control for the above.  Establishes that a constant which never moves while the
-    action does not move is not touched -- harbour's Close always writes 'closed', and a
-    generalisation that reached it would destroy the only claim the rule has."""
+    """Checks a constant the action always writes is left alone, since generalising it
+    would destroy the rule's only claim."""
     ind = inducer()
     ind.operators = [rule("op0", [effect("attr:state", "closed")], support=2),
                      rule("op1", [effect("attr:state", "closed")])]
@@ -304,13 +240,9 @@ def test_a_value_the_action_does_determine_is_left_alone():
 
 
 def test_only_the_part_of_a_value_that_moves_is_dropped():
-    """Establishes that a family of constants agreeing on what the slot says and disagreeing
-    only about which copy it is keeps what it agrees on.
-
-    Dropping the whole value there would convert a claim the page can refute into one it
-    cannot, which is a worse answer than the memorised constant it replaced -- and it would
-    silently excuse the reading whose names collide from the test it exists to face.
-    """
+    """Checks that when constants agree on everything but one part, only that part is
+    dropped, instead of discarding the whole value and losing a claim that could
+    otherwise be refuted."""
     ind = inducer()
     ind.operators = [rule("op0", [effect("id", "closed")]),
                      rule("op1", [effect("id", "closed#2")])]
@@ -320,8 +252,8 @@ def test_only_the_part_of_a_value_that_moves_is_dropped():
 
 
 def test_a_variable_effect_still_claims_that_the_value_changes():
-    """Establishes that generalising does not buy silence.  A slot the action changes without
-    determining the new value is still refuted by a slot that does not change."""
+    """Checks a generalised value still claims the slot changes, even without saying to
+    what, so a slot that stays the same still refutes it."""
     from semabi.compiler.induce import VARIES
     from semabi.compiler.v4 import consequence as csq
     from semabi.compiler.v4 import correspondence as corr

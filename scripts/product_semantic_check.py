@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 """Independent visible evaluator for disclosed dispatch/workshop development fixtures.
 
-Fixture-specific labels and expected values belong to this evaluator, never to
-the learner. No application source, client stores, native API, or database is read.
-Capture/check visits the collection after recording the immediate and reloaded
-detail; those evaluator navigations are intrusive and clear a fixture assignment.
+Fixture-specific labels and expected values belong to this evaluator, never to the
+learner. No application source, client store, native API, or database is read.
 Capture/check run only while onboarding and invocation are idle. Watch mode only
-reloads the visible page to sample a transient response during one invocation;
-it never clicks a control or claims that the sampled response persists.
-Output files are never replaced.
+reloads the visible page to sample a transient response; it never clicks a control
+or claims that response persists. Output files are never replaced.
 """
 from __future__ import annotations
 
@@ -67,7 +64,7 @@ def listing(page, fixture, spec):
     if page.get_by_role("heading", name=spec["listing"], exact=True).count() != 1:
         raise RuntimeError("collection cannot be reached through the visible return control")
     if fixture == "workshop":
-        # This known fixture's complete category list is evaluator knowledge only.
+        # This fixture's full category list is evaluator knowledge only.
         for _ in range(30):
             expand = page.get_by_role("button", name=re.compile(r"^Expand "))
             if not expand.count():
@@ -133,9 +130,8 @@ def watch(args):
                 result["page_read_attempts"] += 1
                 try:
                     page.goto(args.url, wait_until="domcontentloaded")
-                    # One synchronous DOM evaluation avoids combining locator
-                    # reads from different renders. These fixture-specific
-                    # visible selectors belong only to the evaluator.
+                    # One synchronous DOM evaluation avoids combining locator reads
+                    # from different renders. These selectors belong only to the evaluator.
                     observed = page.locator("body").evaluate("""(body, spec) => {
                         const visible = el => el.getClientRects().length > 0;
                         const all = selector => [...body.querySelectorAll(selector)].filter(visible);

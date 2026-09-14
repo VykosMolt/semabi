@@ -77,20 +77,16 @@ class EvidenceLog:
         return self.observations[sig]
 
     def through(self, cut: int) -> "EvidenceLog":
-        """The first ``cut`` steps, and *only* the observations they reach.
+        """The first `cut` steps, and only the observations they reach.
 
-        Truncating ``steps`` alone is not a chronological split.  Everything that fits a
-        schema -- the observation graph, the family hypotheses, the parser the abstractor
-        derives its types and slots from -- reads ``observations``, which on a log loaded from
-        disk holds the whole trace.  So a "prefix" model was being built under a type system
-        that had seen the held-out suffix, and on harbour that is the difference between 14
-        types and 11.
+        Truncating the steps alone is not a chronological split: everything that fits a
+        schema reads the observations, which on a log loaded from disk hold the whole
+        trace, so a "prefix" model would be built under a type system that had seen the
+        suffix.
 
-        The returned log owns restricted dicts rather than sharing this one's, so code fitting
-        on a prefix cannot reach a later observation even by accident.  It is not attached to
-        the run directory: a slice is an analysis view, and appending to it would write the
-        prefix's own observations back over the trace it came from.
-        """
+        The returned log owns its own restricted dicts and is not attached to the run
+        directory: a slice is a view for analysis, and appending to it would write the
+        prefix's observations back over the trace."""
         view = EvidenceLog.__new__(EvidenceLog)
         view.dir = self.dir
         view.obs_path = view.steps_path = None       # a view is not appendable
@@ -102,24 +98,19 @@ class EvidenceLog:
         return view
 
     def before_action(self, t: int) -> "EvidenceLog":
-        """Everything an agent had actually observed at the moment it chose action ``t``.
+        """Everything an agent had actually seen when it chose action `t`.
 
-        This is a different boundary from ``through``.  A held-out evaluation freezes the model
-        at a cut and never updates it again; an agent working through an unfamiliar application
-        keeps learning, and the restriction on it is temporal rather than positional.  At the
-        moment of acting it has seen every completed transition *and* the page in front of it.
-        What it has not seen is the outcome.
+        A different boundary from `through`: a held-out evaluation freezes the model at a
+        cut, while an agent keeps learning and is limited by time instead. At the moment of
+        acting it has seen every completed transition and the page in front of it, but not
+        the outcome.
 
-        ``steps[t].before`` is unioned in explicitly rather than relied upon to arrive as the
-        previous step's ``after``.  On every retained trace here the two coincide, but that is a
-        property of how these traces were collected and not something the structure promises,
-        and a frontier that depends on an unchecked coincidence is not a frontier.
+        `steps[t].before` is unioned in explicitly rather than assumed to be the previous
+        step's `after`: on these traces the two coincide, but nothing promises that.
 
-        Where the action changed nothing, ``before`` and ``after`` are the same observation and
-        so the outcome page is in the view.  That is not leakage -- the agent was looking at it
-        before it acted -- but it does mean presence in this view is never itself evidence about
-        how the action turned out.
-        """
+        Where the action changed nothing, before and after are the same page, so the
+        outcome page is in view. The agent was already looking at it, so presence here is
+        never evidence about how the action turned out."""
         view = self.through(t)
         if 0 <= t < len(self.steps):
             sig = self.steps[t].before
@@ -128,17 +119,15 @@ class EvidenceLog:
         return view
 
     def transductively_through(self, cut: int) -> "EvidenceLog":
-        """The first ``cut`` steps, but every observation the trace retained.
+        """The first `cut` steps, but every observation the trace retained.
 
-        This is the old, wrong split, kept deliberately and under a name that says so.  It
-        answers a question worth asking -- *if representation induction were already solved by
-        access to the retained observation distribution, how good is the downstream action-model
-        machinery?* -- and it is the only way to measure how much of a result came from the
-        suffix participating in schema construction.
+        The old, wrong split, kept under a name that says so. It answers one worthwhile
+        question -- how good is the downstream machinery if the representation were already
+        solved -- and it is the only way to measure how much of a result came from the
+        suffix building the schema.
 
-        It is not a prospective regime and must never be reported as one.  A caller asks for it
-        by name; nothing reaches it by forgetting to scope a log.
-        """
+        It is not a prospective regime and must never be reported as one. A caller has to
+        ask for it by name."""
         view = self.through(cut)
         view.observations = dict(self.observations)
         return view

@@ -1,13 +1,10 @@
-"""Operator-eligibility ledger for the V4 observation model (evaluator side, development).
-
-Same denominator as V2 and V3, so the numbers are comparable: an operator counts against
-the *inducer* only when it was exercised, its arguments were grounded, its state delta was
-representable and correctly registered, its effect is expressible in the frozen V0 language
-and it had support.  On V3 that denominator was zero for the frozen V2 compiler, which is
-why the V0 inducer was left alone.  This asks whether V4's identity readings move it.
-
-The oracle rungs are properties of the trace, not of the compiler, so they are read from
-the V3 diagnosis runs unchanged; only the "current model" column is recompiled with V4.
+"""Operator-eligibility ledger for the V4 observation model, evaluator side, development.
+Uses the same denominator as V2 and V3 so the numbers are comparable: an operator counts
+against the inducer only when it was exercised, its arguments were grounded, its state
+delta was representable and registered, its effect is expressible in the frozen V0
+language, and it had support. This asks whether V4's identity readings move that
+denominator. The oracle rungs are properties of the trace, so they are read from the V3
+diagnosis runs unchanged; only the "current model" column is recompiled with V4.
 """
 from __future__ import annotations
 

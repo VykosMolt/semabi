@@ -1,9 +1,9 @@
-"""Bounded composition of observed navigation, selection and semantic actions.
+"""Compose observed navigation, selection and actions into one bounded operation.
 
-The supplied language is a sequence of scoped clicks and field fills. Repeated
-local headings propose selector arguments; observed transitions supply the
-sequence, and V4 supplies the owner, relation and response condition. No UI
-action word, application route or business field is an integration answer.
+The language is a sequence of scoped clicks and field fills. Repeated local headings
+propose selector arguments, observed transitions supply the sequence, and V4 supplies the
+owner, the relation and the condition on the response. No action word, route or business
+field is supplied by hand.
 """
 from __future__ import annotations
 
@@ -38,13 +38,11 @@ def _owned_region_nodes(surface, root):
 
 
 def local_anchor(surface, root, control_node=None):
-    """A unique observed row anchor, not a persistent identity or complete listing.
+    """A row anchor unique on this page. Not a persistent identity or a complete listing.
 
-    Heading anchors also work beside constant controls. Otherwise a leaf's value
-    may be repeated by a control label. A lone row-owned control can itself supply
-    its full label, but this is only a proposal: publication must constrain what
-    labels callers may execute. Descendant rows own their own controls.
-    """
+    A heading works as an anchor even beside constant controls; a plain leaf's value may be
+    repeated by a control's label. A row's own control can supply its full label, but this
+    is only a proposal: publication decides what callers may actually run."""
     obs = surface.observation
     nodes = _owned_region_nodes(surface, root)
     if control_node is not None and control_node not in {n.i for n in nodes}:
@@ -178,13 +176,11 @@ def _return_context(surface, context):
 
 
 def _return_policy(context, blocked):
-    """Finite strong policy over observed outcomes, without a fairness assumption.
+    """A terminating way back to the entry, from observed transitions only.
 
-    A view can hide navigation history: the same button may return to several
-    observed contexts. Admit it only when every recorded destination already
-    has a strictly shorter policy to entry. Cycles needing a lucky outcome,
-    unknown destinations, and blocked controls supply no terminating policy.
-    """
+    The same button can return to several places, so admit it only when every recorded
+    destination already has a strictly shorter way back. Cycles that need luck, unknown
+    destinations and blocked controls give no policy at all."""
     transitions = {}
     for edge in context["returns"]:
         key = (edge["before"], digest(edge["descriptor"]))
@@ -318,12 +314,10 @@ def reload_observed(browser, trace):
 
 
 def acquisition_priority_context(surface, route):
-    """Search priority only, never an assertion of world-state equivalence.
+    """Search priority only: never a claim that two states are the same.
 
-    The most recent scoped target and native selection distinguish identical
-    chooser/detail views reached for different arguments. Alternate histories
-    remain queued with their full bindings even when this small priority key ties.
-    """
+    The last scoped target and selection tell apart chooser or detail views reached for
+    different arguments. Other histories stay queued with their full bindings."""
     latest = {}
     for step in route:
         if "selector" in step:
@@ -858,11 +852,9 @@ def _legacy_frontier(log, surfaces, trials, edits, context, edges):
 
 
 def recover_learning(log):
-    """Recover observed paths from an interrupted/unpublished onboarding log.
+    """Recover the observed paths from an interrupted onboarding log.
 
-    This reads only recorded browser surfaces and primitives. It supplies no
-    target names or procedure steps that were absent from ordinary onboarding.
-    """
+    Reads only recorded pages and primitives; it invents no target names or steps."""
     from semabi.compiler.runtime import StopOperation
     _require_settled_step_endpoints(log)
     surfaces = _learning_surfaces(log)
@@ -952,11 +944,10 @@ def _reuse_training(log, trace):
 
 
 def owner_correspondence(group):
-    """Unique empirical argument-to-owner wrapper across distinct supported owners.
+    """Match each argument to the owner it named, where that match is unique.
 
-    Earlier selectors can name prerequisite collections. Equal competing sources
-    remain ambiguous; their repeated names are not independent identity evidence.
-    """
+    An earlier selector can name a prerequisite collection. Equally good competing sources
+    stay ambiguous: the same name repeated is not independent evidence."""
     if not group or len({trial["owner"]["key"] for trial in group
                          if trial.get("prediction_status") == "supported"}) < 2:
         return None
@@ -1387,12 +1378,11 @@ def _live_signature(surface):
 
 
 def _terminal_guarded_witness(browser, trace, artifact, procedure, arguments, *, expected_response=None):
-    """Finish on a freshly reloaded target, never act after the final witness.
+    """Finish on a freshly reloaded target, and act no further after the last check.
 
-    Returning to a collection can change a field absent from its rows; opening
-    details can restore a stale draft. Neither preserves an earlier persistence
-    witness. Neighbor observations remain explicitly earlier, not simultaneous.
-    """
+    Returning to a collection can hide a field its rows do not show, and reopening details
+    can restore a stale draft; neither preserves an earlier check. Neighbour observations
+    are explicitly earlier, not simultaneous."""
     restored = replay(browser, trace, procedure["entry_url"], procedure["navigation"], arguments,
                       context=procedure["return_context"])
     restored = reload_observed(browser, trace)
@@ -1467,11 +1457,9 @@ def invoke(runtime, browser, operation, arguments, trace):
                     "effect": {"field_write_attempted": False, "reason": "Supported response excludes caller's requested response"},
                     "metrics": trace.metrics()}
         _check_owner(proposed, procedure, arguments)
-        # Reserve the supplied tail plus the observed return-policy envelope for
-        # each of its four replays. Previously only the direct route was counted:
-        # a multi-view operation could fill despite a known unaffordable return.
-        # This is conservative across the recorded contexts, not a promise about
-        # unseen transitions, future unavailable controls, or elapsed time.
+        # Reserve the tail plus the observed way back for each of its four replays.
+        # Counting only the direct route let an operation fill a field although the way
+        # back was already unaffordable.
         tail = guarded_verification_budget(procedure)
         trace.emit({"type": "semantic_verification_budget", **tail})
         if (trace.budget.actions + tail["actions"] > trace.budget.max_actions
@@ -1560,13 +1548,10 @@ def invoke(runtime, browser, operation, arguments, trace):
 
 
 def acquire_repair(runtime, browser, trace, repair, trials, edits, report):
-    """One task-directed experiment during explicitly authorized learning only.
+    """One task-directed experiment, during explicitly authorized learning only.
 
-    The supplied request proposes a value, not its answer. Complete empirical
-    outcome alternatives must disagree both on simulation and on the actual
-    edited view. All setup, unsuccessful actions and verification use Trace.
-    Neither a selected point answer nor the caller's `expect` labels training.
-    """
+    The request proposes a value, not its answer. The possible outcomes must disagree both
+    in simulation and on the edited page. Nothing the caller expects labels the training."""
     from semabi.compiler.semantic import SemanticArtifact
     operation, arguments = repair["operation"], repair["arguments"]
     runtime._check_operation(operation)

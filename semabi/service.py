@@ -199,9 +199,8 @@ class Service:
                          current_job: str | None = None) -> dict:
         """A failed prediction supplies a task objective, never procedure authority.
 
-        Resolve both at admission and on the serialized worker. A prior version
-        can identify the question after republishing, but only the current active
-        procedure and current live evidence may authorize an experiment.
+        Resolve both at admission and on the serialized worker: only the current
+        active procedure and current live evidence may authorize an experiment.
         """
         job = self.store.job(execution_id)
         if job["connection_id"] != connection_id:
@@ -334,8 +333,8 @@ class Service:
                 settings = {**request["settings"],
                             "_operation_versions": self.store.operation_versions(connection["id"]),
                             "_existing_operations": self.store.operations(connection["id"]),
-                            # Revocation removes authority to invoke, not the
-                            # connection's retained raw training provenance.
+                            # Revocation removes authority to invoke, not the connection's
+                            # retained raw training provenance.
                             "_semantic_training_operations": [operation for operation in
                                 self.store.operations(connection["id"], include_history=True)
                                 if operation.get("kind", "").startswith("semantic_")]}
@@ -353,8 +352,8 @@ class Service:
                 if operation["status"] != "ACTIVE":
                     raise StoreError("operation version became unavailable before execution", 409)
                 if "limits" in request:
-                    # This copy is only for this Runtime call; queueing and authentication
-                    # precede its elapsed deadline, and durable connection scope is unchanged.
+                    # This copy is only for this Runtime call; the durable connection scope
+                    # is unchanged.
                     connection = {**connection, "scope": {**connection["scope"], **request["limits"]},
                                   "_invocation_limits": request["limits"]}
                 result = runtime.invoke(connection, operation, request["arguments"], emit)

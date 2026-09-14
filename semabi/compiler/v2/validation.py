@@ -1,46 +1,33 @@
-"""Out-of-sample behavioral validation for provisional abstraction decisions.
+"""Out-of-sample check on a provisional abstraction decision.
 
-Probe support and originating-counterexample resolution are deliberately insufficient.
-A decision bundle is VALIDATED only when a model learned from the source trace predicts
-the same lifted action/effect relation on an independently collected trace, including a
-binding not used by the source positives.  An applicable held-out occurrence of the
-predicted action whose outcome contradicts a predicted effect literal is a MISPREDICTED
-counterexample.
+Probe support and resolving the counterexample that prompted a decision are deliberately
+not enough. A decision is VALIDATED only when a model learned from the source trace
+predicts the same action and effect on an independently collected trace, including on a
+binding the source never used. A held-out occurrence whose outcome contradicts a
+predicted effect is a mispredicted counterexample.
 
-Comparison protocol (compiler-visible evidence only)
-----------------------------------------------------
-* Run-local type ids are never compared directly.  A prediction mentions a small set of
-  source types; the validator searches for an injective mapping of those types onto the
-  held-out run's types that is forced by the action locators and constrained by local
-  structure (key slot, persistence, relation arity, the slots the schema actually
-  mentions).  Neighbouring types that the schema does not mention do not participate, so
-  a differently factored unrelated entity cannot make two equivalent effects differ.
-* Actions are compared on their effective/value-supplying steps.  Navigation provenance
-  (tab clicks, row expansion) that reveals the target is recorded but is not semantics.
+How the comparison is made, using only what the compiler can see:
+
+* Type ids are local to a run and never compared directly. The validator looks for an
+  injective mapping of the types a prediction mentions, forced by the action's locators
+  and constrained by key slot, persistence, relation arity and the slots the schema uses.
+* Actions are compared on the steps that supply values. Navigation that merely reveals
+  the target is recorded but is not semantics.
 * A prediction is testable only when every object it claims to change is determined by
-  the action binding (directly or through a learned reference precondition).  Effects on
-  objects the action does not bind are attribution artifacts and are reported, not tested.
-* Preconditions are evaluated three-valued on the held-out state.  UNKNOWN never counts
-  as satisfied or violated.  Only schemas meeting the frozen inducer's minimum support
-  are predictions.
-* Predicted effects are checked against the held-out after-state, with forall effects
-  expanded over the held-out before-state.  A predicted change on an object that is not
-  rendered after the action is UNOBSERVED, not contradicted.  Held-out effects that the
-  prediction does not explain are reported as extras and classified by whether the
-  touched object was rendered before the action; they never count as a contradiction of
-  the predicted literals, but visible extras block VALIDATED.
-* Predictions equivalent (under the same mapping machinery) to a schema of the baseline
-  compile of the source trace are not refinement-introduced and are not tested.
+  the action's binding. Effects on objects the action does not bind are reported, not
+  tested.
+* Preconditions are evaluated three ways on the held-out state; unknown never counts as
+  satisfied or violated.
+* A predicted change on an object not rendered after the action is unobserved, not
+  contradicted. Held-out effects the prediction does not explain are reported as extras;
+  visible ones block validation but never count as contradictions.
+* A prediction equivalent to one the baseline compile already made is not introduced by
+  the refinement and is not tested.
 
-What exact structural matching does and does not justify: a CONTRADICTED outcome means a
-determined, applicable, rendered held-out occurrence of the effective action failed a
-predicted literal; it does not distinguish a wrong refinement from a held-out abstraction
-that lacks a state variable the source model implicitly conditions on.  That limitation
-is reported, not hidden.  Inverse relations, intermediate entities that the schema itself
-mentions, and attribute-name drift across runs are not equated; they make occurrences
-NOT_COMPARABLE (untested), never contradicted.
-
-Evaluator labels may diagnose the result later, but never participate in promotion.
+A contradiction means a determined, applicable, rendered occurrence failed a predicted
+condition. It does not distinguish a wrong refinement from a held-out abstraction missing
+a state variable the source model relied on, and that limit is reported rather than
+hidden. Evaluator labels may diagnose a result afterwards but never promote one.
 """
 from __future__ import annotations
 
@@ -265,13 +252,10 @@ def _positions(kept: set[int], core: set[int]) -> frozenset:
 def unsupported_quantifiers(inducer, op) -> list[str]:
     """Universal effects the source evidence could never have falsified.
 
-    `forall x in R(anchor): effect(x)` is inferred because every observed member changed.
-    If no positive transition ever contained two eligible members, the universal claim is
-    observationally identical to a singular effect on the one member that was there: the
-    evidence supports the effect, not the quantifier.  Such a schema is reported and is
-    not a prediction, in either direction, until a discriminating multi-member state is
-    observed.  The rule is stated over the source evidence alone and never consults the
-    held-out trace."""
+    "every member changes" is inferred because every member that was there changed. If no
+    transition ever held two eligible members, that claim is indistinguishable from an
+    effect on the one member present, so the schema is reported and not predicted until a
+    state with several members is seen."""
     out = []
     for e in op.effs:
         if not e.kind.startswith("forall_"):

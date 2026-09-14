@@ -1,12 +1,9 @@
-"""A transported reading must be the source's decision, not a fresh one that agrees with it.
+"""Tests that a transported reading is the source's own decision, not a fresh one
+rebuilt at the destination that merely agrees with it.
 
-The earlier V4 transfer carried a single family-to-key map onto a hypothesis structure that
-was otherwise rebuilt from the destination, so a "transferred" reading was partly refitted
-and its score said nothing about whether the source reading travels.  These tests pin the
-three properties that make transport mean something: nothing is searched, a claim that does
-not fit is recorded rather than repaired, and a family the source never claimed does not
-quietly keep the destination's own idea of a key.
-"""
+Pins three properties: nothing is searched, a claim that doesn't fit is recorded rather
+than repaired, and a family the source never claimed doesn't quietly keep the
+destination's own key."""
 import json
 from types import SimpleNamespace
 
@@ -64,7 +61,7 @@ def test_applicability_counts_only_what_the_source_claimed():
 
 
 def test_a_pinned_compile_never_searches(tmp_path, monkeypatch):
-    """The whole point: applying a reading may instantiate it and nothing else."""
+    """Checks a pinned compile only instantiates the reading, and never searches."""
     from semabi.compiler import compile_v4 as module
 
     def explode(*a, **k):

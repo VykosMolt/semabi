@@ -1,12 +1,9 @@
-"""A control's sensing status may be acquired after the trace, and is read beside it.
+"""Tests that a control's sensing status can be acquired after the trace and read
+alongside it.
 
-Vet's navigation tabs were clicked hundreds of times in the retained trace and never followed
-by a reload, so no probe certified them and the inducer treated every tab switch as a domain
-action -- delete and create effects on every type rendered per view.  `semabi.eval.
-v4_probe_navigation` runs the explorer's own probe on a fresh instance and writes
-``probes.acquired.jsonl``; `fit_view_controls` reads it beside the run's ``probes.jsonl``,
-and a button certified `VIEW` there is a verified view control.
-"""
+`v4_probe_navigation` runs the explorer's probe on a fresh instance and writes
+``probes.acquired.jsonl``; `fit_view_controls` reads it beside the run's own
+``probes.jsonl``, and a button certified `VIEW` there is a verified view control."""
 from __future__ import annotations
 
 import json
@@ -49,10 +46,9 @@ def test_an_acquired_probe_certifies_a_view_control(tmp_path):
 
 
 def test_an_acquired_probe_reached_through_a_prerequisite_certifies_a_domain_control(tmp_path):
-    """Harbour's `Record departure` sits in a call's detail panel, opened by the call's own
-    button: the probe clicks the door first (`--via`), and the departure survived the reload.
-    Uncertified, the departure removed objects while the view changed, and the objective could
-    only call it a visibility error; certified, it is a domain action."""
+    """Checks a control only reachable through a prerequisite click (`--via`) still
+    gets certified as a domain action, not misread as a visibility error caused by the
+    view changing."""
     (tmp_path / "probes.acquired.jsonl").write_text(json.dumps(
         {"key": ["click", "button", "Record departure", None], "status": "DOMAIN", "mixed": [],
          "persisted_default": True, "changed_views": ["Record departure"], "acquired": True,

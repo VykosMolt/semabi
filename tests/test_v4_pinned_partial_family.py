@@ -1,11 +1,6 @@
-"""A pinned reading names a key slot per family; a family's templates need not all render it.
-
-A reading is instantiated on a destination trace by family, and a family may hold a variant
-template without the column the key names (a row rendered without its status cell).  Keying
-every unit of the family on a slot one of them lacks broke the fit of four harbour candidate
-readings (`KeyError: 'cell#0@4'` in `primary_key_values`).  A unit that lacks the slot carries
-no identity under that reading; the others carry the key.
-"""
+"""Tests that a pinned reading's key slot doesn't have to be rendered by every
+template of a family, since a variant template may lack the column the key names. A
+unit lacking the slot simply carries no identity under that reading."""
 from __future__ import annotations
 
 from types import SimpleNamespace

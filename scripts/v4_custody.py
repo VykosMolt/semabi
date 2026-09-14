@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Custody check for the post-V2 line.
 
-V4 deliberately changes files that the V2 freeze manifest covers, so a working-tree hash
-check would now fail by design.  What must still hold is that the *tag* is unchanged: the
-manifest is verified against the blobs `v2.0-causal-abstraction` points at, and the
-divergence of the working tree from it is listed explicitly rather than discovered later.
+V4 deliberately changes files the V2 freeze manifest covers, so a working-tree hash
+check fails by design. What must still hold is that the tag is unchanged: the manifest
+is verified against the blobs `v2.0-causal-abstraction` points at, and divergence of
+the working tree from it is listed explicitly rather than discovered later.
 """
 from __future__ import annotations
 

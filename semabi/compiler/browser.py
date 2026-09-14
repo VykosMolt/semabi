@@ -1,21 +1,15 @@
 """Playwright wrapper exposing only primitive actions and restricted observations.
 
-The compiler sees: roles, accessible names/text, input values, checked state,
-select options, placeholders, bounding boxes, and tree structure. It does not
-see ids, classes, data attributes, network traffic, or JS state.
+The compiler sees roles, accessible names and text, input values, checked state, select
+options, placeholders, bounding boxes and tree structure. It does not see ids, classes,
+data attributes, network traffic or JS state.
 
-Observation settling (V4).  An action may answer by replacing the document rather than
-mutating it -- ``fetch(...).then(() => location.href = ...)`` is an ordinary page pattern --
-and the snapshot script runs inside the document it is about to lose.  Two of the six
-gauntlet-v3 applications do exactly this and ended every V2 run with
-``Execution context was destroyed`` (docs/v3_result.md).  Settling is therefore stated in
-terms of two observable conditions rather than a delay: the request count the page has
-outstanding must be zero, and three consecutive snapshots must agree.  A context destroyed
-by a document swap is a transient failure with a definite end, so it is waited out under a
-bounded budget and restarts the agreement count; every other browser error is raised
-unchanged.  Only the *number* of outstanding requests is used, never their addresses or
-contents -- the same idleness signal playwright's own ``networkidle`` load state is built
-on, which this wrapper already used for navigation and reload.
+A page may answer an action by replacing the document rather than changing it, which
+destroys the context the snapshot script runs in. So "settled" is stated as two observable
+conditions rather than a delay: no request outstanding, and three snapshots in a row that
+agree. A destroyed context is waited out under a bounded budget and restarts the count;
+every other browser error is raised unchanged. Only the number of outstanding requests is
+used, never their addresses or contents.
 """
 from __future__ import annotations
 
@@ -253,13 +247,11 @@ class Browser:
                 pass  # A destroyed document must not replace the primary failure.
 
     def _wait_for_render(self, timeout_ms: float) -> bool:
-        """Once per document rendering: two delivered frames, not a fixed delay.
+        """Wait for the document to have rendered, by two delivered frames rather than a
+        fixed delay.
 
-        The cache is a driver-owned element handle, never an application-writable
-        window flag. Replacing documentElement invalidates it, including set_content.
-        Readiness is availability evidence only; native actionability still checks
-        visibility, enabled state, geometry and hit targets for each actual action.
-        """
+        The cached handle is the driver's, never a flag the page can write. Readiness only
+        says the page is there; each action still checks visibility and hit targets."""
         if self._render_root is not None:
             try:
                 if self._render_root.evaluate("root => root === document.documentElement"):
@@ -291,13 +283,12 @@ class Browser:
         return Observation(nodes, self._page.url)
 
     def _snapshot(self, deadline: float) -> Observation:
-        """One raw snapshot, waiting out a document swap that happens underneath it.
+        """One raw snapshot, waiting out a document swap underneath it.
 
-        A navigation destroys the execution context the snapshot script runs in.  That is a
-        transient condition with a definite end -- the next document -- so it is waited out
-        until `deadline`, and only for errors that name a context or frame swap.  Anything
-        else (a closed target, a crashed browser, a script error) is raised unchanged, so a
-        permanent failure is never silently turned into an observation."""
+        A navigation destroys the context the snapshot script runs in. That ends with the
+        next document, so it is waited out until `deadline`, and only for errors that name
+        a context or frame swap. Anything else is raised, so a permanent failure is never
+        turned into an observation."""
         while True:
             try:
                 self._render_observation_ready = False

@@ -1,9 +1,9 @@
-"""The correspondence instrument: does it find the right structure without using the answer?
+"""Tests for the correspondence matcher: does it find the right structure without using
+the answer?
 
-Each test states what a pass establishes.  Where the property is one an implementation could
-satisfy vacuously, the same fixture is run through a deliberately broken variant so that the
-test is shown to be able to fail.
-"""
+Each test states what a pass establishes. Where an implementation could satisfy a
+property vacuously, the same fixture is also run through a deliberately broken variant
+to show the test can fail."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -50,13 +50,8 @@ def find(obs, role, name):
 # ------------------------------------------------------------------ 1. outcome masking
 
 def test_correspondence_survives_a_total_change_of_the_masked_field():
-    """A prediction's own property is not needed to find the thing it is about.
-
-    Establishes: with the predicted field masked, surrounding structure alone places the
-    continuation, and it places it on the node whose value changed -- not on some other node
-    that happens to still carry the old value.  Does not establish that masking is
-    *necessary* here; the broken control below establishes that.
-    """
+    """Checks that masking the predicted field still lets correspondence find the right
+    node, placing the continuation on the node whose value actually changed."""
     pre = tree(berths(row("N1", "North Quay", "120 m", "closed"),
                       row("N2", "North Quay", "90 m", "open")))
     post = tree(berths(row("N1", "North Quay", "120 m", "open"),
@@ -69,14 +64,8 @@ def test_correspondence_survives_a_total_change_of_the_masked_field():
 
 
 def test_without_the_mask_the_row_can_only_be_found_by_position():
-    """The broken control for masking: correspondence that may use the tested property.
-
-    Establishes that the mask is load-bearing.  When the changed cell's text is available,
-    the row that contains it no longer matches on content, and the descent falls through to
-    the layer that can only count siblings -- so a row inserted above the target is enough to
-    make the unmasked instrument lose track of which row was acted on, while the masked one
-    still identifies it by the berth name that did not change.
-    """
+    """Checks the mask matters: without it, an inserted row above the target can make
+    correspondence lose track of it, unlike the masked version."""
     pre = tree(berths(row("N1", "North Quay", "120 m", "closed"),
                       row("N2", "North Quay", "90 m", "open")))
     post = tree(berths(row("N0", "North Quay", "60 m", "open"),
@@ -92,11 +81,8 @@ def test_without_the_mask_the_row_can_only_be_found_by_position():
 
 
 def test_the_mask_is_hidden_from_ancestors_too():
-    """A masked leaf's text must not re-enter through the descriptor of its container.
-
-    Establishes that masking propagates up the ancestor chain: the row that contains the
-    changed cell is still relocatable, which is what lets the descent reach the cell at all.
-    """
+    """Checks masking propagates to ancestors too, so a changed cell's text can't leak
+    back in through its row's own description."""
     pre = tree(berths(row("N1", "North Quay", "120 m", "closed")))
     cell = find(pre, "cell", "closed")
     parent = pre.node(cell).parent
@@ -113,12 +99,8 @@ def test_the_mask_is_hidden_from_ancestors_too():
 # ------------------------------------------------------------------ 2. duplicate ambiguity
 
 def test_indistinguishable_continuations_are_reported_as_ambiguous():
-    """Two post regions identical under the allowed evidence must not be resolved.
-
-    Establishes that the instrument returns the full admissible set rather than a preferred
-    one when the unmasked evidence cannot separate the candidates.  A forced choice here
-    would manufacture a refutation half the time.
-    """
+    """Checks two candidates identical under the allowed evidence are reported as
+    ambiguous, not resolved to one by a forced choice."""
     twin = ("row", "", [("cell", "same", []), ("cell", "x", [])])
     pre = tree(("group", "", [("rowgroup", "", [twin, twin])]))
     post = tree(("group", "", [("rowgroup", "", [
@@ -132,11 +114,8 @@ def test_indistinguishable_continuations_are_reported_as_ambiguous():
 
 
 def test_an_arbitrary_first_match_would_have_answered_this_one():
-    """The broken control for ambiguity: show the ambiguous fixture has an obvious wrong pick.
-
-    Establishes that the previous test is not vacuous -- a matcher that took the
-    lowest-indexed compatible candidate would have returned a single confident answer.
-    """
+    """Checks the ambiguous fixture has an obvious wrong pick, so the previous test
+    isn't vacuous."""
     twin = ("row", "", [("cell", "same", []), ("cell", "x", [])])
     pre = tree(("group", "", [("rowgroup", "", [twin, twin])]))
     post = tree(("group", "", [("rowgroup", "", [
@@ -148,11 +127,8 @@ def test_an_arbitrary_first_match_would_have_answered_this_one():
 
 
 def test_distinguishing_context_removes_the_ambiguity():
-    """The same shape with the rows told apart by unmasked text resolves to one node.
-
-    Establishes that ``AMBIGUOUS`` above came from the evidence and not from the instrument
-    being unable to decide anything.
-    """
+    """Checks the same shape resolves to one node once unmasked text tells the rows
+    apart."""
     pre = tree(("group", "", [("rowgroup", "", [
         ("row", "", [("cell", "N1", []), ("cell", "x", [])]),
         ("row", "", [("cell", "N2", []), ("cell", "x", [])])])]))
@@ -168,7 +144,7 @@ def test_distinguishing_context_removes_the_ambiguity():
 # ------------------------------------------------------------------ 3. structure that goes
 
 def test_a_region_that_did_not_survive_is_not_matched_to_a_stranger():
-    """Establishes that removal is reported rather than resolved onto some other node."""
+    """Checks removal is reported rather than resolved onto some other node."""
     pre = tree(("group", "", [("rowgroup", "", [
         ("row", "", [("cell", "N1", []), ("cell", "x", [])]),
         ("list", "", [("listitem", "note", [])])])]))
@@ -181,8 +157,8 @@ def test_a_region_that_did_not_survive_is_not_matched_to_a_stranger():
 
 
 def test_a_node_an_equally_good_alignment_could_drop_is_not_called_unique():
-    """Establishes that 'only one candidate' is not reported as settled when the alignment
-    is just as happy to treat the structure as deleted."""
+    """Checks a single candidate isn't reported as settled when the alignment is
+    equally happy to treat the structure as deleted."""
     pre = tree(("group", "", [("rowgroup", "", [
         ("row", "", [("cell", "a", [])]),
         ("row", "", [("cell", "a", [])])])]))
@@ -194,15 +170,8 @@ def test_a_node_an_equally_good_alignment_could_drop_is_not_called_unique():
 
 
 def test_a_node_that_moves_between_containers_is_reported_ambiguous_not_wrong():
-    """The boundary of this matcher, stated as a test rather than left to be discovered.
-
-    The descent walks the pre-node's ancestor chain, so a card dragged from one column to
-    another is not something it can follow.  What it does instead matters more than that it
-    cannot: where the two columns are not told apart by their remaining content, the descent
-    reaches both and returns both continuations, so the true one is in the admissible set and
-    nothing is asserted about which.  A consequence checked against that set is undecided
-    rather than wrong.
-    """
+    """Checks a node dragged to a new container, which this matcher can't follow, is
+    reported ambiguous rather than wrong when both containers could hold it."""
     pre = tree(("group", "", [
         ("list", "todo", [("listitem", "card A", []), ("listitem", "card B", [])]),
         ("list", "done", [])]))
@@ -216,19 +185,8 @@ def test_a_node_that_moves_between_containers_is_reported_ambiguous_not_wrong():
 
 
 def test_a_move_out_of_a_pinned_container_names_the_wrong_candidate_but_flags_it():
-    """The other half of the same boundary, and the honest form of it.
-
-    When the containers are told apart, the descent commits to the one the node was in, and
-    the node is not there any more.  The weakest layer -- role and whether it has children,
-    with rendered text dropped -- then places it on the sibling that remains.  The status is
-    ``AMBIGUOUS`` and the detail says the structure may not have survived, so nothing is
-    asserted; but the admissible set does not contain the true continuation, which is the one
-    kind of miss this matcher can produce.  An application whose objects move between
-    containers needs a matcher that can leave the ancestor chain, and this is not that
-    matcher.  On the tabular applications in this corpus the weakest layer never places the
-    final node; on the veterinary clinic, whose panels are replaced wholesale, it places 83 of
-    295, which is where this failure mode would first bite.
-    """
+    """Checks that when containers can be told apart, the matcher commits to the wrong
+    sibling but flags the result as ambiguous rather than asserting it."""
     pre = tree(("group", "", [
         ("list", "todo", [("heading", "To do", []), ("listitem", "card A", []),
                           ("listitem", "card B", [])]),
@@ -247,8 +205,8 @@ def test_a_move_out_of_a_pinned_container_names_the_wrong_candidate_but_flags_it
 # ------------------------------------------------------------------ alignment primitive
 
 def test_admissible_matches_returns_every_optimal_pairing():
-    """Establishes the alignment primitive reports the union over optimal alignments, which
-    is what makes ambiguity visible rather than a function of iteration order."""
+    """Checks the alignment primitive returns every optimal pairing, not just one, so
+    ambiguity doesn't depend on iteration order."""
     left, right = ["a", "a"], ["a", "a"]
     pairs, skippable = corr.admissible_matches(2, 2, lambda i, j: left[i] == right[j])
     assert pairs == {0: {0}, 1: {1}}
@@ -268,8 +226,8 @@ def test_a_masked_field_matches_anything_in_its_place():
 
 
 def test_only_the_named_field_is_masked():
-    """Establishes masking is per field: a combobox prediction hides ``value`` and leaves the
-    role and options available as correspondence evidence."""
+    """Checks masking is per field: hiding a combobox's value leaves its role and
+    options visible to correspondence."""
     obs = Observation([Node(0, -1, "group", ""),
                        Node(1, 0, "combobox", "", value="one", options=["one", "two"])])
     assert corr.outcome_field(obs.node(1)) == "value"
@@ -302,15 +260,9 @@ def _page_gained(pre, post, value: str) -> bool:
 
 
 def test_a_value_gained_elsewhere_is_not_support_for_this_object():
-    """An occurrence gained somewhere else on the page must not confirm a prediction here.
-
-    Establishes the property the page-global check cannot have, on a real recorded
-    transition: at harbour step 3 a Close click makes the page render ``'closed'`` one more
-    time, so the page-global rule reports support for *any* rule predicting ``'closed'`` --
-    including one about berth N2's cell, which the same transition leaves reading ``'open'``.
-    The scoped check refutes it.  Does not establish that the rule fitted for this step was
-    actually about N2; it establishes what the two outcome rules say about the same claim.
-    """
+    """Checks an occurrence gained elsewhere on the page doesn't confirm a prediction
+    about a different object, using a real transition where a page-global check would be
+    fooled."""
     from semabi.compiler.parse import leaf_value
     step, pre, post = _harbour_step(3)
     other = 55
@@ -322,13 +274,8 @@ def test_a_value_gained_elsewhere_is_not_support_for_this_object():
 
 
 def test_the_object_the_action_landed_on_does_take_the_predicted_value():
-    """The positive case, on the same real transition.
-
-    Establishes that the scoped check is not refusing everything: the condition cell of the
-    row whose Close button was clicked is relocated uniquely and does read ``'closed'``
-    afterwards.  Together with the test above this shows the instrument separates the two
-    cells that the page-global rule cannot tell apart.
-    """
+    """Checks the scoped check does confirm the correct cell on the same transition,
+    showing it separates cells a page-global check can't tell apart."""
     from semabi.compiler.parse import leaf_value
     step, pre, post = _harbour_step(3)
     clicked = step.action.target
@@ -341,9 +288,8 @@ def test_the_object_the_action_landed_on_does_take_the_predicted_value():
 
 
 def test_ambiguous_correspondence_that_disagrees_is_not_a_refutation():
-    """Establishes that a set-valued correspondence whose members disagree yields
-    ``POSSIBLE`` rather than a verdict either way -- the case where a forced choice would
-    have manufactured evidence."""
+    """Checks a set-valued correspondence whose members disagree yields an undecided
+    verdict, not a forced one."""
     from semabi.compiler.v4 import consequence
     pre = tree(("group", "", [("rowgroup", "", [
         ("row", "", [("cell", "same", []), ("cell", "x", [])]),

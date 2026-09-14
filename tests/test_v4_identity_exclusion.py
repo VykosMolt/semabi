@@ -1,12 +1,6 @@
-"""A negated identity constant is still an identity constant.
-
-`learn_pre` may cover a rule's counterexamples with `attr != constant` literals, and allowed
-one such literal per parameter on the key slot -- *the vat is not North Wall* -- as "the
-special object".  Renaming every vat on a held-out history (`semabi.eval.v4_renaming`)
-moved the durable ledger at 27 blend steps, every one a rule guarded by that exclusion,
-while harbour, which has none, was unmoved.  A guard that mentions a spelling is not a
-guard; the refusal that already covered `attr` on the key slot covers `attr_ne`.
-"""
+"""Tests that a negated identity constant (`attr != constant`) is still treated as
+an identity constant, so the refusal to memorise a spelling on the key slot also
+covers the negated form and not just the positive one."""
 from __future__ import annotations
 
 from types import SimpleNamespace

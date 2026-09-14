@@ -1,20 +1,9 @@
 """Which of the search's surviving identity ties a reachable interaction can decide.
 
-The search leaves a family's identity open when two readings score the same on the history
-(`semabi.compiler.v4.search`): a call keyed by its pilot or by its ticket, a vessel by its
-name or by its length.  A tie is not an absence of difference.  The readings differ in what
-they *predict* under an interaction that changes the contested value: if the pilot names the
-call, a sign-on replaces one call with another; if the ticket does, the same call carries a
-new pilot.  So a tie is decidable exactly when the learner already knows an interaction that
-writes one of the contested slots -- an operator whose effects set it -- and undecidable by
-any reachable test when none does, in which case the two readings are provisionally
-quotient-equivalent and the ontology is not forced.
-
-This instrument says which is which, for every open question on a history, from the fitted
-operators alone.  It designs the experiment (which control, on which instance, with what
-each reading predicts) and does not run it; `--execute` runs the designed experiments on the
-live application with both readings' predictions recorded before the first click
-(`docs/v4_ties.md`).
+When two readings of a family score the same on the history (`semabi.compiler.v4.search`),
+this instrument checks, for each open tie, whether a known operator writes one of the
+contested slots. If one does, an experiment could decide the tie; if none does, it stays
+open. It designs the experiment but does not run it.
 """
 from __future__ import annotations
 
@@ -29,8 +18,7 @@ from semabi.compiler.v4.identity import family_key
 # Four things a surviving tie can be, and the evidence that puts it there.
 DECIDED = "DECIDED"                          # a retained experiment refuted one side
 DECIDABLE = "DECIDABLE"                      # a known interaction reaches a state that separates them
-REACHABLE_NOT_DISCRIMINATING = "REACHABLE_NOT_DISCRIMINATING"  # an interaction touches the family, but
-                                             # every state it reached kept the two keys correlated
+REACHABLE_NOT_DISCRIMINATING = "REACHABLE_NOT_DISCRIMINATING"  # touched, but never separated
 NO_KNOWN_EXPERIMENT = "NO_KNOWN_EXPERIMENT"  # nothing the learner knows touches either key
 REACHABLE = DECIDABLE                        # older name
 QUOTIENT_EQUIVALENT = NO_KNOWN_EXPERIMENT    # older name
@@ -50,9 +38,9 @@ def _describe(op) -> dict:
 
 
 def _writers(operators, tid: int, slot: str) -> list[dict]:
-    """Operators whose effects set ``attr:<slot>`` on an object of type ``tid`` -- a
-    *mutation* test: the reading that keys the family by this slot predicts that the
-    instance is replaced; the other, that it persists and carries the new value."""
+    """Operators that set ``attr:<slot>`` on an object of type ``tid``: a mutation test.
+    One reading predicts the instance is replaced; the other, that it persists with the
+    new value."""
     out = []
     for op in operators:
         for eff in op.effs:
@@ -65,9 +53,8 @@ def _writers(operators, tid: int, slot: str) -> list[dict]:
 
 
 def _makers(operators, tids: list[int]) -> list[dict]:
-    """Operators that bring an instance of the family into being -- a *collision* test: make
-    a second instance whose contested value equals an existing one's.  The reading keyed by
-    that value predicts one object (a conflict, or a replacement); the other predicts two."""
+    """Operators that create an instance of the family: a collision test. Making a second
+    instance with the same contested value, one reading predicts one object, the other two."""
     out = []
     for op in operators:
         if any(eff.kind == "add" and eff.tid in tids for eff in op.effs):
@@ -77,9 +64,8 @@ def _makers(operators, tids: list[int]) -> list[dict]:
 
 
 def _made_values(operators, tids: list[int], slots: list[str]) -> dict[str, list[dict]]:
-    """For every maker, the contested values of the instances it made in the history: the
-    evidence for whether a collision on a slot is *reachable* (the maker's instances took
-    that value more than once while another contested slot differed) or only touched."""
+    """For every maker, the contested values of the instances it made: whether a collision
+    on a slot actually occurred, or only could have."""
     out: dict[str, list[dict]] = {}
     for op in operators:
         if not any(eff.kind == "add" and eff.tid in tids for eff in op.effs):
@@ -94,8 +80,8 @@ def _made_values(operators, tids: list[int], slots: list[str]) -> dict[str, list
 
 
 def _attr(slot: str) -> str:
-    """The attribute name an object carries for a hypothesis slot: `cell@Pilot#0` renders
-    as `attr:Pilot#0` (`V2Abstractor.attr_name`); the fallback keeps the slot itself."""
+    """The attribute name an object carries for a hypothesis slot, e.g. `cell@Pilot#0` ->
+    `attr:Pilot#0`."""
     if slot.startswith("cell@"):
         column, _, k = slot[5:].rpartition("#")
         return f"attr:{column}#{k.split('@')[0]}"
@@ -104,9 +90,8 @@ def _attr(slot: str) -> str:
 
 def _separable(rows: list[dict], slot: str, other: list[str]) -> bool:
     """Do the made instances ever repeat `slot`'s value while some other contested slot
-    differs?  That is the state a collision experiment has to produce; if the maker never
-    produced it, the correlation may be one the application preserves (every vessel its own
-    length) and the tie is not identifiable by this interaction."""
+    differs? If not, the correlation may just be one the application preserves, and the
+    tie is not decidable by this interaction."""
     seen: dict = {}
     for r in rows:
         v = r.get(slot)
@@ -120,10 +105,8 @@ def _separable(rows: list[dict], slot: str, other: list[str]) -> bool:
 
 
 def _decided(run_dir: Path, family: str, keys: tuple = ()) -> dict | None:
-    """What already decided this pair: a retained experiment whose readings keyed the
-    family by *both* contested keys (`runs/v4/identity_experiments`), or a refutation of
-    one side in the history's own sidecar (`identity_refutations_v4.json`).  An experiment
-    about another pair of the same family decides nothing here."""
+    """What already decided this pair: a retained experiment keyed by both contested
+    keys, or a refutation recorded in the history's sidecar."""
     root = Path(run_dir).resolve().parent / "identity_experiments"
     wanted = set(keys)
     if root.is_dir():
@@ -151,10 +134,8 @@ def _decided(run_dir: Path, family: str, keys: tuple = ()) -> dict | None:
 
 
 def _movers(operators, tids: list[int]) -> list[dict]:
-    """Operators that remove an instance of one of the family's types and add one of
-    another: a family split by a rendered value (one template per status) is several types,
-    and a status change is rendered as re-typing.  Under a key that survives the change the
-    readings predict one object; the reading whose key does not, predicts two."""
+    """Operators that remove an instance of one family type and add one of another
+    (a re-typing test): under a key that survives the change, one object; otherwise, two."""
     out = []
     for op in operators:
         gone = {eff.tid for eff in op.effs if eff.kind == "remove" and eff.tid in tids}
@@ -165,9 +146,7 @@ def _movers(operators, tids: list[int]) -> list[dict]:
 
 
 def _tids_of_family(H, family: str) -> list[int]:
-    """Every entity type a family's templates realise: a family split by a rendered value
-    (vet's appointments, one template per status) is several types, and an interaction that
-    writes a slot of any of them is an interaction on the family."""
+    """Every entity type a family's templates realise."""
     return sorted({H.tid_of_template[t] for t in H.units
                    if family_key(t) == family and t in H.tid_of_template})
 
@@ -251,10 +230,8 @@ def _override(reading_json: dict, family: str, key_slot: str | None) -> dict:
     return out
 
 
-# What a version space can say about a step, partitioned by *correctness* rather than by
-# confidence: a rule-forced prediction and the only-outcome-ever-seen default are different
-# strengths of claim, but when both were right the application refuted neither, and a
-# semantic question must not be decided by which hypothesis class happened to answer.
+# A step's outcome, grouped by whether the prediction was right, regardless of whether
+# it came from a rule or from the only outcome ever seen.
 RIGHT = ("one outcome was admissible and it happened",
          "the only outcome ever seen on this control, and it happened")
 WRONG = ("one outcome was admissible and a different one happened",
@@ -264,25 +241,14 @@ ESTABLISHED_WRONG = WRONG[0]
 
 
 def _claim_signature(row: dict) -> tuple:
-    """Everything a reading claimed at this step, not just which event it named.
-
-    A rule that fires "Call <> opened for <>" *with its arguments* -- the created call's
-    fresh name checked against the page, the owner bound -- and a rule that fires the same
-    frame alone have said different amounts, and the first run of this instrument could
-    not see the difference: it refuted harbour's keyed call buttons on a one-step event
-    count while ignoring twelve correct fresh-name claims only that reading made
-    (`tests/test_v4_created_argument.py` caught it)."""
+    """Everything a reading claimed at this step, not just which event it named. A
+    claim with its checked arguments has said more than the same event named alone."""
     return (row["verdict"], str(row.get("admissible")), row.get("level"),
             str(row.get("arguments")), str(row.get("fresh")))
 
 
 def _units(row: dict) -> tuple[int, int]:
-    """(right, wrong) content units: the event, plus each argument the claim named.
-
-    A wrong argument already turns the verdict wrong (`outcome._argument_disagreements`,
-    failed fresh checks included), so on a right verdict every named argument was checked
-    and held; on a wrong verdict at the argument level, the arguments field holds the
-    disagreements themselves."""
+    """(right, wrong) content units: the event, plus each argument the claim named."""
     right = wrong = 0
     args = row.get("arguments") or {}
     if row["verdict"] in RIGHT:
@@ -295,16 +261,9 @@ def _units(row: dict) -> tuple[int, int]:
 def retro_decision(left_rows: list[dict], right_rows: list[dict]) -> dict:
     """Compare two readings' claims where they disagree, and decide only on dominance.
 
-    The differential discipline of `v4_tie_experiment.verdict`, applied to a history
-    instead of an intervention: a step both readings treat alike is no evidence between
-    them, so only the steps where their claims differ are read, and there a side is
-    refuted exactly when the other predicts strictly more of what the application
-    actually returned while getting nothing more wrong.  Right and wrong are about
-    returned content, not the hypothesis class that called it: a step where both
-    readings named what happened -- one by rule, one as the only outcome ever seen --
-    counts once for both, and a reading that also named the arguments, checked against
-    the page, has said and risked more (`_units`).  Anything else -- both better
-    somewhere, or no disagreement at all -- leaves the question standing."""
+    Only the steps where the two readings' claims differ count. A side is refuted only
+    when the other predicts strictly more of what actually happened while getting nothing
+    more wrong. Anything else leaves the question open."""
     by_left = {r["step"]: r for r in left_rows}
     diffs = []
     for r in right_rows:
@@ -336,12 +295,10 @@ def retro_decision(left_rows: list[dict], right_rows: list[dict]) -> dict:
 def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
     """The dependency-aware verdict loop over one worklist order.
 
-    ``prep_fn(rows)`` -> {"base", "questions", "held", ...} for a sidecar state;
-    ``derive_fn(prep, family, left, right)`` -> a `retro_decision` dict.  Invalidation
-    first: a row whose base moved is re-derived before any new question is posed, and a
-    question's base never includes its own row.  Termination is exact state recurrence:
-    a recurring state names an orbit, everything that moved inside it is lifted together
-    and closed, and the loop runs on so independent questions still settle."""
+    ``prep_fn(rows)`` -> {"base", "questions", "held", ...}; ``derive_fn(prep, family,
+    left, right)`` -> a `retro_decision` dict. A row whose base moved is re-derived before
+    any new question is posed. A recurring state closes everything that moved in its orbit
+    and the loop continues so independent questions still settle."""
     derived: list[dict] = []
     attempted: set = set()
     events: list[dict] = []
@@ -379,7 +336,7 @@ def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
         history.clear()
         history.append((state_key(), snapshot()))
     def note_change(closer_family) -> bool:
-        """Record a state change; a recurrence opens the orbit's dispute.  True iff capped."""
+        """Record a state change; a recurrence opens the orbit's dispute. True if capped."""
         k = state_key()
         if k in states_seen:
             on_cycle(k, closer_family)
@@ -461,8 +418,8 @@ SUPPORTED, REFUTED = "SUPPORTED", "REFUTED"
 
 
 def _atoms(row: dict) -> dict:
-    """A step's state claims keyed by (kind, page node): the coordinate two readings
-    share whatever they call the slot or the subject.  Falls back to the slot."""
+    """A step's state claims keyed by (kind, page node), the coordinate two readings
+    share regardless of what they call the slot. Falls back to the slot."""
     out = {}
     for c in row.get("state") or []:
         out[(c["kind"], c.get("node") if c.get("node") is not None else c["slot"])] = c
@@ -472,10 +429,8 @@ def _atoms(row: dict) -> dict:
 def retro_decision_shared(left_rows: list[dict], right_rows: list[dict]) -> dict:
     """`retro_decision` with the state channel, scored on the shared surface only.
 
-    Atoms both readings claim earn one unit per supported claim with a checked value
-    and one wrong per refuted; unshared claims are counted as provenance, never units,
-    so a finer ontology cannot win by vocabulary.  A step is a disagreement only on the
-    emission signature or on a shared atom."""
+    Claims both readings share earn a unit each way; claims only one reading makes don't
+    count, so a finer ontology can't win by vocabulary alone."""
     by_left = {r["step"]: r for r in left_rows}
     counts = {"left": {"right": 0, "wrong": 0}, "right": {"right": 0, "wrong": 0}}
     unshared = {"left": 0, "right": 0}
@@ -515,8 +470,8 @@ def retro_decision_shared(left_rows: list[dict], right_rows: list[dict]) -> dict
 def tournament(derive_fn, pr: dict, family: str, candidates: list) -> dict:
     """Every pairwise verdict among a family's candidates on one base.
 
-    Refutes exactly the dominated candidates, and only when an undominated one exists:
-    a dominance cycle refutes nothing."""
+    Refutes the dominated candidates, but only when an undominated one exists; a
+    dominance cycle refutes nothing."""
     from itertools import combinations
     losses: dict = {c: set() for c in candidates}
     pairs = []
@@ -537,11 +492,9 @@ def tournament_fixpoint(prep_fn, derive_fn, raw_rows: list, fam_key=str,
                         max_states: int = 64) -> dict:
     """A family's identity decided by a tournament on a family-neutral base.
 
-    Each family is one question over its candidates, judged pairwise on the base with
-    none of its own rows present, in rounds: the search poses ties against the current
-    key, so candidates surface as survivors emerge and are re-judged on the same base
-    until the posed set stops growing.  Cross-family dependency stays with invalidation;
-    recurrence handling is the orbit policy of `fixpoint`."""
+    Each family's candidates are judged pairwise on a base excluding its own rows, in
+    rounds, until no new candidates are posed. Recurrence handling is the orbit policy
+    of `fixpoint`."""
     derived: list[dict] = []
     attempted: set = set()
     events: list[dict] = []
@@ -681,11 +634,8 @@ def closure_over_schedules(prep_fn, derive_fn, raw_rows: list,
                            orders: tuple = ("fwd", "rev")) -> dict:
     """The closure is what every schedule agrees on.
 
-    The posed question set depends on refutation rows the reading fingerprint does not
-    carry, so two orders can settle into different self-consistent worlds.  Runs the
-    tournament fixpoint under each order; the intersection is the closure, rows in the
-    union but not the intersection are reported as order-disputed, and an oscillation
-    under any order propagates."""
+    Runs the tournament fixpoint under each order; the intersection is the closure, and
+    rows in the union but not the intersection are reported as order-disputed."""
     runs = {o: tournament_fixpoint(prep_fn, derive_fn, raw_rows, fam_key=SCHEDULE_KEYS[o])
             for o in orders}
     sets = {o: {(r["family"], str(r["refuted_key"])): r for r in runs[o]["rows"]} for o in orders}
@@ -784,16 +734,9 @@ def retrospective(run_dir: Path, *, split: float = 0.5, propagate: bool = False)
     """Ask each open question what the retained history itself already answered.
 
     Two readings that tie on the state objective can still differ in what the interface's
-    own responses let them say: harbour's vessels overview keyed by anything makes the
-    clicked row an object, `Schedule call` learns `ref_set(owner, rel) -> already has a
-    call`, and more of the history's actual responses are predicted with nothing more
-    wrong; unkeyed, the rule is inexpressible and those steps stay unestablished.  That is
-    behaviour the history retains, not an intervention -- so it is scored under the
-    frozen-prefix regime (fit on the prefix, judged on the suffix it never saw), on the
-    steps where the two readings disagree, and a side is refuted only by strict dominance
-    (`retro_decision`).  A verdict propagates exactly like an executed experiment's: a
-    refutation row beside the history, bound to what the slot held
-    (`semabi.compiler.v4.search.write_refutation`)."""
+    own responses let them predict. Fits both on a frozen prefix and compares their
+    suffix verdicts where they disagree (`retro_decision`); a decided verdict propagates
+    like an executed experiment's, as a refutation row beside the history."""
     from dataclasses import replace
 
     from semabi.compiler.evidence import EvidenceLog
@@ -878,10 +821,9 @@ def fixpoint_retrospective(run_dir: Path, *, split: float = 0.5, method: str = "
                           schedules: tuple = ("fwd", "rev"), prefetch_workers: int = 0) -> dict:
     """Run a closure against a history until its verdict set is stable, and retain it.
 
-    Raw experiment rows (no ``premises``) are the floor.  ``method`` is the sequential
-    loop or the tournament closure over ``schedules``; ``comparator`` is written into
-    every derived row's premises, so changing it makes earlier verdicts stale by
-    construction.  Fits are cached beside the history and may be prefetched."""
+    ``method`` is the sequential loop or the tournament closure over ``schedules``.
+    Changing ``comparator`` makes earlier verdicts stale, since it is written into every
+    derived row's premises. Fits are cached beside the history and may be prefetched."""
     from semabi.compiler.compile_v4 import build_hypotheses
     from semabi.compiler.evidence import EvidenceLog
     from semabi.compiler.v4 import pinned as v4_pinned

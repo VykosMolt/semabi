@@ -1,11 +1,10 @@
-"""An undecided pair is not an absence of difference.
+"""Tests for the separating witness: it must show an undecided pair as a real
+disagreement, not an absence of difference.
 
-The frontier leaves harbour's two survivors undefeated because it cannot say which of them
-is wrong, not because it saw nothing: their observable deltas differ at 40 of 453 steps,
-and at 39 of those both readings are recorded as EXPLAINED, so the comparison vocabulary
-is blind there. Every one of the 40 is a button click, which is the closest the retained
-evidence comes to naming a separating experiment.
-"""
+Two readings can stay undefeated because the frontier can't say which is wrong, even
+though their observable deltas differ at many steps -- the comparison vocabulary is
+blind where both are recorded as EXPLAINED. The witness should point at the steps that
+come closest to separating them."""
 import json
 from pathlib import Path
 from types import SimpleNamespace

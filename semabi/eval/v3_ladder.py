@@ -1,16 +1,11 @@
-"""Oracle localization ladder for the V3 applications (evaluator side, post-freeze).
-
-Runs after the ordinary V3 result is recorded. The frozen compiler is never given any of
-this: the rungs replace only the Abstractor/Tracker the V0 inducer consumes, exactly as in
-`docs/v2_oracle.md`, and the ladder's output never returns to the compiler.
-
-Rungs C, D and K need only the hidden state and hidden log, which the evaluator already
-recorded during the official run; A, B and Bv additionally need per-node entity
-annotations, which only an instrumented copy of an application can supply.
-
-The latent-attribute declarations are read from each application's own
-`/_evaluator/domain` notes and injected here rather than edited into `oracle.py`, so the
-evaluator that produced the ordinary result stays byte-identical.
+"""Runs the oracle localization ladder for the V3 applications, on the evaluator side,
+after the ordinary V3 result is recorded. The frozen compiler never sees this: the rungs
+replace only the Abstractor/Tracker the V0 inducer consumes, and the ladder's output never
+returns to the compiler. Rungs C, D and K need only the hidden state and log already
+recorded; A, B and Bv also need per-node entity annotations from an instrumented copy of
+the application. Latent-attribute declarations are read from each application's own
+`/_evaluator/domain` notes and injected here, so the evaluator that produced the ordinary
+result stays byte-identical.
 """
 from __future__ import annotations
 
@@ -21,11 +16,10 @@ from pathlib import Path
 from semabi.eval import oracle
 
 # Declared by the authors in their `notes` field. Three of the four applications state
-# that every attribute is rendered somewhere; the cellar has exactly one attribute that
-# is never rendered and never read by a precondition or effect.
+# every attribute is rendered somewhere; the cellar has one that is not.
 V3_LATENT = {
-    # the two applications the V2 runtime could not trace at all; both authors state that
-    # every attribute is rendered somewhere (their /_evaluator/domain notes)
+    # the two applications the V2 runtime could not trace at all; both authors state
+    # every attribute is rendered somewhere
     "grok_01_landing_board": set(),
     "grok_02_blend_book": set(),
     "opus_01_harbour": set(),

@@ -1,14 +1,11 @@
-"""Residual audit: the concrete slot must not define semantic action identity.
+"""Tests that the concrete per-instance slot key never defines semantic action
+identity.
 
-The per-instance slot key (`combobox#0`, `group/combobox#0@7`) still exists, deliberately,
-for three jobs: reading a widget's current value, naming an affordance precondition, and
-replaying the UI primitive.  That is executable grounding.  What must never happen again is
-the old failure: a positional key silently *defining* which semantic action was performed.
-
-These tests pin the boundary at the places where a leak would matter -- family identity,
-lifted action identity, cross-unit merging, cross-run alignment -- and pin that replay
-still reaches the concrete occurrence that was recorded.
-"""
+The slot key still exists for reading a widget's value, naming a precondition, and
+replaying the UI primitive, but must never silently define which semantic action was
+performed. Pins the boundary at family identity, lifted action identity, cross-unit
+merging and cross-run alignment, and checks replay still reaches the recorded
+occurrence."""
 from types import SimpleNamespace
 
 from semabi.compiler.ground import Live
@@ -35,8 +32,8 @@ def test_one_family_covers_occurrences_that_differ_only_by_ordinal():
 
 
 def test_two_families_may_occupy_the_same_ordinal():
-    """`combobox#0` of a wall card and `combobox#0` of a route card are both 'the first
-    combobox of their instance' and are not the same action."""
+    """Checks two controls with the same ordinal in different unit templates are not
+    treated as the same action."""
     wall = _Obs([_node(0, "group", -1), _node(1, "group", 0),
                  _node(2, "combobox", 1, options=["pink"])])
     route = _Obs([_node(0, "group", -1), _node(1, "text", 0),
@@ -49,8 +46,8 @@ def test_two_families_may_occupy_the_same_ordinal():
 
 
 def test_the_same_ordinal_under_a_different_unit_structure_is_a_different_family():
-    """Identical role path, identical ordinal, but the entity layer keeps the two
-    templates apart: they stay apart."""
+    """Checks the same role path and ordinal under different unit structures stay
+    different families."""
     here = _Obs([_node(0, "group", -1), _node(1, "text", 0), _node(2, "combobox", 1, options=["a"])])
     there = _Obs([_node(0, "group", -1), _node(1, "text", 0), _node(2, "combobox", 1, options=["a"])])
     families = _induce({"a": here, "b": there}, {"a": [(0, "t1")], "b": [(0, "t2")]},
@@ -84,8 +81,8 @@ def test_cross_run_action_alignment_does_not_consult_the_concrete_slot():
 
 
 def test_replay_prefers_the_recorded_occurrence_and_is_otherwise_deterministic():
-    """Grounding must reach a concrete control; with several occurrences of one family
-    inside one owner it takes the recorded one, else the lowest node, never a hash order."""
+    """Checks replay prefers the recorded occurrence among several of one family, and
+    otherwise falls back to the lowest node deterministically, never a hash order."""
     class _Ground:
         locate = Live.locate
 

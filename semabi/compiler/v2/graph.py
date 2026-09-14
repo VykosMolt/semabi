@@ -1,11 +1,9 @@
 """Observation graph: per-node structural descriptors and text templates.
 
-No unit detector lives here. The graph exposes, for every node of every
-observation, (a) a *shape* (roles of the subtree), (b) a *template* (shape +
-the label tokens that are constant across all nodes sharing the shape at the
-same structural position), (c) the *data tokens* (the tokens that vary), so
-that later hypotheses can be stated over recurring templates wherever they
-occur: among siblings, across views, or across time.
+No unit detector lives here. For every node of every observation the graph exposes a
+shape (the roles of its subtree), a template (that shape plus the label tokens constant
+across nodes at the same position), and the data tokens that vary. Later hypotheses are
+stated over templates wherever they recur: among siblings, across views, or over time.
 """
 from __future__ import annotations
 
@@ -98,11 +96,10 @@ RESPONSE_ROLES = frozenset({"status", "alert"})
 
 
 class ObsGraph:
-    # Whether variation is judged across the members of a declared collection.  Off, it is
-    # judged per indexed position only -- the reading every report before `docs/v4_open_world.md`
-    # was computed under -- which on a listing whose rows never reorder makes every constant
-    # cell of every row a label, and every row its own type.  Kept as a switch so that the
-    # two readings can be put side by side; nothing sets it but an experiment.
+    # Whether variation is judged across the members of a declared collection. Off, it is
+    # judged per position only, which on a listing whose rows never reorder makes every
+    # constant cell a label and every row its own type. A switch, so the two readings can be
+    # compared; only an experiment turns it on.
     judge_by_collection: bool = True
 
     def __init__(self):
@@ -144,11 +141,9 @@ class ObsGraph:
         return self.stable_skeleton(path for node, path in paths.items() if node not in excluded)
 
     def restore_stable_skeletons(self) -> None:
-        """Rekey legacy process-random indexes from their retained structural paths.
+        """Rekey legacy indexes from their retained structural paths.
 
-        No observation, token statistic, or learned interpretation is added. The
-        caller restores the artifact's structural policy before this migration.
-        """
+        Adds no observation, statistic or interpretation."""
         mapping = {}
         for sig, old in self._skeleton.items():
             obs = self.obs[sig]
@@ -204,21 +199,12 @@ class ObsGraph:
                     d = {t for t in d if t[0].isdigit() or t in d2}
                 self._data = d
                 return self._data
-            # Prose -- a position whose strings are sentences, with a vocabulary of >= 4
-            # constant words, varying in wording rather than in data -- is judged where the
-            # variation is judged, per position, and not over every node in the application
-            # that shares a role path and a token pattern.  Pooled by role path, every
-            # two-word table cell of harbour was one position, the call sheet's field names
-            # (`Length overall`, `Hazardous cargo`) were its constant vocabulary, and the
-            # position was prose: so `United Kingdom`, `Ardent Rose` and `Aoife Marr`, which
-            # occur only in such cells, were wording -- labels -- and every vessel and pilot
-            # row a type of its own, while a name the prefix never saw was a value at the
-            # same cell.  A varying token at a prose position counts only if it is data at a
-            # position that is not prose.
-            # A cell is not a sentence.  The vocabulary test alone called harbour's vessel
-            # cells prose because the cargo words (`drummed solvents`, `frozen fish`) are
-            # lowercase and never stand alone -- constant vocabulary by the letter of the rule
-            # -- and vet's appointment reasons the same; a sentence has the length of one.
+            # Prose is a position whose strings are sentences: four or more constant words,
+            # varying in wording rather than in data. It is judged per position, not over
+            # every node in the application that shares a role path, or a page's field names
+            # become a "vocabulary" and the values beside them become wording.
+            # A cell is not a sentence: the vocabulary test alone called two-word cells prose
+            # because their words are lowercase and never stand alone, so require length too.
             prose = set()
             for key, tt in self.templates_v.items():
                 if not tt.sentence_length():
@@ -235,12 +221,10 @@ class ObsGraph:
                 if any(x == "*" for _, x in key[1]):
                     listed |= v
             d = {t for t in d if t[0].isdigit() or t in plain}
-            # Inside a member of a declared collection the lowercase rule does not apply: what
-            # differs between the rows of one table at one cell is the cell's value whether
-            # or not it is ever shown on its own -- `on duty` / `off duty`, `single varietal`
-            # / `a blend` -- and reading it as wording made the duty of a pilot a difference
-            # between two row templates rather than an attribute of one.  Such a word is a
-            # value where it varies and wording anywhere else (`Sign on`): see `is_data_at`.
+            # Inside a member of a declared collection the lowercase rule does not apply:
+            # what differs between rows at one cell is that cell's value, whether or not it
+            # is ever shown alone ("on duty" / "off duty"). Such a word is a value where it
+            # varies and wording anywhere else.
             self._listed_only = {t for t in d0 if t in listed} - d
             d |= self._listed_only
             self._data = d
@@ -281,9 +265,7 @@ class ObsGraph:
         """Indexed role path in which a member of a declared collection is unindexed.
 
         The rows of a table are one listing: what differs between them at the same cell is
-        content, and which row it stands in is not part of the position.  Everything else
-        keeps its ordinal, so the headings of two sections stay two positions.
-        """
+        content, and which row it stands in is not part of the position."""
         out = []
         x = i
         while x >= 0:
@@ -321,20 +303,15 @@ class ObsGraph:
     def add(self, sig: str, obs: Observation) -> None:
         """Take an observation into the graph.
 
-        Two different things happen here, and once a model is frozen only one of them may.
-        Per-observation structure -- the node descriptors, the role paths, which cells sit in a
-        table's first row -- is what makes *this* observation readable at all, and reading a
-        held-out page requires it.  The corpus statistics are different: the text-variation
-        templates and the data-token vocabulary are the learned judgement about which text on a
-        page is a value rather than a label, and they are as much part of the model as the type
-        system is.  Letting a held-out observation contribute to them is the chronology leak in
-        miniature -- the suffix teaching the model the vocabulary it is about to be judged with.
+        Two things happen here and, once a model is frozen, only one of them may. Reading
+        the page's structure is what makes the page readable at all, and a held-out page
+        needs it. The corpus statistics are different: which text on a page is a value
+        rather than a label is a learned judgement, as much part of the model as the types
+        are, and letting a held-out page teach it is the leak in miniature.
 
-        So a frozen graph reads the observation and declines to learn from it.  A position the
-        prefix never saw simply has no template, and ``is_prose`` answers False for it: the
-        frozen model has no evidence about that position, which is a smaller claim than the
-        alternative and never a claim about the application.
-        """
+        So a frozen graph reads the observation and declines to learn from it. A position
+        the prefix never saw has no template and `is_prose` answers False: no evidence,
+        which is a smaller claim than the alternative."""
         if sig in self.obs:
             return
         self.obs[sig] = obs
@@ -373,12 +350,9 @@ class ObsGraph:
                             self.header_strings[(paths[n.i], k)].add(node_text(obs.node(c)))
                             if declared:
                                 self._declared_headers.add(node_text(obs.node(c)))
-        # Row headers.  A key-value table -- harbour's call sheet, `Flag | United Kingdom`
-        # -- names its fields down the first column, and judged across the members of the
-        # collection those names vary as its values do.  What tells a field name from a value
-        # is that the interface uses the same text as a declared column header elsewhere;
-        # such a first cell is a header, with the same escape as a column header
-        # (`is_header`).
+        # Row headers. A key-value table names its fields down the first column, and judged
+        # across the collection those names vary as values do. What marks one as a field name
+        # is that the interface uses the same text as a declared column header elsewhere.
         if self.judge_by_collection:
             known = {t for t in self._declared_headers if t}
             for n in obs.nodes:
@@ -426,22 +400,19 @@ class ObsGraph:
             elif self.judge_by_collection:
                 ppos = self.position_pooled(obs, n.parent, listings)
                 if self._is_member(obs, n.parent, listings):
-                    # A member's fields are its slots, by their place among its children --
-                    # the column -- whatever shape a value takes.  Keyed by token pattern
-                    # as well, blend's `Ticket 4` (a labelled number) was one position with
-                    # `Block 12` (a name with a number) from another column of the same
-                    # rows, `Ticket` varied, and every draw was keyed `Ticket`.
+                    # A member's fields are its slots, by their place among its children
+                    # (the column), whatever shape the value takes. Keyed by token pattern
+                    # as well, two different columns collapse into one position.
                     sibs = [c for c in obs.children(n.parent) if obs.node(c).role == n.role]
                     header = self.column_header(sig, n.i) if sig in self.obs else None
                     # a column with a declared header is that column wherever it stands:
                     # judged by its header, not by its index (`semabi.eval.v4_columns`)
                     ppos = ppos + ((n.role, f"@{header}" if header else sibs.index(n.i)),)
                     key_pos = paths[n.i]
-                    # and in every view that renders the same table.  The view skeleton
-                    # told two tables apart that stand at the same place in two views
-                    # (vet's vets and its patients) and split one table by whatever else
-                    # the view showed (blend's draws with and without a placeholder row).
-                    # A table declares what it is: its header row.
+                    # and in every view that renders the same table. The view skeleton tells
+                    # apart two tables standing at the same place in different views, and
+                    # splits one table by whatever else the view showed. A table declares
+                    # what it is: its header row.
                     t = n.parent
                     while t >= 0 and obs.node(t).role != "table":
                         t = obs.node(t).parent
@@ -482,12 +453,10 @@ class ObsGraph:
             self._value_paths = None
 
     def forget(self, sig: str) -> None:
-        """Drop one observation's per-observation structure so it can be re-read.
+        """Drop one observation's structure so it can be re-read.
 
-        Used only to replace a page with its section-normalised form, which happens once, on
-        first sight, before anything has been read off it.  Corpus statistics are deliberately
-        left alone: the normalised page carries exactly the same text.
-        """
+        Used only to replace a page with its section-normalised form, once, before anything
+        has been read off it. Corpus statistics are left alone: the text is the same."""
         self.obs.pop(sig, None)
         for key in [k for k in self.nodes if k[0] == sig]:
             self.nodes.pop(key, None)
@@ -501,11 +470,9 @@ class ObsGraph:
         return t in self.data_set() or t[0].isdigit()
 
     def value_paths(self) -> set[str]:
-        """Role paths at which the corpus has seen a value.
+        """Role paths where the corpus has seen a value.
 
-        Computed from the text templates, which stop growing when the graph is frozen, so
-        for a frozen graph this is a fact about the fitting corpus and nothing else.
-        """
+        Computed from the text templates, which stop growing once the graph is frozen."""
         if self._value_paths is None:
             d = self.data_set()
             self._value_paths = {
@@ -517,43 +484,32 @@ class ObsGraph:
     def is_data_at(self, sig: str, i: int, t: str) -> bool:
         """Is this token, at this node, a value?
 
-        The corpus vocabulary decides for every token the corpus has seen.  A token it has
-        *never* seen is a different case, and the frozen model has one piece of evidence
-        about it: where it is.  At a position the corpus read values from -- the name cell
-        of a row, a button whose label carries the row's name -- an unseen word is a value,
-        because that is what the position holds; elsewhere the model has no evidence and
-        the token is left as it would have been.  Nothing changes during fitting, when every
-        token has been seen; what changes is that a frozen model can recognise a row whose
-        name contains a word the prefix never used -- blend's `Block 12`, which was not an
-        object on any of the 267 held-out pages that rendered it.
-        """
+        The corpus vocabulary decides for every token it has seen. For a token it has never
+        seen the only evidence is position: at a place the corpus read values from, an
+        unseen word is a value; elsewhere it is left as it would have been. This matters
+        only for a frozen model, which can then recognise a row whose name contains a word
+        the prefix never used."""
         if t[0].isdigit():
             return True
         d = self.data_set()
         if self.judge_by_collection:
-            # A word admitted as a value only because it varies between the members of a
-            # collection -- `on` in the duty cell, `varietal` in the style cell -- is a value
-            # where it varies and wording anywhere else: `Sign on` keeps its label.  Every
-            # other data token is data wherever it stands, as before.  The alternative --
-            # judging every token at its position -- was tried and reads an entity name as
-            # wording wherever it was the only entity ever rendered there: `North Wall` in
-            # every one of a seed's return-ticket buttons, `S1` in a select whose choice
-            # never changed.  Which is the same thing a global vocabulary gets wrong about
-            # `Open` on the `Open North Wall` button, and there is no telling a name from a
-            # state word at this layer; the name is the costlier one to lose.
+            # A word admitted as a value only because it varies between members of a
+            # collection is a value where it varies and wording anywhere else, so "Sign on"
+            # keeps its label. Every other data token is data wherever it stands. Judging
+            # every token at its own position instead reads an entity name as wording
+            # wherever it was the only entity ever rendered there, and a lost name costs
+            # more than a lost state word.
             n = self.obs[sig].node(i)
             if n.role in ("combobox", "textbox"):
                 return t[0].isalnum()      # what an input holds is its value, all of it
             key = self.variation_key.get((sig, i))
             if key is not None and key[1] and key[1][-1][1] != "*" and any(
                     x == "*" for _, x in key[1]) and n.role not in WIDGET_ROLES:
-                # A field of a collection member -- a table column -- is judged in its
-                # column, where the evidence is: what every member's value carries is the
-                # column's label, what differs is the value.  `Dr` heads every name in the
-                # vets table and is a label there; in the appointments' vet column, beside
-                # `(unassigned)`, it is part of a value.  A vocabulary answering for the
-                # whole application would have to say one thing for both.  A column with
-                # a single distinct value is no evidence, and falls to the vocabulary.
+                # A field of a collection member is judged in its column, where the
+                # evidence is: what every member carries there is the column's label, what
+                # differs is the value. The same word can be a label in one column and part
+                # of a value in another. A column with one distinct value is no evidence and
+                # falls back to the vocabulary.
                 tt = self.templates_v.get(key)
                 if tt is not None and len(tt.strings) >= 2 and (
                         t in tt.varying_tokens() or any(t in tokens(st) for st in tt.strings)):
@@ -622,12 +578,10 @@ class ObsGraph:
         if len(lab) >= 3:
             return True
         if not lab:
-            # Nothing in this string is a constant word, so whatever else shares its
-            # structural position, *this* string is a value and not a sentence about values.
-            # The pooled test below is a corpus heuristic for feedback lines and it misfires
-            # when a position collects unrelated texts: cellar's hall headings sit at the same
-            # position as `Finish fermentation` and `Receive fruit`, whose four constant words
-            # made `Press Hall` prose and cost the hall its key.  A sentence needs words.
+            # Nothing in this string is a constant word, so this string is a value whatever
+            # else shares its position. The pooled test below is a heuristic for feedback
+            # lines and misfires when a position collects unrelated texts. A sentence needs
+            # words.
             return False
         tt = (self.templates_v.get(self.variation_key.get((sig, i))) if self.judge_by_collection
               else self.templates.get(self.position_of[(sig, i)]))
@@ -646,10 +600,8 @@ class ObsGraph:
     def column_header(self, sig: str, i: int) -> str | None:
         """The declared header text of the column a cell stands in, or None.
 
-        Only a table whose header row sits in a row group of its own (a `thead`) declares
-        its columns; there the header is the interface's own name for the column and the
-        cell's position is presentation (`semabi.eval.v4_columns`).  A cell of any other
-        row, or a column with an empty header, has no column name and keeps its position."""
+        Only a table whose header row sits in a row group of its own declares its columns.
+        A cell of any other row, or a column with an empty header, keeps its position."""
         obs = self.obs[sig]
         n = obs.node(i)
         if n.role != "cell" or n.parent < 0:
@@ -683,10 +635,9 @@ class ObsGraph:
     def row_header(self, sig: str, i: int) -> str | None:
         """The header text of the row a cell stands in, or None.
 
-        A key-value table names its fields down the first column, and such a first cell is
-        a header when the interface uses its text as a declared column header elsewhere
-        (found above).  The other cells of that row are named by it, as the cells of a
-        declared column are named by theirs; the table's own header row names nothing."""
+        A key-value table names its fields down the first column; such a first cell is a
+        header when the interface uses its text as a declared column header elsewhere. The
+        table's own header row names nothing."""
         obs = self.obs[sig]
         n = obs.node(i)
         if n.role != "cell" or n.parent < 0 or self.is_header(sig, i):
@@ -705,11 +656,10 @@ class ObsGraph:
     def definition_pairs(self, sig: str, i: int) -> list[tuple[int, int]]:
         """The (label, value) pairs of a definition list rooted at node i, or none.
 
-        A `dl` reaches the snapshot as a run of leaf siblings with no role of their own, so
-        the pairing is read from the structure: an even number of leaves of one role, in
-        which every even one carries the same text wherever this position was seen and at
-        least one odd one has carried different texts.  The labels then name the values,
-        as a key-value table's row headers name its cells."""
+        A definition list reaches the snapshot as a run of plain leaf siblings, so the
+        pairing is read from the structure: an even number of leaves of one role, where
+        every even one carries the same text wherever this position was seen and at least
+        one odd one has varied."""
         cache = self.__dict__.setdefault("_definition_cache", {})
         if (sig, i) in cache:
             return cache[(sig, i)]

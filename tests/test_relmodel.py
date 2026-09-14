@@ -31,15 +31,9 @@ def test_domain_json_roundtrip():
 
 
 def test_an_operator_the_action_grounds_nothing_of_is_not_a_legacy_operator():
-    """``supplied=()`` and ``supplied=None`` mean opposite things and must stay apart.
-
-    ``None`` is every operator written before the distinction existed: the action names all of
-    its objects.  ``()`` is the case the field exists to expose -- the action names none of
-    them, so a planner has to solve the preconditions for every parameter.  Collapsing the two
-    would make the exported model claim there is nothing to derive in exactly the situation
-    where everything has to be, and ``derive_bindings`` would keep enumerating the state while
-    ``derived()`` reported a fully grounded operator.
-    """
+    """Checks ``supplied=()`` and ``supplied=None`` stay distinct: ``None`` means the
+    action names all its objects, ``()`` means it names none, so collapsing them would
+    claim nothing needs deriving in exactly the case where everything does."""
     params = [("?a", "Task"), ("?b", "Project")]
     legacy = rm.Operator("legacy", params, [], [])
     latent = rm.Operator("latent", params, [], [], supplied=())
@@ -61,7 +55,8 @@ def test_an_operator_the_action_grounds_nothing_of_is_not_a_legacy_operator():
 
 
 def test_a_planner_is_given_the_one_binding_or_nothing():
-    """``derive_bindings`` returns every completion; acting needs there to be exactly one."""
+    """Checks a planner is given the one binding or nothing, since ``derive_bindings``
+    returns every completion but acting needs exactly one."""
     d = make_domain("standard")
     s = initial_state("standard", 0)
     projects = [o.id for o in s.of_type("Project")]

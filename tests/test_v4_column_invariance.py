@@ -1,5 +1,5 @@
-"""A table's columns may be rendered in any order: the unit, its slots and its attributes
-are named by the declared header, not by where the column stands (`docs/v4_frontier.md`)."""
+"""Tests that a table's columns can be rendered in any order: the unit, its slots and
+its attributes are named by the declared header, not by column position."""
 from __future__ import annotations
 
 from semabi.compiler.observation import Node, Observation

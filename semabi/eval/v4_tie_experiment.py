@@ -1,20 +1,11 @@
 """Run one experiment that decides a surviving identity tie, with both readings frozen first.
 
-A tie between two keys of a family (`semabi.eval.v4_identity_ties`) is decided by an
-interaction on which the readings predict differently: make a second instance that shares
-the contested value with an existing one (a *collision*), or change the contested value of
-an instance (a *mutation*).  Under the reading keyed by that value the instance is one
-object -- a conflict between two mentions, a replacement -- and under the other it is two.
-
-The plan names the history the readings were fitted on, the application, the two readings
-as ``family -> key`` maps, the actions to perform, and each reading's prediction, and it is
-written *before* the first action.  The actions are performed on a fresh instance of the
-application, appended to a copy of the history (the retained history is not touched), and
-both readings are scored by the causal objective on the extended history.  What decides is
-the change in the terms the experiment was about: a reading whose objects the new steps
-force into a conflict, a churn or a contradiction has been refuted by the application; a
-reading the new steps merely explain has survived.  Both scores are reported whatever they
-say (`docs/v4_ties.md`).
+A tie between two keys of a family is decided by an interaction the readings predict
+differently: a collision (a second instance sharing the contested value) or a mutation
+(changing it). The plan names the history, the readings, and the actions, and is written
+before the first action. Actions run on a fresh copy of the application, appended to a copy
+of the history; both readings are then scored on the extended history, and whichever is
+forced into a conflict, churn, or contradiction is refuted.
 """
 from __future__ import annotations
 
@@ -48,11 +39,9 @@ def _score(run_dir: Path, identity: dict) -> objective.Behaviour:
 def extension(source: Path, workdir: Path) -> dict:
     """What the experiment appended to the history: its steps and the pages they reached.
 
-    The verdict is a reading of these steps under a representation; the representation
-    changes (a column's placeholder row stopped naming a column, and blend's ticket
-    number moved from `cell@Ticket#1` to `cell@Ticket#0`), and the steps do not.  Retained
-    with the result, they let the experiment be scored again under the representation of
-    the day (`rescore`) instead of being trusted by the names it was scored under."""
+    Retained with the result so the experiment can be rescored under a later
+    representation (`rescore`) instead of being trusted by the names it was scored under.
+    """
     before = EvidenceLog(source)
     after = EvidenceLog(workdir)
     return {"steps": [s.to_json() for s in after.steps[len(before.steps):]],
@@ -100,8 +89,8 @@ def run(plan: dict, workdir: Path) -> dict:
                 return report
             text = action.get("text")
             if "option" in action and target is not None:
-                # the k-th option of a select, resolved on the live page rather than spelled
-                # in the plan: what matters is which choice, not the label's exact text
+                # the k-th option of a select, resolved on the live page: what matters is
+                # which choice, not the label's exact text
                 options = list(obs.node(target).options or [])
                 text = options[action["option"]] if action["option"] < len(options) else None
                 if text is None:
@@ -135,11 +124,9 @@ DECISIVE = {"collision": ("positional", "conflicts"), "mutation": ("churn", "con
 def verdict(plan: dict, workdir: Path, report: dict) -> dict:
     """Score both readings on the extended history and decide on the experiment's own terms.
 
-    An experiment is about one difference between two readings -- a collision shows as a
-    key that has to fall back on position or as two mentions in conflict, a mutation as a
-    churn or a contradiction -- and only that difference is evidence between them.  A change
-    both readings suffer alike (the reload, a count that moved) says nothing about which is
-    right, and counting it once made every experiment refute both sides."""
+    Only the terms the experiment was about count as evidence; a change both readings
+    suffer alike says nothing about which is right.
+    """
     readings = plan["readings"]
     kind = plan.get("test", "collision")
     terms = DECISIVE.get(kind, DECISIVE["collision"])
@@ -168,8 +155,8 @@ def verdict(plan: dict, workdir: Path, report: dict) -> dict:
 
 def rescore(plan: dict, workdir: Path, ext: dict | None = None) -> dict:
     """The verdict on an experiment already performed: the extended history in `workdir`
-    (or the source plus a retained extension, spliced there) against the untouched
-    history, without touching the application again."""
+    (or a retained extension spliced there) against the untouched history, without
+    touching the application again."""
     source = Path(plan["run"])
     if ext is not None:
         extend(plan, ext, workdir)
@@ -183,16 +170,11 @@ def rescore(plan: dict, workdir: Path, ext: dict | None = None) -> dict:
 def propagate(result: dict, run_dir: Path | None = None, fresh: bool = False) -> list[dict]:
     """Feed a decided experiment back to the SOURCE history as retained refutations.
 
-    The search reads `identity_refutations_v4.json` beside a history and does not consider
-    a refuted key for that family again (`semabi.compiler.v4.search.read_refutations`), and
-    the freeze refuses a candidate that activates one.  A reading the experiment refuted is
-    written there for every family the plan keyed by it, with the experiment as provenance
-    -- which history, which actions, which terms decided -- so that the SOURCE learner's next
-    manifest carries what the application said, and nothing from the transfer histories.
-    Each record carries what the refuted key slot *held* on the history, so that it binds
-    to the hypothesis tested and not to a name (`semabi.compiler.v4.search.write_refutation`).
-    `fresh` starts the sidecar over: the experiment is the evidence, the sidecar is derived
-    from it."""
+    The search reads `identity_refutations_v4.json` beside a history and never considers a
+    refuted key for that family again. Each record carries what the refuted key slot held
+    on the history, so it binds to the hypothesis tested rather than to a name. `fresh`
+    starts the sidecar over: the experiment is the evidence, the sidecar is derived from it.
+    """
     from semabi.compiler.compile_v4 import build_hypotheses
     from semabi.compiler.v4 import search as v4_search
 

@@ -1,25 +1,9 @@
-"""What is a reading actually claiming, and could those claims have failed?
-
-A per-action success rate is easy to read and easy to be fooled by.  `promote cell[_]=cell#0`
-gets every applicable rule right on 85% of blend's held-out actions -- and every one of its
-1353 decided claims is the same claim, `id: gone`, on a page where 88.8% of all objects stop
-being rendered at every click.  It is not modelling the application; it is naming things on a
-page that re-renders.
-
-So a verdict count is reported here only alongside what produced it:
-
-* **variety** -- how many *distinct* (kind, slot, value) claims the reading makes.  One claim
-  repeated a thousand times is one claim.
-* **composition** -- removals, slots taking a named constant, slots merely changing.  These
-  fail for different reasons and a single rate hides which.
-* **exposure** -- for removals, the unconditional base rate of an object going away anyway,
-  from `v4_existence_baseline`.  A removal model that does not beat it has not been tested.
-* **per action** -- what the rules that *applied* did, together, at each opportunity.  "Some
-  rule was right" rewards emitting more rules; a reading offering four applicable rules and
-  getting one right has covered the action and been wrong three times.
-
-This does not score a reading.  It reports what a score would have been computed over, which is
-the part that decides whether the score means anything.
+"""Reports what a reading is actually claiming, since a per-action success rate alone can
+be misleading: a rule can look accurate while repeating the same trivial claim. Alongside
+each verdict count this reports variety (distinct (kind, slot, value) claims), composition
+(removals vs named constants vs mere changes), exposure (the unconditional base rate an
+object goes away anyway, for removals), and per-action behaviour of every applicable rule
+together. This does not score a reading; it reports what a score would be computed over.
 """
 from __future__ import annotations
 
@@ -51,10 +35,9 @@ def _claim_kind(p) -> str:
     return "changes, unspecified" if p.predicted == csq.CHANGES else "a named constant"
 
 
-# The per-action ledger covers what the action model claims about the *state*, which is what
-# the rows in docs/v4_chronology.md were computed over.  Outputs and creations are new kinds of
-# claim and are reported in the composition; folding them into the same ledger would silently
-# change what a row means.
+# The per-action ledger covers what the action model claims about the state. Outputs and
+# creations are different kinds of claim and are reported in the composition instead, so
+# folding them in would silently change what a row means.
 STATE_CLAIMS = (csq.VALUE, csq.EXISTENCE)
 
 
@@ -96,8 +79,8 @@ def substance(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0
         elif poss:
             actions[UNDECIDABLE] += 1
         elif c[csq.UNKNOWN]:
-            # A rule that abstained because its referring expression named no single object is
-            # not a rule that did not apply.  One is about the model, the other about the page.
+            # A rule that abstained because its referring expression named no single object
+            # did apply; abstaining is about the page, not applicability about the model.
             actions[COULD_NOT_TELL] += 1
         else:
             actions[NO_RULE] += 1

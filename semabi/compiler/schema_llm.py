@@ -1,10 +1,9 @@
-"""V1 front end, part 2: grounding-schema proposals from an LLM.
+"""V1 front end, part 2: an LLM proposes a grounding schema.
 
-The LLM sees the mention catalog and a sample of observed dynamics and proposes
-how surface slots map onto latent entity types, attributes, references and
-view contexts. Proposals are hypotheses: they are applied by the grounder and
-validated against the evidence (coherence) and by interventions; nothing the
-LLM says about semantics is trusted without interaction evidence.
+It sees the mention catalog and a sample of the observed dynamics, and proposes how surface
+slots map onto entity types, attributes, references and view contexts. Those are hypotheses:
+the grounder applies them and the evidence validates them. Nothing the model says about
+semantics is trusted without interaction evidence.
 """
 from __future__ import annotations
 

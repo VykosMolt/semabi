@@ -1,12 +1,10 @@
-"""Unit hypotheses from template recurrence.
+"""Unit hypotheses from repeated templates.
 
-A *unit template* is a subtree template (roles + label tokens, repeated child
-templates collapsed) that occurs with at least two distinct data fillings
-anywhere in the evidence: among siblings, in different views, or at different
-times (a detail panel shown for different objects). Every such template is a
-candidate unit type; instances are the subtrees matching it. Nothing is
-decided globally here — nested candidates coexist, and the later hypothesis
-scoring chooses among them by behaviour.
+A unit template is a subtree shape -- roles plus label tokens, with repeated children
+collapsed -- that occurs with at least two different data fillings somewhere in the evidence:
+among siblings, in different views, or at different times (a detail panel shown for different
+objects). Every such template is a candidate unit type, and nested candidates are allowed to
+coexist; which one wins is decided later, by behaviour.
 """
 from __future__ import annotations
 
@@ -31,9 +29,8 @@ def collapsed_template(G: ObsGraph, sig: str, i: int, memo: dict) -> str:
         if m == "_" and parts and parts[-1] == "_":
             continue  # a run of data tokens is one slot
         parts.append(m)
-    # Optional live output is not part of the enclosing object's identity shape.
-    # Only this template projection changes: the parser still traverses every
-    # raw child, extracts its state fields, and owns any nested recovery actions.
+    # An optional live output is not part of the enclosing object's shape. Only this
+    # projection changes: the parser still walks every raw child and reads its state.
     kids = [c for c in obs.children(i) if not (
         G.response_independent_structure and obs.node(c).role in RESPONSE_ROLES)]
     ch = [collapsed_template(G, sig, c, memo) for c in kids]

@@ -1,13 +1,9 @@
-"""Creation was the one effect kind nothing scored.
+"""Tests for scoring a ``create`` effect, which has no earlier node to relocate.
 
-A ``remove`` claim is checked by relocating the node that rendered the object.  A created
-object has no node in the earlier page to relocate, so the check runs the other way: the values
-the rule says the new object carries are sought as a *minimal* subtree of the later page and
-counted against the earlier one.  Counted, not sought, because blend's draw form renders the
-vat, the blend and the amount before the click as well as after -- a check that asked only
-whether the later page shows them somewhere would be answered by the form the click was made
-from, on every step, whether or not anything was created.
-"""
+The check finds the new object's values as a minimal subtree of the later page and
+counts them against the earlier one, rather than just asking whether the later page
+shows them somewhere -- a leftover form could answer that on every step regardless of
+whether anything was created."""
 from __future__ import annotations
 
 from semabi.compiler.observation import Node, Observation

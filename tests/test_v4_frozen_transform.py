@@ -1,21 +1,15 @@
-"""The information boundary between fitting a semantic model and reading with it.
+"""Tests that a fitted model does not learn anything further from held-out pages.
 
-A held-out evaluation is only prospective if the model that reads the held-out page is the
-model the prefix produced.  Scoping the evidence log was necessary and not sufficient: the
-abstractor puts every observation it is asked to read into the observation graph, and the graph
-accumulates the corpus statistics -- the text-variation templates and the data-token vocabulary
--- that decide which text on a page is a value rather than a label.  So transforming the suffix
-was teaching the model the vocabulary it was about to be judged with.
+A held-out evaluation is only prospective if the model reading a held-out page is the
+one the prefix produced. Scoping the evidence log is not enough: the abstractor's
+observation graph accumulates corpus statistics that decide which text is a value rather
+than a label, so reading the suffix could quietly teach the model the vocabulary it is
+about to be judged with.
 
-What a pass establishes, and what it does not:
-
-* a frozen model can read an observation it has never seen and is not changed by having read
-  it.  Per-observation structure still arrives, because otherwise the page cannot be read at
-  all; what does not arrive is anything the model would later consult as evidence.
-* a position the prefix never established stays unknown rather than becoming known.  The frozen
-  model answers with less, never with a claim about the application.
-* nothing here establishes that the prefix model is *good*.  It establishes that its answers on
-  held-out evidence are answers it could have given before seeing that evidence.
+A frozen model can read a new observation without being changed by it: a position the
+prefix never established stays unknown rather than becoming known. These tests do not
+establish that the prefix model is good, only that its held-out answers are ones it
+could have given before seeing that evidence.
 """
 from __future__ import annotations
 
@@ -62,11 +56,8 @@ def vocabulary(G: ObsGraph) -> dict:
 # ------------------------------------------------------------------ the boundary itself
 
 def test_a_frozen_graph_reads_a_new_observation_without_learning_its_vocabulary():
-    """The defect, at the level it actually occurred.
-
-    On harbour this added three tokens to the data vocabulary, one of them a word the prefix
-    had never seen used as data.  Whether that changed a reading was a property of the trace;
-    that the model moved was a property of the code.
+    """Reading a held-out page can add tokens to the data vocabulary that the prefix
+    never saw, changing the model itself, independent of whether it changed any reading.
     """
     G = fitted(page("Berth 1", "Berth 2"), page("Berth 3", "Berth 4"))
     before = vocabulary(G)
@@ -81,10 +72,7 @@ def test_a_frozen_graph_reads_a_new_observation_without_learning_its_vocabulary(
 
 
 def test_the_same_page_does_move_a_graph_that_is_still_learning():
-    """Proof that the test above exercises the defect rather than an accessor.
-
-    If freezing were a no-op, or if the corpus statistics were not really what the model
-    consults, this assertion would not hold and the guarantee above would be vacuous.
+    """Checks that the test above exercises the actual defect and not a no-op accessor.
     """
     G = fitted(page("Berth 1", "Berth 2"), page("Berth 3", "Berth 4"))
     before = vocabulary(G)
@@ -111,11 +99,9 @@ def test_reading_the_same_held_out_page_twice_learns_nothing_the_second_time():
 # ------------------------------------------------------------------ unknown is not absence
 
 def test_a_position_the_prefix_never_established_stays_unknown_rather_than_becoming_known():
-    """Novelty in the suffix may reduce what the frozen model knows; it may not add to it.
-
-    ``is_prose`` decides whether a text position is a sentence.  A frozen graph has no template
-    for a position the prefix never saw, so it answers False -- *no evidence that this is
-    prose*.  A graph that is still learning invents the evidence from the page it is reading.
+    """Novelty in the suffix may reduce what the frozen model knows, never add to it.
+    A frozen graph has no template for a position the prefix never saw, so ``is_prose``
+    answers False rather than inventing evidence from the page being read.
     """
     def note(text):
         return Observation([Node(0, -1, "main", ""), Node(1, 0, "paragraph", text)])
@@ -350,11 +336,9 @@ HARBOUR_CHAIN = ROOT / "docs/data/v4/manifests/harbour_chain.json"
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_fitting_a_reading_leaves_a_model_that_no_longer_learns():
-    """The boundary reaches the pipeline, not only the graph it is implemented in.
-
-    Also pins the lazily induced control families: resolving them on first access would have
-    induced them over whatever was in the graph at that moment, which after a few held-out
-    transforms is not the prefix.
+    """The freezing boundary must hold for the whole pipeline, including lazily induced
+    control families -- resolving them on first access could induce them over graph state
+    that is no longer the prefix.
     """
     from semabi.compiler.v4 import consequence as csq
     from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
@@ -478,12 +462,10 @@ def _run(tmp_path, rows, name="run"):
 
 
 def test_the_pre_action_view_holds_the_page_the_agent_was_looking_at_and_not_the_outcome(tmp_path):
-    """The information frontier of an agent that is still learning.
-
-    An agent choosing action ``t`` has seen every completed transition and the page in front of
-    it.  It has not seen what the action did.  A held-out cut is a different and stricter
-    boundary; conflating them would either deny the agent the page it is acting on or hand it
-    the answer.
+    """An agent choosing an action has seen every completed transition and the page in
+    front of it, but not what the action does. This is a different, looser boundary than
+    a held-out cut; conflating them would either deny the agent the page it acts on or
+    hand it the answer.
     """
     log = _run(tmp_path, 8)
     view = log.before_action(4)
@@ -496,11 +478,8 @@ def test_the_pre_action_view_holds_the_page_the_agent_was_looking_at_and_not_the
 
 
 def test_what_an_action_does_cannot_reach_the_model_that_predicted_it(tmp_path):
-    """Two histories agreeing up to and including the pre-state of action ``t``.
-
-    Whatever follows -- a different outcome, a different future -- the evidence available when
-    the action was chosen is the same, so a model built from it is the same.  This is the
-    strongest chronology regression available at the level of the evidence view.
+    """Two histories that agree up to and including the pre-state of an action must
+    produce the same model, whatever follows.
     """
     import json
     a = _run(tmp_path, 9, "a")
@@ -524,13 +503,10 @@ def test_what_an_action_does_cannot_reach_the_model_that_predicted_it(tmp_path):
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_a_prequential_model_is_not_built_from_the_outcome_it_is_about_to_predict():
-    """The frontier, on the real pipeline rather than on a fixture.
-
-    Everything the model was fitted from must be an observation the agent had already seen when
-    it chose the action: a completed transition, or the page in front of it.  The post-state is
-    the one thing that must not be there, and where an action changes nothing the two coincide
-    -- so the assertion is about the *step list* the model learned transitions from, not merely
-    about which signatures are present.
+    """Everything the model was fitted from must be an observation the agent had
+    already seen when it chose the action. The post-state must never be among them, so
+    the assertion checks the step list the model learned from, not merely which
+    signatures are present (which can coincide when an action changes nothing).
     """
     from semabi.compiler.v4 import consequence as csq
     from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
@@ -555,12 +531,9 @@ def test_a_prequential_model_is_not_built_from_the_outcome_it_is_about_to_predic
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_deleting_the_future_does_not_move_the_model_that_predicted_the_present(tmp_path):
-    """Future deletion invariance, on the real trace.
-
-    The trace is truncated immediately after the action under test and the model rebuilt.  If
-    anything downstream of the prediction had reached the model, the fingerprint would move.
-    This is the strongest available chronology regression because it changes the data rather
-    than the code, so no accessor or flag can satisfy it by accident.
+    """Truncates the trace immediately after the action under test and rebuilds the
+    model: if anything downstream of the prediction had reached it, the fingerprint
+    would move.
     """
     import json
     import shutil
@@ -599,19 +572,11 @@ def test_deleting_the_future_does_not_move_the_model_that_predicted_the_present(
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_a_rule_that_cannot_say_which_object_says_so_rather_than_guessing():
-    """The difference between "I cannot tell" and "it does not apply here".
-
-    A rule that learned a referring expression and whose expression names no single object in
-    this state has not identified its subject.  Falling through to enumeration answers a
-    different question -- which objects the preconditions fail to exclude -- and that is where
-    the wrong firing happens: on blend, abstaining instead cuts contradictions by 74%, takes
-    precision from 21% to 37%, and stops the model being wrong at all on the steps where the
-    application performs the action.
-
-    What this pins is the *verdict*, not the improvement.  `NOT_APPLICABLE` is a claim about the
-    page; `UNKNOWN` is a claim about the model, and only the second one is true here.  An
-    earlier version of this returned the first, and 1090 predictions on one application would
-    have been reported as the application refusing the rule.
+    """A rule whose referring expression names no single object in this state has not
+    identified its subject. `NOT_APPLICABLE` is a claim about the page; `UNKNOWN` is a
+    claim about the model. Falling through to enumeration answers a different question
+    -- which objects the preconditions fail to exclude -- and wrongly reports the page
+    as refusing the rule instead of the model failing to identify a subject.
     """
     from types import SimpleNamespace
 
@@ -650,23 +615,10 @@ def test_a_rule_that_cannot_say_which_object_says_so_rather_than_guessing():
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_the_application_says_what_it_did_and_the_model_reads_it_as_an_outcome():
-    """The other half, closed, and pinned at the shape of the closing.
-
-    This test used to assert the opposite.  The status line had just been made visible to the
-    parser and nothing downstream could use it: a transition whose only difference was a
-    sentence was not a domain change, so a refusal was set aside as a counterexample rather
-    than lifted as an outcome, and it said in as many words that closing the gap would need a
-    category the model did not have and that a rewrite would be due when it arrived.
-
-    It arrived, and the category is not a slot.  Reading the sentence as an ordinary leaf was
-    the *wrong* half of the first repair: as a leaf it becomes a slot -- of the view where the
-    node stands alone, of a unit where it sits inside one -- and a status-only change then
-    becomes an ordinary attribute change, which is precisely the repair the old test forbade.
-    So `status` is out of the parser's leaf roles again and the sentence is carried on the
-    transition instead, by `semabi.compiler.v4.emission`.
-
-    Three things are pinned here: the parser does not place it, the transition does carry it,
-    and a status-only diff is still not a domain change.
+    """Three things are pinned: the parser does not place the status sentence as an
+    ordinary leaf (doing so would turn it into an attribute slot and make a status-only
+    change look like a domain change), the transition carries it instead, and a
+    status-only diff is still not a domain change.
     """
     from semabi.compiler.abstract import Diff
     from semabi.compiler.parse import DATA_ROLES

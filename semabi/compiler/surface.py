@@ -37,13 +37,11 @@ class Surface:
     settling_reason: str | None = None
 
     def state_key(self, node: int, *, separate_descendant_text: bool = False) -> tuple:
-        """Visible node state with explicitly observed text provenance.
+        """Visible node state, recording where its text came from.
 
-        A browser-generated descendant-text name repeats its children's text.
-        It may be compared separately only when every descendant's own text was
-        captured. Explicit labels, paragraph values and legacy names stay exact.
-        This is local observation accounting, not an identity or effect claim.
-        """
+        A browser-generated name repeats its children's text, so it may only be compared
+        separately when every descendant's own text was captured. Explicit labels and
+        paragraph values stay exact. Local accounting, not an identity claim."""
         key = self.observation.node(node).key()
         source = self.text_sources.get(node)
         if source is None:
@@ -56,12 +54,10 @@ class Surface:
         return (*key, ("rendered_text_source", source))
 
     def text_is_complete(self, node: int) -> bool:
-        """A text witness must equal every containing paragraph's whole value.
+        """A text witness must equal the whole value of every paragraph containing it.
 
-        Names remain ordinary observed UI evidence when a paragraph could not
-        establish a complete value. This restriction concerns text witnesses;
-        rendered link destinations keep their independent channel.
-        """
+        Where a paragraph could not establish a complete value, names remain ordinary
+        evidence. Rendered link destinations have their own channel."""
         name = self.observation.node(node).name
         return all(self.text_boundaries[root] is not None and name == self.text_boundaries[root]
                    for root in [node, *self.observation.ancestors(node)] if root in self.text_boundaries)
@@ -170,11 +166,9 @@ def form_candidates(surface: Surface) -> list[dict]:
                                "value": obs.node(node).value,
                                "checked": obs.node(node).checked})
             if fields:
-                # A field may reveal its own controls as its value changes (for
-                # example, an ordinary clear button). Their containing scope
-                # owns exactly one field and excludes the submitter. Keep them
-                # out of the form-level action context, while still checking
-                # every field descriptor and value before submission.
+                # A field can reveal controls of its own as its value changes (a clear
+                # button, say). Keep them out of the form-level context, while still
+                # checking every field and value before submitting.
                 field_nodes = {node for node, _ in editable}
                 auxiliary_buttons = set()
                 for index in buttons:
@@ -265,9 +259,8 @@ def matching_forms(surface: Surface, descriptor: dict, *, omitted_choices: dict 
 def form_state(surface: Surface, root: int) -> dict | None:
     """Capture value controls by unique descriptors, including disabled defaults.
 
-    Node numbers and DOM order are observation-local. Ambiguous descriptors
-    cannot establish that the same field remained unchanged across observations.
-    """
+    Node numbers and DOM order are local to one observation, so an ambiguous descriptor
+    cannot show that a field stayed unchanged."""
     states = {}
     for node in surface.observation.subtree(root):
         control = surface.controls.get(node, {})
@@ -288,9 +281,8 @@ def form_state(surface: Surface, root: int) -> dict | None:
 def editor_scopes(surface: Surface) -> set[int]:
     """Structural editor scopes, including disabled inputs and incomplete forms.
 
-    Preview exclusion must not depend on whether a form is learnable at this
-    moment: submission can disable its inputs without making its preview a record.
-    """
+    Excluding a preview must not depend on whether the form is learnable right now:
+    submitting can disable its inputs without turning its preview into a record."""
     obs = surface.observation
     # A form can wrap a list solely for bulk checkbox actions. It is an
     # editor/preview scope only when it contains a rendered value editor.
@@ -342,11 +334,10 @@ def relative_value_slots(surface: Surface, root: int, value: str) -> list[dict]:
 
 
 def visible_record_matches(surface: Surface, value: str) -> list[dict]:
-    """Find complete visible values in record-like scopes, excluding form echoes.
+    """Complete visible values in record-like scopes, excluding the form's own echo.
 
-    This is an observable read-back witness, not a claim of business identity.
-    General group scopes require another visible field and a local action/link.
-    """
+    A read-back witness, not a claim about business identity. A plain group needs another
+    visible field and a local action or link."""
     obs = surface.observation
     matches = []
     used = set()

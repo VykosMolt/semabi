@@ -1,22 +1,10 @@
-"""How many of a reading's rules could actually be executed?
-
-A rule is executable only if every object its effects act on can be identified before the
-action: supplied by the action, brought into being by the effect, or picked out by a referring
-query learned from evidence available beforehand.  One unnamed object is enough to make the
-whole rule unusable, so this counts rules rather than variables -- a reading with a hundred
-queries and no complete rule has learned about the application without being able to act on it.
-
-The four statuses are the ones `learn_ref` already distinguishes, lifted to the rule:
-
-* **determined** -- every effect object is supplied, created, or named by a query.
-* **no query** -- the legitimate query language was searched over real evidence and named none.
-* **unestablished** -- every candidate property was refused as indistinguishable from the
-  identity of the one object that carried it, so the evidence cannot decide either way.  This
-  is not the same as having looked and found nothing.
-* **no evidence** -- the rule has no positives to search over at all.
-
-Reported per regime, because the roles are computed over the schema and a chronological cut
-moves the schema.
+"""Counts how many of a reading's rules could actually be executed: every object a rule's
+effects act on must be identified before the action, either supplied, created, or named by
+a learned query. One unnamed object makes the whole rule unusable, so this counts rules
+rather than variables. Each rule gets one of `learn_ref`'s four statuses: determined (every
+object is supplied, created or named), no query (the query language found none), unestablished
+(candidates were indistinguishable from the one object that carried them), or no evidence.
+Reported per regime, since a chronological cut moves the schema.
 """
 from __future__ import annotations
 
@@ -32,14 +20,10 @@ OUT = ROOT / "docs/data/v4"
 
 
 def action_bound(op) -> set[str]:
-    """The parameters a *prediction* will have in hand, which is fewer than the rule mentions.
+    """The parameters a prediction will have in hand, fewer than the rule mentions.
 
-    `action_binding` supplies the owner of the clicked control and nothing else.  A typed or
-    selected string was carried by the concrete step, and the rule is not given the step, so a
-    variable that only an act argument names is one the predictor still has to find -- exactly
-    the case a referring query exists for.  Counting it as supplied told `learn_ref` there was
-    nothing to look for: on blend that is 55 of 86 object parameters, and on harbour none,
-    which is why harbour's numbers do not move when this is corrected.
+    `action_binding` supplies only the owner of the clicked control. A variable that only
+    an act argument names is one the predictor still has to find with a referring query.
     """
     return {a.owner for a in op.core() if a.owner}
 

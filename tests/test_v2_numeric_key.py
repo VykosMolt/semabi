@@ -1,14 +1,9 @@
-"""A number may key a unit that no word identifies -- and a number alike is not a name.
+"""Tests that a number can key a unit no word identifies, but a matching number
+elsewhere is not automatically a name.
 
-Blend's draw rows carry `Ticket 4 | 1 gal | North Wall | Festival White | Return ticket 4 (...)`.
-No word in the row identifies it (vats and blends recur across draws), the ticket number is
-unique among the rows and the same number stands with the same draw on every page, and the
-interface acts on the row by that number.  Refused as a key because it is a number, the row
-was no unit and its cells were slots of the page.  Admitted, it is a type -- and a number is
-admitted only where no word does the job, and names an object of a numerically keyed type
-only where the interface says which kind of number it is: a blend's committed gallons
-overlap the ticket numbers by coincidence and reference nothing.
-"""
+A number is admitted as a key only where no word does the job, and it names an object
+of a numerically keyed type only where the interface says which kind of number it is --
+a coincidental numeric overlap must reference nothing."""
 from __future__ import annotations
 
 from semabi.compiler.observation import Node, Observation

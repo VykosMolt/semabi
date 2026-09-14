@@ -1,39 +1,15 @@
-"""What an interaction *returned*, as distinct from what it changed.
+"""What an interaction returned, as distinct from what it changed.
 
-A click on a control can produce a meaningful observable response without the domain
-transition it was aimed at happening at all.  Blend answers that the destination is already
-bottled; cellar answers that nothing is chosen in the vessel list; harbour answers that a
-berth is already open.  Those sentences are the application stating the contract -- usually
-naming the precondition it refused on, and the object it refused about -- and until now
-nothing downstream could hold them: :attr:`Diff.domain_changed` is ``added or removed or
-attr_changes or rel_changes``, so a transition whose only difference is a sentence went to
-``noops``.
+A click can produce a message without changing anything: "already bottled", "nothing
+chosen". That is neither a state change nor navigation, so it gets its own category
+here, carried alongside the state delta.
 
-Making a sentence count as a domain change would be the wrong repair; nothing about the world
-changed, and that distinction is what keeps view navigation from looking causal.  This module
-supplies the third category instead: an **observable output**, carried on a transition beside
-its state delta, that an operator may predict and a held-out step may refute.
-
-Two decisions here are worth stating because they are the ones that could be wrong.
-
-**An output is observed only where the live region's text changed.**  Blend rewrites its
-status line on every click; harbour and cellar leave it standing when a navigation or
-selection click says nothing.  From the page alone those two cases are indistinguishable when
-the text is the same as before -- a re-emission of the identical sentence, or silence -- so an
-unchanged live region yields no output observation rather than a guessed one.  It costs blend
-the 14 refusals that repeat the previous refusal verbatim, and it never invents evidence.
-
-**The event vocabulary is earned from the page, not from English.**  A message is split into a
-*frame* and *arguments* by masking the maximal spans of it that are rendered as whole values
-elsewhere on the page -- an object's name, a cell's contents, one component of a select
-option.  ``Festival White is already bottled.`` becomes ``<> is already bottled .`` with the
-argument ``Festival White``, and the argument is then grounded to the object that renders it.
-Nothing here knows that "already" means refusal, that "Drew" means success, or that these
-applications are about wine; the frames are whatever recurs once the page's own data is taken
-out of the sentence, and two messages have the same frame exactly when what is left is equal.
-
-The masking is candidate-independent: it reads the raw accessibility tree, never a reading's
-objects, so an outcome class cannot be defined by the model that is about to be scored on it.
+A message counts only when the live region's text changed, because an unchanged
+region may be silence or the same sentence again and the page does not say which.
+The message is then split into a frame and its arguments by masking the spans the
+page renders as values elsewhere, so "Festival White is already bottled." becomes
+"<> is already bottled ." with one argument. The masking reads the raw page, never
+a candidate reading.
 """
 from __future__ import annotations
 
@@ -43,21 +19,13 @@ from dataclasses import dataclass
 
 from semabi.compiler.observation import Observation
 
-# Live regions: the ARIA roles whose content is written by the application in response to an
-# interaction rather than describing the state of the page.
-#
-# `alert` is not here, and the reason is a decision rather than a claim.  It is the same kind
-# of region -- the V0/V1 environment renders its error text with `role="alert"` -- but the
-# parser reads it as an ordinary leaf and has since V0, so the whole frozen V0/V1 line was
-# derived with alert content in the state.  A role must be one thing or the other: state or
-# output, never both, or a message is counted twice and a status-only change becomes a domain
-# change.  Moving `alert` across is a one-line change here and in `parse.DATA_ROLES`, and its
-# cost is re-deriving results that are not about live regions at all.
+# Roles the application writes to in response to an action, rather than to describe
+# the page. `alert` belongs here too, but the parser has always read it as state, and
+# a role must be one or the other or its text is counted twice.
 LIVE_ROLES = ("status",)
 
-# A rendered value is short.  The guard exists to keep an application's prose -- a page
-# heading, an instructional paragraph -- from becoming a vocabulary of values that would mask
-# half of every sentence.
+# Values are short. Without a cap, a heading or a paragraph would become a "value"
+# and mask half of every message.
 MAX_VALUE_TOKENS = 4
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.\-']*|[^\sA-Za-z0-9]")
@@ -70,9 +38,8 @@ def tokens(text: str) -> list[str]:
     """Tokens, with a sentence-final period split off a word but kept inside initials."""
     out = []
     for t in TOKEN_RE.findall(text or ""):
-        # A sentence-final period is punctuation; a period inside a token ("T.S.", "4000.5")
-        # belongs to it.  Splitting matters because a message ends on the value it names --
-        # "...call C-102." has to tokenise to the same "C-102" the page renders.
+        # A final period is punctuation; one inside a token ("T.S.", "4000.5") is part of
+        # it. A message often ends on the value it names.
         if t.endswith(".") and "." not in t[:-1] and len(t) > 1:
             out.append(t[:-1])
             out.append(".")
@@ -105,11 +72,9 @@ def live_nodes(obs: Observation) -> list[int]:
 
 
 def live_text(obs: Observation) -> str | None:
-    """The live-region content, or ``None`` where the application renders no live region.
+    """The live-region text, or None where the page has no live region at all.
 
-    ``None`` and ``""`` are different answers: an application without a status line has no
-    output channel at all, and one whose status line is empty has said nothing this time.
-    """
+    None and "" differ: no channel, against a channel that said nothing."""
     ns = live_nodes(obs)
     if not ns:
         return None
@@ -118,12 +83,9 @@ def live_text(obs: Observation) -> str | None:
 
 @dataclass(frozen=True)
 class ResponseObservation:
-    """Local live-region occurrences; neither their indices nor changes identify a cause.
+    """The live-region texts before and after an action, kept whole.
 
-    Keeping each region intact avoids splitting a multiline response into imaginary
-    channels. Repeated text and concurrent changes remain visible to a completion checker
-    even where the lifted event interface below has no distinguishable output.
-    """
+    A change here is not evidence of a cause."""
     before_regions: tuple[tuple[int, str], ...]
     after_regions: tuple[tuple[int, str], ...]
     newly_visible_texts: tuple[str, ...]
@@ -144,12 +106,9 @@ def observe_response(before: Observation, after: Observation) -> ResponseObserva
 
 
 def response_region_path(obs: Observation, node: int) -> tuple[tuple[str, int], ...]:
-    """Structural locator for a live region, independent of its response text.
+    """Where a live region sits, by role and sibling position rather than by its text.
 
-    Role/sibling ordinals are a correspondence hypothesis, not persistent identity.
-    Fitting must establish the path for a control across its observed owners; a changed
-    layout requires revalidation. Local node indices are never carried between pages.
-    """
+    A changed layout invalidates the path; node indices never cross pages."""
     path = []
     for index in reversed([node, *obs.ancestors(node)]):
         here = obs.node(index)
@@ -159,12 +118,9 @@ def response_region_path(obs: Observation, node: int) -> tuple[tuple[str, int], 
 
 
 def response_locations(before: Observation, after: Observation) -> list[dict]:
-    """Possible locations of newly visible response text.
+    """Where newly visible response text could have come from.
 
-    An old text moved elsewhere is not evidence of re-emission. When one additional
-    occurrence duplicates a standing text, preserve every possible source: a completion
-    checker must not pick an arbitrary node just because it was later in traversal order.
-    """
+    All possible sources are kept: duplicated text must not resolve to an arbitrary node."""
     response = observe_response(before, after)
     novel = set(response.newly_visible_texts)
     return [{"node": node, "path": response_region_path(after, node), "text": text}
@@ -184,12 +140,10 @@ def header_cells(obs: Observation) -> set[int]:
 
 
 def rendered_values(*observations: Observation) -> set[tuple[str, ...]]:
-    """Every short value the pages render, tokenised, excluding labels and the live region.
+    """Every short value the pages render, tokenised, minus labels and the live region.
 
-    Both the whole text of a node and its comma/dash-separated components count, because an
-    application that renders ``T1 - tank - 4000 L - dirty - Ferment Shed`` in a select option
-    is rendering five values and one of them may be what a message names.
-    """
+    A node's whole text counts and so do its comma- or dash-separated parts: one option
+    can render five values, and a message may name any of them."""
     out: set[tuple[str, ...]] = set()
     for obs in observations:
         if obs is None:

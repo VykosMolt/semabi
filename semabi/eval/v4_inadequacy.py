@@ -1,51 +1,16 @@
 """Why a *forced* outcome was wrong, which is not the same question as why a guess was wrong.
 
-`v4_admissible` reports states where every justified rule agrees on one event.  When the
-interface then returns a different one, the model has not been unlucky -- it has been
-falsified while unanimous, and candidate-elimination's guarantees are conditional on the
-target concept being in the hypothesis class.  So a forced-wrong case is evidence about the
-class, and the useful thing is to say *which* of the possible defects it is evidence for.
+`v4_admissible` reports states where every justified rule agrees on one event; when the
+application returns a different one, the model was falsified while unanimous. This classifies
+each such case by what would have had to be different for the model to be right:
 
-The first version of this asked whether the held-out state had a **twin** -- a witness of the
-forced event with the same literal mask -- and called every other case "separable: the search
-did not find the rule".  That was the wrong question twice over.  The search is exact for its
-class (a triple enumeration finds nothing the pair seeding misses, on three applications), so
-there is no rule it failed to find; and 29 of the 32 cases it called separable were clicks on
-five different buttons that the control identity had pooled as one (`docs/v4_identity.md`),
-for which the actual event had never once been seen on the control the model was answering
-for.  A mask that differs from every witness says nothing about whether a rule for the
-*actual* event could exist.
+``UNSEEN`` no fitting occasion returned the actual event; ``ONCE`` seen too few times to found
+a rule; ``UNCORROBORATED`` a pure pair with no third occasion; ``ORDERED`` justified only after
+another event's guard; ``INSEPARABLE`` every shared conjunction also reaches another event, so
+the language (or the state, if the difference was never carried into it) cannot separate them.
 
-So the question is now asked of the actual event, in order of what would have had to be
-different for the model to have been right:
-
-``UNSEEN``
-    No fitting occasion of this control returned the actual event.  No hypothesis over the
-    events the evidence contains can be right here; this is the label space, not the language.
-
-``ONCE``
-    Seen, but fewer times than ``MIN_COVER``.  No rule may be founded on it.
-
-``UNCORROBORATED``
-    A pure conjunction reaches two occasions of it and this state, and no third.  The language
-    separates it; the corroboration refusal declines to claim on two.
-
-``ORDERED``
-    A guard the evidence induces for it fires here and is pure once the guards of other events
-    are checked first, and no globally pure rule exists.  The single-rule class is too small:
-    the application checks its guards in an order.
-
-``INSEPARABLE``
-    Three or more occasions, and every conjunction this state shares with any of them also
-    reaches an occasion of another event that no earlier guard takes.  Those occasions are the
-    ones the language cannot tell this state apart from; the raw difference between this page
-    and one of theirs is the distinction the abstraction erased.  Whether the *language* or the
-    *state* erased it is then decided by where the difference is: a value rendered inside the
-    row of an object the rule is about, and absent from that object's attributes and
-    references, never reached the language at all (``erased_by_the_state``).
-
-Each is reported per control, so a language gap in one part of an application does not hide
-behind accuracy elsewhere.
+Reported per control, so a gap in one part of an application does not hide behind accuracy
+elsewhere.
 """
 from __future__ import annotations
 
@@ -80,16 +45,9 @@ def _raw_diff(a, b, limit: int = 6) -> list[str]:
 
 
 def _erased(A, pre, blocker, bound: dict) -> list[str]:
-    """What the two pages disagree about *inside the bound objects' own renderings* that the
-    abstract state does not carry.
-
-    An inseparable case says the literal language cannot separate the state from a blocker.
-    Whether that is the language's fault or the state's is decided by where the difference
-    is: a value rendered in the row of an object the rule is about, and absent from that
-    object's attributes and references, was dropped by the abstraction before any literal
-    could mention it.  Harbour's ship row renders `Current call: C-102` and the ship object's
-    reference to it is None, because the reading types that slot as pointing at another
-    entity.  That is the state layer, not the language, and it is what this reports.
+    """What the two pages disagree about inside the bound objects' own rendering, that the
+    abstract state does not carry: a value dropped by the abstraction before any literal
+    could mention it. That is a state-layer gap, not a language one, and is what this reports.
     """
     po, po2 = A.parsed(pre), A.parsed(blocker)
     out: list[str] = []
@@ -115,8 +73,8 @@ def _erased(A, pre, blocker, bound: dict) -> list[str]:
 
 
 def _least_blocked(ev, here: int, event: str) -> tuple[tuple, list[int]]:
-    """The witness pair whose shared conjunction with the state reaches the fewest occasions
-    of other events, and those occasions."""
+    """The witness pair whose shared conjunction with the state reaches the fewest
+    occasions of other events, and those occasions."""
     idxs = ev.by_event[event]
     best: tuple | None = None
     for a in range(len(idxs)):
@@ -180,7 +138,7 @@ def diagnose(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
             continue
         scored = oc.score_step_admissible(model, step, corroborated=True, hypothesis=hypothesis)
         if scored["verdict"] != oc.FORCED_WRONG or scored.get("level") != oc.FRAME_ONLY:
-            continue      # a right frame with a wrong argument is a grounding question, not this one
+            continue      # a right frame with a wrong argument is a grounding question, not this
         state = A.abstract(pre)
         owner = _owner_object(A, A.parsed(pre), state, step.action.target)
         bound, status = got.bind(state, owner)

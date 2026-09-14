@@ -1,16 +1,10 @@
-"""The reading the single-edit candidate space cannot express.
+"""Tests for the joint candidate: a reading that fixes two families at once, which a
+single-edit candidate space can't express.
 
-Alternatives were generated one family at a time, so the candidate set was the Hamming-1
-neighbourhood of the incumbent.  Where two families are each better keyed differently, that
-produces two rivals which disagree on both families and which a comparison history orders
-only if one of them happens to be refuted -- while the reading that fixes both is never
-proposed at all.  On harbour that is exactly the shape of the surviving ambiguity: the two
-undefeated readings differ at one step of a 459-step history, and each key separates better
-on a different family.
-
-The joint candidate is computed from the source search alone.  ``source_candidates`` is
-never passed the transfer or holdout histories.
-"""
+If two families are each better keyed differently, generating alternatives one family
+at a time never proposes the reading that fixes both. The joint candidate is computed
+from the source search alone; ``source_candidates`` never sees the transfer or holdout
+histories."""
 from types import SimpleNamespace
 
 import pytest
@@ -138,8 +132,8 @@ def _rows(candidate_name, reading, families):
 
 
 def test_a_joint_candidate_must_document_every_family_it_changes():
-    """Load-bearing: the old cardinality check could not express a multi-family candidate,
-    and a relaxed one would let a joint candidate hide a change."""
+    """Checks a joint candidate documents every family it changes, since the old
+    cardinality check couldn't express a multi-family candidate."""
     incumbent = _incumbent({"rowA": ("cell#0@7", 0.6875), "rowB": ("cell#0@4", 0.5375)})
     joint = incumbent.variant("rowA", FamilyReading("rowA", "cell#0", "SUPPORTED", 1.0), "joint")
     joint = joint.variant("rowB", FamilyReading("rowB", "cell#0", "SUPPORTED", 1.0), "joint")

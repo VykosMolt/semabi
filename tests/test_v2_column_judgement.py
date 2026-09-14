@@ -1,15 +1,9 @@
-"""A member's field is judged in its column, whatever the same word does elsewhere.
+"""Tests that a member's field is judged label-or-value within its own column,
+whatever the same word does elsewhere in the application.
 
-`Dr` heads every name in vet's table of vets and is that column's label; in the appointments'
-vet column, beside `(unassigned)`, it is part of a value.  A vocabulary answering for the
-whole application has to say one thing for both, and whichever it says breaks one table: as
-a value everywhere every vet was keyed `Dr`; as a label everywhere the appointments' column
-split into two templates.  A column is a position with evidence of its own -- the values of
-every member of the table in that field -- and is judged there.  Two things follow and are
-pinned here: the column is the table's column in every view (keyed by the header row the
-table declares, not by which view showed it), and a reference cell that decorates the name
-it carries still names the object.
-"""
+Pins two consequences: a column is the table's column in every view, keyed by the
+declared header row rather than which view showed it, and a reference cell that
+decorates the name it carries still names the object."""
 from __future__ import annotations
 
 from semabi.compiler.observation import Node, Observation

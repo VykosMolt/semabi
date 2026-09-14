@@ -1,10 +1,8 @@
-"""Neither degenerate reading may win.
+"""Tests that neither degenerate reading can win the refinement objective.
 
-V2's refinement objective rewarded regular, well-supported operators, which a re-keyed
-identity maximises: every edit destroys one object and creates another, over and over.
-Inverting that into "fewest errors wins" would be just as wrong, because a reading that
-claims no entities at all makes no errors.  The V4 rule refuses both by refusing to trade.
-"""
+A re-keyed identity maximises regularity by destroying and creating an object on every
+edit; a reading that claims no entities makes no errors. The V4 rule refuses to trade
+one for the other, so neither degenerate reading wins."""
 from collections import Counter, defaultdict
 
 import pytest
@@ -100,7 +98,8 @@ def test_a_thing_that_appears_when_its_own_button_is_clicked_was_shown_not_made(
 
 
 def _widget_page(rows, *, roles=("combobox",), key_role="heading", status="Ready"):
-    """Invented keyed units; only the status outside them distinguishes calibration pages."""
+    """Invented keyed units; only the status outside them distinguishes calibration
+    pages."""
     nodes = [Node(0, -1, "document", ""), Node(1, 0, "list", "")]
     for key, values in rows:
         root = len(nodes)
@@ -132,7 +131,8 @@ def _widget_reparse(H):
 
 
 def _widget_hypotheses(*pages, keys=None, persistent=("combobox#0",)):
-    """Supply a candidate's keys and persistence; keep tokenization and emission native."""
+    """Supply a candidate's keys and persistence; keep tokenization and emission
+    native."""
     keys = {"group": "heading#0"} if keys is None else keys
     graph = ObsGraph()
     for page in pages:

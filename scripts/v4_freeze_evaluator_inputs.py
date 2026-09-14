@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Freeze evaluator-only inputs in a boundary separate from the compiler package.
 
-This script intentionally uses only the standard library.  The compiler custody modules
-do not know the evaluator filenames or this manifest schema; the two input surfaces can
-therefore be audited independently.
+Uses only the standard library, on purpose: the compiler custody modules do not know
+the evaluator filenames or this manifest schema, so the two input surfaces can be
+audited independently.
 """
 from __future__ import annotations
 

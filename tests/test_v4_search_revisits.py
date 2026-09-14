@@ -1,13 +1,9 @@
-"""The identity search reports the key its hypotheses carry, and judges every family again
-after a move.
+"""Tests for the identity search: it must report the key its hypotheses actually
+carry, and re-judge every family after each move.
 
-Two defects found on vet (`docs/v4_frontier.md`): when V2's own key for a family was not
-among the structurally ranked candidates, `chosen` reported the top-ranked candidate while
-the hypotheses kept V2's key, so a reading pinned from the search named a key it never
-validated; and the coordinate pass judged each family once, in sorted order, against a
-base that later moves changed -- vet's appointment key was judged while the junk families
-still cost 250 errors and never again.
-"""
+Covers two defects: ``chosen`` naming a key the hypotheses never actually validated, and
+a family being judged only once against a base that later moves changed instead of being
+re-judged."""
 from __future__ import annotations
 
 from types import SimpleNamespace

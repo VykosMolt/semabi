@@ -283,9 +283,9 @@ class ArtifactStore:
     def prior_repairs(self, connection_id: str, execution_id: str, before_job: str | None = None) -> list[dict]:
         """Durable repair attempts, ordered before a worker's current request.
 
-        Admission sees all existing attempts. Worker revalidation ignores later
-        queued requests, so two concurrent admissions cannot bypass an earlier
-        uncertain experiment or deadlock each other by both seeing the future.
+        Admission sees every existing attempt; a worker revalidating ignores later queued
+        requests, so two concurrent admissions can neither bypass an earlier uncertain
+        experiment nor deadlock by both looking at the future.
         """
         with self._lock:
             rows = self.db.execute(

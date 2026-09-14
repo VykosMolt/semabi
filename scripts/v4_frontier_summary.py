@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Derive frontier_summary.json from the retained reports and their attestations.
 
-The summary used to be maintained by hand, which duplicated every survivor name, outcome
-and hash.  It is now generated, so it cannot drift from the reports it describes, and the
-claims it records are read off the payload rather than asserted alongside it.
+Generated rather than hand-maintained, so it cannot drift from the reports it
+describes; the claims it records are read off the payload, not asserted alongside it.
 """
 from __future__ import annotations
 

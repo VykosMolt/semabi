@@ -1,22 +1,18 @@
-"""Predicting each action from what had actually been observed when it was chosen.
+"""Predicting each action from only what had been observed when it was chosen.
 
-A held-out split asks a question about zero-shot generalisation: fit once, freeze, and never
-learn again.  That is a hard and useful test, and on these traces it is also the wrong model of
-what SemABI is for.  An agent working through an unfamiliar application keeps learning, and the
-restriction on it is temporal rather than positional: it may use anything it has seen, and
-nothing it has not.
+A held-out split tests zero-shot generalisation: fit once, freeze, never learn again. That is
+a hard and useful test, but an agent working through an unfamiliar application keeps
+learning, and its real restriction is temporal: it may use anything it has seen, and nothing
+it has not.
 
-So this rebuilds the whole semantic model from scratch before each scored action, from exactly
-the raw evidence that existed at that moment, and scores the prediction before the outcome is
-allowed to become evidence.  Rebuilding is wasteful and deliberately so.  There is no
-incremental state to reason about, no stale cache, no type identity to migrate, and the
-information frontier is a property of which observations were in the log rather than of the
-correctness of an update rule.  An incremental learner, if one is ever worth building, has this
-to reproduce.
+So this rebuilds the whole model from scratch before each scored action, from exactly the
+evidence that existed at that moment, and scores the prediction before the outcome is allowed
+to become evidence. Rebuilding is wasteful on purpose: there is no incremental state, no
+stale cache, and nothing to migrate.
 
 The invariant, stated so it can be tested: no information from an action's outcome may reach
-the model that predicted that outcome.  Later predictions may benefit from it; earlier
-predictions are never rescored as though the better model had existed.
+the model that predicted that outcome. Later predictions may benefit from it; earlier ones are
+never rescored as though the better model had existed.
 """
 from __future__ import annotations
 
@@ -34,8 +30,7 @@ from semabi.compiler.v4 import consequence as csq
 class Snapshot:
     """What the model knew when one prediction was made.
 
-    Enough provenance to say which model answered, and no more: this is for reading the
-    experiment, not for authenticating it.
+    Enough to say which model answered, and no more.
     """
     step: int
     completed_transitions: int
@@ -59,9 +54,8 @@ def fingerprint(A) -> str:
     """The learned semantics that can affect how a page is read.
 
     Not a source hash: what matters is what the model would answer with, so this canonicalises
-    the type system, the slot statistics, the reference inventory and the control families.
-    Type numbers are included only because two snapshots are compared by content elsewhere; a
-    renumbering shows up here as a difference and is resolved by looking at the events.
+    the types, the slot statistics, the references and the control families. Type numbers are
+    included only so a renumbering shows up as a difference; the events resolve it.
     """
     out: dict[str, Any] = {}
     for tid, ti in sorted(A.types.items()):
@@ -79,14 +73,13 @@ def fingerprint(A) -> str:
 def type_support(A, log, sigs) -> dict[int, frozenset]:
     """Which raw nodes each type covers, so two model versions can be compared by content.
 
-    A type id is a name the fitter happened to assign.  Across rebuilds it means nothing, and
-    treating it as an identity would report a renumbering as a semantic change and a genuine
-    merge as continuity.
+    A type id is a name the fitter happened to assign, and across rebuilds it means nothing:
+    treating it as an identity would report a renumbering as a change and a real merge as
+    continuity.
 
-    Two model versions must be compared over the *same* observations.  A later model has seen
-    more pages, and letting it count them would report every snapshot as growth -- which is a
-    fact about the sample, not about the model.  So the caller passes the earlier snapshot's
-    observations when comparing, and the later one's when carrying forward.
+    The two versions must also be compared over the *same* observations, or a later model
+    counting the extra pages it has seen would look like growth. So the caller passes the
+    earlier snapshot's observations when comparing, and the later one's when carrying forward.
     """
     sup: dict[int, set] = {}
     for sig in sigs:
@@ -102,9 +95,8 @@ def type_support(A, log, sigs) -> dict[int, frozenset]:
 def events(prev, cur, prev_sup, cur_sup) -> list[str]:
     """What changed between two consecutive snapshots, in terms of raw evidence.
 
-    Merges and splits are read off the support sets rather than off the type numbers, so the
-    report says what happened to the application's objects rather than to the fitter's
-    bookkeeping.
+    Merges and splits are read off the support sets rather than the type numbers, so the
+    report says what happened to the application's objects, not to the fitter's bookkeeping.
     """
     out: list[str] = []
     if prev is None:
@@ -147,10 +139,10 @@ def scored_steps(run_dir: Path, control_prefix: str | None = None,
                  stride: int = 1, start: int = 0, stop: int | None = None) -> list[int]:
     """Which actions to score.
 
-    Scoring every action means rebuilding the model every action, which is affordable on none
-    of these traces.  Scoring a subset is sound because the model at step ``t`` is built from
-    everything before ``t`` either way: what is skipped is the *question*, never the evidence.
-    Choosing by control keeps the steps where a rule under study actually fires.
+    Scoring every action means rebuilding the model every action, which none of these traces
+    can afford. A subset is sound because the model at step ``t`` is built from everything
+    before ``t`` either way: what is skipped is the *question*, never the evidence. Choosing
+    by control keeps the steps where the rule under study actually fires.
     """
     full = EvidenceLog(run_dir)
     stop = len(full.steps) if stop is None else stop
@@ -180,9 +172,8 @@ def run(run_dir: Path, reading, steps: list[int], *, min_support: int = 2,
         model = csq.fit(run_dir, reading, at=t, min_support=min_support,
                         regime=csq.CAUSAL_PREQUENTIAL)
         A = model.abstractor
-        # The prediction is produced and scored against the post-state through this same
-        # model.  `fit` has already frozen it, so revealing the outcome cannot change what
-        # read the outcome.
+        # The prediction is made and scored through this same model. `fit` has already
+        # frozen it, so revealing the outcome cannot change what read the outcome.
         result = csq.score(model, evaluate_on="next", applicability=applicability,
                            correspondence=correspondence)
         seen = list(dict.fromkeys([s.before for s in full.steps[:t]]

@@ -1,12 +1,9 @@
-"""A field's theory is a semantic hypothesis, decided per field by what its values do.
+"""Tests for per-field theories: whether a field is treated as ordered or nominal.
 
-Blend's committed gallons bottled at 2, 3, 4 and 5 and were refused at 0 and 1; a frozen
-ordered hypothesis was right at 9 and at 0, values no history had shown, while the learner's
-equality guard was refuted (`docs/v4_frontier.md`).  A ticket number is also a number and is
-nominal.  ORDERED is proposed for a numeric field and adopted only where an ordered rule is
-justified on the fitting occasions and covers more than one value of the field -- what an
-equality could not have said -- and it never reaches a field the evidence does not order.
-"""
+A numeric field is proposed as ORDERED, but only adopted where an ordered rule is
+justified on the fitting occasions and covers more than one value -- something an
+equality rule couldn't say. It never reaches a field the evidence doesn't order (a
+ticket number is numeric but stays nominal)."""
 from __future__ import annotations
 
 from semabi.compiler.v4 import binding, fields

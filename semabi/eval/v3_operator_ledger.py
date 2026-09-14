@@ -1,14 +1,10 @@
-"""Operator-eligibility ledger for V3 (evaluator side, post-freeze).
-
-Reuses the V2 ledger's machinery unchanged and only substitutes the application table,
-the available rungs (C, D, K -- A/B/Bv need instrumented copies that do not exist for
-these applications) and the latent-attribute declarations the V3 authors published in
-their own `/_evaluator/domain` notes.
-
-The point of the ledger is the denominator: an operator only counts against the inducer
-when it was exercised, its arguments were grounded, its state delta was representable and
-correctly registered, its effect is expressible in the frozen V0 language, and it had
-enough support. Anything else is attributed to the layer that actually failed.
+"""Operator-eligibility ledger for V3, evaluator side, post-freeze. Reuses the V2
+ledger's machinery unchanged, substituting only the application table, the available
+rungs (C, D, K; A/B/Bv need instrumented copies these applications lack), and the
+latent-attribute declarations the V3 authors published. The point of the ledger is the
+denominator: an operator only counts against the inducer when it was exercised, its
+arguments were grounded, its state delta was representable and registered, its effect
+is expressible in the frozen V0 language, and it had enough support.
 """
 from __future__ import annotations
 

@@ -1,21 +1,17 @@
-"""V2 exploration: random actions with *persistence probes* and *surveys*.
+"""Exploration with probes and surveys, not just random actions.
 
-Passive traces leave two questions open that no amount of inference settles:
-(1) whether a change is domain state or interface state (a selection, a dialog, a
-feedback line) and (2) what a change did to the representations in the other
-views (needed for cross-view identity). Both are answered by interventions:
+A passive trace cannot settle two things: whether a change is domain state or interface
+state, and what a change did to the other views. Both need an intervention.
 
-  persistence probe : the first time an action kind (role + label) changes the page,
-                      reload; if the page after the reload differs from the last known
-                      page of that view, something persisted (domain state); then
-                      survey every navigation control and compare each view with its
-                      last known rendering. Every probed action kind gets a label-free
-                      status DOMAIN / VIEW / UNDETERMINED, recorded in probes.jsonl.
-  survey            : after other page-changing actions, with some probability, visit
-                      every navigation control once (precise co-change evidence).
+A persistence probe reloads the first time an action kind changes the page; if the page
+differs from the last known one, something persisted. It then visits every navigation
+control and compares each view with its last rendering. Each probed action kind ends up
+DOMAIN, VIEW or UNDETERMINED in probes.jsonl.
 
-Navigation controls are static buttons (outside every repeated unit) present in
-nearly every observation so far; nothing else is assumed.
+A survey does the same visiting, occasionally, after other page-changing actions.
+
+Navigation controls are the static buttons present in nearly every observation so far;
+nothing else is assumed.
 """
 from __future__ import annotations
 

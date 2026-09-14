@@ -1,10 +1,8 @@
-"""Prospective corrected-browser replay of the frozen V1 interaction evidence.
-
-This does not repair stored observations.  It re-executes the historical primitive action
-sequence against fresh deterministic app resets using the corrected browser, then compiles
-with the exact retained final V1 schema.  It therefore isolates observation settling while
-pinning both interaction choices and LLM output.  Any target relocation or action-result
-divergence is retained and affects the run status.
+"""Replays the frozen V1 interaction evidence with the corrected browser, without
+repairing stored observations. Re-executes the historical action sequence against fresh
+deterministic app resets, then compiles with the retained final V1 schema, isolating
+observation settling while pinning interaction choices and LLM output. Any target
+relocation or action-result divergence is retained and affects the run status.
 """
 from __future__ import annotations
 
@@ -81,12 +79,9 @@ def replay(root: Path, historical: Path, run_dir: Path, app_path: Path, port: in
                     after = browser.observe()
                     logged_primitive = copy.copy(primitive)
                     if logged_primitive.target is not None and logged_primitive.target >= len(obs.nodes):
-                        # The historical browser sometimes acted through a detached element
-                        # after its snapshot had gone stale.  Replaying that invalid index can
-                        # correctly fail, but V1's catalog assumes every retained target index
-                        # belongs to the recorded before-observation.  Preserve the execution
-                        # divergence below and omit only this ungroundable target from compiler
-                        # input; never substitute another visible control.
+                        # The historical browser sometimes acted through a stale, detached
+                        # element. Preserve the execution divergence and omit only this
+                        # ungroundable target; never substitute another visible control.
                         logged_primitive.target = None
                         logged_primitive.target_desc = None
                         if relocation:

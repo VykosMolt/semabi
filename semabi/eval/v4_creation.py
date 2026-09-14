@@ -1,20 +1,10 @@
-"""Does a rule that says it creates something predict a page that gains one?
-
-Creation was the one effect kind nothing scored, and it is the one where a page check is
-easiest to fool.  Blend's draw form renders the vat, the blend and the amount *before* the
-click as well as after, so "the later page shows these values" is true on every step whether or
-not a ticket was written; and on an application that re-renders its lists, a structure carrying
-some values will appear somewhere most of the time.
-
-So the check counts *minimal* subtrees carrying the predicted values and asks for an increase,
-and this runner reports it against the exposure that makes an increase easy:
-
-* **the same claim at other clicks** -- the identical value set, tested at held-out clicks the
-  rule did not fire on.  If it would have been supported there too, being supported here is not
-  evidence about the rule.
-* **distinct claims** -- how many different value sets the model actually asserted.
-* **determinacy** -- claims whose values the action does not fix are not claims, and are
-  reported as such rather than as failures.
+"""Checks whether a rule that claims to create something predicts a page that actually
+gains one, since a naive page check is easy to fool (a re-rendered form can show the same
+values whether or not it created anything). The check counts minimal subtrees carrying the
+predicted values and asks for an increase, reported against the exposure that makes an
+increase easy: the same claim tested at held-out clicks the rule did not fire on, how many
+distinct value sets the model asserted, and claims whose values the action does not fix,
+which are not really claims.
 """
 from __future__ import annotations
 

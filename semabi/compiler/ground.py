@@ -141,12 +141,11 @@ class Live:
     # -------------------------------------------------------------- locate
     def locate(self, loc: Locator, owner_key: Any) -> int | None:
         po = self.A.parsed(self.obs)
-        # A semantic action names a control family; several rendered occurrences of that
-        # family may sit inside one owner (two routes of one wall).  Executable grounding
-        # therefore picks one deterministically, preferring the occurrence whose own state
-        # slot matches the recorded provenance.  Which one it is is not part of the
-        # action's identity: an operator that depends on the choice is underdetermined and
-        # the inducer reports it as such.
+        # A semantic action names a control family, and one owner may render several
+        # occurrences of it. Grounding picks one deterministically, preferring the occurrence
+        # whose own state matches what was recorded. Which one it is is not part of the
+        # action's identity: an operator that depends on the choice is underdetermined, and
+        # the inducer says so.
         keys = control_keys(self.A, self.obs, po)
 
         def pick(nodes: list[int]) -> int | None:

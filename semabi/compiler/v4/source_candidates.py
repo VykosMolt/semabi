@@ -1,13 +1,8 @@
-"""SOURCE-only generation of the bounded V4 candidate set.
+"""Generate the candidate readings from the source history alone.
 
-This is the source-side mechanism formerly kept in ``run_v4_transfer``.  It is
-deliberately a straight copy of that mechanism: the source history generates an
-incumbent, promoted-leaf controls, and at most one ordinary alternative per family.
-The transfer and holdout histories are not passed here and cannot influence the
-candidate set.
-
-The freeze script is the intended caller.  Manifest loading never imports this module
-and therefore never runs search as a side effect.
+The source proposes an incumbent, controls for promoted leaves, and at most one alternative
+per family. The transfer and holdout histories are not passed in and cannot influence the
+set. The freeze script is the caller; loading a manifest never runs this.
 """
 from __future__ import annotations
 
@@ -31,15 +26,12 @@ def _refuted(refuted: Mapping[str, set[str | None]], family: str,
 
 
 def _better_discriminating(result) -> dict[str, object]:
-    """Per family, the alternative whose SOURCE discrimination beats the chosen key's.
+    """Per family, the alternative whose discrimination beats the chosen key's.
 
-    The incumbent is what the behavioural objective preferred.  Discrimination is a
-    separate identity signal computed from the same source history: how often the named
-    value actually tells co-present instances apart.  The two do not have to agree, and
-    where they disagree the more discriminating key is a real rival, not noise.
-
-    ``None`` means the reading carries no discrimination evidence at all, and is never
-    treated as an improvement in either direction.
+    The incumbent is what the objective preferred; discrimination counts how often the named
+    value actually tells co-present instances apart. Where the two disagree, the more
+    discriminating key is a real rival. ``None`` means no discrimination evidence at all, and
+    is never an improvement in either direction.
     """
     out: dict[str, object] = {}
     for family, templates in sorted(result.families.items()):
@@ -86,13 +78,14 @@ def _source_candidates(
     refuted: Mapping[str, set[str | None]] | None = None,
     records: list[dict] | None = None,
 ):
-    """Every reading the source history makes plausible, frozen, including the one it
-    prefers.  Generating alternatives is the source's job; deciding between them is not.
+    """Every reading the source history makes plausible, including the one it prefers.
+
+    Generating alternatives is the source's job; deciding between them is not.
     """
     H, G = build_hypotheses(source, log)
     if records is not None:
-        # a retained refutation binds by what its slot held, not by its name; a record
-        # whose slot no longer holds those values (or that never said) cannot be frozen
+        # a refutation binds by the values its slot held, not by its name; one whose slot
+        # no longer holds them, or never said, cannot be frozen
         stale = v4_search.stale_refutations(records, H)
         if stale:
             raise ValueError("retained refutations do not bind to this history: "
@@ -117,9 +110,8 @@ def _source_candidates(
     if max_candidates <= len(candidates):
         return result, candidates[:max_candidates], notes, H, G
 
-    # Readings that promote a repeated leaf to an object of its own come first.  The local
-    # objective declines exactly these, which is the reason this whole comparison exists, so
-    # they must not be the ones a candidate cap truncates.
+    # Readings that promote a repeated leaf come first: the objective declines exactly these,
+    # which is why the comparison exists, so a cap must not be what drops them.
     reload_pairs = v4_search._reload_pairs(log)
     view_of = v4_search._view_of(H)
     for leaf in promote.candidates(H, G):
@@ -145,12 +137,9 @@ def _source_candidates(
         if len(candidates) >= max_candidates:
             return result, candidates[:max_candidates], notes, H, G
 
-    # One reading the single-edit neighbourhood cannot express: take *every* family whose
-    # discrimination the source says is improvable, at once.  Generating alternatives one
-    # family at a time means two families that are each better keyed differently produce two
-    # rivals that disagree everywhere and a comparison history cannot order, while the
-    # reading that fixes both is never proposed.  This is computed from the source search
-    # alone; transfer and holdout are not passed to this module and cannot reach it.
+    # One reading a single edit cannot reach: re-key every family the source says is
+    # improvable, at once. One family at a time gives two rivals that disagree everywhere and
+    # cannot be ordered, while the reading that fixes both is never proposed.
     improvable = _better_discriminating(result)
     if len(improvable) > 1:
         joint = incumbent
@@ -194,6 +183,6 @@ def _source_candidates(
     return result, candidates[:max_candidates], notes, H, G
 
 
-# A public spelling is useful to freeze scripts and keeps the historical private name
-# available to callers that reproduce the previous runner exactly.
+# Public name for freeze scripts; the private one stays for callers that reproduce the
+# previous runner exactly.
 source_candidates = _source_candidates

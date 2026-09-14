@@ -236,13 +236,11 @@ def classify(A: V2Abstractor, log: EvidenceLog) -> list[Counterexample]:
 
 
 def abstraction_contradictions(inducer) -> dict:
-    """Find abstraction-induced apparent nondeterminism without evaluator labels.
+    """Find apparent nondeterminism caused by the abstraction, without evaluator labels.
 
-    Histories are comparable only when their complete recovered persistent state and the
-    grounded candidate semantic action sequence are identical.  Different registered
-    effects are retained as counterexamples; this diagnostic does not assume the real
-    environment is deterministic or choose a refinement.
-    """
+    Two histories are comparable only when the recovered state and the candidate action
+    sequence are identical. Differing effects are kept as counterexamples; this does not
+    assume the environment is deterministic and does not choose a refinement."""
     groups: dict[str, list[tuple]] = defaultdict(list)
     by_action: dict[str, list[tuple]] = defaultdict(list)
 
@@ -260,13 +258,11 @@ def abstraction_contradictions(inducer) -> dict:
         ]
 
     def has_explicit_unknown(state):
-        """Whether equality of two recovered states still contains an UNKNOWN fact.
+        """Whether two recovered states are equal only because something is unknown.
 
-        ``partial`` alone is not sufficient: the V2 tracker carries previously confirmed
-        objects through partial views.  Explicit ``None`` values under the conservative
-        belief convention, provisional identities, and unidentified mentions are the
-        cases where the represented belief itself says that equality is unresolved.
-        """
+        `partial` alone is not enough, since the tracker carries confirmed objects through
+        partial views. Explicit None values, provisional identities and unidentified
+        mentions are where the belief itself says equality is unresolved."""
         if state.unidentified or state.provisional:
             return True
         if not state.unknown_is_none:

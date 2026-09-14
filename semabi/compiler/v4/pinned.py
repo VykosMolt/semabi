@@ -1,25 +1,19 @@
-"""A representation reading, frozen so that it can be carried to another interaction history.
+"""A reading frozen so that it can be carried to another interaction history.
 
-The V4 checkpoint transferred a reading by carrying one thing -- the chosen key slot --
-onto a hypothesis structure that was otherwise rebuilt from the destination trace.  That is
-not transport.  Everything the source had decided except the key was silently re-decided on
-the destination, and a family whose key did not exist there quietly became no-identity, so
-the "transferred" reading was partly a fresh fit and its score said nothing about whether
-the source reading travels.
+Carrying only the chosen key and rebuilding everything else from the destination is not
+transport: a family whose key does not exist there quietly becomes no-identity, and the score
+of the result says nothing about whether the source reading travels.
 
-A pinned reading is the whole decision: which families exist, which of them are read as
-objects at all, what names each one, which leaves are read as objects rather than as values
-of their container, and which readings an experiment has already refuted.  Applying it to a
-new trace may instantiate those decisions against whatever that trace renders, and may do
-nothing else.  In particular applying it may not:
+A pinned reading is the whole decision: which families exist, which are read as objects at
+all, what names each one, which repeated leaves are objects rather than values of their
+container, and which readings an experiment has already refuted. Applying it may instantiate
+those decisions against whatever the new trace renders, and may do nothing else -- no
+re-choosing a key because it scores better there, no rebuilding the families from the
+destination, no dropping a source claim the destination makes inconvenient.
 
-* choose a different key because it scores better on the destination;
-* rebuild the families from the destination and call them the same hypothesis;
-* drop a source claim that the destination makes inconvenient.
-
-Where a decision cannot be instantiated -- the family is not rendered, or the value it
-names is not there -- that is *recorded* as a transport failure rather than repaired.  A
-reading that cannot be applied has told us something.
+Where a decision cannot be instantiated, because the family is not rendered or the value it
+names is not there, that is recorded as a transport failure rather than repaired. A reading
+that cannot be applied has told us something.
 """
 from __future__ import annotations
 
@@ -106,9 +100,8 @@ class PinnedReading:
                 discrimination: float | None = None) -> "PinnedReading":
         """The same reading with one family read differently: the unit of comparison.
 
-        A generated alternative must carry its own evidential metadata.  When callers pass
-        only a key for legacy/development use, the metadata is explicitly marked ``VARIANT``
-        rather than silently inheriting the incumbent's status or discrimination.
+        A generated alternative carries its own evidence. When a caller passes only a key, the
+        metadata is marked ``VARIANT`` rather than inheriting the incumbent's status.
         """
         families = dict(self.families)
         if isinstance(alternative, FamilyReading):
@@ -149,9 +142,9 @@ def from_search(result, run_dir: Path, name: str = "source",
         families[family] = FamilyReading(family, reading.key_slot, reading.status,
                                          reading.evidence.discrimination)
     promoted = sorted({family_key(t) for t in getattr(result, "promoted", [])})
-    # Source custody may supply the already parsed refutation sidecar bytes.  In that
-    # mode the descriptor-bound caller, rather than the current working tree, owns the
-    # input.  Keep the historical run-directory fallback for ordinary development calls.
+    # Source custody may hand over the already-parsed refutation bytes; in that mode the
+    # caller owns the input rather than the working tree. The run-directory fallback stays
+    # for ordinary development calls.
     frozen_refuted = (
         {k: sorted(v, key=str) for k, v in refuted.items()}
         if refuted is not None
@@ -257,9 +250,9 @@ def apply(H, reading: PinnedReading, promoted_absent: list[str] | None = None) -
             continue
         transport.applied[family] = key
         for unit in units:
-            # A family's templates need not all render the slot the reading names -- a
-            # variant without the column -- and a unit keyed on a slot it lacks broke the
-            # fit of four harbour candidates.  Such a unit carries no identity here.
+            # Not every template in a family renders the slot the reading names -- a variant
+            # without that column -- and a unit keyed on a slot it lacks broke the fit of four
+            # harbour candidates. Such a unit carries no identity here.
             if not all(p in unit.slots for p in parts):
                 unit.key_slot = None
                 continue
@@ -296,22 +289,21 @@ def save(reading: PinnedReading, path: Path) -> None:
 # --------------------------------------------------------------------------
 # testing a frozen identity claim against fresh observations
 #
-# "This value names the object" is a prediction, and a destination history can falsify it
-# without any refitting: if the value does not tell apart instances that are on the page at
-# the same time, it cannot be naming them.  Checking that is not re-selecting a key -- no
-# alternative is considered and nothing is changed -- it is asking whether the claim the
-# source made survives evidence the source never saw.  Harbour is the case that made this
-# necessary: the source history chose a two-valued yes/no column as the identity of its
-# rows, and nothing in contradiction, churn, visibility or spurious-delta counting noticed,
-# because a merging key does not contradict anything.  It merely fails to separate.
+# "This value names the object" is a prediction, and a new history can falsify it without any
+# refitting: if the value does not tell apart instances on the page at the same time, it
+# cannot be naming them. That is not re-selecting a key -- no alternative is considered -- it
+# asks whether the source's claim survives evidence the source never saw. Harbour is the case
+# that made it necessary: the source chose a two-valued yes/no column as the identity of its
+# rows and nothing noticed, because a merging key does not contradict anything. It merely
+# fails to separate.
 
 @dataclass
 class Separation:
-    """A key's claim, tested on the destination.  A family that renders peers at once
-    claims its value tells them apart (co-present pairs); a family that never does -- a
-    detail view keyed by what it names -- claims its value names an object the page
-    shows, and is tested by correspondence: each instance's value is a key of another
-    family on the same page."""
+    """A key's claim, tested on the destination.
+
+    A family that renders peers at once claims its value tells them apart. A family that never
+    does -- a detail view keyed by what it names -- claims its value names an object the page
+    shows, and is tested by matching it against a key of another family on the same page."""
     family: str
     key_slot: str
     copresent_pairs: int = 0
@@ -358,10 +350,10 @@ def _stable_instance_identity(instance: Any) -> tuple[str, str, int]:
 
 
 def population_hash(pairs: Iterable[tuple[Any, Any]]) -> str:
-    """Hash a canonical co-present population using stable instance identities only.
+    """Hash a co-present population using stable instance identities only.
 
-    Pair orientation and population order are canonicalized before hashing.  Slot values,
-    object identity, and any mutable evidence fields are intentionally excluded.
+    Pair orientation and order are canonicalized first; slot values and mutable evidence are
+    deliberately excluded.
     """
     canonical_pairs = []
     for left, right in pairs:
@@ -374,12 +366,11 @@ def population_hash(pairs: Iterable[tuple[Any, Any]]) -> str:
 
 
 def separation(H, reading: PinnedReading, transport: Transport) -> list[Separation]:
-    """For each non-null claim actually applied here, test separation of its peers.
+    """For each claim actually applied here, test whether it separates its peers.
 
-    The transport record is mandatory.  A source claim that was absent, had no usable
-    slot, or was applied as ``None`` is not an identity claim on this history and therefore
-    emits no separation record; in particular it cannot be refuted by a denominator that
-    was never valid for the claim.
+    The transport record is required. A source claim that was absent, had no usable slot, or
+    was applied as ``None`` is not a claim on this history and emits no record, so it cannot
+    be refuted by a denominator that was never valid for it.
     """
     from semabi.compiler.v4.identity import _copresence_pairs, _value
     from semabi.compiler.v4.search import _group_families

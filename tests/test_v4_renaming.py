@@ -1,6 +1,6 @@
-"""A consistent renaming of the names that only identify must leave the frozen model's
-answers where they were.  `semabi.eval.v4_renaming` makes the renaming; these pin what it
-makes, so that a difference it reports is the model's and not the instrument's."""
+"""Tests that a consistent renaming of identity-only names leaves the frozen model's
+answers unchanged, so a difference the renaming instrument reports is the model's, not
+the instrument's own artifact."""
 from __future__ import annotations
 
 import json
@@ -61,11 +61,8 @@ def test_a_renamed_run_renames_pages_messages_options_and_typed_values(tmp_path)
 
 
 def test_a_tables_declaration_row_is_never_respelled(tmp_path):
-    """Vet keys its detail panel by field labels, which put `Reason` into the renaming
-    class -- and the substitution then rewrote the appointments table's own column header,
-    unparsing every row beneath it.  A token that identifies is renamed where it
-    identifies; where the interface declares it, the declaration stays, exactly as member
-    reversal leaves the first row where it is."""
+    """Checks a column header that declares a field name is never itself respelled by
+    the renaming, even when the same word identifies elsewhere in the page."""
     src = tmp_path / "src"
     src.mkdir()
     obs = {"sig": "s1", "obs": {"url": "x", "nodes": [

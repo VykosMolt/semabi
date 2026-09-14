@@ -15,12 +15,9 @@ BLEND_CHAIN = ROOT / "docs/data/v4/manifests/blend_book_chain.json"
 
 
 class StubAbstractor:
-    """Two pages of one object, whose State cell moves between two slots when it changes.
-
-    This is blend's defect in miniature: a cell whose text carries a word the parser reads as
-    a label lands in a labelled slot, and the same cell with a bare value lands in a positional
-    one.  Nothing about the object went out of view.
-    """
+    """Two pages of one object, whose State cell moves between a labelled slot and a
+    positional one depending on whether its text looks like a label. Nothing about the
+    object went out of view."""
     conservative_belief = True
 
     def __init__(self, pages):
@@ -59,7 +56,8 @@ def test_a_slot_the_object_no_longer_renders_is_not_carried():
 
 
 def test_a_value_the_object_still_renders_is_carried_when_its_slot_goes_quiet():
-    """Carrying is what this tracker is for; only contradiction removes a value."""
+    """Checks a value the object still renders is carried when its slot goes quiet,
+    since only contradiction removes a value."""
     first, second = _page(["Festival White", "Bottled"]), _page(["Festival White", "Bottled"])
     A = StubAbstractor({
         id(first): [("Festival White", {"attr:state": "Bottled"}, 1)],
@@ -85,12 +83,8 @@ def test_an_object_off_screen_keeps_everything():
 
 @pytest.mark.skipif(not (BLEND_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_no_attribute_the_learner_sees_on_blend_contradicts_its_own_page():
-    """The regression, on the evidence the defect was found in.
-
-    Before the repair 532 of 9636 attribute values -- 5.5% -- were not rendered anywhere under
-    the object they were attributed to, and the two commonest were the two halves of the same
-    swapped column.
-    """
+    """Checks no attribute value the learner sees on blend contradicts its own page,
+    on the evidence the original defect was found in."""
     from semabi.eval.v4_state_fidelity import fidelity
 
     got = fidelity(BLEND_RUN, BLEND_CHAIN, "joint discrimination x3", split=0.7, tracked=True)

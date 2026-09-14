@@ -1,16 +1,9 @@
-"""The verdict vocabulary is coarser than the abstraction it summarises.
+"""Tests for the delta signature, which is finer than the verdict it's derived from.
 
-A verdict records whether a reading accounted for a step.  It does not record what the
-reading said changed there, so two readings that disagree about which rendered values
-belong to tracked objects can receive the same verdict at every step of an 800-step
-history.  On blend_book that is exactly what happens: `button[_]=button#0`,
-`cell[_]=cell#0` and `source_choice` share a verdict map over all 833 steps, and the first
-of them registers four fewer attribute changes than the other two -- rendered label changes
-it does not attribute to any object it tracks.
-
-The signature below is what the comparison was throwing away.  It classifies; it never
-eliminates.  A delta difference says two readings disagree, not which of them is wrong.
-"""
+A verdict only records whether a reading accounted for a step, not what it said
+changed, so two readings can share every verdict while disagreeing about which
+rendered values belong to tracked objects. The signature classifies that disagreement;
+it never says which reading is wrong."""
 from types import SimpleNamespace
 
 from semabi.compiler.v4 import transfer
@@ -32,18 +25,16 @@ def test_the_signature_keeps_what_the_page_showed():
 
 
 def test_object_identity_is_not_in_the_signature():
-    """Otherwise every pair of distinct readings differs and the classes say nothing."""
+    """Checks object identity is left out of the signature, or every pair of distinct
+    readings would differ and the classes would say nothing."""
     left = observable_delta_signature(_delta(attrs=[((7, "a"), "attr:x", "1", "2")]))
     right = observable_delta_signature(_delta(attrs=[((99, "zzz"), "attr:x", "1", "2")]))
     assert left == right
 
 
 def test_relation_slot_names_are_not_in_the_signature():
-    """``rel:N`` is a type id, and two readings can number the same change differently.
-
-    A first version of this probe kept the names and reported three distinct classes on
-    blend_book; every one of those differences was numbering.  Only the count survives.
-    """
+    """Checks relation slot names are left out of the signature, since ``rel:N`` is
+    just a type id and two readings can number the same change differently."""
     left = observable_delta_signature(_delta(rels=[((1, "a"), "rel:5", None, (2, "b"))]))
     right = observable_delta_signature(_delta(rels=[((1, "a"), "rel:2", None, (3, "c"))]))
     assert left == right
@@ -67,7 +58,8 @@ def _behaviour(verdicts, signatures):
 
 
 def test_identical_verdicts_can_carry_different_deltas():
-    """The property the whole probe exists to establish."""
+    """Checks two readings with identical verdicts can still carry different
+    deltas."""
     verdicts = {1: "EXPLAINED", 2: "EXPLAINED"}
     quiet = _behaviour(verdicts, {1: (0, 0, 0, (), 0), 2: (0, 0, 0, (), 0)})
     loud = _behaviour(verdicts, {
@@ -98,13 +90,15 @@ def test_classes_group_readings_that_said_the_same_thing_changed():
 
 
 def test_unsigned_readings_are_never_merged_into_one_class():
-    """A missing signature is absence of evidence, not evidence of sameness."""
+    """Checks unsigned readings are never merged into one class, since a missing
+    signature is absence of evidence, not evidence of sameness."""
     classes = transfer.indistinguishable_classes([_ev("a", ""), _ev("b", ""), _ev("c", "d")])
     assert sorted(classes) == [["a"], ["b"], ["c"]]
 
 
 def test_a_delta_difference_never_decides_a_comparison():
-    """Classification only.  Which reading is wrong is a question the deltas cannot answer."""
+    """Checks a delta difference never decides a comparison, since it classifies but
+    can't say which reading is wrong."""
     left = _ev("left", "d1", {1: "EXPLAINED", 2: "CHURN"})
     same_deltas = _ev("right", "d1", {1: "EXPLAINED", 2: "SILENT"})
     other_deltas = _ev("right", "d2", {1: "EXPLAINED", 2: "SILENT"})

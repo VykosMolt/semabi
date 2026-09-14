@@ -1,19 +1,13 @@
-"""A field's theory: what kind of thing its values are, as a hypothesis behaviour decides.
+"""What kind of thing a field's values are: names, or numbers with an order.
 
-Every field is NOMINAL until shown otherwise: its values are names, and a guard may say a
-value is or is not one of them.  ORDERED is a candidate theory for a field whose values are
-numbers -- blend's committed gallons, where the application bottles at 2, 3, 4 and 5 and
-refuses at 0 and 1, and where a frozen ordered hypothesis was right at 9 and at 0, values no
-history had shown, while the learner's equality guard was refuted at 0
-(`docs/v4_frontier.md`).  A ticket number is also a number, and it is nominal: draws are
-keyed by it and nothing compares two.  So the theory is decided per field and never by the
-shape of a token: ORDERED is *proposed* for a numeric field and *adopted* only when an
-ordered rule over it is justified on the history and says something an equality cannot --
-it covers occasions with more than one value of the field.  Adopted, it gives the outcome
-language two literals over that field, ``x >= v`` and ``x < v`` for the thresholds the
-history rendered, and nothing over any other field.  Between two bound objects it also gives
-``p.a >= q.b`` and ``p.a < q.b`` over their ordered fields -- a berth takes a vessel no longer
-than its capacity -- judged and adopted by the same discipline, over pairs of values.
+Every field is NOMINAL until shown otherwise, so a guard can only say a value is or is not
+one of them. ORDERED is *proposed* for a field whose values are numbers and *adopted* only
+when an ordered rule over it is justified by the history and says something an equality
+cannot. A ticket number is a number too, and nothing ever compares two of them.
+
+Once adopted, a field gives the outcome language ``x >= v`` and ``x < v`` for the thresholds
+the history rendered, and between two bound objects ``p.a >= q.b`` and ``p.a < q.b`` -- a
+berth takes a vessel no longer than its capacity -- judged the same way over pairs of values.
 """
 from __future__ import annotations
 
@@ -62,13 +56,11 @@ def candidates(states, types) -> dict[int, dict[str, list[str]]]:
 
 
 def clocks(sequences, candidates_: dict[int, dict[str, list[str]]]) -> set[tuple[int, str]]:
-    """The candidate fields that rise on some object and never fall on any, within any
-    episode of the history: a value that only ever rises is a clock, and an order over it
-    is an order over time.  Harbour's *calls logged* separated bookings from refusals on
-    the corpus that was built to separate a comparison from a pair of thresholds, by the
-    accident of when each was asked; the history alone does not adopt such an order, a
-    retained intervention still can.  ``sequences`` are the states of each episode in step
-    order; a rise needs two witnesses, as a rule does."""
+    """Candidate fields that rise on some object and never fall on any, within an episode.
+
+    A value that only ever rises is a clock, and an order over it is an order over time. The
+    history alone does not adopt one; a retained intervention still can. ``sequences`` are
+    each episode's states in step order, and a rise needs two witnesses, as a rule does."""
     rises: dict[tuple[int, str], int] = defaultdict(int)
     falls: dict[tuple[int, str], int] = defaultdict(int)
     for states in sequences:
@@ -100,15 +92,13 @@ def literals(role: str, obj, ordered: dict[int, dict[str, list[str]]]) -> set[tu
 
 def pair_literals(binding: dict, ordered: dict[int, dict[str, list[str]]],
                   pairs: frozenset | None = None) -> set[tuple]:
-    """The comparisons true between the ordered fields of any two bound objects, or
-    between two ordered fields of one (a job's required span against the work span of the
-    station its page shows).
+    """The comparisons true between the ordered fields of two bound objects, or between two
+    ordered fields of one (a job's required span against the work span of its station).
 
-    ``pairs`` restricts them to the comparisons a fitted rule justified (`adopted_pairs`):
-    a field is ordered only where a rule ordered it, and a comparison between two fields is
-    in the language only where a rule compared them -- a ticket's length against a vessel's
-    is one, a ticket's length against a count of calls is not.  None leaves every pair
-    available, which is what the first learning pass needs to find them."""
+    ``pairs`` restricts them to the comparisons a fitted rule justified (`adopted_pairs`): a
+    field is ordered only where a rule ordered it, and two fields are comparable only where a
+    rule compared them -- a ticket's length against a vessel's is, against a count of calls is
+    not. None leaves every pair available, which is what the first learning pass needs."""
     fields_ = []
     for role, obj in binding.items():
         tid = getattr(obj, "tid", None)
@@ -155,12 +145,10 @@ def corroborated(run_dir, candidates_) -> set[tuple[int, str]]:
     """Field theories a retained intervention corroborated, beside a history.
 
     Blend's committed gallons: the fitting prefix refuses at 0 only, so the history alone
-    cannot tell an order from an equality there -- what did was the frozen ordered
-    hypothesis being right at 9 and at 0 on the live application while the equality guard
-    was refuted (`runs/v4/blend_bottle_intervention`).  That answer is written beside the
-    history as ``field_theories_v4.json`` -- the theory, the attribute, the intervention --
-    and read here, so the learner that posed the question consumes it as evidence.  A
-    candidate field is named by its attribute (`attr:Committed gal#0`), as the sidecar is."""
+    cannot tell an order from an equality there. What did was running the ordered hypothesis
+    against the live application, where it was right at 9 and at 0 and the equality guard was
+    refuted. That answer is written beside the history as ``field_theories_v4.json`` and read
+    here, naming the field by its attribute (`attr:Committed gal#0`)."""
     from pathlib import Path
     import json
 
@@ -174,20 +162,18 @@ def corroborated(run_dir, candidates_) -> set[tuple[int, str]]:
 
 def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]],
             corroborated_: set | None = None, clocks_: set | None = None) -> dict[int, dict[str, list[str]]]:
-    """The candidate fields some control's fitted rule orders *and* is justified in ordering,
-    or that a retained intervention corroborated (`corroborated`).
+    """Candidate fields a control's fitted rule orders *and* is justified in ordering, or that
+    a retained intervention corroborated (`corroborated`).
 
-    A clock (`clocks`) is not adopted from the history alone.  Two things must hold of the
-    rule's ordered literal ``x >= v`` (or ``x < v``) on the control's fitting occasions.  It covers occasions with at least two distinct values of
-    the field -- what an equality could not have said.  And its threshold is witnessed on
-    *both* sides: occasions of the rule's event on the side it names, and occasions of some
-    other event on the other side.  Blend's `committed >= 2 -> bottled` has refusals at 0
-    and 1 below it; cellar's `capacity < 4000 -> already washed` had every washed vessel
-    below 4000 and one vessel above -- a threshold witnessed on the far side by a single
-    value is that instance, not an order, so the far side needs two values as well
-    (the version space's own `MIN_COVER` for a rule, applied to the order).  A comparison
-    between two objects' fields is judged the same way over pairs of values, and adopts
-    both fields."""
+    A clock (`clocks`) is not adopted from the history alone. Two things must hold of the
+    rule's ``x >= v`` (or ``x < v``) on the control's fitting occasions. It covers occasions
+    with at least two distinct values of the field, which an equality could not have said. And
+    its threshold is witnessed on *both* sides: occasions of the rule's event on the side it
+    names, and occasions of another event on the other side. Blend's `committed >= 2 ->
+    bottled` has refusals at 0 and 1 below it; cellar's `capacity < 4000 -> already washed`
+    had one vessel above the line, and one value beyond a threshold is that value, not an
+    order. A comparison between two objects is judged the same way over pairs of values, and
+    adopts both fields."""
     out: dict[int, dict[str, list[str]]] = defaultdict(dict)
     for tid, slot in (corroborated_ or ()):
         if slot in candidates_.get(tid, {}):
@@ -240,10 +226,8 @@ def _justified(models: dict, candidates_: dict[int, dict[str, list[str]]]):
                 values = {value_of[i] for i in covered if i in value_of}
                 other_side = {x for i, x in value_of.items()
                               if not named_side(x) and ev.events[i] != rule.event}
-                # more than one value on the far side as well: a single instance there is
-                # that instance -- cellar's one 4000-gallon vessel -- and not an order.
-                # A comparison must vary in each of its fields on each side: distinct
-                # pairs are cheap, and a field constant across them is not ordered.
+                # two values on the far side as well: a single one there is that value, not
+                # an order. A comparison must vary in both its fields on both sides.
                 if _varies(values) and _varies(other_side):
                     yield lit, fields_
 

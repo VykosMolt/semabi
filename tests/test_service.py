@@ -173,11 +173,8 @@ class HTTPHarness:
 @pytest.mark.parametrize('exit_reset', [False, True, 'stale_draft'],
                          ids=['repeated_same_and_different_targets', 'contradicted_next_exit', 'restored_stale_draft'])
 def test_http_typed_updates_end_at_checked_state_and_guard_the_next_continuation(tmp_path, monkeypatch, exit_reset):
-    """Ordinary induced artifact and real HTTP worker; application bits are independent.
-
-    Store/connection plumbing is supplied test setup, not unfamiliar-app evidence.
-    The final-exit reset is the evaluator's retained 7ffd0e1 counterexample.
-    """
+    """Uses a real HTTP worker and store; only browser/connection setup is fake. The
+    final-exit reset guards a previously found counterexample."""
     from types import SimpleNamespace
     import test_operation_runtime as diagnostics
 
@@ -254,11 +251,8 @@ def test_http_typed_updates_end_at_checked_state_and_guard_the_next_continuation
 
 @pytest.mark.parametrize('fault', ['terminal_target', 'terminal_completeness', 'initial_draft'])
 def test_http_populated_exit_is_learned_and_checks_terminal_scope(tmp_path, monkeypatch, fault):
-    """Ordinary HTTP learning/invocation; only browser and connection setup are supplied.
-
-    Mutable rows and text-completeness state are independent checks, not supplied
-    operation schemas or procedure answers. This is controlled service evidence.
-    """
+    """Uses real HTTP learning; only browser and connection setup are fake. Rows and
+    text-completeness state are checked independently, not supplied."""
     from itertools import count
     from types import SimpleNamespace
     import sys
@@ -375,11 +369,8 @@ def test_http_populated_exit_is_learned_and_checks_terminal_scope(tmp_path, monk
 
 @pytest.mark.parametrize('fault', ['unsettled', 'budget'])
 def test_http_delayed_creation_samples_once_without_retrying_save(tmp_path, monkeypatch, fault):
-    """Actual HTTP Runtime learning; only browser/connection setup is diagnostic.
-
-    No schema or procedure is supplied. Independent mutable rows distinguish a
-    dispatched-but-unconfirmed creation from a claimed completed operation.
-    """
+    """Uses real HTTP learning; only browser/connection setup is fake. Independent
+    rows distinguish a dispatched-but-unconfirmed creation from a completed one."""
     from itertools import count
     from types import SimpleNamespace
     import sys
@@ -442,8 +433,8 @@ def test_http_delayed_creation_samples_once_without_retrying_save(tmp_path, monk
         assert sum(action.kind == 'click' for action in browser.actions[actions:]) == 1
         reconciled = [event for event in successful['events'] if event['type'] == 'observation_reconciliation_result']
         assert len(reconciled) == 1 and reconciled[0]['settled']
-        # Count actual charged actions through the observed native Save, excluding
-        # its later sample. The second call receives precisely this public budget.
+        # Counts charged actions from the observed Save call only, excluding its later
+        # sample. The second call receives exactly this budget.
         save_budget = 0
         for event in successful['events']:
             kind = event['type']
@@ -472,7 +463,8 @@ def test_http_delayed_creation_samples_once_without_retrying_save(tmp_path, monk
 
 @pytest.mark.parametrize('phase', ['save', 'reload', 'completeness', 'nested_remainder'])
 def test_http_learned_partial_text_update_checks_observed_siblings(tmp_path, monkeypatch, phase):
-    """Diagnostic browser/setup only; schema, procedure and witnesses are learned."""
+    """Only browser/connection setup is fake; schema, procedure and witnesses are
+    learned."""
     from itertools import count
     from types import SimpleNamespace
     import sys
@@ -555,8 +547,8 @@ def test_http_learned_partial_text_update_checks_observed_siblings(tmp_path, mon
             assert code == 202, accepted
             return api.completed(accepted)['result']
 
-        # Duplicate labels are insufficient targets; the ordinary learned URL
-        # argument resolves the record and omitted text must remain unchanged.
+        # Duplicate labels aren't enough targets; the learned URL argument resolves the
+        # record and omitted text must stay unchanged.
         for row in browser.rows:
             row['Title'] = 'Same displayed title'
         before = deepcopy(browser.rows)
@@ -919,11 +911,8 @@ def test_restart_fails_queued_work_and_preserves_write_uncertainty_without_repla
                                   'no_write_budget', 'setup_only_budget', 'no_response_budget',
                                   'terminal_reset', 'terminal_ambiguity'])
 def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effects(tmp_path, monkeypatch, fault):
-    """Diagnostic artifact; real acquisition routing, budgets and observed persistence.
-
-    Opportunity answers are supplied to isolate orchestration, not to claim that
-    fitting discovers rivals. HTTP provenance authorization is tested separately.
-    """
+    """Uses real routing, budgets and persistence; opportunity answers are supplied
+    to isolate orchestration, not to claim fitting discovers rivals."""
     import test_operation_runtime as diagnostics
     from semabi.compiler.runtime import Budget, Runtime, StopOperation, Trace
     from semabi.compiler.semantic import SemanticArtifact
@@ -1038,7 +1027,7 @@ def test_authorized_semantic_repair_orchestration_checks_actual_rivals_and_effec
         assert browser.final_actions == 1
         assert edits and not any(edit.get('persisted') for edit in edits)
         assert not any(event['type'] == 'semantic_repair_observed' for event in events)
-    # Navigation/selection, failed attempts, and verification are charged too.
+    # Navigation, failed attempts, and verification are all charged too.
     assert trace.budget.writes == len(browser.actions)
     assert trace.budget.actions >= trace.budget.writes
     assert trace.budget.writes <= max_writes
@@ -1209,8 +1198,8 @@ def test_semantic_repair_worker_orders_concurrent_admissions_without_repeating_u
     source, _ = _semantic_repair_source(api, connection)
     request = {'repair_execution_id': source, 'repair_operation_version': 1,
                'settings': {'max_actions': 6, 'max_writes': 3}}
-    # Seed the two queued rows that concurrent admission can produce. The real
-    # worker must inspect only earlier attempts, never block on later requests.
+    # Seeds two queued rows that concurrent admission could produce; the real
+    # worker must only look at earlier attempts.
     first = api.service.store.queue_job(connection, 'learn', request)
     second = api.service.store.queue_job(connection, 'learn', request)
     if earlier_failed:
@@ -1236,11 +1225,8 @@ def test_semantic_repair_worker_orders_concurrent_admissions_without_repeating_u
 @pytest.mark.parametrize('later_log', ['none', 'identical', 'changed_trial', 'ambiguous_unrecorded_step'])
 def test_http_relearning_uses_stale_semantic_training_without_replaying_old_procedures(
         tmp_path, monkeypatch, later_log):
-    """Real service/runtime recovery; supplied fit result isolates evidence selection.
-
-    Historical artifacts are training provenance only. This test does not induce a
-    model or claim browser learning; any browser action during reuse is an error.
-    """
+    """Uses real service/runtime recovery; the supplied fit result isolates evidence
+    selection. Any browser action during reuse is an error."""
     from copy import deepcopy
     from types import SimpleNamespace
     import test_operation_runtime as diagnostics
@@ -1431,7 +1417,8 @@ def test_example_client_sends_optional_invocation_limits_only_when_requested(tmp
 @pytest.mark.parametrize('patch', [{'description': 'Changed through HTTP'}, {}, {'unknown': 'Rejected field'},
                                   {'pinned': False}])
 def test_http_partial_text_patch_preserves_schema_and_uses_real_runtime(tmp_path, monkeypatch, patch):
-    """Fake connection setup only; the learned artifact and invocation are real Runtime work."""
+    """Only connection setup is fake; the learned artifact and invocation are real
+    Runtime work."""
     import test_operation_runtime as diagnostics
     helper = diagnostics._learn_checkbox_records if 'pinned' in patch else diagnostics._learn_editable_records
     runtime, original_connection, browser, learned = helper(tmp_path / 'runtime', monkeypatch)
@@ -1448,8 +1435,8 @@ def test_http_partial_text_patch_preserves_schema_and_uses_real_runtime(tmp_path
         assert api.service.store.start_job(job)
         api.service.store.finish_job(job, {'status': 'CONNECTED'})
         runtime.sessions[connection['id']] = browser
-        # Delegate the HTTP worker's execution to the actual runtime, rather
-        # than the harness's canned effect. No browser onboarding is claimed.
+        # Delegates the HTTP worker's execution to the real runtime instead of the
+        # harness's canned effect.
         api.fake.invoke = runtime.invoke
         job = api.service.store.queue_job(connection['id'], 'learn', {})
         assert api.service.store.start_job(job)
@@ -1484,11 +1471,9 @@ def test_http_partial_text_patch_preserves_schema_and_uses_real_runtime(tmp_path
                                  'postaction_owner_changed', 'verification_reload_sibling_changed',
                                  'transient_draft', 'detail_only_final_return_reset', 'incomplete_search'])
 def test_http_semantic_invocation_uses_real_runtime_and_independent_application_state(tmp_path, monkeypatch, fault):
-    """Supplied artifact setup; actual HTTP queue, Runtime invocation and verification.
-
-    This does not claim browser onboarding or fitting. Unlike FakeRuntime, the
-    controlled browser owns mutable application state and never supplies an outcome.
-    """
+    """Uses real HTTP queue, Runtime invocation and verification; only artifact
+    setup is supplied. The controlled browser owns mutable state and never supplies an
+    outcome."""
     from types import SimpleNamespace
     import test_operation_runtime as diagnostics
     from semabi.compiler.runtime import Runtime, bind_contract
@@ -1505,8 +1490,8 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
         captured.update(connection=connection, artifact=artifact, arguments=arguments)
         return {'outcome': 'ARTIFACT_SETUP_ONLY'}
 
-    # Reuse the existing diagnostic artifact builder without invoking it locally.
-    # Restore Runtime.invoke before the service worker is created.
+    # Reuses the existing artifact builder without invoking it locally.
+    # Restores Runtime.invoke before the service worker is created.
     with monkeypatch.context() as setup:
         setup.setattr(Runtime, 'invoke', capture_artifact)
         _, browser = diagnostics._semantic_diagnostic(
@@ -1518,8 +1503,8 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
         from semabi.compiler.semantic import SemanticArtifact
         from semabi.compiler.v4 import consequence, outcome
         import test_v4_outcome as finite
-        # Actual finite evidence search; supplied grounding isolates its HTTP
-        # preflight consequence, not discovery or a learned relational task.
+        # Real finite evidence search; supplied grounding isolates its HTTP preflight
+        # effect, not discovery or a learned relational task.
         model = finite._acquisition_artifact([({'p'}, 'Recorded')] * 3 + [({'q'}, 'Declined')] * 3)
         owner = SimpleNamespace(id=(1, 'A'), tid=1, key='A', node=0,
                                 positional=False, attrs={}, refs={})
@@ -1664,7 +1649,8 @@ def test_http_semantic_invocation_uses_real_runtime_and_independent_application_
 
 
 def test_http_onboarding_retains_unique_navigation_after_ambiguous_candidates(tmp_path, monkeypatch):
-    """Real HTTP Runtime/onboarding/fit; a rendered route, not a supplied API operation."""
+    """Uses real HTTP Runtime, onboarding and fitting; a rendered route, not a
+    supplied API operation."""
     from types import SimpleNamespace
     import test_operation_runtime as diagnostics
     from semabi.compiler import runtime as runtime_module
@@ -1715,11 +1701,8 @@ def test_http_onboarding_retains_unique_navigation_after_ambiguous_candidates(tm
 
 @pytest.mark.parametrize('fault', ['selected', 'owner', 'own_draft'])
 def test_http_induced_creation_tolerates_only_unselected_choice_growth(tmp_path, monkeypatch, fault):
-    """Real HTTP learn/catalog/invoke, with browser and connection setup supplied only.
-
-    Independent mutable rows retain the failed full write, both required-only
-    trials, and a fresh call. No operation schema or procedure is supplied.
-    """
+    """Uses real HTTP learn/catalog/invoke; only browser/connection setup is fake.
+    Independent rows retain the failed full write and both required-only trials."""
     from itertools import count
     from types import SimpleNamespace
     import test_operation_runtime as diagnostics
@@ -1802,12 +1785,8 @@ def test_http_induced_creation_tolerates_only_unselected_choice_growth(tmp_path,
 
 
 def test_http_required_only_creation_is_induced_and_guards_omitted_fields(tmp_path, monkeypatch):
-    """Actual HTTP learn/catalog/invoke; only browser and connection setup are supplied.
-
-    The failed full-form write remains in independent mutable application rows.
-    No operation schema, procedure, or learning result is supplied by this test.
-    This controlled service evidence is not independently authored-app transport.
-    """
+    """Uses real HTTP learn/catalog/invoke; only browser and connection setup are
+    fake. The failed full-form write remains visible in independent application rows."""
     from itertools import count
     from types import SimpleNamespace
     import test_operation_runtime as diagnostics

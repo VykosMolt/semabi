@@ -1,8 +1,8 @@
-"""Account-scoped browser sessions using only rendered interface evidence.
+"""A logged-in browser session that reads only what the interface renders.
 
-The richer product snapshot keeps local form/row information independently of
-V4's persistent identity choices. DOM IDs are not business identities. No page
-application source, network payload, private JS store or hidden endpoint is read.
+It keeps its own record of local form and row state, separate from the identity choices the
+learner makes. DOM ids are not business identities, and no page source, network payload,
+private JS state or hidden endpoint is ever read.
 """
 from __future__ import annotations
 
@@ -277,8 +277,8 @@ class BrowserSession(Browser):
         return obs
 
     def read(self) -> Surface:
-        # Long-lived event streams need not prevent a stable rendered read.
-        # Stability is local snapshot agreement, not network or business quiescence.
+        # A long-lived event stream need not stop a stable read: stability here means two
+        # local snapshots agreeing, not that the network or the application is quiet.
         deadline = None
         previous, agreements = None, 0
         while True:
@@ -297,9 +297,8 @@ class BrowserSession(Browser):
         if self.surface is None:
             raise RuntimeError("No rendered observation is available")
         self.surface.settled = self._render_observation_ready and agreements >= 2
-        # This separates the document/rendering guard from local snapshot
-        # agreement. The guard alone does not identify frame timeout versus a
-        # document replacement during snapshotting.
+        # Separates the document guard from snapshot agreement: the guard alone cannot tell
+        # a frame timeout from the document being replaced mid-snapshot.
         self.surface.settling_reason = ("snapshot_agreement" if self.surface.settled else
                                         "render_guard_unavailable" if not self._render_observation_ready else
                                         "snapshot_agreement_deadline")
@@ -365,7 +364,7 @@ class BrowserSession(Browser):
             element.press(primitive.text, timeout=timeout_ms)
             result = ActionResult(True)
         except Exception:
-            pass  # Expose no page-generated text or opaque browser exception details.
+            pass  # never surface page text or raw browser errors
         finally:
             if handle is not None:
                 try:
@@ -384,11 +383,11 @@ class BrowserSession(Browser):
 
     @staticmethod
     def _login_controls(surface: Surface) -> dict | None:
-        """Select one supported login scope from rendered controls only.
+        """Pick one supported login scope from the rendered controls alone.
 
-        Native submits take priority, including disabled competitors. The
-        fallback is an explicit English authentication-label prior, not a
-        general inference that a nearby button submits a password form.
+        A native submit wins, disabled competitors included. Otherwise it falls back on an
+        explicit list of English sign-in labels, never on a guess that a nearby button
+        submits the password form.
         """
         passwords = [node for node, control in surface.controls.items()
                      if control["input_type"] == "password"]
@@ -410,9 +409,9 @@ class BrowserSession(Browser):
                 return None
             owned = {node: control for node, control in surface.controls.items()
                      if control.get("form") == root}
-            # Native form ownership may reach outside the form subtree. Such
-            # competing credentials/actions cannot disappear from selection,
-            # but this supported scope does not authorize acting outside it.
+            # A native form can own controls outside its subtree, so competing credential
+            # fields stay visible to selection -- but this scope does not authorize acting
+            # on them.
             if any(node not in members and (
                     control["role"] == "textbox" and control["input_type"] in {"text", "email", "", "password"}
                     or control["role"] == "button" and (
@@ -421,8 +420,8 @@ class BrowserSession(Browser):
                 return None
             controls = {node: control for node, control in owned.items() if node in members}
         else:
-            # Preserve the existing form-less requirement of globally unique
-            # username and button controls. Do not discover a new smaller form.
+            # With no form, keep the requirement that the username and button controls are
+            # unique on the page. Do not settle for a smaller one.
             controls = surface.controls
         users = [node for node, control in controls.items()
                  if control["role"] == "textbox" and node != password
@@ -459,8 +458,8 @@ class BrowserSession(Browser):
                          if {user, password, button} <= set(surface.observation.subtree(ancestor))), None)
             if root is None:
                 return None
-        # These English labels advertise cancellation or password visibility,
-        # even if a page marks that button as its only native submit.
+        # These English labels advertise cancelling or revealing the password, even on a
+        # button the page marks as its only native submit.
         if controls[button]["disabled"] or normalized_label(controls[button]) in {
                 "cancel", "show password", "hide password", "show the password", "hide the password"}:
             return None

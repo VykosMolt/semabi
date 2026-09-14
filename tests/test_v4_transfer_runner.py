@@ -237,13 +237,9 @@ def test_every_survivor_is_evaluated_and_authority_is_present(tmp_path, monkeypa
 
 
 def test_the_report_records_its_execution_regime_and_records_it_last(tmp_path, monkeypatch):
-    """The authority state must be captured after compilation, not before it.
-
-    ``_authority`` runs before any candidate is compiled, and compilation imports
-    further project modules lazily.  Recording the execution set there under-reports it,
-    which the authoritative launcher detects and refuses; the field is therefore left
-    unset by ``_authority`` and filled in immediately before the report is written.
-    """
+    """Checks the authority state is captured after compilation, not before, since
+    compilation imports further modules lazily and capturing early would under-report
+    the execution set."""
 
     chain, source, roles = _chain_fixture(tmp_path, ["source_choice", "alternative"])
     _patch_loaders(monkeypatch, chain, source)
@@ -417,7 +413,8 @@ def test_holdout_labels_require_full_coverage_and_no_refuted_claims():
 
 
 def test_report_publishes_the_non_authoritative_source_summary_label(tmp_path, monkeypatch):
-    """No report reader may mistake the unbound search diagnostics for evidence."""
+    """Checks no report reader can mistake the unbound search diagnostics for
+    evidence."""
 
     chain, source, _roles = _chain_fixture(tmp_path, ["source_choice", "alternative"])
     _patch_loaders(monkeypatch, chain, source)

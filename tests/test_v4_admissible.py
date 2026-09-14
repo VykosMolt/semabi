@@ -1,9 +1,10 @@
-"""What the evidence establishes, as against what one decision list answered.
+"""Tests for what the evidence justifies, as distinct from what one fitted decision
+list happens to answer.
 
-The outcome learner returns an ordered list.  Many lists fit the same occasions, so at a
-held-out state the list's answer is a vote.  ``Evidence.admissible`` asks the other question:
-which events could a *justified* rule assign here?  These pin the semantics of that question,
-because it is the difference between a model that knows something and a model that guessed.
+Many decision lists fit the same occasions, so a list's answer at a held-out state is
+one vote among them. ``Evidence.admissible`` asks a different question: which events
+could a justified rule assign here? That is the difference between a model that knows
+something and one that guessed.
 """
 from __future__ import annotations
 
@@ -175,10 +176,8 @@ def test_retained_language_matches_independent_eight_row_cube():
 
 
 def test_corroborated_rule_survives_pair_correlates_and_literal_interning_order():
-    """Every pair has a pure two-witness correlate, but the old guard covers three.
-
-    Greedily keeping a pair correlate must not hide that admissible old guard.
-    All added categorical fields have explicit values on every occasion.
+    """Every pair has a pure two-witness correlate, but the old guard covers three;
+    greedily keeping a pair correlate must not hide that admissible old guard.
     """
     def literal(field, value):
         return ("attr", "r", field, value)
@@ -246,11 +245,9 @@ def test_a_state_matching_a_separated_guard_is_forced():
 
 
 def test_a_state_unlike_anything_seen_establishes_nothing():
-    """The answer a default cannot give, and the reason this exists.
-
-    A decision list fires its default wherever no guard did, however far that is from any
-    occasion.  Here the state matches neither guard, so no pure rule covers it and the honest
-    answer is that nothing is established.
+    """A decision list fires its default wherever no guard did, however far that is
+    from any occasion. When the state matches no guard, the honest answer is that
+    nothing is established.
     """
     e = oc.Evidence(rows(({"g": "open"}, "drew"), ({"g": "open"}, "drew"),
                          ({"g": "closed"}, "refused"), ({"g": "closed"}, "refused")))
@@ -263,10 +260,8 @@ def test_an_event_seen_once_cannot_found_a_rule():
 
 
 def test_unanimity_is_marked_vacuous_where_nothing_else_was_ever_seen():
-    """Truncating blend's `Record draw` to three occasions produces exactly this shape: one
-    event, the whole state space vouched for it, and 71 of 123 held-out actions wrong.  The
-    class forces the answer because the class has one label, which is not the same fact as the
-    evidence separating something."""
+    """A single event whose class has only one label forces an answer for the whole
+    state space, which is not the same fact as the evidence actually separating anything."""
     e = oc.Evidence(rows(({"g": "open"}, "drew"), ({"g": "closed"}, "drew")))
     got = e.admissible(lits(g="novel"))
     assert list(got) == ["drew"]
@@ -277,11 +272,9 @@ def test_unanimity_is_marked_vacuous_where_nothing_else_was_ever_seen():
 
 
 def test_a_condition_that_reaches_only_its_own_witnesses_is_refused_when_corroboration_is_asked():
-    """The anti-memorisation refusal `learn_pre` makes about constants, in conjunction form.
-
-    Two occasions agreeing on a second attribute nothing else shares found a rule that reaches
-    exactly them.  Uncorroborated that is admissible and exact for the class; corroborated it
-    is indistinguishable from naming those two occasions.
+    """Two occasions agreeing on an attribute nothing else shares found a rule that
+    reaches exactly them. Uncorroborated that is admissible and exact for the class;
+    corroborated it is indistinguishable from naming those two occasions by hand.
     """
     e = oc.Evidence(rows(({"g": "open", "k": "1"}, "drew"), ({"g": "open", "k": "1"}, "drew"),
                          ({"g": "open", "k": "2"}, "refused"),
@@ -381,10 +374,9 @@ def test_the_abi_call_answers_with_a_whole_interaction():
     assert "not established" in str(got.answer(novel, None))
 
 
-# The language a sparse control has, as against the language its application uses.  Cellar's
-# `Move vessel` could express exactly one literal -- whether the vessel list names a vessel --
-# against a form with two lists, and the rule it could not express had twice the support of the
-# rule it could.  These pin the two things that were done about it.
+# The language a sparse control has may be smaller than the language its application uses:
+# a control could express one literal against a form needing two, and the rule it could not
+# express had more support than the rule it could. These pin the two things done about it.
 
 class _Node:
     def __init__(self, role, options=None):
@@ -447,18 +439,12 @@ def test_touched_lists_enter_the_language_without_a_placeholder_convention():
 
 
 def test_a_vouch_can_be_required_to_be_about_what_the_event_names():
-    """The restriction `docs/v4_outcomes.md` measured on the decision list, applied to the
-    version space instead.
+    """A literal about an object the event does not name cannot carry it: without this
+    restriction, a rule can fire on attributes of an unrelated object and be wrong at a
+    held-out state.
 
-    Cellar is why it exists.  After acquisition the evidence justified `Nothing chosen in the
-    hall list .` -- and did it through a conjunction over the *vessel's* attributes, which the
-    message does not mention, so the rule fired at a held-out state where the hall list had
-    been chosen into and was wrong.  This pins that the restriction does what it says: a
-    literal about an object the event does not name cannot carry it.
-
-    It is off by default, because doing what it says makes the model worse.  Removing a
-    candidate can collapse *several remain open* into *forced*, which is the most confident
-    answer available; blend's forced claims rise from 98 to 109 and their accuracy falls.
+    Off by default: it makes the model more decisive and less accurate, because removing
+    a candidate can collapse several open answers into one forced answer.
     """
     SRC = "selection['c#0']:1"
     def rows_(*specs):
@@ -480,14 +466,9 @@ def test_a_vouch_can_be_required_to_be_about_what_the_event_names():
 
 
 def test_occasions_acquired_later_are_refused_the_same_literals_as_the_fitted_ones():
-    """`Evidence` drops the literals no rule may use -- identity constants above all -- and
-    `extend` rebuilt the evidence without carrying that rule to the new rows.
-
-    It is not hypothetical.  Cellar's acquisition brought in `id = B1`, the vessel's own key,
-    which every fitted occasion had had removed; the version space then founded a corroborated
-    rule for `Nothing chosen in the hall list .` on it, and fired that rule at a held-out state
-    where the hall list had been chosen into.  A memorised constant, arriving by the one route
-    that did not check.
+    """``Evidence`` drops the literals no rule may use, identity constants above all,
+    but ``extend`` must rebuild new rows under that same rule -- otherwise a memorised
+    constant can arrive by the one route that does not check.
     """
     def no_ids(lit):
         return lit[2] == "id"
@@ -505,20 +486,17 @@ def test_occasions_acquired_later_are_refused_the_same_literals_as_the_fitted_on
 
 # ------------------------------------------------------------ the decision-list class
 #
-# The learner fits an ordered list, and an application with ordered guards *is* one: `already
-# bottled` is what you get when the destination is bottled whatever else is wrong, so a rule
-# for `the source is closed` is pure only among the occasions the bottled guard did not take.
-# `Evidence.admissible` was written with the argument that a single globally pure rule is what
-# any consistent list could put on top, and so decides what any list could answer.  That is
-# wrong in one direction, and these pin the class the question is now asked of.
+# The learner fits an ordered list, and an application with ordered guards is one: a rule
+# for one condition is pure only among the occasions an earlier guard did not already take.
+# A single globally pure rule is not what every consistent list could answer, so these pin
+# the class the question is actually asked of.
 
 
 def _guard_chain():
-    """Destination state `s` (bottled or one of several open states), source `c` closed or
-    not.  The application checks bottled first.  Every closed refusal in the evidence was
-    at a *different* open destination state, so no two closed witnesses share the query's
-    `s` literal, and the conjunction any pair hands over is `c=yes` alone -- which also
-    holds on the two occasions the bottled guard took first."""
+    """The application checks the bottled guard first. Every closed refusal in the
+    evidence was at a different open destination state, so no two closed witnesses share
+    the query's `s` literal, and their only shared conjunction, `c=yes`, also holds on
+    occasions the bottled guard took first."""
     return oc.Evidence(rows(
         ({"s": "bottled", "c": "no"}, "bottled"), ({"s": "bottled", "c": "no"}, "bottled"),
         ({"s": "bottled", "c": "yes"}, "bottled"), ({"s": "bottled", "c": "yes"}, "bottled"),
@@ -543,14 +521,9 @@ def test_a_guard_that_is_pure_only_after_an_earlier_one_is_a_rule_in_the_list_cl
 
 
 def test_additive_categorical_evidence_can_remove_an_expressible_old_list():
-    """Retained diagnostic of the maximal-shared-witness LIST language restriction.
-
-    This is not a claimed correction: the current engine rejects the old residual
-    guard once a newly represented category is shared by all of its witnesses.
-    No old observation or literal was contradicted, and the old procedure below
-    still fits every row. The second arm can even turn that loss into a different
-    lone prediction. A categorical-language extension must not call this rival
-    elimination by an acquired observation.
+    """Not a claimed correction: the engine rejects an old residual guard once a newly
+    represented category is shared by all of its witnesses. No old observation or literal
+    is contradicted, and the old procedure still fits every row.
     """
     original_rows = _guard_chain().rows_for_refit()
     original_rows.append((lits(s="bottled", c="yes"), "bottled", frozenset()))
@@ -607,7 +580,7 @@ def test_the_list_class_still_needs_witnesses_and_corroboration():
 def test_the_abi_answer_is_relative_to_the_list_class_and_names_the_unordered_part():
     e = _guard_chain()
     got = oc.ControlOutcome("c", evidence=e)
-    # `answer` needs the inducer's literal language; the version space is asked directly here
+    # `answer` needs the inducer's literal language; `admissible` is asked directly here
     open_state = lits(s="cask", c="yes")
     assert sorted(got.admissible(open_state, corroborated=True, hypothesis=oc.LIST)) == ["closed"]
     assert got.admissible(open_state, corroborated=True) == {}

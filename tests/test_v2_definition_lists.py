@@ -1,8 +1,6 @@
-"""A definition list names its values: `dt`/`dd` reach the snapshot as a run of leaf
-siblings with no role of their own, and were read as a unit keyed by whichever label word
-happened to be a data token elsewhere.  Judged by their structure -- leaves in pairs, the
-labels constant wherever the position was seen, some value varying -- the pairs are fields
-of the enclosing unit, named by their labels, as a key-value table's rows are."""
+"""Tests that a definition list's dt/dd pairs are read as fields of the enclosing
+unit, named by their labels, rather than as a unit keyed by whichever label word
+happens to look like a data token elsewhere."""
 from collections import Counter, defaultdict
 import pytest
 

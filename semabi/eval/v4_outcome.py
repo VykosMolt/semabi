@@ -1,25 +1,10 @@
 """What does the interface *return*, and is predicting it worth anything?
 
-A rule that predicts a live-region event is making a new kind of claim, and a new kind of
-claim needs the same discipline the removal claims needed before it was noticed that a
-reading could look excellent by repeating one of them on a page where everything disappears
-anyway.  So nothing here reports an output accuracy on its own.  Each run reports:
-
-* **the per-action ledger** -- what the rules that applied said, together, at each held-out
-  opportunity.  "Some rule was right" rewards emitting more rules.
-* **claim variety** -- how many distinct events the reading actually predicted.  A model that
-  only ever says ``Ready .`` has one claim however often it is right.
-* **the majority-frame control** -- always answering with the commonest event this control
-  produced on the prefix.  A model that does not beat this has not learned an outcome model,
-  and on cellar's ``Move vessel`` that control is strong.
-* **the frame-only column** -- the same predictions scored while ignoring the arguments, which
-  separates "knew what would happen" from "knew what it would happen to".
-* **the ablation** -- the same reading fitted with the live region unread, so the effect of the
-  mechanism on the state predictions it sits beside is measured rather than assumed.
-
-The output claim is checked against the raw post-state page: the live region is one
-positionally stable node, and the reading contributes only which objects it thinks the
-interaction was about.
+Never reports a bare output accuracy. Each run reports the per-action ledger (what the
+applicable rules said together), claim variety (how many distinct events were predicted),
+a majority-frame control (always guessing the prefix's commonest event for that control),
+a frame-only column (ignoring arguments), and an ablation (the reading fitted without
+reading the live region).
 """
 from __future__ import annotations
 
@@ -74,11 +59,9 @@ def observed_events(run_dir: Path, vocabulary, *, control: str | None = None):
 
 
 def majority_control(model, events, held_out_steps, *, on: set | None = None) -> dict:
-    """Answering every held-out action with the commonest event the prefix saw on this control.
-
-    Fitted on the prefix and applied to the suffix, so it is a model of the same shape as the
-    one it is a control for -- and on an application whose interface mostly says one thing, it
-    is a strong one.
+    """Answering every held-out action with the commonest event the prefix saw on this
+    control. Fitted on the prefix like the model it controls for, so it can be a strong
+    baseline on an application whose interface mostly says one thing.
     """
     log = model.log
     control_of_step = {s.step: csq.action_control(s) for s in log.steps}
@@ -108,12 +91,9 @@ def prequential(run_dir: Path, chain: Path, reading_name: str, *, split: float =
                 min_support: int = 2, control: str | None = None, stride: int = 8) -> dict:
     """The outcome model under the boundary a deployed agent actually faces.
 
-    Every other number here is `FROZEN_PREFIX`: one model, fitted once, asked about everything
-    after the cut.  This rebuilds the whole model before each scored action from exactly what
-    had been observed when that action was chosen -- every completed transition and the page in
-    front of the agent, and nothing about how the action turns out -- which is a minute apiece,
-    hence the stride.  A stride skips the *question* and never the evidence: the model at step
-    t is built from everything before t either way.
+    Unlike `FROZEN_PREFIX`, rebuilds the whole model before each scored action from exactly
+    what had been observed when it was chosen. A stride skips the question, not the
+    evidence: the model at step t is always built from everything before t.
     """
     from semabi.eval.v4_consequence_run import _candidates
 
@@ -191,11 +171,9 @@ def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
     events = observed_events(Path(run_dir), getattr(model.abstractor, "emissions", None))
     steps = sorted({p.step for p in outputs})
 
-    # The model-level question, which is the one an executable interface has to answer:
-    # given this pre-state and this control, what does the model say happens?  The answer is
-    # the set of branches whose preconditions hold, and it is a prediction only when that set
-    # names one event.  Several is not a wrong answer, it is an undetermined one, and counting
-    # it as either would misreport what the model knows.
+    # The model-level question: given this pre-state and control, which branches'
+    # preconditions hold? A prediction only when that set names exactly one event; several
+    # is undetermined, not wrong.
     frame_only = Counter()
     determinacy = Counter()
     breadth = Counter()
@@ -229,8 +207,8 @@ def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
         "frame_only": dict(sorted(frame_only.items())),
         "model_level": dict(determinacy.most_common()),
         "distinct_events_where_determinate": len(determinate_events),
-        # The control asked the same question on the same actions.  A model that answers only
-        # where the answer is easy has to be compared where it answered.
+        # A model that answers only where the answer is easy has to be compared only
+        # where it answered.
         "majority_frame_control_where_determinate": majority_control(
             model, events, steps, on=determinate),
         "distinct_events_predicted_per_action": dict(sorted(breadth.items())),
@@ -246,8 +224,8 @@ def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
 
     # The outcome model itself: one ordered list per control, asked the executable question.
     if score_on is not None:
-        # A second interaction history, none of which the model has seen.  A prefix/suffix
-        # split inside one trace shares its episodes; this does not.
+        # A second interaction history the model has never seen; unlike a prefix/suffix
+        # split, this shares no episodes with the fitting trace.
         other = EvidenceLog(Path(score_on))
         model = replace(model, log=other)
         held_out = [s for s in other.steps
@@ -289,8 +267,8 @@ def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
         "ledger": dict(ledger.most_common()),
         "accuracy_where_it_answered": round(ledger[oc.RIGHT] / decided, 3) if decided else None,
         "distinct_events_asserted": len(asserted),
-        # Predicting that a control says nothing is a different claim from predicting what it
-        # says, and pooling them lets the easy one carry the hard one.
+        # Predicting silence is a different claim from predicting content; pooling them
+        # lets the easy one carry the hard one.
         "answers_naming_an_event": speaking,
         "accuracy_where_it_named_an_event": (round(speaking_right / speaking, 3)
                                              if speaking else None),
@@ -298,8 +276,8 @@ def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
         "events_asserted": dict(asserted.most_common(8)),
         "majority_frame_control_where_it_answered": majority_control(
             model, events, sorted(decided_steps), on=decided_steps),
-        # Where the failures are.  An aggregate over ten controls with three occasions each
-        # says nothing about whether the mechanism works or the evidence was thin.
+        # Where the failures are: an aggregate hides whether the mechanism works or the
+        # evidence was just thin.
         "by_control": {c: {"fitted": (model.outcomes[c].fitted
                                       if c in model.outcomes else None),
                            "rules": (len(model.outcomes[c].rules)

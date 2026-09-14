@@ -1,13 +1,8 @@
-"""A frozen model meeting a word the prefix never used.
+"""Tests how a frozen model handles a word the fitting prefix never used.
 
-Blend's held-out pages carry a vat named `Block 12`.  `Block` is in no fitting page, so the
-global vocabulary calls it a label, the row's template becomes `cell[Block _]` instead of
-`cell[_]`, the row is no unit, and the vat is not an object on any of the 267 held-out pages
-that render it -- nor is `Close Block 12` the `Close _` control.  The corpus does have evidence
-about that token: where it stands.  These pin the rule that an unseen token at a position the
-corpus read values from is a value, and that the rule is silent everywhere else, including
-during fitting.
-"""
+Pins the rule that an unseen token at a position the corpus read values from is treated
+as a value (not a label that breaks the row into a new template), and that this rule
+stays silent everywhere else, including during fitting."""
 from __future__ import annotations
 
 from semabi.compiler.observation import Node, Observation
@@ -80,8 +75,8 @@ def test_the_rule_never_fires_while_the_graph_is_learning():
 
 
 def test_a_control_in_a_row_is_described_by_the_row_not_by_itself():
-    """`Open North Wall`, all data, is a recurring unit of its own.  Its descriptor must say
-    which row it sits in, or every entity-mention button on the page is one control."""
+    """Checks a control's descriptor says which row it sits in, so entity-mention
+    buttons in different rows aren't collapsed into one control."""
     ship_row = [("row", "", -1), ("cell", "Selkie", 0), ("button", "Selkie", 0)]
     berth_row = [("row", "", -1), ("cell", "North Quay 1", 0), ("button", "North Quay 1", 0)]
     a, b = build(*ship_row), build(*berth_row)

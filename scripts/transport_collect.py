@@ -1,9 +1,8 @@
 """Frozen black-box collection instrument; no fixture semantics in the learner.
 
-Script collection is an evaluator/initial-evidence operation. Acquisition accepts
-only public URLs, the initial EvidenceLog, seed and budget, never scripts/oracles.
-The treatment composes the retained contested predicate with retained Explorer.
-Every attempted primitive, including failed setup, is charged and retained.
+Acquisition accepts only public URLs, the initial EvidenceLog, seed, and budget --
+never scripts or oracles. Every attempted primitive, including failed setup, is
+charged and retained.
 """
 from __future__ import annotations
 
@@ -66,8 +65,8 @@ def verify_freeze(path):
     refused = [p for p in manifest["files"] if not permitted(p)]
     if refused:
         raise RuntimeError(f"Non-learner paths in runtime freeze section: {refused}")
-    # The evaluator separately verifies sealed_evaluator_files. Never open those
-    # files in a collection/learning process, even just to recompute their hash.
+    # The evaluator separately verifies sealed_evaluator_files. Never open those files
+    # in a collection or learning process, even just to recompute their hash.
     changed = [p for p, sha in manifest["files"].items()
                if not (ROOT / p).is_file() or digest(ROOT / p) != sha]
     if changed:
@@ -103,8 +102,8 @@ class Recorder:
             ok, after = False, before
         self.failures += not ok
         if before is None:
-            # No assertion about an unobserved state is a paired transition.
-            # The reset/result still belongs to the complete charged history.
+            # No assertion about an unobserved state is a paired transition, but the
+            # reset/result still belongs to the full charged history.
             step_index, before_sig = None, None
             after_sig = self.log.add_observation(after)
         else:
@@ -135,8 +134,8 @@ def resolve(obs, action):
         return Primitive(kind, text=action.get("text", action.get("value"))), None
     role, name = action["role"], action["name"]
     matches = [n for n in obs.nodes if n.role == role and n.name == name]
-    # Browser's public schema maps a native input[type=number] to textbox.
-    # This translation belongs to scripted setup, never to the acquisition policy.
+    # Browser's public schema maps a native input[type=number] to textbox. This
+    # translation belongs to scripted setup, never to the acquisition policy.
     alias = False
     if not matches and role == "spinbutton":
         matches = [n for n in obs.nodes if n.role == "textbox" and n.name == name]
@@ -202,8 +201,8 @@ def collect_script(args):
                           {"reason": "script_setup_reset", "pre_state_unobserved": case_index == 0,
                            "case": case.get("case"), "reset_url": reset_url})
             if case_index == 0:
-                # This genuine observed reload is the schema/inducer boundary;
-                # the unobserved reset cannot safely be encoded as a Step.
+                # This observed reload is the schema/inducer boundary; the unobserved
+                # reset cannot safely be encoded as a Step.
                 obs = rec.act(obs, Primitive("reload"),
                               {"reason": "observed_session_boundary", "case": case.get("case")})
             charged_index = 0
@@ -232,7 +231,7 @@ def acquire(args):
     initial_steps = len(log.steps)
     browser = Browser(args.url, args.reset_url)
     # Appending a fresh browser session must not merge it with an initial episode;
-    # the frozen clock policy deliberately measures rises/falls within episodes.
+    # the frozen clock policy measures rises/falls within episodes.
     browser.episode = max((step.episode for step in log.steps), default=0)
     explorer = Explorer(browser, log, seed=args.seed)
     rec = Recorder(browser, log, args.out / "decisions.jsonl")

@@ -1,19 +1,10 @@
-"""The bridge from a reading's predicted delta to a check on the raw page.
+"""Tests for the bridge from a reading's predicted delta to a check on the raw page.
 
-The correspondence layer is tested in ``test_v4_correspondence.py``.  These tests cover the
-decisions made either side of it: which object a rule is about, whether its antecedent holds,
-whether the slot it predicts is a node's rendered text at all, and how a set-valued
-correspondence turns into a verdict.
-
-What a pass establishes, and what it does not:
-
-* ``SUPPORTED`` means every admissible continuation of the node the effect names took the
-  predicted value.  It does not confirm the reading -- a reading that commits to little is
-  supported easily.
-* ``REFUTED`` means none of them did, with the predicted field masked from the correspondence
-  that found them.
-* ``NOT_APPLICABLE`` means the rule made no claim here, and is never evidence.
-"""
+Correspondence itself is tested in ``test_v4_correspondence.py``. These tests cover which
+object a rule is about, whether its precondition holds, whether the predicted slot is
+really a node's own text, and how a set-valued correspondence becomes a verdict.
+``SUPPORTED`` means every admissible continuation took the predicted value; ``REFUTED``
+means none did; ``NOT_APPLICABLE`` means the rule made no claim."""
 from __future__ import annotations
 
 from types import SimpleNamespace
@@ -47,8 +38,8 @@ def operator(pre=(), common=(), params=None):
 # ------------------------------------------------------------------ applicability
 
 def test_an_asserted_precondition_is_the_rule_as_it_was_learned():
-    """Establishes that ``asserted`` uses only what ``learn_pre`` kept, so a rule fires
-    wherever it claims to -- including outside the conditions it was fitted under."""
+    """Checks ``asserted`` uses only what ``learn_pre`` kept, so a rule fires wherever
+    it claims to, including outside the conditions it was fitted under."""
     op = operator(pre=[("attr", "?o0", "attr:x", "closed")],
                   common=[("attr", "?o0", "attr:x", "closed"),
                           ("attr", "?o0", "attr:y", "-")])
@@ -56,9 +47,8 @@ def test_an_asserted_precondition_is_the_rule_as_it_was_learned():
 
 
 def test_an_attested_precondition_adds_what_every_positive_held():
-    """Establishes that ``attested`` restricts the rule to the attribute values that held in
-    all of its positives, which is the conservative reading of the same rule.  A slot already
-    constrained by ``pre`` is not constrained twice."""
+    """Checks ``attested`` further restricts a rule to attribute values that held in
+    all its positives, without double-constraining a slot already covered by ``pre``."""
     op = operator(pre=[("attr", "?o0", "attr:x", "closed")],
                   common=[("attr", "?o0", "attr:x", "closed"),
                           ("attr", "?o0", "attr:y", "-"),
@@ -70,15 +60,13 @@ def test_an_attested_precondition_adds_what_every_positive_held():
 
 
 def test_a_precondition_that_cannot_be_checked_stops_the_rule_firing():
-    """Establishes the conservative direction: an unverifiable restriction is not dropped.
-    Ignoring it would let the rule fire where it never claimed to, and over-firing is the
-    direction that invents refutations."""
+    """Checks an unverifiable restriction stops the rule rather than being dropped,
+    since ignoring it would let the rule fire where it never claimed to."""
     A, st = abstractor(), state(obj(**{"attr:x": "closed"}))
     op = operator(pre=[("str_ne_attr", "?s0", "?o0", "attr:x")])
     ok, why = csq.preconditions_hold(A, st, op, {"?o0": list(st.objs.values())[0]})
-    # The reason is the accurate one -- the parameter is not bound -- rather than a blanket
-    # "typed value", because this check now shares its semantics with the binder, which knows
-    # which parameter is missing.
+    # Reports the precise reason (the parameter is unbound) rather than a generic
+    # "typed value", sharing semantics with the binder that knows which parameter is missing.
     assert not ok and "?s0" in why
 
 
@@ -101,16 +89,8 @@ def test_the_key_slot_is_checked_against_the_objects_key():
 # ------------------------------------------------------------------ binding
 
 def test_only_the_action_supplies_a_parameter_directly():
-    """What the action itself carries, as distinct from what the rule's preconditions imply.
-
-    This used to be the whole binder: a parameter was bound either to the owner of the clicked
-    node or to an object whose *key* matched a constant the rule had memorised.  The second is
-    the memorised-constant defect on the binding side, and across the corpus it cost more
-    predictions than parameters having no binding at all -- "no object is named 'Gallons'
-    here" was the single commonest reason a rule could not fire.  Solving the preconditions
-    (see ``test_v4_binding.py``) replaced it; what remains here is the action's own
-    contribution.
-    """
+    """Checks what the action itself binds, separate from what the rule's
+    preconditions imply."""
     A = abstractor()
     op = operator()
     op.core = lambda: (SimpleNamespace(owner=None, loc=None, kind="click"),)
@@ -119,8 +99,8 @@ def test_only_the_action_supplies_a_parameter_directly():
 
 
 def test_a_reading_that_does_not_own_the_clicked_control_supplies_nothing():
-    """Establishes the asymmetry that is a fact about the readings: one can say which object
-    the action was on, the other cannot, and everything it mentions must then be solved for."""
+    """Checks the asymmetry between readings: one can name the object the action was
+    on, the other can't and must solve for everything it mentions."""
     A = abstractor()
     op = operator()
     owner_act = SimpleNamespace(owner="?o0", kind="click",
@@ -134,14 +114,8 @@ def test_a_reading_that_does_not_own_the_clicked_control_supplies_nothing():
 # ------------------------------------------------------------------ the slot/node guard
 
 def test_a_slot_that_is_not_a_nodes_text_is_not_checked_against_that_node():
-    """Establishes the guard that caught a whole class of false refutation.
-
-    ``attr:col`` is the column label *about* a cell; the cell renders its own contents.
-    Comparing a predicted label against the cell's text compares two different things, and
-    before this guard it reported cells refuted for rendering '0' when the prediction was
-    'Gallons'.  The guard compares what the reading says the slot holds now against what the
-    node actually renders now, and refuses the check when they differ.
-    """
+    """Checks a slot that isn't a node's own rendered text isn't compared against
+    that node's text, avoiding false refutations when a label and its cell differ."""
     assert csq._rendered_as("Gallons") != csq._rendered_as("0")
     assert csq._rendered_as("open#3") == csq._rendered_as("open")
     assert csq._rendered_as(None) is None
@@ -186,17 +160,16 @@ def test_no_admissible_continuation_agreeing_is_refutation():
 
 
 def test_admissible_continuations_that_disagree_settle_nothing():
-    """Establishes the verdict the whole set-valued design exists for: where the evidence
-    admits two continuations and only one shows the predicted value, neither a refutation nor
-    a support is available, and choosing the convenient one would manufacture either."""
+    """Checks that when admissible continuations disagree and only one matches the
+    prediction, the verdict is undecided rather than a forced support or refutation."""
     post = tree(("row", "", [("cell", "hit", []), ("cell", "miss", [])]))
     match = corr.Correspondence(1, (1, 2), corr.AMBIGUOUS)
     assert verdict(post, match, "hit").verdict == csq.POSSIBLE
 
 
 def test_a_correspondence_that_settled_nothing_is_unknown_not_refutation():
-    """Establishes that failing to relocate the structure is reported as ignorance.  Calling
-    it a refutation would turn every re-rendered page into evidence against a reading."""
+    """Checks failing to relocate the structure is reported as unknown, not a
+    refutation."""
     post = tree(("row", "", [("cell", "hit", [])]))
     match = corr.Correspondence(1, (), corr.NONE, (), "the structure did not survive")
     assert verdict(post, match, "hit").verdict == csq.UNKNOWN
@@ -205,8 +178,8 @@ def test_a_correspondence_that_settled_nothing_is_unknown_not_refutation():
 # ------------------------------------------------------------------ the broken controls
 
 def test_the_same_index_control_answers_where_the_matcher_would_not():
-    """Establishes that ``same_index`` is a real alternative rule rather than a no-op: it
-    answers confidently for a node whose surroundings changed completely."""
+    """Checks ``same_index`` is a real alternative, answering confidently even when
+    the surroundings changed completely."""
     pre = tree(("row", "", [("cell", "a", []), ("cell", "b", [])]))
     post = tree(("row", "", [("cell", "z", []), ("cell", "y", [])]))
     naive = csq.matcher(csq.SAME_INDEX, corr.Corresponder())
@@ -230,8 +203,8 @@ def test_the_unmasked_control_may_use_the_property_under_test():
 # ------------------------------------------------------------------ the signature
 
 def test_only_decided_predictions_are_signed():
-    """Establishes that the predictive-class comparison is about claims made, not about how
-    many rules were fitted: a rule that did not fire contributes nothing."""
+    """Checks the signature reflects claims actually made, not how many rules were
+    fitted."""
     result = csq.ScopedResult("r", 0.6, csq.ASSERTED, csq.MASKED, 1, 1, 1, 1)
     result.predictions = [
         csq.ScopedPrediction(step=1, control="c", operator="a", kind=csq.VALUE, support=1,
@@ -265,9 +238,8 @@ def test_an_object_whose_structure_is_gone_is_reported_gone():
 
 
 def test_an_object_still_rendered_refutes_a_removal():
-    """Establishes the control the existence check needs: it can say no.  A check that
-    reported every removal supported would be measuring the page's willingness to re-render,
-    not the rule's claim."""
+    """Checks the removal check can say no, rather than treating every removal as
+    supported."""
     pre = tree(("group", "", [("row", "", [("cell", "Bramble", [])]),
                               ("row", "", [("cell", "Willow", [])])]))
     post = tree(("group", "", [("row", "", [("cell", "Bramble", [])]),
@@ -276,12 +248,8 @@ def test_an_object_still_rendered_refutes_a_removal():
 
 
 def test_survival_is_not_decided_by_shape_alone():
-    """Establishes why the removal check refuses the weakest correspondence layer.
-
-    The panel is replaced by a different panel with the same shape.  Falling through to role
-    and position would find a continuation and report the object still present; restricted to
-    the content layers, nothing continues it and the removal stands.
-    """
+    """Checks the removal check refuses the weakest correspondence layer: a
+    same-shaped replacement panel doesn't count as the object surviving."""
     from semabi.compiler.v4 import correspondence as c
     pre = tree(("group", "", [("row", "", [("cell", "Bramble", [])])]))
     post = tree(("group", "", [("row", "", [("cell", "Something else", [])])]))

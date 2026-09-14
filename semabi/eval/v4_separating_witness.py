@@ -1,15 +1,9 @@
-"""Where a history already shows two readings disagreeing, and what was done there.
-
-An undecided pair is not an absence of difference.  Two readings can be left undefeated
-while their observable deltas differ at dozens of steps -- the comparison declines because
-it cannot say *which* of them is wrong there, not because it saw nothing.  Those steps are
-the ones an experiment would have to reproduce, and the actions taken at them are the
-closest thing the retained evidence has to a separating experiment.
-
-This is a development diagnostic and the first half of active distinguishability: it says
-what kind of interaction separates a surviving pair, in the vocabulary of what the history
-already did.  It does not choose or execute an experiment, and it cannot say which reading
-is right at any of these steps.
+"""Reports where a history already shows two readings disagreeing, and what action was
+taken there. An undecided pair can still differ at dozens of steps; the comparison declines
+only because it cannot say which reading is wrong there. Those steps are the closest thing
+the retained evidence has to a separating experiment. A development diagnostic: it names
+what kind of interaction separates a surviving pair, but does not choose or execute an
+experiment, and cannot say which reading is right.
 """
 from __future__ import annotations
 

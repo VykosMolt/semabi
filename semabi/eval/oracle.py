@@ -1,23 +1,10 @@
-"""Oracle ladder (evaluator-only): feed the frozen V0 operator learner with
-increasingly correct object/state structure derived from hidden ground truth,
-keeping operator semantics hidden. See docs/v2_oracle.md.
+"""Oracle ladder (evaluator-only): feed the frozen V0 operator learner increasingly
+correct object/state structure derived from hidden ground truth, while keeping operator
+semantics hidden. See docs/v2_oracle.md.
 
-Conditions
-  base : the V1 front end (catalog + LLM schema + grounder) on the same trace
-  A    : mention -> entity correspondence (units = annotated DOM subtrees, keys = hidden ids;
-         no attributes, no relations)
-  B    : A + attachment of the values visible inside an entity's unit (attributes, relation
-         endpoints); unseen facts are unknown, beliefs carried across views
-  C    : B + the full persistent non-latent state at every step (no partial observability,
-         view state separated by construction)
-  D    : C + macro grouping / argument grounding from the hidden log (which primitives make
-         up a semantic action instance and which entities/values are its arguments)
-  K    : known action vocabulary: operator names + argument bindings from the hidden log;
-         effects and preconditions learned from the hidden trace alone (no UI)
-
-The compiler's segmentation, lifting, clustering and precondition learning
-(semabi/compiler/induce.py) run unchanged in A-D; only the Abstractor/Tracker
-they consume is replaced, plus (D) the macro-extension hook and (K) nothing.
+Conditions, from least to most structure given: base (V1 front end), A (entity
+correspondence only), B (+ visible attributes/relations), C (+ full non-latent state),
+D (+ macro/argument grounding), K (known action vocabulary, no UI).
 
 Nothing here is importable from semabi.compiler (tests/test_boundary.py)."""
 from __future__ import annotations
@@ -1274,11 +1261,9 @@ def argument_binding_metrics(C: Compiled, recs: list[dict | None], hidden_dom: r
                              m: Mapping) -> dict:
     """Evaluator-only audit of whether hidden action arguments exist in V2 bindings.
 
-    This does not give arguments to the compiler.  It aligns each successful hidden
-    invocation after compilation and asks two progressively stronger questions: is every
-    argument present anywhere in the induced transition binding, and is it used by the
-    grounded action sequence rather than appearing only in an effect-side binding?
-    Duplicate hidden entities mapping to one learned id are rejected as non-distinct.
+    Does not give arguments to the compiler. Checks whether each hidden argument appears
+    anywhere in the induced transition binding, and whether it is used by the grounded
+    action sequence rather than only in an effect-side binding.
     """
     A = C.abstractor
     inv_type = {H: L for L, H in m.type_map.items()}
@@ -1382,10 +1367,8 @@ def argument_binding_metrics(C: Compiled, recs: list[dict | None], hidden_dom: r
 
 def object_layer_metrics(C: Compiled, recs: list[dict | None], v1: bool, m: Mapping) -> dict:
     """Mention -> entity association of the learner's grounding against the oracle
-    annotations: pairwise same-entity precision/recall over annotated leaf nodes
-    that the learner assigned to a keyed object, plus duplicate-name separation
-    and cross-view identity (same hidden entity keyed identically in two different
-    observations)."""
+    annotations: same-entity precision/recall, duplicate-name separation, and
+    cross-view identity."""
     A = C.abstractor
     tp = fp = fn = 0
     same_key_by_entity: dict[str, set[str]] = defaultdict(set)
@@ -1505,9 +1488,9 @@ def view_false_positives(C: Compiled, recs: list[dict | None]) -> dict:
 
 
 def _unify_created(s2: rm.State, l0: rm.State, l1: rm.State, learned: LearnedModel) -> rm.State:
-    """Objects created by the learned operator get the identity of the hidden objects
-    created in the real transition (same type; matched by attributes when several):
-    an internal id is not observable, so it cannot be part of a learned effect."""
+    """Match learned-created objects to the hidden objects created in the real
+    transition (same type, matched by attributes when several): an internal id is not
+    observable, so it can't be part of a learned effect."""
     new2 = [o for oid, o in s2.objects.items() if oid not in l0.objects]
     new1 = [o for oid, o in l1.objects.items() if oid not in l0.objects]
     if not new2 or not new1:
@@ -1600,8 +1583,8 @@ class _noop:
 
 
 class _with_ids:
-    """Context: ext.state_from_json normalises ints to strings (the learner's value
-    language) and, with ids=True, adds the hidden id as a pseudo-attribute."""
+    """Context: ext.state_from_json normalises ints to strings and, with ids=True,
+    adds the hidden id as a pseudo-attribute."""
 
     def __init__(self, ids: bool = True):
         self.ids = ids

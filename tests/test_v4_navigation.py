@@ -1,11 +1,10 @@
-"""Navigating to another view is not behaviour a reading failed to explain, and a container
-or reference first observed there is a discovery, as an attribute first observed is.
+"""Tests that navigating to another view is never counted as unexplained behaviour,
+and that a container or reference first observed there is a discovery, the same as an
+attribute first observed elsewhere.
 
-On the fresh dispatch interface every step changes the page: open a card, choose a carrier,
-go back.  A keyed listing paid for each of those as an unexplained change (its units came and
-went with the view and nothing registered), and an unkeyed detail page was credited with a
-relation change whenever it became an object and a containment slot went from unobserved to
-a value.  Both credited the reading with fewer objects, on nothing the application did."""
+Before this, a keyed listing paid for each navigation as an unexplained change, and an
+unkeyed detail page was credited with a relation change just for becoming visible --
+both penalised the reading for something the application never did."""
 from semabi.compiler.abstract import AbsObj, AbstractState, diff
 from semabi.compiler.browser import Primitive
 from semabi.compiler.evidence import EvidenceLog, Step

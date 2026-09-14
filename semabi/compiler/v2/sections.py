@@ -1,38 +1,21 @@
 """Objects an interface renders as a run of siblings rather than as a subtree.
 
-`find_unit_types` asks of every *node* whether its collapsed template recurs with a data
-filling that varies, and that question is the whole of SemABI's notion of objecthood.  It is a
-good question.  What it cannot reach is an object with no node of its own.
+Objecthood is normally asked of a node: does its template recur with a filling that
+varies? That cannot reach an object with no node of its own, such as a hall rendered as a
+heading, a line of prose and a table, three times over, flat inside one group. No node has
+the hall's extent, so no template recurs per hall.
 
-Cellar renders its halls like this, three times, flat inside one group::
+The repair is to ask the same question of spans of siblings: a span runs from one boundary
+template to the next, at least two spans under one parent share a shape, and their values
+differ. A span of one is a subtree and is already handled.
 
-    heading 'Ferment Shed'
-    text    'Temperature 22 C. Room for 3 vessels; 2 standing here.'
-    table   ...the vessels standing there...
+Nothing here is about headings or prose. A card, fieldset or panel laid out flat passes
+the same test; a run of form controls does not, because its labels are labels.
 
-There is no per-hall element.  The hall is a *span* of siblings delimited by a heading, and the
-enclosing group's own template collapses the three spans into one because repeated child
-templates count once.  So no node has a hall's extent, no template recurs per hall, and the
-abstraction cannot form the concept -- which is why `Move vessel`'s outcome rule could not
-mention a hall however much evidence was acquired.
-
-The repair is not to admit `heading` as an entity role.  It is to ask the existing objecthood
-question of sibling *spans* as well as of subtrees:
-
-* **bounded extent** -- a span runs from one occurrence of a boundary template to the next;
-* **recurring shape** -- at least two spans under one parent share a span template;
-* **varying values** -- their data fillings differ, which is `UnitType.recurrence >= 2`;
-* **not already a node** -- a span of one is a subtree and is handled already.
-
-Nothing here is specific to headings, prose or Cellar.  A card, fieldset, panel or labelled
-cluster laid out flat satisfies the same test; a run of form controls does not, because its
-labels are labels rather than data and its filling does not vary.
-
-Spans that pass become real containers: `normalise` appends a synthetic ``group`` per span and
-reparents the span's members to it, so every layer above -- units, entity types, referring
-queries, controls, outcomes -- sees an ordinary node and needs no notion of a span at all.  The
-containers are *appended*, never inserted, so existing node indices keep their meaning and a
-recorded action still names the element it named.
+Spans that pass become real containers: a synthetic group is appended per span and its
+members are reparented, so every layer above sees an ordinary node. The containers are
+appended, never inserted, so existing node indices keep their meaning and a recorded
+action still names the element it named.
 """
 from __future__ import annotations
 

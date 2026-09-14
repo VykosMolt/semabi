@@ -174,8 +174,8 @@ class Abstractor:
         self.types: dict[int, TypeInfo] = {}
         self.static_slots: dict[str, SlotInfo] = {}
         self._cache: dict[str, ParsedObs] = {}
-        # Which token spans a message may be naming.  A corpus statistic like the graph's
-        # data tokens, learned from the observations the regime allowed and frozen with them.
+        # Which token spans a message may be naming. Counted from the observations this fit
+        # was allowed to see, and frozen with them.
         self.emissions = emission.Vocabulary()
 
     def parsed(self, obs: Observation) -> ParsedObs:

@@ -1,7 +1,7 @@
-"""Read-only EvidenceLog construction over descriptor-retained V4 bytes.
+"""Build a read-only EvidenceLog from retained bytes instead of from a run directory.
 
-This adapter lives entirely on the V4 side of the frozen compiler boundary.  The shared
-``semabi.compiler.evidence`` implementation remains byte-identical to the V2 tag.
+The shared ``semabi.compiler.evidence`` implementation stays byte-identical to the V2 tag;
+this adapter sits beside it.
 """
 from __future__ import annotations
 
@@ -55,13 +55,11 @@ def from_bytes(
     acquired_probes: bytes | None = None,
     run_dir: Path,
 ) -> RetainedEvidenceLog:
-    """Parse exact retained JSONL bytes without opening ``run_dir``.
+    """Parse retained JSONL bytes without opening ``run_dir``.
 
-    Probe records are parsed into a new object graph for every call.  The V4 abstractor
-    consumes that graph directly; the retained run path is provenance only.  Acquired probes
-    (``probes.acquired.jsonl``: executed after the trace on a fresh instance, for controls the
-    explorer never probed) are records of the same kind and are parsed into the same graph,
-    each marked ``acquired``.
+    Every call builds a fresh object graph for the abstractor; the run path is provenance
+    only. Acquired probes (``probes.acquired.jsonl``, run after the trace on a fresh instance
+    for controls the explorer never probed) go into the same graph, marked ``acquired``.
     """
 
     if not isinstance(observations, bytes) or not isinstance(steps, bytes):
@@ -139,7 +137,7 @@ def _parse_probe_records(raw: bytes | None) -> list[dict[str, Any]]:
                     raise ValueError(
                         f"probes.jsonl record {number} sensing step numbers are malformed"
                     )
-        # json.loads already creates a new graph; copy the outer mapping to make the
-        # retained adapter's ownership explicit even for Mapping-compatible decoders.
+        # json.loads already builds a new graph; copying the outer mapping keeps ownership
+        # explicit even for a decoder that returns a shared mapping.
         records.append(dict(row))
     return records

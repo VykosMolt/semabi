@@ -1,19 +1,16 @@
 """Candidate identity readings and the evidence that does or does not support them.
 
-V2 chose one key slot per unit template by an argmax over a structural score whose
-uniqueness term was `unique_in_parent / n`.  A form's field label satisfies that term
-perfectly: there is exactly one "Name" label inside the one form, so its uniqueness is 1
-and it wins.  Nothing in the score asks the question that matters -- *did this value ever
-tell two co-present instances apart* -- so a family that renders once per page could
-acquire a confident identity from a constant.  That is the mechanism behind the
-`create 'Name'` / `delete 'Name'` deltas in the V3 diagnosis.
+A key slot must actually distinguish instances, not merely be unique by some structural
+score. A form's field label like "Name" can look unique because there's only one "Name"
+label in the one form, while never actually telling two instances apart -- that's the
+mechanism behind spurious create/delete deltas elsewhere in the pipeline.
 
-Here a candidate identity reading carries its own denominator.  Discrimination is measured
+Here a candidate identity reading carries its own denominator. Discrimination is measured
 only over pairs of peer instances that were actually co-present in one observation; when a
-family never showed two instances at once, discrimination is not high, it is *absent*, and
-the reading is UNSUPPORTED rather than perfect.  No construct of the page is named: a
-column header, a form label and a status word are rejected by the same rule that would
-reject any other constant, because a constant separates nothing.
+family never showed two instances at once, discrimination isn't high, it's absent, and the
+reading is UNSUPPORTED rather than perfect. No construct of the page is named for free: a
+column header, a form label and a status word are rejected by the same rule as any other
+constant, because a constant separates nothing.
 """
 from __future__ import annotations
 
@@ -23,7 +20,7 @@ from dataclasses import dataclass, field
 from itertools import combinations
 from typing import Any
 
-MAX_COMPOSITE = 2          # composites of at most two slots; more is not evidence, it is fitting
+MAX_COMPOSITE = 2          # composites of at most two slots; more is not evidence, it's fitting
 MAX_READINGS = 6           # per family, kept for the behavioural search
 COPRESENCE_PAIR_CAP = 400  # pairs sampled per family; identity evidence saturates quickly
 
@@ -39,22 +36,22 @@ class IdentityEvidence:
     reload_lost: int = 0
     cross_view_values: int = 0      # values that also occur in another view
     numeric_share: float = 0.0
-    # the share of instances whose value the interface has *spoken* -- rendered as an
-    # argument of a status line, "Selkie berthed at W1", "Closed Chapel Row" -- against a
-    # value that merely happens to differ between instances ("64 m").  What the application
-    # calls the thing when it talks about it, which is behaviour, not a datatype
+    # The share of instances whose value the interface has spoken -- rendered as an
+    # argument of a status message -- against a value that merely happens to differ between
+    # instances. What the application calls the thing when it talks about it, which is
+    # behaviour, not a datatype.
     spoken: float = 0.0
-    # the share of instances whose value is a key value of some *other* family: the name a
-    # second rendering of the same thing is already known by (harbour's vessel overview and
-    # its vessels table), which is what unions by key overlap rest on
+    # The share of instances whose value is a key value of some other family: the name a
+    # second rendering of the same thing is already known by, which is what unions by key
+    # overlap rest on.
     shared: float = 0.0
 
     @property
     def discrimination(self) -> float | None:
         """Fraction of available co-presence pairs this reading separates.
 
-        None when the family never rendered two instances at once: the reading has not been
-        given the opportunity to discriminate anything, which is not the same as succeeding.
+        None when the family never rendered two instances at once: the reading hasn't been
+        given the opportunity to discriminate anything, which isn't the same as succeeding.
         """
         if self.copresent_pairs == 0:
             return None
@@ -126,13 +123,12 @@ def _collapse(text: str) -> str:
 def family_key(template: str) -> str:
     """The family a template belongs to: its structure with every rendered token erased.
 
-    V2's template keeps a token literally when it recurs often enough to look like a label,
-    so a low-cardinality *data* value -- a status word, an enum-like reason, a title prefix
-    -- is indistinguishable from a static caption and ends up in the structure.  One row
-    family then becomes one template per value, each with a single instance per page, which
-    is why nothing in the V3 traces ever had a peer to be told apart from.  Whether a
-    recurring token is caption or data is a hypothesis, not a fact about the page, so the
-    family is formed without it and identity evidence is gathered across the whole family.
+    A low-cardinality data value -- a status word, an enum-like reason, a title prefix --
+    can look like a static caption if it's kept literally, splitting one row family into one
+    template per value with a single instance per page and no peer to compare against.
+    Whether a recurring token is caption or data is a hypothesis, not a fact about the page,
+    so the family is formed without it and identity evidence is gathered across the whole
+    family.
     """
     return _collapse(_LITERAL.sub("[_]", template))
 
@@ -194,7 +190,7 @@ def _value(instance, slots: tuple[str, ...]) -> str | None:
 
 def _spoken_share(slots: tuple[str, ...], present, spoken) -> float:
     """The share of instances whose value under these slots the interface has rendered as
-    an argument of something it said.  Only single-slot readings are scored: a composite's
+    an argument of something it said. Only single-slot readings are scored: a composite's
     value is never spoken whole."""
     if not spoken or len(slots) != 1 or not present:
         return 0.0
@@ -260,20 +256,19 @@ def readings_for(unit, reload_pairs: list[tuple[str, str]],
         if sid.endswith("~") or sid == "col" or "|" in sid:
             continue      # transient widget value, column context, or an existing composite
         if sid.endswith("!") and not allow_prose:
-            # a run of text inside a compound unit is narration *about* that unit, and
-            # letting it compete as the unit's name costs more than it buys: on `harbour` it
-            # wins the objective with a reading that separates barely half of the co-present
-            # pairs.  The exception is a leaf being read as an object of its own, where the
-            # text is not narration about something else -- it is the whole of what is
-            # rendered, and excluding it leaves the reading with no candidate at all.
+            # A run of text inside a compound unit is narration about that unit, and letting
+            # it compete as the unit's name costs more than it buys. The exception is a leaf
+            # read as an object of its own, where the text isn't narration about something
+            # else -- it's the whole of what's rendered, and excluding it leaves the reading
+            # with no candidate at all.
             continue
         if n < 0.5 * len(instances):
             continue      # present in too few instances to name them
         usable.append(sid)
 
     candidates: list[tuple[str, ...]] = [(s,) for s in sorted(usable)]
-    # composites only where no single slot separates every available pair: a composite that
-    # is not needed is extra representational complexity with no evidence behind it
+    # Composites only where no single slot separates every available pair: a composite
+    # that isn't needed is extra complexity with no evidence behind it.
     singles_that_separate = set()
     for (sid,) in list(candidates):
         if pairs and all(_value(a, (sid,)) != _value(b, (sid,)) for a, b in pairs):
@@ -285,18 +280,18 @@ def readings_for(unit, reload_pairs: list[tuple[str, str]],
     out: list[Reading] = [reading_for(unit, slots, reload_pairs, view_of, pairs=pairs,
                                       positions=positions, spoken=spoken, shared=shared) for slots in candidates]
     if out and all(r.evidence.discrimination is None for r in out):
-        # never two at once: nothing separates instances, and the only evidence of identity
-        # left is correspondence -- a value another family is already keyed by (harbour's
-        # call sheet names its vessel).  A key with no such tie is behaviour's to choose
-        # among, and behaviour prefers whichever makes the fewest objects.
+        # Never two at once: nothing separates instances, and the only remaining evidence of
+        # identity is correspondence -- a value another family is already keyed by. A key
+        # with no such tie is behaviour's to choose among, and behaviour prefers whichever
+        # makes the fewest objects.
         out = [r for r in out if r.evidence.shared >= 0.5]
     out.append(Reading(unit.template, (), IdentityEvidence(copresent_pairs=len(pairs)),
                        status="NO_IDENTITY", why="no identity-bearing observation claimed"))
     out.sort(key=_rank)
     kept = out[:MAX_READINGS]
-    # a composite's single components stay proposable: a key can need coarsening as well as
-    # splitting, and the structural rank alone would drop every single once composites
-    # separate every pair (`docs/v4_frontier.md`)
+    # A composite's single components stay proposable: a key can need coarsening as well
+    # as splitting, and the structural rank alone would drop every single once composites
+    # separate every pair.
     components = {s for r in kept for s in r.slots if len(r.slots) > 1}
     kept += [r for r in out[MAX_READINGS:] if len(r.slots) == 1 and r.slots[0] in components]
     return kept + [r for r in out[MAX_READINGS:] if not r.is_identity][:1]
@@ -307,9 +302,9 @@ def reading_for(unit, slots: tuple[str, ...], reload_pairs: list[tuple[str, str]
                 status: str | None = None, why: str | None = None, spoken=None, shared=None) -> Reading:
     """One candidate reading of a family -- these slots as its name -- with its evidence.
 
-    `status` overrides the evidential classification: a key inherited from the V2 fit that
-    the structural ranking would not have proposed is carried as ``INHERITED`` rather than
-    reported as if the search had chosen it (`docs/v4_frontier.md`)."""
+    `status` overrides the evidential classification: a key inherited from a prior fit that
+    the structural ranking wouldn't have proposed is carried as ``INHERITED`` rather than
+    reported as if the search had chosen it."""
     instances = unit.instances
     pairs = _copresence_pairs(unit) if pairs is None else pairs
     positions = {(i.sig, i.root): i for i in instances} if positions is None else positions
@@ -347,10 +342,10 @@ def _classify(ev: IdentityEvidence) -> tuple[str, str]:
 
     Only two things are decided here, and both are absolutes rather than cut-offs: whether
     the reading was ever given an opportunity to discriminate, and whether it demonstrably
-    failed when it was.  A reading that separates some pairs but not all is neither -- it
-    is a partial identity whose ties are broken positionally, and how good that is compared
-    with its rivals is a behavioural question, not a structural one, so it is passed to the
-    search with its discrimination recorded instead of being accepted or rejected here.
+    failed when it was. A reading that separates some pairs but not all is neither -- it's
+    a partial identity whose ties are broken positionally, and how good that is compared
+    with its rivals is a behavioural question, so it's passed to the search with its
+    discrimination recorded instead of being accepted or rejected here.
     """
     if ev.distinct_values < 2:
         return ("CONTRADICTED", "one value only: it names no instance in particular")
@@ -369,8 +364,8 @@ def _classify(ev: IdentityEvidence) -> tuple[str, str]:
             f"{ev.distinct_values} values, coverage {ev.coverage:.2f}")
 
 
-# a family that was never given the chance to show its identity discriminates anything
-# starts with no identity at all, and has to win one back from behaviour
+# A family never given the chance to show its identity discriminates anything starts
+# with no identity at all, and has to win one back from behaviour.
 _STATUS_RANK = {"SUPPORTED": 0, "NO_IDENTITY": 1, "UNSUPPORTED": 2, "CONTRADICTED": 3, "INHERITED": 4}
 
 
@@ -392,8 +387,8 @@ def family_readings(units: list, reload_pairs: list[tuple[str, str]],
     """Identity readings for a family, with evidence gathered over all of its templates.
 
     Instances of two templates of one family that are on the page together are peers, so
-    they are exactly the pairs a candidate identity has to tell apart.  Splitting the
-    family by a rendered value hides those pairs; gathering the evidence here restores them.
+    they're exactly the pairs a candidate identity has to tell apart. Splitting the family
+    by a rendered value hides those pairs; gathering the evidence here restores them.
     """
     if not units:
         return []

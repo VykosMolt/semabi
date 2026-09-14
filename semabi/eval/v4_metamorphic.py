@@ -1,24 +1,13 @@
-"""Is the frozen model invariant under a permutation of the members of a collection?
-
-`docs/v4_open_world.md` found that the observation model had been reading the *position* of
-a row -- second in its table -- as part of what the row's cells mean, and that removing
-that coordinate collapsed eleven harbour types to five.  A vessel does not become a
-different thing by being rendered third instead of first; where the interface declares a
-listing, the order of its members is presentation, and nothing the model says about a click
-should depend on it.  Renaming (`semabi.eval.v4_renaming`) is the same test for the
-spelling of a name.  This is the test for the coordinate.
+"""Checks whether the frozen model is invariant under reversing the members of a
+collection: a vessel does not become a different thing by being rendered third instead
+of first, so nothing the model says about a click should depend on member order.
 
 The transform reverses the members of every declared collection on every page of a held-out
-history -- the rows of each body row group, the items of each list -- renumbers the tree
-in document order, and remaps every click to the node it landed on.  Header rows stay where
-they are: a table's first row is the interface's own declaration and not a member.  Reversal
-rather than a random shuffle so that consecutive pages are transformed alike and the
-history stays a history.  Every verdict of the version space and the chosen list at every
-click is then compared against the untouched history.
-
-Not every rearrangement of a page is neutral, and this one is applied only where the
-accessibility tree says a container is a collection.  A difference it reports is a place
-where the model read a coordinate.
+history, renumbers the tree in document order, and remaps every click to the node it landed
+on. Header rows are not members and stay in place. Reversal is used rather than a random
+shuffle so consecutive pages transform alike and the history stays a history. Every verdict
+is then compared against the untouched history; a difference is a place where the model
+read a position rather than a value.
 """
 from __future__ import annotations
 
@@ -73,8 +62,8 @@ def _rows_of(table: int, children: dict[int, list[int]], role: dict[int, str]) -
 def transform_page(obs: dict, children_of=_reordered_children) -> tuple[dict, dict[int, int]]:
     """The page with its collections reversed, and old node index -> new.
 
-    `children_of` is the rearrangement: the members of each collection reversed here, the
-    columns of each table reversed in `semabi.eval.v4_columns`."""
+    `children_of` does the rearrangement; column reversal lives in `semabi.eval.v4_columns`.
+    """
     nodes = obs["nodes"]
     children = children_of(nodes)
     order: list[int] = []
@@ -114,7 +103,7 @@ def transform_run(src: Path, dst: Path, children_of=_reordered_children) -> None
             page, new_of = transform_page(d["obs"], children_of)
             maps[d["sig"]] = new_of
             # a transformed page is a different page: it carries its own structural
-            # signature, so that a fresh fit on the transformed run is self-consistent
+            # signature, so a fresh fit on the transformed run is self-consistent
             sig_of[d["sig"]] = Observation.from_json(page).structural_signature()
             fout.write(json.dumps({**d, "sig": sig_of[d["sig"]], "obs": page}) + "\n")
     with (src / "steps.jsonl").open() as fin, (dst / "steps.jsonl").open("w") as fout:

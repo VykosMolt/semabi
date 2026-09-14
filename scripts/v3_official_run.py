@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Official frozen-V2 run against the frozen V3 benchmark (docs/v3_protocol.md).
 
-Stage driver.  Every stage invokes ordinary entry points only; nothing here configures
-compiler behaviour beyond what the protocol fixes (min support 2, no LLM, VALIDATED
-decisions only in the canonical model).  Stages exist so that independent work can run in
-parallel; the order between them is the protocol's order.
+Stage driver. Every stage invokes ordinary entry points only; nothing here configures
+compiler behaviour beyond what the protocol fixes. Stages exist so independent work
+can run in parallel; the order between them is the protocol's order.
 
     explore   collect the selection trace (seed 0) and the first held-out trace (seed 11)
     refine    run the counterexample-guided refinement loop on the selection trace
@@ -83,8 +82,8 @@ def main() -> None:
         return runs / f"log_{app['tag']}.txt"
 
     def explore(app, seed, run_dir, survey: bool) -> dict:
-        """Selection traces use the plain explorer, held-out traces the survey explorer:
-        exactly the asymmetry of the frozen V2 protocol (docs/v3_protocol.md, amendment 1)."""
+        """Selection traces use the plain explorer; held-out traces use the survey
+        explorer, per the frozen V2 protocol (docs/v3_protocol.md, amendment 1)."""
         cmd = [PY, "-m", "semabi.run_oracle", "explore"]
         if survey:
             cmd.append("--v2")
@@ -93,8 +92,8 @@ def main() -> None:
 
     jobs: list = []
     if a.stage == "explore":
-        # one application holds one hidden state: its traces are collected one after the
-        # other, and only different applications run in parallel
+        # One application holds one hidden state: its traces are collected one after
+        # the other, and only different applications run in parallel.
         def explore_both(app) -> list[dict]:
             return [explore(app, 0, loop_dir(app), survey=False),
                     explore(app, 11, seed_dir(app, 11), survey=True)]

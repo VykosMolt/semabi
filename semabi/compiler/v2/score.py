@@ -1,17 +1,14 @@
-"""Behavioural scoring and refinement of abstraction hypotheses (label-free).
+"""Score an abstraction by how well it explains behaviour, without labels.
 
-An abstraction earns its distinctions by explaining behaviour: after a click that
-changed the page, the abstract state should register a domain change (else the
-change is *unexplained*); after a reload or a click on a sensing control, it should
-not (else *noise*); entities should not change at every step (*volatility*); and
-every type / attribute / relation costs. The score is MDL-flavoured, not calibrated:
+After a click that changed the page the abstract state should register a change, and after
+a reload or a sensing click it should not. Entities should not change at every step, and
+every type, attribute and relation costs something:
 
     score = registered - unexplained - 2 * noise - 5 * volatile_types - 0.1 * complexity
 
-`refine` performs coordinate ascent over cheap alternatives of the deterministic
-hypotheses: dropping a unit type's identity, switching to its runner-up key, and
-flipping a merge into a link (or back). Every accepted move is recorded with the
-score difference so that the final abstraction is traceable to behaviour.
+`refine` climbs over cheap alternatives: dropping a type's identity, taking its runner-up
+key, turning a merge into a link or back. Every accepted move is recorded with its score
+difference, so the final abstraction can be traced to the behaviour that chose it.
 """
 from __future__ import annotations
 

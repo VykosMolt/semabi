@@ -1,5 +1,5 @@
-"""An experiment's steps are retained with its verdict, so that it can be scored again under
-a later representation instead of being trusted by the names it was scored under."""
+"""Tests that an experiment's steps are retained with its verdict, so it can be
+re-scored under a later representation instead of trusted by name."""
 from __future__ import annotations
 
 import json

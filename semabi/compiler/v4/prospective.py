@@ -1,44 +1,26 @@
-"""Do a reading's action-effect rules predict the page it has not seen yet?
+"""Do a reading's action-effect rules predict a page it has not seen yet?
 
-The V4 comparison judges a reading by how it accounts for transitions it was shown.  That
-is description, not prediction, and two readings can describe the same history differently
-without either of them being wrong about anything.  This module asks the other question:
-fit the reading's action-effect rules on an earlier part of a history, then check what they
-say about a later part against the rendered page.
+The main comparison judges a reading by how it accounts for transitions it was shown, which
+is description rather than prediction. This module fits the rules on an earlier part of a
+history and checks what they say about a later part against the rendered page.
 
-Two things make the check non-circular.
-
-The rules are fitted on a strict chronological prefix, so nothing about the evaluated step
-reached them.  And the prediction is projected onto **rendered text in the accessibility
-tree** -- ``Counter(node.name)`` over the raw observation -- which no reading computes and
-none can influence.  A reading cannot pass by having built the target.
+Two things keep the check non-circular. The rules are fitted on a strict chronological
+prefix, so nothing about the evaluated step reached them. And the prediction is checked
+against rendered text, which no reading computes and none can influence.
 
 There are two page checks and one internal one.
 
-* CONTENT -- the rule says this value is what the entity now shows: "after this click
-  something renders 'closed'".  Applicability comes from what the rule says the slot
-  already held (see :func:`required_value`); the outcome is checked page-wide rather than
-  in the scoped row, because the row cannot be relocated reliably in the later observation.
-  That is conservative in the direction that matters: a gain elsewhere can make a failed
-  prediction look supported, so CONTENT under-reports refutations and never invents one.
-* POSITION -- a reading that names an entity by a value which *collides* has to
-  disambiguate by position, so its learned effects carry an ordinal (``id := 'open#3'``)
-  and it predicts *which copy* the entity becomes.  It is contradicted whenever the page
-  renders fewer copies than the ordinal needs.  Only a reading whose names collide is
-  exposed to this, and that is because it claimed more, not because the test was built for
-  it.  A reading that makes no positional claim is not thereby confirmed -- it is
-  unfalsified by a test its ontology never faces.
-* :func:`action_effect_determinacy` -- prior to either page check: taking the observable
-  action key, do all the rules a reading fitted for that action agree on what it does?
+* CONTENT -- the rule says this value is what the entity now shows. The outcome is checked
+  page-wide rather than in the scoped row, because the row cannot be relocated reliably in
+  the later observation, so CONTENT under-reports refutations and never invents one.
+* POSITION -- a reading whose names collide has to disambiguate by position, so its effects
+  carry an ordinal (``id := 'open#3'``) and predict which copy the entity becomes. It is
+  contradicted when the page renders fewer copies than the ordinal needs. A reading that
+  makes no positional claim is not thereby confirmed; it simply never faces the test.
+* :func:`action_effect_determinacy` -- before either page check: for one observable action,
+  do all the rules the reading fitted for it agree on what it does?
 
-Both readings must face the same instrument for a comparison between them to mean anything.
-An earlier cut of this module read applicability off ``op.pre`` alone and did not: harbour's
-``joint discrimination x2`` only ever faced CONTENT and ``promote cell[_]=cell#0`` only ever
-faced POSITION, because the latter's rules carried no projectable precondition.  Consulting
-the fitted invariants as well puts both on CONTENT, where they turn out to agree -- and the
-positional claim is then the only thing that separates them.
-
-Silence is not evidence.  ``NOT_APPLICABLE`` is not a pass, and a reading whose rules the
+Silence is not evidence. ``NOT_APPLICABLE`` is not a pass, and a reading whose rules the
 retained trace cannot instantiate is reported as untested, never as unrefuted.
 """
 from __future__ import annotations
@@ -98,9 +80,8 @@ class ProspectiveResult:
 
     def by_basis(self, kind: str) -> dict[str, dict[str, int]]:
         """Verdicts split by what licensed the rule to fire, and by how many transitions
-        it was fitted on.  ``PRECONDITION`` alone reproduces the instrument as it stood
-        before invariants were consulted; ``support=1`` marks a rule fitted from a single
-        transition, whose claim generalises less even though its pre-value is exact."""
+        it was fitted on. ``support=1`` marks a rule fitted from a single transition,
+        whose claim generalises less even though its pre-value is exact."""
         out: dict[str, dict[str, int]] = {}
         for p in self.predictions:
             if p.kind != kind:
@@ -118,9 +99,7 @@ class ProspectiveResult:
         """Why this instrument said nothing, so that untested is never read as unrefuted.
 
         A reading with no refutations has either survived a test or never faced one, and
-        the difference is not visible from the verdict counts alone.  On blend_book every
-        CONTENT prediction is NOT_APPLICABLE for one reason -- the clicked control has no
-        enclosing row -- which is a property of this instrument's scope, not of the reading.
+        the difference isn't visible from the verdict counts alone.
         """
         rows = [p for p in self.predictions if p.kind == kind]
         untested = [p for p in rows if p.verdict == NOT_APPLICABLE]
@@ -160,10 +139,9 @@ def split_literal(value: Any) -> tuple[str, int]:
 def control_of(locator_slot: str) -> str:
     """The control's identity, as `semabi.compiler.v2.controls.identity` defines it.
 
-    This used to drop everything after ``@``, which is right for a static slot's node index
-    and for a labelled family's entity-group digest, and wrong for a label-less family, whose
-    digest is the only thing that names it: it pooled blend's ``Open`` buttons with every
-    other label-less button at the same path.
+    This used to drop everything after ``@``, which is right for a static slot's node
+    index but wrong for a label-less family, whose digest is the only thing that names
+    it -- dropping it pooled unrelated buttons at the same path together.
     """
     from semabi.compiler.v2.controls import identity
     return identity(locator_slot)
@@ -182,24 +160,22 @@ def rendered_names(observation) -> Counter:
 def required_value(operator, effect) -> tuple[str | None, str]:
     """The value the rule says the effect's slot already holds, and where that came from.
 
-    ``op.pre`` is a **discriminative** set.  ``learn_pre`` picks literals by greedy cover to
-    exclude negatives, and it *manufactures* ``attr_ne`` candidates for exactly that purpose,
-    so a positive equality survives into ``pre`` only when it happens to discriminate.  Across
-    this corpus that is roughly one effect in four hundred (``attr_ne`` outnumbers ``attr``
-    about 200:1), which left the CONTENT test structurally dead on two applications of three
-    and -- worse -- tested harbour's two survivors on *disjoint* instruments: A only ever
-    faced CONTENT, B only ever faced POSITION.
+    ``op.pre`` is a discriminative set: ``learn_pre`` picks literals by greedy cover to
+    exclude negatives, so a positive equality survives into ``pre`` only when it happens
+    to discriminate. That left the CONTENT test structurally dead most of the time, and
+    could test two readings on disjoint instruments.
 
-    ``op.common`` is the **generative** invariant the same pass already computes and stores:
-    every literal true in all the positives the rule was fitted on.  For "what did this slot
-    hold before the effect fired" that is the right set.  It is computed from prefix positives
-    only, so nothing leaks from the evaluated step, and where both sources define a value they
-    never disagree -- ``pre`` is a subset of ``common`` by construction.
+    ``op.common`` is the generative invariant the same pass already computes: every
+    literal true in all the positives the rule was fitted on. For "what did this slot
+    hold before the effect fired" that's the right set. It's computed from prefix
+    positives only, so nothing leaks from the evaluated step, and where both sources
+    define a value they never disagree -- ``pre`` is a subset of ``common`` by
+    construction.
 
-    The returned value is projected through :func:`split_literal`, because a reading whose
-    names collide states its invariant with an ordinal (``'open#2'``) and no page renders that
-    verbatim.  Taking the base asks only that the value is rendered, which is the conservative
-    projection; the ordinal itself is what POSITION tests.
+    The returned value is projected through :func:`split_literal`, because a reading
+    whose names collide states its invariant with an ordinal (``'open#2'``) and no page
+    renders that verbatim. Taking the base asks only that the value is rendered, which
+    is the conservative projection; the ordinal itself is what POSITION tests.
     """
     for source, literals in ((PRECONDITION, operator.pre),
                              (INVARIANT, getattr(operator, "common", ()) or ())):
@@ -214,18 +190,15 @@ def required_value(operator, effect) -> tuple[str | None, str]:
 def enclosing_scope(observation, node_index, role: str = "row") -> Counter | None:
     """Rendered text inside the clicked control's nearest enclosing ``role`` element.
 
-    A rule's precondition is about the object the action names, not about the page.  The
-    accessibility tree's ancestry is the candidate-independent way to ask what the clicked
-    control sits inside, and without it the precondition projection fires whenever *any*
-    instance anywhere renders the required value.  An earlier version of this module did
-    exactly that and reported four refutations for a reading at steps where its rule did
-    not apply at all -- three Reopen clicks on rows already open, and one Close on a row
-    already closed.
+    A rule's precondition is about the object the action names, not about the page. The
+    accessibility tree's ancestry is the candidate-independent way to ask what the
+    clicked control sits inside; without it, the precondition projection would fire
+    whenever any instance anywhere renders the required value, producing refutations at
+    steps where the rule never applied.
 
-    This uses tree ancestry, which is structurally aligned with an ontology that treats
-    rows as objects.  It is not derived from any reading, and both readings are scoped the
-    same way; a reading whose preconditions do not project onto rendered text is simply not
-    tested here rather than assumed to fire.
+    This isn't derived from any reading, and both readings are scoped the same way; a
+    reading whose preconditions don't project onto rendered text is simply not tested
+    here rather than assumed to fire.
     """
     if node_index is None or node_index < 0 or node_index >= len(observation.nodes):
         return None
@@ -252,16 +225,15 @@ def local_separability(result: "ProspectiveResult", run_dir: Path) -> dict[str, 
     """Could a precondition on the thing acted on have saved the refuted predictions?
 
     This is the difference between a rule the learner under-specified and a reading whose
-    ontology forces a claim it cannot keep.  If every clicked-control context that refuted
+    ontology forces a claim it can't keep. If every clicked-control context that refuted
     the rule is absent from the contexts that supported it, some precondition on that
-    context separates them and the failure is a gap in the rule.  If the same context
-    appears on both sides, no precondition on the thing acted on can separate them, and the
-    predicted quantity depends on something else -- for a positional identity claim, on how
-    many *other* entities happen to share the name.
+    context separates them and the failure is a gap in the rule. If the same context
+    appears on both sides, no precondition on the thing acted on can separate them, and
+    the predicted quantity depends on something else -- for a positional identity claim,
+    on how many other entities happen to share the name.
 
-    The context is the rendered content of the clicked control's enclosing row, taken from
-    the accessibility tree.  Only refutations are analysed; a supported prediction needs no
-    excuse.
+    The context is the rendered content of the clicked control's enclosing row. Only
+    refutations are analysed; a supported prediction needs no excuse.
     """
     from semabi.compiler.evidence import EvidenceLog
 
@@ -297,32 +269,29 @@ def local_separability(result: "ProspectiveResult", run_dir: Path) -> dict[str, 
 
 def action_effect_determinacy(run_dir: Path, reading, *, split: float = 0.6,
                               min_support: int = 2) -> dict[str, Any]:
-    """Is the reading's action-effect model a *function* of the observable action?
+    """Is the reading's action-effect model a function of the observable action?
 
-    The page check asks whether a rule's prediction came true.  This asks something prior
-    and cheaper: taking the observable action key (the clicked control's role and rendered
-    name, from the accessibility tree, which no reading computes), do all the rules the
-    reading fitted for that action agree on what the action does?
+    The page check asks whether a rule's prediction came true. This asks something prior
+    and cheaper: taking the observable action key (the clicked control's role and
+    rendered name, which no reading computes), do all the rules the reading fitted for
+    that action agree on what it does?
 
-    A reading that supports a lifted action-effect model answers yes: one rule, or several
-    that predict the same literal.  A reading whose entity names collide cannot -- the
-    abstractor must disambiguate each occurrence positionally, so the reading fits a
-    separate rule per button occurrence, each from a single transition, and those rules
-    then disagree with each other about the same observable action.
+    A reading that supports a lifted action-effect model answers yes: one rule, or
+    several that predict the same literal. A reading whose entity names collide can't --
+    it must disambiguate each occurrence positionally, fitting a separate rule per button
+    occurrence from a single transition each, and those rules then disagree with each
+    other about the same observable action.
 
-    Measured on harbour's ``click:Close`` at split 0.6, ``joint discrimination x2`` fits two
-    rules that both predict ``'closed'``; ``promote cell[_]=cell#0`` fits seven that predict
-    ``'closed'`` and ``'closed#2'`` for the identical click.
+    Two things keep this non-circular. The grouping key is the observable action, not any
+    reading's ontology. And the comparison is internal to each reading -- it never scores
+    one reading's literals against another's vocabulary -- so what's reported is each
+    reading's own coherence, comparable across readings precisely because it's a yes/no
+    about that reading alone.
 
-    Two things keep this non-circular.  The grouping key is the observable action, not any
-    reading's ontology.  And the comparison is *internal* to each reading -- it never scores
-    one reading's literals against another's vocabulary -- so what is reported is each
-    reading's own coherence, which is comparable across readings precisely because it is a
-    yes/no about that reading alone.
-
-    ``base_ambiguous`` means the rules disagree about what value is rendered.  ``ordinal_
-    ambiguous`` means they agree on the value and disagree about *which copy* -- the
-    positional commitment, surfaced as self-inconsistency rather than as a page refutation.
+    ``base_ambiguous`` means the rules disagree about what value is rendered.
+    ``ordinal_ambiguous`` means they agree on the value and disagree about which copy --
+    the positional commitment, surfaced as self-inconsistency rather than a page
+    refutation.
     """
     from semabi.compiler.compile_v4 import compile_v4
     from semabi.compiler.evidence import EvidenceLog
@@ -374,7 +343,7 @@ def evaluate(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2
     """Fit on the first ``split`` of the history; predict the rest; check the raw page.
 
     ``mutate`` rewrites every predicted literal and exists for the controls: a test that
-    cannot fail when the predictions are made wrong is measuring nothing.
+    can't fail when the predictions are made wrong is measuring nothing.
     """
     from semabi.compiler.compile_v4 import compile_v4
     from semabi.compiler.evidence import EvidenceLog
@@ -415,11 +384,9 @@ def evaluate(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2
                               basis=basis, support=len(operator.positives),
                               rendered_before=before.get(base, 0),
                               rendered_after=after.get(base, 0))
-                # CONTENT: the rule says this value is what the entity now shows.  A rule
+                # CONTENT: the rule says this value is what the entity now shows. A rule
                 # only claims that where its own precondition holds; firing every rule that
-                # matches the control tests something the rule never asserted, and an
-                # earlier version of this module did exactly that and reported refutations
-                # for a reading at steps where its rule did not apply.
+                # matches the control would test something the rule never asserted.
                 if needed is None:
                     content = NOT_APPLICABLE
                     detail = ("neither the rule's chosen preconditions nor the invariants of "

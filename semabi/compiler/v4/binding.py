@@ -1,36 +1,33 @@
 """Which semantic objects could the action have acted on?
 
-A lifted rule names objects the concrete action does not supply.  Harbour's Close binds the
-berth whose button was pressed and nothing else, but cellar's rules delete an object the click
-never mentions, and blend's mention two.  Until now the checker handled this in two ad-hoc
-ways and neither was a semantics: it took the owner of the clicked node, and otherwise looked
-for an object whose *key* matched a constant the rule had memorised.  The second is the same
-defect as memorised effect values, moved to the binding side -- across the corpus far more
-predictions were lost to "no object is named 'Gallons' here" than to a parameter having no
-binding at all.
+A lifted rule names objects the concrete action doesn't supply. Some rules act only on the
+object whose control was clicked; others act on or mention objects the click never names.
+Matching those objects by a memorised key constant has the same defect as memorised effect
+values, moved to the binding side, and loses far more predictions than an honestly unbound
+parameter does.
 
-The rule's own preconditions are the right answer, read as a query rather than as a test.  The
+The rule's own preconditions are the right answer, read as a query rather than a test. The
 action supplies some parameters; the preconditions constrain the rest; evaluating them over
-the pre-action state yields the assignments that could have been the one that happened.  So
+the pre-action state yields the assignments that could have been the one that happened. So
 binding and applicability become one thing: an assignment is admissible exactly when it
 satisfies the literals that decide whether the rule applies, and a rule "not applying" and a
 rule "having no binding" stop being different answers.
 
-**Before the outcome, always.**  The query runs on the pre-action state.  Nothing about the
-later observation reaches it, which is what stops a rule from choosing whichever object makes
-its own effect come true.
+Before the outcome, always. The query runs on the pre-action state. Nothing about the later
+observation reaches it, which stops a rule from choosing whichever object makes its own
+effect come true.
 
-**Existential, not universal.**  A lifted rule had one concrete instantiation per real action.
-Several admissible assignments are competing hypotheses about *which* instantiation occurred,
-not a claim that every one of them received the effect.  So one admissible assignment whose
+Existential, not universal. A lifted rule had one concrete instantiation per real action.
+Several admissible assignments are competing hypotheses about which instantiation occurred,
+not a claim that every one of them received the effect. So one admissible assignment whose
 consequence holds is enough to stop a refutation, and the aggregation downstream must say so.
 
-**Absent is not false.**  These states are built from one observation, so an object on another
-tab is not present with unknown values -- it is not there at all.  A parameter whose type has
-no rendered instance therefore yields no binding *because nothing was visible*, which is
-ignorance; a parameter whose candidates are all contradicted by what is rendered yields none
-because the rule does not apply here.  The two are reported apart, because reading the first
-as the second turns a page that did not show something into evidence about the rule.
+Absent is not false. These states are built from one observation, so an object on another
+tab isn't present with unknown values -- it's not there at all. A parameter whose type has
+no rendered instance yields no binding because nothing was visible, which is ignorance; a
+parameter whose candidates are all contradicted by what's rendered yields none because the
+rule doesn't apply here. The two are reported apart, since reading the first as the second
+turns a page that didn't show something into evidence about the rule.
 """
 from __future__ import annotations
 
@@ -52,11 +49,10 @@ UNOBSERVED = "UNOBSERVED"    # a parameter's type is not rendered here at all
 UNSETTLED = "UNSETTLED"      # the search hit its bound without settling what the state admits
 UNNAMED = "UNNAMED"          # the rule's own referring expression names no single object here
 
-# What the admissible set says about the objects the rule claims to *change*, which is a
-# different question from how many assignments there are.  A rule may admit hundreds of
-# assignments because its precondition-only witnesses vary while every one of them picks the
-# same object to act on; that rule is usable.  A rule admitting two assignments that disagree
-# about which object changes is not, however small the number.
+# What the admissible set says about the objects the rule claims to change, which is
+# different from how many assignments there are. A rule may admit hundreds of assignments
+# while every one picks the same object to act on; that rule is usable. A rule admitting two
+# assignments that disagree about which object changes is not, however small the number.
 DETERMINED = "DETERMINED"                  # complete search, every assignment agrees
 UNDERDETERMINED = "UNDERDETERMINED"        # two assignments disagree -- sound under truncation
 UNDETERMINED_INCOMPLETE = "INCOMPLETE"     # the search stopped; agreement so far proves nothing
@@ -104,13 +100,13 @@ class Bindings:
         ``UNIQUE`` pins all of them and ``NONE`` pins none, but the interesting case is in
         between: an ambiguous set can still determine some of its parameters while leaving
         others open, and which ones is the whole question when deciding whether an effect is
-        about a definite object.  All the assignments come from one state, so the objects are
-        the same instances and identity is the right comparison.
+        about a definite object. All the assignments come from one state, so identity is
+        the right comparison.
         """
         if not self.admissible or self.truncated:
             # A truncated enumeration is a partial view of the admissible set, and the
-            # assignments it never reached may disagree.  Reading agreement off what was
-            # enumerated would claim determinacy the search did not establish, in the
+            # assignments it never reached may disagree. Reading agreement off what was
+            # enumerated would claim determinacy the search didn't establish -- in the
             # direction that makes an ill-formed schema look well-formed.
             return frozenset()
         first = self.admissible[0].values
@@ -120,9 +116,9 @@ class Bindings:
     def denotations(self, params: Sequence[str]) -> tuple[tuple, ...]:
         """The distinct values the admissible assignments give to ``params``, as a set.
 
-        Objects are compared by their abstract identity rather than by rendered name, because
-        the point of asking is to find out whether the rule names one object or several, and a
-        name is the thing under suspicion.
+        Objects are compared by their abstract identity rather than by rendered name,
+        because the point is to find out whether the rule names one object or several, and
+        a name is the thing under suspicion.
         """
         seen = {}
         for b in self.admissible:
@@ -133,11 +129,11 @@ class Bindings:
     def effect_target(self, params: Sequence[str]) -> tuple[str, int]:
         """Does this state determine which objects the rule acts on, and how many candidates?
 
-        Truncation is asymmetric here, and the asymmetry is the whole reason to separate this
-        from the assignment count.  Seeing two disagreeing denotations settles
-        underdetermination however the search ended -- a witness is a witness.  Seeing one
-        settles nothing unless the search was complete, because the assignment that would have
-        disagreed may be the one never reached.
+        Truncation is asymmetric here, which is why this is kept separate from the
+        assignment count. Seeing two disagreeing denotations settles underdetermination
+        however the search ended -- a witness is a witness. Seeing one settles nothing
+        unless the search was complete, since the assignment that would have disagreed may
+        be the one never reached.
         """
         if not params:
             return DETERMINED, 0
@@ -166,10 +162,10 @@ def _target(value) -> Any:
 def holds(literal: tuple, values: Mapping[str, Any], state) -> bool | None:
     """``True``, ``False``, or ``None`` when this state cannot decide it.
 
-    Undecidable means the literal mentions a parameter that is not bound yet, or a string
-    parameter the action never supplied.  It never means "the attribute was not there": an
-    attribute the reading does not fill is stored as ``None`` and compares as a value, which is
-    the reading's own claim about that object and not an absence of evidence.
+    Undecidable means the literal mentions a parameter that isn't bound yet, or a string
+    parameter the action never supplied. It never means "the attribute was not there": an
+    attribute the reading doesn't fill is stored as ``None`` and compares as a value, which
+    is the reading's own claim about that object, not an absence of evidence.
     """
     head = literal[0]
     params = [x for x in literal[1:] if isinstance(x, str) and x.startswith("?")]
@@ -222,9 +218,9 @@ def holds(literal: tuple, values: Mapping[str, Any], state) -> bool | None:
 def _domains(op, state, unbound: Sequence[str]) -> dict[str, list]:
     """Candidate objects per unbound parameter: the instances of its declared type.
 
-    The type comes from the rule itself.  Nothing here searches by rendered name, which is the
-    identity key the corpus has repeatedly shown to be unsafe; a name equality that is part of
-    a learned precondition still participates, as one constraint among the others.
+    The type comes from the rule itself. Nothing here searches by rendered name, which is
+    an unsafe identity key; a name equality that's part of a learned precondition still
+    participates, as one constraint among the others.
     """
     by_type: dict[Any, list] = {}
     for obj in state.objs.values():
@@ -238,20 +234,19 @@ def solve(op, literals: Iterable[tuple], state, action_binding: Mapping[str, Any
           nodes: int = MAX_SEARCH_NODES) -> Bindings:
     """Every assignment of the rule's parameters the pre-action state leaves open.
 
-    Two bounds, and they stop different things.  ``limit`` caps the *answer*: once that many
-    assignments are admissible the rule is as good as unconstrained and counting further says
-    nothing.  ``nodes`` caps the *search*, and it exists because the first bound does not.
+    Two bounds stop different things. ``limit`` caps the answer: once that many assignments
+    are admissible the rule is as good as unconstrained and counting further says nothing.
+    ``nodes`` caps the search itself, which the first bound doesn't.
 
-    A rule can name many objects the action does not supply -- one operator on the wine cellar
-    names twenty, over a product space of 10^26 -- and when its preconditions are weak the
-    search fills its quota immediately and unwinds.  When they are strong enough that few
-    complete assignments exist, nothing fills, and the enumeration walks that space to the end.
-    Under ``asserted`` that rule scores in nine seconds; under ``attested``, which adds the
-    invariants as further preconditions, it had not finished after three and a half hours.
+    A rule can name many objects the action doesn't supply, over a huge product space. When
+    its preconditions are weak, the search fills its quota immediately and unwinds. When
+    they're strong enough that few complete assignments exist, nothing fills, and the
+    enumeration walks that space to the end -- which can take hours rather than seconds.
 
-    Exhausting either bound means the same thing to a reader -- the search did not establish
-    what the state admits -- so both set ``truncated``, which already forbids refuting and pins
-    no parameter.  Giving up in bounded time and saying so beats an answer nobody waited for.
+    Exhausting either bound means the same thing to a reader -- the search didn't establish
+    what the state admits -- so both set ``truncated``, which already forbids refuting and
+    pins no parameter. Giving up in bounded time and saying so beats an answer nobody waited
+    for.
     """
     literals = list(literals)
     if types is not None and not hasattr(state, "types"):
@@ -270,8 +265,8 @@ def solve(op, literals: Iterable[tuple], state, action_binding: Mapping[str, Any
     provenance = {p: ACTION for p in action_binding}
     provenance.update({p: DERIVED for p in unbound})
     # Every parameter is accounted for, including the ones with no pre-state object behind
-    # them.  A reader of a binding should not have to infer from a parameter's absence which
-    # of the two reasons it is absent for.
+    # them. A reader of a binding shouldn't have to infer from a parameter's absence which
+    # of the two reasons it's absent for.
     provenance.update({p: UNRESOLVED for p in strings})
     provenance.update({p: UNBOUND for p in op.params if p.startswith("?new")})
     out: list[Binding] = []

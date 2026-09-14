@@ -1,13 +1,9 @@
-"""A frozen model naming, and referring to, an object the prefix never rendered.
+"""Tests that a frozen model can name and refer to an object the fitting prefix
+never rendered.
 
-Blend's held-out pages carry a vat called `Block 12`.  Once `Block` was recognised as a value
-(`tests/test_v2_unseen_tokens.py`) the vat was an object -- keyed `Block`, because the value
-segmenter keeps a number apart from a name beside it, so two `Block N` vats collided on one
-key and a draw's `Returned 1 gal to Block 12` argument never matched.  And a ticket's
-reference to it resolved to nothing, because `resolve` consulted a registry of the key values
-the *fitting* pages rendered, and `Block 12` was not among them.  These pin both repairs on the
-trace they were found on (`docs/v4_identity.md`).
-"""
+Pins two repairs: a key built from a number beside a name must not collide two
+distinct objects onto one key, and resolving a reference must not depend on a
+registry limited to what the fitting pages rendered."""
 from __future__ import annotations
 
 from pathlib import Path

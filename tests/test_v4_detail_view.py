@@ -1,14 +1,11 @@
-"""A detail view is a view of persistent objects, not interface state.
+"""Tests that a detail view is read as persistent objects, not transient interface
+state.
 
-Harbour's call sheet names its fields down a first column whose words are the register's
-own column headers, and closes on reload.  Read as feedback, its rows became units keyed
-by their values and were then dropped as transient, and the button beneath it had no
-owner (docs/v4_retained.md, Part XVI).  Here a value cell is named by its row header as
-a column cell is by its column header, a labelled row is a field of the panel and not a
-unit, a cleared region that names persistent objects by key is spared the transient
-rule while a feedback line is not, and a control takes roles from an operator whose
-enabling click bound the object its own click binds.
-"""
+A value cell is named by its row header the way a column cell is named by its column
+header; a labelled row is a field of the panel, not its own unit; a cleared region
+naming persistent objects by key is spared the transient rule while a feedback line is
+not; and a control takes roles from the operator whose enabling click bound the object
+its own click binds."""
 from __future__ import annotations
 
 from types import SimpleNamespace

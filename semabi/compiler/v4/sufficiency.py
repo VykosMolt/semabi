@@ -1,11 +1,8 @@
-"""What a trace would have had to show for an ambiguity to be decidable.
+"""Why the evidence never separated two readings of a family.
 
-An unresolved reading is a state of knowledge, not a score.  When two readings of a family
-survive, it is worth saying *why* the evidence did not separate them, because the answer is
-usually a specific observation that was never made: the family was never rendered twice at
-once, nothing was ever reloaded while it was on screen, it never appeared in a second view.
-Naming the missing observation turns "unresolved" into something an explorer can act on,
-and keeps the compiler from inventing certainty it has no basis for.
+Usually the answer is a particular observation that was never made: the family was never
+rendered twice at once, nothing was reloaded while it was on screen, it never appeared in a
+second view. Naming that turns "unresolved" into something an explorer can act on.
 
 These are predicates over evidence that was or was not collected, not thresholds.
 """

@@ -70,19 +70,9 @@ def test_only_an_equality_on_the_effects_own_slot_projects():
 
 
 def test_the_fitted_invariant_licenses_a_prediction_where_no_chosen_precondition_does():
-    """The repair this module needed.
-
-    Executes: an operator whose ``pre`` says nothing about the effect's slot, but whose
-    ``common`` -- the literals true in every transition it was fitted on -- does.
-
-    Detects: the regression of reading applicability off ``learn_pre``'s *discriminative*
-    output.  ``learn_pre`` manufactures ``attr_ne`` candidates to cover negatives, so a
-    positive equality reaches ``pre`` only when it happens to discriminate; measured over
-    this corpus that was about one effect in four hundred, which left CONTENT dead on two
-    applications of three and tested harbour's two survivors on disjoint instruments.
-
-    A pass establishes that the generative invariant is consulted and labelled.  It does
-    not establish that the invariant generalises -- see the support test below."""
+    """Reads applicability from an operator's generative invariant (``common``), not
+    only its discriminative ``pre``, which can omit a literal that always held simply
+    because it never needed to discriminate against a negative."""
     effect = _eff()
     op = SimpleNamespace(pre=[("attr_ne", "?o0", "attr:s", "z")],
                          common=[("attr", "?o0", "attr:s", "old")])
@@ -100,11 +90,9 @@ def test_a_chosen_precondition_outranks_the_invariant():
 
 
 def test_an_ordinal_bearing_invariant_projects_to_its_base():
-    """A reading whose names collide states its invariant positionally -- ``id == 'open#2'``
-    -- and no page renders that string.  Projecting the base asks only that the value is
-    rendered, which is what the accessibility tree can answer; the ordinal is POSITION's
-    business.  Without this, every ordinal-bearing reading is silently NOT_APPLICABLE on
-    CONTENT, which is exactly how B escaped the content test."""
+    """A reading whose names collide states its invariant positionally (``id == 'open#2'``),
+    and no page renders that string. Projecting to the base value asks only what the
+    accessibility tree can answer; the ordinal is a separate concern."""
     effect = _eff(slot="id")
     op = SimpleNamespace(pre=[], common=[("attr", "?o0", "id", "open#2")])
     assert required_value(op, effect) == ("open", INVARIANT)
@@ -139,23 +127,18 @@ def test_a_control_with_no_enclosing_row_has_no_scope():
 
 @pytest.fixture(scope="module")
 def harbour():
-    """The retained harbour readings, recovered as data.
-
-    The chain manifest authenticates the compiler that produced it, and the inducer has since
-    changed on purpose, so the authenticated loader refuses it -- correctly.  What these tests
-    need is the readings, which are data; the guarantee being given up is that this compiler
-    generated them, and that is not what they are testing.
+    """The chain manifest authenticates the compiler that produced it. The inducer has
+    since changed on purpose, so the authenticated loader correctly refuses it -- but these
+    tests only need the readings as data, not that guarantee.
     """
     from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
     return with_loose_reading({c.name: c.reading for c in _candidates(HARBOUR_CHAIN)})
 
 
 def with_loose_reading(readings: dict) -> dict:
-    """The loose harbour reading -- every childless cell an object keyed by its own text --
-    is no longer one the source generator proposes: since `docs/v4_columns.md` a cell under
-    a declared header is not a `cell[_]` leaf at all.  The reading is still constructible,
-    and what the tests about it test is what it does, so it is built from the incumbent when
-    the manifest does not carry it."""
+    """The generator no longer proposes this reading directly, but it is still
+    constructible, and what the tests need is what it does -- so it is built from the
+    incumbent when the manifest does not carry it."""
     from semabi.compiler.v4.pinned import FamilyReading
     if "promote cell[_]=cell#0" not in readings:
         readings["promote cell[_]=cell#0"] = readings["source_choice"].with_promotion(
@@ -166,11 +149,10 @@ def with_loose_reading(readings: dict) -> dict:
 
 
 def require_distinct_loose_reading(readings: dict) -> None:
-    """Tests about what the loose reading gets *wrong* need it to differ from the incumbent.
-    On harbour under the header scheme there is no `cell[_]` leaf for the promotion to
-    apply to, so the constructed reading is the incumbent under another name and the
-    finding those tests record -- open bindings, a disjoint vocabulary -- has no subject.
-    They are skipped rather than weakened; `docs/v4_columns.md` records why."""
+    """Tests about what the loose reading gets wrong need it to differ from the incumbent.
+    When there is nothing for the promotion to apply to, the constructed reading is just
+    the incumbent under another name and has no subject to test, so it is skipped rather
+    than weakened."""
     import pytest
     if readings.get("_loose_is_constructed"):
         pytest.skip("harbour has no cell[_] leaf under the header-named scheme: the loose "
@@ -182,20 +164,11 @@ def _run(reading, mutate=None, split=0.6):
 
 
 def test_the_positional_claim_was_the_learner_memorising_an_ordinal(harbour):
-    """A finding of an earlier run, and its correction.
-
-    This test used to assert that ``promote cell[_]=cell#0`` commits to *which copy* an
-    entity becomes -- ``id := 'open#3'`` where the page renders two -- and is refuted for it.
-    That was true of the learner as it stood.  It is no longer, and the reason matters more
-    than the result did: the ordinal was never something the reading's ontology required, it
-    was the value the learner happened to see in the one transition each rule was lifted from.
-    The learner now drops effect values the action does not determine, keeping the base and
-    discarding the ordinal, so the reading makes no positional claim at all.
-
-    What a pass establishes is that the positional evidence is *gone*, not that the reading is
-    exonerated: the case against it now rests on the scoped value check in
-    :mod:`semabi.compiler.v4.consequence`, where it still fires on rows nobody clicked.  A
-    refutation that disappears when a learner stops memorising was a fact about the learner.
+    """The ordinal in a positional claim was never required by the reading's ontology;
+    it was the value the learner happened to see in the one transition each rule was
+    lifted from. The learner now drops effect values the action does not determine, so
+    the reading makes no positional claim at all -- this establishes only that the
+    positional evidence is gone, not that the reading is exonerated elsewhere.
     """
     result = _run(harbour["promote cell[_]=cell#0"])
     assert result.counts(POSITION) == Counter()
@@ -227,33 +200,19 @@ def test_predicting_a_value_the_application_never_renders_is_refuted_not_ignored
 
 def test_scoping_the_precondition_removes_predictions_the_rule_never_made(harbour,
                                                                           monkeypatch):
-    """A rule is not tested where it does not apply, and the scope is load-bearing.
+    """Compares predictions scoped to the clicked control's enclosing row against the
+    same predictions with the scope replaced by the whole page. Without scoping, unrelated
+    rows produce spurious refutations and the diagnosis worsens.
 
-    Executes A's content predictions at split 0.6 twice: scoped to the clicked control's
-    enclosing row, and with the scope replaced by the whole page -- the behaviour that once
-    reported refutations for three Reopen clicks on rows already open and one Close on a
-    row already closed.
-
-    Detects the loss of scoping.  Measured: refuted *contexts* 1 -> 5 and contexts on both
-    sides 0 -> 4, and the diagnosis flips from RULE_GAP to NOT_REPAIRABLE_LOCALLY.  That
-    flip happens for *both* harbour survivors, so an unscoped projection does not merely
-    add noise -- it destroys the adjudication.
-
-    The unit is contexts, not predictions.  A fits two rules for ``click:Close`` (two button
-    locators) and both fail at step 367, where the click changed nothing at all: two refuted
-    predictions, one underlying failure, one context.  Asserting on the raw prediction count
-    would make this test sensitive to how many rules a reading happens to fit.
-
-    A pass establishes that the scope suppresses inapplicable firings.  It does not
-    establish that the enclosing row is the right scope for applications that are not
-    tables -- it is undefined for 88% of vet_clinic's clicks, which those runs report as
-    NOT_APPLICABLE.
+    The unit counted is contexts, not raw predictions: several rules can fail at the same
+    step for the same underlying reason, and counting predictions would make the test
+    sensitive to how many rules a reading happens to fit.
     """
     result = _run(vessel_keyed(harbour))
     assert result.counts(CONTENT)[NOT_APPLICABLE] > 0
     scoped = prospective.local_separability(result, HARBOUR_RUN)[CONTENT]
     # one refuted context under the reading every vessel was a type of its own; two under
-    # the reading of `docs/v4_open_world.md`.  What the test is about is the comparison.
+    # the other reading. What the test is about is the comparison.
     assert 1 <= scoped["refuted_contexts"] <= 2, scoped
     assert scoped["contexts_on_both_sides"] == 0, scoped
     assert scoped["diagnosis"].startswith("RULE_GAP"), scoped
@@ -271,11 +230,8 @@ def test_scoping_the_precondition_removes_predictions_the_rule_never_made(harbou
 # ------------------------------------- rule gap versus a claim the ontology cannot keep
 
 def test_a_refutation_is_diagnosed_as_a_rule_gap_when_the_acted_on_state_separates(harbour):
-    """A's one refutation is a missing precondition, not a wrong ontology.
-
-    All 28 successful toggles are on rows whose call cell renders '-'; all 10 failures are
-    on rows rendering 'C-101'.  The rule can be repaired by adding a precondition about the
-    row it is clicked in, which is a property of the object the action names.
+    """The one refutation here is a missing precondition, not a wrong ontology: the rule
+    can be repaired by adding a precondition about the row it is clicked in.
     """
     from semabi.compiler.v4.prospective import local_separability
     result = _run(vessel_keyed(harbour))
@@ -285,10 +241,8 @@ def test_a_refutation_is_diagnosed_as_a_rule_gap_when_the_acted_on_state_separat
 
 
 def test_there_is_no_positional_diagnosis_left_to_make(harbour):
-    """The companion of the correction above.
-
-    The diagnosis that B's positional failures were not locally repairable had a positional
-    failure to diagnose.  With the ordinal no longer memorised there is none, and the
+    """The diagnosis that a positional failure is not locally repairable needs a
+    positional failure to diagnose. With no ordinal memorised there is none, and the
     diagnosis correctly says so rather than inventing one.
     """
     from semabi.compiler.v4.prospective import local_separability
@@ -303,14 +257,8 @@ def test_the_diagnosis_says_nothing_when_there_are_no_refutations(harbour):
 
 
 def test_the_result_reports_why_it_was_silent(harbour):
-    """Executes the silence summary on a reading the instrument does reach.
-
-    Detects a result artifact in which an absence of refutations cannot be told apart from
-    an absence of tests.  A pass establishes that coverage and the reasons for
-    NOT_APPLICABLE are recorded alongside the verdicts; it does not establish that the
-    instrument's scope is appropriate for any given application -- on blend_book every
-    CONTENT prediction is untested for a single reason, and the summary is what makes that
-    legible rather than hiding it behind a clean refutation count.
+    """An absence of refutations must be distinguishable from an absence of tests, so
+    coverage and the reasons for NOT_APPLICABLE are recorded alongside the verdicts.
     """
     result = _run(vessel_keyed(harbour))
     silence = result.silence(CONTENT)
@@ -336,15 +284,9 @@ def _group(result, control):
 
 
 def test_a_stable_naming_gives_one_effect_per_observable_action(determinacy):
-    """Executes the determinacy check on harbour's ``click:Close`` and ``click:Reopen``.
-
-    Detects a reading whose rules disagree with each other about what one observable action
-    does.  A pass establishes that this reading's rules for a given a11y action all predict
-    the same literal -- internal coherence, measured without reference to any other reading
-    and without consulting the later page at all.
-
-    It does not establish that the literal is correct; that is what CONTENT and POSITION
-    are for, and this reading is refuted there too.
+    """Checks that a reading's rules for a given action all predict the same literal --
+    internal coherence, without reference to any other reading or to the later page. It
+    does not establish that the literal is correct.
     """
     result = determinacy["vessel-keyed"]
     assert result["totals"].get("BASE_AMBIGUOUS", 0) == 0
@@ -356,38 +298,24 @@ def test_a_stable_naming_gives_one_effect_per_observable_action(determinacy):
 
 
 def test_a_colliding_naming_still_fragments_but_no_longer_contradicts_itself(determinacy):
-    """The internal counterpart of the positional refutation, and what survived of it.
-
-    Executes the same check on the reading that names a cell by its own text.  Because the
-    abstractor must disambiguate each occurrence positionally, the reading fits a separate
-    rule per button occurrence, most from a single transition, and those rules then predict
-    different identities for the identical observable click.
-
-    Detects a model that is not a function of the action it is keyed on.  A pass establishes
-    that this reading is self-inconsistent about ``click:Close`` on the evidence it was
-    fitted from; it does not by itself refute the reading -- the page checks do that.
+    """The reading that names a cell by its own text fits a separate rule per button
+    occurrence, and those rules predict different identities for the identical action --
+    a model that is not a function of the action it is keyed on.
     """
     result = determinacy["promote cell[_]=cell#0"]
-    # What this check used to find on the loose reading has drained away in two steps.  The
-    # disagreement about which copy the entity becomes was the learner's memorised ordinal,
-    # and dropping that removed it.  The fragmentation -- more rules than the rival fits for
-    # the same click, single-transition ones among them -- was the control identity's
-    # (`docs/v4_identity.md`).  And since a reference names its object by key whether or not
-    # the prefix rendered it, a reading that keys every cell by its own text fills its
-    # references with phantoms and fits no value rule for the click at all: the determinacy
-    # check has nothing of it to check.  What must not appear is a self-contradiction.
+    # A reference names its object by key whether or not the prefix rendered it, so a
+    # reading that keys every cell by its own text fills its references with phantoms and
+    # fits no value rule for the click: the determinacy check has nothing to check. What
+    # must not appear is a self-contradiction.
     assert result["totals"].get("ORDINAL_AMBIGUOUS", 0) == 0
     assert not any(g["control"] == "button:Close" and g["verdict"] != "DETERMINATE"
                    for g in result["groups"])
 
 
 def test_determinacy_never_compares_one_readings_literals_with_anothers(determinacy):
-    """Guards the non-circularity of this check: it is a within-reading measure.
-
-    The two readings share no vocabulary -- one predicts ``'closed'`` on an attribute slot,
-    the other ``'closed#2'`` on the identity slot -- so a cross-reading comparison would be
-    meaningless.  What makes the results comparable is that each is a yes/no about that
-    reading alone, keyed on the observable action.
+    """The two readings share no vocabulary, so a cross-reading comparison would be
+    meaningless. This check is within-reading only: a yes/no about one reading, keyed
+    on the observable action.
     """
     slots = {name: {g["slot"] for g in result["groups"]}
              for name, result in determinacy.items()}
@@ -395,8 +323,7 @@ def test_determinacy_never_compares_one_readings_literals_with_anothers(determin
         require_distinct_loose_reading({"_loose_is_constructed": True})
     assert slots["vessel-keyed"] != slots["promote cell[_]=cell#0"]
     for result in determinacy.values():
-        # the controls whose clicks land in an object under either reading; the pilot
-        # buttons joined them when the pilots became a type (`docs/v4_open_world.md`)
+        # the controls whose clicks land in an object under either reading
         assert {g["control"] for g in result["groups"]} <= {
             "button:Close", "button:Reopen", "button:Schedule call",
             "button:Sign on", "button:Sign off"}

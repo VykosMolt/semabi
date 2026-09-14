@@ -13,18 +13,11 @@ from typing import Any
 from semabi.compiler.observation import Node, Observation
 
 WIDGETS = {"button", "link", "checkbox", "radio", "combobox", "textbox"}
-# Live regions are not here.  `status` was added to this set once, to stop the application's
-# account of the last action being dropped before any learner saw it, and that was right about
-# the evidence and wrong about where to put it: as an ordinary leaf the sentence becomes a slot
-# -- of the page's view state where the node sits alone, of a *unit* where it sits inside one,
-# which makes a status-only change a domain change and produces operators whose effect is
-# `attr:status#0(?o) := 'Closed Creek Bed'`.  A live region is what the transition *returned*;
-# it belongs on the transition, and `semabi.compiler.v4.emission` is where it now goes.
-#
-# `alert` stays, and that is a compatibility decision rather than a claim.  It is the same kind
-# of live region and by this argument does not belong in the state either, but it is inside
-# frozen V0/V1 history on a corpus with no `status` anywhere, and moving those results is not
-# what this change is about.  `emission.LIVE_ROLES` reads both.
+# Live regions are not here. A status line is what an action returned, not part of the
+# page's state: read as an ordinary leaf it becomes a slot, and a status-only change then
+# looks like a change to the world. `semabi.compiler.v4.emission` handles it instead.
+# `alert` stays for compatibility with frozen V0/V1 results on a corpus that has no status
+# line at all. `emission.LIVE_ROLES` reads both.
 DATA_ROLES = {"text", "heading", "cell", "listitem", "alert"}
 LEAF_ROLES = WIDGETS | DATA_ROLES
 

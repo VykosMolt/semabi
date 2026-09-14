@@ -103,11 +103,8 @@ def test_a_complete_singleton_at_its_bounds_remains_unique(budget, pruned_tail):
 
 
 def test_a_rule_that_constrains_nothing_admits_every_object_of_the_type():
-    """Establishes that weak preconditions produce ambiguity rather than a guess.
-
-    This is the shape a reading gets when its rules cannot relate the acted-on control to the
-    object they affect.  Three berths satisfy a rule that says nothing about which, and the
-    binder returns three -- it does not pick the first, the lowest id, or the best match.
+    """When a rule cannot relate the acted-on control to the object it affects,
+    the binder returns every candidate rather than guessing one.
     """
     world = state(obj("N1", node=1), obj("N2", node=2), obj("S1", node=3))
     found = binding.solve(rule({"?o0": BERTH}), (), world, {})
@@ -126,12 +123,9 @@ def test_a_contradicted_precondition_leaves_no_assignment():
 
 
 def test_a_type_that_is_not_rendered_here_is_ignorance_not_non_applicability():
-    """Establishes the partial-observability discipline at the binding layer.
-
-    These states are built from one observation, so an object on another view is not present
-    with unknown values -- it is absent.  A parameter whose type has no rendered instance is
-    therefore something this page could not show, and reporting it as "the rule does not apply"
-    would turn a page that showed nothing into evidence about the rule.
+    """A state built from one observation treats an object on another view as
+    absent, not as unknown. A page that shows nothing must not be read as evidence
+    that a rule does not apply.
     """
     world = state(obj("N1", node=1))
     found = binding.solve(rule({"?o0": CALL}), (), world, {})
@@ -142,10 +136,8 @@ def test_a_type_that_is_not_rendered_here_is_ignorance_not_non_applicability():
 # ------------------------------------------------------------------ joint solving
 
 def test_two_latent_variables_related_by_a_reference_are_solved_together():
-    """Establishes that the search is a join and not two independent choices.
-
-    Either berth could be ``?o1`` and either call ``?o2`` on their own; only one pair satisfies
-    the reference between them, and solving the variables separately would admit four.
+    """The search is a join, not two independent choices: solving the variables
+    separately would admit pairs that do not satisfy the reference between them.
     """
     world = state(obj("N1", node=1, holds="C-101"), obj("N2", node=2, holds="C-102"),
                   obj("C-101", tid=CALL, node=8), obj("C-102", tid=CALL, node=9))
@@ -179,14 +171,10 @@ def test_a_string_the_action_never_supplied_leaves_the_assignment_merely_possibl
 # ------------------------------------------------------------------ the leakage trap
 
 def test_rewriting_every_prediction_leaves_the_binding_untouched():
-    """The leakage trap, empirically rather than by signature.
-
-    ``never_rendered_token`` rewrites every predicted value to a string the application never
-    renders, so every claim that can be refuted is.  If anything about the search consulted the
-    outcome -- picking the assignment that makes the prediction come true, ranking by how well
-    it fits, quietly preferring an object that changed -- the binding summary would move.  It
-    does not, on either reading, in either applicability mode.  (The same comparison over the
-    retained artifacts holds for all 114 paired rows.)
+    """Rewrites every predicted value to a string the application never renders,
+    so every refutable claim is refuted. If the search consulted the outcome -- picking
+    the assignment that makes the prediction true -- the binding summary would move. It
+    does not.
     """
     from semabi.compiler.v4.consequence import ASSERTED, ATTESTED, fit, score
     from semabi.eval.v4_consequence_run import MUTATIONS
@@ -205,39 +193,26 @@ def test_rewriting_every_prediction_leaves_the_binding_untouched():
             assert plain.schema() == wrecked.schema(), (name, mode)
             # and the control really did do something -- where the instrument decides anything.
             #
-            # On the loose reading it no longer does.  Its binder hits the enumeration bound on
-            # every one of its 145 firings, and a truncated enumeration can never refute, so
-            # every value claim is POSSIBLE with the predictions rewritten or not.
-            #
-            # Not because of the belief repair, which was the obvious suspect and was measured:
-            # restoring the old merge, so that the tracker carries values the page contradicts
-            # again, gives the identical {'POSSIBLE': 145} and the identical 145 truncations.
-            # What is left is the counterexample-rebinding repair -- a parameter the negative
-            # does not determine no longer counts as excluded -- which leaves this reading with
-            # fewer surviving literals and so with less to constrain its search.  A reading
-            # whose rules constrain nothing binds everything, which is what this file is about;
-            # the claim made here is therefore the weaker true one.
+            # On the loose reading it no longer does: the binder hits the enumeration bound
+            # every time, and a truncated enumeration can never refute, so every value claim
+            # stays POSSIBLE whether or not the predictions are rewritten. A reading whose
+            # rules constrain nothing binds everything.
             counts = plain.counts("VALUE")
             if set(counts) - {"POSSIBLE", "NOT_APPLICABLE", "UNKNOWN"}:
                 assert counts != wrecked.counts("VALUE"), (name, mode)
             elif mode == ASSERTED:
                 assert plain.binding_summary()["hit_the_enumeration_bound"], (name, mode)
-            # Under the retired `attested` mode the loose reading is silent for the other
-            # reason that mode was retired for: it pins every parameter with the constant
-            # its one occasion showed, binds uniquely, and claims no value at all
-            # (`docs/v4_collections.md`).  The leakage invariants above are what this test
-            # is about, and they hold in both modes.
+            # Under `attested` mode the loose reading is silent for a different reason:
+            # it pins every parameter to the constant its one occasion showed, binds
+            # uniquely, and claims no value at all. The leakage invariants above hold
+            # in both modes.
 
 
 def test_the_outcome_cannot_choose_the_binding():
-    """The most important test here.
-
-    Two berths satisfy the rule equally in the pre-state; after the transition only one of them
-    took the predicted value.  The binder is given the pre-state and nothing else, so it must
-    return both -- and the consequence layer must therefore be unable to refute, because the
-    hidden instantiation might have been the one that worked.  A binder that could see the
-    outcome would return one, and every reading would then be able to pick whichever object
-    made its own effect come true.
+    """The binder sees only the pre-state, not the outcome. Two berths satisfy
+    the rule equally before the transition, so both must be returned even though only
+    one took the predicted value afterward -- otherwise a reading could always pick
+    whichever object made its own effect come true.
     """
     world = state(obj("N1", node=1, state="open"), obj("N2", node=2, state="open"))
     op = rule({"?o0": BERTH}, [("attr", "?o0", "state", "open")])
@@ -259,13 +234,10 @@ HARBOUR_RUN = ROOT / "runs/v4/harbour_transfer"
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_not():
-    """The finding, through the whole path: fit, bind, relocate, check.
-
-    The reading that names a berth row by its identifying column binds every rule uniquely from
-    the clicked control plus its learned preconditions.  The reading that makes each rendered
-    cell an entity named by its own text leaves dozens of assignments open for the same click,
-    because nothing in its rules relates the control to the cell.  That is not a score; it is
-    the number of objects its own preconditions fail to exclude.
+    """The reading that names a row by its identifying column binds every rule
+    uniquely from the clicked control and its learned preconditions. The reading that
+    names each cell by its own text leaves many assignments open, because nothing in
+    its rules relates the control to the cell.
     """
     from semabi.compiler.model import build_model
     from semabi.compiler.v4.consequence import VALUE, fit, score
@@ -280,11 +252,10 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
     decided = [p for p in grounded.predictions if p.kind == VALUE and p.bindings]
     assert decided and all(p.binding_status == binding.UNIQUE for p in decided)
     open_ended = [p for p in loose.predictions if p.kind == VALUE and p.bindings]
-    # The loose reading used to leave dozens of assignments open on every value claim.  Since
-    # a reference resolves by key whether or not the prefix rendered the referent
-    # (`docs/v4_identity.md`), a reading that makes every cell an entity keyed by its own text
-    # fills its references with phantoms and no value rule of it applies at all -- a different
-    # shape of the same failure.  What must not happen is a *unique* binding from it.
+    # A reference resolves by key whether or not the prefix rendered the referent, so a
+    # reading that keys every cell by its own text fills its references with phantoms and
+    # no value rule applies -- a different shape of the same failure. What must not happen
+    # is a *unique* binding from it.
     assert not any(p.binding_status == binding.UNIQUE for p in open_ended)
     assert all(p.bindings > 10 for p in open_ended)
 
@@ -295,15 +266,10 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
         set(where) == {"in the clicked row"} for where in grounded.landing(VALUE).values())
     assert all("in another row" in where for where in loose.landing(VALUE).values())
 
-    # And the exported action model says it before any prediction is checked at all, because
-    # it is a property of the reading rather than of the trace: an operator records which of
-    # its parameters the interaction itself grounds.
-    #
-    # About the objects it *changes*.  Since the model learned what an interaction returns, an
-    # operator can also mention an object no effect of it touches -- harbour's "cannot be
-    # closed while call C-101 holds it" is about the call -- and that parameter is derived on
-    # both readings, correctly.  Conflating the two would say the grounded reading has stopped
-    # grounding its action, which is not what happened.
+    # The exported action model says this before any prediction is checked, because it is
+    # a property of the reading rather than of the trace: an operator records which of its
+    # parameters the interaction itself grounds. An operator can also mention an object no
+    # effect of it touches; that parameter is derived, not grounded, on both readings.
     import semabi.relmodel as rm
 
     def changes(op):
@@ -317,10 +283,8 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
             if isinstance(e, rm.Create):
                 vals += [v for _, v in e.attrs]
                 created.add(e.bind)
-        # An object the interaction brings into being is not one it had to ground.  Under
-        # the loose reading `Schedule call` has a creation-only operator, which reached
-        # support 2 only once the control identity stopped fragmenting the control by node
-        # index (`docs/v4_identity.md`); it changes nothing pre-existing.
+        # An object the interaction brings into being is not one it had to ground: a
+        # creation-only operator changes nothing pre-existing.
         return {v for v in vals if isinstance(v, str) and v.startswith("?")} - created
 
     for fitted, action_grounds_everything in ((grounded_fit, True), (loose_fit, False)):
@@ -332,15 +296,12 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
         assert all(bool(set(op.derived()) & changes(op)) is not action_grounds_everything
                    for op in operators if changes(op))
 
-        # and the exported claim is the same claim the checker acts on.  ``supplied`` is
-        # computed statically from the grounding acts while ``action_binding`` is computed per
-        # transition from where the click landed; if they disagreed, the ABI would be
-        # describing a different operator from the one being measured.
+        # and the exported claim is the same claim the checker acts on. ``supplied`` is
+        # computed statically from the grounding acts while ``action_binding`` is computed
+        # per transition from where the click landed; they must agree.
         for op in fitted.operators:
-            # Every click supplies the object it lands in.  An operator of two clicks -- a
-            # call's reference button, then `Allocate berth` on the sheet it opens -- supplies
-            # two, and reaches support 2 on harbour once the reference buttons are one family
-            # (`docs/v4_open_world.md`).
+            # Every click supplies the object it lands in. An operator of two clicks --
+            # a reference button, then an action on the sheet it opens -- supplies two.
             at_runtime = {a.owner for a in op.acts
                           if a.kind == "click" and a.owner and a.loc is not None
                           and a.loc.owner_tid is not None}
@@ -366,12 +327,9 @@ def _fold(verdicts, truncated=False):
 
 
 def test_one_assignment_that_works_stops_a_refutation():
-    """The existential reading, and the thing this whole layer exists to protect.
-
-    The rule fired once.  Several admissible assignments are competing hypotheses about which
-    instantiation that was, so a refutation requires all of them to fail -- the hidden one
-    might have been the one that worked.  Aggregating any other way would let a reading be
-    refuted for objects the action never touched.
+    """Several admissible assignments are competing hypotheses about which
+    instantiation actually fired, so a refutation requires all of them to fail. Otherwise
+    a reading could be refuted for objects the action never touched.
     """
     from semabi.compiler.v4 import consequence as csq
     assert _fold([csq.REFUTED, csq.REFUTED, csq.SUPPORTED]).verdict == csq.POSSIBLE
@@ -589,19 +547,12 @@ def test_an_ambiguous_set_can_still_pin_some_of_its_parameters():
 
 
 def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema():
-    """The STRIPS+ condition, measured rather than assumed.
-
-    A variable that appears in an effect has to be determined by the explicit arguments and the
-    preconditions, or the effect does not say which object changes.  Harbour's two readings sit
-    on opposite sides of that line and the checker does not need to be told which is which: the
-    grounded reading has no derived parameters to determine, while the loose reading's single
-    parameter is left open on every occasion its rules fire, so nine of its sixteen operators
-    are effects on nothing in particular.
-
-    Adding the attested equalities determines the parameter and every operator becomes
-    well-formed -- and is then refuted, which is the point of separating the two questions.  A
-    schema that names a definite object can be wrong about it; one that does not cannot even be
-    wrong.
+    """A variable that appears in an effect has to be determined by the explicit
+    arguments and the preconditions, or the effect does not say which object changes.
+    Adding equalities can determine the parameter and make an operator well-formed, but
+    that is a separate question from whether it is then refuted: a schema naming a
+    definite object can be wrong about it, but one that names no object cannot even
+    be wrong.
     """
     from semabi.compiler.v4.consequence import ATTESTED, VALUE, fit, score
     from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
@@ -634,26 +585,15 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
     # any does, it must come from an operator whose effect object the state never pinned.
     assert all(loose["operators"][p.operator]["undetermined_effect_params"] for p in decided)
 
-    # The retired `attested` mode used to make every one of them well-formed -- and then
-    # refuted.  It could, because each of these operators had support 1: the button sat
-    # outside every unit under this reading and its slot key carried a node index, so every
-    # occurrence was its own operator and `attested` pinned the parameter with the constant
-    # that one occasion happened to show (`id = 'open'`).  With the control named by its
-    # masked label the occasions pool (`docs/v4_identity.md`), the only attested literal left
-    # for the open parameter is its column, and nothing pins it.  That is the mode doing what
-    # it was retired for, and the ill-formed set is what it was.
-    # Under the column judgement of `docs/v4_collections.md` the loose reading's cell
-    # objects changed again, and `attested` pins the open parameter once more with the one
-    # constant its occasion showed -- `op8`, support 1, three cell parameters and no
-    # precondition, made "well-formed" by a memorised value.  Which is the mode doing what
-    # it was retired for, and it never makes an operator ill-formed that `asserted` does not.
+    # `attested` mode pins an open parameter with the constant its one occasion showed,
+    # which can make an operator look well-formed by memorising a value rather than by
+    # determining it from the rule. It never makes an operator ill-formed that this mode
+    # does not.
     assert set(score(loose_fit, applicability=ATTESTED).schema()["ill_formed"]) <= set(loose["ill_formed"])
 
-    # And no binding query could have determined those parameters, because there is nothing
-    # to determine them *from*: every ill-formed operator here has an action attributed to no
-    # object at all, so the only atoms available to a determinacy search mention constants,
-    # and a constant selects whichever object looks like the training one.  That is what
-    # attested does, and it is why the object it commits to is so often the wrong one.
+    # No binding query could have determined these parameters: every ill-formed operator
+    # here has an action attributed to no object, so the only atoms available mention
+    # constants, and a constant just selects whichever object looks like the training one.
     by_name = {op.name: op for op in loose_fit.operators}
     for name in loose["ill_formed"]:
         core = by_name[name].core()[0]
@@ -662,14 +602,11 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
 
 
 def test_the_generative_mode_is_the_invariants_alone_and_not_the_learned_cover():
-    """``op.pre`` has no counterpart in the construction the literature proves correct.
-
-    SYNTH builds a precondition as a binding query conjoined with the atoms that held in every
-    state where the action was applied.  ``op.common`` is that second part; ``op.pre`` is a
-    greedy discriminative cover chosen to exclude negatives, which is a different object
-    entirely.  ``generative`` is therefore not a weaker ``attested`` -- it is what is left when
-    the cover is removed, and on harbour it is not the same thing: the cover was suppressing a
-    refutation the invariants alone expose.
+    """A precondition is a binding query conjoined with the atoms that held in every
+    state where the action applied. ``op.common`` is that second part; ``op.pre`` adds a
+    greedy discriminative cover chosen to exclude negatives. ``generative`` is what remains
+    once that cover is removed, and removing it can expose a refutation the cover was
+    suppressing.
     """
     from semabi.compiler.v4 import consequence as csq
 
@@ -698,12 +635,10 @@ def test_a_truncated_enumeration_pins_nothing():
 
 
 def test_every_parameter_says_why_it_has_a_value_or_has_none():
-    """Four provenances, not two and an absence.
-
-    A reader of a binding should not have to infer from a parameter's absence which of the
-    reasons it is absent for: a string the action carried but this code was not given, or an
-    object the rule creates and no pre-state can hold.  Both are absent from ``values``; only
-    the label says which.
+    """A reader should not have to infer from a parameter's absence why it is
+    absent: a string the action carried but this code was not given, or an object the
+    rule creates that no pre-state can hold. Both are absent from ``values``; only the
+    label says which.
     """
     op = rule({"?o0": BERTH, "?s": "str", "?new0": BERTH})
     s = state(obj("a"))
@@ -716,16 +651,10 @@ def test_every_parameter_says_why_it_has_a_value_or_has_none():
 
 
 def test_a_search_that_cannot_finish_says_so_instead_of_running(monkeypatch):
-    """The bound on the answer is not a bound on the search, and the difference bit.
-
-    A rule naming many objects the action does not supply spans a product space the size of
-    which is set by the state, not by ``MAX_ADMISSIBLE``.  Where its preconditions are weak the
-    search fills its quota at once and unwinds; where they exclude nearly everything, nothing
-    fills, and the enumeration walks the whole space.  On the wine cellar that is 10^26 and one
-    scoring pass had not finished after three and a half hours.
-
-    Giving up is only safe because it is reported: ``UNSETTLED`` is not ``NONE``, so a rule the
-    search could not settle is never read as one the state contradicted.
+    """The size of the search space is set by the state, not by ``MAX_ADMISSIBLE``.
+    Where preconditions exclude nearly everything, the enumeration can walk the whole
+    space without finishing. Giving up is only safe because it is reported:
+    ``UNSETTLED`` is not ``NONE``, so an unsettled rule is never read as a contradicted one.
     """
     monkeypatch.setattr(binding, "MAX_SEARCH_NODES", 20)
     # the failing literal is about the *last* parameter, so nothing can be excluded until a
@@ -747,11 +676,9 @@ def test_a_search_that_cannot_finish_says_so_instead_of_running(monkeypatch):
 # --------------------------------------------------- what the rule claims to change, and where
 
 def test_many_witnesses_one_target_is_not_ambiguity():
-    """Assignment count is a computational fact.  Which object changes is the semantic one.
-
-    A rule whose precondition-only variables range over many objects while every satisfying
-    assignment picks the same object to act on is perfectly usable, and counting assignments
-    would call it hopeless.  This is the case the old ``bindings`` number could not express.
+    """A rule can range over many admissible objects while every satisfying
+    assignment picks the same one to act on. That rule is usable even though a raw
+    count of assignments would call it hopeless.
     """
     target = obj("the one that changes")
     others = [obj(f"witness{i}") for i in range(6)]
@@ -788,12 +715,9 @@ def test_two_observed_targets_remain_underdetermined_when_search_is_incomplete(b
 
 
 def test_agreement_among_the_assignments_reached_is_not_determinacy():
-    """Truncation is asymmetric, and the asymmetry is the reason to ask this separately.
-
-    Two disagreeing denotations settle underdetermination however the search ended -- a witness
-    is a witness.  Agreement settles nothing unless the search was complete, because the
-    assignment that would have disagreed may be the one never reached.  Reading determinacy off
-    a truncated enumeration is how a resource bound becomes a semantic claim.
+    """Two disagreeing denotations settle underdetermination however the search
+    ended -- a witness is a witness. Agreement settles nothing unless the search was
+    complete, since the assignment that would have disagreed may be the one never reached.
     """
     target = obj("same target")
     op = rule({"?z": BERTH, "?y": BERTH}, [])
@@ -850,10 +774,9 @@ def test_a_relation_from_the_action_object_names_what_the_rule_changes():
 
 
 def test_an_enabling_clicks_owner_is_named_from_the_acting_object_or_not_at_all():
-    """Harbour's call button opens the sheet; under a reading that keys the sheet by its
-    vessel the acting click binds the vessel and the enabling click the call.  The call is
-    not in hand at prediction time, so it is wanted like an effect object and named by a
-    relation from the vessel where one exists."""
+    """The acting click binds one object and the enabling click a second that is
+    not yet in hand at prediction time, so it must be named by a relation from the first
+    where one exists."""
     from semabi.compiler.v4 import referring
     call = obj("C-103", tid=CALL)
     vessel = obj("Bregagh", holds="C-103")
@@ -880,10 +803,9 @@ def test_two_indistinguishable_objects_leave_the_rule_unable_to_say_which():
 
 
 def test_a_created_object_is_never_searched_for_in_the_state_before_it_exists():
-    """The category error that cost a run: a creation is an output, not an implicit reference.
-
-    Searching the pre-state for it always fails, and charging that failure to the reading
-    understates exactly the reading whose effects are honest creations.
+    """A creation is an output, not an implicit reference. Searching the pre-state
+    for it always fails, which would unfairly penalize a reading whose effects are
+    honest creations.
     """
     from semabi.compiler.v4 import referring
     op = _grounding_fixture(params={"?x": BERTH, "?new0": CALL}, effect_on="?new0")
@@ -932,13 +854,10 @@ def _tiny_log(tmp_path, rows):
 
 
 def test_a_prefix_view_cannot_reach_a_later_observation(tmp_path):
-    """Truncating the step list is not a chronological split.
-
-    Everything that fits a schema reads ``observations``, not ``steps``: the observation graph,
-    the family hypotheses, the parser the abstractor takes its types and slots from.  A log
-    loaded from disk holds the whole trace there, so a "prefix" model was being built under a
-    type system that had already seen the held-out suffix -- on harbour, the difference between
-    14 types and 11.
+    """Everything that fits a schema reads ``observations``, not ``steps``. A log
+    loaded from disk holds the whole trace, so truncating the step list alone does not
+    stop a "prefix" model from being built under a type system that has already seen the
+    held-out suffix.
     """
     log = _tiny_log(tmp_path, 6)
     assert len(log.steps) == 6 and len(log.observations) == 7
@@ -979,16 +898,10 @@ def _world(view, *objs):
 
 
 def test_an_object_can_be_named_by_the_control_the_interface_currently_points_at():
-    """The form blend needed and did not have.
-
-    A draw moves gallons from the vat named in one dropdown into the blend named in another,
-    and the click carries neither: the selections were made earlier and persist, so at the
-    moment of acting they are ordinary pre-state evidence -- sitting in the view rather than on
-    any object, which is why relation, singleton and property all miss them.
-
-    Without this the learner has nothing to say about the variable and falls back on what
-    actually separates its examples, the identity of the vats it was fitted from, which is
-    correctly refused as memorisation.  The rule then cannot be expressed at all.
+    """The click carries neither object: two dropdown selections were made
+    earlier and persist, so at the moment of acting they are ordinary pre-state evidence
+    sitting in the view rather than on any object. Without a way to read that evidence,
+    the learner falls back on memorising which vats it was fitted from.
     """
     from semabi.compiler.v4 import referring
 
@@ -1017,12 +930,9 @@ def test_an_object_can_be_named_by_the_control_the_interface_currently_points_at
 
 
 def test_a_control_that_names_no_object_of_the_type_determines_nothing():
-    """Naming nothing is not naming the absence of anything.
-
-    The dropdown may point at something the frozen schema does not read as an object of this
-    type -- on blend that happens on 49 of 373 held-out opportunities.  The honest answer is an
-    empty denotation, which the caller reports as the query failing to determine, never as the
-    object being absent from the application.
+    """The dropdown may point at something the frozen schema does not read as
+    an object of this type. The honest answer is an empty denotation, reported as the
+    query failing to determine -- never as the object being absent from the application.
     """
     from semabi.compiler.v4 import referring
 
@@ -1046,12 +956,9 @@ def test_a_control_naming_two_candidates_is_not_proposed_as_a_query():
 
 
 def test_a_collection_members_cell_is_not_offered_as_a_selection_anchor():
-    """Harbour's unkeyed vessels overview rendered its cells as view slots numbered by
-    where the row stood -- `cell@Vessel#2` held whatever vessel was listed third -- and the
-    Schedule-call rules then quantified over those coordinates, which is exactly what the
-    member-reversal instrument caught.  A slot inside a collection member anchors nothing;
-    a header cell or a page-level control still can, and a state with no parse is read as
-    it always was."""
+    """A slot inside a collection member is numbered by where the row stood,
+    not by identity, so it anchors nothing. A header cell or page-level control still
+    can; a state with no parse is read as it always was."""
     from semabi.compiler.v4 import referring
 
     def obs_with_rows():

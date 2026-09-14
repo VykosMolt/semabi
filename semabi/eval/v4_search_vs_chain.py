@@ -1,13 +1,9 @@
-"""What the identity search chooses on its own, against the reading a chain carries.
-
-The chain manifests pin readings chosen by earlier sessions' frontier tools; the search
-(`semabi.compiler.v4.search`) is what SOURCE generation runs.  This runs the search on a
-run's prefix under the certified regime -- acquired probes, sensing clicks out of the
-macros, the mention-conflict and certified-domain terms, revisiting passes, withheld unions
--- and scores its reading and the chain's on the same suffix.  The search's reading is
-what a fresh compile would produce; the chain's is what every instrument has been
-measuring.  Where they tie on the suffix the instruments' numbers stand for the search;
-where they differ, the difference is a fact about the objective (`docs/v4_frontier.md`).
+"""Compares what the identity search chooses on its own against the reading a chain
+manifest carries. Chain manifests pin readings chosen by earlier sessions' frontier tools,
+while `semabi.compiler.v4.search` is what fresh generation actually runs. This runs the
+search on a run's prefix under the certified regime and scores its reading and the
+chain's on the same suffix: a tie means the instruments' numbers stand for the search;
+a difference is a fact about the objective.
 """
 from __future__ import annotations
 

@@ -2,14 +2,14 @@
 
 The search is coordinate-wise and local: one family at a time, each of its candidate
 readings applied on a copy, the trace recompiled and scored by
-`semabi.compiler.v4.objective`.  Nothing enumerates joint partitions of all mentions.
+`semabi.compiler.v4.objective`. Nothing enumerates joint partitions of all mentions.
 
-Two properties matter more than the optimum it reaches.  First, a reading whose identity
-claim has no discrimination evidence is not adopted merely because it scores well
-structurally -- it has to earn its place behaviourally against the alternative of claiming
-no identity at all.  Second, when two readings are behaviourally indistinguishable on the
-trace so far, the tie is *kept* rather than broken by a tiebreak rule: it becomes an open
-question for `semabi.compiler.v4.probe` to put to the application.
+Two things matter more than the optimum it reaches. A reading whose identity claim has
+no discrimination evidence isn't adopted just because it scores well structurally -- it
+has to earn its place behaviourally against claiming no identity at all. And when two
+readings are behaviourally indistinguishable on the trace so far, the tie is kept rather
+than broken by a rule: it becomes an open question for `semabi.compiler.v4.probe` to put
+to the application.
 """
 from __future__ import annotations
 
@@ -27,8 +27,8 @@ from semabi.compiler.v4.abstractor import V4Abstractor
 from semabi.compiler.v4 import objective
 from semabi.compiler.v4.identity import Reading, _Family, family_key, family_readings, other_key_values, reading_for, spoken_values
 
-MAX_ROUNDS = 4     # coordinate passes: a family judged against a base that later moves change
-                   # is judged again, until no family moves (`docs/v4_frontier.md`)
+MAX_ROUNDS = 4     # coordinate passes: a family judged against a base that later moves
+                   # change is judged again, until no family moves
 
 
 @dataclass
@@ -77,10 +77,9 @@ REFUTATIONS_FILE = "identity_refutations_v4.json"
 def read_refutations(run_dir: Path | None) -> dict[str, set[str | None]]:
     """Readings an executed experiment has already refuted, per family.
 
-    A verdict reached by running an experiment is evidence about that hypothesis, not one
-    more point in an aggregate: once the application has contradicted a reading, the search
-    may not re-adopt it because it happens to explain more elsewhere.  This is the same
-    discipline V2 used for refuted refinement hypotheses.
+    A verdict reached by running an experiment is evidence about that hypothesis, not
+    one more point in an aggregate: once the application has contradicted a reading, the
+    search may not re-adopt it because it happens to explain more elsewhere.
     """
     if run_dir is None:
         return {}
@@ -108,13 +107,11 @@ def write_refutation(run_dir: Path, family: str, key_slot: str | None, why: str,
                      premises: dict | None = None) -> None:
     """Record a refuted reading beside the history it was fitted on.
 
-    A slot's name is a coordinate of the representation, not of the application: blend's
-    `cell@Ticket#0` was the word "Ticket" while a placeholder row made the column's label
-    vary, and the number once that was repaired.  A refutation written by name alone would
-    have followed the name to a hypothesis the experiment never tested.  So a record
-    carries ``held`` -- the distinct values the key slot took on the history when the
-    experiment decided -- and is applied only while the slot still holds them
-    (`stale_refutations`)."""
+    A slot's name is a coordinate of the representation, not of the application, and can
+    change meaning under the same name. A refutation written by name alone would follow
+    the name to a hypothesis the experiment never tested. So a record carries ``held`` --
+    the distinct values the key slot took on the history when the experiment decided --
+    and is applied only while the slot still holds them (`stale_refutations`)."""
     path = Path(run_dir) / REFUTATIONS_FILE
     payload = json.loads(path.read_text()) if path.exists() else {"refuted": []}
     if not any(r["family"] == family and r["key_slot"] == key_slot for r in payload["refuted"]):
@@ -122,13 +119,12 @@ def write_refutation(run_dir: Path, family: str, key_slot: str | None, why: str,
         if held is not None:
             row["held"] = sorted(held)
         if premises is not None:
-            # ``held`` binds the *denotation*: does the slot still hold what was
-            # adjudicated.  ``premises`` binds the *derivation*: the base reading the
-            # verdict was compared under, the cut, the comparator, and the question's two
-            # sides -- so a fixpoint loop can detect that the base has moved out from
-            # under a derived verdict and re-derive it instead of trusting it
-            # (docs/v4_retained.md).  Orthogonal stalenesses; a raw executed experiment
-            # records no premises because its evidence is not a derivation.
+            # ``held`` binds the denotation: does the slot still hold what was
+            # adjudicated. ``premises`` binds the derivation: the base reading, cut,
+            # comparator, and question that produced the verdict, so a fixpoint loop can
+            # tell the base has moved and re-derive instead of trusting a stale verdict.
+            # These are independent kinds of staleness; a raw executed experiment records
+            # no premises, since its evidence isn't a derivation.
             row["premises"] = premises
         payload["refuted"].append(row)
     path.write_text(json.dumps(payload, indent=1))
@@ -148,8 +144,8 @@ def slot_values(H: Hypotheses, family: str, key_slot: str | None) -> set[str]:
 def stale_refutations(records: list[dict], H: Hypotheses) -> list[dict]:
     """Records whose slot no longer holds what it held when the experiment decided.
 
-    A record without ``held`` binds by name only and is reported as unbound, since nothing
-    says the name still means what it meant."""
+    A record without ``held`` binds by name only and is reported as unbound, since
+    nothing says the name still means what it meant."""
     out = []
     for r in records:
         held = r.get("held")
@@ -181,8 +177,7 @@ def _reload_pairs(log: EvidenceLog) -> list[tuple[str, str]]:
 def _view_of(H: Hypotheses) -> dict[str, str]:
     """A cheap view label per observation: the multiset of top-level role paths.
 
-    Only used as context for cross-view evidence; it names no application construct.
-    """
+    Only used as context for cross-view evidence; it names no application construct."""
     out = {}
     for sig, obs in H.G.obs.items():
         roots = [n.role for n in obs.nodes if n.parent < 0 or obs.node(n.parent).parent < 0]
@@ -193,9 +188,9 @@ def _view_of(H: Hypotheses) -> dict[str, str]:
 def _materialise(unit, key_slot: str) -> None:
     """Give a composite reading a slot to live in, the way `Hypotheses.fit` does for its own.
 
-    A composite identity is two rendered values read as one name.  Nothing about it is new
-    to the downstream: it is the same mechanism V2 already uses when no single value tells
-    duplicates apart, exposed here as one candidate reading among others.
+    A composite identity is two rendered values read as one name. Nothing about it is
+    new downstream: it's the same mechanism used when no single value tells duplicates
+    apart, exposed here as one candidate reading among others.
     """
     parts = key_slot.split("|")
     stat = SlotStat(key_slot)
@@ -226,9 +221,8 @@ def _decided_by(before, after) -> dict[str, int]:
     if after.explained != before.explained:
         out["explained"] = after.explained - before.explained
     if after.named != before.named:
-        # what the interface said is evidence (`_evidence_tie`), and a move it decides
-        # must say so: harbour's board lost its key to a reading that binds more of the
-        # spoken call ids through the keyed buttons, and reported `decided_by: {}`
+        # What the interface said is evidence (`_evidence_tie`), and a move it decides
+        # must say so rather than report an empty `decided_by`.
         out["named"] = after.named - before.named
     return out
 
@@ -242,11 +236,9 @@ def _refuted_in(refuted: dict[str, set[str | None]], units: list) -> set[str | N
 
 
 def _group_families(H: Hypotheses) -> dict[str, list]:
-    """Units by family: the structure with every rendered token erased, and then the
-    variants that differ only by optional parts (a page with or without its feedback line,
-    a card with or without an occupant) as one family, as V2's `_family_keys` reads them.
-    Split by an optional node, a detail page held identity only on the variants that
-    happened to show a status line."""
+    """Units by family: the structure with every rendered token erased, with variants
+    that differ only by optional parts (present or absent) merged into one family, the
+    way V2's `_family_keys` reads them."""
     by_key: dict[str, list] = {}
     for template, unit in sorted(H.units.items()):
         by_key.setdefault(family_key(template), []).append(unit)
@@ -292,16 +284,16 @@ def _template_pairs(grouped: dict[str, list], fa: str, fb: str) -> set[frozenset
 
 
 def family_templates(H: Hypotheses, name: str) -> list[str]:
-    """The templates of the family the search calls `name`: its variants merged by optional
-    parts, or, for a name the grouping does not produce here, the templates with that
-    erased-token name."""
+    """The templates of the family the search calls `name`: its variants merged by
+    optional parts, or, for a name the grouping doesn't produce here, the templates with
+    that erased-token name."""
     grouped = _group_families(H)
     return [u.template for u in grouped.get(name, [])] or [t for t in H.units if family_key(t) == name]
 
 
 def _reparse(Hx: Hypotheses) -> None:
     """A recurring template is a unit only if it has identity: the content of a part the
-    search left without a key flows to the enclosing unit, as under the V2 fixpoint."""
+    search left without a key flows to the enclosing unit."""
     keyed = Hx.unit_templates()
     if Hx.allowed == keyed:
         return
@@ -331,8 +323,8 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
            refuted: dict[str, set[str | None]] | None = None) -> SearchResult:
     """Search using either retained refutations or the legacy run-dir sidecar.
 
-    Frozen SOURCE generation passes ``refuted`` parsed from the descriptor-bound
-    custody bytes.  Path-based sidecar loading remains for live/probe callers only.
+    Frozen SOURCE generation passes ``refuted`` parsed from the descriptor-bound custody
+    bytes. Path-based sidecar loading remains for live/probe callers only.
     """
     stale: list[dict] = []
     if refuted is None:
@@ -350,8 +342,8 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
     result.families = {name: [u.template for u in units] for name, units in grouped.items()}
     family_reading: dict[str, list[Reading]] = {}
     for name, units in grouped.items():
-        # a family whose members are leaves on trial as objects may name itself with its own
-        # text; a compound unit may not use its narration as its name
+        # A family whose members are leaves on trial as objects may name itself with its
+        # own text; a compound unit may not use its narration as its name.
         leaf_family = bool(H.promoted) and all(u.template in H.promoted for u in units)
         candidates = family_readings(units, reload_pairs, view_of, allow_prose=leaf_family,
                                      spoken=spoken, shared=other_key_values(H, {u.template for u in units}))
@@ -375,9 +367,8 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                 continue
             target = hyps.units[unit.template]
             if parts and not all(p in target.slots for p in parts):
-                # a template of the family that does not render the slot carries no identity
-                # under this reading (as `pinned.apply` already held); keying it anyway made
-                # `primary_key_values` fail on a column-reversed vet
+                # A template that doesn't render the slot carries no identity under this
+                # reading; keying it anyway breaks `primary_key_values`.
                 target.key_slot = None
                 continue
             target.key_slot = reading.key_slot
@@ -389,8 +380,8 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
     result.initial = score
     log_fn(f"v4 initial (V2 identities): {score}")
 
-    # start from what the evidence says rather than from V2's argmax: a family whose identity
-    # claim has no discrimination evidence starts with no identity and has to win it back
+    # Start from what the evidence says rather than V2's argmax: a family whose identity
+    # claim has no discrimination evidence starts with no identity and has to win it back.
     for name in grouped:
         assign(base, name, family_reading[name][0])
     trial = _build(copy.deepcopy(base), G, log)
@@ -405,18 +396,16 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
     else:
         base = copy.deepcopy(H)
         for name in grouped:
-            # What the hypotheses actually carry is V2's key.  When the structural ranking
-            # did not propose it, `chosen` used to report the top-ranked candidate instead,
-            # and a reading pinned from that report named a key the search never validated
-            # (vet's appointments: hypotheses keyed by the patient, report keyed by reason
-            # and status).  The inherited key is now a reading of its own, with its
-            # evidence, and the alternatives are judged against it as they always were.
+            # What the hypotheses actually carry is V2's key. When the structural ranking
+            # didn't propose it, `chosen` used to report the top-ranked candidate instead,
+            # pinning a key the search never validated. The inherited key is now a reading
+            # of its own, with its evidence, judged against the alternatives as usual.
             v2_key = H.units[grouped[name][0].template].key_slot
             inherited = next((r for r in family_reading[name] if r.key_slot == v2_key), None)
             if inherited is None and v2_key in _refuted_in(refuted, grouped[name]):
-                # V2's key was refuted by an executed experiment: it is not inherited, and
-                # the hypotheses are moved off it to the best surviving reading (a refuted
-                # key must not reach a frozen manifest by this door either)
+                # V2's key was refuted by an executed experiment: it isn't inherited, and
+                # the hypotheses move off it to the best surviving reading -- a refuted key
+                # must not reach a frozen manifest by this door either.
                 inherited = family_reading[name][0]
                 assign(base, name, inherited)
                 log_fn(f"v4 {name}: V2's key {v2_key!r} is refuted; starting from {inherited.key_slot!r}")
@@ -452,15 +441,11 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                         and not ((reading.is_identity or here.is_identity)
                                  and _evidence_tie(trial_score, score))):
                     # Where a move would change what identity is claimed, only the evidence
-                    # may make it: explanation, error, or what the interface names.  The
+                    # may decide it: explanation, error, or what the interface names. The
                     # objective's own tie-breaks -- atoms, complexity -- are about how an
-                    # event is spelled, and between keys they favoured whichever key
-                    # happened not to union the family with another (harbour's overview
-                    # keyed by `Cargo` rather than by the vessel's name, which the vessels
-                    # table already keys by); between a key and no identity they favour
-                    # whichever spelling is shorter, which is not a fact about the objects
-                    # (harbour's vessels).  On such a tie the incumbent stays, or the
-                    # demotion below runs, and the question is kept either way.
+                    # event is spelled, not a fact about the objects, so on such a tie the
+                    # incumbent stays, or the demotion below runs, and the question stays
+                    # open either way.
                     result.moves.append({"move": "identity", "round": round_no, "family": name,
                                          "templates": len(grouped[name]),
                                          "key_slot": reading.key_slot, "status": reading.status,
@@ -474,14 +459,10 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                     moved = True
                 elif (not reading.is_identity and here.is_identity
                       and _evidence_tie(trial_score, score)):
-                    # An identity has to earn its place against claiming none, and earning
-                    # is by evidence -- explanation, error, or what the interface names --
-                    # never by the spelling: the objects it posits change nothing the trace
-                    # explains, and on blend such a family, unioned into the vats by key
-                    # overlap, added mentions the outcome layer generalised wrongly
-                    # (`docs/v4_frontier.md`).  Atoms and complexity may differ either way
-                    # (a key usually spells the same events longer); a spelling is not a
-                    # fact about the objects.  The question stays open.
+                    # An identity has to earn its place against claiming none, by evidence
+                    # -- explanation, error, or what the interface names -- never by
+                    # spelling. Atoms and complexity may differ either way; spelling is not
+                    # a fact about the objects, so the question stays open.
                     result.moves.append({"move": "identity", "round": round_no, "family": name,
                                          "templates": len(grouped[name]), "key_slot": None,
                                          "status": reading.status, "decided_by": {"unearned": here.key_slot},
@@ -494,10 +475,8 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                     moved = True
                 elif (here.status == "INHERITED" and reading.status != "INHERITED"
                       and _evidence_tie(trial_score, score) and not score.better_than(trial_score)):
-                    # V2's key was carried, not proposed: on an evidence tie a reading the
-                    # structure did propose replaces it (dispatch's run page keyed by its
-                    # depot word, where its name is what its cards are keyed by), and the
-                    # question is kept
+                    # V2's key was carried, not proposed: on an evidence tie, a reading the
+                    # structure did propose replaces it, and the question stays open.
                     result.moves.append({"move": "identity", "round": round_no, "family": name,
                                          "templates": len(grouped[name]),
                                          "key_slot": reading.key_slot, "status": reading.status,
@@ -511,14 +490,14 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                     moved = True
                 elif trial_score.comparable_to(score) or (
                         (reading.is_identity or here.is_identity) and _evidence_tie(trial_score, score)):
-                    # neither dominates: either the two readings score identically, or one
-                    # explains more while the other errs less.  Both are undecided, and an
+                    # Neither dominates: either the two readings score identically, or one
+                    # explains more while the other errs less. Both are undecided, and an
                     # undecided reading is a question for the application, not a tie to break.
                     equal.append((reading, trial_score))
                 else:
-                    # the incumbent explains more, errs less, or names more of what the
-                    # interface said: a decision by evidence, recorded so that what decided a
-                    # family can be read from the moves rather than inferred from its silence
+                    # The incumbent explains more, errs less, or names more of what the
+                    # interface said: a decision by evidence, recorded so what decided a
+                    # family can be read from the moves rather than inferred from silence.
                     result.moves.append({"move": "rejected", "round": round_no, "family": name,
                                          "key_slot": reading.key_slot, "status": reading.status,
                                          "against": here.key_slot,
@@ -531,10 +510,9 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                     why = (f"undecided: chosen explains {score.explained} with {score.errors} errors, "
                            f"the alternative explains {trial_score.explained} with {trial_score.errors}")
                 result.open_questions.append(OpenQuestion(name, here, reading, why))
-        # The other identity hypothesis: two families the key overlap unioned into one entity
-        # type may be two kinds of thing (an appointment row names its patient).  Each
-        # cross-family union the built hypotheses made is a candidate to withhold, judged
-        # like a key.
+        # The other identity hypothesis: two families the key overlap unioned into one
+        # entity type may actually be two kinds of thing. Each cross-family union the
+        # built hypotheses made is a candidate to withhold, judged like a key.
         for fa, fb in _cross_family_unions(base, grouped):
             if (fa, fb) in result.withheld_unions:
                 continue
@@ -557,16 +535,16 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
             break
         log_fn(f"v4 round {round_no}: moved; judging every family again against the new base")
 
-    # `_build` runs `_build_entity_types` on the accepted candidate, which may have adopted a
-    # composite key from a sibling template of the entity type it was unioned into -- a key
-    # nobody judged.  Report what the hypotheses carry, marked as such, rather than the last
-    # reading the search accepted (`docs/v4_frontier.md`).
+    # `_build` runs `_build_entity_types` on the accepted candidate, which may have adopted
+    # a composite key from a sibling template it was unioned into -- a key nobody judged.
+    # Report what the hypotheses carry, marked as such, rather than the last reading the
+    # search accepted.
     for name, units in grouped.items():
         reported = result.chosen[units[0].template]
         parts = reported.key_slot.split("|") if reported.key_slot else []
-        # judged among the templates that render the reading's slots: a variant that does
-        # not (a row without the cell) carries no key under the reading by `assign`, and
-        # that is the reading, not a harmonisation
+        # Judged among the templates that render the reading's slots: a variant that
+        # doesn't (a row without the cell) carries no key under the reading, and that is
+        # the reading, not a harmonisation.
         carried = next((base.units[u.template].key_slot for u in units
                         if u.template in base.units and all(part in base.units[u.template].slots for part in parts)
                         and base.units[u.template].key_slot != reported.key_slot), reported.key_slot)

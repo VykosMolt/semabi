@@ -1,32 +1,11 @@
-"""What does the evidence establish, as against what one decision list happened to answer?
-
-The outcome learner returns a single ordered list.  Many lists fit the same occasions, and
-where two of them disagree about a held-out state the one the search returned is a vote rather
-than a conclusion.  `semabi.compiler.v4.outcome.Evidence` asks the other question exactly:
-given every completed occasion of this control, which events could a *justified* rule assign
-to this state?  A rule is justified when it is a conjunction over the literal language that
-this state satisfies, reaches at least two occasions of one event, and reaches no occasion of
-another -- the two refusals the greedy learner already makes, read as a definition rather than
-as a stopping rule.
-
-Four things are measured here and none of them collapses into the others.
-
-* **Forced** -- one event is admissible.  Under the rule class this means *no globally pure
-  rule vouches for anything else here*; it was first read as "no consistent list can say
-  anything else here", which is a claim about the list class and is false of the rule class
-  (a list answers by guards that are pure only after the ones above them).  ``--hypothesis
-  list`` asks the list-class question; the report cross-tabulates the two.
-* **Several admissible** -- the class does not determine the outcome.  The list still answers;
-  that answer is its ordering bias, and the honest report says so.
-* **Not established** -- nothing is admissible.  This is the answer a default cannot give and
-  the reason this instrument exists.
-* **Containment** -- whether what happened was inside the admissible set at all.  Outside is
-  not uncertainty; it is the hypothesis class failing to contain the application's behaviour.
-
-The list is cross-tabulated against these rather than scored beside them, because the
-interesting quantities are the disagreements: actions the evidence settles and the search
-abstained on, and actions the evidence leaves open that the search answered anyway.
-"""
+"""Checks what the evidence establishes on its own, against what one decision list
+happened to answer. `semabi.compiler.v4.outcome.Evidence` asks which events a justified
+rule could assign to a held-out state, then reports four things: forced (one event is
+admissible), several admissible (the class underdetermines the outcome), not established
+(nothing is admissible), and containment (whether what happened was in the admissible set
+at all). The list's answer is cross-tabulated against these rather than scored beside them,
+to surface where the evidence settles something the search abstained on, or leaves open
+something the search answered anyway."""
 from __future__ import annotations
 
 import argparse
@@ -67,8 +46,8 @@ def compare(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
     model = csq.fit(Path(run_dir), readings[reading_name], split=split,
                     min_support=min_support, regime=regime)
     if score_on is not None:
-        # A second interaction history none of which the model has seen -- the cleanest test
-        # of whether a forced answer transports.  A split inside one trace shares its episodes.
+        # A second interaction history the model has not seen at all: the cleanest test
+        # of whether a forced answer transports. A split inside one trace shares episodes.
         from dataclasses import replace
         from semabi.compiler.evidence import EvidenceLog
         model = replace(model, log=EvidenceLog(Path(score_on)), cut=0)
@@ -85,10 +64,8 @@ def compare(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
     combined: Counter = Counter()
     asserted: Counter = Counter()
     witnesses: list[dict] = []
-    # The same state under the other hypothesis class, so the two readings of "forced" are
-    # cross-tabulated rather than reported apart: what the rule class calls forced the list
-    # class mostly calls open, and where the rule class establishes nothing a fired guard can
-    # still be justified after another's.
+    # The same state under the other hypothesis class: what the rule class calls forced,
+    # the list class mostly calls open.
     other = oc.LIST if hypothesis == oc.RULE else oc.RULE
     cross_class: Counter = Counter()
     for step in steps:
@@ -113,8 +90,8 @@ def compare(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
         if got is not None:
             contained["inside the admissible set" if got in options else
                       ("outside it" if options else "nothing was admissible")] += 1
-        # The policy the two together support: answer the forced event where the evidence
-        # forces one, and elsewhere report the list's preference as a preference.
+        # Answer the forced event where the evidence forces one, and elsewhere report
+        # the list's preference as a preference.
         if bucket in (FORCED, SOLE):
             combined[vs["verdict"]] += 1
             asserted[options[0]] += 1

@@ -1,6 +1,6 @@
-"""Active experimentation: verification replays, precondition probes and
-systematic affordance sweeps, all executed on the live app and logged as
-ordinary evidence so that re-induction incorporates them."""
+"""Experiments run on the live application: replays that verify an operator, probes that
+test a precondition, and sweeps over affordances. Everything is logged as ordinary evidence,
+so a later re-induction takes it into account."""
 from __future__ import annotations
 
 import json

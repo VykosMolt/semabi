@@ -152,10 +152,8 @@ def refinement_process(run_dir: Path, variants: dict) -> dict | None:
         resolved = [x for x in selected if refined_status.get(str(x)) == "EXPLAINED"]
         selected_contradictions = []
     else:
-        # Early runner versions populated these fields with every nearby UNGROUNDED
-        # event even though correspondence/record probes targeted an association
-        # contradiction, not a probe-confirmed persistent DOMAIN event.  Normalize the
-        # diagnostic denominator without altering the append-only source artifact.
+        # Early runner versions populated these fields with unrelated UNGROUNDED events.
+        # Normalize the diagnostic denominator without altering the source artifact.
         selected = []
         resolved = []
         selected_contradictions = [source.get("component_id")]

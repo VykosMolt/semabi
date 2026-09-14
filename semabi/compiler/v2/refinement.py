@@ -285,14 +285,12 @@ def _component_for_widget(A, log: EvidenceLog, ce: Counterexample) -> AmbiguityC
 
 
 def _reveal_correspondence_components(A, log: EvidenceLog, counterexamples: list[Counterexample]) -> list[AmbiguityComponent]:
-    """Propose local same-entity assignments from action-conditioned mention reveals.
+    """Propose that two mentions are the same entity, from what a click revealed.
 
-    A click on one keyed mention followed by a differently structured keyed mention with
-    the same rendered key is correspondence evidence.  It is not sufficient by itself:
-    the alternatives remain unresolved until a reload/survey intervention establishes a
-    view-only transition.  Assignments are observation-local so a generic button template
-    cannot drag unrelated controls into the target entity type.
-    """
+    A click on one keyed mention followed by a differently shaped mention with the same key
+    is evidence, not proof: the alternatives stay open until a reload or survey shows the
+    transition changed nothing. Assignments are local to one page, so a generic button
+    template cannot drag unrelated controls into the type."""
     groups: dict[tuple[str, str], dict[str, Any]] = {}
     ce_by_step = {c.step: c for c in counterexamples}
     for step in log.steps:
@@ -590,15 +588,11 @@ def _context_membership_components(A, log: EvidenceLog,
         return out
 
     def anchored_mentions(sig, template, keys):
-        """Key mentions from the existing rich entity representation only.
+        """Key mentions from the existing entity representation only.
 
-        Accessible names elsewhere on the screen often repeat an entity key beneath a
-        page-level heading.  Treating all of those as source memberships would turn UI
-        chrome into candidate domain state.  The current entity hypothesis already gives
-        us a narrower, generic proposal anchor: its key-slot node.  The destination remains
-        a raw mention because discovering an alternative representation is the purpose of
-        the refinement.
-        """
+        Names elsewhere on the screen often repeat an entity's key under a page heading, and
+        treating those as memberships would turn chrome into domain state. The destination
+        stays a raw mention, since finding another representation is the whole point."""
         obs = A.G.obs[sig]
         unit = A.H.units[template]
         first_key_slot = unit.key_slot.split("|")[0] if unit.key_slot else None
@@ -998,15 +992,12 @@ def apply_matrix_record_result(component: AmbiguityComponent, result: dict[str, 
 def reopen_from_predictive_counterexamples(
         run_dir: Path, decisions: list[dict[str, Any]], mispredicted_ids: set[str],
         provenance: dict[str, Any]) -> dict[str, Any]:
-    """Feed a predictive failure back into the hypothesis space that produced it.
+    """Feed a predictive failure back into the hypotheses that produced it.
 
     Demoting a decision is not enough: unless the refuted alternative is marked, the next
-    refinement pass re-selects it and the loop cannot learn from the counterexample.  Each
-    MISPREDICTED decision's accepted hypothesis becomes CONTRADICTED with the failure as
-    its evidence, so `select_intervention` targets only the surviving alternatives and
-    `apply_*_result` accepts a different refinement.  Competing hypotheses are never
-    invented here; only the refuted one is removed from contention.
-    """
+    pass picks it again and nothing is learned from the counterexample. The accepted
+    hypothesis becomes contradicted, with the failure as its evidence. No new hypotheses
+    are invented here; only the refuted one leaves contention."""
     if not mispredicted_ids:
         return {"reopened_components": [], "contradicted_hypotheses": []}
     path = Path(run_dir) / HYPOTHESES_FILE
@@ -1052,12 +1043,9 @@ def write_counterexamples(run_dir: Path, counterexamples: list[Counterexample]) 
 def _carry_refutations(stored: dict[str, Any], fresh: dict[str, Any]) -> dict[str, Any]:
     """Keep a hypothesis refuted, whatever a later refit proposes.
 
-    Components are rebuilt from scratch by every diagnostic compile.  A refutation -
-    from a controlled probe or from a predictive counterexample on an independent trace -
-    is evidence about the application, not about the current fit, so a rebuild must not
-    silently return a contradicted alternative to contention.  Nothing else is carried:
-    support is re-derived from the trace each time.
-    """
+    Components are rebuilt by every compile, but a refutation is evidence about the
+    application rather than about this fit, so a rebuild must not quietly return a
+    contradicted alternative. Nothing else is carried: support is re-derived each time."""
     prior = {h["id"]: h for h in stored.get("hypotheses", [])}
     for h in fresh.get("hypotheses", []):
         old = prior.get(h["id"])

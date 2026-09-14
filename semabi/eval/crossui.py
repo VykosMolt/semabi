@@ -1,9 +1,7 @@
-"""Cross-UI structural equivalence: compare two learned models directly,
-without any hidden-domain information.
-
-Searches over type bijections, attribute correspondences (with value maps),
-and relation correspondences; operators are matched behaviourally by
-simulation on synthetic states in model A's vocabulary translated to B.
+"""Compares two learned models directly for structural equivalence, without any
+hidden-domain information. Searches over type bijections, attribute correspondences
+(with value maps), and relation correspondences; operators are matched behaviourally
+by simulation on synthetic states translated from model A's vocabulary to B's.
 """
 from __future__ import annotations
 
@@ -75,7 +73,7 @@ class CrossResult:
     ops_b: int
     equivalent: int  # A-operators with a behaviourally equivalent B-operator (pre and eff agree)
     per_op: list
-    equivalent_eff: int = 0  # A-operators whose effects are reproduced by a B-operator (eff agree)
+    equivalent_eff: int = 0  # A-operators whose effects are reproduced by a B-operator
 
     @property
     def score(self) -> float:
@@ -101,7 +99,7 @@ def _attr_candidates(A: LearnedModel, B: LearnedModel, ta: str, tb: str, vals_a,
         used = [a for a in assign if a is not None]
         if len(used) != len(set(used)):
             continue
-        # value maps: bijections between value sets (when sizes match), else skip
+        # value maps: bijections between value sets when sizes match, else skip
         options = []
         for b, a in zip(attrs_b, assign):
             if a is None:
@@ -130,7 +128,7 @@ def compare_models(A: LearnedModel, B: LearnedModel, seed: int = 0, n_states: in
     for k in range(min(len(ta_names), len(tb_names)), 0, -1):
         for tb_sub in itertools.combinations(tb_names, k):
             for ta_perm in itertools.permutations(ta_names, k):
-                type_map = dict(zip(tb_sub, ta_perm))  # B type -> A type  (B plays "learned", A plays "hidden")
+                type_map = dict(zip(tb_sub, ta_perm))  # B type -> A type (B is "learned", A is "hidden")
                 key_attr = {tb: A.key_slots[ta] for tb, ta in type_map.items()}
                 attr_iters = [list(_attr_candidates(A, B, ta, tb, vals_a, vals_b)) for tb, ta in type_map.items()]
                 # relation map: B rel -> A rel with matching src/dst under the type map

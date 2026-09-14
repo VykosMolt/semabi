@@ -39,12 +39,11 @@ FIT_RECIPE = {"version": 1, "reading": None, "min_support": 2,
 
 
 def fit_source_hashes(root: Path | None = None) -> dict:
-    """Conservative loaded fitting/serialization boundary, not workflow policy.
+    """Which source files a fit depends on.
 
-    Keep whole shared files, including inference used after deserialization. Only
-    these four browser workflow modules are outside the ordinary fitting closure.
-    A change in a caller that starts using them invalidates its own shared hash.
-    """
+    Whole shared files are kept, including code used after loading. Only the four browser
+    workflow modules sit outside the fitting closure; a caller that starts using them
+    invalidates its own hash."""
     root = Path(__file__).parent if root is None else Path(root)
     excluded = {"runtime.py", "semantic_runtime.py", "surface.py", "browser_session.py"}
     paths = [path for path in sorted(root.rglob("*.py"))
@@ -268,11 +267,10 @@ class SemanticArtifact:
         return consequence.clicked_control(self.abstractor, obs, step)
 
     def owner_at(self, obs, node):
-        """The learned object owning a local occurrence, including its key's raw source.
+        """The learned object owning a local occurrence, with the raw source of its key.
 
-        The caller can compare this before and after observed navigation. Equal display
-        strings alone do not establish that two occurrences denote the same object.
-        """
+        A caller can compare this before and after navigation. Equal displayed strings do
+        not by themselves mean two occurrences are the same object."""
         obs = self.prepare(obs)
         state = self.abstract(obs)
         owner = consequence._owner_object(self.abstractor, self.abstractor.parsed(obs), state, node)
@@ -285,12 +283,11 @@ class SemanticArtifact:
                 "basis": "learned parsed instance ancestry"}
 
     def relevant_editables(self, obs, control_node):
-        """Editable occurrences supplying fields used by this control's learned guards.
+        """Editable occurrences supplying the fields this control's guards use.
 
-        Provenance is the unit parser's slot-to-node map, never equality of displayed
-        values. Widget persistence is included as fitted evidence; it does not establish
-        that an arbitrary fill procedure commits a write.
-        """
+        Found through the parser's slot-to-node map, never by matching displayed values.
+        Widget persistence counts as fitted evidence; it does not establish that filling a
+        field commits a write."""
         obs = self.prepare(obs)
         got = self.outcomes.get(self.control_at(obs, control_node))
         if got is None:
@@ -391,11 +388,10 @@ class SemanticArtifact:
         return result
 
     def acquisition_opportunity(self, obs, node, *, editable_node=None, value=None):
-        """Classify a possible question, without authorizing or executing exploration.
+        """Classify a question worth asking, without authorising or running anything.
 
-        These are the corroborated LIST alternatives under this artifact's
-        observation model, not a frontier over every possible ontology.
-        """
+        These are the alternatives this artifact's model still admits, not a survey of
+        every possible ontology."""
         if (editable_node is None) != (value is None):
             raise ValueError("an acquisition edit requires both editable_node and value")
         simulation = (self.simulate_edit(obs, node, editable_node, value)
@@ -427,13 +423,11 @@ class SemanticArtifact:
                 "representation_revision": self.metadata.get("representation_revision")}
 
     def acquisition_change(self, previous, before, after, node, *, question=None, question_node=None):
-        """Compare admitted outcomes after ordinary refitting on new raw evidence.
+        """Compare the outcomes admitted before and after an ordinary refit.
 
-        Both models rebuild the same raw question. A changed short witness is
-        not elimination if some conjunction/list still supports that outcome.
-        Response recognition is deliberately not an eligibility gate: unfamiliar
-        observations remain data for the ordinary fitter.
-        """
+        Both models rebuild the same question. A changed witness is not elimination if some
+        other condition still supports the outcome. An unfamiliar response is data for the
+        fitter, not a reason to reject the evidence."""
         question = before if question is None else question
         question_node = node if question_node is None else question_node
         prior = previous.acquisition_opportunity(question, question_node)
@@ -558,12 +552,11 @@ class SemanticArtifact:
                 "attribution": "changed live region after action; exclusive causality not established"}
 
     def verify_response(self, before, after, node, control=None, *, prediction=None):
-        """Check an observed response's learned frame and bound object arguments.
+        """Check an observed response's frame and the objects it names.
 
-        A surprising known branch can be confirmed. The point prediction is never
-        used as the answer key. Novel frames and unnamed/fresh arguments remain visible
-        but unconfirmed; creation needs its own independent freshness/effect check.
-        """
+        A surprising but known branch can be confirmed. The point prediction is never the
+        answer key. New frames and fresh arguments stay visible but unconfirmed; a creation
+        needs its own freshness check."""
         prediction = prediction if prediction is not None else self.predict(before, node, control)
         control = control or prediction.get("control")
         response = self.observe(before, after, control)

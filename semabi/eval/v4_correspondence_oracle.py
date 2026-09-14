@@ -1,40 +1,10 @@
 """Does the candidate-independent matcher include the continuation the application intended?
 
-The correspondence in :mod:`semabi.compiler.v4.correspondence` is built from the accessibility
-tree alone, which is the only thing SemABI is allowed to see.  Whether it is *right* is a
-different question, and these applications can answer it: every retained run carries an
-``oracle.jsonl`` of the application's own hidden state, one record per observation, with each
-domain entity under a stable identifier that persists across re-renders.
-
-That is a diagnostic sidecar and nothing more.  It is never given to the compiler, to a
-reading, or to the consequence check; it exists so that a claim like "the matcher relocated
-the berth's condition cell" can be checked against what the application says the berth is,
-rather than against the matcher's own reasoning.
-
-Three restricted tallies keep the headline number from being a statement about easy inputs:
-the same counts over transitions that add or remove nodes, over the nodes whose index actually
-moved -- the only cases a matcher that answered "the same position" could not get right -- and
-over the cases where the entity came back rendered *somewhere else on the page* -- under a
-different heading, or in a different role -- which are not correspondence questions at all.
-That last split matters: without it the cellar application appeared to break the matcher 150
-times, when what it does is switch view and render a hall that was a heading as a cell in
-another table's Hall column.  The domain entity persists; the node does not; the matcher
-tracks nodes.
-
-The check is deliberately run in the matcher's hardest mode -- the anchoring text masked, as a
-prediction about that text would mask it -- and reports the number that matters:
-``unique_but_wrong``, a confident correspondence onto the wrong structure, which is the only
-failure mode that manufactures a false semantic verdict.  ``ambiguous`` costs coverage and
-``none`` costs coverage; neither invents evidence.
-
-Steps that reset the application are excluded: a reset regenerates the scenario and reuses
-the entity identifiers, so there is no continuation for the oracle to be right about.  Leaving
-them in reported seven confident mismatches that were entirely an artefact of that reuse.
-
-A caveat the numbers cannot carry: an entity whose identifying string is rendered once is
-located here *by that string*, so the oracle's realisation and the matcher's evidence overlap
-wherever the surrounding structure is thin.  The masking is what keeps the two apart at the
-node under test; it does not make the oracle independent of the DOM in general.
+Checks the matcher's correspondence against each run's ``oracle.jsonl``, a diagnostic sidecar
+of the application's hidden state that is never given to the compiler. Reports restricted
+tallies (structural transitions, index moves, re-renders elsewhere) so the headline number
+isn't a statement about easy inputs, and highlights ``unique_but_wrong``: a confident
+correspondence onto the wrong structure, the only failure mode that invents a false verdict.
 """
 from __future__ import annotations
 
@@ -58,9 +28,8 @@ def key_attrs(states: list[dict]) -> dict[str, str]:
                 if isinstance(value, str):
                     values.setdefault((obj["type"], attr), []).append(value)
     out: dict[str, str] = {}
-    # Prefer the conventional identifier names.  Taking whichever qualifying attribute came
-    # first alphabetically picked ``cargo`` for harbour's vessels, and two vessels can carry
-    # the same cargo, so the anchor was lost in exactly the states the check needed it.
+    # Prefer the conventional identifier names over alphabetical order: picking whichever
+    # attribute came first alphabetically chose a non-unique one like ``cargo``.
     preferred = ("code", "ref", "name", "id", "label", "title")
     def rank(item):
         (etype, attr) = item[0]
@@ -97,13 +66,7 @@ def anchors(state: dict, obs: Observation, keys: dict[str, str]) -> dict[str, in
 
 
 def section(obs: Observation, index: int) -> str:
-    """The nearest heading above this node, which is what tells one view of a page from another.
-
-    Walking up from the node, the first heading among the earlier siblings of each ancestor.
-    A vessel's cell in the Vessels table and a lot's cell in the Lots table have the same role
-    and the same ancestor role path; what separates them is that one sits under "Cellar: halls
-    and vessels" and the other under "Lots in the cellar".
-    """
+    """The nearest heading above this node, which tells one view of a page from another."""
     node = index
     while node >= 0:
         parent = obs.node(node).parent
@@ -126,7 +89,7 @@ def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
     tally: Counter = Counter()
     cells: Counter = Counter()
     vanished: Counter = Counter()
-    hard: Counter = Counter()      # the same tally restricted to structural transitions
+    hard: Counter = Counter()      # the same tally, restricted to structural transitions
     shifted: Counter = Counter()   # ... and to cases where the node's index itself moved
     rerendered: Counter = Counter()  # ... and where the entity came back in a different role
     wrong: list[dict[str, Any]] = []
@@ -139,28 +102,22 @@ def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
             tally["misaligned_oracle_record"] += 1
             continue
         if records[k + 1]["kind"] == "reset":
-            # A reset regenerates the scenario and reuses the entity identifiers, so ``b3``
-            # before and ``b3`` after are different berths.  There is no continuation to
-            # check across one, and treating the oracle as if there were reported the
-            # matcher wrong for relocating a row that genuinely ceased to exist.
+            # A reset reuses entity identifiers for new entities, so there is no
+            # continuation to check across one.
             tally["reset_no_continuation_exists"] += 1
             continue
         before = anchors(states[k], pre, keys)
         after = anchors(states[k + 1], post, keys)
-        # A transition that only rewrites one cell is easy for any matcher; one that adds or
-        # removes nodes is where a positional or content-exact rule breaks.  Reporting the
-        # restricted tally is what keeps "0 wrong" from being a statement about easy inputs.
+        # A transition that adds or removes nodes is where a positional rule actually
+        # breaks; the restricted tally keeps "0 wrong" from being about easy inputs only.
         structural = len(pre.nodes) != len(post.nodes)
         for eid, pre_node in sorted(before.items()):
             obj_id = eid
             truth = after.get(eid)
             match = corresponder(pre, post, pre_node, mask_outcome(pre, pre_node))
             if truth is None:
-                # Two different situations, and only one of them is about the matcher: the
-                # entity is gone from the application's state, or it is still there and its
-                # identifying text is no longer rendered exactly once so the oracle has no
-                # node to name.  Counting them together made 44 unremarkable relocations look
-                # like confident matches onto deleted structure.
+                # Two different situations, and only one is about the matcher: the entity
+                # is gone, or its identifying text is no longer rendered exactly once.
                 gone = obj_id not in {o["id"] for o in states[k + 1]["objects"]}
                 vanished[f"{'removed_from_state' if gone else 'anchor_not_unique_after'}"
                           f"/{match.status}"] += 1
@@ -175,17 +132,13 @@ def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
             elsewhere = (pre.node(pre_node).role != post.node(truth).role
                          or section(pre, pre_node) != section(post, truth))
             if elsewhere:
-                # Not a correspondence question.  This application switched view and rendered
-                # the entity somewhere else -- a hall that was a heading comes back as a cell
-                # in a table's Hall column, a vessel's cell moves from the Vessels table to
-                # the Lots table -- so the domain entity persists while the node does not.
-                # The matcher tracks nodes and correctly declines these; scoring them as
-                # matcher errors would conflate the two.
+                # Not a correspondence question: the view switched and the entity was
+                # re-rendered elsewhere. The domain entity persists but the node does not,
+                # and the matcher correctly declines these.
                 rerendered[outcome] += 1
             elif truth != pre_node:
-                # The decisive subset.  Most nodes keep their index across a re-render, so a
-                # matcher that simply answered "the same index" would score well on the totals
-                # above; it cannot score at all here.
+                # The decisive subset: a matcher that just answered "same index" would
+                # score well above, but not here.
                 shifted[outcome] += 1
             if match.status == NONE:
                 tally["none"] += 1
@@ -199,7 +152,7 @@ def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
                 tally["ambiguous_containing_truth" if truth in match.admissible
                       else "ambiguous_missing_truth"] += 1
             if elsewhere:
-                # The anchor is a re-render, so the row pairing derived from it is not a
+                # The anchor is a re-render, so the row pairing from it isn't a
                 # correspondence question either.
                 continue
             _cells(corresponder, pre, post, pre_node, truth, cells, wrong, step.step, eid,
@@ -224,8 +177,7 @@ def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
 def _cells(corresponder, pre, post, pre_anchor: int, truth_anchor: int, cells: Counter,
            wrong: list, step: int, eid: str, hard: Counter | None = None,
            shifted: Counter | None = None) -> None:
-    """The same check for every sibling cell of the entity's row, which is where the readings'
-    predictions actually land."""
+    """The same check for every sibling cell of the entity's row, where predictions land."""
     pre_row = next((a for a in pre.ancestors(pre_anchor) if pre.node(a).role == "row"), None)
     post_row = next((a for a in post.ancestors(truth_anchor) if post.node(a).role == "row"), None)
     if pre_row is None or post_row is None:

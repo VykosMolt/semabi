@@ -1,10 +1,9 @@
-"""Adversarial tests for the prospective validator's comparison semantics.
+"""Tests for the prospective validator's comparison semantics.
 
 Each test targets one way the gate could be unsound: run-local type ids, navigation
 provenance, UNKNOWN preconditions, underdetermined effect parameters, unrendered
 outcomes, forall expansion, unexplained extras, inconsistent provenance, trace
-independence, and baseline subtraction.
-"""
+independence, and baseline subtraction."""
 import json
 from types import SimpleNamespace
 
@@ -405,8 +404,8 @@ def test_promotion_is_per_decision_and_vetoed_by_retained_contradictions():
 
 
 def test_a_decision_keyed_only_by_source_observations_is_not_reported_as_transferring():
-    """The datacenter context decision installs (sig, node) assignments and nothing else,
-    so its schema-level gate is unreachable by construction, not by sparse evidence."""
+    """Checks a decision keyed only by (sig, node) assignments has an unreachable
+    schema-level gate by construction, not because evidence happens to be sparse."""
     context = {"id": "ref-ctx", "kind": "ATTACH_CONTEXT_MEMBERSHIP", "target": {
         "target_template": "unit-row", "target_entity_tid": 4,
         "context_assignments": [{"sig": "s1", "node": 3, "key": "node-30", "context": "Retired"},
@@ -455,7 +454,8 @@ def _absence_case(after_state, effs=(EffT("set", 3, "?o0", "attr:duration", None
 
 
 def test_absence_from_a_view_that_renders_no_object_of_the_type_is_unknown_not_contradiction():
-    """A view showing no record at all cannot refute a prediction about one record."""
+    """Checks a view showing no record at all can't refute a prediction about one
+    record."""
     row = _absence_case(_state(_obj(0, "other", node=1)),
                         occurrence_effs=[EffT("set", 4, "?o0", "attr:duration", None, "3"),
                                          EffT("remove", 4, "?o0")])
@@ -474,7 +474,7 @@ def test_absence_while_the_type_is_still_rendered_does_contradict():
 
 
 def test_a_predicted_removal_is_not_confirmed_by_a_view_without_the_type():
-    """The symmetric hazard: absence must not act as TRUE either."""
+    """Checks absence also can't act as confirmation (TRUE)."""
     unrendered = _absence_case(_state(_obj(0, "other", node=1)),
                                effs=[EffT("remove", 3, "?o0")])
     assert unrendered["outcome"] == "UNOBSERVED_OUTCOME"
@@ -496,7 +496,7 @@ def _family(role, label, path, templates):
 
 
 def test_a_control_family_the_held_out_run_never_rendered_is_not_comparable():
-    """Cross-run action alignment must fail closed: an unmatched family makes the
+    """Checks cross-run action alignment fails closed: an unmatched family makes an
     occurrence untested, never contradicted."""
     src_types = {3: _type(3, ["attr:duration"])}
     tst_types = {4: _type(4, ["attr:duration"])}
@@ -556,8 +556,8 @@ def test_one_prediction_family_cannot_align_with_two_held_out_families_at_once()
 
 
 def test_a_universal_effect_never_seen_with_two_members_is_not_a_prediction():
-    """The climbing forall: every observed wall had one route, so `all routes change` and
-    `that route changes` are the same claim on the source evidence."""
+    """Checks a universal claim never seen with two members, e.g. every observed
+    wall had one route, is not treated as a prediction beyond the single-member case."""
     anchor = _obj(0, "Cave")
     one_member = _state(anchor, _obj(2, "R1", {"attr:attached": "pink"}, {"rel:0": (0, "Cave")}))
     two_members = _state(anchor, _obj(2, "R1", {"attr:attached": "pink"}, {"rel:0": (0, "Cave")}),

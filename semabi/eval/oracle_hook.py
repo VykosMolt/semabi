@@ -1,17 +1,11 @@
 """Evaluator-side recorder for the oracle ladder.
 
-After every primitive it snapshots the settled page the same way the compiler
-does and records, per observation node, the hidden entity id that the
-instrumented app (experiments/oracle_apps) annotates on the nearest ancestor
-(`data-eid`), the referenced entities (`data-erefs`) and, for comboboxes, the
-entity id of every option (`data-oid`). It also records the hidden state, so
-one record per hook call carries everything the oracle conditions need.
-
-Records are keyed by (primitive kind, after-signature) so that hook calls the
-compiler did not log (e.g. the reset inside `view_sweep`) can be skipped when
-aligning with the evidence log (see `align_records`).
-
-The compiler never reads these files (tests/test_boundary.py)."""
+After every primitive it snapshots the settled page and records, per observation node, the
+hidden entity id the instrumented app annotates on the nearest ancestor (`data-eid`), the
+referenced entities (`data-erefs`), and for comboboxes the entity id of every option
+(`data-oid`), plus the hidden state. Records are keyed by (primitive kind, after-signature)
+so hook calls the compiler did not log can be skipped when aligning with the evidence log.
+The compiler never reads these files."""
 from __future__ import annotations
 
 import json
@@ -45,8 +39,8 @@ class OracleHook:
 
     def __call__(self, browser, primitive, result) -> None:
         obs = browser.observe()  # settled snapshot; refreshes window.__semabi_nodes
-        # apps that re-render after an async fetch may settle later than the compiler's
-        # two-snapshot criterion: wait until the signature is stable for 150 ms
+        # apps that re-render after an async fetch may settle late: wait until the
+        # signature is stable for 150 ms
         for _ in range(10):
             time.sleep(0.15)
             again = browser.observe()
@@ -71,7 +65,7 @@ def load_records(run_dir: Path) -> list[dict]:
 
 
 def align_records(log, records: list[dict]) -> list[dict | None]:
-    """One record per evidence-log step (None if missing): sequential match on
+    """One record per evidence-log step (None if missing), matched sequentially on
     (kind, after-signature); hook records without a logged step are skipped."""
     out: list[dict | None] = []
     j = 0

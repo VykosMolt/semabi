@@ -1,4 +1,5 @@
-"""A table's column order is presentation: header and field travel together, clicks follow."""
+"""Tests that a table's column order is presentation only: header and field travel
+together, and clicks still follow the right cell."""
 from __future__ import annotations
 
 import json

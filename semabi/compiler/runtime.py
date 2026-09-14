@@ -121,15 +121,12 @@ class StopOperation(Exception):
 
 
 class PasswordBearingView(StopOperation):
-    """A settled view carrying a password control outside any login scope.
+    """A settled page with a password control that is not a login form.
 
-    FreshRSS's feed subscription form asks for the feed's HTTP credentials beside
-    the URL, title and headers of an authenticated page.  Such a view is never
-    filled or clicked, and an operation that reaches it stops as before; only
-    acquisition treats the candidate that led there as unsupported and goes on,
-    because the session itself has not been lost.  A view that is the login
-    scope (`BrowserSession._login_controls`) still stops as a lost session.
-    """
+    A feed form may ask for a feed's own credentials on an authenticated page. Such a page
+    is never filled or clicked, and an operation reaching it still stops; only acquisition
+    skips the candidate and carries on, because the session is not lost. A real login page
+    still stops as a lost session."""
 
 
 @dataclass

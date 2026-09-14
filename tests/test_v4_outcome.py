@@ -47,12 +47,9 @@ class FakeInducer:
 
 @pytest.mark.parametrize("silent", [False, True])
 def test_response_fitting_uses_the_observed_state_without_revising_effect_beliefs(monkeypatch, silent):
-    """One named object has different local and maintained values before acting.
-
-    This supplies a small reading, not learned ontology evidence. Both ordinary
-    fields and related ordered fields must agree with a fresh query; the prior
-    belief and delayed-effect record must remain intact.
-    """
+    """Checks a fresh query updates local fields correctly while leaving prior belief
+    and delayed-effect records intact, using an object with different local and
+    maintained values."""
     from copy import deepcopy
     from types import SimpleNamespace
     from semabi.compiler.abstract import Diff, TypeInfo
@@ -178,12 +175,8 @@ def test_semantic_fit_cache_roundtrip_uses_exact_inputs_and_keeps_original_cost(
 
 
 def test_archived_sampling_observation_does_not_become_a_fitted_transition_view(tmp_path):
-    """A resampled write may archive an unready sample without using it as an endpoint.
-
-    This checks ordinary fitting's existing reachable-view boundary, not a
-    general settled-view filter: an old Step pointing at an unready view still
-    requires a separately justified repair.
-    """
+    """Checks an unready sample gets archived without being used as a fitting
+    endpoint."""
     from semabi.compiler.evidence import EvidenceLog
     from semabi.compiler.observation import Node, Observation
     from semabi.compiler.semantic import fit_semantics
@@ -303,13 +296,9 @@ def test_it_learns_a_guard_and_puts_the_rest_in_the_default():
 
 
 def test_an_ordered_list_expresses_a_guard_chain_that_a_rule_set_cannot():
-    """The first failing guard wins, so the second rule never mentions the first condition.
-
-    Closed sources refuse whatever the destination is; only an open source reaches the
-    destination check.  A learner that insisted every rule state every condition would need
-    "open and bottled", and the evidence never shows it: there is no occasion with a closed
-    source and an unbottled destination to separate the two.
-    """
+    """Checks the first failing guard wins, so a later rule never needs to restate
+    the first condition, since the evidence never shows the combination that would
+    require it."""
     rows = [({"gate": "closed", "dest": "bottled"}, "closed", ())] * 3
     rows += [({"gate": "closed", "dest": "open"}, "closed", ())] * 3
     rows += [({"gate": "open", "dest": "bottled"}, "bottled", ())] * 3
@@ -358,9 +347,9 @@ def test_arguments_are_roles_and_not_the_values_they_took_while_fitting():
 
 
 def test_the_owners_own_relations_are_roles_even_where_no_effect_named_them():
-    # a run page (type 0) contains its carrier (type 2) and refers to a depot (type 5); a
-    # control whose only answer is a message has no operator variable for either, and the
-    # reading's own relations supply them, anchored on the owner
+    # A run page contains its carrier and refers to a depot; a control whose only
+    # answer is a message has no operator variable for either, so the reading's own
+    # relations supply them, anchored on the owner.
     from collections import Counter
     from semabi.compiler.abstract import TypeInfo
     types = {0: TypeInfo(0, refs={"rel:5": 5}), 2: TypeInfo(2, refs={"in:0": 0}),
@@ -399,13 +388,8 @@ def test_a_path_role_enters_the_language_only_through_comparisons():
 
 
 def test_categorical_path_limit_survives_duplicate_aliases_without_new_evidence():
-    """Keep the explicit language limit without admitting categories through an alias.
-
-    Availability truly governs this synthetic task, but no comparison can express it.
-    Before Alias.path propagated the restriction, these same eight observations became
-    representable merely by adding a second path to the very same resources: point
-    Allowed and one admissible Allowed branch. No new occasion justified that change.
-    """
+    """Checks adding a second path to the same resource doesn't let a categorical
+    distinction become representable without new evidence."""
     from dataclasses import replace
     from semabi.compiler.abstract import AbsObj, AbstractState
     roles = {oc.OWNER: oc.Role(oc.OWNER, 'action', (), 0),
@@ -435,8 +419,8 @@ def test_categorical_path_limit_survives_duplicate_aliases_without_new_evidence(
     assert isinstance(aliased.roles['duplicate'], oc.Alias)
     assert answer(aliased) == (oc.UNDETERMINED, set())
     assert ordinary.fitted == aliased.fitted == len(occasions)
-    # A full-capability role remains able to learn this categorical task. This is a
-    # supplied-language control, not evidence that comparison-only paths learned it.
+    # A full-capability role can still learn this task; this is a supplied-language
+    # control, not evidence that comparison-only paths learn it.
     full_roles = {name: replace(role, path=False) for name, role in roles.items()}
     full = oc.learn_control(FakeInducer(), 'Check', occasions, full_roles)
     full_alias = oc.learn_control(FakeInducer(), 'Check', occasions,
@@ -470,12 +454,9 @@ def test_local_relationship_witness_does_not_require_global_membership_absence()
 
 
 def test_raw_categorical_relationship_is_observed_but_not_in_current_path_language():
-    """Crossed names/states isolate a real categorical task from alias coincidence.
-
-    The synthetic task allows a check exactly when its sole displayed resource is Ready.
-    Raw structure/fields/containment are fitted normally; the full-role arm is explicitly
-    supplied language assistance, not a claimed repair or end-to-end learned operation.
-    """
+    """Checks structure/fields/containment are fitted normally, while the
+    categorical distinction needs the full-role language, supplied here rather than
+    learned."""
     from dataclasses import replace
     from semabi.compiler.observation import Node, Observation
     from semabi.compiler.v2.graph import ObsGraph
@@ -573,11 +554,9 @@ def test_response_verification_checks_actual_known_branch_not_the_point_predicti
 
 
 def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monkeypatch):
-    """Disclosed development corpus: fit raw observations, carry semantics, query fresh pages.
-
-    This is a language/persistence boundary gate, not independent application evidence.
-    The HTTP onboarding and effect verifier are exercised by the service tests.
-    """
+    """Checks fitting raw observations, carrying semantics, and querying fresh pages
+    keeps the relational language intact. This is a persistence check, not
+    application evidence."""
     import copy
     import json
     from pathlib import Path
@@ -667,10 +646,9 @@ def test_product_semantic_artifact_roundtrip_keeps_live_relational_language(monk
             actual["point"], actual["alternatives"])
         # Repeated notices are not fresh evidence of a response, even if predicted.
         assert restored.observe(page, page, control)["changed"] is False
-    # Retained 411189b measurement: 7 correct supported / 0 wrong / 1 ambiguous.
-    # Local-feature parity removes carried list-only attributes from ALL fifteen
-    # training rows. Two additional rival outcomes survive; accept that disclosed
-    # coverage regression, not restored certainty from unseen prior beliefs.
+    # Local-feature parity removes carried list-only attributes from all training rows.
+    # Two additional rival outcomes survive; that's an expected coverage regression,
+    # not restored certainty from unseen prior beliefs.
     assert calls == 8 and supported == 5
     assert ambiguous_steps == [14, 24, 29]
     assert changed > 0, "the learned comparison must change an operational prediction"
@@ -689,11 +667,8 @@ def _acquisition_page(features, response=None):
 
 
 def _acquisition_artifact(rows):
-    """A supplied finite feature language; the actual LIST evidence engine is tested.
-
-    This isolates acquisition bookkeeping from ontology fitting. Raw observations
-    still supply the query on each call, and actual emission code reads responses.
-    """
+    """Supplies a finite feature language; the actual acquisition bookkeeping engine
+    is tested, not ontology fitting."""
     from collections import Counter
     from types import SimpleNamespace
     from semabi.compiler.semantic import SemanticArtifact
@@ -900,8 +875,8 @@ def test_acquisition_qualifies_fitted_primitive_changes_separately_from_reduced_
                'ordered': {0: {'attr:load': ('1', '2', '3')}},
                'pairs': frozenset(), 'defaults': {'selection': 'Initial'}}
     setattr(current.outcomes['act'], component, changes[component])
-    # The fixture supplies finite feature observations; this tests bookkeeping
-    # at the artifact boundary, not discovery of the supplied extra primitives.
+    # Tests bookkeeping at the artifact boundary using finite feature observations,
+    # not discovery of the supplied extra primitives.
     change = current.acquisition_change(previous, before, after, 2)
     assert change['before']['outcomes'] == ['Ready', 'Unavailable']
     assert change['after']['outcomes'] == ['Ready']

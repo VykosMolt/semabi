@@ -1,7 +1,5 @@
-"""An attribute is named once.  A nested part's slot flows to the enclosing unit under its
-attribute name; passing that name through `attr_name` again prefixed it again, and
-harbour's vessels and vet's list items carried `attr:attr:Length overall#0` while blend's
-cells carried `attr:Committed gal#0` -- one fact, two spellings across subsystems."""
+"""Tests that an attribute is named once: a nested part's slot flows to the
+enclosing unit under its attribute name without being prefixed twice."""
 from __future__ import annotations
 
 from semabi.compiler.v2.abstractor import V2Abstractor

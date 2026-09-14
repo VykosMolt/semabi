@@ -1,24 +1,22 @@
 """Which pre-state relations determine the objects a rule claims to change?
 
-``learn_pre`` asks *when does this rule apply*.  This asks a different question about the same
-vocabulary: *which object does it apply to*.  A rule may be perfectly applicable and still fail
-to say what it acts on, and that failure is invisible to a precondition learner because nothing
-about it is contradicted -- the rule explains the transition under some assignment, which is
-retrospective explanation rather than an executable operator.
+``learn_pre`` asks when a rule applies. This asks a different question about the same
+vocabulary: which object does it apply to. A rule can be perfectly applicable and still
+fail to say what it acts on, invisibly to a precondition learner, since nothing about it
+is contradicted.
 
-A referring query determines an implicit variable from what is already known.  What counts as
-already known starts with the objects the concrete action names, but need not stop there: a
-state can distinguish an object on its own, and a query over stable pre-state semantics is a
-legitimate way to reach it.  Three forms are searched here, in that spirit:
+A referring query determines an implicit variable from what is already known. That starts
+with the objects the concrete action names, but doesn't have to stop there: a state can
+distinguish an object on its own. Three forms are searched here:
 
 ``relation``   the target of a relation from an already-determined object, or its source
-``singleton`` the sole instance of its type in every state where the rule fired
-``property``  the sole object carrying a stable attribute value
+``singleton``  the sole instance of its type in every state where the rule fired
+``property``   the sole object carrying a stable attribute value
 
-What is refused is what ``learn_pre`` refuses -- a training-instance identity, a constant of an
-object seen once, a constant of mutable free text -- because a query that names the object that
-was there during fitting is the memorisation this exists to detect, not a way around it.  The
-search runs over the fitting evidence only and never looks at an outcome.
+What is refused is what ``learn_pre`` refuses -- a training-instance identity, a constant
+of an object seen once, a constant of mutable free text -- because naming the object that
+was there during fitting is the memorisation this exists to detect, not a way around it.
+The search runs over the fitting evidence only and never looks at an outcome.
 """
 from __future__ import annotations
 
@@ -28,21 +26,19 @@ from typing import Any
 from semabi.compiler.v2.graph import COLLECTIONS
 
 
-# The roles an operator's variables can play.  "Implicit" and "derived" are reserved for
-# objects that already exist and the action does not name -- the only class a referring query
-# is even about.  A creation variable is not an implicit reference; it is an existential output
-# of the transition, and conflating the two sent an earlier version of this searching the
-# pre-state for objects that do not exist there yet.
+# The roles an operator's variables can play. "Implicit" and "derived" are reserved for
+# objects that already exist and the action doesn't name -- the only class a referring
+# query is about. A creation variable is not an implicit reference; it's an existential
+# output of the transition, not something to search the pre-state for.
 ACTION_BOUND = "the action supplies it"
 CREATED = "the effect brings it into being"
 DERIVED_PRESTATE = "it already exists and the action does not name it"
 PRECONDITION_WITNESS = "it appears only in preconditions"
-# An object the interaction's *output* names and its state effects do not touch: harbour's
-# "Berth S1 cannot be closed while call C-101 holds it" is about the call, which nothing in
-# that branch changes.  It needs a query for the same reason a derived effect target does --
-# the message cannot be predicted without naming it -- and it is a different obligation:
-# an operator whose *output* argument the state does not pin down has said less than it might,
-# while one whose *effect target* is not pinned down has not said which object changes.
+# An object the interaction's output names, but its state effects don't touch. It needs a
+# query for the same reason a derived effect target does -- the message can't be predicted
+# without naming it -- but it's a different obligation: an operator whose output argument
+# isn't pinned down has said less than it might, while one whose effect target isn't
+# pinned down hasn't said which object changes.
 OUTPUT_ARGUMENT = "the interaction's output names it and no effect changes it"
 
 RELATION = "relation"
@@ -63,9 +59,9 @@ DETERMINED = "every effect target is supplied, created, or determined by a query
 class Query:
     """One way of naming an implicit variable, and what it needed to know first.
 
-    ``detail`` is for reading; ``form`` is for running.  A query learned on the fitting
-    evidence is only interesting if it can be asked of a state it was not learned from, and a
-    rendered sentence cannot be asked of anything.
+    ``detail`` is for reading; ``form`` is for running. A query learned on the fitting
+    evidence is only interesting if it can be asked of a state it wasn't learned from, and
+    a rendered sentence can't be asked of anything.
     """
     kind: str
     variable: str
@@ -76,9 +72,9 @@ class Query:
     def denotation(self, op, state, known: dict) -> list:
         """Every object in ``state`` this query names, given the objects already determined.
 
-        A list, not an object: the answer may be empty, which says the query names nothing
-        here, or plural, which says it does not determine anything here.  Collapsing either
-        into a choice is how a referring expression stops being a claim.
+        A list, not an object: the answer may be empty, meaning the query names nothing
+        here, or plural, meaning it doesn't determine anything here. Collapsing either into
+        a choice is how a referring expression stops being a claim.
         """
         tid = op.params.get(self.variable)
         here = _candidates(state, tid)
@@ -127,7 +123,7 @@ class Grounding:
     basis: dict[str, dict[str, Any]] = field(default_factory=dict)
 
     def roles(self) -> dict[str, str]:
-        """Every parameter, and which of the four roles it plays.  No unexplained bucket."""
+        """Every parameter, and which of the four roles it plays. No unexplained bucket."""
         out = {}
         for param in self.params:
             if param in self.created:
@@ -145,9 +141,9 @@ class Grounding:
     def outcomes(self) -> dict[str, str]:
         """Per derived-prestate variable: found, refuted, or not decidable on this evidence.
 
-        ``NO_QUERY`` is a claim about the query language, so it is only made where there was
-        evidence to search over.  Without positives the honest answer is that nothing was
-        established, which is a different thing from having looked and found nothing.
+        ``NO_QUERY`` is a claim about the query language, so it's only made where there was
+        evidence to search over. Without positives the honest answer is that nothing was
+        established, which is different from having looked and found nothing.
         """
         wanted = [v for v in tuple(self.effect_variables) + tuple(self.output_variables)
                   if v not in self.action_bound and v not in self.created]
@@ -159,10 +155,10 @@ class Grounding:
                 out[v] = QUERY_FOUND
                 continue
             got = self.basis.get(v, {})
-            # Distinguish a language that was searched from one that was filtered away.  If no
-            # property candidate survived the anti-memorisation refusal and the relational form
-            # had nothing to start from, then the singleton form is the only one that actually
-            # ran, and failing it does not exhaust what the reading could express.
+            # Distinguish a language that was searched from one filtered away. If no property
+            # candidate survived the anti-memorisation refusal and the relational form had
+            # nothing to start from, the singleton form is the only one that actually ran, and
+            # failing it doesn't exhaust what the reading could express.
             searched = got.get("legitimate", 0) > 0 or got.get("relational_start", False)
             out[v] = NO_QUERY if searched else LOW_SUPPORT
         return out
@@ -199,11 +195,12 @@ def _candidates(state, tid) -> list:
 
 
 def _relation_queries(op, var, known, evidence):
-    """Relation slots that pick out ``var`` from an already-determined object, in every positive.
+    """Relation slots that pick out ``var`` from an already-determined object, in every
+    positive.
 
-    Proposed from the structure actually present -- the slots that do relate the intended
-    objects -- rather than by enumerating the vocabulary, which is what keeps this a search over
-    relational paths instead of over arbitrary literals.
+    Proposed from the structure actually present, rather than by enumerating the
+    vocabulary, which is what keeps this a search over relational paths instead of over
+    arbitrary literals.
     """
     proposed: set[tuple[str, str, str]] | None = None
     for state, binding in evidence:
@@ -264,14 +261,11 @@ def _singleton(op, var, evidence) -> bool:
 def _member_positioned(state, slot: str) -> bool:
     """Whether a view slot is rendered inside a member of a declared collection.
 
-    Which value such a slot carries depends on where the member stands: harbour's unkeyed
-    vessels overview rendered ``cell@Vessel#2`` as whatever vessel was listed third, and the
-    member-reversal instrument (`semabi.eval.v4_metamorphic`) may permute the members of a
-    declared listing without changing what anything means.  Such a slot is a presentation
-    coordinate, not a control the interface is pointed at, and it anchors nothing.  A
-    table's first row is the interface's own declaration -- its header -- and stays put
-    under the instrument, so its cells are not positional; neither is anything outside a
-    declared collection.  Without a parse there is no coordinate to have read."""
+    Which value such a slot carries can depend on where the member stands, since a listing's
+    members can be reordered without changing what anything means. Such a slot is a
+    presentation coordinate, not a control the interface is pointed at, and anchors nothing.
+    A table's header stays put under reordering, so its cells are not positional; neither is
+    anything outside a declared collection. Without a parse there's no coordinate to read."""
     po = getattr(state, "parsed", None)
     obs = getattr(po, "obs", None)
     if obs is None:
@@ -288,8 +282,8 @@ def _member_positioned(state, slot: str) -> bool:
     child = next((n for n, k in (getattr(po, "node_key", None) or {}).items() if k == slot), None)
     out = False
     if child is not None and child in getattr(po, "row_named", ()):
-        # named by its row's header: a field of a key-value table, which reversing the
-        # table's rows does not rename
+        # Named by its row's header: a field of a key-value table, which reversing the
+        # table's rows doesn't rename.
         cache[slot] = False
         return False
     while child is not None and child >= 0:
@@ -325,20 +319,17 @@ def _selection_queries(op, var, evidence) -> list[str]:
     """View controls whose current value names the intended object, in every positive.
 
     Some objects an action acts on are neither supplied by it nor findable from another
-    object: they are whatever the interface is currently pointed at.  Blend draws from the vat
-    named in one dropdown into the blend named in another, and the click carries neither -- the
-    selections were made earlier and persist, so at the moment of acting they are ordinary
-    pre-state evidence sitting in the view rather than on any object.
+    object: they are whatever the interface is currently pointed at, chosen earlier and
+    persisting as ordinary pre-state evidence sitting in the view rather than on any object.
 
-    Without this form the learner has nothing to say about such a variable and falls back on
-    what actually separates its examples, which is the identity of the vats it was fitted from
-    -- and that is correctly refused as memorisation, leaving the rule inexpressible.  Naming
-    the control is not memorisation: the slot is reusable and the value is read at prediction
+    Without this form the learner falls back on what actually separates its training
+    examples, which is refused as memorisation, leaving the rule inexpressible. Naming the
+    control is not memorisation: the slot is reusable and the value is read at prediction
     time, exactly as a relation query re-follows its slot.
 
     The convention is that a control renders an object as its key followed by details --
-    ``North Wall (Chenin, 2 gal, open)``.  A control that leaves more than one object of the
-    type matching does not determine it, and is not proposed.
+    ``North Wall (Chenin, 2 gal, open)``. A control that leaves more than one matching
+    object doesn't determine it, and is not proposed.
     """
     tid = op.params.get(var)
     proposed: set[str] | None = None
@@ -364,10 +355,10 @@ def _selection_queries(op, var, evidence) -> list[str]:
 def property_basis(op, var, evidence, refuses) -> dict[str, int]:
     """How much of the property form was actually available, before asking whether it worked.
 
-    ``NO_QUERY`` is a claim about a language, and a language whose candidates were all filtered
-    out before evaluation was never searched.  The filter is right to refuse a property of an
-    object seen once -- it cannot be told from that object's identity -- but the conclusion that
-    follows is that the evidence cannot decide, not that the reading cannot express it.
+    ``NO_QUERY`` is a claim about a language, and a language whose candidates were all
+    filtered out before evaluation was never searched. The filter is right to refuse a
+    property of an object seen once -- it can't be told from that object's identity -- but
+    the conclusion is that the evidence can't decide, not that the reading can't express it.
     """
     shared: set | None = None
     for _, binding in evidence:
@@ -421,31 +412,28 @@ def ground(op, evidence, action_bound, refuses, collections=frozenset(),
            enabling=frozenset()) -> Grounding:
     """Search for a query naming each effect object, one variable at a time.
 
-    Stratified rather than joint: a variable a query has already determined becomes something
-    the next query may refer from.  Iterating to a fixed point recovers chains without assuming
-    one exists, and stops when a round adds nothing.
+    Stratified rather than joint: a variable a query has already determined becomes
+    something the next query may refer from. Iterating to a fixed point recovers chains
+    without assuming one exists, and stops when a round adds nothing.
 
     ``evidence`` is a sequence of ``(pre-state, binding)`` pairs where the binding maps a
-    parameter to the *object* it was bound to, not to the ``(tid, key)`` pair a transition
-    records.  A query is asked about an object's attributes and relations, so the caller
-    resolves the identifiers first; parameters bound to strings rather than objects are left
-    out, and nothing is claimed about them.
+    parameter to the object it was bound to, not to the ``(tid, key)`` pair a transition
+    records. Parameters bound to strings rather than objects are left out, and nothing is
+    claimed about them.
     """
     effect_vars = tuple(sorted({e.obj for e in op.effs if isinstance(e.obj, str) and e.obj
                                 and getattr(e, "kind", "") != "emit"}))
-    # Objects only the output names.  They are sought the same way -- a message about an object
-    # cannot be predicted without naming it -- and reported apart, because "the state does not
-    # pin down what this interaction *changes*" and "...what it *mentions*" are different
-    # failures and only the first makes an operator ill-formed.
+    # Objects only the output names. Sought the same way -- a message about an object can't
+    # be predicted without naming it -- but reported apart: "the state doesn't pin down what
+    # this interaction changes" and "...what it mentions" are different failures, and only
+    # the first makes an operator ill-formed.
     output_vars = tuple(sorted({v for e in op.effs if getattr(e, "kind", "") == "emit"
                                 for v in ([e.obj] + [x for _, x in e.attrs])
                                 if isinstance(v, str) and v.startswith("?")
                                 and v not in effect_vars}))
-    # A ``?new`` variable is not an object to be identified in the pre-state -- it is one the
-    # effect brings into being, so its denotation is supplied by the effect rather than by any
-    # query, and looking for a pre-state referring expression for it is a category error.  An
-    # earlier version of this searched for them anyway and reported the failures as the
-    # reading's, which would have understated exactly the reading that grounds best.
+    # A ``?new`` variable is not an object to be identified in the pre-state -- it's one the
+    # effect brings into being, so its denotation is supplied by the effect, not by a query.
+    # Looking for a pre-state referring expression for it would be a category error.
     created = tuple(v for v in effect_vars + output_vars if v.startswith("?new"))
     all_params = tuple(op.params)
     witnesses = tuple(p for p in all_params if p not in effect_vars
@@ -455,9 +443,9 @@ def ground(op, evidence, action_bound, refuses, collections=frozenset(),
     if not evidence:
         return out
     known = set(action_bound)
-    # An enabling click's owner -- the call button that opened the sheet -- is not in hand
-    # at prediction time either: only the acting click's owner is.  It is wanted the way an
-    # effect object is, and named or not by the same search.
+    # An enabling click's owner isn't in hand at prediction time either: only the acting
+    # click's owner is. It's wanted the way an effect object is, and named or not by the
+    # same search.
     wanted = [v for v in effect_vars + output_vars + tuple(sorted(enabling))
               if v not in action_bound and v not in created]
     progress = True
@@ -472,11 +460,10 @@ def ground(op, evidence, action_bound, refuses, collections=frozenset(),
                               "instances_of_its_type": max(
                                   (len(_candidates(st, op.params.get(var))) for st, _ in evidence),
                                   default=0)}
-            # "The only object of its type" names an object of a type that has one -- a
-            # form, a status panel -- and not whichever draw happened to be alone in the
-            # book when this rule's few positives were seen.  For a collection type the
-            # form is a count in disguise: on blend it gave `Bottle` a role that was
-            # `ambiguous` whenever two draws existed, and nine confident errors.
+            # "The only object of its type" names an object of a type that has exactly
+            # one -- a form, a status panel -- not whichever instance happened to be alone
+            # when this rule's few positives were seen. For a collection type the form is a
+            # count in disguise, and can turn ambiguous as soon as a second instance exists.
             if op.params.get(var) not in collections and _singleton(op, var, evidence):
                 out.queries[var] = Query(SINGLETON, var, "the only object of its type", form=())
             else:

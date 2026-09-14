@@ -1,14 +1,9 @@
-"""A reference is to the type a key comes from, not to a type that borrows it.
+"""Tests that a reference resolves to the type a key comes from, not a type that
+merely borrows the same key values.
 
-Harbour's ship row renders `Current call: C-102`.  The reading has two types whose keys are
-call references: the calls, and the matrix cells of the calls table, which are link objects
-keyed by the call reference they render.  A column whose values overlap both is a reference
-to the calls, and until this run it was typed as a reference to the cells -- the cells also
-key an empty cell, so their overlap was higher -- against which `C-102` never resolves.  On
-every page the ship's reference to the call it holds was `None`, `Schedule call`'s refusal
-(*Selkie already has call C-102 on the board*) was inseparable from an opening, and two of
-harbour's held-out outcomes were forced and wrong (`docs/v4_identity.md`).
-"""
+Before this, a column whose values overlapped two types could resolve to the wrong one
+(the type with the higher overlap, including an empty-cell match), so a real reference
+never resolved and outcomes were forced and wrong."""
 from __future__ import annotations
 
 from pathlib import Path

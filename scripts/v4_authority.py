@@ -1,38 +1,20 @@
 #!/usr/bin/env python3
 """V4 authoritative launcher and project-import authority.
 
-This file is the root of trust for authenticated V4 execution.  It is stdlib-only, is
+This file is the root of trust for authenticated V4 execution. It is stdlib-only,
 never imported by SemABI, and must be started by an isolated interpreter::
 
     .venv/bin/python -I -S -B scripts/v4_authority.py <command> ...
 
-What it establishes, in order:
+It locks down the import environment (``-I -S`` so no ``.pth`` file, including an
+editable install of this project, can run), reads the candidate commit's tracked
+Python source straight from Git's object store, installs an import authority that
+lets CPython pick the module as normal and then checks the bytes it picked against
+the authenticated content, and on exit proves every module that ran was either
+authenticated project code, the stdlib, or a declared third-party directory. It
+ends by printing a byte-reproducible attestation and an environment record.
 
-1.  an explicitly controlled import environment.  ``-I`` drops the script directory,
-    the user site directory and every ``PYTHON*`` variable; ``-S`` stops ``site`` from
-    running at all, so no ``.pth`` file is read and no ``.pth`` import line executes.
-    An editable SemABI installation is implemented by exactly such a ``.pth`` line, so
-    it cannot contribute anything here.  This is checked, not assumed.
-2.  the exact candidate checkout, derived from this file's own resolved location.
-3.  the authenticated project source bytes.  Every tracked ``*.py`` path in the Git
-    index is read **from Git's object store**, not from the working tree, so the
-    authenticated content is the content the candidate commit will contain.  Bytes are
-    compared directly; the Git object id is only an index key, never a security hash.
-4.  a project-import authority installed at ``sys.meta_path[0]``.  It never predicts
-    Python's import resolution: it hands the search to CPython's own ``FileFinder``
-    (with CPython's own loader table, so package-before-module and
-    extension-before-source ordering are CPython's, not ours), cross-checks the
-    selection against ``PathFinder``, authenticates the origin CPython actually
-    selected, reads its bytes once, compares them with the authenticated content, and
-    executes those in-memory bytes.  The path is never reopened, and project bytecode
-    is never consulted.
-5.  an exit audit proving every module that actually executed was authenticated project
-    code, interpreter stdlib, or a declared third-party directory.
-6.  a byte-reproducible execution attestation, plus a non-reproducible environment
-    record (absolute paths, commit, interpreter) printed to stdout.
-
-It is not a sandbox.  ``docs/v4_execution_authority.md`` states the declared threat
-model and the explicit non-goals.
+It is not a sandbox. See docs/v4_execution_authority.md for the threat model.
 """
 from __future__ import annotations
 
@@ -55,21 +37,20 @@ LOADER_KIND = "V4_VERIFIED_SOURCE_LOADER"
 RESOLVER_KIND = "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER"
 MEMBERSHIP_SOURCE = "GIT_INDEX_BLOB_CONTENT_OF_THE_CANDIDATE_CHECKOUT"
 
-# The only importable top-level project name.  Verified against the tracked tree at
-# startup so a new top-level package cannot silently escape the authority.
+# The only importable top-level project name. Checked against the tracked tree so a
+# new top-level package cannot silently escape the authority.
 PROJECT_TOP_LEVEL = ("semabi",)
 
-# CPython's own loader table, in CPython's own order.  This is exactly what
-# ``importlib._bootstrap_external._get_supported_file_loaders`` returns; it is spelled
-# out here only because that function is private.  A test pins the equality.
+# CPython's own loader table, in CPython's own order. Copied here only because
+# ``importlib._bootstrap_external._get_supported_file_loaders`` is private.
 LOADER_DETAILS = (
     (importlib.machinery.ExtensionFileLoader, importlib.machinery.EXTENSION_SUFFIXES),
     (importlib.machinery.SourceFileLoader, importlib.machinery.SOURCE_SUFFIXES),
     (importlib.machinery.SourcelessFileLoader, importlib.machinery.BYTECODE_SUFFIXES),
 )
 
-# Authoritative entrypoints.  ``semabi/run_v4_transfer.py`` is imported as a module;
-# the two freeze scripts are executed from authenticated bytes under a private name.
+# Authoritative entrypoints. ``run_v4_transfer.py`` is imported as a module; the two
+# freeze scripts are executed from authenticated bytes under a private name.
 ENTRYPOINTS = {
     "freeze-source": "scripts/v4_freeze_source_candidates.py",
     "freeze-chain": "scripts/v4_freeze_chain_manifest.py",
@@ -78,12 +59,8 @@ ENTRYPOINTS = {
 
 
 class AuthorityViolation(BaseException):
-    """A refusal to execute.  Deliberately not an ``Exception``.
-
-    Import failures are routinely caught by ``except ImportError`` or ``except
-    Exception``; an authority refusal must never be swallowed by ordinary code, so it
-    derives from ``BaseException`` and terminates the run.
-    """
+    """A refusal to execute. Deliberately not an ``Exception``, so it can't be
+    swallowed by an ``except ImportError`` or ``except Exception`` elsewhere."""
 
     def __init__(self, code: str, detail: str) -> None:
         super().__init__(f"{code}: {detail}")
@@ -230,8 +207,7 @@ def authenticated_sources(root: str) -> tuple[dict[str, bytes], dict[str, tuple[
         if not relative.endswith(".py"):
             continue
         if mode not in ("100644", "100755"):
-            # 120000 is a symlink and 160000 a submodule; neither is authenticable
-            # Python source, and neither may become executable project code.
+            # 120000 is a symlink, 160000 a submodule; neither counts as project source.
             raise _fail("TRACKED_PYTHON_PATH_IS_NOT_A_REGULAR_FILE", f"{relative} mode {mode}")
         wanted[relative] = blob
     blobs = _cat_blobs(root, sorted(set(wanted.values())))
@@ -267,9 +243,9 @@ def _under(path: str, directory: str) -> bool:
 def default_site_packages() -> str:
     """The declared third-party directory of the interpreter's own environment.
 
-    ``sys.executable`` is used unresolved on purpose: a virtual environment's
-    interpreter is a symlink to the base interpreter, so resolving it would name the
-    base installation's directories instead of the environment's.
+    ``sys.executable`` is left unresolved: it's a symlink to the base interpreter in a
+    virtual environment, and resolving it would name the base install's directories
+    instead of the environment's own.
     """
 
     base = os.path.dirname(os.path.dirname(sys.executable))
@@ -295,14 +271,12 @@ def prepare_site_packages(
     """Add declared third-party directories as ordinary paths, never as site dirs.
 
     ``site`` never runs here, so no ``.pth`` file in these directories is read or
-    executed.  Any ``.pth`` that mentions the candidate checkout is recorded as
-    evidence that it was present and inert -- that is how an editable installation of
-    this very project is shown to contribute nothing.
+    executed. Any ``.pth`` that mentions the candidate checkout is recorded as
+    evidence that it was present and did nothing.
 
-    A declared directory may sit inside the candidate checkout (a ``.venv`` beside the
-    sources is ordinary), but only if it holds no tracked path at all, so it can never
-    overlap authenticated project space.  Its *contents* are trusted, not authenticated:
-    see the declared trusted computing base in docs/v4_execution_authority.md.
+    A declared directory may sit inside the candidate checkout, but only if it holds
+    no tracked path, so it can never overlap authenticated project space. Its
+    contents are trusted, not authenticated: see docs/v4_execution_authority.md.
     """
 
     if not enabled:
@@ -650,8 +624,8 @@ class ProjectImportAuthority:
             spec = getattr(module, "__spec__", None)
             origin = getattr(spec, "origin", None) or getattr(module, "__file__", None)
             if origin in (None, "built-in", "frozen") or not isinstance(origin, str):
-                # A namespace package has no origin at all, so classify it by the
-                # directories it would search rather than letting it pass as builtin.
+                # A namespace package has no origin, so classify it by the directories
+                # it would search rather than letting it pass as builtin.
                 for entry in list(getattr(module, "__path__", None) or []):
                     if not isinstance(entry, str):
                         continue
@@ -688,8 +662,8 @@ class ProjectImportAuthority:
 def _read_once(origin: str, fullname: str) -> bytes:
     """Open the selected origin exactly once and keep its bytes.
 
-    ``O_NOFOLLOW`` refuses a symlinked final component, and the mode is taken from the
-    open descriptor rather than from a second ``stat`` of the name.
+    ``O_NOFOLLOW`` refuses a symlinked final component. The mode comes from the open
+    descriptor, not a second ``stat`` of the name.
     """
 
     flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
@@ -729,10 +703,10 @@ def _declared_closure(entry_kind: str) -> tuple[str, ...]:
 def closure_comparison(authority: ProjectImportAuthority, entry_kind: str | None) -> dict:
     """Compare the declared static closure with the set that actually executed.
 
-    The static closure is a *declaration* discovered by scanning literal imports.  It
-    is what the manifests hash, so nothing outside it may execute.  It is not a proof
-    of completeness, and it may legitimately over-approximate: a declared file that no
-    run imports is recorded, not rejected.
+    The static closure is a declaration found by scanning literal imports. It is what
+    the manifests hash, so nothing outside it may execute. It is not a completeness
+    proof, and may legitimately over-approximate: a declared file that no run imports
+    is recorded, not rejected.
     """
 
     executed = sorted({str(row["path"]) for row in authority.records.values()})
@@ -1002,8 +976,8 @@ def main(argv: list[str] | None = None) -> int:
     artifact = runner(authority, args)
 
     entry_kind = args.command if args.command in ENTRYPOINTS else getattr(args, "entry_kind", None)
-    # The comparison imports the manifests module, so run it before the exit audit and
-    # before the execution digest is taken: nothing may execute after either.
+    # This imports the manifests module, so run it before the exit audit and before
+    # the execution digest: nothing may execute after either.
     closure = closure_comparison(authority, entry_kind)
     counts = authority.audit()
     attestation = build_attestation(authority, entry_kind, artifact, root, closure)

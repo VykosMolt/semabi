@@ -1,20 +1,12 @@
-"""How many semantically distinct controls does one action symbol currently denote?
+"""Measures how many semantically distinct controls one action symbol denotes, without
+changing anything. The learned action alphabet can give two controls in different unit
+templates the same identity, so operator induction treats them as one semantic action.
 
-The learned action alphabet identifies a control by the slot key its enclosing entity
-instance assigns it plus that entity's run-local type id -- for an unlabelled widget the
-key is a per-instance role ordinal (`combobox#0`).  Two controls in different unit
-templates of one entity type therefore receive the same identity, and operator induction
-treats them as instances of the same semantic action.
-
-This diagnostic measures the damage without changing anything.  For every action the
-explorer actually performed it recovers the symbol the inducer would use and the
-*surface context* of the target: the template of the innermost recurring unit containing
-it and the role path from that unit's root.  A symbol covering more than one surface
-context is a candidate collision; disjoint option vocabularies are strong evidence that
-the merged occurrences are not the same semantic action.
-
-Compiler-visible evidence only: templates, roles, paths, option sets and interaction
-kinds.  No hidden operator name or evaluator label is read.
+For every action the explorer performed, this recovers the symbol the inducer would use and
+the surface context of the target (the containing unit's template and role path). A symbol
+covering more than one surface context is a candidate collision; disjoint option vocabularies
+are strong evidence the merged occurrences are not the same action. Uses only compiler-visible
+evidence: no hidden operator name or evaluator label is read.
 """
 from __future__ import annotations
 
@@ -33,8 +25,7 @@ STATIC_TEMPLATE = "<static>"
 def surface_context(H, obs, sig: str, node: int) -> tuple[str, str]:
     """(unit template, role path from the unit root) of a control occurrence.
 
-    Both parts are structural and run-independent: a template is the collapsed shape of a
-    recurring fragment and the path is a sequence of roles."""
+    Both parts are structural and run-independent."""
     units = {ui.root: ui for ui in H.parse_units(sig)}
     x = node
     while x >= 0:
@@ -77,9 +68,8 @@ def analyse(run_dir: Path, min_support: int = 2, legacy_symbols: bool = False) -
     for symbol, by_context in symbols.items():
         if len(by_context) < 2:
             continue
-        # Do the merged occurrences fall into two or more groups with no value in common?
-        # Overlapping vocabularies are expected between renderings of one control; two
-        # mutually disjoint groups are evidence that distinct controls have been merged.
+        # Overlapping option vocabularies are expected between renderings of one control;
+        # two mutually disjoint groups are evidence distinct controls have been merged.
         vocabularies = [row["option_vocabulary"] for row in by_context.values() if row["option_vocabulary"]]
         groups: list[set] = []
         for vocabulary in vocabularies:
@@ -90,9 +80,8 @@ def analyse(run_dir: Path, min_support: int = 2, legacy_symbols: bool = False) -
         paths = {context[1] for context in by_context}
         collisions.append({
             "symbol": {"kind": symbol[0], "slot": symbol[1], "owner_type": symbol[2]},
-            # A symbol covering several *variants* of one card is benign: same structural
-            # position, compatible values.  A symbol covering different structural
-            # positions, or groups with no value in common, denotes different controls.
+            # A symbol covering several variants of one card is benign (same structural
+            # position, compatible values); different positions or disjoint values are not.
             "incompatible": len(paths) > 1 or disjoint,
             "distinct_paths": sorted(paths),
             "surface_contexts": [

@@ -1,10 +1,8 @@
-"""Identity readings must carry their own denominator.
+"""Tests that identity readings must carry their own denominator.
 
-The V3 failure was not that V2 picked a bad key by a small margin; it was that a value
-which never told two instances apart could be accepted as an identity with a perfect
-structural score.  These tests pin the distinction the V4 layer is built on: evidence that
-is *absent* is not evidence that is *good*.
-"""
+Pins the distinction the V4 layer is built on: a value that never told two instances
+apart must not be accepted as an identity with a perfect structural score just because
+it was never contradicted. Absent evidence is not good evidence."""
 from types import SimpleNamespace
 
 from semabi.compiler.v4.identity import family_key, family_readings, readings_for

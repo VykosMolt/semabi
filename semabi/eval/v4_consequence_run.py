@@ -1,8 +1,6 @@
-"""Run the scoped, outcome-masked consequence check over the retained development chains.
-
-One compile per reading and split; every applicability mode and every control mutation scores
-that same fit, because compiling is the entire cost of the instrument.
-"""
+"""Runs the scoped, outcome-masked consequence check over the retained development chains.
+Compiles once per reading and split, then reuses that fit for every applicability mode
+and control mutation."""
 from __future__ import annotations
 
 import argparse
@@ -22,19 +20,11 @@ class _Candidate:
 
 
 def vessel_keyed(readings: dict):
-    """Harbour's reading that makes the rows vessels: the overview and the board both
-    keyed by the vessel's name.  The retained manifests carried it as the candidate
-    'joint discrimination x2' until the retrospective campaign (`docs/v4_retained.md`)
-    refuted keying the call buttons by their labels and refuted the overview's
-    no-identity; since then the source choice itself carries both keys and the old
-    candidate name is gone.  The content is verified either way, so a test names the
-    semantics it exercises rather than trusting a label."""
+    """Harbour's reading that makes the rows vessels: the overview and the board are
+    both keyed by the vessel's name."""
     def carries_vessels(reading) -> bool:
-        # What the tests exercise: the overview rows are vessels and the call buttons are
-        # objects (the created-argument claim needs them).  The board key is deliberately
-        # unconstrained -- since the retrospective campaign SOURCE holds it unkeyed by its
-        # own named evidence while the transfer survivor keys it, and neither reading
-        # stops being the vessels-as-objects one.
+        # The overview rows are vessels and the call buttons are objects (the
+        # created-argument claim needs them). The board key is left unconstrained.
         fams = getattr(reading, "families", None) or {}
         overview = next((f for t, f in fams.items() if "cell@Calls logged" in t), None)
         buttons = fams.get("button[_]")
@@ -52,20 +42,12 @@ def vessel_keyed(readings: dict):
 
 
 def _candidates(path: Path):
-    """The candidate readings, from a chain manifest or from a bare source manifest.
+    """The candidate readings, from a chain manifest or a bare source manifest.
 
-    Chains exist for the three applications the frontier was run on.  Applying this instrument
-    to an application that never reached that stage needs only its source candidates, and
-    refusing to look at one for want of a chain would confine every result to the three
-    histories the instrument was developed on.
-
-    A manifest also pins the hash of the compiler that generated it, and the authenticated
-    loaders refuse a manifest whose compiler has since changed.  That is the right default and
-    it is exactly what happens here, because this line of work changes the inducer on purpose.
-    What the experiment carries forward is the *reading* -- which families are objects and what
-    names them -- and a reading is data.  So when authentication fails on the compiler hash the
-    readings are recovered from the same file as data, and what is given up is stated rather
-    than worked around: these results are not a claim that the frozen compiler produced them.
+    A manifest pins the hash of the compiler that generated it; the authenticated loader
+    refuses one whose compiler has since changed, which happens here on purpose since this
+    project changes the inducer. When that happens the readings are still recovered from
+    the file as data, but these results are not a claim the frozen compiler produced them.
     Any other mismatch is still an error.
     """
     path = Path(path)
@@ -75,10 +57,8 @@ def _candidates(path: Path):
             return manifests.load_chain_manifest(path).source_manifest.candidates
         return manifests.load_source_manifest(path).candidates
     except manifests.ManifestError as exc:
-        # Three ways the same fact surfaces: a compiler file changed, a compiler file was
-        # added, or the import closure moved because of one of those.  All three say the
-        # manifest was written by a compiler that is not this one, which is what happens on
-        # purpose in a line of work whose subject is the inducer.
+        # A compiler file changed or was added, or the import closure moved because of
+        # one of those. All three mean the manifest was written by a different compiler.
         if not any(m in str(exc) for m in ("implementation hash mismatch",
                                            "implementation file set is not frozen",
                                            "implementation closure is not frozen")):
@@ -171,9 +151,8 @@ def main() -> None:
         if len(digests) < 2:
             continue
         groups: dict[str, list[str]] = {}
-        # A reading that made no testable claim is untested, not a class of its own: an empty
-        # signature would otherwise read as "distinguished from everything", which is the
-        # opposite of what no evidence means.
+        # A reading with no testable claim is untested, not its own class: an empty
+        # signature would otherwise read as "distinguished from everything".
         untested = [n for n, (_, count) in sorted(digests.items()) if not count]
         for name, (digest, count) in sorted(digests.items()):
             if count:

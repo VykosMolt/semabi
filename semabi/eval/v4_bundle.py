@@ -1,27 +1,5 @@
-"""Does the model predict one interaction outcome, or several unrelated fragments?
-
-An interaction that succeeds changes the source, changes the destination and returns a message
-saying so.  One that refuses changes nothing and returns a message saying why.  Those are two
-*bundles*, and in the fitting evidence they are exactly that: on blend's ``Record draw``,
-``Drew <> from <> into <> .`` co-occurs with ``set cell#0@3, set cell#0@4`` on 57 occasions of
-57, and every refusal frame co-occurs with an empty delta on all of its.
-
-The model that predicts them is assembled from parts that were built separately.  The outcome
-layer answers with a frame; the operator layer's rules each assert their own effects and every
-rule whose precondition holds asserts them independently.  Nothing in that arrangement stops
-the model from claiming a refusal message *and* a transfer at the same click -- a combination
-the application has never produced.
-
-This measures whether it does.  For each control it collects the bundles the fitting evidence
-showed, as (frame, the kinds and slots that durably changed).  Then at each held-out action it
-assembles what the model claims -- the outcome layer's frame, and the effect signature of every
-operator that fires there -- and asks whether that pair is a bundle the evidence has ever
-shown.  A pair that is not is a hybrid: each half may be individually defensible and the whole
-is a behaviour of the application that does not exist.
-
-Values are deliberately not part of a signature.  Whether the model gets the *amount* right is
-the business of the VALUE check; what is asked here is whether the shape of the claimed
-transition is a shape this control has.
+"""Checks whether the model predicts one coherent interaction outcome, or claims a
+combination of frame and effects that the application has never actually produced.
 """
 from __future__ import annotations
 
@@ -43,7 +21,7 @@ UNSEEN_FRAME = "the frame itself was never observed on this control"
 
 
 def delta_signature(tr) -> tuple:
-    """What durably changed, as kinds and slots.  Not values: that is the VALUE check's job."""
+    """What durably changed, as kinds and slots, not values."""
     d = tr.d
     parts = [("add", o.tid) for o in d.added]
     parts += [("remove", o.tid) for o in d.removed]
@@ -53,7 +31,7 @@ def delta_signature(tr) -> tuple:
 
 
 def operator_signature(op) -> tuple:
-    """The same shape, read off a learned operator's effects rather than a transition."""
+    """The same shape, read off a learned operator's effects."""
     parts = []
     for e in op.effs:
         if e.kind == "emit":
@@ -70,7 +48,7 @@ def operator_signature(op) -> tuple:
 
 
 def observed_bundles(model) -> dict[str, Counter]:
-    """Per control, the (frame, delta shape) pairs the fitting evidence actually showed."""
+    """Per control, the (frame, delta shape) pairs the evidence actually showed."""
     from semabi.compiler.v4.consequence import clicked_control
 
     I = model.inducer
@@ -83,8 +61,8 @@ def observed_bundles(model) -> dict[str, Counter]:
         if s is None or s.action.kind != "click" or s.action.target is None:
             continue
         control = clicked_control(I.A, I.log.obs(s.before), s)
-        # An unreported output is missing data, not an outcome, so those occasions constrain
-        # nothing here and are left out rather than counted as a bundle with no frame.
+        # An unreported output is missing data, not an outcome, so it is skipped rather
+        # than counted as a bundle with no frame.
         if tr.emission is None:
             continue
         out[control][(tr.emission.frame, delta_signature(tr))] += 1
@@ -92,10 +70,9 @@ def observed_bundles(model) -> dict[str, Counter]:
 
 
 def _observed_shape(model, step) -> frozenset:
-    """The kinds and slots the page actually changed at this held-out step.
+    """The kinds and slots the page actually changed at this step.
 
-    Read from the two parses rather than from a belief-tracked pair: this is the shape of one
-    transition, and the tracker's business is carrying facts between views.
+    Read from the two parses directly, not from the belief tracker.
     """
     from semabi.compiler.abstract import diff
 
@@ -134,10 +111,8 @@ def audit(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
         fired[p.step].add(p.operator)
 
     verdicts: Counter = Counter()
-    # Two ways of answering "what durably changed here", scored against the page.  The
-    # operator layer's answer is the union of whatever rules fired; the branch's answer is the
-    # delta its own evidence gives that outcome.  They are the same question and only one of
-    # them is a single coherent claim.
+    # Two answers to "what durably changed here": the operator layer's is the union of
+    # whatever rules fired, the branch's is the delta its evidence gives that outcome.
     shape_scores: dict[str, Counter] = defaultdict(Counter)
     hybrids: list[dict] = []
     steps = [s for s in model.log.steps[model.cut:]
@@ -173,8 +148,7 @@ def audit(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
             continue
         shapes = {operator_signature(by_name[n]) for n in fired.get(step.step, ())
                   if n in by_name}
-        # A step where no operator fires claims no durable change at all, which is itself a
-        # shape -- the one every refusal has.
+        # No operator firing is itself a shape: the one every refusal has.
         claimed = shapes or {()}
         for sig in sorted(claimed):
             if (frame, sig) in known:

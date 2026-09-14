@@ -1,40 +1,23 @@
-"""Latent control families: which surface controls are observations of one semantic action.
+"""Latent control families: which surface controls are one semantic action.
 
-The action alphabet used to identify a control by the slot key its enclosing entity
-instance assigns it (`combobox#0`) plus that entity's run-local type id.  That key is a
-per-instance role ordinal, so it fails in both directions at once: two structurally
-different controls in different unit templates of one entity type receive the *same*
-identity (climbing's grade selector and a route card's wall selector), while two
-renderings of the *same* control in one instance receive different ones.  The first kind
-of error fabricates lifted semantics; the second fragments support.
+Identifying a control by the slot key of its enclosing instance fails both ways: two
+different controls in different templates of one entity type get the same identity, while
+two renderings of one control get different ones. The first fabricates semantics, the
+second only fragments support.
 
-A surface control occurrence is therefore treated the way a UI fragment is treated for
-entities: as an observation of a latent family.  A family is described by evidence that
-does not depend on the run:
+So a control occurrence is treated as an observation of a family, described by evidence
+that does not depend on the run: its role, its label with the data masked ("Close _"),
+and its role path from the innermost recurring unit that contains it.
 
-* the interaction role (`combobox`, `button`, ...);
-* the control's label with its data masked (`Close _`), when any constant token remains;
-* the role path from the root of the innermost recurring unit that properly contains it.
+Occurrences agreeing on all three are one family across template variants, but only where
+the entity layer already reads those templates as renderings of one kind of thing, and
+only where their option vocabularies are not disjoint. Any disagreement splits, because a
+false merge invents semantics while a false split only costs support. No type id, node
+index or per-instance ordinal enters a descriptor, so the alphabet is stable across runs.
 
-Occurrences agreeing on all three are the same family across unit-template variants, but
-only when the entity layer already judges those templates to be renderings of one kind of
-thing -- a card rendered with and without an extra line is one card, and its buttons are
-one control -- and only when their option vocabularies are not *disjoint*, which is
-positive evidence that two different controls have been merged.  Merging therefore needs
-agreement on structure, on the latent entity the control belongs to, and on values; any
-one of them disagreeing splits, because a false merge fabricates lifted semantics while a
-false split only fragments support.  The entity grouping is consulted as evidence, never
-as identity: no type id enters a family descriptor.  Nothing here reads a control's effects, so family
-identity remains available as selection evidence that later behavioural validation can
-confirm or refute without circularity.  Nothing here reads entity type ids, hash order,
-DOM node indices or per-instance ordinals, so the alphabet is stable across runs.
-
-Controls outside every recurring unit (navigation, filters, global forms) keep the
-identity they already had: view/sensing separation is unchanged by this module.
-
-The families are a *model*, applied to pages the induction never read: `ControlFamilies.assign`
-classifies a new page's controls by the same descriptor (`docs/v4_identity.md`).  Until it
-existed, every held-out click on every application fell through to a per-instance ordinal.
+Controls outside every recurring unit keep the identity they had. The families are a
+model, applied to pages the induction never read: `ControlFamilies.assign` classifies a
+new page's controls by the same descriptor.
 """
 from __future__ import annotations
 
@@ -80,19 +63,12 @@ class ControlFamily:
 def masked_label(node, data_tokens, *, is_data=None) -> str:
     """The control's label with its data masked, or "" when nothing but data remains.
 
-    ``Close North Wall``, ``Bottle Cloister`` and ``Return ticket 4 (1 gal from North Wall
-    out of Picnic)`` each carry an entity's name, and the first version of this blanked any
-    label that did -- so all three, and ``Open North Wall`` and ``Disgorge Cloister`` with
-    them, were label-less controls distinguished by nothing but the digest of their unit
-    template, which the layers above then dropped.  Five hidden operators became one control.
+    The name of an action is what is left of its label once the data is taken out, which is
+    the masking the abstraction already does on templates: "Close _", "Bottle _". Blanking
+    any label that contains a name instead made five different actions one control.
 
-    The name of an action is what is left of its label when the data is taken out of it, and
-    that is a masking the abstraction already performs on every template: ``Close _``,
-    ``Bottle _``, ``Return ticket _ gal from _ out of _``.  Only a label with no constant token
-    at all is label-less.  ``is_data`` is the graph's judgement at this node where the caller
-    has one -- so a word the corpus never saw, in a label where it saw names, is masked too
-    (`Close Block 12` is `Close _`) -- and the frozen corpus vocabulary otherwise.
-    """
+    `is_data` is the graph's judgement at this node where the caller has one, so a word the
+    corpus never saw, in a label where it saw names, is masked too."""
     if is_data is None:
         is_data = data_tokens.__contains__
     parts: list[str] = []
@@ -123,18 +99,13 @@ def rendered_name(role: str, label: str, path: str) -> str:
 def identity(slot: str) -> str:
     """What names a control, from a family id, a static slot key or a locator slot.
 
-    Three kinds of string reach the behavioural layers as a control's identity, and they
-    have to be compared on one footing:
+    Three kinds of string reach the layers above and must be compared on one footing:
 
-    * ``button:Close@54dcf8`` -- a labelled family, disambiguated from another family with
-      the same label and path that the entity layer keeps apart.  The label is the
-      interface's own name for the action, and the layers above have always pooled these;
-      the digest is dropped.
-    * ``button#button@bb8f76`` -- a label-less family.  Nothing but its template family
-      names it, so the digest *is* the identity and stays.  Dropping it pooled blend's
-      ``Open`` buttons with every other label-less button at the same path.
-    * ``button:Walls@57`` -- a static slot key whose ``@`` carries a node index, dropped.
-    """
+    * `button:Close@54dcf8` -- a labelled family. The label is the interface's own name for
+      the action, so the digest is dropped.
+    * `button#button@bb8f76` -- a label-less family. Nothing but the template names it, so
+      the digest is the identity and stays.
+    * `button:Walls@57` -- a static slot key whose `@` carries a node index, dropped."""
     head, sep, tail = slot.partition("@")
     if not sep:
         return slot

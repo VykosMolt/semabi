@@ -1,11 +1,8 @@
-"""What the learner actually learned: rules, preconditions, and what they exclude.
-
-Aggregate verdict counts hide the two failures that matter most.  A model can stop being
-contradicted by learning a condition that explains its counterexamples, or by learning one
-that stops it speaking; and a condition can be a genuine fact about the acted-on object or a
-restatement of that object's identity.  Neither is visible from a refutation count, so this
-prints the rules themselves: what each one fires on, what it claims, which prefix transitions
-support it, which negatives its preconditions exclude, and which it still cannot explain.
+"""Reports what the learner actually learned: the rules, their preconditions, and what
+they exclude. Aggregate verdict counts hide whether a condition explains counterexamples
+or just silences the rule, and whether it is a genuine fact or a restatement of identity,
+so this prints each rule: what it fires on, what it claims, what supports it, and what
+it still cannot explain.
 """
 from __future__ import annotations
 
@@ -43,10 +40,9 @@ def model(run_dir: Path, reading, split: float, min_support: int = 2) -> dict[st
             culprits = [lit for lit in op.pre if _excluded_by(lit, lits)]
             if culprits:
                 excluded += 1
-                # A precondition that only ever fails on objects the rule never fired on could
-                # be a restatement of which object this is.  One that fails on an object the
-                # rule *did* fire on, at another moment, is a fact that varies over time --
-                # which is what a precondition has to be.
+                # A precondition failing only on objects the rule never fired on could be a
+                # restatement of identity. Failing on an object the rule did fire on, at
+                # another moment, means it is a fact that varies over time.
                 if any(binding.get(lit[1]) in seen.get(lit[1], ()) for lit in culprits
                        if len(lit) > 1 and isinstance(lit[1], str) and lit[1].startswith("?")):
                     same_object += 1
@@ -80,16 +76,10 @@ COPIED = "copied from instance data"
 def effect_value_character(operators) -> dict[str, Any]:
     """Where does each effect's value come from?
 
-    Three answers, and only the third is a defect.  A value that is a rule parameter is
-    supplied by the action.  A value that is a constant, and the *same* constant everywhere
-    that action family writes that slot, is determined by the action -- harbour's Close always
-    writes 'closed'.  A value that is a constant differing between rules for the same action
-    and slot is none of those: it was copied out of the one transition the rule was lifted
-    from, so the rule says "clicking Schedule call creates a call for the vessel Nordkapp" and
-    can only be right by coincidence.
-
-    The test is structural and needs no threshold: it asks whether the action determines the
-    value, by looking at whether the value moves when nothing about the action does.
+    Supplied by the action (a rule parameter), determined by the action (the same constant
+    everywhere that family writes the slot), or copied from the one transition the rule was
+    lifted from, which can only be right by coincidence. The test is structural: whether the
+    value moves when nothing about the action does.
     """
     by_slot: dict[tuple[str, str], dict[str, Any]] = {}
     for op in operators:
@@ -134,7 +124,7 @@ def _effect_values(eff):
 
 
 def _excluded_by(lit: tuple, lits: set) -> bool:
-    """Does this precondition rule the negative out?  ``attr_ne`` is stored as the exclusion
+    """Does this precondition rule the negative out? ``attr_ne`` is stored as the exclusion
     it manufactures, so it excludes when the corresponding equality holds."""
     if lit[0] == "attr_ne":
         return ("attr", lit[1], lit[2], lit[3]) in lits

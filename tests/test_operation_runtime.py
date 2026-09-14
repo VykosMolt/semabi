@@ -1,8 +1,7 @@
-"""Synthetic operation diagnostics; no application source, database or oracle.
+"""Runtime tests with a synthetic in-memory browser, not a real application.
 
-Most fixtures describe rendered observations and form metadata only. Settling
-uses an invented snapshot stream and clock; browser tests check disclosures,
-menu/element continuity, and paragraph boundaries against in-memory HTML.
+Fixtures describe rendered observations and form metadata; settling uses an
+invented snapshot stream and clock.
 """
 from copy import deepcopy
 from itertools import count
@@ -450,10 +449,10 @@ def _semantic_diagnostic(tmp_path, monkeypatch, *, wrong_control=False, interven
                          counterfactual_event='Recorded', predecessor_category=False,
                          nested_category=False, argument_overrides=None, scope_limits=None,
                          return_rank=0, invocation_limits=None, **browser_options):
-    """Supply a fitted prediction contract; exercise real routing, tracing and response readback.
+    """Exercise real routing, tracing and response readback against a supplied prediction.
 
-    No fitting claim is made by this diagnostic. The rendered application deliberately can
-    navigate to the wrong owner or emit a notice without producing the requested result.
+    The rendered application can navigate to the wrong owner or emit a notice
+    without producing the requested result.
     """
     from semabi.compiler.semantic import SemanticArtifact
     from semabi.compiler.semantic_runtime import shape, step_for
@@ -951,11 +950,8 @@ def test_semantic_cell_anchor_language_resolves_fresh_rows_and_refuses_ambiguous
 
 
 def test_semantic_radio_proposal_retains_same_layout_selection_change():
-    """Regression: heading-only proposal and role-only context lost this selection.
-
-    A checked-state transition is already observed even though the navigation shape stays
-    the same. A procedure learner must retain that edge to reach its later commit action.
-    """
+    """A checked-state transition is observed even when the navigation shape is
+    unchanged; the procedure learner must keep that edge."""
     from semabi.compiler.semantic_runtime import procedure_context, selector, shape, step_for
     before, after = _semantic_radio_rows(), _semantic_radio_rows(selected='Alpha')
     assert selector(before, 4)['anchor_role'] == 'cell'
@@ -967,11 +963,8 @@ def test_semantic_radio_proposal_retains_same_layout_selection_change():
 
 
 def test_semantic_recovery_keeps_observed_radio_prerequisite_before_commit(tmp_path):
-    """Regression: raw selection evidence was dropped from recovered procedures.
-
-    This reproduces an interrupted-onboarding boundary, not just selector proposal:
-    opening a chooser, selecting a row, and committing are three recorded actions.
-    """
+    """Opening a chooser, selecting a row, and committing are three recorded
+    actions; recovery must not drop the selection evidence."""
     from semabi.compiler.browser import Primitive
     from semabi.compiler.runtime import Budget, Trace
     from semabi.compiler.semantic_runtime import recover_learning
@@ -1856,12 +1849,8 @@ def test_semantic_numeric_frontier_progress_requires_observed_edit_or_rejection(
 @pytest.mark.parametrize('control_only', [False, True])
 def test_semantic_publication_learns_which_selector_supplied_action_owner(
         tmp_path, monkeypatch, predecessor_category, post_owner_changed, control_only):
-    """Isolate publication from fitting: a predecessor must not hide the actual owner.
-
-    Predictions and response observations are identical in the two arms. Only the earlier
-    collection selector differs; it is not the action's owner. Previously this arm failed
-    publication because the implementation assumed route[0] was always the owner source.
-    """
+    """The two arms differ only in an earlier selector that is not the action's
+    owner; publication must not assume the owner is always route[0]."""
     from semabi.compiler.browser import Primitive
     from semabi.compiler.runtime import Budget
     from semabi.compiler import semantic, semantic_runtime as procedures
@@ -6336,11 +6325,8 @@ def test_completion_learning_requires_two_triggered_trials_and_reuses_without_pu
 
 
 class _MixedCompletionRecordBrowser(_EditableRecordBrowser):
-    """One whitespace-splitting value and one explicitly advertised completion.
-
-    The list intentionally never restates the complete split value. A global
-    punctuation probe therefore destroys the original single-value witness.
-    """
+    """One whitespace-splitting value and one explicitly advertised completion;
+    the list never restates the complete split value."""
     popup_mode = None
     retained_node_indices = _CompletionRecordBrowser.retained_node_indices
 
@@ -7040,11 +7026,8 @@ class _FinalReopenGuardedSemanticDiagnosticBrowser(_DetailOnlyGuardedSemanticDia
 
 @pytest.mark.parametrize('fault', ['stale_draft', 'changed_capacity', 'wrong_owner'])
 def test_semantic_final_reopen_revalidates_persistence_prerequisite_and_owner(tmp_path, monkeypatch, fault):
-    """Supplied diagnostic condition; mutable state refutes a final read-only check.
-
-    This requires the proposed final reopen to engage. It is not evidence that
-    ordinary learning induces the supplied diagnostic relationship or condition.
-    """
+    """Mutable state refutes a check that was assumed read-only, forcing the
+    final reopen to engage."""
     monkeypatch.setattr(_FinalReopenGuardedSemanticDiagnosticBrowser, 'final_reopen_fault', fault)
     monkeypatch.setitem(globals(), '_GuardedSemanticDiagnosticBrowser', _FinalReopenGuardedSemanticDiagnosticBrowser)
     result, browser = _semantic_diagnostic(tmp_path, monkeypatch, guarded=True)
@@ -7157,10 +7140,8 @@ class _PasswordViewBrowser:
 
 @pytest.mark.parametrize('login', [False, True])
 def test_semantic_acquisition_leaves_a_password_bearing_view_and_stops_only_on_a_login_scope(tmp_path, login):
-    # FreshRSS's subscription form asks for the feed's HTTP credentials on an
-    # authenticated page: the candidate that reached it is unsupported and the
-    # acquisition goes on, nothing filled or clicked there.  A login scope is a
-    # lost session and still stops the acquisition.
+    # A page asking for HTTP credentials is unsupported: acquisition continues
+    # without filling or clicking. A login scope is a lost session and stops it.
     from semabi.compiler.runtime import Budget, Trace, StopOperation
     from semabi.compiler.semantic_runtime import acquire
 

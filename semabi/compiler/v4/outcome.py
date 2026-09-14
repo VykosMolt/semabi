@@ -1,42 +1,18 @@
 """An outcome model: what a control returns, as an ordered list of guarded answers.
 
-The operator layer learns one rule per (action, effect) cluster and gives each its own
-precondition.  For state effects that is right -- two effects of one action are both true --
-but for what an interaction *returns* it is wrong in a way that shows up immediately: exactly
-one event occurs, the branches are alternatives, and learning each one's condition
-independently produces a set of rules that all claim the same click.  On blend's ``Record
-draw`` at a 0.7 cut, six branches were applicable at every one of 67 held-out actions and the
-right one was among them every time; the model had recall and no decision.
+Exactly one event happens per click, so the branches are alternatives rather than
+independent rules. An application checks its guards in an order and reports the first
+that fails, so the model is an ordered list: a rule only has to be pure among the
+occasions the rules above it did not take.
 
-Three things follow from taking the alternatives seriously.
+Not answering is an answer. Where no pure rule covers the rest, the list ends and the
+model says it does not know rather than falling back to the commonest event.
 
-The first is that the hypothesis is a **decision list**, not a set.  An application checks its
-guards in an order and reports the first that fails, so ``already bottled`` is what you get
-when the destination is bottled *whatever else is also wrong*, and a rule for ``the source is
-closed`` never has to mention the destination.  Learning the branches as independent
-mutually-exclusive rules asks each one to state conditions the application never checks.
-Separate-and-conquer learns exactly the ordered form: a rule need only be pure among what the
-rules above it did not already take.
-
-The second is that not answering is an answer.  Where no pure rule covers the rest, the list
-ends and the model says it does not know, rather than defaulting to the commonest event --
-which is the control this instrument is measured against.
-
-The third is that the application says which object each event is about, and that is evidence
-about the *referring expressions*, not only about the events.  The roles here are the
-expressions the operators already learned -- "the object named by this select", "the object
-this button sits in", "the object whose reference points at that one" -- and two of them that
-fill the same argument position of the same event are two names for one role, merged and then
-ordered by which of them the messages corroborate.  An expression never once corroborated and
-sometimes contradicted is dropped.  Nothing here introduces a new way of *naming* an object;
-what is new is that a name can now be checked against the application's own use of it.
-
-Using a completed transition's message to choose a referring expression is causally legal --
-the action has happened.  Using it to choose the target of the prediction that preceded it is
-not, and does not occur: prediction asks only pre-state queries.  Whether a role names anything
-at all is itself a condition the list may be about, which is how cellar's commonest refusal --
-*Nothing chosen in the vessel list.* -- is expressible; and a state where a role the list
-depends on names nothing makes the model abstain rather than guess.
+The application also says which object each event is about. The roles here are the
+expressions the operators already learned ("the object this button sits in", "the
+object named by this select"); two that fill the same position of the same event are
+two names for one role. Messages are used to align those names while fitting, never
+to answer a prediction: prediction asks only about the state before the click.
 """
 from __future__ import annotations
 
@@ -53,31 +29,20 @@ UNDETERMINED = "\x00UNDETERMINED"    # the evidence did not separate the remaini
 UNNAMED = "\x00UNNAMED"              # a role the list depends on names nothing here
 
 OWNER = "owner"                      # the object the clicked control sits in
-# An argument position filled by the key of an object the interaction *creates*.  No
-# pre-state role can name it: the value is fresh, and what the model claims is that it is --
-# that the message names the new object, and names it by a key nothing on the board had.
+# An argument position filled by the key of an object the click creates. No role can
+# name it beforehand; the claim is exactly that the name is new.
 CREATED = "created"
 FRESH = "*"                          # the prediction for such a position: a new name
 
-# The two hypothesis classes a version space can be asked about.  See `Evidence.admissible`.
+# The two classes a question can be asked of. See `Evidence`.
 RULE = "rule"      # one conjunction, pure over every fitting occasion: a list's head
 LIST = "list"      # an ordered list of conjunctions, each pure on what the ones above left
 
-# Whether the literal language states how many objects of each type the state holds.  A
-# count is a fact about a collection rather than about any object in it, and blend's draw
-# book refuses a thirteenth draw on a count: *The book already holds 12 records*.  Measured
-# twice and off both times (`docs/v4_identity.md`, `docs/v4_collections.md`).  With the draw
-# rows objects, per-type counts widen every control's admissible sets where a count happens
-# to vary -- harbour's second history 155 forced to 147, blend's 240 to 227 -- and close
-# none of the eight cardinality states, because the application's cap is on the *total* of
-# its objects (vats, blends and draws together), reached in that seed at six draws; a
-# per-type count is a proxy for it in one seed and a different number in the next.  Two
-# fitting occasions of the refusal could found no rule in any case.  Kept for measurement.
+# Whether conditions may count the objects of a type. Off: an application that caps a
+# total is not described by a per-type count, and allowing it only makes answers vaguer.
 COUNT_LITERALS = False
 
-# A condition fitted to a single occasion is indistinguishable from naming that occasion.
-# The same principle is already in `memorises_the_fitting_instance` and in `learn_pre`'s
-# refusal to explain isolated failures, and it is the only count in this module.
+# A condition fitted to one occasion is indistinguishable from naming that occasion.
 MIN_COVER = 2
 LIST_SEARCH_BUDGET = 100_000
 
@@ -121,14 +86,9 @@ def describe(event: str) -> str:
 class Alias:
     """Several ways of naming one role, tried in order.
 
-    The same object is reached by different expressions on different pages -- the destination
-    is what the Blend select names where the page renders that select, and what this button's
-    row refers to where it does not -- and a role that is named on only some occasions cannot
-    carry a condition across all of them.  The expressions are aligned by the application's own
-    messages: two of them fill the same argument position of the same event, so they are two
-    names for one thing.  What is asked at prediction time is still a pre-state query; the
-    message is used to *align* the queries during fitting and never to answer one.
-    """
+    The same object is reached differently on different pages, and a role named on only
+    some occasions cannot carry a condition across all of them. Two expressions are merged
+    when the application's messages put them in the same position of the same event."""
     name: str
     parts: tuple
     tid: Any
@@ -140,9 +100,8 @@ class Alias:
 
     @property
     def path(self):
-        # Several expressions for the same restricted role do not add nominal
-        # evidence. Preserve any full role's existing capability, but never create
-        # it merely by aligning two comparison-only paths through a message.
+        # Merging two comparison-only paths must not create a role that can carry
+        # nominal conditions.
         return all(getattr(part, "path", False) for part in self.parts)
 
     def denotation(self, state, bound: dict) -> list:
@@ -166,11 +125,8 @@ class Role:
     def denotation(self, state, bound: dict) -> list:
         here = [o for o in state.objs.values() if o.tid == self.tid]
         if self.path:
-            # A comparison path reads the objects this observation displays. A holder
-            # displaying a new member need not prove that every previously seen member
-            # ceased to belong to it: those retained beliefs remain available to other
-            # questions, but do not compete with the local field occurrence being read.
-            # Lightweight callers without node provenance retain their existing scope.
+            # Read only what this page displays. A remembered member that is not shown
+            # here stays in belief, but does not compete with what is.
             here = [o for o in here if not hasattr(o, "node")
                     or (isinstance(o.node, int) and o.node >= 0)]
         if self.kind == referring.SINGLETON:
@@ -198,8 +154,7 @@ class Role:
 
 
 def _components(key) -> set[str]:
-    """The values a key is made of: itself, and for a link type's composite key -- harbour's
-    call button, keyed `T0:Selkie|T3:C-107` -- each part with its type prefix removed."""
+    """The values a key is made of: the key itself, and each part of a composite key."""
     key = str(key)
     parts = {key}
     for part in key.split("|"):
@@ -209,10 +164,7 @@ def _components(key) -> set[str]:
 
 
 def _names_of(obj) -> set[str]:
-    """The values by which an object can be named: its key's components, and the keys of
-    the objects it refers to.  Harbour's call button is a link object keyed by its row and
-    column (`T0:Nordkapp|col:Call`) whose content, `C-102`, is a reference to the call, and
-    the message that opens the call names it by that."""
+    """The values an object can be named by: parts of its key, and the keys it refers to."""
     out = _components(obj.key)
     for target in obj.refs.values():
         if target is not None:
@@ -226,25 +178,19 @@ def _bits(mask: int) -> int:
 
 @dataclass(frozen=True)
 class Vouch:
-    """Why an event is admissible here: the occasions that vouch for it, and on what.
+    """Why an event is possible here: the occasions that vouch for it, and on what.
 
-    ``condition`` is the largest conjunction this state shares with both witnesses, and
-    ``covers`` is every fitting occasion it reaches -- all of them of this event, which is what
-    makes the rule justified rather than merely available.
-    """
+    `condition` is what this state shares with both witnesses; `covers` is every occasion
+    it reaches, all of the same event."""
     event: str
     witnesses: tuple[int, ...]
     condition: tuple
     covers: int
-    # True when this control has never been seen to do anything else.  Then unanimity among
-    # admissible hypotheses is vacuous -- there is only one label in the space -- and the model
-    # is agreeing with itself rather than being forced by evidence.  Truncating blend's
-    # `Record draw` to three occasions produces exactly this: one event, the whole state space
-    # vouched for it, and 71 of 123 held-out actions wrong.
+    # True when this control has never been seen to do anything else. Agreement is then
+    # vacuous: there is only one answer to agree on, and it is not forced by evidence.
     sole: bool = False
-    # The events whose guards had to be checked *before* this rule for it to be pure.  Empty
-    # for a rule that is pure over all the evidence -- one that could head a decision list --
-    # and otherwise the earlier branches of the ordered list this rule is justified in.
+    # The events whose guards must be checked before this rule for it to be pure. Empty
+    # for a rule that is pure over all the evidence.
     preceded_by: tuple[str, ...] = ()
 
     @property
@@ -260,51 +206,36 @@ class Vouch:
 
 
 class Evidence:
-    """The fitting occasions of one control, and what any justified rule could say from them.
+    """The occasions this control was seen on, and what any justified rule could say.
 
-    The decision list is a *point* hypothesis.  Many ordered lists fit the same evidence, and
-    where they disagree about a held-out state the list the search returned is one vote rather
-    than a conclusion.  This asks the question the list cannot: given everything observed for
-    this control, which events could a justified rule assign to *this* state?
+    A decision list is one hypothesis among many that fit the same evidence. This asks
+    the question the list cannot: which events could a justified rule assign to this
+    state at all?
 
-    A rule is admissible when it is a conjunction over the literal language that (a) this state
-    satisfies, (b) reaches at least ``MIN_COVER`` fitting occasions of one event, and (c)
-    reaches no occasion of any other -- the same two refusals the greedy learner already makes,
-    read as a definition of justification rather than as a stopping rule.  An adversary who
-    wants a decision list to answer ``e`` here can put such a rule at the top.
+    A rule is justified when it is a condition the state satisfies, reaches at least
+    MIN_COVER occasions of one event, and reaches no occasion of another.
 
-    The converse -- that if no such rule exists, no consistent list answers ``e`` here -- was
-    asserted in the first version of this docstring and is false: a list answers by rules
-    that are pure only *after* the guards above them, and the application these lists model
-    checks its guards in an order.  That is a second hypothesis class, ``LIST``, and
-    :meth:`admissible` answers for whichever is named.  What "forced" means depends on it:
-    under ``RULE`` it is *the only event a globally pure rule vouches for here*, under ``LIST``
-    it is the only event admitted by the ordered-guard language below. The latter restricts
-    residual guards to maximal shared witness conjunctions; it is not all consistent
-    decision lists. Adding a categorical field can change that language without refuting
-    an old explanation. :meth:`ControlOutcome.answer` reports this restricted class.
+    Two classes give different answers. RULE wants one condition pure over all the
+    evidence. LIST is what an application with ordered guards actually is: a rule need
+    only be pure among the occasions the guards above it did not take, so "the source is
+    closed" can be justified even where "already bottled" fired first on some occasions.
+    `admissible` answers for whichever class is named, and what "forced" means depends
+    on it.
 
-    The uncorroborated globally pure search is exact and quadratic. A
-    conjunction this state satisfies is a subset of its literals; its cover is the intersection
-    of the occasions of its literals, so covers shrink as conjunctions grow.  For a witness set
-    ``S`` the most specific conjunction available is ``L(state) & ⋂_{i∈S} L(i)``, which has the
-    *smallest* cover and therefore the best chance of purity.  Adding a third witness can only
-    shrink the conjunction and so enlarge the cover: if every pair fails purity, every larger
-    set fails too. So enumerating pairs of same-event occasions decides that question.
-    Requiring a third supporting occasion needs the triple fallback in :meth:`admissible`;
-    greedy pair generalisation alone is not complete for corroborated support.
+    For RULE, pairs of same-event occasions decide the question exactly: the condition a
+    pair shares is the most specific one available, and adding a witness only widens the
+    cover, so if no pair is pure no larger set is. Requiring a third supporting occasion
+    needs the triple fallback in `admissible`.
 
-    Literals are held as bitmasks over one interned vocabulary, which is what makes 3750 pairs
-    against 150 occasions a fraction of a second rather than a minute.
+    Conditions are bitmasks over one shared vocabulary, which is what keeps thousands of
+    pairs to a fraction of a second.
     """
 
     def __init__(self, rows, refuse=None, subjects=None):
         self.subjects = subjects
         self._blocks: list[tuple[int, int, str]] | None = None
-        # Kept so that occasions added later are filtered by the same rule.  They were not,
-        # and it mattered: an acquired occasion carried `id = B1` into the vocabulary, the
-        # identity constant every fitted occasion had had removed, and that literal then
-        # founded a corroborated rule for cellar's hall refusal.
+        # Kept so occasions added later are filtered the same way. Without it, a new
+        # occasion can smuggle in an identity constant the others had removed.
         self.refuse = refuse
         self.events: list[str] = []
         self.index: dict[tuple, int] = {}
@@ -324,17 +255,8 @@ class Evidence:
             self.events.append(event)
         self.of_bit = {b: lit for lit, b in self.index.items()}
         self.occasion_obs: dict = {}     # occasion -> the page it was read from (diagnostic)
-        # Which literals a rule for each event is allowed to be *about*.  `_best_rule` has had
-        # this restriction as an option since `docs/v4_outcomes.md` measured it on the list.
-        #
-        # It was added here on the reasoning that denying a literal can only remove hypotheses
-        # and is therefore conservative in a version space.  **That reasoning is wrong and the
-        # measurement says so.**  Confidence here is a property of the admissible *set*, and a
-        # set of one is the most confident answer there is, so removing a candidate can turn
-        # *several remain open* into *this outcome is forced*.  On blend it does exactly that:
-        # 57 several-open states fall to 41, forced claims rise from 98 to 109, and they are
-        # right 61 times against 66 before -- more decisive and less accurate.  Off by default;
-        # the negative is why it is kept.
+        # Optional: restrict what a rule for each event may be about. Off by default --
+        # removing a candidate answer makes the model more decisive and less accurate.
         self.about: dict[str, int] | None = None
         if subjects is not None:
             self.about = {}
@@ -356,11 +278,10 @@ class Evidence:
 
     @classmethod
     def extend(cls, evidence: "Evidence", extra) -> "Evidence":
-        """The same evidence with further occasions, refitted from scratch.
+        """The same evidence plus further occasions, rebuilt from scratch.
 
-        Rebuilding rather than mutating keeps the literal vocabulary a function of the whole
-        evidence, so an acquired occasion cannot silently change what an earlier one meant.
-        """
+        Rebuilding keeps the vocabulary a function of all the evidence, so a new occasion
+        cannot quietly change what an old one meant."""
         return cls(list(evidence.rows_for_refit()) + list(extra),
                    refuse=getattr(evidence, "refuse", None),
                    subjects=getattr(evidence, "subjects", None))
@@ -378,15 +299,11 @@ class Evidence:
                              if mask >> b & 1), key=str))
 
     def _generalise(self, cond: int, other: list[int]) -> int:
-        """Drop every literal purity does not need, widening the claim to what is separated.
+        """Drop every condition purity does not need.
 
-        The conjunction a witness pair hands over is the *most specific* one available, and a
-        most specific conjunction usually reaches nothing but its own witnesses -- which is the
-        anti-memorisation refusal this compiler already makes about constants, in conjunction
-        form.  Dropping a literal can only enlarge the cover, so a minimal pure condition is
-        the widest claim the evidence still separates, and its cover is how much of that width
-        the evidence actually establishes.
-        """
+        A pair of witnesses hands over the most specific condition available, which usually
+        covers nothing but the pair itself. Dropping parts only widens the cover, so what is
+        left is the widest claim the evidence still separates."""
         for b in range(cond.bit_length()):
             bit = 1 << b
             if not cond & bit:
@@ -401,32 +318,13 @@ class Evidence:
                    search_budget: int | None = None) -> dict[str, Vouch]:
         """Event -> the widest justified rule this state satisfies, or nothing.
 
-        Empty means *not established*.  With ``corroborated`` the rule must additionally reach
-        an occasion beyond the two that built it: a condition covering only its own witnesses
-        is indistinguishable from naming them, which is the same refusal ``learn_pre`` makes
-        about a constant seen once.  Pairs decide the uncorroborated question exactly. With
-        corroboration, pair generalisation is a fast path; if it finds no three-occasion
-        condition, triples complete the search. A pure condition reaching three occasions
-        is contained in their shared literals and in the query. Their intersection is
-        therefore pure too, and generalising it cannot lose those three witnesses. This
-        decides RULE outcome existence independently of greedy literal-removal order;
-        the representative condition need not be order-independent or globally optimal.
+        Empty means nothing is established here. With `corroborated` the rule must also
+        reach an occasion beyond the two that built it: a condition covering only its own
+        witnesses is indistinguishable from naming them.
 
-        ``hypothesis`` names the class the question is asked of, and the two classes give
-        different answers.  ``RULE`` is a single conjunction pure over *all* the evidence --
-        a rule that could head a decision list.  ``LIST`` is what the learner actually fits and
-        what an application with ordered guards actually is: a rule need only be pure among
-        the occasions the guards above it did not take, so *the source is closed* can be a
-        justified rule even though it also holds on occasions where *already bottled* fired
-        first.  The docstring this class was written with argued that the two coincide -- an
-        adversary who wants a list to answer ``e`` puts a pure rule for it on top -- and that
-        argument is wrong in one direction: a list can answer ``e`` by a rule that is pure
-        only *after* earlier guards, and no globally pure rule for ``e`` need exist.  On blend
-        63 of 93 states the rule class calls forced are open under the list class, and 6 of
-        its confident errors are states where a consistent list answered correctly.  See
-        :meth:`_search_lists`. Exhausted LIST search raises
-        :class:`IncompleteAdmissibility`; use :meth:`admissibility` to retain
-        partial witnesses without making an exact-set claim.
+        `hypothesis` names the class asked (see `Evidence`). A LIST search that exhausts
+        its budget raises IncompleteAdmissibility; `admissibility` keeps the partial
+        witnesses without claiming the set is exact.
         """
         if hypothesis == LIST:
             result = self.admissibility(literals, corroborated=corroborated,
@@ -451,19 +349,12 @@ class Evidence:
                         continue      # the condition reaches an occasion of another event
                     cond = self._generalise(cond, other)
                     covers = sum(1 for i in idxs if cond & self.masks[i] == cond)
-                    # Which pure condition to vouch by, where several are pure.  By default the
-                    # widest, which is what the greedy learner also prefers.  Under `simplest`,
-                    # the one with fewest literals -- guards are short, so Occam should pick the
-                    # application's own condition over a coincidence.  **It does not.**  The
-                    # shortest separating condition in this language is an object's key, so the
-                    # preference selects memorisation; asking cellar for it returned `id = B1`.
-                    # Measured on every application and it changes nothing else, so: off, kept
-                    # for what it revealed.  See `docs/v4_admissibility.md`.
+                    # Which pure condition to vouch by when several are pure: the widest by
+                    # default. `simplest` prefers the shortest, which sounds right and is not:
+                    # the shortest condition here is usually just an object's key.
                     if corroborated and simplest and covers <= 2:
-                        # Only corroborated candidates may compete, or preferring a short
-                        # condition could discard an event whose *longer* condition was
-                        # admissible -- refusing more, which would look like an improvement
-                        # and would not be one.
+                        # Only corroborated candidates compete, or a short condition could
+                        # discard an event whose longer condition was fine.
                         continue
                     score = ((-_bits(cond), covers) if simplest else (covers,))
                     if best is None or score > mark:
@@ -474,11 +365,8 @@ class Evidence:
                 if best is not None and not simplest and (not corroborated or best.covers > 2):
                     break
             if corroborated and (best is None or best.covers <= 2):
-                # A pair can generalise towards a pure two-occasion correlate and miss a
-                # different pure guard covering three occasions. Seed the required support
-                # directly before generalisation, rather than letting bit order decide
-                # whether this event exists in the admissible set. The pair fast path is
-                # retained; this fallback changes neither the literals nor the rule class.
+                # A pair can generalise to a two-occasion condition and miss a different
+                # one covering three, so try triples directly before giving up.
                 for witnesses in combinations(idxs, 3):
                     cond = here & keep
                     for i in witnesses:
@@ -502,13 +390,11 @@ class Evidence:
                                   simplest=simplest, search_budget=search_budget)
 
     def _search_lists(self, literals, *, corroborated, simplest, search_budget):
-        """Search retained pair-guard orders, protecting each query's founders.
+        """Search orders of guards that could stand above this query.
 
-        Purity increases when rows disappear, but minimum support can decrease.
-        Consequently greedy closure is not a sound impossibility test. Prefixes
-        merge only at equal residual row sets; all their guards are query-false.
-        Omitted rows remain visible: this is not whole-model completion search.
-        """
+        Removing occasions makes purity easier but support harder, so a greedy search
+        cannot prove impossibility. Two prefixes merge only when the same occasions are
+        left. This searches guard orders, not whole models."""
         budget = LIST_SEARCH_BUDGET if search_budget is None else search_budget
         if not isinstance(budget, int) or isinstance(budget, bool) or budget < 0:
             raise ValueError("search_budget must be a nonnegative integer")
@@ -531,10 +417,8 @@ class Evidence:
 
         def cover(condition):
             nonlocal cover_hits
-            # Different founder triples can have the same exact condition.
-            # Share only its immutable full-row cover, never their protected
-            # founder sets or residual purity/support decisions. Cache work is
-            # charged; lifetime is this one query against these exact masks.
+            # Two triples can produce the same condition: share its cover, never their
+            # founders or their purity decisions. The cache lives for this query only.
             spend()
             if condition in covers:
                 cover_hits += 1
@@ -683,11 +567,8 @@ class Evidence:
     def _pair_blocks(self) -> list[tuple[int, int, str]]:
         """Every rule a pair of same-event occasions can found: (condition, cover, event).
 
-        These are the retained language's earlier-guard candidates, not a proof
-        of what arbitrary decision lists can remove. Reachability also requires
-        an order preserving residual purity and minimum support. Covers are
-        bitsets over occasions; their founding event remains part of the guard.
-        """
+        These are candidates for guards above a query, not everything a decision list
+        could express. Covers are bitsets over occasions."""
         if self._blocks is None:
             n = len(self.events)
             blocks = []
@@ -726,16 +607,14 @@ class ControlOutcome:
     default: str = UNDETERMINED
     fitted: int = 0
     events: dict[str, int] = field(default_factory=dict)
-    # The fitting occasions, kept.  The decision list is one hypothesis; `admissible` asks
-    # which events *any* justified hypothesis could assign here, and that question is about
-    # the evidence rather than about the list the search happened to find.
+    # The occasions themselves, kept: `admissible` asks what any justified rule could say,
+    # which is a question about the evidence rather than about the list that was fitted.
     evidence: "Evidence | None" = None
     # What each list this control sits with held the first time the model saw it, which is
     # what it holds untouched.  The literal language compares against these; see `_literals`.
     defaults: dict = field(default_factory=dict)
-    # The fields whose theory is ORDERED -- ``tid -> slot -> thresholds`` -- adopted per
-    # field from the fitting evidence (`semabi.compiler.v4.fields`).  The literal language
-    # compares against these thresholds; every other field is nominal.
+    # Fields read as ordered (tid -> slot -> thresholds). Conditions may compare against
+    # these; every other field can only be equal or unequal.
     ordered: dict = field(default_factory=dict)
     # The comparisons between two fields a fitted rule justified (`fields.adopted_pairs`);
     # None while every candidate pair is available, which is the first learning pass.
@@ -743,11 +622,8 @@ class ControlOutcome:
     # Which of several pure conditions to vouch by: the widest, or the one with fewest
     # literals.  See `Evidence.admissible`.
     simplest: bool = False
-    # What each event *durably did*, as the kinds and slots that changed.  An interaction is
-    # one behaviour: a draw moves gallons and says so, a refusal changes nothing and says why.
-    # Holding the delta on the branch is what stops the model claiming a transfer message with
-    # no transfer, which it did at 86 of blend's 267 held-out claims when the outcome layer
-    # and the operator layer answered separately.
+    # What each event durably did, as the kinds and slots that changed. Keeping it on the
+    # branch stops the model predicting a message about a transfer with no transfer.
     deltas: dict[str, dict[tuple, int]] = field(default_factory=dict)
     # Which role fills each argument position of each event.  This is what makes the answer a
     # parameterized output rather than a sentence: `already_bottled(<the object the Blend
@@ -755,14 +631,10 @@ class ControlOutcome:
     arg_roles: dict[str, dict[int, str]] = field(default_factory=dict)
 
     def bind(self, state, owner) -> tuple[dict[str, Any], dict[str, str]]:
-        """The objects the roles name here, and what happened to the ones that named nothing.
+        """The objects the roles name here, and what happened to those that named nothing.
 
-        Whether a referring expression names anything is itself a fact about the state and one
-        the application talks about: *Nothing chosen in the vessel list.* is cellar refusing
-        because a selection names no object.  So an unnamed role is not a missing input to be
-        worked around, it is a condition the list may be about, and it enters the literal
-        language as ``unnamed`` beside ``named`` and ``ambiguous``.
-        """
+        Whether a role names anything is itself a fact a rule may be about: "nothing chosen
+        in the list" is a real refusal. So `unnamed` and `ambiguous` are conditions too."""
         out: dict[str, Any] = {}
         status: dict[str, str] = {}
         if owner is not None:
@@ -843,10 +715,8 @@ class ControlOutcome:
         bound, status = self.bind(state, owner)
         from semabi.compiler.v4 import outcome as _self          # literals need the inducer
         literals = _self._pending_literals(self, state, bound, status)
-        # The status is relative to the class the learner declares -- ordered lists -- and
-        # the events a globally pure rule vouches for are reported inside it as the guards
-        # that need no ordering to be justified.  A set of one under the rule class is not
-        # "forced": it is the one event a list could *head* with here.
+        # Answered for ordered lists, the class the learner declares. A single answer under
+        # the rule class is not "forced": it is what a list could head with here.
         result = self.admissibility(literals, corroborated=True, hypothesis=LIST,
                                     search_budget=search_budget)
         options = result.options
@@ -1088,11 +958,8 @@ def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None
                       binding={k: o.id for k, o in binding.items()})
     lits = inducer._literals(None, fake)
     if getattr(state, "partial", False):
-        # This inherited literal asserts that no object points at the owner,
-        # not merely that this view shows no members. Even a complete visible
-        # collection does not enumerate all incoming references in the world.
-        # Explicit observed null references and scoped membership evidence are
-        # separate; neither is discarded here.
+        # "empty" would claim nothing points at the owner anywhere, which a single view
+        # cannot establish. Observed null references are kept; this one is dropped.
         lits = {literal for literal in lits if literal[0] != "empty"}
     for role, how in status.items():
         lits.add((how, role))
@@ -1125,11 +992,8 @@ def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None
             lits.add(("count", tid, tally.get(tid, 0)))
     view = getattr(state, "view", None) or {}
     for slot, initial in (defaults or {}).items():
-        # Whether this list has been touched since the run began.  Not "is it empty": that
-        # would need a placeholder convention the interface never states.  The value it holds
-        # in the earliest observation is what it holds when nothing has chosen into it, and
-        # every guard that reads a list checks exactly that.  Pre-state only, and an input
-        # widget rather than the live region, so it is not the status line by another route.
+        # Whether this list has been touched yet, not whether it is "empty": the page never
+        # says which value means empty, only what the list held before anything chose.
         here = view.get(slot)
         if isinstance(here, str):
             lits.add(("untouched" if here == initial else "chosen into", slot))
@@ -1321,10 +1185,8 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
             if len(named) == 1:
                 tally[named[0]] += 1
                 continue
-            # No object on the board is called this.  Where the value is the key of an
-            # object the interaction created -- harbour's `Call C-107 opened for Selkie`
-            # -- the position is filled by the new object's name, a claim that can be
-            # checked afterwards and never predicted in its spelling.
+            # Nothing on the board is called this. If the click created the object, the
+            # position is filled by its new name: checkable afterwards, never predictable.
             made = {tid for tid, name in created if name == arg}
             tally[f"{CREATED}:T{next(iter(made))}" if len(made) == 1 else None] += 1
     for frame, positions in fills.items():
@@ -1422,20 +1284,16 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
         by_control.setdefault(control, []).append((tr, s, obs, event))
 
     out: dict[str, ControlOutcome] = {}
-    # What each list holds the first time this model sees it.  Not the first state of the
-    # run: cellar keeps its move form on a page the landing view does not show, so the slot
-    # does not exist yet there.  The earliest state in the frozen prefix that *has* the slot
-    # is where it stands untouched, and the prefix is the evidence this model is allowed.
+    # What each list held when this model first saw it. Not the first state of the run: a
+    # form may live on a page the landing view never shows.
     first_view: dict = {}
     for tr in sorted((t for t in list(inducer.transitions) + list(inducer.noops) if t.steps),
                      key=lambda t: t.steps[0]):
         state = inducer.state(steps[tr.steps[0]].before)
         for slot, value in (getattr(state, "view", None) or {}).items():
             first_view.setdefault(slot, value)
-    # Field theories.  ORDERED is proposed for every numeric field the fitting states render
-    # (`semabi.compiler.v4.fields`), the controls are learned with those literals available,
-    # and a field keeps the theory only where a fitted rule orders it and is justified in
-    # doing so; the controls are then learned again with the adopted fields alone, so that
+    # Every numeric field is offered as ordered, the controls are learned, and a field keeps
+    # the order only where a justified rule used it. Then learn again with those alone, so
     # the frozen model orders nothing the evidence did not.
     from semabi.compiler.v4 import fields as field_theory
     proposed = field_theory.candidates(
@@ -1513,19 +1371,15 @@ def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out
                         if isinstance(initial, str):
                             defaults[slot] = initial
         if all(event is None for _, _, _, event in rows):
-            # Nothing this control did ever moved the live region.  With enough occasions that
-            # is a prediction a held-out step can refute -- it returns nothing.  With one or
-            # two it is the same as any other condition fitted to a single occasion, and cellar
-            # is where that shows: eleven of its eighteen "returns nothing" answers were wrong,
-            # every one of them from a control seen once or twice before the cut.
+            # This control never moved the live region. With enough occasions that is a real
+            # prediction; with one or two it is a guess, like any condition seen once.
             silent = SILENT if len(rows) >= MIN_COVER else UNDETERMINED
             model = ControlOutcome(control, roles, [], silent, 0, {silent: len(rows)},
                                    defaults=defaults, simplest=simplest, ordered=dict(ordered or {}),
                                    pairs=pairs)
-            # Returning nothing is an outcome, so the evidence for it is the occasions
-            # themselves.  Only where the live region never moved on *any* of them: for a
-            # control that sometimes speaks, an unchanged region is missing data rather than
-            # silence (see `emission.observed`) and must not be labelled as an event.
+            # Returning nothing is an outcome, so the occasions are its evidence. Only where
+            # the region never moved: for a control that sometimes speaks, an unchanged
+            # region is missing data rather than silence.
             silent_rows = []
             for tr, s_, obs_, _event in rows:
                 state = inducer.state(s_.before)
@@ -1654,10 +1508,8 @@ RIGHT = "the event the interface returned"
 WRONG = "a different event"
 ABSTAINED = "no determinate answer"
 NO_MODEL = "no outcome model for this control"
-# An application with no live region returns nothing to every click, so "returns nothing" is
-# true there for free.  Counting it would have reported the veterinary clinic -- which has no
-# status line at all -- at 257 correct predictions out of 257, which is the vacuity this whole
-# layer of instruments exists to catch.
+# An application with no live region returns nothing to every click, so scoring "returns
+# nothing" there would be free marks. These clicks are not scored at all.
 NO_CHANNEL = "this application has no live region, so there is nothing to predict"
 # The version-space verdicts.  `NOT_ESTABLISHED` is the one the decision list cannot say: it
 # means no two occasions of any event vouch for this state under any pure condition, so every

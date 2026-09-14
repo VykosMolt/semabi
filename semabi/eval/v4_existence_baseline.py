@@ -1,31 +1,13 @@
 """What fraction of objects disappear anyway, whether or not a rule said they would.
 
-The removal check asks whether the structure that rendered an object still renders it after
-the click.  A reading whose whole action model is removals can score very well on that
-question for a reason that has nothing to do with its rules: if most objects on the page stop
-being rendered at every click -- a view switch, a re-render, a filtered list -- then "this one
-goes away" is true of nearly everything, and a rule that says it about some object the
-pre-state did not pin down is being marked correct for guessing the weather.
+A reading whose action model is mostly removals can score well on the removal check for free
+if most objects stop being rendered at every click regardless. Runs the same check over
+every object in every held-out pre-state, with no rule involved, as the base rate a reading's
+supported removals must exceed to mean anything.
 
-So this runs exactly the same check over *every* object in every held-out pre-state, with no
-rule involved at all, and reports the base rate.  A reading's supported removals mean
-something only to the extent they exceed it.
-
-The base rate is unconditional, which is the weaker of the two comparisons worth making.  A
-rule that only ever fires on objects sitting in a view that is about to be replaced would beat
-it without modelling anything, because the objects it selects are not a random sample.
-
-`per_click` is the sharper control the paragraph above used to say was missing.  It asks, for
-each removal a reading actually claims, what fraction of the objects present at *that same
-step* went away -- so the comparison is against the click the rule fired on rather than against
-the trace.  On a page that re-renders wholesale the two are very different: blend takes more
-than 90% of objects away on 217 of 249 held-out steps, so an unconditional rate of 0.888 is
-something a reading can beat by naming almost anything, while the per-click rate at the steps
-it chose is the number that says whether it chose.
-
-Treat a reading that fails to beat the unconditional rate as settled.  Treat one that beats the
-unconditional rate but not the per-click rate as having modelled which clicks clear the page,
-not which objects go.
+`per_click` is the sharper control: for each removal a reading claims, what fraction of
+objects present at that same step went away, so the comparison is against the click the
+rule fired on rather than against the whole trace.
 """
 from __future__ import annotations
 
@@ -73,10 +55,9 @@ def baseline(run_dir: Path, reading, *, split: float = 0.5) -> dict:
         if sum(here.values()):
             per_step.append(here["SUPPORTED"] / sum(here.values()))
     total = sum(verdicts.values())
-    # Is removal a property of the object or of the click?  If every step either takes almost
-    # everything away or almost nothing, then the check is answering "did the view change",
-    # and a rule that predicts *which clicks* wipe the page scores well without knowing which
-    # object it is about.  The shape of this distribution says which question is being asked.
+    # If every step takes almost everything away or almost nothing, the check is really
+    # answering "did the view change", and a rule predicting which clicks wipe the page
+    # would score well without knowing which object it's about.
     buckets = Counter()
     for fraction in per_step:
         buckets["none went (<10%)" if fraction < .1 else
@@ -91,10 +72,9 @@ def baseline(run_dir: Path, reading, *, split: float = 0.5) -> dict:
 def per_click(run_dir: Path, reading, *, split: float = 0.5) -> dict:
     """A reading's removal claims against the same click, not against the trace.
 
-    For every removal the reading asserts, the control is the fraction of *other* objects
-    present at that step that also went away.  A reading whose objects disappear at the rate
-    everything else does at the moments it chose to speak has told us about the page, not about
-    the object.
+    The control is the fraction of other objects present at that step that also went away.
+    A reading whose objects disappear at the same rate as everything else has told us about
+    the page, not the object.
     """
     model = fit(Path(run_dir), reading, split=split)
     A, full, cut = model.abstractor, model.log, model.cut
@@ -137,8 +117,8 @@ def per_click(run_dir: Path, reading, *, split: float = 0.5) -> dict:
     dec = sup + sum(c["REFUTED"] for c in claimed.values())
     rate = round(sup / dec, 3) if dec else None
     control = round(control_num / control_den, 3) if control_den else None
-    # A margin, not a verdict.  Blend's promoted reading scores 1.000 where everything else at
-    # the same steps scores 0.996, and a boolean would report that as beating the control.
+    # A margin, not a verdict: a boolean pass/fail would treat a negligible edge as
+    # beating the control.
     margin = None if (rate is None or control is None) else round(rate - control, 4)
     return {"split": split, "removal_claims": dec, "steps_spoken_at": len(claimed),
             "reading_supported_share": rate,

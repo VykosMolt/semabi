@@ -1,12 +1,9 @@
-"""Adversarial tests for latent control families.
+"""Tests for how controls are grouped into families.
 
-The action alphabet used to identify a control by a per-instance role ordinal inside a
-run-local entity type, which merged structurally different controls and split renderings
-of one control.  These tests pin the replacement policy at its failure boundaries: a
-false merge fabricates lifted semantics, a false split only fragments support, so the
-policy must require agreement on structure, on the latent entity the control belongs to,
-and on values before two occurrences may share a family.
-"""
+Two occurrences of a control can only share a family if they agree on structure, on the
+latent entity they belong to, and on values. A false merge fabricates semantics that
+were never there; a false split only fragments support -- these tests pin the policy at
+that boundary."""
 from types import SimpleNamespace
 
 from semabi.compiler.v2 import controls
@@ -62,8 +59,8 @@ def _card(base, template_root_role="group", combobox_options=(), extra_depth=Tru
 
 
 def test_two_controls_at_different_paths_are_never_one_family():
-    """The climbing collision: a grade selector under `group/` and a wall selector under
-    `text/` shared one symbol because both were the first combobox of their instance."""
+    """Checks two selectors at different paths never share a family, even when both
+    are the first combobox of their instance."""
     grade = _Obs([_node(0, "group", -1), _node(1, "group", 0),
                   _node(2, "combobox", 1, options=["pink", "yellow"])])
     wall = _Obs([_node(0, "group", -1), _node(1, "text", 0),
@@ -79,8 +76,8 @@ def test_two_controls_at_different_paths_are_never_one_family():
 
 
 def test_template_variants_of_one_card_share_a_family():
-    """A card rendered with and without an extra line is one card; splitting it would only
-    fragment support."""
+    """Checks a card rendered with and without an extra line stays one family,
+    instead of splitting and fragmenting support."""
     plain = _Obs(_card(0, combobox_options=["pink", "yellow"]))
     lead = _Obs(_card(0, combobox_options=["yellow", "black"]))
     families = _induce(
@@ -94,8 +91,8 @@ def test_template_variants_of_one_card_share_a_family():
 
 
 def test_disjoint_option_vocabularies_split_a_shared_path():
-    """The datacenter collision: two selectors at the same path in one entity, offering
-    values with nothing in common, are different controls."""
+    """Checks two selectors at the same path in one entity, whose values share
+    nothing, are split into different controls."""
     blades = _Obs(_card(0, combobox_options=["blade-02", "blade-04"]))
     pools = _Obs(_card(0, combobox_options=["D1", "D3"]))
     families = _induce(
@@ -108,8 +105,8 @@ def test_disjoint_option_vocabularies_split_a_shared_path():
 
 
 def test_templates_the_entity_layer_keeps_apart_are_not_merged():
-    """`button[Hang on _]` and a route-name mention are both unlabelled buttons at path
-    `button`; only the entity grouping distinguishes them."""
+    """Checks two unlabelled buttons at the same path stay apart, distinguished only
+    by which entity group they belong to."""
     action = _Obs([_node(0, "button", -1, name="Hang on Cave")])
     mention = _Obs([_node(0, "button", -1, name="R1")])
     families = _induce(
@@ -123,7 +120,8 @@ def test_templates_the_entity_layer_keeps_apart_are_not_merged():
 
 
 def test_a_control_outside_every_unit_keeps_its_existing_identity():
-    """View/navigation controls are untouched: they are not part of any recurring unit."""
+    """Checks controls outside any recurring unit keep their existing identity
+    untouched."""
     obs = _Obs([_node(0, "group", -1), _node(1, "button", 0, name="Walls")])
     families = _induce({"a": obs}, {"a": []}, {})
 
@@ -142,10 +140,9 @@ def test_family_ids_do_not_depend_on_observation_order_or_hash_seed():
 
 
 def test_family_ids_are_run_local_and_are_aligned_across_runs_by_descriptor():
-    """A run that never rendered one variant needs no disambiguating suffix, so the two
-    runs give the same family different names.  Cross-run comparison must therefore match
-    descriptors and overlapping templates, never the run-local string -- the same rule the
-    validator already applies to entity type ids."""
+    """Checks cross-run comparison matches on descriptor and overlapping template,
+    never the run-local family name, since two runs can give the same family different
+    names."""
     from semabi.compiler.v2.validation import family_compatibility
 
     blades = _Obs(_card(0, combobox_options=["blade-02"]))
@@ -178,8 +175,8 @@ def test_alignment_needs_a_shared_template_not_just_a_matching_descriptor():
 
 
 def test_the_same_control_rendered_in_another_view_is_one_family():
-    """Two observations, same card template and same position: one control, whatever view
-    the survey reached it through."""
+    """Checks the same card template at the same position is one control regardless
+    of which view it was reached through."""
     a = _Obs(_card(0, combobox_options=["pink"]))
     b = _Obs([_node(9, "group", -1), _node(10, "text", 9), _node(11, "combobox", 10, options=["pink"])])
     families = _induce({"a": a, "b": b}, {"a": [(0, "card")], "b": [(9, "card")]}, {"card": 2})
@@ -189,8 +186,8 @@ def test_the_same_control_rendered_in_another_view_is_one_family():
 
 
 def test_one_family_covers_several_entity_bindings():
-    """Family identity says which control; which entity it acts on is the locator's owner,
-    not part of the control's identity."""
+    """Checks family identity is about which control it is, not which entity it
+    acts on."""
     two_cards = _Obs([
         _node(0, "group", -1), _node(1, "text", 0), _node(2, "combobox", 1, options=["pink"]),
         _node(3, "group", -1), _node(4, "text", 3), _node(5, "combobox", 4, options=["yellow"]),
@@ -202,12 +199,9 @@ def test_one_family_covers_several_entity_bindings():
 
 # ---------------------------------------------------------------- identity across renderings
 #
-# Blend rendered five hidden operators as row buttons whose labels carry the row's entity --
-# `Close North Wall`, `Open North Wall`, `Bottle Cloister`, `Disgorge Cloister`, `Return ticket
-# 4 (...)` -- and every one of them was a label-less family distinguished by nothing but a
-# template digest that the layers above dropped.  On a held-out page they were not even that:
-# a page the induction never read fell through to per-instance ordinals, so all five were
-# `button#0`.  The tests below pin the three repairs at the cases that produced that.
+# Row buttons whose labels carry the row's entity (e.g. "Close North Wall") are
+# label-less families distinguished only by a template digest. The tests below check
+# that digest still identifies them correctly, including on a held-out page.
 
 
 def test_data_in_a_label_is_masked_rather_than_blanking_the_label():
@@ -227,7 +221,8 @@ def test_data_in_a_label_is_masked_rather_than_blanking_the_label():
 
 
 def test_a_label_that_is_nothing_but_data_is_label_less():
-    """`Open North Wall`, where `Open` is also a cell value: no constant token, no label."""
+    """Checks a button whose text is also a cell value elsewhere is treated as
+    label-less, not as carrying a constant label."""
     obs = _Obs([_node(0, "button", -1, name="Open North Wall")])
     families = _induce({"a": obs}, {"a": [(0, "button[_]")]}, {"button[_]": 1},
                        data=("Open", "North", "Wall"))
@@ -236,9 +231,8 @@ def test_a_label_that_is_nothing_but_data_is_label_less():
 
 
 def test_a_page_the_induction_never_read_is_classified_by_descriptor():
-    """The families are a model, not a memo: a held-out page gets the family its control's
-    descriptor names, and a unit template the induction never saw falls back on role, label
-    and path."""
+    """Checks a held-out page gets the family its control's descriptor names, and an
+    unseen unit template falls back to role, label and path."""
     seen = _Obs(_card(0, combobox_options=["pink"]))
     families = _induce({"a": seen}, {"a": [(0, "card")]}, {"card": 2})
     H = _H({"a": [(0, "card")], "b": [(9, "card")], "c": [(9, "card-with-a-lead")]},
@@ -251,9 +245,8 @@ def test_a_page_the_induction_never_read_is_classified_by_descriptor():
 
 
 def test_classification_of_a_new_template_respects_an_entity_split():
-    """Two families share a descriptor but for the entity group; a new template the frozen
-    hypotheses place in one of those groups goes there, and one they place nowhere gets the
-    bare rendered name -- which names nothing fitted for a label-less control."""
+    """Checks a new template is assigned to the family whose entity group it fits,
+    and falls back to its bare rendered name when it fits none."""
     a = _Obs([_node(0, "button", -1, name="Hang on Cave")])
     b = _Obs([_node(0, "button", -1, name="R1")])
     families = _induce({"a": a, "b": b},
@@ -278,9 +271,8 @@ def test_identity_keeps_a_label_less_digest_and_drops_a_labelled_one():
 
 
 def test_units_that_are_not_entities_do_not_split_a_labelled_control():
-    """A page-level unit has no entity group.  Blend's `Record draw` sat in seven page-template
-    variants and was seven families; a unit the entity layer does not read is no evidence
-    that two same-shaped controls are two things."""
+    """Checks a page-level unit, which has no entity group, doesn't split a labelled
+    control just because it appears in several page-template variants."""
     a = _Obs([_node(0, "group", -1), _node(1, "group", 0), _node(2, "button", 1, name="Record draw")])
     b = _Obs([_node(0, "group", -1), _node(1, "group", 0), _node(2, "button", 1, name="Record draw")])
     families = _induce({"a": a, "b": b}, {"a": [(0, "page-v1")], "b": [(0, "page-v2")]}, {})

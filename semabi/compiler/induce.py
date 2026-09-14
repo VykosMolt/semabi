@@ -67,11 +67,9 @@ class ActT:
 class _Varies:
     """An effect value the action does not determine.
 
-    ``lift`` keeps whatever constant it saw when it cannot bind a value to a parameter.  Where
-    the same action family writes the same slot with a different constant in different
-    transitions, that constant was a property of the instance the rule was lifted from and not
-    of the action, and the honest content of the effect is that the slot changes.
-    """
+    Where the same action writes the same slot with a different constant each time, the
+    constant belonged to the instance the rule was lifted from, not to the action, and all
+    the effect honestly says is that the slot changes."""
     __slots__ = ()
 
     def __repr__(self) -> str:
@@ -85,11 +83,9 @@ VARIES = _Varies()
 
 
 def _base(value: Any) -> Any:
-    """``'open#3'`` is the third rendered copy of ``'open'``; the base is what it says.
+    """'open#3' is the third rendered copy of 'open'; the base is what it says.
 
-    The convention is the abstractor's own (see the duplicate-name disambiguation in
-    ``v2/hypotheses.py``): siblings that render the same text are told apart by an ordinal.
-    """
+    Siblings that render the same text are told apart by an ordinal."""
     if not isinstance(value, str):
         return value
     head, sep, tail = value.rpartition("#")
@@ -425,12 +421,9 @@ class Inducer:
                             last_change_i = realize_pending_domain(pending_domain, d, st)
                             pending_domain = None
                     elif s.action.kind == "reload" and getattr(st, "unknown_is_none", False) and self.transitions and self.transitions[-1].episode == ep:
-                        # A reload re-renders the current view from persistent state.  Only a
-                        # reload that directly follows the last domain transition (no other
-                        # action in between) can attribute a newly rendered fact to that
-                        # transition.  After intervening actions the cause is not identifiable:
-                        # the same rule as for view navigation applies and the fact stays
-                        # explicitly unattributed.
+                        # Only a reload immediately after the last change can attribute a
+                        # newly rendered fact to it. With another action in between the
+                        # cause is not identifiable, so the fact stays unattributed.
                         d = diff(prev, st)
                         d.added = [o for o in d.added if o.id not in discovered]
                         if d.domain_changed:
@@ -518,12 +511,8 @@ class Inducer:
                     pending_domain = None
                     d = Diff([], [], [], [], d.view_changes)
                 elif sensing_step:
-                    # A sensing action can reveal a persistent fact without having caused
-                    # it.  The old fallback attached every such delta to the most recent
-                    # learned transition, even across unrelated actions, which fragmented
-                    # operator effects and made view navigation appear causal.  Preserve
-                    # the evidence, but leave its cause unresolved unless a controlled
-                    # DOMAIN probe established the pending action above.
+                    # A sensing action can reveal a fact without having caused it. Keep the
+                    # evidence, but leave the cause unresolved unless a probe established it.
                     self.unattributed_sensing_changes.append({
                         "revealing_step": s.step,
                         "delta": str(d),
@@ -536,10 +525,9 @@ class Inducer:
                     pending_domain = None
 
                 tr = Transition(ep, [s.step], [s.step], prev, st, d)
-                # What the interaction returned, as distinct from what it changed.  Read from
-                # the live region and only where its text moved: an unchanged status line is
-                # either a re-emission of the same sentence or silence, and the page does not
-                # say which.
+                # What the interaction returned, as distinct from what it changed. Only
+                # where the live region's text moved: an unchanged one may be silence or
+                # the same sentence again.
                 tr.emission = (emit_mod.observed(self.log.obs(s.before), self.log.obs(s.after),
                                                  getattr(self.A, "emissions", None))
                                if self.read_outputs else None)
@@ -569,15 +557,12 @@ class Inducer:
                     if pending_domain is not None and not self._is_view_control_click(s):
                         pending_domain = None
                     if tr.emission is not None and s.action.kind == "click":
-                        # The interaction returned something and changed nothing.  That is a
-                        # transition with an output and an empty delta, not a no-op, and it is
-                        # where every refusal in this corpus lives.
+                        # The interaction returned something and changed nothing: a
+                        # transition with an output and an empty delta, which is where every
+                        # refusal lives.
                         #
-                        # ``last_change_i`` is deliberately not advanced.  It marks the point
-                        # after which enabling actions are still in force, and an interaction
-                        # that changed no state did not consume the selections that preceded
-                        # it: the vat and blend chosen before a refused draw are still chosen
-                        # for the draw after it.
+                        # `last_change_i` is deliberately not advanced: an interaction that
+                        # changed nothing did not consume the selections made before it.
                         tr.ext = (steps, last_change_i + 1, i - 1, self._episode_anchor(steps, i))
                         self._extend_macro(tr, *tr.ext)
                         self.transitions.append(tr)
@@ -665,11 +650,9 @@ class Inducer:
             if s.action.kind in ("reload", "reset"):
                 continue
             if self._is_certified_sensing_click(s):
-                # A click a probe has certified as sensing is not part of what a domain action
-                # is, even when it reveals the control: once its delta is cleared above it is a
-                # no-op step, and folding it in as an enabling action made the tab switch the
-                # operator's core, a two-click macro no held-out single click instantiates.
-                # The evaluator skips these clicks by the same predicate; the learner must too.
+                # A click a probe certified as sensing is not part of a domain action, even
+                # when it reveals the control. Folding it in made a tab switch part of the
+                # operator, which no single held-out click can instantiate.
                 continue
             if j >= lo and s.action.kind == "type" and s.action.text in eff_texts:
                 extra.append(s.step)
@@ -846,27 +829,17 @@ class Inducer:
             args: list[Any] = []
             already = {o[1]: o for o in obj_param}
             for a in tr.emission.args:
-                # An object this transition already talks about, first.  `key_lookup` refuses a
-                # key two types share, and a refused argument becomes a *constant* -- which
-                # clusters the operator apart from its own family, so blend had one Drew rule
-                # naming its vat by parameter and another naming "Block 12" by name.
+                # An object this transition already talks about, first. A key two types
+                # share is refused, and a refused argument becomes a constant, which splits
+                # the operator away from its own family.
                 oid = already.get(a) or key_lookup(a, tr.before) or key_lookup(a, tr.after)
                 if oid:
                     args.append(obj_p(oid))
                 elif a in self._seen_keys:
-                    # The token identifies an entity the corpus tracks, but none this
-                    # transition can name: harbour's op13 was fitted from one occasion
-                    # whose output named the pilot's booked call while that call was off
-                    # the board, and the constant survived unanimity until the renaming
-                    # instrument reached call ids -- the moment they became keys -- and
-                    # refuted it twelve times (docs/v4_retained.md).  A name that only
-                    # identifies is never part of a rule's spelling.  Where exactly one
-                    # attribute of exactly one object this transition already names holds
-                    # the token, the interface itself provides the determining relation --
-                    # the pilot's own `Booked for call` renders it -- and the argument is
-                    # lifted as that dereference: read from the pre-action page at
-                    # prediction time, checked like any other argument, invariant under
-                    # renaming because both sides rename together.  Otherwise it is left
+                    # The token names an entity the corpus tracks but this transition
+                    # cannot name. Where one attribute of one object it does name holds the
+                    # token, lift the argument as that lookup: read from the page at
+                    # prediction time, and unaffected by renaming. Otherwise leave it
                     # undetermined rather than memorised.
                     holders = []
                     for oid, param in obj_param.items():
@@ -888,10 +861,8 @@ class Inducer:
                         args.append(VARIES)
                 else:
                     args.append(a)
-            # The subject is the first argument that names an object, so that an output about
-            # an entity is typed by that entity and binds like any other effect.  An output
-            # naming no object -- "Nothing chosen in the vessel list." -- has none, and says
-            # so rather than being attached to whatever happened to be nearby.
+            # The subject is the first argument that names an object, so a message about an
+            # entity is typed by it. A message naming no object has none, and says so.
             subject = next((a for a in args if isinstance(a, str) and a.startswith("?")), "")
             tid = binding[subject][0] if subject else -1
             effs.append(EffT("emit", tid, subject, tr.emission.frame,
@@ -1040,12 +1011,10 @@ class Inducer:
                 for tr in self.noops:
                     if tr.core() == core and tr.acts:
                         op.negatives.append(tr)
-        # Grounding before preconditions, and for a reason that is not tidiness.  A rule whose
-        # subject the action does not supply is executed by asking a referring query for it,
-        # and a counterexample has to be read the same way: which object would this rule have
-        # been about *here*?  Learning the queries afterwards left every literal about a
-        # derived parameter undecidable on every counterexample, so no such literal could ever
-        # be chosen -- the learner could not condition on the object it was talking about.
+        # Grounding before preconditions: a rule whose subject the action does not supply is
+        # executed by asking a query for it, and a counterexample has to be read the same way.
+        # Learning the queries afterwards left every condition about such an object
+        # undecidable, so the learner could not condition on what it was talking about.
         self.queries = self.learn_queries()
         for op in self.operators:
             self.learn_pre(op)
@@ -1131,24 +1100,17 @@ class Inducer:
     def _absorb_unobserved_outputs(self) -> None:
         """Two occasions of one operator are not two operators because their messages differ.
 
-        Clustering on ``(acts, effs)`` puts the output in the cluster key, which is what makes
-        an interaction that returns something a different rule from one that returns something
-        else -- the whole point of the layer.  It also splits a rule for two reasons that are
-        not that:
+        Clustering puts the returned message in the key, which is the point: an interaction
+        that returns something is a different rule from one that returns something else. It
+        also splits a rule for two reasons that are not that.
 
-        *An argument that did not resolve.*  Blend learned one ``Drew`` rule naming its vat by
-        parameter and another naming "Block 12" by name, because on those four occasions the
-        message named an object whose key under this reading is not what it printed.  Same
-        acts, same state delta, same event -- one rule, with the disagreeing argument
-        generalised to "the action does not determine this", exactly as a slot value is.
+        An argument that did not resolve: the same action, delta and event, where one
+        occasion named an object by a key this reading spells differently. One rule, with
+        the disagreeing argument generalised to "the action does not determine this".
 
-        *An output the page did not report.*  An unchanged live region is missing data, not
-        silence (see :mod:`semabi.compiler.v4.emission`), so an occasion where the same state
-        change happened while the status line already read what it was about to read must not
-        cluster apart -- that would make the absence of an observation into an observation.
-        Absorbed only where one branch matches: where two branches share a state delta and
-        differ in what they return, an unreported output does not say which this was.
-        """
+        An output the page did not report: an unchanged live region is missing data, not
+        silence, so an occasion where the status line already read what it was about to read
+        must not cluster apart. Absorbed only where exactly one branch matches."""
         from dataclasses import replace
 
         def state_key(op):
@@ -1205,13 +1167,11 @@ class Inducer:
             op.name = f"op{i}"
 
     def _control_key(self, op: OperatorHyp) -> str:
-        """What counts as the same action family for the purpose of comparing effect values.
+        """What counts as the same action family when comparing effect values.
 
-        The control the core click names, when there is one.  An operator with no core -- a
-        select or type with nothing clicked after it -- is keyed by its whole action sequence
-        instead, because pooling every coreless rule under one name would compare the effect
-        values of actions that have nothing to do with each other.
-        """
+        The control the core click names. An operator with no core is keyed by its whole
+        action sequence instead, since pooling every coreless rule under one name would
+        compare actions that have nothing to do with each other."""
         core = op.core()
         if core and core[0].loc is not None:
             from semabi.compiler.v2.controls import identity
@@ -1232,18 +1192,14 @@ class Inducer:
     def _generalise_copied_effects(self) -> None:
         """Rules that differ only in a value the action does not determine are one rule.
 
-        Harbour's ``Schedule call`` is five operators of support one, each asserting that the
-        click creates a call for one particular vessel, because the vessel's name was in the
-        transition each was lifted from and nothing bound it to the action.  They are the same
-        rule seen five times.  Keeping them apart states five claims that can only be right by
-        coincidence and leaves each with too little evidence to learn a precondition from.
+        Five operators each claiming a click creates a call for one particular vessel are
+        the same rule seen five times: the vessel's name was in the transition each was
+        lifted from and nothing bound it to the action. Keeping them apart states five
+        claims that can only be right by coincidence.
 
-        A position is generalised only when every rule of that action family writes it with a
-        constant and the constants differ: a value the action supplies is a parameter and is
-        left alone, and a value that never moves is determined by the action and is left alone
-        too.  So the test is whether the value moves while the action does not, which needs no
-        threshold and no vocabulary of its own.
-        """
+        A position is generalised only when every rule of that family writes it with a
+        constant and the constants differ. A value the action supplies is a parameter, and
+        a value that never moves is determined by the action; both are left alone."""
         by_position: dict[tuple[str, str], dict[str, Any]] = {}
         for op in self.operators:
             control = self._control_key(op)
@@ -1259,12 +1215,10 @@ class Inducer:
         for key, seen in by_position.items():
             if seen["parameters"] or len(seen["constants"]) < 2:
                 continue
-            # Only the part that actually moves is dropped.  The abstractor tells duplicate
-            # names apart by appending an ordinal, so a family of constants that share a base
-            # -- 'closed' and 'closed#2' -- agrees about what the slot says and disagrees only
-            # about which copy it is.  Replacing the whole value with "something" there would
-            # convert a claim the evidence can refute into one it cannot, which is a worse
-            # answer than the memorised constant it replaced.
+            # Only the part that moves is dropped. Duplicate names are told apart by an
+            # ordinal, so 'closed' and 'closed#2' agree about what the slot says and differ
+            # only about which copy. Replacing the whole value would turn a refutable claim
+            # into one nothing can refute.
             bases = {_base(v) for v in seen["constants"]}
             varying[key] = bases.pop() if len(bases) == 1 else VARIES
         if not varying:
@@ -1367,15 +1321,10 @@ class Inducer:
             for k, v in o.attrs.items():
                 lits.add(("attr", p, k, v))
             lits.add(("attr", p, self.A.types[o.tid].key_slot, o.key))
-            # Whether a reference slot points at anything is a fact about *this* object, and
-            # until now it could only be said about a pair: the loop below relates one bound
-            # param to another, so a rule that binds a single object could not express
-            # "nothing is attached here" at all.  That is the whole condition harbour's Close
-            # rule needs -- a berth can be closed only while no call holds it -- and its
-            # absence from the language, not from the evidence, is why the learner left five
-            # prefix counterexamples unexplained and an external filter had to supply the
-            # condition afterwards.  The slot name is whatever the reading exposes; nothing
-            # here knows about berths or calls.
+            # Whether a reference points at anything is a fact about one object. Without
+            # this the language could only relate two bound objects, so a rule about a
+            # single object could not say "nothing is attached here" at all. The slot name
+            # comes from the reading; nothing here knows what the objects are.
             for k, v in o.refs.items():
                 lits.add(("ref_null", p, k) if v is None else ("ref_set", p, k))
             has_parent_rel = bool(self.A.types[o.tid].parent_tids)
@@ -1441,14 +1390,10 @@ class Inducer:
             if p not in out and not p.startswith("?new"):
                 if t == "str":
                     out[p] = ""
-                # An object parameter the negative's own actions do not supply is *not*
-                # determined here.  It used to be filled from `tr.binding[p]` -- the object
-                # some other rule happened to give the same canonical name to, which is not
-                # the same object and often not even the same type.  Every literal about that
-                # parameter was then evaluated against an unrelated object, and a literal that
-                # is false about an unrelated object counts as excluding a counterexample it
-                # never touched.  Leaving it out makes the parameter undetermined, and
-                # `learn_pre` treats undetermined as no evidence rather than as coverage.
+                # An object the negative's own actions do not supply is left undetermined.
+                # Filling it from another rule's binding evaluated every condition against
+                # an unrelated object, so a condition that is false about that object looked
+                # like it excluded a counterexample it never touched.
         return out
 
     def _widget_value(self, po, st: AbstractState, a: ActT, bound: dict[str, Any]):
@@ -1482,29 +1427,19 @@ class Inducer:
         return tid in self.A.types and self.A.types[tid].key_slot == slot
 
     def memorises_the_fitting_instance(self, op: OperatorHyp, lit: tuple) -> str:
-        """Why this literal cannot become reusable action semantics, or ``""`` if it can.
+        """Why this condition cannot become reusable action semantics, or "" if it can.
 
-        These three refusals were written inline in ``learn_pre``'s greedy cover and were
-        therefore invisible to everything else -- including ``applicable_literals``, which
-        added ``op.common`` back to the binder without them and so re-admitted precisely what
-        was thrown out.  On harbour every one of the 145 verdict changes that mode produced was
-        caused by a key-slot identity constant.
-
-        The rule is narrow on purpose: a training-instance identity cannot become action
-        semantics *merely because it was present in the fitting transition*.  A genuinely
-        distinguished object could still earn that role through independent evidence, which is
-        a question about evidence rather than about syntax.
-        """
+        A training-instance identity must not become part of a rule merely because it was
+        present when the rule was fitted. A genuinely special object could still earn that
+        role through independent evidence, which is a question about evidence rather than
+        about syntax."""
         if lit[0] not in ("attr", "attr_ne"):
             return ""
         _, param, slot, value = lit
         if self._is_key_slot(op, param, slot):
-            # Negated as well: *the vat is not North Wall* names the fitting instance as
-            # surely as *the vat is North Wall*.  `learn_pre` allowed one such exclusion per
-            # parameter as "the special object"; renaming every vat on a held-out history
-            # (`semabi.eval.v4_renaming`) changed the durable ledger at 27 steps on blend,
-            # every one of them a rule guarded by that exclusion, while harbour, which has
-            # none, was unmoved.  A guard that mentions a spelling is not a guard.
+            # Negated too: "the vat is not North Wall" names the fitting instance as surely
+            # as "the vat is North Wall". A guard that mentions a spelling is not a guard,
+            # and renaming the objects on a held-out history changes what such rules do.
             return "identity constants never generalise"
         if (lit[0] == "attr" and not isinstance(value, bool)
                 and len({tr.binding.get(param) for tr in op.positives}) < 2):
@@ -1514,12 +1449,10 @@ class Inducer:
         return ""
 
     def learn_queries(self) -> dict[str, dict]:
-        """Per operator, a referring query for each object its effects act on and it must find.
+        """Per operator, a query for each object its effects act on that it must find itself.
 
-        What a prediction will actually have in hand: ``action_binding`` supplies the owner of
-        the clicked control and nothing else, so a typed or selected string carried by the
-        concrete step is *not* something the rule is given.
-        """
+        A prediction is given the owner of the clicked control and nothing else: a string
+        typed or selected on the concrete step is not something the rule receives."""
         out: dict[str, dict] = {}
         for op in self.operators:
             core = op.core()
@@ -1537,11 +1470,10 @@ class Inducer:
 
     def _query_binding(self, op: OperatorHyp, state: AbstractState,
                        known: dict[str, Any]) -> dict[str, Any]:
-        """Objects the operator's own referring queries name in ``state``, given ``known``.
+        """Objects the operator's own queries name in `state`, given `known`.
 
-        Only a query that names exactly one object binds anything.  Empty or plural is the
-        rule declining to say, which is the same answer it gives at prediction time.
-        """
+        Only a query naming exactly one object binds anything: empty or plural is the rule
+        declining to say, which is what it does at prediction time too."""
         queries = self.queries.get(op.name) or {}
         out: dict[str, Any] = {}
         resolved = dict(known)

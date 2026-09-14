@@ -1,24 +1,14 @@
-"""Is the model invariant under a permutation of a table's columns?
+"""Checks whether the model is invariant under reversing a table's columns, a third
+presentation coordinate besides collection order and naming: a slot is named by its
+node's offset within its unit, a position rather than a column, so this finds out
+whether that matters.
 
-`semabi.eval.v4_metamorphic` reverses the members of every collection and
-`semabi.eval.v4_renaming` renames every name; both are presentation coordinates the frozen
-model must not read.  A table's column order is a third: the header row declares what
-each column means, and a vet's appointment keyed by its patient and its reason is the same
-appointment when the reason column is rendered first.  The hypotheses name a slot by the
-node's offset within its unit (`cell#0@3`), which is a position, not a column
-(`docs/v4_frontier.md`), so this is the attack that finds out whether that matters.
-
-The transform reverses the cells of every row of every table -- header and body rows alike,
-each cell with its whole subtree, so header and field stay aligned -- renumbers the tree in
-document order and remaps every click.  Two comparisons:
-
-* **frozen**: the model fitted on the untouched history, scored on the column-reversed
-  held-out history -- the version space, the chosen list and the durable ledger at every
-  click, as the reversal instrument does.  A difference here is the model reading a column
-  position.
-* **refit**: the identity search run on the column-reversed run's prefix, its reading and
-  entity types compared with the search on the untouched run *by column header*, and the
-  two readings' suffix ledgers compared.  A difference here is the learner reading one.
+The transform reverses the cells of every row of every table, header and body alike,
+renumbers the tree in document order, and remaps every click. Two comparisons: frozen
+(model fitted on the untouched history, scored on the column-reversed one; a difference
+means the model read a column position) and refit (identity search rerun on the
+column-reversed prefix, compared with the untouched run by column header; a difference
+means the learner read one).
 """
 from __future__ import annotations
 
@@ -57,8 +47,8 @@ def frozen(run_dir: Path, chain: Path, reading_name: str, score_on: Path, *,
            split: float = 1.0, workdir: Path | None = None) -> dict:
     """The frozen model on a column-reversed held-out history."""
     if reading_name == "search":
-        # the search's own reading of the run (the manifests' pinned readings name families
-        # and slots by the scheme in force when they were frozen)
+        # the search's own reading of the run: pinned readings name families and slots
+        # by the scheme in force when they were frozen
         _, reading, _ = _search_reading(Path(run_dir), split)
     else:
         from semabi.eval.v4_consequence_run import _candidates
@@ -115,7 +105,7 @@ def _search_reading(run_dir: Path, split: float):
 
 def _slot_columns(result, log) -> dict[str, dict[str, str]]:
     """For each family, the header text under each key slot component, read off the page:
-    the slot's node is a cell; the header row's cell at the same column names it."""
+    the slot's node is a cell, named by the header row's cell at the same column."""
     out: dict[str, dict[str, str]] = {}
     H = result.hypotheses
     for template, unit in H.units.items():

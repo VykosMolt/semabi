@@ -1,19 +1,10 @@
-"""Which text on a page is a value, judged across the members of a collection.
+"""Tests for judging which page text is a value versus a label, across a collection.
 
-Whether a token is a label or a value was judged by whether it varied at an *indexed*
-position over the corpus -- row 2, column 2, over time.  On a listing whose rows never
-reorder that is the wrong question: a vessel's flag never changes at its row, so `United
-Kingdom` was a label, every vessel row a template of its own with its constant cells baked
-in, and a harbour with four ships had four vessel types and no pilot type at all.  A name the
-prefix had never seen was a value in the same cell (`tests/test_v2_unseen_tokens.py`); a name
-it had seen was not.
-
-The rows of a table are one listing.  What differs between them at the same cell is content,
-whichever row it stands in, so variation is judged with the member of a declared collection
-unindexed.  Three refinements come with it, each pinned here: a cell is never prose, however
-lowercase its words; two buttons side by side are two controls, not one control with two
-values; and a first cell that repeats a column header is a row header.
-"""
+Variation is judged with the collection's member unindexed, since a table's rows are one
+listing and what differs between them at the same cell is content, whichever row it's
+in. Three refinements are pinned here: a cell is never prose, two side-by-side buttons
+are two controls not one with two values, and a first cell repeating a column header is
+a row header."""
 from __future__ import annotations
 
 from collections import Counter, defaultdict
@@ -46,7 +37,7 @@ PILOTS = [("Aoife Marr", "150 m"), ("Tom Dorley", "100 m")]
 
 def desk(duty: tuple[str, str], sheet: str, berth: str) -> Observation:
     """One harbour page: a vessels table, a pilots table with two buttons per row, a
-    key-value call sheet whose field names are column headers elsewhere, a berth select."""
+    key-value call sheet, and a berth select."""
     rows = [("group", "", -1),
             ("heading", "Vessels", 0), ("table", "", 0), ("rowgroup", "", 2),
             ("row", "", 3), ("cell", "Vessel", 4), ("cell", "Flag", 4),
@@ -158,7 +149,8 @@ def test_what_a_select_holds_is_its_value_whole():
 
 
 def test_a_sentence_position_is_still_prose():
-    """The status line: sentences whose wording varies with the message, not with data."""
+    """Checks a status line's sentences, whose wording varies with the message, are
+    still treated as prose."""
     G = ObsGraph()
     lines = ["Berth N1 is closed.", "Berth S1 is closed.", "Selkie is not alongside.",
              "Nordkapp is not alongside.", "Nothing sailed from here.", "Nothing chosen this time.",
@@ -386,7 +378,8 @@ def test_post_promotion_key_collisions_cannot_be_repaired_by_position(collision_
 @pytest.mark.parametrize("key_slot", ["combobox#0", "listitem#0|combobox#0"])
 @pytest.mark.parametrize("supported", [False, True])
 def test_rejected_widget_key_dependencies_fail_without_rekeying(key_slot, supported):
-    """Native parses with a direct key intervention isolate the finalizer's dependency rule."""
+    """Native parses with a direct key intervention isolate the finalizer's
+    dependency rule."""
     hypothesis, template, _pages, sigs = _native_widget_hypothesis()
     hypothesis.fit(reload_pairs=[tuple(sigs)])
     unit = hypothesis.units[template]
@@ -437,7 +430,8 @@ def test_revocation_removes_unused_widget_composites_and_restores_slot_statistic
 
 
 def _parsed_widget_units(pages, roots, parent_roots=()):
-    """Native slot extraction; keys are specified only for isolated builder mechanics."""
+    """Native slot extraction; keys are specified only for isolated builder
+    mechanics."""
     graph = ObsGraph()
     sigs = [page.structural_signature() for page in pages]
     for sig, page in zip(sigs, pages):
@@ -547,7 +541,8 @@ def _context_key_change_hypothesis(association):
 
 @pytest.mark.parametrize("association", ["none", "alias", "override"])
 def test_context_key_changes_materialize_associations_from_raw_fields(association):
-    """Native key choice changes both split scopes from a later field to the earlier name."""
+    """Native key choice changes both split scopes from a later field to the earlier
+    name."""
     hypothesis, template, sigs, contexts = _context_key_change_hypothesis(association)
     swaps = {"Alpha": "Beta", "Beta": "Alpha", "Gamma": "Delta", "Delta": "Gamma"}
     for sig in sigs:
@@ -699,7 +694,8 @@ def test_missing_reload_or_widget_node_cannot_support_a_finalized_claim(missing_
 
 
 def board(*cards) -> Observation:
-    """A grid of cards under a plain group: a listing the accessibility tree does not declare."""
+    """A grid of cards under a plain group: a listing the accessibility tree doesn't
+    declare."""
     rows = [("group", "", -1), ("heading", "Dispatch board", 0), ("group", "", 0)]
     for name, depot, kg in cards:
         c = len(rows)

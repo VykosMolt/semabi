@@ -1,16 +1,12 @@
-"""Turning an undecided identity reading into an experiment the application can settle.
+"""Turn an undecided identity reading into an experiment the application can settle.
 
-An identity reading is not falsified by a single observation -- both readings of a page are
-consistent with the page.  What separates them is what happens when the value one of them
-calls the identity is *changed*.  If a slot really names the object, editing it replaces
-one object with another: everything else the instance shows would have to have been
-recreated identically by coincidence.  If it does not name the object, the instance simply
-carries a new value and stays itself.
+Both readings of a page are consistent with the page. What separates them is what happens
+when the value one of them calls the identity is changed: if the slot names the object,
+editing it replaces one object with another; if it does not, the instance stays itself and
+carries a new value.
 
-So the probe is generic: find an instance where the contested value is rendered by a
-control the learner can operate, change it, and let the behavioural objective rescore both
-readings on the extended trace.  Nothing here inspects what kind of application this is; it
-asks which rendered value is under dispute and whether that value can be operated.
+So the probe is generic: find an instance where the contested value is rendered by a control
+the learner can operate, change it, and rescore both readings on the longer trace.
 """
 from __future__ import annotations
 
@@ -69,8 +65,8 @@ def derive(question, H, G, typed_tokens: list[str] | None = None) -> Probe | Non
             if obs is None or node_index >= len(obs.nodes):
                 continue
             node = obs.node(node_index)
-            # the contested value itself may be static text; the control that carries it is
-            # the one the learner can operate, so look at the node and its immediate children
+            # the contested value may be static text, so look at the node and its children
+            # for the control that actually carries it
             for candidate in [node] + [obs.node(c) for c in obs.children(node_index)]:
                 if candidate.role not in EDITABLE:
                     continue
@@ -107,10 +103,8 @@ def derive(question, H, G, typed_tokens: list[str] | None = None) -> Probe | Non
 def locate(question, H, G, obs, sig: str, typed_tokens: list[str] | None = None) -> Probe | None:
     """Find the contested control in an observation the browser is actually looking at.
 
-    A probe needs a *situation*, not a page that hashes to a particular value: the same
-    contested slot reappears whenever the family is rendered, and any instance of it will
-    do. This is the whole of V4's multi-step reachability -- enough to get to the control a
-    current hypothesis disagreement needs, and no more.
+    A probe needs a situation, not one exact page: the contested slot reappears whenever the
+    family is rendered, and any instance of it will do.
     """
     from semabi.compiler.v4.identity import family_key
     slot = _contested(question)
@@ -149,11 +143,10 @@ def locate(question, H, G, obs, sig: str, typed_tokens: list[str] | None = None)
 # --------------------------------------------------------------------------
 # probes aimed at missing evidence rather than at a disagreement
 #
-# An ambiguity can survive not because two readings are equally good but because the
-# observation that would separate them was never made.  That is a different situation and
-# it has a different remedy: go and make the observation.  What can be acquired this way is
-# limited and the limits are honest -- a peer instance cannot be conjured where the
-# application renders one, and saying so is better than guessing.
+# An ambiguity can survive because the observation that would separate the two readings was
+# never made. The remedy is to go and make it. What can be collected this way is limited: a
+# second instance cannot be conjured where the application renders one, and saying so beats
+# guessing.
 
 ACQUIRABLE = {
     "NO_RELOAD_WITNESS": "reach a page that renders the family and reload it",

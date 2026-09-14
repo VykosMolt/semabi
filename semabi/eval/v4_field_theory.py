@@ -1,12 +1,8 @@
-"""Which fields the fitted model orders, and on what evidence.
-
-`semabi.compiler.v4.fields` proposes ORDERED for every numeric field and adopts it only where
-a fitted rule orders the field and is justified in doing so.  This prints the proposal and
-the adoption for one reading of one history -- every candidate field, whether it was
-adopted, and the rules that order it -- so that the intended field (blend's committed
-gallons) can be seen to carry the theory and the negative control (a ticket number, also
-numeric, nominal) can be seen not to.  Then the version space's answer for a named control
-at the values a held-out history or an intervention rendered.
+"""Reports which fields the fitted model orders, and on what evidence. Prints, for one
+reading of one history, every candidate numeric field, whether ORDERED was adopted, and
+the rules that order it, so an intended ordered field and a nominal negative control can
+be told apart. Then reports the version space's answer for a named control at the values
+a held-out history or intervention rendered.
 """
 from __future__ import annotations
 
@@ -48,7 +44,7 @@ def theory(run_dir: Path, reading, *, split: float = 0.5) -> dict:
 
 def corroborate(intervention: Path, attribute: str, into: list[Path]) -> dict:
     """Write what a retained intervention established about a field beside the histories
-    that will be fitted: the theory, the attribute, the intervention and its verdicts."""
+    to be fitted: the theory, the attribute, the intervention and its verdicts."""
     results = json.loads((Path(intervention) / "results.json").read_text())
     hypotheses = json.loads((Path(intervention) / "hypotheses.json").read_text()) \
         if (Path(intervention) / "hypotheses.json").is_file() else {}

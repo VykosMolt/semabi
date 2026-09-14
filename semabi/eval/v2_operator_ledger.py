@@ -1,10 +1,8 @@
-"""Evaluator-side operator eligibility and per-app oracle localization ledger.
-
-This campaign runs only after V2 compilation.  Hidden operator names, arguments,
-states, and effect descriptions are never passed to compiler code.  The ledger makes
-the denominator behind raw operator recovery explicit: reach, argument grounding,
-registered state deltas, frozen-language eligibility, support, and induction are kept
-as separate evidence fields rather than collapsed into RTC.
+"""Evaluator-side operator eligibility and per-app oracle localization ledger, run only
+after V2 compilation. Hidden operator names, arguments, states, and effect descriptions
+are never passed to compiler code. The ledger keeps reach, argument grounding, registered
+state deltas, frozen-language eligibility, support, and induction as separate evidence
+fields rather than collapsing them into RTC.
 """
 from __future__ import annotations
 
@@ -49,10 +47,8 @@ def _effect_language(effect: str) -> dict:
     """Classify constructs absent from the frozen V0 effect language.
 
     V0 can create/delete objects and set attributes/relations to constants or action
-    parameters, including a restricted relation-anchored forall.  It cannot express a
-    value as a function of its old value or a genuinely outcome-branching effect.  The
-    benchmark descriptions use a controlled vocabulary, so preserve both the generic
-    rule and the exact text as audit evidence.
+    parameters, including a restricted relation-anchored forall. It cannot express a value
+    as a function of its old value, or a genuinely outcome-branching effect.
     """
     lower = " " + effect.lower().replace("\n", " ") + " "
     reasons = []

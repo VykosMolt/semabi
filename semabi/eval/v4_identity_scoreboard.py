@@ -1,11 +1,9 @@
-"""An identity scoreboard scored only on what every candidate addresses.
-
-Per candidate reading of a chain: the frontier's transfer identification and holdout
-verdict; coverage and contradictions on the shared state surface (claims keyed by kind
-and page node, an ontology-neutral coordinate); right and wrong on the shared emission
-steps; unshared volume on both channels as provenance, never units; the survivor set;
-the assumptions a reading declares beyond its keys.  Counting claims would let a finer
-ontology win by vocabulary (docs/v4_retained.md, Parts XIII-XV).
+"""An identity scoreboard scored only on what every candidate addresses, to avoid letting
+a finer ontology win by vocabulary. Per candidate reading of a chain: the frontier's
+transfer identification and holdout verdict; coverage and contradictions on the shared
+state surface (claims keyed by kind and page node); right and wrong on the shared emission
+steps; unshared volume on both channels as provenance, never units; the survivor set; and
+the assumptions a reading declares beyond its keys.
 """
 from __future__ import annotations
 
@@ -21,7 +19,7 @@ SPLIT = 0.5
 
 def claims_for(args) -> tuple:
     """One candidate's node-keyed state claims and per-step emission claims on the
-    frozen-prefix suffix.  Module-level so a process pool can run it."""
+    frozen-prefix suffix. Module-level so a process pool can run it."""
     from dataclasses import replace
     run, name, reading_json, split = args
     from semabi.compiler.evidence import EvidenceLog
@@ -51,7 +49,7 @@ def claims_for(args) -> tuple:
 
 
 def score(results: dict, assumptions: dict) -> dict:
-    """Shared surfaces, units on them, unshared volume as provenance.  Pure."""
+    """Shared surfaces, units on them, unshared volume as provenance. Pure."""
     shared = set.intersection(*[set(r["state"]) for r in results.values()]) if results else set()
     shared_em = set.intersection(*[set(r["emission"]) for r in results.values()]) if results else set()
     board = {}

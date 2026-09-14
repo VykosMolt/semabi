@@ -1,11 +1,9 @@
-"""Do the frozen documents, the machine artifacts and the stored run records agree?
-
-A freeze is only meaningful if the prose, the JSON and the per-run provenance say the same
-thing.  This checks the claims that would matter if they drifted: which decisions are
-canonical, how many independent traces each was tested on and with what verdict, the
-differential counts, the collision before/after, hash-seed determinism, and the operator
-ledger.  Every number is read from an artifact and compared with the run records that
-produced it and with the headline claims in `docs/v2_status.md`.
+"""Checks whether the frozen documents, the machine artifacts and the stored run records
+agree, since a freeze is only meaningful if the prose, the JSON and the per-run provenance
+say the same thing. Checks which decisions are canonical, how many traces each was tested
+on and with what verdict, differential counts, collision before/after, hash-seed
+determinism, and the operator ledger, each read from an artifact and compared against the
+run records that produced it and the headline claims in `docs/v2_status.md`.
 """
 from __future__ import annotations
 

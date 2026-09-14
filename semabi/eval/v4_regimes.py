@@ -1,29 +1,8 @@
-"""The same predictions, asked of three different information boundaries.
-
-A held-out number means nothing until the question "held out from what?" has an answer.  This
-run answers it for one application by fitting the same reading three ways and scoring the same
-actions:
-
-``TRANSDUCTIVE``
-    the schema is built from the whole retained trace while transitions still come from the
-    prefix.  This was the old behaviour and it is not prospective evidence.  It is kept because
-    it answers a real question -- if representation induction were already solved by access to
-    the retained observation distribution, how good is the downstream machinery? -- and because
-    it is the only way to measure what the suffix representation was responsible for.
-
-``FROZEN_PREFIX``
-    everything comes from the prefix and the model never learns again.  Zero-shot
-    representation and action-model generalisation beyond a cut.
-
-``CAUSAL_PREQUENTIAL``
-    before each scored action the whole model is rebuilt from exactly what had been observed
-    when that action was chosen -- every completed transition and the page in front of the
-    agent, and nothing about how the action turns out.  This is the boundary a deployed agent
-    faces, and the only one of the three under which learning continues.
-
-The comparison is only meaningful on the same actions, so the prequential column is restricted
-to steps at or after the cut the other two were fitted to.
-"""
+"""Fits the same reading three ways and scores the same actions, to compare information
+boundaries: TRANSDUCTIVE (schema from the whole trace), FROZEN_PREFIX (everything from
+the prefix, no further learning) and CAUSAL_PREQUENTIAL (model rebuilt before each scored
+action from only what had been observed so far, the boundary a deployed agent faces).
+The comparison is restricted to actions all three regimes were fitted to."""
 from __future__ import annotations
 
 import argparse
@@ -70,11 +49,9 @@ def compare(run_dir: Path, chain: Path, reading_name: str, control: str, *,
     out: dict = {"run": run_dir.name, "reading": reading_name, "control": control,
                  "split": split, "regimes": {}}
 
-    # The prequential column rebuilds per action, which is about a minute apiece, so a control
-    # firing 123 times after the cut needs a stride.  Whatever it scores, the other two are
-    # restricted to the same actions: three columns over three different subsets are three
-    # numbers, not a comparison, and the whole point of this instrument is that they are asked
-    # the same questions.
+    # The prequential column rebuilds per action, so a control that fires often after the
+    # cut needs a stride. The other two columns are restricted to the same actions, since
+    # scoring different subsets would give three numbers rather than a comparison.
     cut = int(len(EvidenceLog(run_dir).steps) * split)
     steps = [t for t in pq.scored_steps(run_dir, control) if t >= cut][::stride]
     matched = set(steps)
@@ -90,12 +67,9 @@ def compare(run_dir: Path, chain: Path, reading_name: str, control: str, *,
             "refuted_steps": sorted({p.step for p in rows if p.verdict == csq.REFUTED})}
         out["cut"] = model.cut
 
-    # The prequential column rebuilds per action, so it is restricted to the steps the other
-    # two were asked about: a regime that answered a different set of questions cannot be
-    # compared with them.
-    # Scoring every nth action is sound rather than a shortcut: the model at step t is built
-    # from everything before t either way, so a stride skips the question and never the
-    # evidence.
+    # Restricted to the steps the other two regimes were asked about, so the comparison is
+    # valid. Scoring every nth action is sound, not a shortcut: the model at step t is built
+    # from everything before t either way, so a stride skips questions, not evidence.
     out["prequential_stride"] = stride
     out["matched_steps"] = steps
     snaps = pq.run(run_dir, reading, steps, min_support=min_support)

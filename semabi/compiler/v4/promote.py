@@ -1,15 +1,9 @@
-"""Is a repeated leaf a value of its container, or a thing in its own right?
+"""Is a repeated line of text a value of the thing that shows it, or a thing of its own?
 
-The frozen parser answers this structurally and once: a childless text node is a slot of
-the unit that encloses it.  For a card whose title is a line of text that is right, and for
-a list of patients rendered one per line it is exactly wrong -- no reading of identity can
-make a patient an object if patients are values of the owner that lists them.  The question
-is not about lists or cards; it is the observation-model question of whether an emission
-belongs to the latent object it sits inside or to one of its own.
-
-So it is asked the same way as identity: propose leaves that recur as siblings, put each
-proposal on trial, and keep it only if reading it as an object explains more of what the
-application did without inventing anything.
+The parser answers structurally and always the same way: a childless text node is a slot of
+the unit around it. For a card's title that is right; for a list rendered one patient per
+line it is exactly wrong. So candidates are proposed here and put on trial the way identity
+keys are, and kept only if reading them as objects explains more of what the application did.
 """
 from __future__ import annotations
 

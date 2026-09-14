@@ -1,19 +1,14 @@
-"""Custody snapshots for compiler-visible V4 interaction evidence.
+"""Freeze and verify the evidence files the compiler is allowed to read.
 
-Only the interaction evidence needed by the compiler is in scope here.  Historical
-run directories also contain generated models, logs, screenshots, and separately
-custodied evidence; those artifacts are not compiler inputs.  The two required JSONL
-files and the two optional V4 sidecars are the complete recognized input surface.  In
-particular, this module deliberately has no knowledge of evaluator data.
+Only interaction evidence is in scope. A run directory also holds models, logs and
+screenshots, which are not compiler inputs, and nothing here knows about evaluator data. The
+two required JSONL files and the two optional sidecars are the whole recognized surface.
 
-The snapshot format is intentionally boring and canonical.  File contents are
-bound to their relative name, mode, and size; the resulting content-tree digest is
-then bound to a role (SOURCE, TRANSFER, or HOLDOUT).  A second consumed-evidence
-digest covers observations.jsonl, steps.jsonl, and optional probes.jsonl, excluding
-modes and the refutation-only sidecar, and is the identity used for role
-independence. Verification re-enumerates that named input surface, so adding or
-removing an optional sidecar after a snapshot is a custody failure rather than an
-ignored change.
+A snapshot binds each file's contents to its relative name, mode and size, and binds the
+resulting digest to a role (SOURCE, TRANSFER or HOLDOUT). A second digest covers only what
+the compiler consumes, and is the identity used to check that two roles are independent.
+Verification re-enumerates the same named surface, so adding or removing an optional sidecar
+after a snapshot is a custody failure rather than an ignored change.
 """
 from __future__ import annotations
 
@@ -40,14 +35,11 @@ RECOGNIZED_INPUTS = frozenset(
 )
 REQUIRED_INPUTS = frozenset({"observations.jsonl", "steps.jsonl"})
 # ``probes.jsonl`` is a compiler input when present, and so is ``probes.acquired.jsonl``:
-# persistence probes executed on a fresh instance after the trace for controls the explorer
-# never probed (`semabi.eval.v4_probe_navigation`).  A probe is a fact about a control, not
-# about any state of the history, and the compiler reads both files alike.  The
-# identity-refutation sidecar is consumed by SOURCE generation, but it is not evidence used
-# by replay and therefore must not establish role independence.
-# ``field_theories_v4.json`` -- the field theories a retained intervention corroborated
-# (`semabi.compiler.v4.fields`) -- is read when the outcome layer is learned, so it is
-# evidence used by replay and part of what is consumed.
+# probes run on a fresh instance after the trace, for controls the explorer never reached.
+# A probe is a fact about a control, not about the state of a history, so both are read
+# alike. The identity-refutation sidecar is used when candidates are generated but not by
+# replay, so it must not establish role independence. ``field_theories_v4.json`` is read
+# when the outcome layer is learned, so it is part of what is consumed.
 CONSUMED_INPUTS = REQUIRED_INPUTS | frozenset({"probes.jsonl", "probes.acquired.jsonl",
                                                "field_theories_v4.json"})
 
@@ -110,10 +102,8 @@ def require_regular_file(path: Path) -> os.stat_result:
 def _reject_symlink_components(path: Path) -> None:
     """Reject a path containing a symlink at any component.
 
-    ``O_NOFOLLOW`` protects the final component of an open, but does not protect
-    parent components.  Snapshot paths are small and are opened infrequently, so
-    checking every component explicitly is preferable to relying on a race-prone
-    string path after resolution.
+    ``O_NOFOLLOW`` protects only the final component of an open. Snapshot paths are small and
+    opened rarely, so every component is checked rather than trusting a resolved string.
     """
 
     path = Path(path)
@@ -138,12 +128,11 @@ def _reject_symlink_components(path: Path) -> None:
 
 
 def _open_regular_nofollow(path: Path) -> int:
-    """Open a file by descriptor-bound traversal from the filesystem root.
+    """Open a file by walking descriptors from the filesystem root.
 
-    ``O_NOFOLLOW`` on only the final component still permits a parent-directory
-    substitution between an ``lstat`` and ``open``.  Holding every parent descriptor
-    while opening the next component closes that gap.  The lexical component check is
-    retained as a fail-closed rejection of paths such as ``link/../file``.
+    ``O_NOFOLLOW`` on the last component still allows a parent directory to be swapped
+    between the ``lstat`` and the ``open``; holding every parent descriptor closes that gap.
+    The lexical check stays as a fail-closed rejection of paths such as ``link/../file``.
     """
 
     path = Path(path)
@@ -210,11 +199,10 @@ def sha256_file(path: Path) -> str:
 
 
 def _enumerate_files(root: Path) -> list[tuple[str, Path, os.stat_result]]:
-    """Enumerate the named compiler-input surface without following anything.
+    """List the named compiler inputs without following anything.
 
-    Other immediate entries are historical outputs or belong to a separately named
-    custody boundary.  They are deliberately invisible here rather than accepted as
-    compiler inputs.
+    Other entries are outputs, or belong to a different custody boundary. They are invisible
+    here rather than accepted as inputs.
     """
 
     root = _require_directory(root)
@@ -280,12 +268,11 @@ def content_tree_sha256(files: list[Mapping[str, Any]]) -> str:
 
 
 def consumed_evidence_sha256(files: list[Mapping[str, Any]]) -> str:
-    """Digest only the evidence consumed by the compiler.
+    """Digest only the evidence the compiler consumes.
 
-    Modes and the refutation-only sidecar are intentionally absent.  The optional
-    probes file is compiler-visible evidence and is included when present.  This is
-    the identity used for role independence; ancillary bytes cannot make two
-    histories distinct.
+    Modes and the refutation-only sidecar are left out on purpose; the optional probes file
+    is included when present. This is the identity used for role independence, so ancillary
+    bytes cannot make two histories look distinct.
     """
 
     normalized = [
@@ -434,11 +421,10 @@ class ConsumedRun:
     files: Mapping[str, bytes]
 
     def evidence_log(self) -> Any:
-        """Return a fresh parser object over the same retained immutable bytes.
+        """A fresh parser over the same retained bytes.
 
-        Compiler passes receive isolated object graphs, so an accidental mutation by one
-        candidate cannot affect a later candidate while every parser still consumes the
-        exact same authenticated observations and steps.
+        Each pass gets its own object graph, so a mutation by one candidate cannot reach a
+        later one while both read the same authenticated observations and steps.
         """
 
         from semabi.compiler.v4.frozen_evidence import from_bytes
@@ -484,11 +470,10 @@ def parse_refutations(raw: bytes | None) -> dict[str, set[str | None]]:
 
 
 def parse_refutation_records(raw: bytes | None) -> list[dict[str, Any]]:
-    """The refutation records with what each slot ``held`` when the experiment decided.
+    """The refutation records, with what each slot ``held`` when the experiment decided.
 
-    `parse_refutations` keeps the family-to-keys map the manifest freezes; the freeze also
-    needs the binding, to refuse a record whose slot no longer holds those values
-    (`semabi.compiler.v4.search.stale_refutations`)."""
+    `parse_refutations` keeps the family-to-keys map the manifest freezes; freezing also needs
+    the values, to refuse a record whose slot no longer holds them."""
     parse_refutations(raw)          # the shape checks
     if raw is None:
         return []
@@ -503,11 +488,10 @@ def parse_refutation_records(raw: bytes | None) -> list[dict[str, Any]]:
 
 
 def _validate_probe_bytes(raw: bytes | None) -> None:
-    """Eagerly validate the JSONL shape consumed by V2's probe reader.
+    """Check the probe JSONL shape up front.
 
-    Probes are optional, but when retained they are compiler inputs.  Checking the
-    exact bytes at the consumption boundary prevents a later parser from silently
-    reopening or accepting a malformed mutable file.
+    Probes are optional, but a retained one is a compiler input. Checking the exact bytes here
+    stops a later parser from reopening or accepting a malformed file.
     """
 
     if raw is None:
@@ -649,11 +633,10 @@ def consume_snapshot(
     *,
     repo_root: Path,
 ) -> ConsumedRun:
-    """Consume a frozen compiler role exactly once into immutable bytes.
+    """Consume a frozen role exactly once into immutable bytes.
 
-    The returned :class:`ConsumedRun` is the only object replay should pass to
-    ``compile_v4``.  No compiler code is permitted to reopen ``run_dir`` after this
-    boundary.
+    The returned :class:`ConsumedRun` is the only object replay should pass to ``compile_v4``;
+    no compiler code may reopen ``run_dir`` after this point.
     """
 
     validated = validate_snapshot(expected)

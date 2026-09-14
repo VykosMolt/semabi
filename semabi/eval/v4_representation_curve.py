@@ -1,19 +1,11 @@
-"""How an application's semantic representation changes with the evidence available.
+"""Reports how an application's semantic representation changes as more evidence becomes
+available, by walking the chronological cut rather than looking at a single split. No
+score: reports the structures downstream machinery is expressed in (how many kinds of
+thing, how many slots, whether actions have semantic identities or merely positions) at
+each cut, so a capability can be attributed to when a concept became learnable.
 
-The headline of the chronology run is that every failure traced under strict chronology turned
-out to be a threshold rather than a ceiling: harbour's precondition became learnable at step
-252, blend's action alphabet consolidated between 503 and 587, and a fixed half-trace split was
-below threshold for both.  None of that is visible from a single cut.  It is visible from
-walking the cut, which is what this does.
-
-No score.  These are the structures the downstream machinery is expressed in -- how many kinds
-of thing there are, how many slots describe them, whether the actions have semantic identities
-or merely positions -- reported at each chronological cut, so a capability can be attributed to
-when a concept became learnable rather than to how much of the trace a split handed over.
-
-A positional control slot is one whose name carries no semantic identity (`button#3` rather
-than `button:Record draw`).  Counting them is how blend's consolidation shows up: 13 of them at
-a half-trace cut, 4 once the families consolidate.
+A positional control slot is one whose name carries no semantic identity (`button#3`
+rather than `button:Record draw`).
 """
 from __future__ import annotations
 

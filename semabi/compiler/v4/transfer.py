@@ -1,21 +1,17 @@
 """Deciding between frozen readings with evidence they were not fitted to.
 
 A reading that explains one more transition than its rival on the history it was chosen
-from has told us almost nothing: it was chosen for that.  What distinguishes a description
-of the black-box system from a description of one run is whether it still describes a
-separate comparison-role run.  So competing readings are frozen, carried unchanged to
-another interaction history, and compared only where they say *different* things about it;
-whether that role was prospectively fresh must be established by separate chronology.
+from has told us almost nothing -- it was chosen for that. So competing readings are
+frozen, carried unchanged to another interaction history, and compared only where they say
+different things about it. Whether that history is prospectively fresh has to be
+established separately; the retained phase here does not establish that, since its SOURCE,
+TRANSFER, and HOLDOUT objects are separate spent development histories, and the mechanics
+below only preserve those role boundaries.
 
-The retained phase does not establish prospective chronology: its SOURCE, TRANSFER, and
-HOLDOUT objects are separate spent development histories.  The mechanics below preserve
-those role boundaries without claiming that a current comparison was prospectively fresh.
-
-Two disciplines are borrowed from V2 deliberately.  Evidence is a vector, not a scalar, and
-the decision over it is a dominance rule rather than a weighted sum, so no coefficient has
-to be calibrated on gauntlet-v3.  And a confirmation counts only where the rival predicted
-otherwise: agreeing with something every candidate predicted is not evidence for any of
-them.
+Evidence is a vector, not a scalar, and the decision over it is a dominance rule rather
+than a weighted sum, so no coefficient needs tuning. A confirmation counts only where the
+rival predicted otherwise: agreeing with something every candidate predicted is not
+evidence for any of them.
 """
 from __future__ import annotations
 
@@ -82,7 +78,7 @@ def _safe_synthetic_fraction(value: Any, label: str) -> Fraction:
     if not math.isfinite(float(value)):
         raise ValueError(f"{label} must be finite numeric")
     # A bounded denominator recovers intended simple ratios such as 1/3 from their
-    # display float while keeping old synthetic decimal fixtures (0.6, 0.8) exact.
+    # display float, while keeping old decimal fixtures (0.6, 0.8) exact.
     return Fraction(str(float(value))).limit_denominator(1000)
 
 
@@ -103,10 +99,10 @@ class TransferEvidence:
     transport: dict[str, Any] = field(default_factory=dict)
     verdicts: dict[int, str] = field(default_factory=dict)
     separation: list[dict] = field(default_factory=list)
-    # identity of everything this reading said changed, at delta granularity.  Empty for
-    # hand-built fixtures; production evidence always carries it.  It decides nothing:
-    # a delta difference says two readings disagree, not which of them is wrong, so it
-    # classifies indistinguishability and never eliminates.
+    # identity of everything this reading said changed, at delta granularity. Empty for
+    # hand-built fixtures; production evidence always carries it. It decides nothing: a
+    # delta difference says two readings disagree, not which is wrong, so it classifies
+    # indistinguishability and never eliminates.
     delta_signature_sha256: str = ""
 
     @property
@@ -176,8 +172,8 @@ def from_behaviour(name: str, behaviour, transport, key_slots: dict[str, str | N
         verdicts=dict(behaviour.verdicts),
         delta_signature_sha256=(behaviour.delta_signature_digest()
                                 if hasattr(behaviour, "delta_signature_digest") else ""))
-    # from_behaviour is the production evidence boundary.  Validate it before returning so
-    # malformed transport/separation combinations cannot enter a frontier artifact.
+    # from_behaviour is the production evidence boundary. Validate it before returning so
+    # a malformed transport/separation combination can't enter a frontier artifact.
     _validate_separation_records(evidence)
     _validate_transfer_coherence(evidence)
     return evidence
@@ -197,9 +193,9 @@ def _evidence_applicability_fraction(evidence: TransferEvidence) -> Fraction:
 def _validate_separation_records(evidence: TransferEvidence) -> None:
     """Validate all separation records before any evidence can decide.
 
-    The counts are deliberately kept as exact integers.  In particular, ``bool`` is
-    an ``int`` subclass in Python, so it must be rejected explicitly rather than
-    accepted as a count.  The status is a derived field, not an independent claim.
+    Counts are kept as exact integers. ``bool`` is an ``int`` subclass in Python, so
+    it must be rejected explicitly rather than accepted as a count. The status is a
+    derived field, not an independent claim.
     """
     records = evidence.separation
     if not isinstance(records, (list, tuple)):
@@ -291,9 +287,10 @@ def _validate_separation_records(evidence: TransferEvidence) -> None:
 def _validate_transfer_coherence(evidence: TransferEvidence) -> None:
     """Validate the transport, key summary, applicability, and separation cross-fields.
 
-    Hand-built ``TransferEvidence`` instances with an empty transport remain available for
-    focused rule tests.  Any serialized transport, including every ``from_behaviour``
-    result, is required to carry a complete and internally coherent claim partition.
+    Hand-built ``TransferEvidence`` instances with an empty transport remain available
+    for focused rule tests. Any serialized transport, including every
+    ``from_behaviour`` result, must carry a complete and internally coherent claim
+    partition.
     """
     if evidence.transport == {}:
         return
@@ -500,9 +497,8 @@ class SeparationDifferential:
     """Exact comparisons between identity claims on the same family.
 
     A separation rate is only evidence when both readings make a claim about the
-    same literal-free family on this history.  The counts are retained rather
-    than reduced to the rounded ``rate`` field in the transfer artifact so that
-    the comparison remains an exact comparison of fractions.
+    same literal-free family on this history. The counts are retained rather than
+    reduced to the rounded ``rate`` field, so the comparison stays exact.
     """
 
     cases: list[dict[str, Any]] = field(default_factory=list)
@@ -537,10 +533,10 @@ class SeparationDifferential:
 def _tested_separation_by_family(evidence: TransferEvidence) -> dict[str, dict[str, Any]]:
     """Return tested identity claims, keyed by their exact family name.
 
-    ``UNTESTED`` records (including records with no co-present denominator) do
-    not put a family into the comparison.  A family is intentionally not
-    matched by key slot: the point of this evidence is to compare competing
-    keys for the same family.
+    ``UNTESTED`` records (including ones with no co-present denominator) don't put
+    a family into the comparison. A family is deliberately not matched by key slot,
+    since the point of this evidence is to compare competing keys for the same
+    family.
     """
     _validate_separation_records(evidence)
     tested: dict[str, dict[str, Any]] = {}
@@ -560,9 +556,9 @@ def separation_differential(left: TransferEvidence,
                             right: TransferEvidence) -> SeparationDifferential:
     """Compare exact separation fractions for shared, tested families.
 
-    For ``a/b`` versus ``c/d`` the comparison is ``a*d`` versus ``c*b``.
-    No rounded rate or absolute threshold participates.  Every shared tested
-    family is retained as an auditable case, including equal fractions.
+    For ``a/b`` versus ``c/d`` the comparison is ``a*d`` versus ``c*b``; no rounded
+    rate or threshold participates. Every shared tested family is retained as an
+    auditable case, including equal fractions.
     """
     out = SeparationDifferential()
     left_claims = _tested_separation_by_family(left)
@@ -577,9 +573,9 @@ def separation_differential(left: TransferEvidence,
         left_population = left_record["population_hash"]
         right_population = right_record["population_hash"]
         if left_population != right_population:
-            # A rate over a different pair population is not a comparison.  Keep the
+            # A rate over a different pair population is not a comparison. Keep the
             # mismatch in the differential for auditability, but it contributes no
-            # direction and therefore cannot decide the reading.
+            # direction and can't decide the reading.
             out.population_mismatches += 1
             out.cases.append({
                 "family": family,
@@ -634,11 +630,11 @@ def separation_differential(left: TransferEvidence,
 def indistinguishable_classes(evidence) -> list[list[str]]:
     """Group readings that said exactly the same thing changed, at every step.
 
-    Deliberately not called equivalence.  It is indistinguishability by the observable
-    content of this history's deltas: an interaction the history never performed can still
-    separate two readings in the same class, and readings in one class still induce
-    different models.  Readings without a delta signature -- hand-built fixtures -- are
-    each left in a class of their own rather than merged into one.
+    Deliberately not called equivalence. It's indistinguishability by the observable
+    content of this history's deltas: an interaction the history never performed can
+    still separate two readings in the same class, and readings in one class can still
+    induce different models. Readings without a delta signature -- hand-built fixtures
+    -- are each left in a class of their own rather than merged into one.
     """
     groups: dict[str, list[str]] = {}
     for row in sorted(evidence, key=lambda e: e.name):
@@ -688,10 +684,10 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
     5. If applicability differs, only strict refutation dominance may decide --
        one reading contradicted where the other is not contradicted at all.
        Otherwise return ``INCONCLUSIVE_ASYMMETRIC_APPLICABILITY``, because
-       credit is not comparable across readings that instantiate differently.
+       credit isn't comparable across readings that instantiate differently.
     6. Use the behavioural differential: a reading contradicted where its
-       rival is not contradicted loses; otherwise fewer contradicted steps
-       wins when the counts differ.
+       rival is not loses; otherwise fewer contradicted steps wins when the
+       counts differ.
     7. If total behavioural errors differ, prefer fewer errors.
     8. If same-family exact separation has both ``LEFT`` and ``RIGHT``
        directions, return ``UNDECIDED`` immediately; confirmed-claim count
@@ -700,16 +696,15 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
        side is better on at least one shared family and worse on none.
     10. Otherwise, a larger confirmed-claim count wins.
     11. Otherwise, readings whose verdicts, observable deltas and identity
-        claims match everywhere are ``EQUIVALENT`` -- an established equivalence
-        on everything this instrument reads, never a defeat; representational
-        cost selects a canonical member of such a class in ``all_pairs_frontier``
-        and eliminates nothing.  A differing claim the history never adjudicated
-        keeps the pair ``UNDECIDED``.
+        claims match everywhere are ``EQUIVALENT`` -- an equivalence, never a
+        defeat; cost selects a canonical member of such a class in
+        ``all_pairs_frontier`` and eliminates nothing. A differing claim the
+        history never adjudicated keeps the pair ``UNDECIDED``.
     12. Otherwise, return ``UNDECIDED``.
     """
     # This must precede differential(), makes_predictions, and every other
-    # decision gate. It also prevents malformed records from being partially
-    # consumed by a separation comparison.
+    # decision gate, so a malformed record can't be partially consumed by a
+    # separation comparison.
     _validate_separation_records(left)
     _validate_separation_records(right)
     diff = differential(left, right)
@@ -721,20 +716,20 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                         "neither reading could be instantiated on this history", left, right, diff,
                         separation_diff)
     if not left.makes_predictions or not right.makes_predictions:
-        # Silence is not evidence in either direction.  A reading that says nothing this
-        # history could confirm or refute cannot be supported by it -- and, symmetrically,
-        # cannot support anything against a reading that does speak.  Without the second
-        # half a reading that asserts no identity anywhere is never contradicted, so it
-        # defeats every rival that risks a claim, and wins by declining to say anything.
+        # Silence is not evidence in either direction. A reading that says nothing this
+        # history could confirm or refute can't be supported by it -- and, symmetrically,
+        # can't support anything against a reading that does speak. Without the second
+        # half, a reading that asserts no identity anywhere would never be contradicted
+        # and would win every comparison by declining to say anything.
         silent = ("neither reading" if not left.makes_predictions and not right.makes_predictions
                   else f"the {'left' if not left.makes_predictions else 'right'} reading")
         return Decision("INCONCLUSIVE_NO_PREDICTIONS",
                         f"{silent} says anything this history could confirm or refute, so this "
                         f"history cannot weigh them against each other",
                         left, right, diff, separation_diff)
-    # an identity claim this history shows separates nothing it names is refuted by it, in
-    # the same way and for the same reason as a contradiction: the reading asserted that a
-    # value distinguishes these objects and the page says it does not
+    # An identity claim this history shows separates nothing it names is refuted by it,
+    # the same way a contradiction is: the reading asserted a value distinguishes these
+    # objects, and the page says it doesn't.
     if left.separation_refuted != right.separation_refuted:
         winner = "LEFT" if left.separation_refuted < right.separation_refuted else "RIGHT"
         return Decision(winner, f"the history refutes "
@@ -744,17 +739,13 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                                 f"one: a named value that separates none of the instances it "
                                 f"names is not naming them", left, right, diff, separation_diff)
     if left_applicability != right_applicability:
-        # Asymmetric applicability makes *credit* incomparable: a reading whose claims
-        # instantiate differently has different opportunities to explain, and a reading
-        # that claims less can buy a lower error total by saying less.  It does not make
-        # *refutation* incomparable.  A claim that could not be instantiated leaves the
-        # reading SILENT there, and silence is never classified WRONG, so a less
-        # instantiated reading cannot manufacture refutations of its rival: the count of
-        # steps where it is wrong and the rival is not can only fall as it instantiates
-        # less.  A reading contradicted where its rival never is has therefore been
-        # refuted despite the handicap, and refusing to say so exempts exactly the
-        # readings that restructure the object inventory -- promotion above all -- from
-        # the test transfer exists to apply.
+        # Asymmetric applicability makes credit incomparable: a reading whose claims
+        # instantiate differently has different opportunities to explain, and can buy a
+        # lower error total simply by saying less. It doesn't make refutation
+        # incomparable: a claim that couldn't be instantiated leaves the reading SILENT
+        # there, never WRONG, so a less-instantiated reading can't manufacture
+        # refutations of its rival. A reading contradicted where its rival never is has
+        # been refuted despite the handicap.
         left_bad, right_bad = diff.left_refuted_here, diff.right_refuted_here
         if left_bad and not right_bad:
             return Decision("RIGHT", f"the history contradicts the left reading at {left_bad} "
@@ -810,10 +801,9 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
         return Decision("RIGHT", f"strictly better separation on {separation_diff.right_better} "
                         "shared family claims and no worse shared family", left, right, diff,
                         separation_diff)
-    # An identity claim this history confirms is evidence the rival does not have, when the
-    # rival makes no such claim.  Without this the rule can only ever eliminate, so the
-    # least committed reading survives every comparison it does not lose -- silence winning
-    # by default is the same error as coverage winning by default, in the other direction.
+    # An identity claim this history confirms is evidence the rival doesn't have, when the
+    # rival makes no such claim. Without this the rule could only ever eliminate, letting
+    # the least committed reading survive every comparison by default.
     if left.separation_confirmed != right.separation_confirmed:
         winner = "LEFT" if left.separation_confirmed > right.separation_confirmed else "RIGHT"
         return Decision(winner, f"the history confirms "
@@ -829,15 +819,14 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
     if (left.verdicts == right.verdicts
             and left.delta_signature_sha256 == right.delta_signature_sha256
             and _claims(left) == _claims(right)):
-        # Same verdict at every step, the same observable delta content behind each
-        # verdict, and the same identity claims put to the same tests: on everything this
-        # instrument reads, the readings are one behaviour.  That is an equivalence, not a
-        # defeat -- cost may choose which spelling of the class travels
-        # (`all_pairs_frontier`), but a spelling preference eliminating a reading is the
-        # same defect the identity search retired (`docs/v4_retained.md`).  Readings whose
-        # verdicts agree while their *claims* differ -- an untested separation claim, a
-        # delta spelled differently -- were never shown equivalent and fall through: the
-        # history did not adjudicate the difference, and neither may cost.
+        # Same verdict at every step, the same observable delta content, and the same
+        # identity claims put to the same tests: on everything this instrument reads, the
+        # readings are one behaviour. That's an equivalence, not a defeat -- cost may
+        # choose which spelling of the class travels (`all_pairs_frontier`), but a
+        # spelling preference eliminating a reading is not allowed. Readings whose
+        # verdicts agree while their claims differ were never shown equivalent and fall
+        # through instead: the history didn't adjudicate the difference, so cost can't
+        # either.
         return Decision("EQUIVALENT", "the readings said the same thing, in the same "
                         "observable deltas, with the same identity claims, at every step "
                         "of this history; representational cost chooses a spelling among "
@@ -855,9 +844,9 @@ FRONTIER_OUTCOMES = ("UNIQUE_SURVIVOR", "EQUIVALENT_SURVIVOR_CLASS",
 class FrontierResult:
     """Order-invariant result of deciding every unordered candidate pair once.
 
-    ``losses`` and ``winners`` retain the opponent names, rather than only a
-    count, so the undefeated set is auditable.  A pair that is undecided or
-    inconclusive contributes neither a loss nor a win.
+    ``losses`` and ``winners`` retain the opponent names, rather than only a count,
+    so the undefeated set is auditable. A pair that's undecided or inconclusive
+    contributes neither a loss nor a win.
     """
 
     candidates: list[str]
@@ -900,10 +889,10 @@ class FrontierResult:
 def all_pairs_frontier(evidence) -> FrontierResult:
     """Decide every unordered pair of uniquely named readings exactly once.
 
-    Candidate names are sorted before pairing, so both the pair orientation and
-    the resulting machine JSON are independent of the caller's input order.
-    Only explicit ``LEFT``/``RIGHT`` decisions create a pairwise win and loss;
-    no survivor is selected by iteration order or by the number of wins.
+    Candidate names are sorted before pairing, so both the pair orientation and the
+    resulting machine JSON are independent of the caller's input order. Only
+    explicit ``LEFT``/``RIGHT`` decisions create a pairwise win and loss; no
+    survivor is selected by iteration order or by the number of wins.
     """
     if isinstance(evidence, dict):
         evidence = list(evidence.values())
@@ -922,7 +911,7 @@ def all_pairs_frontier(evidence) -> FrontierResult:
         if item.name in by_name:
             raise ValueError(f"duplicate frontier evidence name {item.name!r}")
         # Validate every record for every candidate before the first pairwise
-        # decision is made.  This matters when a later candidate is malformed.
+        # decision, so a later malformed candidate is still caught.
         _validate_separation_records(item)
         by_name[item.name] = item
 
@@ -949,8 +938,8 @@ def all_pairs_frontier(evidence) -> FrontierResult:
         elif decision.outcome == "EQUIVALENT":
             equivalent_pairs.add((left.name, right.name))
 
-    # Pair generation is canonical, and every opponent list is sorted again
-    # here to make the invariant explicit rather than relying on combinations.
+    # Every opponent list is sorted again here to make the invariant explicit
+    # rather than relying on the order `combinations` happens to produce.
     names = sorted(by_name)
     for name in names:
         losses[name].sort()
@@ -961,10 +950,9 @@ def all_pairs_frontier(evidence) -> FrontierResult:
         selection = survivors[0]
     elif survivors and all((a, b) in equivalent_pairs
                            for i, a in enumerate(survivors) for b in survivors[i + 1:]):
-        # Every surviving pair was decided EQUIVALENT: the survivors are one established
-        # behavioural class on this projection, and choosing which member travels is
-        # canonicalization inside it, not a judgement between readings.  Least cost, then
-        # name, so the choice is deterministic and admits what it is.
+        # Every surviving pair was decided EQUIVALENT: the survivors are one behavioural
+        # class, and choosing which member travels is canonicalization, not a judgement
+        # between readings. Least cost, then name, keeps the choice deterministic.
         outcome = "EQUIVALENT_SURVIVOR_CLASS"
         selection = min(survivors, key=lambda n: (by_name[n].complexity, n))
     elif survivors:
@@ -977,8 +965,7 @@ def all_pairs_frontier(evidence) -> FrontierResult:
     return FrontierResult(names, pair_decisions, losses, winners, survivors, outcome, selection)
 
 
-# Keep the short spellings available to callers while retaining one canonical
-# implementation and schema.
+# Short aliases for callers; one canonical implementation and schema underneath.
 def decide_frontier(evidence) -> FrontierResult:
     return all_pairs_frontier(evidence)
 

@@ -25,8 +25,8 @@ def main() -> None:
     args = parser.parse_args()
     source, test = Path(args.source), Path(args.test)
     all_decisions = read_decisions(source)
-    # Every decision is re-tested, including already VALIDATED ones: a later independent
-    # trace can demote a decision, and promotion never exempts it from further testing.
+    # Every decision is re-tested, including VALIDATED ones: a later independent trace
+    # can demote a decision, and promotion never exempts it from further testing.
     decisions = [d for d in all_decisions
                  if d.get("status") in ("SUPPORTED", "PROVISIONAL", "MISPREDICTED", "VALIDATED")]
     if not decisions:

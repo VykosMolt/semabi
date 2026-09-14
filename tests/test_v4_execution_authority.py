@@ -1,14 +1,9 @@
-"""Load-bearing regressions for the V4 authoritative import authority.
+"""Regression tests for the V4 authoritative import authority.
 
-Every attack here is run twice where that is meaningful: once under a plain isolated
-interpreter, to show the attack really does change what executes, and once under
-``scripts/v4_authority.py``, which must refuse it or authenticate the right file.  A test
-that only checked the launcher would still pass if the mechanism were deleted.
-
-The fixtures are throwaway Git repositories containing a tiny synthetic ``semabi``
-package and a copy of the real launcher, so the attack surface exercised is the real
-authority code with none of the real pipeline's cost.
-"""
+Each attack runs twice where that matters: once under a plain isolated interpreter, to
+show it really changes what executes, and once under ``scripts/v4_authority.py``, which
+must refuse it or authenticate the right file. Fixtures are throwaway Git repositories
+with a tiny synthetic ``semabi`` package and a copy of the real launcher."""
 from __future__ import annotations
 
 import ast
@@ -28,14 +23,10 @@ REPO = Path(__file__).resolve().parents[1]
 LAUNCHER = REPO / "scripts" / "v4_authority.py"
 DATA = REPO / "docs" / "data" / "v4"
 
-# The retained attestations bind the bytes that ran.  The subject of the study has since moved
-# and is expected to keep moving, so the attestations no longer match the working tree.  What
-# may drift is enumerated here rather than inferred from a path prefix, because the prefix rule
-# silently granted permission to every future file under it.  ``semabi/relmodel.py`` is on the
-# list because the learned action model is what is under study: pre-state binding of the
-# parameters an action does not supply is part of the exported operator semantics, not an
-# analysis layer sitting above them.  Nothing in the authority or the manifest machinery is on
-# the list, and the two assertions below keep it that way.
+# The retained attestations bind bytes that have since moved, so they no longer match the
+# working tree. What is allowed to drift is enumerated explicitly here rather than by a
+# path prefix, since a prefix would silently permit every future file under it. The
+# authority and manifest machinery are never on this list.
 SUBJECT_UNDER_STUDY_PREFIXES = ("semabi/compiler/",)
 SUBJECT_UNDER_STUDY_FILES = ("semabi/relmodel.py",)
 
@@ -150,12 +141,8 @@ def _paths(attestation: dict) -> set[str]:
 
 
 def _cache_path(source_path: Path) -> Path:
-    """The cache path the *subprocess* would use.
-
-    The test process may run under ``PYTHONPYCACHEPREFIX``; the authoritative and plain
-    subprocesses run under ``-I``, which ignores it, so the prefix has to be neutralised
-    here or the attack would be planted where nothing looks for it.
-    """
+    """Checks the cache path the subprocess would use, since it runs under ``-I`` and
+    ignores ``PYTHONPYCACHEPREFIX`` even if the test process doesn't."""
 
     saved = sys.pycache_prefix
     sys.pycache_prefix = None
@@ -659,12 +646,10 @@ def test_retained_reports_claim_the_authority_and_match_their_attestation():
         assert attestation["unauthorised_module_origins"] == []
         assert all(row["loader"] == "V4_VERIFIED_SOURCE_LOADER"
                    for row in attestation["project_modules"])
-        # The attestation binds the bytes that ran.  Whether the working tree still holds
-        # those bytes is a different question, and the answer is now no: the inducer is under
-        # active development.  What must remain true is that the attestation is complete and
-        # internally consistent, that the drift is confined to the subject under study, and
-        # that the authority's own implementation has not moved -- an attestation produced by
-        # a changed authority would be worth nothing.
+        # The attestation binds the bytes that ran, not whether the working tree still
+        # holds them (it doesn't; the inducer is under active development). What must
+        # hold is that the attestation is complete, the drift is confined to the subject
+        # under study, and the authority's own implementation hasn't moved.
         drifted = []
         for module in attestation["project_modules"]:
             assert not Path(module["path"]).is_absolute()

@@ -1,17 +1,15 @@
-"""LLM local proposals for V2 (narrow questions; answers are hypotheses, never facts).
+"""Narrow questions put to an LLM, whose answers are hypotheses and never facts.
 
-Proposal kinds
-  aliases : two unit types show identifiers that never overlap as strings but may name
-            the same objects under a transformation (initials, codes, abbreviations):
-            the model is shown the two value lists with their label context and returns
-            candidate pairs. Each pair becomes an Alias with status UNTESTED, then goes
-            through the co-change verifier (SUPPORTED / CONTRADICTED / UNRESOLVED).
-  subject : a unit with several identifying slots (a detail panel with a breadcrumb): the
-            model is asked which slot names the thing the panel's attributes belong to.
+Two kinds are asked. *Aliases*: two unit types show identifiers that never match as strings
+but may name the same objects under some transformation (initials, codes, abbreviations); the
+model sees both value lists with their label context and returns candidate pairs, each of
+which then goes through the co-change verifier. *Subject*: a unit with several identifying
+slots, such as a detail panel with a breadcrumb; the model is asked which slot names the
+thing the panel's attributes belong to.
 
-All prompts, responses and the model id are cached under runs/llm_cache and written to
-the run directory for reproducibility. The compiler never treats a proposal as accepted
-semantics: aliases are used as provisional identity with their status reported.
+Prompts, responses and the model id are cached under runs/llm_cache and written to the run
+directory. Nothing the model says is accepted as semantics: an alias is provisional identity
+and carries its status with it.
 """
 from __future__ import annotations
 
