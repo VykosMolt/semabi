@@ -25,6 +25,12 @@ uv venv --python 3.12 .venv && uv pip install -e .
 .venv/bin/python -m semabi.demo
 ```
 
+![SemABI demo: the learner fits a model on a recorded trace, reports the object types and the rule it found, then predicts a session it never saw](docs/demo.gif)
+
+*A real run, recorded with `scripts/record_demo.py`. The output is revealed at a readable
+pace rather than in the two bursts the program prints it in; the fit time on screen is its
+own.*
+
 Five seconds, no browser needed. The learner is handed 91 recorded interactions with a
 small dispatch application — a board of runs, a van to attach to each, a weight field and
 a button that answers *Dispatch ready* or *Dispatch unavailable* — and is asked what it
